@@ -719,7 +719,7 @@
                                     <input type="text" id="file-name" name="file-name" class="form-control" placeholder="Ex: leads_tech_france" required>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
                                     <i class="fas fa-paper-plane mr-2"></i> Obtenir mes leads vérifiés
                                 </button>
                             </form>
@@ -926,6 +926,50 @@
     </section>
     
     <script>
+        // Liens de paiement Stripe
+        const stripeLinks = {
+            "1000": "https://buy.stripe.com/cN2bKb3JBaFh69WaEI",
+            "2000": "https://buy.stripe.com/14k9C30xp8x99m88wB",
+            "3000": "https://buy.stripe.com/bIYcOfgwnbJldCofZ4",
+            "4000": "https://buy.stripe.com/4gw8xZ3JBbJl69WbIP",
+            "5000": "https://buy.stripe.com/4gw01tgwneVx7e05ks",
+            "6000": "https://buy.stripe.com/7sI3dF5RJaFh7e028i",
+            "7000": "https://buy.stripe.com/cN27tVeof4gT69W28j",
+            "8000": "https://buy.stripe.com/eVag0rdkb5kXdCo14g",
+            "9000": "https://buy.stripe.com/aEU7tVcg7eVxdCo00d",
+            "10000": "https://buy.stripe.com/28o8xZ0xp6p1fKw3cq"
+        };
+
+        // Gestionnaire d'événement pour le formulaire
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('leads-form');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Empêche la soumission normale du formulaire
+                    
+                    // Validation du formulaire
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const apolloLink = document.getElementById('apollo-link').value;
+                    const leadsCount = document.getElementById('leads-count').value;
+                    const fileName = document.getElementById('file-name').value;
+                    
+                    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+                        alert('Veuillez remplir tous les champs obligatoires');
+                        return;
+                    }
+                    
+                    // Redirection vers le lien Stripe correspondant
+                    if (stripeLinks[leadsCount]) {
+                        window.location.href = stripeLinks[leadsCount];
+                    } else {
+                        alert('Veuillez sélectionner un nombre de leads valide');
+                    }
+                });
+            }
+        });
+
         function selectPlan(planValue) {
             // Scroll to the top of the page
             window.scrollTo({
