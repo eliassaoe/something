@@ -940,31 +940,67 @@
             "10000": "https://buy.stripe.com/28o8xZ0xp6p1fKw3cq"
         };
 
+        // URL du webhook
+        const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+
         // Gestionnaire d'événement pour le formulaire
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('leads-form');
             
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', async function(e) {
                     e.preventDefault(); // Empêche la soumission normale du formulaire
                     
-                    // Validation du formulaire
+                    // Récupération des valeurs du formulaire
                     const name = document.getElementById('name').value;
                     const email = document.getElementById('email').value;
                     const apolloLink = document.getElementById('apollo-link').value;
                     const leadsCount = document.getElementById('leads-count').value;
                     const fileName = document.getElementById('file-name').value;
                     
+                    // Validation du formulaire
                     if (!name || !email || !apolloLink || !leadsCount || !fileName) {
                         alert('Veuillez remplir tous les champs obligatoires');
                         return;
                     }
                     
-                    // Redirection vers le lien Stripe correspondant
-                    if (stripeLinks[leadsCount]) {
-                        window.location.href = stripeLinks[leadsCount];
-                    } else {
-                        alert('Veuillez sélectionner un nombre de leads valide');
+                    // Préparation des données pour le webhook
+                    const formData = {
+                        name: name,
+                        email: email,
+                        apolloLink: apolloLink,
+                        leadsCount: leadsCount,
+                        fileName: fileName,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    try {
+                        // Envoi des données au webhook
+                        const response = await fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        // Vérification de la réponse du webhook (optionnel)
+                        if (!response.ok) {
+                            console.error('Erreur lors de l\'envoi au webhook');
+                        }
+                        
+                        // Redirection vers le lien Stripe correspondant
+                        if (stripeLinks[leadsCount]) {
+                            window.location.href = stripeLinks[leadsCount];
+                        } else {
+                            alert('Veuillez sélectionner un nombre de leads valide');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        // Redirection vers Stripe même en cas d'erreur avec le webhook
+                        if (stripeLinks[leadsCount]) {
+                            window.location.href = stripeLinks[leadsCount];
+                        }
                     }
                 });
             }
