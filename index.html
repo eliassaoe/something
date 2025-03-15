@@ -1,4 +1,1095 @@
-<!-- Footer Section -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6NTYLJ115');
+</script>
+
+    
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>unlimitedleads - Emails vérifiés pour votre entreprise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --primary-50: #eef2ff;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section {
+            padding: 3rem 0;
+        }
+
+        .hero {
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01));
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+
+        .col {
+            flex: 1;
+            padding: 0 1rem;
+            width: 100%;
+            min-width: 0;
+        }
+
+        @media (max-width: 991px) {
+            .row {
+                flex-direction: column;
+            }
+            
+            .col {
+                margin-bottom: 2rem;
+            }
+            
+            .col:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--gray-900);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .text-base {
+            font-size: 1rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .text-4xl {
+                font-size: 1.875rem;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .text-2xl {
+                font-size: 1.25rem;
+            }
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .text-gray-500 {
+            color: var(--gray-500);
+        }
+
+        .text-gray-600 {
+            color: var(--gray-600);
+        }
+
+        .text-gray-700 {
+            color: var(--gray-700);
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .leading-tight {
+            line-height: 1.25;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mb-12 {
+            margin-bottom: 3rem;
+        }
+
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .mt-6 {
+            margin-top: 1.5rem;
+        }
+
+        .mt-8 {
+            margin-top: 2rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Card */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .card-body {
+                padding: 2rem;
+            }
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--gray-900);
+            background-color: white;
+            background-clip: padding-box;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-light);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-select {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--gray-900);
+            background-color: white;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234B5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            appearance: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-light);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-text {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.5rem;
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-dark));
+            border-color: var(--primary-dark);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        /* Features */
+        .features {
+            background-color: white;
+            padding: 4rem 0;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            background-color: var(--primary-50);
+            color: var(--primary);
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .feature-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-content {
+            font-size: 1rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .testimonial-title {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Pricing */
+        .pricing-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .pricing-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            text-align: center;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-description {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .pricing-features {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .pricing-feature-icon {
+            color: var(--success);
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            padding: 1.5rem;
+            background-color: var(--gray-50);
+            border-top: 1px solid var(--gray-100);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 4rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .footer-description {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            max-width: 24rem;
+        }
+
+        .footer-heading {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-link a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-100);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* Utilities */
+        .d-flex {
+            display: flex;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+
+        .flex-column {
+            flex-direction: column;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .text-decoration-none {
+            text-decoration: none;
+        }
+
+        /* Custom Styles */
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+        }
+
+        .form-card {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 991px) {
+            .form-card {
+                margin-top: 2rem;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 600;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            background-color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" id="top">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">unlimitedleads</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">Des emails vérifiés pour vos campagnes à chaque fois !</p>
+                <div class="mt-4">
+                    <span class="badge">5€ pour 1000 leads</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-shadow form-card animate-fade-in">
+                        <div class="card-header">
+                            <h2 class="text-2xl font-bold mb-2">Commandez vos leads maintenant</h2>
+                            <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés</p>
+                        </div>
+                        <div class="card-body">
+                            <form id="leads-form">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Nom *</label>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                    <small class="form-text">Nous vous enverrons vos leads à cette adresse</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="apollo-link" class="form-label">Lien Apollo *</label>
+                                    <input type="url" id="apollo-link" name="apollo-link" class="form-control" placeholder="https://app.apollo.io/..." required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="leads-count" class="form-label">Nombre de Leads *</label>
+                                    <select id="leads-count" name="leads-count" class="form-select" required>
+                                        <option value="">Choisissez</option>
+                                        <option value="1000">1000 leads - 5€</option>
+                                        <option value="2000">2000 leads - 10€</option>
+                                        <option value="3000">3000 leads - 15€</option>
+                                        <option value="4000">4000 leads - 20€</option>
+                                        <option value="5000">5000 leads - 25€</option>
+                                        <option value="6000">6000 leads - 30€</option>
+                                        <option value="7000">7000 leads - 35€</option>
+                                        <option value="8000">8000 leads - 40€</option>
+                                        <option value="9000">9000 leads - 45€</option>
+                                        <option value="10000">10000 leads - 50€</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="file-name" class="form-label">Nom du Fichier *</label>
+                                    <input type="text" id="file-name" name="file-name" class="form-control" placeholder="Ex: leads_tech_france" required>
+                                </div>
+                                
+                                <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-paper-plane mr-2"></i> Obtenir mes leads vérifiés
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="mb-8 animate-fade-in delay-1">
+                        <h2 class="text-3xl font-bold mb-4">Pourquoi choisir unlimitedleads ?</h2>
+                        <p class="text-gray-600 mb-4">Nous vous fournissons des leads de haute qualité avec des emails vérifiés pour maximiser l'efficacité de vos campagnes marketing.</p>
+                    </div>
+                    
+                    <div class="feature animate-fade-in delay-2">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="text-lg font-semibold mb-2">Emails vérifiés à 100%</h3>
+                            <p class="text-gray-600">Tous nos emails sont vérifiés pour garantir des taux de délivrabilité optimaux et réduire les taux de rebond.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature animate-fade-in delay-2">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="text-lg font-semibold mb-2">Filtrage précis</h3>
+                            <p class="text-gray-600">Ciblez exactement les profils qui vous intéressent par secteur, taille d'entreprise ou localisation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature animate-fade-in delay-3">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="text-lg font-semibold mb-2">Livraison rapide</h3>
+                            <p class="text-gray-600">Recevez vos leads dans les 24 heures suivant votre commande, prêts à être utilisés.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature animate-fade-in delay-3">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="text-lg font-semibold mb-2">Conformité RGPD</h3>
+                            <p class="text-gray-600">Toutes nos données sont collectées et traitées dans le respect des réglementations en vigueur.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Comment ça marche</h2>
+                <p class="text-gray-600">Un processus simple en trois étapes</p>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-list-alt text-4xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">1. Commandez</h3>
+                            <p class="text-gray-600">Remplissez notre formulaire avec vos critères spécifiques et la quantité de leads souhaitée.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-credit-card text-4xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">2. Payez</h3>
+                            <p class="text-gray-600">Effectuez votre paiement via notre plateforme sécurisée pour valider votre commande.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-envelope-open-text text-4xl text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">3. Recevez</h3>
+                            <p class="text-gray-600">Recevez vos leads vérifiés par email au format CSV et Excel, prêts à être utilisés.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="video-section">
+  <div class="container">
+    <div class="video-wrapper">
+      <div style="position: relative; padding-bottom: 62.5%; height: 0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <iframe 
+          src="https://www.loom.com/embed/c2cd8de064fb426b969f0db4ab9b2ee6?sid=a0addc46-bb51-496e-8d83-4addc028772a" 
+          frameborder="0" 
+          webkitallowfullscreen 
+          mozallowfullscreen 
+          allowfullscreen 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .video-section {
+      padding: 40px 0;
+      width: 100%;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    .video-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      .video-section {
+        padding: 30px 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .video-section {
+        padding: 20px 0;
+      }
+    }
+  </style>
+</section>
+    
+    <!-- Pricing Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Nos tarifs</h2>
+                <p class="text-gray-600">Des prix accessibles pour tous les budgets</p>
+            </div>
+            
+            <div class="card card-shadow">
+                <div class="card-body">
+                    <table class="w-100" style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--gray-200);">
+                                <th style="padding: 1rem; text-align: left; font-weight: 600;">Nombre de leads</th>
+                                <th style="padding: 1rem; text-align: center; font-weight: 600;">Prix</th>
+                                <th style="padding: 1rem; text-align: right; font-weight: 600;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>1000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">5€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('1000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>2000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">10€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('2000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>3000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">15€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('3000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>4000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">20€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('4000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>5000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">25€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('5000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>6000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">30€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('6000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>7000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">35€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('7000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>8000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">40€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('8000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>9000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">45€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('9000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem; text-align: left;"><strong>10000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">50€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('10000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4 text-sm text-gray-600">
+                <p>Tous nos leads incluent : emails vérifiés, format CSV/Excel et livraison sous 24h</p>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Liens de paiement Stripe
+        const stripeLinks = {
+            "1000": "https://buy.stripe.com/cN2bKb3JBaFh69WaEI",
+            "2000": "https://buy.stripe.com/14k9C30xp8x99m88wB",
+            "3000": "https://buy.stripe.com/bIYcOfgwnbJldCofZ4",
+            "4000": "https://buy.stripe.com/4gw8xZ3JBbJl69WbIP",
+            "5000": "https://buy.stripe.com/4gw01tgwneVx7e05ks",
+            "6000": "https://buy.stripe.com/7sI3dF5RJaFh7e028i",
+            "7000": "https://buy.stripe.com/cN27tVeof4gT69W28j",
+            "8000": "https://buy.stripe.com/eVag0rdkb5kXdCo14g",
+            "9000": "https://buy.stripe.com/aEU7tVcg7eVxdCo00d",
+            "10000": "https://buy.stripe.com/28o8xZ0xp6p1fKw3cq"
+        };
+
+        // URL du webhook
+        const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+
+        // Gestionnaire d'événement pour le formulaire
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('leads-form');
+            
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault(); // Empêche la soumission normale du formulaire
+                    
+                    // Récupération des valeurs du formulaire
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const apolloLink = document.getElementById('apollo-link').value;
+                    const leadsCount = document.getElementById('leads-count').value;
+                    const fileName = document.getElementById('file-name').value;
+                    
+                    // Validation du formulaire
+                    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+                        alert('Veuillez remplir tous les champs obligatoires');
+                        return;
+                    }
+                    
+                    // Préparation des données pour le webhook
+                    const formData = {
+                        name: name,
+                        email: email,
+                        apolloLink: apolloLink,
+                        leadsCount: leadsCount,
+                        fileName: fileName,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    try {
+                        // Envoi des données au webhook
+                        const response = await fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        // Vérification de la réponse du webhook (optionnel)
+                        if (!response.ok) {
+                            console.error('Erreur lors de l\'envoi au webhook');
+                        }
+                        
+                        // Redirection vers le lien Stripe correspondant
+                        if (stripeLinks[leadsCount]) {
+                            window.location.href = stripeLinks[leadsCount];
+                        } else {
+                            alert('Veuillez sélectionner un nombre de leads valide');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        // Redirection vers Stripe même en cas d'erreur avec le webhook
+                        if (stripeLinks[leadsCount]) {
+                            window.location.href = stripeLinks[leadsCount];
+                        }
+                    }
+                });
+            }
+        });
+
+        function selectPlan(planValue) {
+            // Scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Optionally, select the corresponding option in the dropdown
+            const leadsCountSelect = document.getElementById('leads-count');
+            if (leadsCountSelect) {
+                leadsCountSelect.value = planValue;
+            }
+            
+            // Focus on the form
+            const nameInput = document.getElementById('name');
+            if (nameInput) {
+                nameInput.focus();
+            }
+        }
+    </script>
+</body>
+    <!-- Footer Section -->
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -45,3 +1136,6 @@
         </div>
     </div>
 </footer>
+    
+</html>
+
