@@ -3,8 +3,8 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main  # ou master, selon votre branche principale
-  workflow_dispatch:  # permet de lancer manuellement le workflow
+      - main
+  workflow_dispatch:
 
 jobs:
   generate-sitemap:
@@ -18,81 +18,89 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        run: npm install -g sitemap-generator-cli
-
-      - name: Generate sitemap
+      - name: Create sitemap generation script
         run: |
-          # Crée un script pour générer le sitemap
-          cat > generate-sitemap.js <<EOL
+          cat > generate-sitemap.js <<'EOL'
           const fs = require('fs');
           const path = require('path');
 
-          // Configuration - adaptez à votre structure
-          const BASE_URL = 'https://unlimited-leads.online/'; // URL de votre site
-          const CONTENT_DIR = './'; // Répertoire contenant vos pages
-          const FILE_EXTENSIONS = ['.html', '.md']; // Extensions à inclure
-          const EXCLUDED_DIRS = ['.git', 'node_modules', '.github']; // Dossiers à exclure
-          
-          // Fonction récursive pour parcourir les répertoires
+          // Configuration
+          const BASE_URL = 'https://unlimited-leads.online/';
+          const CONTENT_DIR = './';
+          const FILE_EXTENSIONS = ['.html', '.md', '.txt'];
+          const EXCLUDED_DIRS = ['.git', 'node_modules', '.github'];
+
+          // Fonction pour parcourir les répertoires
           function walkSync(dir, fileList = []) {
+            if (!fs.existsSync(dir)) return fileList;
+            
             const files = fs.readdirSync(dir);
             
             files.forEach(file => {
               const filePath = path.join(dir, file);
-              const stat = fs.statSync(filePath);
               
-              if (stat.isDirectory() && !EXCLUDED_DIRS.includes(file)) {
-                fileList = walkSync(filePath, fileList);
-              } else if (
-                stat.isFile() && 
-                FILE_EXTENSIONS.some(ext => file.endsWith(ext))
-              ) {
-                // Convertir le chemin relatif en URL
-                let urlPath = filePath.replace(CONTENT_DIR, '');
+              try {
+                const stat = fs.statSync(filePath);
                 
-                // Remplacer les extensions .md par .html pour les sites qui convertissent
-                if (urlPath.endsWith('.md')) {
-                  urlPath = urlPath.replace('.md', '.html');
+                if (stat.isDirectory() && !EXCLUDED_DIRS.includes(file)) {
+                  fileList = walkSync(filePath, fileList);
+                } else if (stat.isFile() && FILE_EXTENSIONS.some(ext => file.endsWith(ext))) {
+                  // Convertir le chemin relatif en URL
+                  let urlPath = path.relative(CONTENT_DIR, filePath);
+                  
+                  // Remplacer les backslash par des forward slash
+                  urlPath = urlPath.split(path.sep).join('/');
+                  
+                  // Ajouter l'URL au sitemap
+                  const fullUrl = BASE_URL + urlPath;
+                  fileList.push({
+                    url: fullUrl,
+                    lastmod: new Date().toISOString().split('T')[0]
+                  });
                 }
-                
-                // Nettoyer le chemin de l'URL
-                urlPath = urlPath.replace(/\\/g, '/');
-                if (urlPath.startsWith('/')) urlPath = urlPath.substring(1);
-                
-                // Ajouter l'URL au sitemap
-                const fullUrl = BASE_URL + urlPath;
-                fileList.push(fullUrl);
+              } catch (error) {
+                console.error(`Erreur lors du traitement de ${filePath}:`, error.message);
               }
             });
             
             return fileList;
           }
 
-          // Générer la liste des URLs
-          const urls = walkSync(CONTENT_DIR);
+          // Génération du sitemap XML
+          function generateSitemap(urls) {
+            let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+            
+            urls.forEach(item => {
+              sitemap += '  <url>\n';
+              sitemap += `    <loc>${item.url}</loc>\n`;
+              sitemap += `    <lastmod>${item.lastmod}</lastmod>\n`;
+              sitemap += '  </url>\n';
+            });
+            
+            sitemap += '</urlset>';
+            return sitemap;
+          }
 
-          // Créer le contenu XML du sitemap
-          const today = new Date().toISOString().split('T')[0];
-          let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-          sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-          
-          urls.forEach(url => {
-            sitemap += '  <url>\n';
-            sitemap += `    <loc>${url}</loc>\n`;
-            sitemap += `    <lastmod>${today}</lastmod>\n`;
-            sitemap += '  </url>\n';
-          });
-          
-          sitemap += '</urlset>';
-
-          // Écrire le fichier sitemap.xml
-          fs.writeFileSync('sitemap.xml', sitemap);
-          console.log('Sitemap généré avec', urls.length, 'URLs');
+          // Exécution principale
+          try {
+            console.log('Génération du sitemap...');
+            const urls = walkSync(CONTENT_DIR);
+            const sitemap = generateSitemap(urls);
+            
+            fs.writeFileSync('sitemap.xml', sitemap);
+            console.log(`Sitemap généré avec ${urls.length} URLs.`);
+            
+            // Log les URLs pour débogage
+            urls.forEach(item => console.log(` - ${item.url}`));
+          } catch (error) {
+            console.error('Erreur:', error);
+            process.exit(1);
+          }
           EOL
 
-          # Exécuter le script
-          node generate-sitemap.js
+      - name: Generate sitemap
+        run: node generate-sitemap.js
 
       - name: Commit and push sitemap
         run: |
