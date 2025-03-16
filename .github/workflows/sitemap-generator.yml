@@ -1,0 +1,103 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches:
+      - main  # ou master, selon votre branche principale
+  workflow_dispatch:  # permet de lancer manuellement le workflow
+
+jobs:
+  generate-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install -g sitemap-generator-cli
+
+      - name: Generate sitemap
+        run: |
+          # Crée un script pour générer le sitemap
+          cat > generate-sitemap.js <<EOL
+          const fs = require('fs');
+          const path = require('path');
+
+          // Configuration - adaptez à votre structure
+          const BASE_URL = 'https://unlimited-leads.online/'; // URL de votre site
+          const CONTENT_DIR = './'; // Répertoire contenant vos pages
+          const FILE_EXTENSIONS = ['.html', '.md']; // Extensions à inclure
+          const EXCLUDED_DIRS = ['.git', 'node_modules', '.github']; // Dossiers à exclure
+          
+          // Fonction récursive pour parcourir les répertoires
+          function walkSync(dir, fileList = []) {
+            const files = fs.readdirSync(dir);
+            
+            files.forEach(file => {
+              const filePath = path.join(dir, file);
+              const stat = fs.statSync(filePath);
+              
+              if (stat.isDirectory() && !EXCLUDED_DIRS.includes(file)) {
+                fileList = walkSync(filePath, fileList);
+              } else if (
+                stat.isFile() && 
+                FILE_EXTENSIONS.some(ext => file.endsWith(ext))
+              ) {
+                // Convertir le chemin relatif en URL
+                let urlPath = filePath.replace(CONTENT_DIR, '');
+                
+                // Remplacer les extensions .md par .html pour les sites qui convertissent
+                if (urlPath.endsWith('.md')) {
+                  urlPath = urlPath.replace('.md', '.html');
+                }
+                
+                // Nettoyer le chemin de l'URL
+                urlPath = urlPath.replace(/\\/g, '/');
+                if (urlPath.startsWith('/')) urlPath = urlPath.substring(1);
+                
+                // Ajouter l'URL au sitemap
+                const fullUrl = BASE_URL + urlPath;
+                fileList.push(fullUrl);
+              }
+            });
+            
+            return fileList;
+          }
+
+          // Générer la liste des URLs
+          const urls = walkSync(CONTENT_DIR);
+
+          // Créer le contenu XML du sitemap
+          const today = new Date().toISOString().split('T')[0];
+          let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+          sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+          
+          urls.forEach(url => {
+            sitemap += '  <url>\n';
+            sitemap += `    <loc>${url}</loc>\n`;
+            sitemap += `    <lastmod>${today}</lastmod>\n`;
+            sitemap += '  </url>\n';
+          });
+          
+          sitemap += '</urlset>';
+
+          // Écrire le fichier sitemap.xml
+          fs.writeFileSync('sitemap.xml', sitemap);
+          console.log('Sitemap généré avec', urls.length, 'URLs');
+          EOL
+
+          # Exécuter le script
+          node generate-sitemap.js
+
+      - name: Commit and push sitemap
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add sitemap.xml
+          git commit -m "Mise à jour automatique du sitemap" || echo "Pas de changements à commiter"
+          git push
