@@ -1296,7 +1296,7 @@
         // Créer le contenu du formulaire pour les leads gratuits
         const freeLeadsFormHTML = `
             <div class="card-header">
-                <h2 class="text-2xl font-bold mb-2">Commandez vos 500 leads gratuits</h2>
+                <h2 class="text-2xl font-bold mb-2">Commandez vos 100 leads gratuits</h2>
                 <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés gratuitement</p>
                 <div class="mt-4">
                     <span class="badge success-badge">Code Promo Valide: ${promoCode}</span>
@@ -1328,7 +1328,7 @@
                     <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}" />
                     
                     <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
-                        <i class="fas fa-paper-plane mr-2"></i> Obtenir mes 500 leads gratuits
+                        <i class="fas fa-paper-plane mr-2"></i> Obtenir mes 100 leads gratuits
                     </button>
                 </form>
             </div>
@@ -1390,7 +1390,7 @@
                         name: name,
                         email: email,
                         apolloLink: apolloLink,
-                        leadsCount: '500',
+                        leadsCount: '100',
                         fileName: fileName,
                         promoCode: promoCode,
                         isFreeOrder: true,
@@ -1410,22 +1410,14 @@
                         throw new Error('Erreur lors de l\'envoi au webhook');
                     }
                     
-                    // Afficher un message de succès
-                    formCard.innerHTML = `
-                        <div class="card-body text-center">
-                            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
-                            <h2 class="text-2xl font-bold mt-4 mb-4">Commande confirmée !</h2>
-                            <p class="text-gray-600 mb-4">Votre commande de 500 leads gratuite a été confirmée. Vous recevrez vos leads sous 24h à l'adresse email que vous avez indiquée.</p>
-                            <button onclick="window.location.reload()" class="btn btn-primary">
-                                Retour à l'accueil
-                            </button>
-                        </div>
-                    `;
+                    // Redirection vers la page de confirmation
+                    window.location.href = "https://unlimited-leads.online/confirmation";
+                    
                 } catch (error) {
                     console.error('Erreur:', error);
                     alert('Une erreur est survenue: ' + error.message);
                     submitButton.disabled = false;
-                    submitButton.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Obtenir mes 500 leads gratuits';
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Obtenir mes 100 leads gratuits';
                 }
             });
         }
