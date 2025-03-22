@@ -678,7 +678,7 @@
                 </h1>
                 <p class="text-xl text-gray-600 mb-4">Des emails vérifiés pour vos campagnes à chaque fois !</p>
                 <div class="mt-4">
-                    <span class="badge">5€ pour 1000 leads</span>
+                    <span class="badge">10€ pour 1000 leads</span>
                 </div>
             </div>
         </div>
@@ -716,16 +716,17 @@
                                     <label for="leads-count" class="form-label">Nombre de Leads *</label>
                                     <select id="leads-count" name="leads-count" class="form-select" required>
                                         <option value="">Choisissez</option>
-                                        <option value="1000">1000 leads - 5€</option>
-                                        <option value="2000">2000 leads - 10€</option>
-                                        <option value="3000">3000 leads - 15€</option>
-                                        <option value="4000">4000 leads - 20€</option>
-                                        <option value="5000">5000 leads - 25€</option>
-                                        <option value="6000">6000 leads - 30€</option>
-                                        <option value="7000">7000 leads - 35€</option>
-                                        <option value="8000">8000 leads - 40€</option>
-                                        <option value="9000">9000 leads - 45€</option>
-                                        <option value="10000">10000 leads - 50€</option>
+                                        <option value="500">500 leads - 5€</option>
+                                        <option value="1000">1000 leads - 10€</option>
+                                        <option value="2000">2000 leads - 20€</option>
+                                        <option value="3000">3000 leads - 30€</option>
+                                        <option value="4000">4000 leads - 40€</option>
+                                        <option value="5000">5000 leads - 50€</option>
+                                        <option value="6000">6000 leads - 60€</option>
+                                        <option value="7000">7000 leads - 70€</option>
+                                        <option value="8000">8000 leads - 80€</option>
+                                        <option value="9000">9000 leads - 90€</option>
+                                        <option value="10000">10000 leads - 100€</option>
                                     </select>
                                 </div>
                                 
@@ -968,71 +969,78 @@
                         </thead>
                         <tbody>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>1000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: left;"><strong>500 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">5€</td>
+                                <td style="padding: 1rem; text-align: right;">
+                                    <button onclick="selectPlan('500')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                                <td style="padding: 1rem; text-align: left;"><strong>1000 leads</strong></td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">10€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('1000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>2000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">10€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">20€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('2000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>3000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">15€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">30€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('3000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>4000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">20€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">40€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('4000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>5000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">25€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">50€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('5000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>6000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">30€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">60€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('6000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>7000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">35€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">70€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('7000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>8000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">40€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">80€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('8000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--gray-200);">
                                 <td style="padding: 1rem; text-align: left;"><strong>9000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">45€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">90€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('9000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 1rem; text-align: left;"><strong>10000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">50€</td>
+                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">100€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('10000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
@@ -1049,18 +1057,19 @@
     </section>
     
     <script>
-        // Liens de paiement Stripe
+        // Liens de paiement Stripe mis à jour
         const stripeLinks = {
-            "1000": "https://buy.stripe.com/cN2bKb3JBaFh69WaEI",
-            "2000": "https://buy.stripe.com/14k9C30xp8x99m88wB",
-            "3000": "https://buy.stripe.com/bIYcOfgwnbJldCofZ4",
-            "4000": "https://buy.stripe.com/4gw8xZ3JBbJl69WbIP",
-            "5000": "https://buy.stripe.com/4gw01tgwneVx7e05ks",
-            "6000": "https://buy.stripe.com/7sI3dF5RJaFh7e028i",
-            "7000": "https://buy.stripe.com/cN27tVeof4gT69W28j",
-            "8000": "https://buy.stripe.com/eVag0rdkb5kXdCo14g",
-            "9000": "https://buy.stripe.com/aEU7tVcg7eVxdCo00d",
-            "10000": "https://buy.stripe.com/28o8xZ0xp6p1fKw3cq"
+            "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
+            "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
+            "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
+            "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
+            "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
+            "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
+            "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
+            "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
+            "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
+            "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
+            "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
         };
 
         // URL du webhook
