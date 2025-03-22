@@ -1099,15 +1099,17 @@
                     }
                     
                     // Préparation des données pour le webhook
-                    const formData = {
-                        name: name,
-                        email: email,
-                        apolloLink: apolloLink,
-                        leadsCount: leadsCount,
-                        fileName: fileName,
-                        promoCode: promoCode, // Ajout du code promo aux données
-                        timestamp: new Date().toISOString()
-                    };
+                   // Préparation des données pour le webhook
+const formData = {
+    name: name,
+    email: email,
+    apolloLink: apolloLink,
+    leadsCount: leadsCount,
+    fileName: fileName,
+    promoCode: promoCode, // Ajout du code promo aux données
+    language: "eng", // Ajout du paramètre de langue
+    timestamp: new Date().toISOString()
+};
                     
                     try {
                         // Envoi des données au webhook
