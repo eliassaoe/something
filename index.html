@@ -1371,31 +1371,7 @@
                 submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Traitement en cours...';
                 
                 try {
-                    // Marquer le code comme utilisé
-                    const markResponse = await fetch(promoCodeWebhookUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ 
-                            code: promoCode, 
-                            action: 'use',
-                            userEmail: email,
-                            timestamp: new Date().toISOString()
-                        })
-                    });
-                    
-                    if (!markResponse.ok) {
-                        throw new Error('Erreur lors du marquage du code comme utilisé');
-                    }
-                    
-                    const markData = await markResponse.json();
-                    
-                    if (!markData.success) {
-                        throw new Error(markData.error || 'Le code ne peut pas être utilisé');
-                    }
-                    
-                    // Préparation des données pour le webhook principal
+                    // Préparation des données pour le webhook principal - le code a déjà été validé
                     const formData = {
                         name: name,
                         email: email,
@@ -1421,17 +1397,8 @@
                         throw new Error('Erreur lors de l\'envoi au webhook');
                     }
                     
-                    // Afficher un message de succès
-                    messageContainer.innerHTML = `
-                        <div class="success-message">
-                            <i class="fas fa-check-circle"></i> <strong>Commande réussie!</strong> Vos leads gratuits seront envoyés à l'adresse email fournie.
-                        </div>
-                    `;
-                    
-                    // Redirection vers la page de confirmation après un court délai
-                    setTimeout(() => {
-                        window.location.href = "https://unlimited-leads.online/confirmation";
-                    }, 2000);
+                    // Redirection immédiate vers la page de confirmation
+                    window.location.href = "https://unlimited-leads.online/confirmation";
                     
                 } catch (error) {
                     console.error('Erreur:', error);
