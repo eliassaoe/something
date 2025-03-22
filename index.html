@@ -734,6 +734,12 @@
                                     <input type="text" id="file-name" name="file-name" class="form-control" placeholder="Ex: leads_tech_france" required>
                                 </div>
                                 
+                                <!-- Ajout du champ code promo -->
+                                <div class="form-group">
+                                    <label for="promo-code" class="form-label">Code de réduction (optionnel)</label>
+                                    <input type="text" id="promo-code" name="promo-code" class="form-control" placeholder="Entrez votre code promo">
+                                </div>
+                                
                                 <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
                                     <i class="fas fa-paper-plane mr-2"></i> Obtenir mes leads vérifiés
                                 </button>
@@ -1074,6 +1080,8 @@
                     const apolloLink = document.getElementById('apollo-link').value;
                     const leadsCount = document.getElementById('leads-count').value;
                     const fileName = document.getElementById('file-name').value;
+                    // Récupération du code promo (nouveau)
+                    const promoCode = document.getElementById('promo-code') ? document.getElementById('promo-code').value.trim() : '';
                     
                     // Validation du formulaire
                     if (!name || !email || !apolloLink || !leadsCount || !fileName) {
@@ -1088,6 +1096,7 @@
                         apolloLink: apolloLink,
                         leadsCount: leadsCount,
                         fileName: fileName,
+                        promoCode: promoCode, // Ajout du code promo aux données
                         timestamp: new Date().toISOString()
                     };
                     
@@ -1198,4 +1207,3 @@
 </footer>
     
 </html>
-
