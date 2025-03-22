@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 
     
@@ -369,6 +369,17 @@
             border-color: var(--primary-dark);
         }
 
+        .btn-success {
+            color: white;
+            background: linear-gradient(to right, var(--success), #059669);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(to right, #059669, #047857);
+            border-color: #059669;
+        }
+
         .btn-lg {
             padding: 1rem 2rem;
             font-size: 1rem;
@@ -666,6 +677,70 @@
         .delay-3 {
             animation-delay: 0.3s;
         }
+
+        /* Styles for free leads form */
+        .success-badge {
+            background-color: var(--success);
+        }
+
+        .error-message {
+            background-color: #FEE2E2;
+            border: 1px solid #EF4444;
+            color: #B91C1C;
+            padding: 10px;
+            border-radius: 0.5rem;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            background-color: #D1FAE5;
+            border: 1px solid #10B981;
+            color: #047857;
+            padding: 10px;
+            border-radius: 0.5rem;
+            margin-top: 10px;
+        }
+
+        /* Styles for lead section */
+        .sample-leads-image {
+            max-width: 100%;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .sample-leads-image:hover {
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 768px) {
+            .sample-leads-image img {
+                max-width: 100%;
+            }
+        }
+
+        /* Styles for video section */
+        .video-section {
+            padding: 40px 0;
+            width: 100%;
+        }
+        
+        .video-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .video-section {
+                padding: 30px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .video-section {
+                padding: 20px 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -689,7 +764,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="card card-shadow form-card animate-fade-in">
+                    <div class="card card-shadow form-card animate-fade-in" id="form-card">
                         <div class="card-header">
                             <h2 class="text-2xl font-bold mb-2">Order your leads now</h2>
                             <p class="text-gray-600">Fill out the form below to receive your verified leads</p>
@@ -735,7 +810,7 @@
                                     <input type="text" id="file-name" name="file-name" class="form-control" placeholder="Ex: leads_tech_france" required>
                                 </div>
                                 
-                                <!-- Ajout du champ code promo -->
+                                <!-- Promo code field -->
                                 <div class="form-group">
                                     <label for="promo-code" class="form-label">Promo Code (optional)</label>
                                     <input type="text" id="promo-code" name="promo-code" class="form-control" placeholder="Enter your promo code">
@@ -799,48 +874,28 @@
         </div>
     </section>
 
-    <!-- Ajouter cette section après la section "Process Section" et avant la section "Video Section" -->
-
-<!-- Section Exemple de Leads -->
-<section class="section">
-  <div class="container">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold mb-4">A preview of your future leads</h2>
-      <p class="text-gray-600">Here's what the leads you'll receive look like</p>
-    </div>
-    
-    <div class="card card-shadow">
-      <div class="card-body">
-        <div class="sample-leads-image">
-          <img src="https://media.discordapp.net/attachments/1316901647024263188/1352577808634871909/Screen_Shot_2025-03-21_at_10.40.47_AM.png?ex=67de85bf&is=67dd343f&hm=926fa4a0da88025cbd1b87d9bf6cc100c998d58a3a5713d24a6a9f6e393c51e5&=&format=webp&quality=lossless&width=1874&height=1224" 
-               alt="Example of a lead list with emails, phones and company information" 
-               style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+    <!-- Section Example of Leads -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">A preview of your future leads</h2>
+                <p class="text-gray-600">Here's what the leads you'll receive look like</p>
+            </div>
+            
+            <div class="card card-shadow">
+                <div class="card-body">
+                    <div class="sample-leads-image">
+                        <img src="https://media.discordapp.net/attachments/1316901647024263188/1352577808634871909/Screen_Shot_2025-03-21_at_10.40.47_AM.png?ex=67de85bf&is=67dd343f&hm=926fa4a0da88025cbd1b87d9bf6cc100c998d58a3a5713d24a6a9f6e393c51e5&=&format=webp&quality=lossless&width=1874&height=1224" 
+                            alt="Example of a lead list with emails, phones and company information" 
+                            style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                    </div>
+                    <div class="mt-4 text-center">
+                        <p class="text-gray-700"><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 text-center">
-          <p class="text-gray-700"><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-  .sample-leads-image {
-    max-width: 100%;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-  
-  .sample-leads-image:hover {
-    transform: scale(1.02);
-  }
-  
-  @media (max-width: 768px) {
-    .sample-leads-image img {
-      max-width: 100%;
-    }
-  }
-</style>
+    </section>
     
     <!-- Process Section -->
     <section class="section">
@@ -890,56 +945,31 @@
         </div>
     </section>
 
-<!-- Section Vidéo -->
-<section id="video-section" class="section video-section">
-  <div class="container">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold mb-4">How to use Unlimited leads</h2>
-      <p class="text-gray-600">Watch our video tutorial to understand the process</p>
-    </div>
-    
-    <div class="video-wrapper">
-      <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/a3748df5d5fb425ca1d7283e4ab84925?sid=287849d5-95bc-4cc8-88cd-b4a49e53b9e4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    </div>
-  </div>
-</section>
+    <!-- Video Section -->
+    <section id="video-section" class="section video-section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">How to use Unlimited leads</h2>
+                <p class="text-gray-600">Watch our video tutorial to understand the process</p>
+            </div>
+            
+            <div class="video-wrapper">
+                <div style="position: relative; padding-bottom: 62.5%; height: 0;">
+                    <iframe src="https://www.loom.com/embed/a3748df5d5fb425ca1d7283e4ab84925?sid=287849d5-95bc-4cc8-88cd-b4a49e53b9e4" 
+                    frameborder="0" 
+                    webkitallowfullscreen 
+                    mozallowfullscreen 
+                    allowfullscreen 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-  <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" style="font-size: 18px; color: #4f46e5; text-decoration: none; padding: 10px 20px; border: 2px solid #4f46e5; border-radius: 5px; transition: all 0.3s ease;">Useful Apollo.io link</a>
-</div>
-
-  <style>
-    .video-section {
-      padding: 40px 0;
-      width: 100%;
-    }
-    
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-    
-    .video-wrapper {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    
-    @media (max-width: 768px) {
-      .video-section {
-        padding: 30px 0;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .video-section {
-        padding: 20px 0;
-      }
-    }
-  </style>
-</section>
+    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+        <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" style="font-size: 18px; color: #4f46e5; text-decoration: none; padding: 10px 20px; border: 2px solid #4f46e5; border-radius: 5px; transition: all 0.3s ease;">Useful Apollo.io link</a>
+    </div>
     
     <!-- Pricing Section -->
     <section class="section">
@@ -1048,165 +1078,371 @@
         </div>
     </section>
     
-    <script>
-        // Liens de paiement Stripe mis à jour
-        const stripeLinks = {
-            "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
-            "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
-            "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
-            "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
-            "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
-            "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
-            "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
-            "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
-            "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
-            "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
-            "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
-        };
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="footer-logo-text">unlimitedleads</div>
+                    </div>
+                    <p class="footer-description">Verified emails for your marketing campaigns every time. Increase the effectiveness of your campaigns with quality leads.</p>
+                </div>
+                
+                <div class="col">
+                    <h4 class="footer-heading">Useful links</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link">
+                            <a href="#top">Home</a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="https://unlimited-leads.online/politique_de_confidentialite" target="_blank">Privacy Policy</a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="https://unlimited-leads.online/mentions_legales" target="_blank">Legal Notice</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col">
+                    <h4 class="footer-heading">Follow us</h4>
+                    <div class="social-links" style="display: flex; gap: 1rem;">
+                        <a href="https://www.youtube.com/@EliasIA694" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
 
-        // URL du webhook
-        const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
-
-        // Gestionnaire d'événement pour le formulaire
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('leads-form');
+                <div class="col">
+                    <h4 class="footer-heading">Contact</h4>
+                    <p>Email: <a href="mailto:contact@unlimited-leads.online" style="text-decoration: none; color: var(--gray-600);">contact@unlimited-leads.online</a></p>
+                </div>
+            </div>
             
-            if (form) {
-                form.addEventListener('submit', async function(e) {
-                    e.preventDefault(); // Empêche la soumission normale du formulaire
-                    
-                    // Récupération des valeurs du formulaire
-                    const name = document.getElementById('name').value;
-                    const email = document.getElementById('email').value;
-                    const apolloLink = document.getElementById('apollo-link').value;
-                    const leadsCount = document.getElementById('leads-count').value;
-                    const fileName = document.getElementById('file-name').value;
-                    // Récupération du code promo (nouveau)
-                    const promoCode = document.getElementById('promo-code') ? document.getElementById('promo-code').value.trim() : '';
-                    
-                    // Validation du formulaire
-                    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-                        alert('Please fill in all required fields');
-                        return;
-                    }
-                    
-                    // Préparation des données pour le webhook
-                   // Préparation des données pour le webhook
-const formData = {
-    name: name,
-    email: email,
-    apolloLink: apolloLink,
-    leadsCount: leadsCount,
-    fileName: fileName,
-    promoCode: promoCode, // Ajout du code promo aux données
-    language: "eng", // Ajout du paramètre de langue
-    timestamp: new Date().toISOString()
-};
-                    
-                    try {
-                        // Envoi des données au webhook
-                        const response = await fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(formData)
-                        });
-                        
-                        // Vérification de la réponse du webhook (optionnel)
-                        if (!response.ok) {
-                            console.error('Error sending to webhook');
-                        }
-                        
-                        // Redirection vers le lien Stripe correspondant
-                        if (stripeLinks[leadsCount]) {
-                            window.location.href = stripeLinks[leadsCount];
-                        } else {
-                            alert('Please select a valid number of leads');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        // Redirection vers Stripe même en cas d'erreur avec le webhook
-                        if (stripeLinks[leadsCount]) {
-                            window.location.href = stripeLinks[leadsCount];
-                        }
-                    }
+            <div class="footer-bottom">
+                <p>© 2025 unlimitedleads. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+    // Stripe payment links
+    const stripeLinks = {
+        "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
+        "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
+        "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
+        "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
+        "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
+        "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
+        "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
+        "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
+        "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
+        "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
+        "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
+    };
+
+    // Main webhook URL
+    const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+    
+    // Promo code webhook URL
+    const promoCodeWebhookUrl = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get DOM elements
+        const form = document.getElementById('leads-form');
+        const formCard = document.getElementById('form-card');
+        const promoCodeInput = document.getElementById('promo-code');
+        const leadsCountSelect = document.getElementById('leads-count');
+        const submitButton = document.getElementById('submit-button');
+        
+        // Create promo code verification button and message container
+        const promoCheckButton = document.createElement('button');
+        const promoMessage = document.createElement('div');
+        
+        // Configure verification button
+        promoCheckButton.type = 'button';
+        promoCheckButton.className = 'btn btn-primary';
+        promoCheckButton.style.marginTop = '10px';
+        promoCheckButton.textContent = 'Verify Code';
+        
+        // Configure message container
+        promoMessage.id = 'promo-message';
+        promoMessage.style.marginTop = '10px';
+        
+        // Add elements to the page
+        if (promoCodeInput && promoCodeInput.parentNode) {
+            promoCodeInput.parentNode.appendChild(promoCheckButton);
+            promoCodeInput.parentNode.appendChild(promoMessage);
+        }
+        
+        // Event handler for the verification button
+        promoCheckButton.addEventListener('click', async function() {
+            const code = promoCodeInput.value.trim();
+            
+            if (!code) {
+                promoMessage.textContent = 'Please enter a promo code';
+                promoMessage.style.color = 'var(--danger)';
+                return;
+            }
+            
+            // Show loading message
+            promoMessage.textContent = 'Verifying code...';
+            promoMessage.style.color = 'var(--gray-600)';
+            
+            try {
+                // Send code to webhook for verification
+                const response = await fetch(promoCodeWebhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        code: code, 
+                        action: 'check' 
+                    })
                 });
+                
+                if (!response.ok) {
+                    throw new Error('Server error');
+                }
+                
+                const data = await response.json();
+                
+                // Process result
+                if (data.valid) {
+                    // Valid code: Show free leads form
+                    showFreeLeadsForm(code, formCard);
+                } else {
+                    // Invalid code: Show error message
+                    showInvalidCodeMessage(data.error, promoMessage);
+                }
+            } catch (error) {
+                promoMessage.textContent = '❌ Error verifying code';
+                promoMessage.style.color = 'var(--danger)';
+                console.error('Error:', error);
             }
         });
-
-        function selectPlan(planValue) {
-            // Scroll to the top of the page
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Optionally, select the corresponding option in the dropdown
-            const leadsCountSelect = document.getElementById('leads-count');
-            if (leadsCountSelect) {
-                leadsCountSelect.value = planValue;
-            }
-            
-            // Focus on the form
-            const nameInput = document.getElementById('name');
-            if (nameInput) {
-                nameInput.focus();
-            }
-        }
-    </script>
-</body>
-    <!-- Footer Section -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="footer-logo">
-                    <div class="footer-logo-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="footer-logo-text">unlimitedleads</div>
-                </div>
-                <p class="footer-description">Verified emails for your marketing campaigns every time. Increase the effectiveness of your campaigns with quality leads.</p>
-            </div>
-            
-            <div class="col">
-                <h4 class="footer-heading">Useful links</h4>
-                <ul class="footer-links">
-                    <li class="footer-link">
-                        <a href="#top">Home</a>
-                    </li>
-                    <li class="footer-link">
-                        <a href="https://unlimited-leads.online/politique_de_confidentialite" target="_blank">Privacy Policy</a>
-                    </li>
-                    <li class="footer-link">
-                        <a href="https://unlimited-leads.online/mentions_legales" target="_blank">Legal Notice</a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="col">
-                <h4 class="footer-heading">Follow us</h4>
-                <div class="social-links" style="display: flex; gap: 1rem;">
-                    <a href="https://www.youtube.com/@EliasIA694" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-        </div>
-
-             <div class="col">
-                <h4 class="footer-heading">Contact</h4>
-                <p>Email: <a href="mailto:contact@unlimited-leads.online" style="text-decoration: none; color: var(--gray-600);">contact@unlimited-leads.online</a></p>
-            </div>
-            </div>
         
-        <div class="footer-bottom">
-            <p>© 2025 unlimitedleads. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
-    
+        // Event handler for the regular form
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault(); // Prevent normal form submission
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const apolloLink = document.getElementById('apollo-link').value;
+                const leadsCount = document.getElementById('leads-count').value;
+                const fileName = document.getElementById('file-name').value;
+                const promoCode = document.getElementById('promo-code') ? document.getElementById('promo-code').value.trim() : '';
+                
+                // Form validation
+                if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Prepare data for webhook
+                const formData = {
+                    name: name,
+                    email: email,
+                    apolloLink: apolloLink,
+                    leadsCount: leadsCount,
+                    fileName: fileName,
+                    promoCode: promoCode,
+                    language: "eng", // Add language parameter
+                    timestamp: new Date().toISOString()
+                };
+                
+                try {
+                    // Send data to webhook
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    // Check webhook response (optional)
+                    if (!response.ok) {
+                        console.error('Error sending to webhook');
+                    }
+                    
+                    // Redirect to the corresponding Stripe link
+                    if (stripeLinks[leadsCount]) {
+                        window.location.href = stripeLinks[leadsCount];
+                    } else {
+                        alert('Please select a valid number of leads');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Redirect to Stripe even if there's an error with the webhook
+                    if (stripeLinks[leadsCount]) {
+                        window.location.href = stripeLinks[leadsCount];
+                    }
+                }
+            });
+        }
+    });
+
+    // Function to display the free leads form
+    function showFreeLeadsForm(promoCode, formCard) {
+        // Save the values from the original form before replacing it
+        const originalName = document.getElementById('name') ? document.getElementById('name').value : '';
+        const originalEmail = document.getElementById('email') ? document.getElementById('email').value : '';
+        const originalApolloLink = document.getElementById('apollo-link') ? document.getElementById('apollo-link').value : '';
+        const originalFileName = document.getElementById('file-name') ? document.getElementById('file-name').value : '';
+        
+        // Create the free leads form content
+        const freeLeadsFormHTML = `
+            <div class="card-header">
+                <h2 class="text-2xl font-bold mb-2">Order your 100 free leads</h2>
+                <p class="text-gray-600">Fill out the form below to receive your verified leads for free</p>
+                <div class="mt-4">
+                    <span class="badge success-badge">Valid Promo Code: ${promoCode}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="free-leads-form">
+                    <div class="form-group">
+                        <label for="free-name" class="form-label">Name *</label>
+                        <input type="text" id="free-name" name="free-name" class="form-control" value="${originalName}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-email" class="form-label">Email *</label>
+                        <input type="email" id="free-email" name="free-email" class="form-control" value="${originalEmail}" required>
+                        <small class="form-text">We will send your leads to this address</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-apollo-link" class="form-label">Apollo Link *</label>
+                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${originalApolloLink}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-file-name" class="form-label">File Name *</label>
+                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${originalFileName}" required>
+                    </div>
+                    
+                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}" />
+                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100" />
+                    
+                    <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
+                        <i class="fas fa-paper-plane mr-2"></i> Get my 100 free leads
+                    </button>
+                </form>
+                <div id="free-form-message" class="mt-4"></div>
+            </div>
+        `;
+        
+        // Replace the form content
+        formCard.innerHTML = freeLeadsFormHTML;
+        
+        // Add event handler for the new form
+        const freeLeadsForm = document.getElementById('free-leads-form');
+        if (freeLeadsForm) {
+            freeLeadsForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('free-name').value;
+                const email = document.getElementById('free-email').value;
+                const apolloLink = document.getElementById('free-apollo-link').value;
+                const fileName = document.getElementById('free-file-name').value;
+                
+                // Form validation
+                if (!name || !email || !apolloLink || !fileName) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Disable button during processing
+                const submitButton = document.getElementById('free-submit-button');
+                const messageContainer = document.getElementById('free-form-message');
+                
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                
+                try {
+                    // Prepare data for the main webhook - code has already been validated
+                    const formData = {
+                        name: name,
+                        email: email,
+                        apolloLink: apolloLink,
+                        leadsCount: '100',
+                        fileName: fileName,
+                        promoCode: promoCode,
+                        isFreeOrder: true,
+                        language: "eng",
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Send data to the main webhook
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Error sending to webhook');
+                    }
+                    
+                    // Immediate redirect to confirmation page
+                    window.location.href = "https://unlimited-leads.online/confirmation";
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    messageContainer.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${error.message || 'An error occurred while processing your request.'}
+                        </div>
+                    `;
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Get my 100 free leads';
+                }
+            });
+        }
+    }
+
+    // Function to display invalid code error message
+    function showInvalidCodeMessage(errorMessage, promoMessage) {
+        promoMessage.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-times-circle"></i> <strong>Invalid promo code:</strong> ${errorMessage || 'This promo code is invalid or has already been used.'}
+            </div>
+        `;
+    }
+
+    function selectPlan(planValue) {
+        // Scroll to the top of the page
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Select the corresponding option in the dropdown
+        const leadsCountSelect = document.getElementById('leads-count');
+        if (leadsCountSelect) {
+            leadsCountSelect.value = planValue;
+        }
+        
+        // Focus on the form
+        const nameInput = document.getElementById('name');
+        if (nameInput) {
+            nameInput.focus();
+        }
+    }
+</script>
+</body>
 </html>
