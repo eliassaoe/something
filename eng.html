@@ -79,9 +79,6 @@
     <!-- Asynchronous font loading with font-display: swap -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
-    <!-- Preloading critical resources -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-    
     <!-- Non-critical CSS loaded asynchronously -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     
@@ -91,7 +88,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </noscript>
     
-    <!-- Optimized full CSS -->
+    <!-- Optimized full CSS with reduced complex calculations -->
     <style>
         :root {
             --primary: #4f46e5;
@@ -116,7 +113,7 @@
 
         body {font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
 
-        /* Layout */
+        /* Simplified layout */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -172,13 +169,14 @@
         .mt-8 {margin-top: 2rem;}
         .mx-auto {margin-left: auto; margin-right: auto;}
 
-        /* Card */
+        /* Card with optimized rendering */
         .card {
             background-color: white;
             border-radius: 0.75rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s;
             overflow: hidden;
+            transform: translateZ(0); /* Force GPU acceleration */
+            will-change: transform; /* Hint for browser optimization */
         }
         .card-body {padding: 1.5rem;}
         @media (min-width: 768px) {
@@ -360,10 +358,10 @@
             border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s;
             height: 100%;
             display: flex;
             flex-direction: column;
+            transform: translateZ(0); /* Force GPU acceleration */
         }
         .pricing-card:hover {
             transform: translateY(-5px);
@@ -468,9 +466,9 @@
         .w-100 {width: 100%;}
         .text-decoration-none {text-decoration: none;}
 
-        /* Custom Styles */
+        /* Custom Styles with optimizations */
         .gradient-bg {background: linear-gradient(to right, var(--primary), var(--secondary));}
-        .card-shadow {box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);}
+        .card-shadow {box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);}
         .form-card {
             margin-top: -4rem;
             position: relative;
@@ -497,18 +495,16 @@
             margin-top: 10px;
         }
 
-        /* Styles for lead section */
+        /* Optimized lead section styles */
         .sample-leads-image {
             max-width: 100%;
             overflow: hidden;
-            transition: transform 0.3s ease;
         }
-        .sample-leads-image:hover {transform: scale(1.02);}
         @media (max-width: 768px) {
             .sample-leads-image img {max-width: 100%;}
         }
 
-        /* Styles for video section */
+        /* Optimized video section styles */
         .video-section {
             padding: 40px 0;
             width: 100%;
@@ -524,24 +520,7 @@
         @media (max-width: 480px) {
             .video-section {padding: 20px 0;}
         }
-        
-        /* Performance visual optimizations */
-        .will-change-transform {will-change: transform;}
-        .transform-gpu {transform: translateZ(0);}
     </style>
-    
-    <!-- Deferred analytics with async -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-V6NTYLJ115', { 'send_page_view': false });
-    // Wait for initial load to send PageView
-    window.addEventListener('load', function() {
-        gtag('event', 'page_view');
-    });
-    </script>
 </head>
 <body>
     <!-- Hero Section -->
@@ -564,7 +543,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="card card-shadow form-card transform-gpu" id="form-card">
+                    <div class="card card-shadow form-card" id="form-card">
                         <div class="card-header">
                             <h2 class="text-2xl font-bold mb-2">Order your leads now</h2>
                             <p class="text-gray-600">Fill out the form below to receive your verified leads</p>
@@ -614,6 +593,8 @@
                                 <div class="form-group">
                                     <label for="promo-code" class="form-label">Promo Code (optional)</label>
                                     <input type="text" id="promo-code" name="promo-code" class="form-control" placeholder="Enter your promo code">
+                                    <button type="button" id="check-promo" class="btn btn-primary" style="margin-top: 10px;">Verify Code</button>
+                                    <div id="promo-message" style="margin-top: 10px;"></div>
                                 </div>
                                 
                                 <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
@@ -685,11 +666,10 @@
             <div class="card card-shadow">
                 <div class="card-body">
                     <div class="sample-leads-image">
-                        <!-- Optimized image with explicit width and height, lazy loading -->
+                        <!-- Optimized image with lazy loading -->
                         <img src="https://media.discordapp.net/attachments/1316901647024263188/1352577808634871909/Screen_Shot_2025-03-21_at_10.40.47_AM.png?ex=67de85bf&is=67dd343f&hm=926fa4a0da88025cbd1b87d9bf6cc100c998d58a3a5713d24a6a9f6e393c51e5&=&format=webp&quality=lossless&width=1874&height=1224" 
-                            alt="Example of a lead list with emails, phones and company information" 
-                            width="1874" height="1224" loading="lazy"
-                            style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                            alt="Example of a lead list with emails" 
+                            width="1874" height="1224" loading="lazy">
                     </div>
                     <div class="mt-4 text-center">
                         <p class="text-gray-700"><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
@@ -757,22 +737,21 @@
             
             <div class="video-wrapper">
                 <div style="position: relative; padding-bottom: 62.5%; height: 0;">
-                    <!-- Added lazy loading and size attributes -->
-                    <iframe src="https://www.loom.com/embed/a3748df5d5fb425ca1d7283e4ab84925?sid=287849d5-95bc-4cc8-88cd-b4a49e53b9e4" 
-                    width="640" height="400" loading="lazy"
-                    frameborder="0" 
-                    webkitallowfullscreen 
-                    mozallowfullscreen 
-                    allowfullscreen 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+                    <!-- Iframe with lazy loading attributes -->
+                    <iframe width="640" height="400" loading="lazy" data-src="https://www.loom.com/embed/a3748df5d5fb425ca1d7283e4ab84925?sid=287849d5-95bc-4cc8-88cd-b4a49e53b9e4" 
+                        frameborder="0" 
+                        webkitallowfullscreen 
+                        mozallowfullscreen 
+                        allowfullscreen 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
                     </iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-        <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" style="font-size: 18px; color: #4f46e5; text-decoration: none; padding: 10px 20px; border: 2px solid #4f46e5; border-radius: 5px; transition: all 0.3s ease;">Useful Apollo.io link</a>
+    <div class="text-center mt-6 mb-6">
+        <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Useful Apollo.io link</a>
     </div>
     
     <!-- Pricing Section -->
@@ -793,85 +772,8 @@
                                 <th style="padding: 1rem; text-align: right; font-weight: 600;">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>500 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">5€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('500')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>1000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">10€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('1000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>2000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">20€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('2000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>3000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">30€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('3000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>4000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">40€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('4000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
-                                <td style="padding: 1rem; text-align: left;"><strong>5000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">50€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('5000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <!-- Using data attributes instead of animations for remaining rows -->
-                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="6000">
-                                <td style="padding: 1rem; text-align: left;"><strong>6000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">60€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('6000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="7000">
-                                <td style="padding: 1rem; text-align: left;"><strong>7000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">70€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('7000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="8000">
-                                <td style="padding: 1rem; text-align: left;"><strong>8000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">80€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('8000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="9000">
-                                <td style="padding: 1rem; text-align: left;"><strong>9000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">90€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('9000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
-                            <tr data-plan="10000">
-                                <td style="padding: 1rem; text-align: left;"><strong>10000 leads</strong></td>
-                                <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">100€</td>
-                                <td style="padding: 1rem; text-align: right;">
-                                    <button onclick="selectPlan('10000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
-                                </td>
-                            </tr>
+                        <tbody id="pricing-table">
+                            <!-- Content will be generated by JavaScript -->
                         </tbody>
                     </table>
                 </div>
@@ -936,10 +838,10 @@
         </div>
     </footer>
     
-    <!-- Optimized script with deferred loading -->
+    <!-- Optimized script with deferred loading and reduced DOM operations -->
     <script>
-    // Declare global variables
-    const stripeLinks = {
+    // Global configuration defined once
+    const STRIPE_LINKS = {
         "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
         "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
         "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
@@ -953,17 +855,57 @@
         "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
     };
     
-    // Main webhook URL
-    const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+    const PROMO_CODE_WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
     
-    // Promo code webhook URL
-    const promoCodeWebhookUrl = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
+    // Preload pricing data for table
+    const PRICING_DATA = [
+        { count: "500", price: "5€" },
+        { count: "1000", price: "10€" },
+        { count: "2000", price: "20€" },
+        { count: "3000", price: "30€" },
+        { count: "4000", price: "40€" },
+        { count: "5000", price: "50€" },
+        { count: "6000", price: "60€" },
+        { count: "7000", price: "70€" },
+        { count: "8000", price: "80€" },
+        { count: "9000", price: "90€" },
+        { count: "10000", price: "100€" }
+    ];
     
-    // Use IntersectionObserver to load resources when visible
-    document.addEventListener('DOMContentLoaded', function() {
-        // Observer for images and iframes
+    // Optimized initialization function
+    function initApp() {
+        // Use a single initialization function to avoid repetition
+        initFormHandlers();
+        initLazyLoading();
+        initPricingTable();
+    }
+    
+    // Form event handlers
+    function initFormHandlers() {
+        const form = document.getElementById('leads-form');
+        const promoCodeInput = document.getElementById('promo-code');
+        const checkPromoButton = document.getElementById('check-promo');
+        const promoMessage = document.getElementById('promo-message');
+        const formCard = document.getElementById('form-card');
+        
+        // Event delegation for the form
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
+        
+        // Promo code validation handler
+        if (checkPromoButton && promoCodeInput && promoMessage) {
+            checkPromoButton.addEventListener('click', () => {
+                checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
+            });
+        }
+    }
+    
+    // Handle lazy loading of images and iframes
+    function initLazyLoading() {
         if ('IntersectionObserver' in window) {
-            const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+            const lazyLoadObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const element = entry.target;
@@ -971,120 +913,110 @@
                             element.src = element.dataset.src;
                             element.removeAttribute('data-src');
                         }
-                        observer.unobserve(element);
+                        lazyLoadObserver.unobserve(element);
                     }
                 });
             });
             
-            // Observe all images with data-src
-            document.querySelectorAll('img[data-src], iframe[data-src]').forEach(element => {
+            // Observe elements with data-src
+            document.querySelectorAll('[data-src]').forEach(element => {
                 lazyLoadObserver.observe(element);
             });
-        }
-        
-        // Get DOM elements
-        const form = document.getElementById('leads-form');
-        const formCard = document.getElementById('form-card');
-        const promoCodeInput = document.getElementById('promo-code');
-        
-        // Handle promo code
-        if (promoCodeInput) {
-            // Create promo verification button with deferred creation
-            const promoCheckButton = document.createElement('button');
-            const promoMessage = document.createElement('div');
-            
-            // Configure verification button
-            promoCheckButton.type = 'button';
-            promoCheckButton.className = 'btn btn-primary';
-            promoCheckButton.style.marginTop = '10px';
-            promoCheckButton.textContent = 'Verify Code';
-            
-            // Configure message container
-            promoMessage.id = 'promo-message';
-            promoMessage.style.marginTop = '10px';
-            
-            // Add elements to the page
-            promoCodeInput.parentNode.appendChild(promoCheckButton);
-            promoCodeInput.parentNode.appendChild(promoMessage);
-            
-            // Event handler for the verification button with lazy loading
-            promoCheckButton.addEventListener('click', function() {
-                // Load verification function as needed
-                import('./promo-validation.js').then(module => {
-                    module.checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard, promoCodeWebhookUrl);
-                }).catch(() => {
-                    // Fallback if module loading fails
-                    checkPromoCodeFallback(promoCodeInput.value.trim(), promoMessage, formCard);
-                });
+        } else {
+            // Fallback for browsers without IntersectionObserver
+            document.querySelectorAll('[data-src]').forEach(element => {
+                element.src = element.dataset.src;
             });
         }
+    }
+    
+    // Initialize pricing table
+    function initPricingTable() {
+        const pricingTable = document.getElementById('pricing-table');
+        if (!pricingTable) return;
         
-        // Event handler for the regular form
-        if (form) {
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Validate form
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const apolloLink = document.getElementById('apollo-link').value;
-                const leadsCount = document.getElementById('leads-count').value;
-                const fileName = document.getElementById('file-name').value;
-                const promoCode = document.getElementById('promo-code') ? document.getElementById('promo-code').value.trim() : '';
-                
-                if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-                
-                // Prepare data for webhook
-                const formData = {
-                    name: name,
-                    email: email,
-                    apolloLink: apolloLink,
-                    leadsCount: leadsCount,
-                    fileName: fileName,
-                    promoCode: promoCode,
-                    language: "eng", // Add language parameter
-                    timestamp: new Date().toISOString()
-                };
-                
-                try {
-                    // Use fetch with timeout to avoid long waits
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 5000);
-                    
-                    fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(formData),
-                        signal: controller.signal
-                    }).then(response => {
-                        clearTimeout(timeoutId);
-                        if (!response.ok) console.error('Error sending to webhook');
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    }).finally(() => {
-                        // Redirect to Stripe link regardless of webhook response
-                        if (stripeLinks[leadsCount]) {
-                            window.location.href = stripeLinks[leadsCount];
-                        } else {
-                            alert('Please select a valid number of leads');
-                        }
-                    });
-                } catch (error) {
-                    console.error('Error:', error);
-                    // Fallback in case of error to still redirect
-                    if (stripeLinks[leadsCount]) {
-                        window.location.href = stripeLinks[leadsCount];
-                    }
-                }
-            });
+        // Create table content in a single DOM operation
+        let tableHTML = '';
+        
+        PRICING_DATA.forEach(plan => {
+            tableHTML += `
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 1rem; text-align: left;"><strong>${plan.count} leads</strong></td>
+                    <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">${plan.price}</td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button type="button" class="btn btn-primary plan-btn" data-plan="${plan.count}" style="padding: 0.5rem 1rem;">Order</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        pricingTable.innerHTML = tableHTML;
+        
+        // Event delegation for plan buttons
+        pricingTable.addEventListener('click', (e) => {
+            const button = e.target.closest('.plan-btn');
+            if (button) {
+                selectPlan(button.dataset.plan);
+            }
+        });
+    }
+    
+    // Form submission function
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        
+        // Cache DOM references to avoid repetitive DOM queries
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const apolloLink = document.getElementById('apollo-link').value;
+        const leadsCount = document.getElementById('leads-count').value;
+        const fileName = document.getElementById('file-name').value;
+        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+        
+        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+            alert('Please fill in all required fields');
+            return;
         }
-    });
-
-    // Fallback function to check promo codes
-    function checkPromoCodeFallback(code, messageElement, formCardElement) {
+        
+        // Data preparation
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount,
+            fileName,
+            promoCode,
+            language: "eng", // Add language parameter
+            timestamp: new Date().toISOString()
+        };
+        
+        // Send data asynchronously in parallel with redirection
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData),
+            signal: controller.signal
+        }).catch(() => {
+            // Silently ignore webhook errors
+            // Redirection happens anyway
+        });
+        
+        // Immediate redirection to Stripe
+        if (STRIPE_LINKS[leadsCount]) {
+            window.location.href = STRIPE_LINKS[leadsCount];
+        } else {
+            alert('Please select a valid number of leads');
+        }
+        
+        // Clean up timeout
+        clearTimeout(timeoutId);
+    }
+    
+    // Optimized promo code verification function
+    function checkPromoCode(code, messageElement, formCardElement) {
         if (!code) {
             messageElement.textContent = 'Please enter a promo code';
             messageElement.style.color = 'var(--danger)';
@@ -1094,7 +1026,7 @@
         messageElement.textContent = 'Verifying code...';
         messageElement.style.color = 'var(--gray-600)';
         
-        fetch(promoCodeWebhookUrl, {
+        fetch(PROMO_CODE_WEBHOOK_URL, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({code: code, action: 'check'})
@@ -1107,26 +1039,27 @@
             if (data.valid) {
                 showFreeLeadsForm(code, formCardElement);
             } else {
-                showInvalidCodeMessage(data.error, messageElement);
+                showInvalidCodeMessage(data.error || 'Invalid code', messageElement);
             }
         })
-        .catch(error => {
+        .catch(() => {
             messageElement.textContent = '❌ Error verifying code';
             messageElement.style.color = 'var(--danger)';
-            console.error('Error:', error);
         });
     }
-
+    
     // Function to display the free leads form
     function showFreeLeadsForm(promoCode, formCard) {
-        // Save form values
-        const originalName = document.getElementById('name')?.value || '';
-        const originalEmail = document.getElementById('email')?.value || '';
-        const originalApolloLink = document.getElementById('apollo-link')?.value || '';
-        const originalFileName = document.getElementById('file-name')?.value || '';
+        // Save current form values
+        const formValues = {
+            name: document.getElementById('name')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            apolloLink: document.getElementById('apollo-link')?.value || '',
+            fileName: document.getElementById('file-name')?.value || ''
+        };
         
-        // Create the free leads form content
-        const freeLeadsFormHTML = `
+        // Create HTML for the free leads form
+        formCard.innerHTML = `
             <div class="card-header">
                 <h2 class="text-2xl font-bold mb-2">Order your 100 free leads</h2>
                 <p class="text-gray-600">Fill out the form below to receive your verified leads for free</p>
@@ -1138,23 +1071,23 @@
                 <form id="free-leads-form">
                     <div class="form-group">
                         <label for="free-name" class="form-label">Name *</label>
-                        <input type="text" id="free-name" name="free-name" class="form-control" value="${originalName}" required>
+                        <input type="text" id="free-name" name="free-name" class="form-control" value="${formValues.name}" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="free-email" class="form-label">Email *</label>
-                        <input type="email" id="free-email" name="free-email" class="form-control" value="${originalEmail}" required>
+                        <input type="email" id="free-email" name="free-email" class="form-control" value="${formValues.email}" required>
                         <small class="form-text">We will send your leads to this address</small>
                     </div>
                     
                     <div class="form-group">
                         <label for="free-apollo-link" class="form-label">Apollo Link *</label>
-                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${originalApolloLink}" required>
+                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${formValues.apolloLink}" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="free-file-name" class="form-label">File Name *</label>
-                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${originalFileName}" required>
+                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${formValues.fileName}" required>
                     </div>
                     
                     <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}">
@@ -1168,113 +1101,119 @@
             </div>
         `;
         
-        // Replace the form content
-        formCard.innerHTML = freeLeadsFormHTML;
-        
         // Add event handler for the new form
         const freeLeadsForm = document.getElementById('free-leads-form');
         if (freeLeadsForm) {
-            freeLeadsForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const name = document.getElementById('free-name').value;
-                const email = document.getElementById('free-email').value;
-                const apolloLink = document.getElementById('free-apollo-link').value;
-                const fileName = document.getElementById('free-file-name').value;
-                
-                // Form validation
-                if (!name || !email || !apolloLink || !fileName) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-                
-                // Disable button during processing
-                const submitButton = document.getElementById('free-submit-button');
-                const messageContainer = document.getElementById('free-form-message');
-                
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                
-                try {
-                    // Prepare data for the main webhook
-                    const formData = {
-                        name: name,
-                        email: email,
-                        apolloLink: apolloLink,
-                        leadsCount: '100',
-                        fileName: fileName,
-                        promoCode: promoCode,
-                        isFreeOrder: true,
-                        language: "eng",
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    // Use Promise.race for timeout
-                    const timeout = new Promise((_, reject) => 
-                        setTimeout(() => reject(new Error('Request timeout')), 5000)
-                    );
-                    
-                    const fetchPromise = fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(formData)
-                    });
-                    
-                    await Promise.race([fetchPromise, timeout]);
-                    
-                    // Redirect to confirmation page
-                    window.location.href = "https://unlimited-leads.online/confirmation";
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    messageContainer.innerHTML = `
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${error.message || 'An error occurred while processing your request.'}
-                        </div>
-                    `;
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my 100 free leads';
-                }
-            });
+            freeLeadsForm.addEventListener('submit', handleFreeFormSubmit);
         }
     }
-
-    // Function to display invalid code error message
+    
+    // Function to handle free form submission
+    function handleFreeFormSubmit(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('free-name').value;
+        const email = document.getElementById('free-email').value;
+        const apolloLink = document.getElementById('free-apollo-link').value;
+        const fileName = document.getElementById('free-file-name').value;
+        const promoCode = document.getElementById('free-promo-code').value;
+        
+        if (!name || !email || !apolloLink || !fileName) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        const submitButton = document.getElementById('free-submit-button');
+        const messageContainer = document.getElementById('free-form-message');
+        
+        // Disable button during processing
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        
+        // Prepare data for webhook
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount: '100',
+            fileName,
+            promoCode,
+            isFreeOrder: true,
+            language: "eng",
+            timestamp: new Date().toISOString()
+        };
+        
+        // Send data with timeout
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            // Redirect to confirmation page
+            window.location.href = "https://unlimited-leads.online/confirmation";
+        })
+        .catch(error => {
+            messageContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${error.message || 'An error occurred while processing your request.'}
+                </div>
+            `;
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my 100 free leads';
+        });
+    }
+    
+    // Function to display error message
     function showInvalidCodeMessage(errorMessage, promoMessage) {
         promoMessage.innerHTML = `
             <div class="error-message">
-                <i class="fas fa-times-circle"></i> <strong>Invalid promo code:</strong> ${errorMessage || 'This promo code is invalid or has already been used.'}
+                <i class="fas fa-times-circle"></i> <strong>Invalid promo code:</strong> ${errorMessage}
             </div>
         `;
     }
-
-    // Function to select a plan (optimized to avoid page refreshes)
+    
+    // Optimized plan selection function
     function selectPlan(planValue) {
-        // Scroll to form with smooth behavior
         const formCard = document.getElementById('form-card');
+        const leadsCountSelect = document.getElementById('leads-count');
+        
+        // Smooth scroll to form
         if (formCard) {
             formCard.scrollIntoView({behavior: 'smooth', block: 'center'});
-        } else {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-        
-        // Select the corresponding option in the dropdown
-        const leadsCountSelect = document.getElementById('leads-count');
-        if (leadsCountSelect) {
-            leadsCountSelect.value = planValue;
-            // Trigger change event to notify browser of change
-            leadsCountSelect.dispatchEvent(new Event('change'));
-        }
-        
-        // Focus on the form
-        setTimeout(() => {
-            const nameInput = document.getElementById('name');
-            if (nameInput && !nameInput.value) {
-                nameInput.focus();
+            
+            // Select option in dropdown
+            if (leadsCountSelect) {
+                leadsCountSelect.value = planValue;
+                
+                // Focus on first empty field after scrolling
+                setTimeout(() => {
+                    const nameInput = document.getElementById('name');
+                    if (nameInput && !nameInput.value) {
+                        nameInput.focus();
+                    }
+                }, 800);
             }
-        }, 800); // Delay to let scroll complete
+        }
     }
+    
+    // Initialize app on DOM load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
+    
+    // Deferred analytics
+    window.addEventListener('load', function() {
+        // Delayed loading of Google Analytics
+        setTimeout(() => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V6NTYLJ115', { 'send_page_view': true });
+        }, 2000);
+    });
     </script>
 </body>
 </html>
