@@ -1,28 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
-    
-
-    
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-V6NTYLJ115');
-</script>
-
-    
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>unlimitedleads - Emails vérifiés pour votre entreprise</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Preconnect pour les domaines externes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CSS critique inline pour le rendu initial -->
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+        .container {width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;}
+        .hero {
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01));
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), #0ea5e9);
+        }
+        .text-center {text-align: center;}
+        .mb-4 {margin-bottom: 1rem;}
+        .mb-8 {margin-bottom: 2rem;}
+        h1 {
+            color: var(--gray-900);
+            font-weight: 700;
+            line-height: 1.2;
+            font-size: 2.25rem;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), #0ea5e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 600;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            background-color: var(--primary);
+        }
+        .section {padding: 3rem 0;}
+        p {color: var(--gray-600);}
+    </style>
+    
+    <!-- Chargement asynchrone des polices avec font-display: swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- CSS non critique chargé de façon asynchrone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    
+    <!-- Fallback en cas de JavaScript désactivé -->
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- CSS complet optimisé -->
     <style>
         :root {
             --primary: #4f46e5;
@@ -45,242 +114,83 @@
             --danger: #ef4444;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.5;
-        }
+        body {font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
 
         /* Layout */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .section {
-            padding: 3rem 0;
-        }
-
-        .hero {
-            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01));
-            padding: 4rem 0 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-        }
-
         .row {
             display: flex;
             flex-wrap: wrap;
             margin: 0 -1rem;
         }
-
         .col {
             flex: 1;
             padding: 0 1rem;
             width: 100%;
             min-width: 0;
         }
-
         @media (max-width: 991px) {
-            .row {
-                flex-direction: column;
-            }
-            
-            .col {
-                margin-bottom: 2rem;
-            }
-            
-            .col:last-child {
-                margin-bottom: 0;
-            }
+            .row {flex-direction: column;}
+            .col {margin-bottom: 2rem;}
+            .col:last-child {margin-bottom: 0;}
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6 {
+        h2, h3, h4, h5, h6 {
             color: var(--gray-900);
             font-weight: 700;
             line-height: 1.2;
         }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-        }
-
-        .text-base {
-            font-size: 1rem;
-        }
-
-        .text-lg {
-            font-size: 1.125rem;
-        }
-
-        .text-xl {
-            font-size: 1.25rem;
-        }
-
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-
-        .text-3xl {
-            font-size: 1.875rem;
-        }
-
-        .text-4xl {
-            font-size: 2.25rem;
-        }
-
+        .text-sm {font-size: 0.875rem;}
+        .text-base {font-size: 1rem;}
+        .text-lg {font-size: 1.125rem;}
+        .text-xl {font-size: 1.25rem;}
+        .text-2xl {font-size: 1.5rem;}
+        .text-3xl {font-size: 1.875rem;}
+        .text-4xl {font-size: 2.25rem;}
         @media (max-width: 768px) {
-            .text-4xl {
-                font-size: 1.875rem;
-            }
-            
-            .text-3xl {
-                font-size: 1.5rem;
-            }
-            
-            .text-2xl {
-                font-size: 1.25rem;
-            }
+            .text-4xl {font-size: 1.875rem;}
+            .text-3xl {font-size: 1.5rem;}
+            .text-2xl {font-size: 1.25rem;}
         }
-
-        .font-medium {
-            font-weight: 500;
-        }
-
-        .font-semibold {
-            font-weight: 600;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-        .text-gray-500 {
-            color: var(--gray-500);
-        }
-
-        .text-gray-600 {
-            color: var(--gray-600);
-        }
-
-        .text-gray-700 {
-            color: var(--gray-700);
-        }
-
-        .text-primary {
-            color: var(--primary);
-        }
-
-        .leading-tight {
-            line-height: 1.25;
-        }
-
-        .mb-1 {
-            margin-bottom: 0.25rem;
-        }
-
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .mb-3 {
-            margin-bottom: 0.75rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-
-        .mb-6 {
-            margin-bottom: 1.5rem;
-        }
-
-        .mb-8 {
-            margin-bottom: 2rem;
-        }
-
-        .mb-12 {
-            margin-bottom: 3rem;
-        }
-
-        .mt-1 {
-            margin-top: 0.25rem;
-        }
-
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-
-        .mt-4 {
-            margin-top: 1rem;
-        }
-
-        .mt-6 {
-            margin-top: 1.5rem;
-        }
-
-        .mt-8 {
-            margin-top: 2rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .font-medium {font-weight: 500;}
+        .font-semibold {font-weight: 600;}
+        .font-bold {font-weight: 700;}
+        .text-gray-500 {color: var(--gray-500);}
+        .text-gray-600 {color: var(--gray-600);}
+        .text-gray-700 {color: var(--gray-700);}
+        .text-primary {color: var(--primary);}
+        .leading-tight {line-height: 1.25;}
+        .mb-1 {margin-bottom: 0.25rem;}
+        .mb-2 {margin-bottom: 0.5rem;}
+        .mb-3 {margin-bottom: 0.75rem;}
+        .mb-6 {margin-bottom: 1.5rem;}
+        .mb-12 {margin-bottom: 3rem;}
+        .mt-1 {margin-top: 0.25rem;}
+        .mt-2 {margin-top: 0.5rem;}
+        .mt-4 {margin-top: 1rem;}
+        .mt-6 {margin-top: 1.5rem;}
+        .mt-8 {margin-top: 2rem;}
+        .mx-auto {margin-left: auto; margin-right: auto;}
 
         /* Card */
         .card {
             background-color: white;
             border-radius: 0.75rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            transition: all 0.2s;
+            transition: transform 0.2s;
             overflow: hidden;
         }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
+        .card-body {padding: 1.5rem;}
         @media (min-width: 768px) {
-            .card-body {
-                padding: 2rem;
-            }
+            .card-body {padding: 2rem;}
         }
-
         .card-header {
             padding: 1.5rem;
             border-bottom: 1px solid var(--gray-100);
         }
 
         /* Form styles */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
+        .form-group {margin-bottom: 1.5rem;}
         .form-label {
             display: block;
             font-weight: 500;
@@ -288,7 +198,6 @@
             margin-bottom: 0.5rem;
             color: var(--gray-700);
         }
-
         .form-control {
             display: block;
             width: 100%;
@@ -303,13 +212,11 @@
             border-radius: 0.5rem;
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-
         .form-control:focus {
             border-color: var(--primary-light);
             outline: 0;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
-
         .form-select {
             display: block;
             width: 100%;
@@ -328,13 +235,11 @@
             appearance: none;
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-
         .form-select:focus {
             border-color: var(--primary-light);
             outline: 0;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
-
         .form-text {
             margin-top: 0.25rem;
             font-size: 0.75rem;
@@ -357,39 +262,32 @@
             transition: all 0.15s ease-in-out;
             cursor: pointer;
         }
-
         .btn-primary {
             color: white;
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
             border-color: var(--primary);
         }
-
         .btn-primary:hover {
             background: linear-gradient(to right, var(--primary-dark), var(--primary-dark));
             border-color: var(--primary-dark);
         }
-
         .btn-success {
             color: white;
             background: linear-gradient(to right, var(--success), #059669);
             border-color: var(--success);
         }
-
         .btn-success:hover {
             background: linear-gradient(to right, #059669, #047857);
             border-color: #059669;
         }
-
         .btn-lg {
             padding: 1rem 2rem;
             font-size: 1rem;
         }
-
         .btn-block {
             display: block;
             width: 100%;
         }
-
         .btn:disabled {
             opacity: 0.65;
             pointer-events: none;
@@ -400,13 +298,11 @@
             background-color: white;
             padding: 4rem 0;
         }
-
         .feature {
             display: flex;
             align-items: flex-start;
             margin-bottom: 2rem;
         }
-
         .feature-icon {
             flex-shrink: 0;
             display: inline-flex;
@@ -420,7 +316,6 @@
             margin-right: 1rem;
             font-size: 1.25rem;
         }
-
         .feature-content {
             flex: 1;
             min-width: 0;
@@ -434,18 +329,15 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
             margin-bottom: 2rem;
         }
-
         .testimonial-content {
             font-size: 1rem;
             color: var(--gray-600);
             margin-bottom: 1rem;
         }
-
         .testimonial-author {
             display: flex;
             align-items: center;
         }
-
         .testimonial-avatar {
             width: 3rem;
             height: 3rem;
@@ -453,12 +345,10 @@
             object-fit: cover;
             margin-right: 1rem;
         }
-
         .testimonial-name {
             font-weight: 600;
             color: var(--gray-900);
         }
-
         .testimonial-title {
             font-size: 0.875rem;
             color: var(--gray-500);
@@ -470,53 +360,45 @@
             border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            transition: all 0.2s;
+            transition: transform 0.2s;
             height: 100%;
             display: flex;
             flex-direction: column;
         }
-
         .pricing-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
         .pricing-header {
             padding: 1.5rem;
             border-bottom: 1px solid var(--gray-100);
             text-align: center;
         }
-
         .pricing-price {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
-
         .pricing-description {
             font-size: 0.875rem;
             color: var(--gray-500);
         }
-
         .pricing-features {
             padding: 1.5rem;
             flex: 1;
         }
-
         .pricing-feature {
             display: flex;
             align-items: center;
             margin-bottom: 0.75rem;
             font-size: 0.875rem;
         }
-
         .pricing-feature-icon {
             color: var(--success);
             margin-right: 0.5rem;
             flex-shrink: 0;
         }
-
         .pricing-cta {
             padding: 1.5rem;
             background-color: var(--gray-50);
@@ -530,56 +412,46 @@
             margin-top: 2rem;
             border-top: 1px solid var(--gray-200);
         }
-
         .footer-logo {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-
         .footer-logo-icon {
             font-size: 1.5rem;
             color: var(--primary);
             margin-right: 0.5rem;
         }
-
         .footer-logo-text {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--gray-900);
         }
-
         .footer-description {
             color: var(--gray-600);
             margin-bottom: 2rem;
             max-width: 24rem;
         }
-
         .footer-heading {
             font-size: 1rem;
             font-weight: 600;
             color: var(--gray-900);
             margin-bottom: 1rem;
         }
-
         .footer-links {
             list-style: none;
         }
-
         .footer-link {
             margin-bottom: 0.75rem;
         }
-
         .footer-link a {
             color: var(--gray-600);
             text-decoration: none;
             transition: color 0.15s;
         }
-
         .footer-link a:hover {
             color: var(--primary);
         }
-
         .footer-bottom {
             border-top: 1px solid var(--gray-100);
             padding-top: 2rem;
@@ -589,100 +461,25 @@
         }
 
         /* Utilities */
-        .d-flex {
-            display: flex;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .justify-content-center {
-            justify-content: center;
-        }
-
-        .flex-column {
-            flex-direction: column;
-        }
-
-        .w-100 {
-            width: 100%;
-        }
-
-        .text-decoration-none {
-            text-decoration: none;
-        }
+        .d-flex {display: flex;}
+        .align-items-center {align-items: center;}
+        .justify-content-center {justify-content: center;}
+        .flex-column {flex-direction: column;}
+        .w-100 {width: 100%;}
+        .text-decoration-none {text-decoration: none;}
 
         /* Custom Styles */
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-        }
-
-        .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-        }
-
+        .gradient-bg {background: linear-gradient(to right, var(--primary), var(--secondary));}
+        .card-shadow {box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);}
         .form-card {
             margin-top: -4rem;
             position: relative;
             z-index: 10;
         }
-
         @media (max-width: 991px) {
-            .form-card {
-                margin-top: 2rem;
-            }
+            .form-card {margin-top: 2rem;}
         }
-
-        .badge {
-            display: inline-block;
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 600;
-            line-height: 1;
-            color: white;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.375rem;
-            background-color: var(--primary);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .delay-1 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.3s;
-        }
-
-        /* Styles pour le formulaire de leads gratuits */
-        .success-badge {
-            background-color: var(--success);
-        }
-
+        .success-badge {background-color: var(--success);}
         .error-message {
             background-color: #FEE2E2;
             border: 1px solid #EF4444;
@@ -691,7 +488,6 @@
             border-radius: 0.5rem;
             margin-top: 10px;
         }
-
         .success-message {
             background-color: #D1FAE5;
             border: 1px solid #10B981;
@@ -707,15 +503,9 @@
             overflow: hidden;
             transition: transform 0.3s ease;
         }
-        
-        .sample-leads-image:hover {
-            transform: scale(1.02);
-        }
-        
+        .sample-leads-image:hover {transform: scale(1.02);}
         @media (max-width: 768px) {
-            .sample-leads-image img {
-                max-width: 100%;
-            }
+            .sample-leads-image img {max-width: 100%;}
         }
 
         /* Styles pour la section vidéo */
@@ -723,25 +513,35 @@
             padding: 40px 0;
             width: 100%;
         }
-        
         .video-wrapper {
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
         }
-        
         @media (max-width: 768px) {
-            .video-section {
-                padding: 30px 0;
-            }
+            .video-section {padding: 30px 0;}
+        }
+        @media (max-width: 480px) {
+            .video-section {padding: 20px 0;}
         }
         
-        @media (max-width: 480px) {
-            .video-section {
-                padding: 20px 0;
-            }
-        }
+        /* Optimisations visuelles pour performance */
+        .will-change-transform {will-change: transform;}
+        .transform-gpu {transform: translateZ(0);}
     </style>
+    
+    <!-- Analytics différé avec async -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V6NTYLJ115', { 'send_page_view': false });
+    // Attendre le chargement initial pour envoyer PageView
+    window.addEventListener('load', function() {
+        gtag('event', 'page_view');
+    });
+    </script>
 </head>
 <body>
     <!-- Hero Section -->
@@ -764,7 +564,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="card card-shadow form-card animate-fade-in" id="form-card">
+                    <div class="card card-shadow form-card transform-gpu" id="form-card">
                         <div class="card-header">
                             <h2 class="text-2xl font-bold mb-2">Commandez vos leads maintenant</h2>
                             <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés</p>
@@ -817,7 +617,7 @@
                                 </div>
                                 
                                 <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-paper-plane mr-2"></i> Obtenir mes leads vérifiés
+                                    <i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés
                                 </button>
                             </form>
                         </div>
@@ -825,12 +625,12 @@
                 </div>
                 
                 <div class="col">
-                    <div class="mb-8 animate-fade-in delay-1">
+                    <div class="mb-8">
                         <h2 class="text-3xl font-bold mb-4">Pourquoi choisir unlimitedleads ?</h2>
                         <p class="text-gray-600 mb-4">Nous vous fournissons des leads de haute qualité avec des emails vérifiés pour maximiser l'efficacité de vos campagnes marketing.</p>
                     </div>
                     
-                    <div class="feature animate-fade-in delay-2">
+                    <div class="feature">
                         <div class="feature-icon">
                             <i class="fas fa-check"></i>
                         </div>
@@ -840,7 +640,7 @@
                         </div>
                     </div>
                     
-                    <div class="feature animate-fade-in delay-2">
+                    <div class="feature">
                         <div class="feature-icon">
                             <i class="fas fa-filter"></i>
                         </div>
@@ -850,7 +650,7 @@
                         </div>
                     </div>
                     
-                    <div class="feature animate-fade-in delay-3">
+                    <div class="feature">
                         <div class="feature-icon">
                             <i class="fas fa-bolt"></i>
                         </div>
@@ -860,7 +660,7 @@
                         </div>
                     </div>
                     
-                    <div class="feature animate-fade-in delay-3">
+                    <div class="feature">
                         <div class="feature-icon">
                             <i class="fas fa-lock"></i>
                         </div>
@@ -885,8 +685,10 @@
             <div class="card card-shadow">
                 <div class="card-body">
                     <div class="sample-leads-image">
+                        <!-- Image optimisée avec width et height explicites, loading lazy -->
                         <img src="https://media.discordapp.net/attachments/1316901647024263188/1352577808634871909/Screen_Shot_2025-03-21_at_10.40.47_AM.png?ex=67de85bf&is=67dd343f&hm=926fa4a0da88025cbd1b87d9bf6cc100c998d58a3a5713d24a6a9f6e393c51e5&=&format=webp&quality=lossless&width=1874&height=1224" 
                             alt="Exemple de liste de leads avec emails, téléphones et informations sur l'entreprise" 
+                            width="1874" height="1224" loading="lazy"
                             style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
                     </div>
                     <div class="mt-4 text-center">
@@ -955,7 +757,9 @@
             
             <div class="video-wrapper">
                 <div style="position: relative; padding-bottom: 62.5%; height: 0;">
+                    <!-- Ajout de loading lazy et attributs de taille -->
                     <iframe src="https://www.loom.com/embed/a0228b323152438992ce4b9b0628b4f7?sid=7b669ee1-38ca-4b82-ba9d-99f9e3f3b75a" 
+                    width="640" height="400" loading="lazy"
                     frameborder="0" 
                     webkitallowfullscreen 
                     mozallowfullscreen 
@@ -1032,35 +836,36 @@
                                     <button onclick="selectPlan('5000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                            <!-- Utilisation de data attributes plutôt que d'animations pour les rangs restants -->
+                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="6000">
                                 <td style="padding: 1rem; text-align: left;"><strong>6000 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">60€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('6000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="7000">
                                 <td style="padding: 1rem; text-align: left;"><strong>7000 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">70€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('7000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="8000">
                                 <td style="padding: 1rem; text-align: left;"><strong>8000 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">80€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('8000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-200);">
+                            <tr style="border-bottom: 1px solid var(--gray-200);" data-plan="9000">
                                 <td style="padding: 1rem; text-align: left;"><strong>9000 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">90€</td>
                                 <td style="padding: 1rem; text-align: right;">
                                     <button onclick="selectPlan('9000')" class="btn btn-primary" style="padding: 0.5rem 1rem;">Commander</button>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr data-plan="10000">
                                 <td style="padding: 1rem; text-align: left;"><strong>10000 leads</strong></td>
                                 <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">100€</td>
                                 <td style="padding: 1rem; text-align: right;">
@@ -1131,8 +936,9 @@
         </div>
     </footer>
     
+    <!-- Script optimisé avec chargement différé -->
     <script>
-    // Liens de paiement Stripe mis à jour
+    // Déclarer les variables globales
     const stripeLinks = {
         "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
         "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
@@ -1146,95 +952,79 @@
         "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
         "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
     };
-
+    
     // URL du webhook principal
     const webhookUrl = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
     
     // URL du webhook pour la vérification et la gestion des codes promo
     const promoCodeWebhookUrl = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
     
+    // Utilisation de IntersectionObserver pour charger les ressources quand visibles
     document.addEventListener('DOMContentLoaded', function() {
+        // Observer pour les images et iframes
+        if ('IntersectionObserver' in window) {
+            const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        if (element.dataset.src) {
+                            element.src = element.dataset.src;
+                            element.removeAttribute('data-src');
+                        }
+                        observer.unobserve(element);
+                    }
+                });
+            });
+            
+            // Observer toutes les images avec data-src
+            document.querySelectorAll('img[data-src], iframe[data-src]').forEach(element => {
+                lazyLoadObserver.observe(element);
+            });
+        }
+        
         // Récupérer les éléments du DOM
         const form = document.getElementById('leads-form');
         const formCard = document.getElementById('form-card');
         const promoCodeInput = document.getElementById('promo-code');
-        const leadsCountSelect = document.getElementById('leads-count');
-        const submitButton = document.getElementById('submit-button');
         
-        // Créer le bouton de vérification du code promo
-        const promoCheckButton = document.createElement('button');
-        const promoMessage = document.createElement('div');
-        
-        // Configurer le bouton de vérification
-        promoCheckButton.type = 'button';
-        promoCheckButton.className = 'btn btn-primary';
-        promoCheckButton.style.marginTop = '10px';
-        promoCheckButton.textContent = 'Vérifier le code';
-        
-        // Configurer le message
-        promoMessage.id = 'promo-message';
-        promoMessage.style.marginTop = '10px';
-        
-        // Ajouter les éléments à la page
-        if (promoCodeInput && promoCodeInput.parentNode) {
+        // Gérer le code promo
+        if (promoCodeInput) {
+            // Créer le bouton de vérification du code promo avec création différée
+            const promoCheckButton = document.createElement('button');
+            const promoMessage = document.createElement('div');
+            
+            // Configurer le bouton de vérification
+            promoCheckButton.type = 'button';
+            promoCheckButton.className = 'btn btn-primary';
+            promoCheckButton.style.marginTop = '10px';
+            promoCheckButton.textContent = 'Vérifier le code';
+            
+            // Configurer le message
+            promoMessage.id = 'promo-message';
+            promoMessage.style.marginTop = '10px';
+            
+            // Ajouter les éléments à la page
             promoCodeInput.parentNode.appendChild(promoCheckButton);
             promoCodeInput.parentNode.appendChild(promoMessage);
-        }
-        
-        // Gestionnaire d'événement pour le bouton de vérification
-        promoCheckButton.addEventListener('click', async function() {
-            const code = promoCodeInput.value.trim();
             
-            if (!code) {
-                promoMessage.textContent = 'Veuillez entrer un code promo';
-                promoMessage.style.color = 'var(--danger)';
-                return;
-            }
-            
-            // Afficher un message de chargement
-            promoMessage.textContent = 'Vérification du code...';
-            promoMessage.style.color = 'var(--gray-600)';
-            
-            try {
-                // Envoyer le code au webhook pour vérification
-                const response = await fetch(promoCodeWebhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        code: code, 
-                        action: 'check' 
-                    })
+            // Gestionnaire d'événement pour le bouton de vérification avec lazy loading
+            promoCheckButton.addEventListener('click', function() {
+                // Charger la fonction de vérification au besoin
+                import('./promo-validation.js').then(module => {
+                    module.checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard, promoCodeWebhookUrl);
+                }).catch(() => {
+                    // Fallback en cas d'échec du chargement du module
+                    checkPromoCodeFallback(promoCodeInput.value.trim(), promoMessage, formCard);
                 });
-                
-                if (!response.ok) {
-                    throw new Error('Erreur serveur');
-                }
-                
-                const data = await response.json();
-                
-                // Traiter le résultat
-                if (data.valid) {
-                    // Code valide: Modifier l'interface pour afficher le formulaire de leads gratuits
-                    showFreeLeadsForm(code, formCard);
-                } else {
-                    // Code invalide: Afficher un message d'erreur
-                    showInvalidCodeMessage(data.error, promoMessage);
-                }
-            } catch (error) {
-                promoMessage.textContent = '❌ Erreur lors de la vérification du code';
-                promoMessage.style.color = 'var(--danger)';
-                console.error('Erreur:', error);
-            }
-        });
+            });
+        }
         
         // Gestionnaire d'événement pour le formulaire original
         if (form) {
             form.addEventListener('submit', async function(e) {
-                e.preventDefault(); // Empêche la soumission normale du formulaire
+                e.preventDefault();
                 
-                // Récupération des valeurs du formulaire
+                // Valider le formulaire
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const apolloLink = document.getElementById('apollo-link').value;
@@ -1242,7 +1032,6 @@
                 const fileName = document.getElementById('file-name').value;
                 const promoCode = document.getElementById('promo-code') ? document.getElementById('promo-code').value.trim() : '';
                 
-                // Validation du formulaire
                 if (!name || !email || !apolloLink || !leadsCount || !fileName) {
                     alert('Veuillez remplir tous les champs obligatoires');
                     return;
@@ -1260,29 +1049,31 @@
                 };
                 
                 try {
-                    // Envoi des données au webhook
-                    const response = await fetch(webhookUrl, {
+                    // Utiliser fetch avec timeout pour éviter les attentes trop longues
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+                    
+                    fetch(webhookUrl, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(formData),
+                        signal: controller.signal
+                    }).then(response => {
+                        clearTimeout(timeoutId);
+                        if (!response.ok) console.error('Erreur lors de l\'envoi au webhook');
+                    }).catch(error => {
+                        console.error('Erreur:', error);
+                    }).finally(() => {
+                        // Redirection vers le lien Stripe indépendamment de la réponse du webhook
+                        if (stripeLinks[leadsCount]) {
+                            window.location.href = stripeLinks[leadsCount];
+                        } else {
+                            alert('Veuillez sélectionner un nombre de leads valide');
+                        }
                     });
-                    
-                    // Vérification de la réponse du webhook (optionnel)
-                    if (!response.ok) {
-                        console.error('Erreur lors de l\'envoi au webhook');
-                    }
-                    
-                    // Redirection vers le lien Stripe correspondant
-                    if (stripeLinks[leadsCount]) {
-                        window.location.href = stripeLinks[leadsCount];
-                    } else {
-                        alert('Veuillez sélectionner un nombre de leads valide');
-                    }
                 } catch (error) {
                     console.error('Erreur:', error);
-                    // Redirection vers Stripe même en cas d'erreur avec le webhook
+                    // Fallback en cas d'erreur pour quand même rediriger
                     if (stripeLinks[leadsCount]) {
                         window.location.href = stripeLinks[leadsCount];
                     }
@@ -1291,13 +1082,47 @@
         }
     });
 
+    // Fonction fallback pour vérifier les codes promo
+    function checkPromoCodeFallback(code, messageElement, formCardElement) {
+        if (!code) {
+            messageElement.textContent = 'Veuillez entrer un code promo';
+            messageElement.style.color = 'var(--danger)';
+            return;
+        }
+        
+        messageElement.textContent = 'Vérification du code...';
+        messageElement.style.color = 'var(--gray-600)';
+        
+        fetch(promoCodeWebhookUrl, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({code: code, action: 'check'})
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Erreur serveur');
+            return response.json();
+        })
+        .then(data => {
+            if (data.valid) {
+                showFreeLeadsForm(code, formCardElement);
+            } else {
+                showInvalidCodeMessage(data.error, messageElement);
+            }
+        })
+        .catch(error => {
+            messageElement.textContent = '❌ Erreur lors de la vérification du code';
+            messageElement.style.color = 'var(--danger)';
+            console.error('Erreur:', error);
+        });
+    }
+
     // Fonction pour afficher le formulaire de leads gratuits
     function showFreeLeadsForm(promoCode, formCard) {
-        // Sauvegarder les valeurs du formulaire original avant de le remplacer
-        const originalName = document.getElementById('name') ? document.getElementById('name').value : '';
-        const originalEmail = document.getElementById('email') ? document.getElementById('email').value : '';
-        const originalApolloLink = document.getElementById('apollo-link') ? document.getElementById('apollo-link').value : '';
-        const originalFileName = document.getElementById('file-name') ? document.getElementById('file-name').value : '';
+        // Sauvegarder les valeurs du formulaire
+        const originalName = document.getElementById('name')?.value || '';
+        const originalEmail = document.getElementById('email')?.value || '';
+        const originalApolloLink = document.getElementById('apollo-link')?.value || '';
+        const originalFileName = document.getElementById('file-name')?.value || '';
         
         // Créer le contenu du formulaire pour les leads gratuits
         const freeLeadsFormHTML = `
@@ -1331,11 +1156,11 @@
                         <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${originalFileName}" required>
                     </div>
                     
-                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}" />
-                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100" />
+                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}">
+                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100">
                     
                     <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
-                        <i class="fas fa-paper-plane mr-2"></i> Obtenir mes 100 leads gratuits
+                        <i class="fas fa-paper-plane"></i> Obtenir mes 100 leads gratuits
                     </button>
                 </form>
                 <div id="free-form-message" class="mt-4"></div>
@@ -1368,10 +1193,10 @@
                 const messageContainer = document.getElementById('free-form-message');
                 
                 submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Traitement en cours...';
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
                 
                 try {
-                    // Préparation des données pour le webhook principal - le code a déjà été validé
+                    // Préparation des données pour le webhook principal
                     const formData = {
                         name: name,
                         email: email,
@@ -1384,20 +1209,20 @@
                         timestamp: new Date().toISOString()
                     };
                     
-                    // Envoi des données au webhook principal
-                    const response = await fetch(webhookUrl, {
+                    // Utilisation de Promise.race pour timeout
+                    const timeout = new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error('Délai d\'attente dépassé')), 5000)
+                    );
+                    
+                    const fetchPromise = fetch(webhookUrl, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(formData)
                     });
                     
-                    if (!response.ok) {
-                        throw new Error('Erreur lors de l\'envoi au webhook');
-                    }
+                    await Promise.race([fetchPromise, timeout]);
                     
-                    // Redirection immédiate vers la page de confirmation
+                    // Redirection vers la page de confirmation
                     window.location.href = "https://unlimited-leads.online/confirmation";
                     
                 } catch (error) {
@@ -1408,7 +1233,7 @@
                         </div>
                     `;
                     submitButton.disabled = false;
-                    submitButton.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Obtenir mes 100 leads gratuits';
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes 100 leads gratuits';
                 }
             });
         }
@@ -1423,25 +1248,32 @@
         `;
     }
 
+    // Fonction pour sélectionner un plan (optimisée pour éviter les rechargements de page)
     function selectPlan(planValue) {
-        // Scroll to the top of the page
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        // Scroll jusqu'au formulaire avec comportement fluide
+        const formCard = document.getElementById('form-card');
+        if (formCard) {
+            formCard.scrollIntoView({behavior: 'smooth', block: 'center'});
+        } else {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
         
-        // Optionally, select the corresponding option in the dropdown
+        // Sélectionner l'option correspondante dans le dropdown
         const leadsCountSelect = document.getElementById('leads-count');
         if (leadsCountSelect) {
             leadsCountSelect.value = planValue;
+            // Déclencher l'événement change pour notifier le navigateur du changement
+            leadsCountSelect.dispatchEvent(new Event('change'));
         }
         
-        // Focus on the form
-        const nameInput = document.getElementById('name');
-        if (nameInput) {
-            nameInput.focus();
-        }
+        // Focus sur le formulaire
+        setTimeout(() => {
+            const nameInput = document.getElementById('name');
+            if (nameInput && !nameInput.value) {
+                nameInput.focus();
+            }
+        }, 800); // Délai pour laisser le scroll se terminer
     }
-</script>
+    </script>
 </body>
 </html>
