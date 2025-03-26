@@ -961,11 +961,12 @@
         });
     }
     
-    // Form submission function
-    function handleFormSubmit(e) {
+    // CORRECTED Form submission function
+    async function handleFormSubmit(e) {
         e.preventDefault();
         
         // Cache DOM references to avoid repetitive DOM queries
+        const submitButton = document.getElementById('submit-button');
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const apolloLink = document.getElementById('apollo-link').value;
@@ -977,6 +978,10 @@
             alert('Please fill in all required fields');
             return;
         }
+        
+        // Display loading state
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         
         // Data preparation
         const formData = {
@@ -990,33 +995,67 @@
             timestamp: new Date().toISOString()
         };
         
-        // Send data asynchronously in parallel with redirection
+        // Set up abort controller with a timeout of 10 seconds
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         
-        fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData),
-            signal: controller.signal
-        }).catch(() => {
-            // Silently ignore webhook errors
-            // Redirection happens anyway
-        });
-        
-        // Immediate redirection to Stripe
-        if (STRIPE_LINKS[leadsCount]) {
-            window.location.href = STRIPE_LINKS[leadsCount];
-        } else {
-            alert('Please select a valid number of leads');
+        try {
+            // Wait for the API call to complete
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Clear timeout
+            clearTimeout(timeoutId);
+            
+            // Check if response is OK (status 200-299)
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            // Try to read response body as JSON
+            try {
+                const responseData = await response.json();
+                console.log('Server response:', responseData);
+            } catch (jsonError) {
+                // If body is not JSON, that's okay
+                console.log('Response received but not in JSON format');
+            }
+            
+            // Redirect to Stripe only after successful API call
+            if (STRIPE_LINKS[leadsCount]) {
+                window.location.href = STRIPE_LINKS[leadsCount];
+            } else {
+                alert('Please select a valid number of leads');
+                // Reset button in case of error
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my verified leads';
+            }
+        } catch (error) {
+            // Clear timeout if not already cleared
+            clearTimeout(timeoutId);
+            
+            // Handle error
+            console.error('Error:', error);
+            
+            // Specific error message for timeouts
+            if (error.name === 'AbortError') {
+                alert('The server is taking too long to respond. Please try again.');
+            } else {
+                alert('An error occurred while sending data. Please try again.');
+            }
+            
+            // Reset button in case of error
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my verified leads';
         }
-        
-        // Clean up timeout
-        clearTimeout(timeoutId);
     }
     
-    // Optimized promo code verification function
-    function checkPromoCode(code, messageElement, formCardElement) {
+    // CORRECTED Promo code verification function
+    async function checkPromoCode(code, messageElement, formCardElement) {
         if (!code) {
             messageElement.textContent = 'Please enter a promo code';
             messageElement.style.color = 'var(--danger)';
@@ -1026,26 +1065,31 @@
         messageElement.textContent = 'Verifying code...';
         messageElement.style.color = 'var(--gray-600)';
         
-        fetch(PROMO_CODE_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({code: code, action: 'check'})
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Server error');
-            return response.json();
-        })
-        .then(data => {
+        // Use async/await for clearer error handling
+        try {
+            const response = await fetch(PROMO_CODE_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code: code, action: 'check'})
+            });
+            
+            // Check if response is OK
+            if (!response.ok) {
+                throw new Error('Server error: ' + response.status);
+            }
+            
+            const data = await response.json();
+            
             if (data.valid) {
                 showFreeLeadsForm(code, formCardElement);
             } else {
                 showInvalidCodeMessage(data.error || 'Invalid code', messageElement);
             }
-        })
-        .catch(() => {
+        } catch (error) {
+            console.error('Error while verifying code:', error);
             messageElement.textContent = '❌ Error verifying code';
             messageElement.style.color = 'var(--danger)';
-        });
+        }
     }
     
     // Function to display the free leads form
@@ -1108,8 +1152,8 @@
         }
     }
     
-    // Function to handle free form submission
-    function handleFreeFormSubmit(e) {
+    // CORRECTED Function to handle free form submission
+    async function handleFreeFormSubmit(e) {
         e.preventDefault();
         
         const name = document.getElementById('free-name').value;
@@ -1143,25 +1187,60 @@
             timestamp: new Date().toISOString()
         };
         
-        // Send data with timeout
-        fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        })
-        .then(() => {
-            // Redirect to confirmation page
+        // Set up abort controller with a timeout of 10 seconds
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Wait for the API call to complete
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Clear timeout
+            clearTimeout(timeoutId);
+            
+            // Check if response is OK (status 200-299)
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            // Try to read response body as JSON
+            try {
+                const responseData = await response.json();
+                console.log('Server response:', responseData);
+            } catch (jsonError) {
+                // If body is not JSON, that's okay
+                console.log('Response received but not in JSON format');
+            }
+            
+            // Redirect to confirmation page only after successful API call
             window.location.href = "https://unlimited-leads.online/confirmation";
-        })
-        .catch(error => {
+        } catch (error) {
+            // Clear timeout if not already cleared
+            clearTimeout(timeoutId);
+            
+            // Handle error in detail
+            console.error('Error:', error);
+            
+            // More informative error message
             messageContainer.innerHTML = `
                 <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${error.message || 'An error occurred while processing your request.'}
+                    <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${
+                        error.name === 'AbortError' 
+                        ? 'The server is taking too long to respond. Please try again.' 
+                        : error.message || 'An error occurred while processing your request.'
+                    }
                 </div>
             `;
+            
+            // Reset button
             submitButton.disabled = false;
             submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my 100 free leads';
-        });
+        }
     }
     
     // Function to display error message
