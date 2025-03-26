@@ -1187,58 +1187,156 @@
         });
     }
     
-    // Fonction de soumission du formulaire
-    function handleFormSubmit(e) {
-        e.preventDefault();
-        
-        // Cache les références DOM pour éviter les requêtes DOM répétitives
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const apolloLink = document.getElementById('apollo-link').value;
-        const leadsCount = document.getElementById('leads-count').value;
-        const fileName = document.getElementById('file-name').value;
-        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
-        
-        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-            alert('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        
-        // Préparation des données
-        const formData = {
-            name,
-            email,
-            apolloLink,
-            leadsCount,
-            fileName,
-            promoCode,
-            timestamp: new Date().toISOString()
-        };
-        
-        // Envoi des données de façon asynchrone en parallèle avec la redirection
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-        
-        fetch(WEBHOOK_URL, {
+   // Fonction de soumission du formulaire modifiée pour attendre la fin de l'appel API
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // Cache les références DOM pour éviter les requêtes DOM répétitives
+    const submitButton = document.getElementById('submit-button');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const apolloLink = document.getElementById('apollo-link').value;
+    const leadsCount = document.getElementById('leads-count').value;
+    const fileName = document.getElementById('file-name').value;
+    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+    
+    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    // Afficher l'état de chargement
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    
+    // Préparation des données
+    const formData = {
+        name,
+        email,
+        apolloLink,
+        leadsCount,
+        fileName,
+        promoCode,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+        // Attendre que l'appel API soit terminé
+        const response = await fetch(WEBHOOK_URL, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData),
             signal: controller.signal
-        }).catch(() => {
-            // Ignorer silencieusement les erreurs de webhook
-            // La redirection se fait quand même
         });
         
-        // Redirection immédiate vers Stripe
+        // Nettoyage du timeout
+        clearTimeout(timeoutId);
+        
+        // Redirection vers Stripe une fois l'appel API réussi
         if (STRIPE_LINKS[leadsCount]) {
             window.location.href = STRIPE_LINKS[leadsCount];
         } else {
             alert('Veuillez sélectionner un nombre de leads valide');
+            // Réinitialiser le bouton en cas d'erreur
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
         }
+    } catch (error) {
+        // Nettoyage du timeout si ce n'est pas déjà fait
+        clearTimeout(timeoutId);
+        
+        // Gérer l'erreur
+        console.error('Erreur:', error);
+        
+        // Message d'erreur spécifique pour les timeouts
+        if (error.name === 'AbortError') {
+            alert('Le serveur met trop de temps à répondre. Veuillez réessayer.');
+        } else {
+            alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
+        }
+        
+        // Réinitialiser le bouton en cas d'erreur
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+    }
+}
+
+// Fonction pour gérer la soumission du formulaire gratuit également mise à jour
+async function handleFreeFormSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('free-name').value;
+    const email = document.getElementById('free-email').value;
+    const apolloLink = document.getElementById('free-apollo-link').value;
+    const fileName = document.getElementById('free-file-name').value;
+    const promoCode = document.getElementById('free-promo-code').value;
+    
+    if (!name || !email || !apolloLink || !fileName) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    const submitButton = document.getElementById('free-submit-button');
+    const messageContainer = document.getElementById('free-form-message');
+    
+    // Désactiver le bouton pendant le traitement
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+    
+    // Préparation des données pour le webhook
+    const formData = {
+        name,
+        email,
+        apolloLink,
+        leadsCount: '100',
+        fileName,
+        promoCode,
+        isFreeOrder: true,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+        // Attendre que l'appel API soit terminé
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData),
+            signal: controller.signal
+        });
         
         // Nettoyage du timeout
         clearTimeout(timeoutId);
+        
+        // Redirection vers la page de confirmation
+        window.location.href = "https://unlimited-leads.online/confirmation";
+    } catch (error) {
+        // Nettoyage du timeout si ce n'est pas déjà fait
+        clearTimeout(timeoutId);
+        
+        // Message d'erreur
+        messageContainer.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i> <strong>Erreur:</strong> ${
+                    error.name === 'AbortError' 
+                    ? 'Le serveur met trop de temps à répondre. Veuillez réessayer.' 
+                    : error.message || 'Une erreur est survenue lors du traitement de votre demande.'
+                }
+            </div>
+        `;
+        
+        // Réinitialiser le bouton
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes 100 leads gratuits';
     }
+}
     
     // Fonction optimisée pour vérifier les codes promo
     function checkPromoCode(code, messageElement, formCardElement) {
