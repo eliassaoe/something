@@ -22,8 +22,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
 <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
 
-
-
+    <!-- In the <head> section -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V6NTYLJ115');
+</script>
+    
      <!-- Open Graph Tags -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://unlimited-leads.online/" />
@@ -2371,17 +2378,6 @@
     } else {
         initApp();
     }
-    
-    // Analytics différé
-    window.addEventListener('load', function() {
-        // Chargement différé de Google Analytics
-        setTimeout(() => {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-V6NTYLJ115', { 'send_page_view': true });
-        }, 2000);
-    });
-    </script>
+        
 </body>
 </html>
