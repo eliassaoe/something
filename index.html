@@ -956,115 +956,6 @@
         </div>
     </section>
 
-    <script>
-// URL du webhook directement définie en haut de la fonction pour plus de clarté
-const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
-
-async function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    // Récupération des données du formulaire
-    const submitButton = document.getElementById('submit-button');
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const apolloLink = document.getElementById('apollo-link').value;
-    const leadsCount = document.getElementById('leads-count').value;
-    const fileName = document.getElementById('file-name').value;
-    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
-    
-    // Validation basique
-    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-        alert('Veuillez remplir tous les champs obligatoires');
-        return;
-    }
-    
-    // Vérifier si le lien Stripe existe
-    if (!STRIPE_LINKS[leadsCount]) {
-        alert('Veuillez sélectionner un nombre de leads valide');
-        return;
-    }
-    
-    // URL de redirection Stripe
-    const stripeUrl = STRIPE_LINKS[leadsCount];
-    
-    // Afficher l'état de chargement
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-    
-    // Préparation des données
-    const formData = {
-        name,
-        email,
-        apolloLink,
-        leadsCount,
-        fileName,
-        promoCode,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Envoyer la requête et attendre la réponse
-    try {
-        // Appel au webhook avec l'URL définie en haut
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
-        
-        // Vérifier si la réponse est OK (statut 200-299)
-        if (!response.ok) {
-            throw new Error(`Erreur serveur: ${response.status}`);
-        }
-        
-        // Si l'appel API a réussi, rediriger vers Stripe
-        window.location.href = stripeUrl;
-        
-    } catch (error) {
-        console.error('Erreur:', error);
-        alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
-        
-        // Réinitialiser le bouton
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
-    }
-}
-
-// Gestionnaires d'événements pour le formulaire
-function initFormHandlers() {
-    const form = document.getElementById('leads-form');
-    const promoCodeInput = document.getElementById('promo-code');
-    const checkPromoButton = document.getElementById('check-promo');
-    const promoMessage = document.getElementById('promo-message');
-    const formCard = document.getElementById('form-card');
-    
-    // Délégation d'événements pour le formulaire
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
-    
-    // Gestionnaire de validation du code promo
-    if (checkPromoButton && promoCodeInput && promoMessage) {
-        checkPromoButton.addEventListener('click', () => {
-            checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
-        });
-    }
-}
-
-// Initialisation de l'application au chargement du DOM
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-} else {
-    initApp();
-}
-
-function initApp() {
-    // Utilisation d'une seule fonction d'initialisation pour éviter les répétitions
-    initFormHandlers();
-    initLazyLoading();
-    initPricingTable();
-}
-</script>
-
     <!-- Form Section -->
     <section class="section">
         <div class="container">
@@ -1336,6 +1227,115 @@ function initApp() {
     <div class="text-center mt-6 mb-6">
         <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Lien utile Apollo.io</a>
     </div>
+
+    <script>
+// URL du webhook directement définie en haut de la fonction pour plus de clarté
+const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // Récupération des données du formulaire
+    const submitButton = document.getElementById('submit-button');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const apolloLink = document.getElementById('apollo-link').value;
+    const leadsCount = document.getElementById('leads-count').value;
+    const fileName = document.getElementById('file-name').value;
+    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+    
+    // Validation basique
+    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    // Vérifier si le lien Stripe existe
+    if (!STRIPE_LINKS[leadsCount]) {
+        alert('Veuillez sélectionner un nombre de leads valide');
+        return;
+    }
+    
+    // URL de redirection Stripe
+    const stripeUrl = STRIPE_LINKS[leadsCount];
+    
+    // Afficher l'état de chargement
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    
+    // Préparation des données
+    const formData = {
+        name,
+        email,
+        apolloLink,
+        leadsCount,
+        fileName,
+        promoCode,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Envoyer la requête et attendre la réponse
+    try {
+        // Appel au webhook avec l'URL définie en haut
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        
+        // Vérifier si la réponse est OK (statut 200-299)
+        if (!response.ok) {
+            throw new Error(`Erreur serveur: ${response.status}`);
+        }
+        
+        // Si l'appel API a réussi, rediriger vers Stripe
+        window.location.href = stripeUrl;
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
+        
+        // Réinitialiser le bouton
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+    }
+}
+
+// Gestionnaires d'événements pour le formulaire
+function initFormHandlers() {
+    const form = document.getElementById('leads-form');
+    const promoCodeInput = document.getElementById('promo-code');
+    const checkPromoButton = document.getElementById('check-promo');
+    const promoMessage = document.getElementById('promo-message');
+    const formCard = document.getElementById('form-card');
+    
+    // Délégation d'événements pour le formulaire
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+    }
+    
+    // Gestionnaire de validation du code promo
+    if (checkPromoButton && promoCodeInput && promoMessage) {
+        checkPromoButton.addEventListener('click', () => {
+            checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
+        });
+    }
+}
+
+// Initialisation de l'application au chargement du DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+function initApp() {
+    // Utilisation d'une seule fonction d'initialisation pour éviter les répétitions
+    initFormHandlers();
+    initLazyLoading();
+    initPricingTable();
+}
+</script>
 
  <!-- FAQ Section -->
 <section class="section" id="faq">
