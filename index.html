@@ -655,8 +655,6 @@
 </head>
  
 <body>
-
-    
     <!-- Chat Widget (Optimized) -->
 <script>
   // Defer chat widget loading until after page is fully loaded
@@ -958,75 +956,6 @@
         </div>
     </section>
 
-    <script>
-async function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const submitButton = document.getElementById('submit-button');
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const apolloLink = document.getElementById('apollo-link').value;
-    const leadsCount = document.getElementById('leads-count').value;
-    const fileName = document.getElementById('file-name').value;
-    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
-    
-    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-        alert('Veuillez remplir tous les champs obligatoires');
-        return;
-    }
-    
-    // Afficher l'état de chargement
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-    
-    // Préparation des données
-    const formData = {
-        name,
-        email,
-        apolloLink,
-        leadsCount,
-        fileName,
-        promoCode,
-        timestamp: new Date().toISOString()
-    };
-    
-    console.log('Données du formulaire:', formData);
-    
-    try {
-        // Envoi des données à l'API et attente de la réponse
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
-        
-        console.log('Statut de réponse:', response.status);
-        
-        // Vérifier si la réponse de l'API est OK
-        if (!response.ok) {
-            throw new Error(`Erreur API: ${response.status}`);
-        }
-        
-        // API call a réussi, maintenant redirection vers Stripe
-        if (STRIPE_LINKS[leadsCount]) {
-            console.log('Redirection vers:', STRIPE_LINKS[leadsCount]);
-            window.location.href = STRIPE_LINKS[leadsCount];
-        } else {
-            alert('Veuillez sélectionner un nombre de leads valide');
-            submitButton.disabled = false;
-            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
-        }
-    } catch (error) {
-        console.error('Erreur lors de l\'appel API:', error);
-        alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
-        
-        // Réinitialiser le bouton en cas d'erreur
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
-    }
-}
-</script>
-
     <!-- Form Section -->
     <section class="section">
         <div class="container">
@@ -1090,7 +1019,6 @@ async function handleFormSubmit(e) {
                                     <i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés
                                 </button>
                             </form>
-                            <div id="form-status" class="mt-4"></div>
                         </div>
                     </div>
                 </div>
@@ -1682,3 +1610,774 @@ async function handleFormSubmit(e) {
                         </ol>
                         
                         <p class="mt-4">Cette approche intégrée vous permet de tirer le maximum de valeur de vos fichiers de prospection tout en renforçant votre relation client. Le multicanal améliore considérablement les taux de conversion car il multiplie les points de contact avec vos futurs clients professionnels.</p>
+                    </div>
+                </div>
+                
+                <!-- Question 10 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 class="text-xl font-semibold">Comment enrichir et maintenir à jour votre propre base de données professionnelles ?</h3>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pour maintenir l'efficacité de vos campagnes et préserver votre relation client, l'enrichissement et la mise à jour de votre database sont essentiels :</p>
+                        
+                        <h4 class="text-lg font-medium mt-4">1. Techniques d'enrichissement de vos fichiers :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Enrichissement externe :</strong> Nous pouvons compléter votre fichier avec des données supplémentaires (téléphones, adresses postales, informations sectorielles)</li>
+                            <li><strong>Enrichissement comportemental :</strong> Ajoutez des données sur les interactions avec vos communications (clics, ouvertures, achats)</li>
+                            <li><strong>Qualification progressive :</strong> Améliorez vos fiches clients à chaque interaction commerciale</li>
+                            <li><strong>Données professionnelles :</strong> Complétez avec des informations sur l'entreprise (taille, chiffre d'affaires, etc.)</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">2. Méthodes pour maintenir votre base à jour :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Programmez un nettoyage de base trimestriel pour éliminer les données obsolètes</li>
+                            <li>Traitez immédiatement les retours postaux et les emails non délivrés</li>
+                            <li>Utilisez des formulaires en ligne pour collecter des données actualisées</li>
+                            <li>Mettez en place un processus de validation des données lors des interactions clients</li>
+                            <li>Vérifiez les changements d'adresse et mises à jour NPAI (n'habite plus à l'adresse indiquée)</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">3. Créer un carnet d'adresses unifié :</h4>
+                        <p>Pour constituer une bonne base, centralisez toutes vos sources de données :</p>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Intégrez les données de vos formulaires web</li>
+                            <li>Importez les contacts de votre CRM et outils marketing</li>
+                            <li>Consolidez les fiches prospects issues de différentes campagnes</li>
+                            <li>Fusionnez les données des salons, événements et rencontres professionnelles</li>
+                            <li>Synchronisez avec vos outils de vente et téléphonie</li>
+                        </ul>
+                        
+                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+                            <p><strong>Notre service d'enrichissement :</strong> Nous proposons un service de qualification de fichiers qui permet d'enrichir la base de données que vous avez déjà constituée. En analysant vos fiches clients existantes, nous pouvons ajouter des informations manquantes et corriger les données obsolètes pour optimiser vos actions commerciales et campagnes emailing.</p>
+                        </div>
+                        
+                        <p class="mt-4">L'enrichissement constant de votre base client est un investissement stratégique qui améliore votre connaissance client et optimise le retour sur investissement de toutes vos opérations marketing.</p>
+                    </div>
+                </div>
+                
+                <!-- Question 11 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 class="text-xl font-semibold">Comment rédiger un email de prospection efficace pour convertir vos fichiers en clients ?</h3>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>La rédaction d'un email de prospection commerciale efficace est essentielle pour transformer vos contacts en clients qualifiés. Voici nos conseils pour optimiser vos campagnes :</p>
+                        
+                        <h4 class="text-lg font-medium mt-4">1. Structurer votre email de prospection :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Objet percutant :</strong> Exemple objet mail prospection efficace : "3 solutions pour optimiser la performance de [Entreprise]"</li>
+                            <li><strong>Phrase d'accroche personnalisée :</strong> Commencez par une phrase d'approche qui montre votre connaissance de leur secteur</li>
+                            <li><strong>Proposition de valeur claire :</strong> Expliquez rapidement le bénéfice principal de votre offre</li>
+                            <li><strong>Preuve sociale :</strong> Mentionnez un résultat obtenu pour une entreprise similaire</li>
+                            <li><strong>Call-to-action précise :</strong> Proposez de fixer un rendez-vous à une date/heure spécifique</li>
+                            <li><strong>Signature professionnelle :</strong> Incluez vos coordonnées complètes et liens professionnels</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">2. Exemples de phrases d'accroche par secteur :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Pour les entreprises de fabrication :</strong> "Après avoir analysé les tendances du secteur de la fabrication de machines, j'ai identifié trois défis majeurs que [Entreprise] pourrait rencontrer cette année..."</li>
+                            <li><strong>Pour les bureaux d'études :</strong> "Votre dernier projet publié sur LinkedIn démontre votre expertise en ingénierie. Nous avons développé un outil qui pourrait réduire de 30% le temps consacré à..."</li>
+                            <li><strong>Pour le commerce de gros :</strong> "Dans un contexte où les marges des grossistes sont sous pression, notre solution a permis à 3 acteurs de votre secteur d'augmenter leur rentabilité de 15%..."</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">3. Exemple mail prospection commerciale complet :</h4>
+                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+                            <p style="font-style: italic;"><strong>Objet :</strong> Réduction des coûts opérationnels pour [Entreprise] - Proposition</p>
+                            <p style="font-style: italic;"><strong>Bonjour [Prénom],</strong></p>
+                            <p style="font-style: italic;">En tant que [Fonction] chez [Entreprise], vous cherchez probablement des moyens d'optimiser les coûts opérationnels tout en maintenant la qualité de service.</p>
+                            <p style="font-style: italic;">Nous avons récemment collaboré avec [Entreprise similaire] dans le secteur [Secteur] et avons réussi à réduire leurs coûts de [X%] en seulement 3 mois grâce à notre solution [Nom de la solution].</p>
+                            <p style="font-style: italic;">Concrètement, notre approche permet de :</p>
+                            <ul style="font-style: italic; list-style-type: disc; margin-left: 1.5rem;">
+                                <li>Automatiser les processus chronophages (gain de [X] heures/semaine)</li>
+                                <li>Optimiser la gestion des ressources (économie de [X]€/mois)</li>
+                                <li>Améliorer la productivité des équipes (augmentation de [X]%)</li>
+                            </ul>
+                            <p style="font-style: italic;">Seriez-vous disponible pour un échange de 15 minutes ce jeudi à 10h ou vendredi à 14h pour explorer comment ces bénéfices pourraient s'appliquer à [Entreprise] ?</p>
+                            <p style="font-style: italic;">Dans l'attente de votre retour,</p>
+                            <p style="font-style: italic;">Cordialement,</p>
+                        </div>
+                        
+                        <h4 class="text-lg font-medium mt-4">4. Conseils pour optimiser vos taux de conversion :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Testez différentes phrases d'accroche et objets sur des segments de votre base</li>
+                            <li>Programmez l'envoi à des moments stratégiques (mardi et jeudi matin sont souvent efficaces)</li>
+                            <li>Prévoyez des emails de relance devis pour les prospects qui ont montré un intérêt</li>
+                            <li>Personnalisez au maximum en utilisant les données de votre fichier (secteur, taille, etc.)</li>
+                            <li>Concentrez-vous sur les bénéfices plutôt que sur les caractéristiques techniques</li>
+                        </ul>
+                        
+                        <p class="mt-4">En appliquant ces principes à vos campagnes d'email marketing et en utilisant les techniques de closing commercial adaptées lors des suivis, vous maximiserez la conversion de vos fichiers prospects en clients fidèles.</p>
+                    </div>
+                </div>
+                
+                <!-- Question 12 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 class="text-xl font-semibold">Quelles sont les spécificités de nos fichiers pour les secteurs de niche ?</h3>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nos bases de données spécialisées couvrent plusieurs secteurs de niche avec un niveau de détail et de qualification supérieur à la moyenne du marché :</p>
+                        
+                        <h4 class="text-lg font-medium mt-4">1. Secteur agricole et agroalimentaire :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Liste des agriculteurs par département :</strong> Base complète avec spécialisation (céréaliers, éleveurs, viticulteurs...)</li>
+                            <li><strong>Liste exploitation agricole par commune :</strong> Données précises incluant taille d'exploitation, productions et équipements</li>
+                            <li><strong>Coopératives agricoles :</strong> Contacts des décideurs et responsables achats</li>
+                            <li><strong>Informations spécifiques :</strong> Surface exploitée, types de cultures, certifications (bio, labels...)</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">2. Secteur de la construction et des travaux publics :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Entreprises travaux public :</strong> Classées par spécialité (terrassement, VRD, génie civil...)</li>
+                            <li><strong>Fabrication de charpentes et structures :</strong> Contacts des responsables techniques et achats</li>
+                            <li><strong>Bureaux d'études :</strong> Spécialisations et projets typiques</li>
+                            <li><strong>Entreprises de dépannage :</strong> Par zone d'intervention et services proposés</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">3. Secteur médical et santé :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Chirurgiens par spécialité :</strong> Base segmentée par type d'intervention et établissement</li>
+                            <li><strong>Fournisseurs de matériel médical :</strong> Décideurs et responsables d'approvisionnement</li>
+                            <li><strong>Cliniques privées :</strong> Contacts des directeurs et responsables achats</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">4. Secteur de l'éducation :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Lycées professionnels :</strong> Contacts des responsables de filières et directeurs</li>
+                            <li><strong>Centres de formation :</strong> Spécialisations et responsables pédagogiques</li>
+                            <li><strong>Écoles supérieures :</strong> Décideurs et responsables des achats</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-medium mt-4">5. Secteur public et collectivités :</h4>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Email des mairies :</strong> Base complète des contacts municipaux par taille de commune</li>
+                            <li><strong>Administrations publiques :</strong> Contacts des responsables de services et décideurs</li>
+                            <li><strong>Établissements publics :</strong> Segmentés par type et taille</li>
+                        </ul>
+                        
+                        <p class="mt-4">Nos fichiers spécialisés sont particulièrement utiles pour les entreprises ciblant des marchés de niche. Par exemple, si vous vendez des équipements agricoles, notre liste des agriculteurs par département vous permet d'identifier précisément les exploitations correspondant à votre cible idéale.</p>
+                        
+                        <p>Ces bases de données font l'objet d'une mise à jour constante pour garantir leur pertinence. Contrairement aux annuaires génériques, nos fichiers contiennent des informations spécifiques au secteur, permettant une segmentation avancée et des campagnes plus ciblées.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+
+
+<!-- Ajout du style CSS pour la FAQ -->
+<style>
+    .faq-accordion {
+        width: 100%;
+    }
+    
+    .faq-item {
+        border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .faq-item:last-child {
+        border-bottom: none;
+    }
+    
+    .faq-question {
+        padding: 1.25rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .faq-answer {
+        padding: 0 1.25rem 1.25rem;
+        display: none;
+        color: var(--gray-600);
+    }
+    
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+    
+    .faq-item.active .faq-icon i {
+        transform: rotate(180deg);
+    }
+    
+    .faq-icon i {
+        transition: transform 0.3s ease;
+        color: var(--primary);
+    }
+</style>
+
+<!-- Script JavaScript pour la FAQ -->
+<script>
+    // Fonction pour initialiser l'accordéon FAQ
+    function initFaqAccordion() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Si l'élément est déjà actif, on le ferme
+                if (item.classList.contains('active')) {
+                    item.classList.remove('active');
+                } else {
+                    // Ferme tous les autres éléments
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+                    
+                    // Ouvre l'élément cliqué
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Ouvre la première question par défaut
+        if (faqItems.length > 0) {
+            faqItems[0].classList.add('active');
+        }
+    }
+    
+    // Initialise l'accordéon FAQ au chargement
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFaqAccordion);
+    } else {
+        initFaqAccordion();
+    }
+</script>
+    
+    <!-- Pricing Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Nos tarifs</h2>
+                <p class="text-gray-600">Des prix accessibles pour tous les budgets</p>
+            </div>
+            
+            <div class="card card-shadow">
+                <div class="card-body">
+                    <table class="w-100" style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--gray-200);">
+                                <th style="padding: 1rem; text-align: left; font-weight: 600;">Nombre de leads</th>
+                                <th style="padding: 1rem; text-align: center; font-weight: 600;">Prix</th>
+                                <th style="padding: 1rem; text-align: right; font-weight: 600;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pricing-table">
+                            <!-- Le contenu sera généré par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4 text-sm text-gray-600">
+                <p>Tous nos leads incluent : emails vérifiés, format CSV/Excel et livraison sous 24h</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="footer-logo-text">unlimitedleads</div>
+                    </div>
+                    <p class="footer-description">Des emails vérifiés pour vos campagnes marketing à chaque fois. Augmentez l'efficacité de vos campagnes avec des leads de qualité.</p>
+                </div>
+                
+                <div class="col">
+                    <h4 class="footer-heading">Liens utiles</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link">
+                            <a href="#top">Accueil</a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="https://unlimited-leads.online/politique-de-confidentialite" target="_blank">Politique de confidentialité</a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="https://unlimited-leads.online/mentions-legales" target="_blank">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col">
+                    <h4 class="footer-heading">Suivez-nous</h4>
+                    <div class="social-links" style="display: flex; gap: 1rem;">
+                        <a href="https://www.youtube.com/@EliasIA694" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/" target="_blank" style="text-decoration: none; font-size: 1.5rem; color: var(--gray-600); transition: color 0.2s;">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h4 class="footer-heading">Contact</h4>
+                    <p>Email : <a href="mailto:hamoureliasse@gmail.com" style="text-decoration: none; color: var(--gray-600);">hamoureliasse@gmail.com</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 unlimitedleads. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Script optimisé avec chargement différé et réduction des opérations DOM -->
+    <script>
+    // Configuration globale définie une seule fois
+    const STRIPE_LINKS = {
+        "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
+        "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
+        "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
+        "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
+        "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
+        "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
+        "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
+        "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
+        "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
+        "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
+        "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
+    };
+    
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+    const PROMO_CODE_WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
+    
+    // Précharge des données de prix pour le tableau
+    const PRICING_DATA = [
+        { count: "500", price: "5€" },
+        { count: "1000", price: "10€" },
+        { count: "2000", price: "20€" },
+        { count: "3000", price: "30€" },
+        { count: "4000", price: "40€" },
+        { count: "5000", price: "50€" },
+        { count: "6000", price: "60€" },
+        { count: "7000", price: "70€" },
+        { count: "8000", price: "80€" },
+        { count: "9000", price: "90€" },
+        { count: "10000", price: "100€" }
+    ];
+    
+    // Fonction d'initialisation optimisée
+    function initApp() {
+        // Utilisation d'une seule fonction d'initialisation pour éviter les répétitions
+        initFormHandlers();
+        initLazyLoading();
+        initPricingTable();
+    }
+    
+    // Gestionnaires d'événements pour le formulaire
+    function initFormHandlers() {
+        const form = document.getElementById('leads-form');
+        const promoCodeInput = document.getElementById('promo-code');
+        const checkPromoButton = document.getElementById('check-promo');
+        const promoMessage = document.getElementById('promo-message');
+        const formCard = document.getElementById('form-card');
+        
+        // Délégation d'événements pour le formulaire
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
+        
+        // Gestionnaire de validation du code promo
+        if (checkPromoButton && promoCodeInput && promoMessage) {
+            checkPromoButton.addEventListener('click', () => {
+                checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
+            });
+        }
+    }
+    
+    // Gestion du chargement différé des images et iframes
+    function initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const lazyLoadObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        if (element.dataset.src) {
+                            element.src = element.dataset.src;
+                            element.removeAttribute('data-src');
+                        }
+                        lazyLoadObserver.unobserve(element);
+                    }
+                });
+            });
+            
+            // Observer les éléments avec data-src
+            document.querySelectorAll('[data-src]').forEach(element => {
+                lazyLoadObserver.observe(element);
+            });
+        } else {
+            // Fallback pour les navigateurs sans IntersectionObserver
+            document.querySelectorAll('[data-src]').forEach(element => {
+                element.src = element.dataset.src;
+            });
+        }
+    }
+    
+    // Initialisation du tableau de prix
+    function initPricingTable() {
+        const pricingTable = document.getElementById('pricing-table');
+        if (!pricingTable) return;
+        
+        // Création du contenu du tableau en une seule opération DOM
+        let tableHTML = '';
+        
+        PRICING_DATA.forEach(plan => {
+            tableHTML += `
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 1rem; text-align: left;"><strong>${plan.count} leads</strong></td>
+                    <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">${plan.price}</td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button type="button" class="btn btn-primary plan-btn" data-plan="${plan.count}" style="padding: 0.5rem 1rem;">Commander</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        pricingTable.innerHTML = tableHTML;
+        
+        // Délégation d'événements pour les boutons de plan
+        pricingTable.addEventListener('click', (e) => {
+            const button = e.target.closest('.plan-btn');
+            if (button) {
+                selectPlan(button.dataset.plan);
+            }
+        });
+    }
+    
+    // FONCTION CORRIGÉE pour la soumission du formulaire principal
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        
+        // Cache les références DOM pour éviter les requêtes DOM répétitives
+        const submitButton = document.getElementById('submit-button');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const apolloLink = document.getElementById('apollo-link').value;
+        const leadsCount = document.getElementById('leads-count').value;
+        const fileName = document.getElementById('file-name').value;
+        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+        
+        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
+        // Afficher l'état de chargement
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+        
+        // Préparation des données
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount,
+            fileName,
+            promoCode,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Attendre que l'appel API soit terminé
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Nettoyage du timeout
+            clearTimeout(timeoutId);
+            
+            // Vérifier si la réponse est OK (statut 200-299)
+            if (!response.ok) {
+                throw new Error(`Erreur serveur: ${response.status}`);
+            }
+            
+            // Tenter de lire le corps de la réponse comme JSON
+            try {
+                const responseData = await response.json();
+                console.log('Réponse du serveur:', responseData);
+            } catch (jsonError) {
+                // Si le corps n'est pas du JSON, ce n'est pas grave
+                console.log('Réponse reçue mais pas au format JSON');
+            }
+            
+            // Redirection vers Stripe une fois l'appel API réussi
+            if (STRIPE_LINKS[leadsCount]) {
+                window.location.href = STRIPE_LINKS[leadsCount];
+            } else {
+                alert('Veuillez sélectionner un nombre de leads valide');
+                // Réinitialiser le bouton en cas d'erreur
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+            }
+        } catch (error) {
+            // Nettoyage du timeout si ce n'est pas déjà fait
+            clearTimeout(timeoutId);
+            
+            // Gérer l'erreur
+            console.error('Erreur:', error);
+            
+            // Message d'erreur spécifique pour les timeouts
+            if (error.name === 'AbortError') {
+                alert('Le serveur met trop de temps à répondre. Veuillez réessayer.');
+            } else {
+                alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
+            }
+            
+            // Réinitialiser le bouton en cas d'erreur
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+        }
+    }
+
+    // FONCTION CORRIGÉE pour la soumission du formulaire gratuit
+    async function handleFreeFormSubmit(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('free-name').value;
+        const email = document.getElementById('free-email').value;
+        const apolloLink = document.getElementById('free-apollo-link').value;
+        const fileName = document.getElementById('free-file-name').value;
+        const promoCode = document.getElementById('free-promo-code').value;
+        
+        if (!name || !email || !apolloLink || !fileName) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
+        const submitButton = document.getElementById('free-submit-button');
+        const messageContainer = document.getElementById('free-form-message');
+        
+        // Désactiver le bouton pendant le traitement
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+        
+        // Préparation des données pour le webhook
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount: '100',
+            fileName,
+            promoCode,
+            isFreeOrder: true,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Attendre que l'appel API soit terminé
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Nettoyage du timeout
+            clearTimeout(timeoutId);
+            
+            // Vérifier si la réponse est OK (statut 200-299)
+            if (!response.ok) {
+                throw new Error(`Erreur serveur: ${response.status}`);
+            }
+            
+            // Tenter de lire le corps de la réponse
+            try {
+                const responseData = await response.json();
+                console.log('Réponse du serveur:', responseData);
+            } catch (jsonError) {
+                // Si le corps n'est pas du JSON, ce n'est pas grave
+                console.log('Réponse reçue mais pas au format JSON');
+            }
+            
+            // Redirection vers la page de confirmation uniquement après un appel API réussi
+            window.location.href = "https://unlimited-leads.online/confirmation";
+        } catch (error) {
+            // Nettoyage du timeout si ce n'est pas déjà fait
+            clearTimeout(timeoutId);
+            
+            // Gérer l'erreur de manière détaillée
+            console.error('Erreur:', error);
+            
+            // Message d'erreur plus informatif
+            messageContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> <strong>Erreur:</strong> ${
+                        error.name === 'AbortError' 
+                        ? 'Le serveur met trop de temps à répondre. Veuillez réessayer.' 
+                        : error.message || 'Une erreur est survenue lors du traitement de votre demande.'
+                    }
+                </div>
+            `;
+            
+            // Réinitialiser le bouton
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes 100 leads gratuits';
+        }
+    }
+    
+    // Fonction optimisée pour vérifier les codes promo
+    async function checkPromoCode(code, messageElement, formCardElement) {
+        if (!code) {
+            messageElement.textContent = 'Veuillez entrer un code promo';
+            messageElement.style.color = 'var(--danger)';
+            return;
+        }
+        
+        messageElement.textContent = 'Vérification du code...';
+        messageElement.style.color = 'var(--gray-600)';
+        
+        // Utiliser async/await pour une gestion d'erreurs plus claire
+        try {
+            const response = await fetch(PROMO_CODE_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code: code, action: 'check'})
+            });
+            
+            // Vérifier si la réponse est OK
+            if (!response.ok) {
+                throw new Error('Erreur serveur: ' + response.status);
+            }
+            
+            const data = await response.json();
+            
+            if (data.valid) {
+                showFreeLeadsForm(code, formCardElement);
+            } else {
+                showInvalidCodeMessage(data.error || 'Code non valide', messageElement);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la vérification du code:', error);
+            messageElement.textContent = '❌ Erreur lors de la vérification du code';
+            messageElement.style.color = 'var(--danger)';
+        }
+    }
+    
+    // Fonction pour afficher le formulaire de leads gratuits
+    function showFreeLeadsForm(promoCode, formCard) {
+        // Sauvegarde des valeurs du formulaire actuel
+        const formValues = {
+            name: document.getElementById('name')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            apolloLink: document.getElementById('apollo-link')?.value || '',
+            fileName: document.getElementById('file-name')?.value || ''
+        };
+        
+        // Création du HTML pour le formulaire de leads gratuits
+        formCard.innerHTML = `
+            <div class="card-header">
+                <h2 class="text-2xl font-bold mb-2">Commandez vos 100 leads gratuits</h2>
+                <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés gratuitement</p>
+                <div class="mt-4">
+                    <span class="badge success-badge">Code Promo Valide: ${promoCode}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="free-leads-form">
+                    <div class="form-group">
+                        <label for="free-name" class="form-label">Nom *</label>
+                        <input type="text" id="free-name" name="free-name" class="form-control" value="${formValues.name}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-email" class="form-label">Email *</label>
+                        <input type="email" id="free-email" name="free-email" class="form-control" value="${formValues.email}" required>
+                        <small class="form-text">Nous vous enverrons vos leads à cette adresse</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-apollo-link" class="form-label">Lien Apollo *</label>
+                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${formValues.apolloLink}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-file-name" class="form-label">Nom du Fichier *</label>
+                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${formValues.fileName}" required>
+                    </div>
+                    
+                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}">
+                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100">
+                    
+                    <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
+                        <i class="fas fa-paper-plane"></i> Obtenir mes 100 leads gratuits
+                    </button>
+                </form>
+                <div id="free-form-message" class="mt-4"></div>
+            </div>
+        `;
+        
+        // Ajouter le gestionnaire d'événement pour le nouveau formulaire
+        const freeLeadsForm = document.getElementById('free-leads-form');
+        if (freeLeadsForm) {
+            freeLeadsForm.addEventListener('submit', handleFreeFormSubmit);
+        }
+    }
+    
+    // Fonction pour afficher un message d'erreur
+    function showInvalidCodeMessage(errorMessage, promoMessage) {
+        promoMessage.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-times-circle"></i> <strong>Code promo invalide:</strong> ${errorMessage}
+            </div>
+        `;
+    }
+    
+    // Fonction optimisée pour sélectionner un plan
+    function selectPlan(planValue) {
+        const formCard = document.getElementById('form-card');
+        const leadsCountSelect = document.getElementById('leads-count');
+        
+        // Scroll fluide jusqu'au formulaire
+        if (formCard) {
+            formCard.scrollIntoView({behavior: 'smooth', block: 'center'});
+            
+            // Sélectionner l'option dans le dropdown
+            if (leadsCountSelect) {
+                leadsCountSelect.value = planValue;
+                
+                // Focus sur le premier champ vide après le scroll
+                setTimeout(() => {
+                    const nameInput = document.getElementById('name');
+                    if (nameInput && !nameInput.value) {
+                        nameInput.focus();
+                    }
+                }, 800);
+            }
+        }
+    }
+    
+    // Initialisation de l'application au chargement du DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
+        
+</body>
+</html>
