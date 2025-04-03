@@ -655,6 +655,8 @@
 </head>
  
 <body>
+
+    
     <!-- Chat Widget (Optimized) -->
 <script>
   // Defer chat widget loading until after page is fully loaded
@@ -955,6 +957,75 @@
             </div>
         </div>
     </section>
+
+    <script>
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const submitButton = document.getElementById('submit-button');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const apolloLink = document.getElementById('apollo-link').value;
+    const leadsCount = document.getElementById('leads-count').value;
+    const fileName = document.getElementById('file-name').value;
+    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+    
+    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    // Afficher l'état de chargement
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    
+    // Préparation des données
+    const formData = {
+        name,
+        email,
+        apolloLink,
+        leadsCount,
+        fileName,
+        promoCode,
+        timestamp: new Date().toISOString()
+    };
+    
+    console.log('Données du formulaire:', formData);
+    
+    try {
+        // Envoi des données à l'API et attente de la réponse
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        
+        console.log('Statut de réponse:', response.status);
+        
+        // Vérifier si la réponse de l'API est OK
+        if (!response.ok) {
+            throw new Error(`Erreur API: ${response.status}`);
+        }
+        
+        // API call a réussi, maintenant redirection vers Stripe
+        if (STRIPE_LINKS[leadsCount]) {
+            console.log('Redirection vers:', STRIPE_LINKS[leadsCount]);
+            window.location.href = STRIPE_LINKS[leadsCount];
+        } else {
+            alert('Veuillez sélectionner un nombre de leads valide');
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'appel API:', error);
+        alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
+        
+        // Réinitialiser le bouton en cas d'erreur
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+    }
+}
+</script>
 
     <!-- Form Section -->
     <section class="section">
