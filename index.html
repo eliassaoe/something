@@ -1989,7 +1989,7 @@
         
         // Délégation d'événements pour le formulaire
         if (form) {
-            form.addEventListener('submit', Submit);
+            form.addEventListener('submit', handleFormSubmit);
         }
         
         // Gestionnaire de validation du code promo
@@ -2059,74 +2059,97 @@
         });
     }
     
-   <script>
-async function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const submitButton = document.getElementById('submit-button');
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const apolloLink = document.getElementById('apollo-link').value;
-    const leadsCount = document.getElementById('leads-count').value;
-    const fileName = document.getElementById('file-name').value;
-    const promoCode = document.getElementById('promo-code')?.value.trim() || '';
-    
-    if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-        alert('Veuillez remplir tous les champs obligatoires');
-        return;
-    }
-    
-    // Afficher l'état de chargement
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-    
-    // Préparation des données
-    const formData = {
-        name,
-        email,
-        apolloLink,
-        leadsCount,
-        fileName,
-        promoCode,
-        timestamp: new Date().toISOString()
-    };
-    
-    console.log('Données du formulaire:', formData);
-    
-    try {
-        // Envoi des données à l'API et attente de la réponse
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
+    // FONCTION CORRIGÉE pour la soumission du formulaire principal
+    async function handleFormSubmit(e) {
+        e.preventDefault();
         
-        console.log('Statut de réponse:', response.status);
+        // Cache les références DOM pour éviter les requêtes DOM répétitives
+        const submitButton = document.getElementById('submit-button');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const apolloLink = document.getElementById('apollo-link').value;
+        const leadsCount = document.getElementById('leads-count').value;
+        const fileName = document.getElementById('file-name').value;
+        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
         
-        // Vérifier si la réponse de l'API est OK
-        if (!response.ok) {
-            throw new Error(`Erreur API: ${response.status}`);
+        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
         }
         
-        // API call a réussi, maintenant redirection vers Stripe
-        if (STRIPE_LINKS[leadsCount]) {
-            console.log('Redirection vers:', STRIPE_LINKS[leadsCount]);
-            window.location.href = STRIPE_LINKS[leadsCount];
-        } else {
-            alert('Veuillez sélectionner un nombre de leads valide');
+        // Afficher l'état de chargement
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+        
+        // Préparation des données
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount,
+            fileName,
+            promoCode,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Attendre que l'appel API soit terminé
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Nettoyage du timeout
+            clearTimeout(timeoutId);
+            
+            // Vérifier si la réponse est OK (statut 200-299)
+            if (!response.ok) {
+                throw new Error(`Erreur serveur: ${response.status}`);
+            }
+            
+            // Tenter de lire le corps de la réponse comme JSON
+            try {
+                const responseData = await response.json();
+                console.log('Réponse du serveur:', responseData);
+            } catch (jsonError) {
+                // Si le corps n'est pas du JSON, ce n'est pas grave
+                console.log('Réponse reçue mais pas au format JSON');
+            }
+            
+            // Redirection vers Stripe une fois l'appel API réussi
+            if (STRIPE_LINKS[leadsCount]) {
+                window.location.href = STRIPE_LINKS[leadsCount];
+            } else {
+                alert('Veuillez sélectionner un nombre de leads valide');
+                // Réinitialiser le bouton en cas d'erreur
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
+            }
+        } catch (error) {
+            // Nettoyage du timeout si ce n'est pas déjà fait
+            clearTimeout(timeoutId);
+            
+            // Gérer l'erreur
+            console.error('Erreur:', error);
+            
+            // Message d'erreur spécifique pour les timeouts
+            if (error.name === 'AbortError') {
+                alert('Le serveur met trop de temps à répondre. Veuillez réessayer.');
+            } else {
+                alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
+            }
+            
+            // Réinitialiser le bouton en cas d'erreur
             submitButton.disabled = false;
             submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
         }
-    } catch (error) {
-        console.error('Erreur lors de l\'appel API:', error);
-        alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
-        
-        // Réinitialiser le bouton en cas d'erreur
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
     }
-}
-</script>
 
     // FONCTION CORRIGÉE pour la soumission du formulaire gratuit
     async function handleFreeFormSubmit(e) {
