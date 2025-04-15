@@ -1740,6 +1740,7 @@
         initFaqAccordion();
     }
 </script>
+
     
     
     <!-- Footer Section -->
@@ -1797,6 +1798,11 @@
     
     <!-- Script optimisé avec chargement différé et réduction des opérations DOM -->
     <script>
+
+        function generateUniqueId() {
+    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+}
+
     // Configuration globale définie une seule fois
     const STRIPE_LINKS = {
         "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
@@ -1982,10 +1988,6 @@ const formData = {
                 // Si le corps n'est pas du JSON, ce n'est pas grave
                 console.log('Réponse reçue mais pas au format JSON');
             }
-            function generateUniqueId() {
-    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
-}
-
             
             // Redirection vers Stripe une fois l'appel API réussi
             if (STRIPE_LINKS[leadsCount]) {
