@@ -1940,17 +1940,19 @@
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
         
-        // Préparation des données
-        const formData = {
-            name,
-            email,
-            apolloLink,
-            leadsCount,
-            fileName,
-            promoCode,
-            timestamp: new Date().toISOString()
-        };
-        
+        const uniqueId = generateUniqueId(); // ✅ create the ID
+
+const formData = {
+    id: uniqueId, // ✅ include in webhook payload
+    name,
+    email,
+    apolloLink,
+    leadsCount,
+    fileName,
+    promoCode,
+    timestamp: new Date().toISOString()
+};
+
         // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -1980,11 +1982,24 @@
                 // Si le corps n'est pas du JSON, ce n'est pas grave
                 console.log('Réponse reçue mais pas au format JSON');
             }
+            function generateUniqueId() {
+    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+}
+
+            function generateUniqueId() {
+    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+}
+
             
             // Redirection vers Stripe une fois l'appel API réussi
             if (STRIPE_LINKS[leadsCount]) {
-                window.location.href = STRIPE_LINKS[leadsCount];
-            } else {
+    const baseUrl = STRIPE_LINKS[leadsCount];
+    const redirectUrl = `${baseUrl}?client_reference_id=${uniqueId}`;
+    window.location.href = redirectUrl;
+}
+
+
+             else {
                 alert('Veuillez sélectionner un nombre de leads valide');
                 // Réinitialiser le bouton en cas d'erreur
                 submitButton.disabled = false;
@@ -2032,8 +2047,12 @@
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
         
+        const uniqueId = generateUniqueId(); // Create unique ID
+
         // Préparation des données pour le webhook
         const formData = {
+
+            id: uniqueId, // <-- add this line
             name,
             email,
             apolloLink,
