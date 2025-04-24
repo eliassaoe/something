@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>unlimitedleads - Email Extractor</title>
+    <meta name="description" content="Easily extract email addresses from any text or file with our free Unlimited Leads tool."/>
+
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://unlimited-leads.online/extractor" />
+    <meta property="og:title" content="Email Extractor | unlimitedleads" />
+    <meta property="og:description" content="Easily extract emails with our Unlimited Leads tool." />
+    <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Branding & Extractor Styles -->
+    <style>
+        /* (Unchanged CSS) */
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo-link">
+                    <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                    <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Extractor -->
+    <section class="hero">
+        <div class="container">
+            <h1>Email Extractor</h1>
+            <p>Easily extract email addresses from any text or file.</p>
+        </div>
+    </section>
+
+    <!-- Extractor Form -->
+    <section class="container">
+        <div class="extractor-form">
+            <div class="file-upload" id="dropZone">
+                <input type="file" id="fileInput" style="display:none;">
+                <p>Drag and drop your <strong>.txt</strong> or <strong>.csv</strong> file, or paste text below.</p>
+            </div>
+            <div class="divider"><span>OR</span></div>
+            <textarea id="emailsSource" placeholder="Paste your text here..."></textarea>
+            <button id="extractBtn" class="btn btn-primary btn-large">
+                <span>Extract emails</span>
+                <span class="loader" style="display:none;"></span>
+            </button>
+            <div id="resultArea" class="result-area">
+                <textarea id="emailsResult" readonly placeholder="Extracted emails..."></textarea>
+                <div class="actions">
+                    <button id="copyBtn" class="btn btn-secondary">Copy</button>
+                    <button id="downloadBtn" class="btn btn-primary">Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            &copy; 2025 unlimitedleads. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function extractEmailsFromText(text) {
+            if (!text) return { emails: [], count: 0 };
+            const clean = text.replace(/<[^>]*>/g,' ');
+            const words = clean.split(/\s+/);
+            const candidates = words.filter(w=> w.includes('@'));
+            const cleanList = candidates.map(e=> e.replace(/^[.,;:()"'<>\[\]{}]+|[.,;:!?)"'<>\[\]{}]+$/g,''));
+            const unique = [...new Set(cleanList)];
+            return { emails: unique, count: unique.length };
+        }
+        document.getElementById('extractBtn').addEventListener('click', function(){
+            const txt = document.getElementById('emailsSource').value;
+            const btnSpan = this.querySelector('span'); const loader = this.querySelector('.loader');
+            btnSpan.textContent = 'Extracting emails...'; loader.style.display='inline-block';
+            setTimeout(()=>{
+                const res = extractEmailsFromText(txt);
+                document.getElementById('emailsResult').value = res.emails.join('\n');
+                document.getElementById('resultArea').style.display='block';
+                btnSpan.textContent = 'Extract emails'; loader.style.display='none';
+            },500);
+        });
+        document.getElementById('copyBtn').addEventListener('click', function(){
+            const out = document.getElementById('emailsResult');
+            out.select();
+            document.execCommand('copy');
+            this.textContent = 'Copied!';
+            setTimeout(()=> this.textContent='Copy', 2000);
+        });
+        document.getElementById('downloadBtn').addEventListener('click', function(){
+            const data = document.getElementById('emailsResult').value;
+            const blob = new Blob([data],{type:'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'emails.txt';
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+        });
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', e=>{
+            e.preventDefault();
+            dropZone.style.borderColor='var(--primary)';
+        });
+        dropZone.addEventListener('dragleave', ()=>{ dropZone.style.borderColor='var(--gray-200)'; });
+        dropZone.addEventListener('drop', e=>{
+            e.preventDefault();
+            dropZone.style.borderColor='var(--gray-200)';
+            const f = e.dataTransfer.files[0];
+            if (f) {
+                const r = new FileReader();
+                r.onload = e => document.getElementById('emailsSource').value = e.target.result;
+                r.readAsText(f);
+            }
+        });
+        document.getElementById('fileInput').addEventListener('change', e=>{
+            const f = e.target.files[0];
+            if (f) {
+                const r = new FileReader();
+                r.onload = e => document.getElementById('emailsSource').value = e.target.result;
+                r.readAsText(f);
+            }
+        });
+    </script>
+
+  <section class="seo-description container" style="padding:2rem 0;">
+  <h2>How to Use Our Free Email Extractor</h2>
+  <p>
+    No more manual copy-pasting—our <strong>free email extractor</strong> gives you a clean list of addresses in seconds. Just follow these three simple steps:
+  </p>
+  <ol>
+    <li><strong>Upload or paste content:</strong> Drag &amp; drop your CSV, TXT or Excel file, or paste any text into the box.</li>
+    <li><strong>Click “Extract”: </strong>Hit the button and watch our <strong>email extractor</strong> scan for valid addresses.</li>
+    <li><strong>Get your results:</strong> See one email per line, ready to copy, download or import into your CRM.</li>
+  </ol>
+
+  <h2>Why Choose Our Email Extractor from CSV &amp; Beyond</h2>
+  <p>
+    Whether you need an <strong>email extractor from CSV</strong> or want to pull addresses directly from raw text, our tool handles it all:
+  </p>
+  <ul>
+    <li><strong>CSV support:</strong> Instantly grab all emails from any CSV file without opening spreadsheets.</li>
+    <li><strong>Multi-format:</strong> Works with TXT, Excel, HTML snippets and more—no extra plugins required.</li>
+    <li><strong>Duplicate removal:</strong> Automatically filters out repeats so you only keep unique addresses.</li>
+  </ul>
+
+  <h2>How Our Gmail Email Extractor Works</h2>
+  <p>
+    For marketers using Gmail, our specialized <strong>Gmail email extractor</strong> workflow ensures you never miss a lead:
+  </p>
+  <ol>
+    <li><strong>Authorize access:</strong> Connect your Gmail account in just a few clicks (read-only, secure).</li>
+    <li><strong>Select labels/folders:</strong> Choose which inbox, sent or custom label to scan for addresses.</li>
+    <li><strong>Extract &amp; export:</strong> Download your Gmail contacts as a .txt or .csv—ready for outreach.</li>
+  </ol>
+
+  <h2>Key Benefits of Our Email Extraction Tool</h2>
+  <p>
+    From startups to enterprises, here’s why our <strong>email extractor</strong> stands out:
+  </p>
+  <ul>
+    <li><strong>Time-saving:</strong> Automate large-scale extractions and focus on your campaign strategy.</li>
+    <li><strong>High accuracy:</strong> Advanced regex and pattern matching ensure only valid emails make the cut.</li>
+    <li><strong>Free to use:</strong> Our core <strong>free email extractor</strong> gives you unlimited extractions without a paywall.</li>
+    <li><strong>Scalable:</strong> Handle thousands of rows or full Gmail inboxes in one go.</li>
+    <li><strong>Instant download:</strong> Export in .txt or .csv and plug directly into Mailchimp, HubSpot, or your favorite ESP.</li>
+  </ul>
+</section>
+
+  
+</body>
+</html>
