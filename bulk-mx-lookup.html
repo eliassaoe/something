@@ -50,7 +50,7 @@
         .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
         .header-content { display: flex; justify-content: center; align-items: center; }
         .logo-link { display: flex; align-items: center; }
-        .logo-text { font-size: 1.5rem;	font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
         .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
 
         /* Hero */
@@ -65,6 +65,8 @@
         .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
         .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
         .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; margin-left: 0.5rem; }
+        .btn-secondary:hover { background: var(--primary); }
         .loader { display: inline-block; width: 1.25rem; height: 1.25rem; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 0.5rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -95,7 +97,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="/" class="logo-link">
+                <a href="https://unlimited-leads.online/eng" class="logo-link">
                     <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
                     <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
                 </a>
@@ -114,11 +116,14 @@
     <!-- Lookup Form -->
     <section class="container">
         <div class="lookup-form">
-            <textarea id="domainsInput" placeholder="Enter domains, one per line..."></textarea>
-            <button id="lookupBtn" class="btn btn-primary btn-large">
-                <span>Start Lookup</span>
-                <span class="loader" style="display:none;"></span>
-            </button>
+            <textarea id="domainsInput" placeholder="Enter domains or URLs (up to 100), one per line..."></textarea>
+            <div>
+                <button id="lookupBtn" class="btn btn-primary btn-large">
+                    <span>Start Lookup</span>
+                    <span class="loader" style="display:none;"></span>
+                </button>
+                <button id="downloadCsvBtn" class="btn btn-secondary" style="display:none;">Download CSV</button>
+            </div>
             <div id="resultArea" class="result-area">
                 <table>
                     <thead>
@@ -135,34 +140,30 @@
         <h2>How to Use Our Free Bulk MX Lookup</h2>
         <p>No more manual DNS checks—our <strong>free Bulk MX lookup</strong> tool lets you verify MX records for multiple domains in seconds. Just follow these three simple steps:</p>
         <ol>
-            <li><strong>Paste your domains:</strong> Enter your list of domains or upload a text file, one per line.</li>
-            <li><strong>Click “Start Lookup”:</strong> Hit the button and watch our <strong>Bulk MX lookup</strong> scan each domain using <strong>MX lookup google</strong>.</li>
-            <li><strong>Review your results:</strong> See which domains have properly configured MX records and download your report.</li>
+            <li><strong>Paste your domains or URLs:</strong> Enter domains or full URLs (including http/https), up to 100 lines.</li>
+            <li><strong>Click “Start Lookup”:</strong> Our <strong>Bulk MX lookup</strong> automatically extracts each hostname and queries MX records via <strong>MX lookup google</strong>.</li>
+            <li><strong>Download or review:</strong> View all results in the table and click “Download CSV” for easy integration.</li>
         </ol>
 
         <h2>Why Choose Our Bulk MX Lookup Tool</h2>
-        <p>Whether you need a <strong>free Bulk MX lookup</strong> or a quick <strong>MX lookup domain</strong> check, our tool provides:</p>
         <ul>
-            <li><strong>Batch processing:</strong> Perform MX lookup for dozens or hundreds of domains in one go.</li>
-            <li><strong>Google DNS-powered:</strong> Uses <strong>MX lookup google</strong> via DNS-over-HTTPS for fast and reliable results.</li>
-            <li><strong>Clear reporting:</strong> Highlights domains with missing or misconfigured MX records at a glance.</li>
+            <li><strong>Batch processing:</strong> Check MX lookup domain status for dozens or hundreds of entries at once.</li>
+            <li><strong>Accurate & fast:</strong> Powered by Google DNS-over-HTTPS (<strong>MX lookup google</strong>) for reliable results.</li>
+            <li><strong>Clear reporting:</strong> See which domains have missing or misconfigured MX records instantly.</li>
         </ul>
 
         <h2>Key Benefits of Our Bulk MX Lookup</h2>
         <ul>
-            <li><strong>Time-saving:</strong> Automate your MX checks and focus on fixing issues, not gathering data.</li>
-            <li><strong>High accuracy:</strong> Leverages real-time DNS queries to ensure up-to-date MX record status.</li>
-            <li><strong>Free to use:</strong> Our <strong>free Bulk MX lookup</strong> service has no limits on the number of domains checked.</li>
-            <li><strong>Downloadable report:</strong> Export results as CSV or JSON for easy integration.</li>
-            <li><strong>Scalable:</strong> Handle domain lists of any size—small businesses to large enterprises.</li>
+            <li><strong>Time-saving:</strong> Automate MX checks and focus on remediation, not manual lookups.</li>
+            <li><strong>Free & limitless:</strong> Our <strong>free Bulk MX lookup</strong> tool handles up to 100 entries per batch with no restrictions.</li>
+            <li><strong>Downloadable report:</strong> Export results as a CSV file for further analysis or sharing.</li>
+            <li><strong>Scalable:</strong> Perfect for IT teams, marketers, and administrators managing large domain lists.</li>
         </ul>
     </section>
 
     <!-- Footer -->
     <section class="footer">
-        <div class="container">
-            &copy; 2025 unlimitedleads. All rights reserved.
-        </div>
+        <div class="container"> &copy; 2025 unlimitedleads. All rights reserved. </div>
     </section>
 
     <!-- Scripts -->
@@ -172,42 +173,62 @@
         const label = btn.querySelector('span');
         const resultArea = document.getElementById('resultArea');
         const tbody = resultArea.querySelector('tbody');
+        const downloadBtn = document.getElementById('downloadCsvBtn');
 
         btn.addEventListener('click', async () => {
             const raw = document.getElementById('domainsInput').value.trim();
             if (!raw) return;
-            const domains = [...new Set(raw.split('\n').map(d => d.trim()).filter(d => d))];
+            const lines = raw.split('\n').map(d => d.trim()).filter(d => d);
+            const domains = [...new Set(lines)].slice(0,100);
             tbody.innerHTML = '';
             resultArea.style.display = 'none';
+            downloadBtn.style.display = 'none';
             label.textContent = 'Checking...'; loader.style.display = 'inline-block';
 
-            for (const domain of domains) {
+            for (const entry of domains) {
+                let hostname = entry;
                 try {
-                    const res = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`);
+                    if (/^https?:\/\//i.test(entry)) {
+                        hostname = (new URL(entry)).hostname;
+                    }
+                } catch {}
+                try {
+                    const res = await fetch(`https://dns.google/resolve?name=${hostname}&type=MX`);
                     const data = await res.json();
                     const answers = data.Answer || [];
                     if (answers.length) {
-                        const mxList = answers
-                            .filter(a => a.type === 15)
-                            .map(a => a.data)
-                            .join(', ');
-                        appendRow(domain, true, mxList);
+                        const mxList = answers.filter(a => a.type===15).map(a=>a.data).join(', ');
+                        appendRow(hostname, true, mxList);
                     } else {
-                        appendRow(domain, false, 'No MX records found');
+                        appendRow(hostname, false, 'No MX records found');
                     }
-                } catch (e) {
-                    appendRow(domain, false, 'API error');
+                } catch {
+                    appendRow(hostname, false, 'API error');
                 }
             }
 
             loader.style.display = 'none';
             label.textContent = 'Start Lookup';
             resultArea.style.display = 'block';
+            downloadBtn.style.display = 'inline-block';
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const rows = [['Domain','MX Configured','Details']];
+            tbody.querySelectorAll('tr').forEach(tr => {
+                const cols = Array.from(tr.querySelectorAll('td')).map(td => td.textContent);
+                rows.push(cols);
+            });
+            const csvContent = rows.map(r => r.map(c=>`"${c.replace(/"/g,'""')}"`).join(',')).join('\n');
+            const blob = new Blob([csvContent], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'bulk_mx_results.csv';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
         });
 
         function appendRow(domain, ok, detail) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${domain}</td><td class=\"${ok?'ok':'ko'}\">${ok?'Yes':'No'}</td><td>${detail}</td>`;
+            tr.innerHTML = `<td>${domain}</td><td class="${ok?'ok':'ko'}">${ok?'Yes':'No'}</td><td>${detail}</td>`;
             tbody.appendChild(tr);
         }
     </script>
