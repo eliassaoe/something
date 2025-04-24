@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>unlimitedleads - Email Extractor</title>
-    <meta name="description" content="Easily extract email addresses from any text or file with our free Unlimited Leads tool."/>
+    <title>Email Extractor | Extracting Email from CSV or Text</title>
+    <meta name="description" content="Free Email Extractor - Extract email addresses from any CSV or Text with our free tool"/>
 
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,8 +18,8 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://unlimited-leads.online/extractor" />
-    <meta property="og:title" content="Email Extractor | unlimitedleads" />
-    <meta property="og:description" content="Easily extract emails with our Unlimited Leads tool." />
+    <meta property="og:title" content="Extracteur d'Emails | unlimitedleads" />
+    <meta property="og:description" content="Extrayez facilement des emails avec notre outil Unlimited Leads." />
     <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
 
     <!-- Fonts & Icons -->
@@ -30,7 +30,65 @@
 
     <!-- Branding & Extractor Styles -->
     <style>
-        /* (Unchanged CSS) */
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Extractor Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; }
+
+        /* Extractor Form */
+        .extractor-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 800px; margin: 0 auto; }
+        .file-upload { border: 2px dashed var(--gray-200); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: var(--transition); }
+        .file-upload:hover { border-color: var(--primary); background: rgba(79,70,229,0.05); }
+        .divider { display: flex; align-items: center; margin: 1.5rem 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+        .divider span { padding: 0 1rem; color: var(--gray-200); }
+        textarea { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); resize: vertical; margin-bottom: 1.5rem; }
+        .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { width: 100%; font-size: 1rem; padding: 1rem; }
+        .loader { display: inline-block; width: 1.25rem; height: 1.25rem; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 0.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result Area */
+        .result-area { display: none; margin-top: 2rem; }
+        .result-area textarea { background: var(--gray-50); }
+        .actions { margin-top: 1rem; }
+        .actions .btn { margin-right: 0.5rem; }
+
+        /* Footer */
+        .footer { background: var(--gray-800); color: white; padding: 2rem 0; text-align: center; }
+        .footer a { color: var(--gray-200); }
+
+        @media (max-width:768px) { .hero h1 { font-size: 2rem; } }
     </style>
 </head>
 <body>
@@ -50,7 +108,7 @@
     <!-- Hero Extractor -->
     <section class="hero">
         <div class="container">
-            <h1>Email Extractor</h1>
+            <h1>Email Extrator</h1>
             <p>Easily extract email addresses from any text or file.</p>
         </div>
     </section>
@@ -60,18 +118,18 @@
         <div class="extractor-form">
             <div class="file-upload" id="dropZone">
                 <input type="file" id="fileInput" style="display:none;">
-                <p>Drag and drop your <strong>.txt</strong> or <strong>.csv</strong> file, or paste text below.</p>
+                <p>Drag and drop your file <strong>.txt</strong>, <strong>.csv</strong> or paste text below.</p>
             </div>
-            <div class="divider"><span>OR</span></div>
+            <div class="divider"><span>OU</span></div>
             <textarea id="emailsSource" placeholder="Paste your text here..."></textarea>
             <button id="extractBtn" class="btn btn-primary btn-large">
                 <span>Extract emails</span>
                 <span class="loader" style="display:none;"></span>
             </button>
             <div id="resultArea" class="result-area">
-                <textarea id="emailsResult" readonly placeholder="Extracted emails..."></textarea>
+                <textarea id="emailsResult" readonly placeholder="Emails extracted..."></textarea>
                 <div class="actions">
-                    <button id="copyBtn" class="btn btn-secondary">Copy</button>
+                    <button id="copyBtn" class="btn btn-secondary">Paste</button>
                     <button id="downloadBtn" class="btn btn-primary">Download</button>
                 </div>
             </div>
@@ -98,58 +156,32 @@
         }
         document.getElementById('extractBtn').addEventListener('click', function(){
             const txt = document.getElementById('emailsSource').value;
-            const btnSpan = this.querySelector('span'); const loader = this.querySelector('.loader');
-            btnSpan.textContent = 'Extracting emails...'; loader.style.display='inline-block';
+            const btn = this.querySelector('span'); const loader = this.querySelector('.loader');
+            btn.textContent='Extraction en cours...'; loader.style.display='inline-block';
             setTimeout(()=>{
                 const res = extractEmailsFromText(txt);
                 document.getElementById('emailsResult').value = res.emails.join('\n');
                 document.getElementById('resultArea').style.display='block';
-                btnSpan.textContent = 'Extract emails'; loader.style.display='none';
+                btn.textContent='Extraire les emails'; loader.style.display='none';
             },500);
         });
         document.getElementById('copyBtn').addEventListener('click', function(){
-            const out = document.getElementById('emailsResult');
-            out.select();
-            document.execCommand('copy');
-            this.textContent = 'Copied!';
-            setTimeout(()=> this.textContent='Copy', 2000);
+            const out = document.getElementById('emailsResult'); out.select(); document.execCommand('copy'); this.textContent='Copié !'; setTimeout(()=>this.textContent='Copier',2000);
         });
         document.getElementById('downloadBtn').addEventListener('click', function(){
             const data = document.getElementById('emailsResult').value;
             const blob = new Blob([data],{type:'text/plain'});
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = 'emails.txt';
-            document.body.appendChild(a); a.click();
-            document.body.removeChild(a);
+            const a=document.createElement('a'); a.href=url; a.download='emails.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         });
         const dropZone = document.getElementById('dropZone');
-        dropZone.addEventListener('dragover', e=>{
-            e.preventDefault();
-            dropZone.style.borderColor='var(--primary)';
-        });
+        dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.style.borderColor='var(--primary)'; });
         dropZone.addEventListener('dragleave', ()=>{ dropZone.style.borderColor='var(--gray-200)'; });
-        dropZone.addEventListener('drop', e=>{
-            e.preventDefault();
-            dropZone.style.borderColor='var(--gray-200)';
-            const f = e.dataTransfer.files[0];
-            if (f) {
-                const r = new FileReader();
-                r.onload = e => document.getElementById('emailsSource').value = e.target.result;
-                r.readAsText(f);
-            }
-        });
-        document.getElementById('fileInput').addEventListener('change', e=>{
-            const f = e.target.files[0];
-            if (f) {
-                const r = new FileReader();
-                r.onload = e => document.getElementById('emailsSource').value = e.target.result;
-                r.readAsText(f);
-            }
-        });
+        dropZone.addEventListener('drop', e=>{ e.preventDefault(); dropZone.style.borderColor='var(--gray-200)'; const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=e=>document.getElementById('emailsSource').value=e.target.result; r.readAsText(f);} });
+        document.getElementById('fileInput').addEventListener('change', e=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=e=>document.getElementById('emailsSource').value=e.target.result; r.readAsText(f);} });
     </script>
 
-  <section class="seo-description container" style="padding:2rem 0;">
+    <section class="seo-description container" style="padding:2rem 0;">
   <h2>How to Use Our Free Email Extractor</h2>
   <p>
     No more manual copy-pasting—our <strong>free email extractor</strong> gives you a clean list of addresses in seconds. Just follow these three simple steps:
@@ -193,6 +225,6 @@
   </ul>
 </section>
 
-  
+    
 </body>
 </html>
