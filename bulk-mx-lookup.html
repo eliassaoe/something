@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bulk MX Lookup | Free Bulk MX Lookup Tool</title>
+    <meta name="description" content="Free Bulk MX Lookup - Check MX records for multiple domains at once with our free tool"/>
+
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://unlimited-leads.online/bulk-mx-lookup" />
+    <meta property="og:title" content="Bulk MX Lookup | Free Bulk MX Lookup Tool" />
+    <meta property="og:description" content="Free Bulk MX Lookup - Check MX records for multiple domains at once with our free tool" />
+    <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Branding & Styles -->
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem;	font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; }
+
+        /* Form */
+        .lookup-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 800px; margin: 0 auto; }
+        textarea { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); resize: vertical; margin-bottom: 1.5rem; height: 300px; }
+        .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .loader { display: inline-block; width: 1.25rem; height: 1.25rem; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 0.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Results */
+        .result-area { display: none; margin-top: 2rem; }
+        .result-area table { width: 100%; border-collapse: collapse; }
+        .result-area th, .result-area td { border: 1px solid var(--gray-200); padding: 0.5rem; }
+        .result-area th { background: var(--gray-50); }
+        .ok { color: var(--success); font-weight: 600; }
+        .ko { color: var(--danger); font-weight: 600; }
+
+        /* SEO Section */
+        .seo-description { padding: 2rem 0; }
+        .seo-description h2 { font-size: 1.75rem; margin-bottom: 1rem; color: var(--gray-800); }
+        .seo-description p, .seo-description ul, .seo-description ol { max-width: 800px; margin: 0 auto 1.5rem; }
+        .seo-description ol li, .seo-description ul li { margin-bottom: 0.75rem; }
+
+        /* Footer */
+        .footer { background: var(--gray-800); color: white; text-align: center; padding: 2rem 0; margin-top: 3rem; }
+        .footer a { color: var(--gray-200); }
+
+        @media (max-width:768px) { .hero h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo-link">
+                    <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                    <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bulk MX Lookup</h1>
+            <p>Check MX records for multiple domains at once—free and instant.</p>
+        </div>
+    </section>
+
+    <!-- Lookup Form -->
+    <section class="container">
+        <div class="lookup-form">
+            <textarea id="domainsInput" placeholder="Enter domains, one per line..."></textarea>
+            <button id="lookupBtn" class="btn btn-primary btn-large">
+                <span>Start Lookup</span>
+                <span class="loader" style="display:none;"></span>
+            </button>
+            <div id="resultArea" class="result-area">
+                <table>
+                    <thead>
+                        <tr><th>Domain</th><th>MX Configured?</th><th>Details</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Section -->
+    <section class="seo-description container">
+        <h2>How to Use Our Free Bulk MX Lookup</h2>
+        <p>No more manual DNS checks—our <strong>free Bulk MX lookup</strong> tool lets you verify MX records for multiple domains in seconds. Just follow these three simple steps:</p>
+        <ol>
+            <li><strong>Paste your domains:</strong> Enter your list of domains or upload a text file, one per line.</li>
+            <li><strong>Click “Start Lookup”:</strong> Hit the button and watch our <strong>Bulk MX lookup</strong> scan each domain using <strong>MX lookup google</strong>.</li>
+            <li><strong>Review your results:</strong> See which domains have properly configured MX records and download your report.</li>
+        </ol>
+
+        <h2>Why Choose Our Bulk MX Lookup Tool</h2>
+        <p>Whether you need a <strong>free Bulk MX lookup</strong> or a quick <strong>MX lookup domain</strong> check, our tool provides:</p>
+        <ul>
+            <li><strong>Batch processing:</strong> Perform MX lookup for dozens or hundreds of domains in one go.</li>
+            <li><strong>Google DNS-powered:</strong> Uses <strong>MX lookup google</strong> via DNS-over-HTTPS for fast and reliable results.</li>
+            <li><strong>Clear reporting:</strong> Highlights domains with missing or misconfigured MX records at a glance.</li>
+        </ul>
+
+        <h2>Key Benefits of Our Bulk MX Lookup</h2>
+        <ul>
+            <li><strong>Time-saving:</strong> Automate your MX checks and focus on fixing issues, not gathering data.</li>
+            <li><strong>High accuracy:</strong> Leverages real-time DNS queries to ensure up-to-date MX record status.</li>
+            <li><strong>Free to use:</strong> Our <strong>free Bulk MX lookup</strong> service has no limits on the number of domains checked.</li>
+            <li><strong>Downloadable report:</strong> Export results as CSV or JSON for easy integration.</li>
+            <li><strong>Scalable:</strong> Handle domain lists of any size—small businesses to large enterprises.</li>
+        </ul>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="container">
+            &copy; 2025 unlimitedleads. All rights reserved.
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        const btn = document.getElementById('lookupBtn');
+        const loader = btn.querySelector('.loader');
+        const label = btn.querySelector('span');
+        const resultArea = document.getElementById('resultArea');
+        const tbody = resultArea.querySelector('tbody');
+
+        btn.addEventListener('click', async () => {
+            const raw = document.getElementById('domainsInput').value.trim();
+            if (!raw) return;
+            const domains = [...new Set(raw.split('\n').map(d => d.trim()).filter(d => d))];
+            tbody.innerHTML = '';
+            resultArea.style.display = 'none';
+            label.textContent = 'Checking...'; loader.style.display = 'inline-block';
+
+            for (const domain of domains) {
+                try {
+                    const res = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`);
+                    const data = await res.json();
+                    const answers = data.Answer || [];
+                    if (answers.length) {
+                        const mxList = answers
+                            .filter(a => a.type === 15)
+                            .map(a => a.data)
+                            .join(', ');
+                        appendRow(domain, true, mxList);
+                    } else {
+                        appendRow(domain, false, 'No MX records found');
+                    }
+                } catch (e) {
+                    appendRow(domain, false, 'API error');
+                }
+            }
+
+            loader.style.display = 'none';
+            label.textContent = 'Start Lookup';
+            resultArea.style.display = 'block';
+        });
+
+        function appendRow(domain, ok, detail) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${domain}</td><td class=\"${ok?'ok':'ko'}\">${ok?'Yes':'No'}</td><td>${detail}</td>`;
+            tbody.appendChild(tr);
+        }
+    </script>
+
+</body>
+</html>
