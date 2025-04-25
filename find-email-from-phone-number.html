@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find Email from Phone Number | Email Finder Tool</title>
+  <meta name="description" content="Find email from phone number with our free and fast email finder tool. Enter a phone number to uncover associated email addresses instantly."/>
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Find Email from Phone Number | Unlimited Leads" />
+  <meta property="og:description" content="Free tool to find email address from phone number. Fast, accurate, and easy email finder from phone numbers." />
+  <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+  
+  <!-- Fonts and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #0ea5e9;
+      --gray-50: #f9fafb;
+      --gray-200: #e5e7eb;
+      --gray-800: #1f2937;
+      --success: #10b981;
+      --border-radius: 0.5rem;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); }
+    .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; }
+    .logo { display: flex; align-items: center; justify-content: center; }
+    .logo i { font-size: 1.5rem; color: var(--primary); margin-right: 0.5rem; }
+    .logo-text { font-weight: 700; font-size: 1.5rem; }
+    .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+    .hero { text-align: center; padding: 3rem 0; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+    .hero p { font-size: 1.125rem; }
+
+    .form-box { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; }
+    .form-box input { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); }
+    .btn { display: block; width: 100%; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; font-weight: 600; padding: 1rem; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); }
+    .btn:hover { transform: translateY(-2px); }
+
+    #result { display: none; margin-top: 1.5rem; }
+    #result textarea { width: 100%; height: 200px; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); background: var(--gray-50); }
+
+    footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: white; margin-top: 4rem; }
+
+    @media(max-width:768px) { .hero h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container logo">
+      <i class="fas fa-bolt"></i>
+      <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Find Email from Phone Number</h1>
+      <p>Enter a phone number to discover associated email addresses instantly.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="form-box">
+      <input type="text" id="phoneNumber" placeholder="Enter phone number e.g. +1 555 123 4567" />
+      <button class="btn" onclick="findEmail()">Find Email</button>
+
+      <div id="result">
+        <h3 style="margin-top: 1rem;">Results:</h3>
+        <textarea readonly id="emailResults">email@example.com</textarea>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Unlimited Leads. All rights reserved.
+  </footer>
+
+  <script>
+    function findEmail() {
+      const phone = document.getElementById('phoneNumber').value.trim();
+      const resultBox = document.getElementById('result');
+      const resultText = document.getElementById('emailResults');
+      if (!phone) return alert("Please enter a phone number.");
+      
+      // Simulated email response – replace with actual fetch to backend later
+      resultText.value = `Searching emails linked to: ${phone}\n\ncontact@domain.com\nhello@example.com`;
+      resultBox.style.display = 'block';
+    }
+  </script>
+  
+</body>
+
+<section class="container" style="margin-top: 3rem;">
+  <h2 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;">How to Use Our Free Email Finder from Phone Number</h2>
+  <p style="margin-bottom: 1.5rem;">
+    Skip the guesswork—our tool lets you <strong>find email from phone number</strong> in just a few clicks. Whether you're a marketer, recruiter, or sales pro, it’s built for speed and accuracy.
+  </p>
+
+  <ol style="margin-left: 1.25rem; margin-bottom: 2rem;">
+    <li style="margin-bottom: 0.75rem;"><strong>Enter a phone number:</strong> Paste any valid phone number in the field above.</li>
+    <li style="margin-bottom: 0.75rem;"><strong>Click “Find Email”:</strong> Our tool runs a deep lookup to identify email addresses linked to that number.</li>
+    <li><strong>Get instant results:</strong> See emails displayed in a clean list, ready to copy or export.</li>
+  </ol>
+
+  <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Why Use Our Email Finder from Phone Number?</h3>
+  <p style="margin-bottom: 1.5rem;">
+    Whether you want to <strong>find email address from phone number</strong> or reverse-search a contact, our tool makes it effortless:
+  </p>
+
+  <ul style="margin-left: 1.25rem; margin-bottom: 2rem;">
+    <li style="margin-bottom: 0.75rem;"><strong>Reverse search made easy:</strong> Quickly <strong>find a phone number from an email address</strong> or vice versa.</li>
+    <li style="margin-bottom: 0.75rem;"><strong>Smart matching:</strong> Uses pattern recognition and proprietary data to return real, verified emails.</li>
+    <li style="margin-bottom: 0.75rem;"><strong>No installations:</strong> 100% web-based—no software or plugins needed.</li>
+    <li><strong>Privacy focused:</strong> We never store or share your inputs—searches are confidential and secure.</li>
+  </ul>
+
+  <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Find Email Address from Phone Number—Free & Unlimited</h3>
+  <p style="margin-bottom: 1rem;">
+    Our goal is to democratize lead intelligence. That’s why our <strong>find email address from phone number free</strong> tool offers:
+  </p>
+  <ul style="margin-left: 1.25rem;">
+    <li style="margin-bottom: 0.75rem;"><strong>Unlimited lookups:</strong> No limits, no paywalls—just results.</li>
+    <li style="margin-bottom: 0.75rem;"><strong>CRM ready:</strong> Copy, download or import results straight into your favorite platforms like HubSpot, Salesforce, or Lemlist.</li>
+    <li style="margin-bottom: 0.75rem;"><strong>Scalable and reliable:</strong> Works for one contact or thousands with the same speed and accuracy.</li>
+    <li><strong>Constant updates:</strong> Our email finder from phone number engine gets smarter every day with new data integrations.</li>
+  </ul>
+</section>
+
+</html>
