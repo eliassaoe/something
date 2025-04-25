@@ -98,15 +98,33 @@
       const resultText = document.getElementById('emailResults');
       if (!phone) return alert("Please enter a phone number.");
       
-      // Simulated email response – replace with actual fetch to backend later
-      resultText.value = `Searching emails linked to: ${phone}\n\ncontact@domain.com\nhello@example.com`;
+      resultText.value = `Searching emails linked to: ${phone}...`;
       resultBox.style.display = 'block';
+
+      fetch(`https://eliasse-n8n.onrender.com/webhook/ef3beb8e-71e0-4cd5-871d-25309a0dd345?phone=${encodeURIComponent(phone)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && Array.isArray(data) && data.length > 0) {
+            const results = data.map(item => {
+              const email = item.email || "N/A";
+              const firstName = item.first_name || "";
+              const lastName = item.last_name || "";
+              return `${firstName} ${lastName} (${email})`.trim();
+            }).join('\n');
+
+            resultText.value = results;
+          } else {
+            resultText.value = "No emails found for this phone number.";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          resultText.value = "An error occurred while fetching the data.";
+        });
     }
   </script>
-  
-</body>
 
-<section class="container" style="margin-top: 3rem;">
+  <section class="container" style="margin-top: 3rem;">
   <h2 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;">How to Use Our Free Email Finder from Phone Number</h2>
   <p style="margin-bottom: 1.5rem;">
     Skip the guesswork—our tool lets you <strong>find email from phone number</strong> in just a few clicks. Whether you're a marketer, recruiter, or sales pro, it’s built for speed and accuracy.
@@ -142,4 +160,9 @@
   </ul>
 </section>
 
+
+  
+</body>
 </html>
+
+
