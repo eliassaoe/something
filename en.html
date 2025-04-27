@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnlimitedLeads | B2B Database & Waitlist</title>
+    <meta name="description" content="UnlimitedLeads - Access 450M+ verified contacts and enjoy unlimited lead exports with one-time payment!" />
+
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --gray-600: #4b5563;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; color: inherit; }
+        .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--box-shadow); }
+        .btn-secondary { background: var(--secondary); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { font-size: 1rem; padding: 1rem 2rem; }
+        .section { padding: 4rem 0; }
+        h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--gray-800); text-align: center; }
+        h3, h4 { margin-bottom: 0.75rem; color: var(--gray-800); }
+        p { margin-bottom: 1rem; color: var(--gray-600); }
+        ul { list-style: disc inside; color: var(--gray-600); }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-links { display: flex; gap: 1.5rem; font-weight: 500; }
+        .cta-group { display: flex; gap: 1rem; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 6rem 0 4rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; color: var(--gray-800); }
+        .hero p { font-size: 1.25rem; margin-bottom: 2rem; }
+
+        /* Stats */
+        .stats { display: flex; justify-content: space-around; text-align: center; margin-top: 2rem; }
+        .stat { flex: 1; }
+        .stat h3 { font-size: 2rem; color: var(--primary); }
+        .stat p { font-weight: 600; color: var(--gray-800); }
+
+        /* Steps */
+        .steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 2rem; margin-top: 2rem; }
+        .step { text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
+        .step i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem; }
+        .step h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+        /* Features */
+        .features { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 2rem; margin-top: 2rem; }
+        .feature-card { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; transition: transform 0.3s ease; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-card i { font-size: 2rem; margin-bottom: 1rem; color: var(--primary); }
+
+        /* Pricing Cards */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; margin-top: 2rem; }
+        .pricing-card { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; }
+
+        /* Waitlist */
+        .waitlist-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 600px; margin: 0 auto; text-align: center; }
+        .waitlist-form input[type="email"] { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); margin-bottom: 1.5rem; }
+
+        /* Testimonials */
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; margin-top: 2rem; }
+        .testimonial { background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
+        .testimonial p { font-style: italic; margin-bottom: 1rem; }
+        .testimonial h4 { font-weight: 600; color: var(--gray-800); }
+
+        /* Footer */
+        .footer { background: var(--gray-800); color: white; padding: 2rem 0; text-align: center; }
+        .footer a { color: var(--gray-200); margin: 0 0.5rem; }
+
+        @media (max-width:768px) { .hero h1 { font-size: 2.5rem; } .stats { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="/" class="logo-link">
+                <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                <span class="logo-text"><span class="gradient-text">UnlimitedLeads</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#testimonials">Success Stories</a>
+                <a href="#contact">Contact Sales</a>
+            </nav>
+            <div class="cta-group">
+                <a href="#" class="btn btn-secondary">Log in</a>
+                <a href="#waitlist" class="btn btn-primary">Sign up free</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Access 450M+ Verified Contacts<br><span class="gradient-text">with Unlimited Exports</span></h1>
+            <p>Unlock 63M+ B2B companies, filter your ideal customers, and never run out of leads—one-time payment, unlimited downloads.</p>
+            <a href="#waitlist" class="btn btn-primary btn-large">Join the Waitlist</a>
+            <div class="stats">
+                <div class="stat">
+                    <h3>450M+</h3>
+                    <p>Verified Contacts</p>
+                </div>
+                <div class="stat">
+                    <h3>63M+</h3>
+                    <p>B2B Companies</p>
+                </div>
+                <div class="stat">
+                    <h3>∞</h3>
+                    <p>Unlimited Exports</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section container">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <i class="fas fa-search"></i>
+                <h4>Select</h4>
+                <p>Filter by industry, company size, tech stack, funding, and growth signals.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-check-circle"></i>
+                <h4>Verify</h4>
+                <p>Enrich your lists with accurate emails and phone numbers in one click.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-download"></i>
+                <h4>Export</h4>
+                <p>Download unlimited leads with a single purchase—stay stocked with prospects forever.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section container">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-infinity"></i>
+                <h3>Unlimited Exports</h3>
+                <p>One-time payment gives you infinite downloads of verified leads—no caps, no surprises.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-filter"></i>
+                <h3>Advanced Filters</h3>
+                <p>Narrow down your ICP by revenue, size, tech stack, funding, and hiring trends.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-database"></i>
+                <h3>Massive Database</h3>
+                <p>Tap into 450M+ contacts and 63M+ B2B companies worldwide—always fresh, always verified.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>99% Accuracy</p>
+                <p>Enjoy one of the highest email and phone verification rates on the market.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section container" style="background: var(--gray-50);">
+        <h2>One-Time Payment Plans</h2>
+        <p style="color: var(--gray-600); text-align:center;">Choose your plan and get unlimited exports forever. Sign up now and receive 1,000 leads free!</p>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter Plan</h3>
+                <p><strong>$97</strong> — 58M Leads</p>
+                <ul>
+                    <li>40M US leads</li>
+                    <li>8M UK leads</li>
+                    <li>5M Canada leads</li>
+                    <li>3M Australia leads</li>
+                    <li>267M Worldwide leads</li>
+                </ul>
+                <button class="btn btn-primary btn-large">Buy Now</button>
+            </div>
+            <div class="pricing-card">
+                <h3>All Access Plan</h3>
+                <p><strong>$149</strong> — 392M Leads</p>
+                <ul>
+                    <li>93M US leads</li>
+                    <li>16M UK leads</li>
+                    <li>10.2M Canada leads</li>
+                    <li>6.6M Australia leads</li>
+                    <li>267M Worldwide leads</li>
+                </ul>
+                <button class="btn btn-primary btn-large">Buy Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section id="waitlist" class="section container">
+        <h2>Join the Waitlist</h2>
+        <p style="text-align:center; color: var(--gray-600);">Our ultimate B2B database is launching soon. Sign up now to secure exclusive early access and grab your 1,000 free leads!</p>
+        <div class="waitlist-form">
+            <form action="#" method="POST">
+                <input type="email" name="email" placeholder="Your work email" required />
+                <button type="submit" class="btn btn-primary btn-large">Get Early Access</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section container">
+        <h2>Trusted by Professionals</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>“This database is a game-changer—I’ve already booked 3 meetings!”</p>
+                <h4>Antonio Romero, CEO</h4>
+            </div>
+            <div class="testimonial">
+                <p>“Unlimited exports mean I never run out of prospects. Love it!”</p>
+                <h4>Julien Perrière, Growth Lead</h4>
+            </div>
+            <div class="testimonial">
+                <p>“One purchase, infinite downloads—perfect for scaling our outreach.”</p>
+                <h4>Kate Kurnevych, Sales Manager</h4>
+            </div>
+            <div class="testimonial">
+                <p>“I cancelled my other tools—UnlimitedLeads covers everything I need.”</p>
+                <h4>Joseph Barnard, Business Dev</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
