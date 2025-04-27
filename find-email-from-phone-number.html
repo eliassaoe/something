@@ -50,6 +50,8 @@
     .form-box input { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); }
     .btn { display: block; width: 100%; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; font-weight: 600; padding: 1rem; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); }
     .btn:hover { transform: translateY(-2px); }
+    .btn-secondary { background: var(--gray-800); margin-top: 0.5rem; }
+    .btn-secondary:hover { background: #374151; }
 
     #result { display: none; margin-top: 1.5rem; }
     #result textarea { width: 100%; height: 200px; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); background: var(--gray-50); }
@@ -73,7 +75,7 @@
   <section class="hero">
     <div class="container">
       <h1>Get email address from phone number​</h1>
-      <p>Enter a company phone number to find associated email addresses instantly.</p>
+      <p>Enter a <strong>company</strong> phone number to find associated email addresses instantly.</p>
     </div>
   </section>
 
@@ -81,6 +83,7 @@
     <div class="form-box">
       <input type="text" id="phoneNumber" placeholder="Enter phone number e.g. +1 555 123 4567" />
       <button class="btn" onclick="findEmail()">Find Email</button>
+      <button class="btn btn-secondary" onclick="tryExample()">Try an Example</button>
 
       <div id="result">
         <h3 style="margin-top: 1rem;">Results:</h3>
@@ -124,7 +127,12 @@
           resultText.value = "An error occurred while fetching the data.";
         });
     }
+
+    function tryExample() {
+      document.getElementById('phoneNumber').value = "(661) 837-6000";
+    }
   </script>
+
 
    <section class="container" style="margin-top: 3rem;">
 
