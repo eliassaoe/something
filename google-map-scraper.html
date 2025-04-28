@@ -58,15 +58,24 @@
     .example-text { font-size: 0.875rem; color: var(--gray-600); margin-top: 0.5rem; }
     .highlight-text { color: var(--primary); font-weight: 600; }
 
-    .loading-message { margin-top: 1.5rem; padding: 1rem; background: #10b981; color: white; border-radius: var(--border-radius); text-align: center; display: none; }
+    .loading-message {
+      padding: 1rem;
+      background: #10b981;
+      color: white;
+      border-radius: var(--border-radius);
+      text-align: center;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
 
   <header>
     <div class="container logo">
-      <i class="fas fa-map"></i>
-      <span class="logo-text"><span class="gradient-text">Google Map Scraper</span></span>
+      <a href="https://unlimited-leads.online/apollo-email-finder">
+        <i class="fas fa-bolt"></i>
+        <span class="logo-text"><span class="gradient-text">Unlimitedleads</span></span>
+      </a>
     </div>
   </header>
 
@@ -79,23 +88,23 @@
 
   <section class="container">
     <div class="form-box">
-      <input type="text" id="googleSearch" placeholder="Enter Google search keyword (e.g Restaurant Paris 12)" />
+      <input type="text" id="googleSearch" placeholder="Enter Google search keyword" />
+      <div class="example-text">e.g Restaurant Paris 12</div>
       <input type="email" id="email" placeholder="Enter your email" />
       <button class="btn" onclick="submitForm()">Submit</button>
 
-      <div id="popup" style="display: none; padding: 1rem; background: #0ea5e9; color: white; border-radius: var(--border-radius); text-align: center; margin-top: 1rem;">
-        You will receive the data in the next 24 hours. Please check your spam folder.
+      <div id="loadingMessage" class="loading-message" style="display:none;">
+        Working on your request... You will receive the result in your email within 24 hours. Please check your spam folder.
       </div>
 
-      <!-- Loading message -->
-      <div id="loadingMessage" class="loading-message">
-        <p>Work in progress for <strong id="loadingSearchName"></strong>. You will receive the result in your email. It may take up to 24 hours. Please check your spam folder.</p>
+      <div id="popup" style="display: none; padding: 1rem; background: #0ea5e9; color: white; border-radius: var(--border-radius); text-align: center; margin-top: 1rem;">
+        You will receive the data in the next 24 hours. Please check your spam folder.
       </div>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 Google Map Scraper. All rights reserved.</p>
+    <p>&copy; 2025 Unlimitedleads. All rights reserved.</p>
   </footer>
 
   <script>
@@ -105,7 +114,6 @@
 
       if (googleSearch && email) {
         // Show loading message
-        document.getElementById("loadingSearchName").textContent = googleSearch;
         document.getElementById("loadingMessage").style.display = 'block';
 
         // Send GET request to the provided URL with the form data
