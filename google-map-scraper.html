@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- Focus keyword up front for SEO -->
-  <title>Google Map Scraper Extension – Free & Unlimited Leads</title>
-  <meta name="description" content="Get our FREE Google Map Scraper Extension to extract phones, emails, social profiles & reviews in one click. Export to CSV, JSON or Excel – no limits!"/>
-  <meta name="keywords" content="google map scraper extension, maps scraper, google map free lead extractor"/>
+  <title>Free Google Map Scraper</title>
+  <meta name="description" content="Scrape data from Google Maps based on Google search, and get the results via email, including unlimited leads and phone numbers."/>
   
-  <!-- Open Graph for social sharing -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Free Google Map Scraper Extension" />
-  <meta property="og:description" content="Download our FREE browser extension to pull business leads from Google Maps instantly. Export to CSV, JSON or Excel." />
-  <meta property="og:image" content="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
-
-  <link rel="icon" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+  <meta property="og:title" content="Free Google Map Scraper" />
+  <meta property="og:description" content="Scrape data from Google Maps with our free tool. Get results directly to your email, including unlimited leads and phone numbers." />
+  <meta property="og:image" content="https://example.com/screenshot.png" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://example.com/favicon.png">
+  
+  <!-- Fonts and Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     :root {
@@ -25,96 +27,107 @@
       --primary-dark: #4338ca;
       --secondary: #0ea5e9;
       --gray-50: #f9fafb;
+      --gray-200: #e5e7eb;
       --gray-800: #1f2937;
+      --success: #10b981;
       --border-radius: 0.5rem;
       --transition: all 0.3s ease;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { font-size: 16px; }
-    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
-    a { text-decoration: none; }
-    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1rem; }
-    header { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .logo { display: flex; align-items: center; justify-content: center; padding: 1rem 0; }
-    .logo img { height: 32px; margin-right: 0.5rem; }
-    .logo-text { font-weight: 800; font-size: 1.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); }
+    .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; }
+    .logo { display: flex; align-items: center; justify-content: center; }
+    .logo i { font-size: 1.5rem; color: var(--primary); margin-right: 0.5rem; }
+    .logo-text { font-weight: 700; font-size: 1.5rem; }
+    .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
 
-    /* Hero */
-    .hero { text-align: center; padding: 4rem 1rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); }
+    .hero { text-align: center; padding: 3rem 0; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); }
     .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
-    .hero p { font-size: 1.125rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: #fff; font-weight: 600; padding: 1rem 2rem; border: none; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); }
+    .hero p { font-size: 1.125rem; }
+
+    .form-box { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; }
+    .form-box input { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); }
+    .btn { display: block; width: 100%; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; font-weight: 600; padding: 1rem; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); }
     .btn:hover { transform: translateY(-2px); }
+    .btn-secondary { background: var(--gray-800); margin-top: 0.5rem; }
+    .btn-secondary:hover { background: #374151; }
 
-    /* Features */
-    .features { margin-top: 4rem; text-align: center; }
-    .features h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; }
-    .features ul { list-style: none; max-width: 800px; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .features li { position: relative; padding-left: 1.5rem; font-size: 1rem; }
-    .features li:before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--primary); }
+    footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: white; margin-top: 4rem; }
 
-    /* Example section */
-    .example { margin-top: 4rem; text-align: center; }
-    .example h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
-    .example-image img { max-width: 100%; height: auto; border-radius: var(--border-radius); }
+    .example-text { font-size: 0.875rem; color: var(--gray-600); margin-top: 0.5rem; }
+    .highlight-text { color: var(--primary); font-weight: 600; }
 
-    footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: #fff; font-size: 0.875rem; margin-top: 4rem; }
-
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1rem; }
-    }
-    @media (max-width: 480px) {
-      .btn { width: 100%; }
-    }
+    .loading-message { margin-top: 1.5rem; padding: 1rem; background: #10b981; color: white; border-radius: var(--border-radius); text-align: center; display: none; }
   </style>
 </head>
 <body>
 
   <header>
-  <div class="container logo">
-    <a href="https://unlimited-leads.online/" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center;">
-      <img src="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"
-           alt="Unlimited Leads Logo"
-           style="height: 32px; margin-right: 0.5rem;">
-      <span class="logo-text">unlimitedleads</span>
-    </a>
-  </div>
-</header>
-
+    <div class="container logo">
+      <i class="fas fa-map"></i>
+      <span class="logo-text"><span class="gradient-text">Google Map Scraper</span></span>
+    </div>
+  </header>
 
   <section class="hero">
     <div class="container">
-      <h1>Free Google Map Scraper Extension</h1>
-      <p>Instantly extract business names, phones, emails, reviews & social profiles from Google Maps—no limits, no credit card required.</p>
-      <a href="https://gumroad.com/r/c5451ecc4636d1965f53a5324977fe6c/product_files?product_file_ids%5B%5D=vjeW4K1epVy4rFDGue6uYA%3D%3D" class="btn" target="_blank" rel="noopener noreferrer">Download It for Free Now</a>
+      <h1>Get Unlimited Leads from Google Maps</h1>
+      <p>Scrape <strong>unlimited leads</strong> directly from Google Maps based on your search, including <strong>phone numbers</strong> of all the leads.</p>
     </div>
   </section>
 
-  <section class="container features">
-    <h2>What You Can Extract</h2>
-    <ul>
-      <li>Business Name & Address</li>
-      <li>Phone Number & Email</li>
-      <li>Social Media Profiles</li>
-      <li>Website & Domain</li>
-      <li>Ratings & Review Count</li>
-      <li>Opening Hours & Time Zone</li>
-    </ul>
-  </section>
+  <section class="container">
+    <div class="form-box">
+      <input type="text" id="googleSearch" placeholder="Enter Google search keyword (e.g Restaurant Paris 12)" />
+      <input type="email" id="email" placeholder="Enter your email" />
+      <button class="btn" onclick="submitForm()">Submit</button>
 
-  <!-- New example section -->
-  <section class="container example">
-    <h2>Example of what you will get</h2>
-    <div class="example-image">
-      <!-- INSERT YOUR IMAGE HERE -->
-      <img src="path-to-your-example.png" alt="Sample extracted data">
+      <div id="popup" style="display: none; padding: 1rem; background: #0ea5e9; color: white; border-radius: var(--border-radius); text-align: center; margin-top: 1rem;">
+        You will receive the data in the next 24 hours. Please check your spam folder.
+      </div>
+
+      <!-- Loading message -->
+      <div id="loadingMessage" class="loading-message">
+        <p>Work in progress for <strong id="loadingSearchName"></strong>. You will receive the result in your email. It may take up to 24 hours. Please check your spam folder.</p>
+      </div>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Unlimited Leads. All rights reserved.
+    <p>&copy; 2025 Google Map Scraper. All rights reserved.</p>
   </footer>
+
+  <script>
+    function submitForm() {
+      const googleSearch = document.getElementById("googleSearch").value;
+      const email = document.getElementById("email").value;
+
+      if (googleSearch && email) {
+        // Show loading message
+        document.getElementById("loadingSearchName").textContent = googleSearch;
+        document.getElementById("loadingMessage").style.display = 'block';
+
+        // Send GET request to the provided URL with the form data
+        const url = `https://eliasse-n8n.onrender.com/webhook/47b98cba-d347-4049-81df-67243ae21009?search=${encodeURIComponent(googleSearch)}&email=${encodeURIComponent(email)}`;
+        
+        // Making the GET request
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            console.log('Data received:', data);
+            // Show the popup to inform the user
+            document.getElementById("popup").style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('There was an issue. Please try again.');
+          });
+      } else {
+        alert('Please fill in all fields!');
+      }
+    }
+  </script>
 
 </body>
 </html>
