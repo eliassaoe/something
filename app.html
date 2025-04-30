@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Contact Finder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1A77F0;
+            --secondary-color: #192B47;
+            --light-bg: #EAF1FF;
+            --white: #ffffff;
+            --success: #AAF0D1;
+            --warning: #FFCC99;
+            --danger: #FF9999;
+            --gray: #ccc;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--light-bg);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .search-section {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .search-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .form-group {
+            flex: 1 1 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 28px;
+            width: 100%;
+        }
+        
+        .search-button:hover {
+            background-color: #1666C1;
+        }
+        
+        .results-section {
+            margin-top: 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .results-count {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .export-button {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .export-button:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .results-table th {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            text-align: left;
+            padding: 15px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .results-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .results-table tr:hover {
+            background-color: var(--light-bg);
+            cursor: pointer;
+        }
+        
+        .action-icons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-icons i {
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        
+        .action-icons i:hover {
+            color: var(--primary-color);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading i {
+            color: var(--primary-color);
+            font-size: 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: var(--white);
+            margin: 50px auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--light-bg);
+            padding-bottom: 15px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: var(--secondary-color);
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .contact-info, .company-info {
+            flex: 1 1 300px;
+        }
+        
+        .info-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: var(--secondary-color);
+        }
+        
+        .info-tag {
+            display: inline-block;
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* Alert styles */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: rgba(170, 240, 209, 0.3);
+            border: 1px solid var(--success);
+            color: #2a6;
+        }
+        
+        .alert-error {
+            background-color: rgba(255, 153, 153, 0.3);
+            border: 1px solid var(--danger);
+            color: #d33;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+            font-size: 18px;
+            display: none;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .pagination button {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .pagination button:hover:not(.active) {
+            background-color: var(--light-bg);
+        }
+        
+        .pagination button:disabled {
+            border-color: var(--gray);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .form-group {
+                flex: 1 1 100%;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+                padding: 15px;
+            }
+            
+            .results-table {
+                font-size: 14px;
+            }
+            
+            .results-table th, .results-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Business Contact Finder</div>
+        </header>
+        
+        <section class="search-section">
+            <h2 class="search-title">Find Business Contacts</h2>
+            
+            <div id="searchAlert" class="alert"></div>
+            
+            <form id="searchForm" class="search-form">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="">All Countries</option>
+                        <!-- Country options will be populated dynamically -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="industry">Industry</label>
+                    <select id="industry" name="industry">
+                        <option value="">All Industries</option>
+                        <!-- Industry options will be populated dynamically -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jobTitle">Job Title</label>
+                    <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g. CEO, Marketing Manager">
+                </div>
+                
+                <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input type="text" id="companyName" name="companyName" placeholder="e.g. Acme Inc">
+                </div>
+                
+                <div class="form-group">
+                    <label for="keywords">Keywords</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i> Search Contacts
+                    </button>
+                </div>
+            </form>
+        </section>
+        
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Searching for contacts...</p>
+        </div>
+        
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <div class="results-count">Found <span id="resultsNumber">0</span> contacts</div>
+                <button id="exportButton" class="export-button">
+                    <i class="fas fa-download"></i> Export to CSV
+                </button>
+            </div>
+            
+            <div id="noResults" class="no-results">
+                <i class="fas fa-search" style="font-size: 40px; margin-bottom: 15px;"></i>
+                <p>No contacts found. Try adjusting your search criteria.</p>
+            </div>
+            
+            <table id="resultsTable" class="results-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+            
+            <div id="pagination" class="pagination">
+                <!-- Pagination buttons will be populated here -->
+            </div>
+        </section>
+    </div>
+    
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalName">Contact Details</h2>
+            </div>
+            
+            <div class="modal-body">
+                <div class="contact-info">
+                    <h3 class="info-section-title">Contact Information</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value" id="modalFullName"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Job Title</div>
+                        <div class="info-value" id="modalTitle"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Department</div>
+                        <div class="info-value" id="modalDepartment"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Management Level</div>
+                        <div class="info-value" id="modalManagementLevel"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" id="modalEmail"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value" id="modalPhone"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">LinkedIn</div>
+                        <div class="info-value" id="modalLinkedIn"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Location</div>
+                        <div class="info-value" id="modalLocation"></div>
+                    </div>
+                </div>
+                
+                <div class="company-info">
+                    <h3 class="info-section-title">Company Information</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company</div>
+                        <div class="info-value" id="modalCompany"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Industry</div>
+                        <div class="info-value" id="modalIndustry"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company Size</div>
+                        <div class="info-value" id="modalCompanySize"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Website</div>
+                        <div class="info-value" id="modalWebsite"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company Phone</div>
+                        <div class="info-value" id="modalCompanyPhone"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Social Media</div>
+                        <div class="info-value" id="modalSocialMedia"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Description</div>
+                        <div class="info-value" id="modalDescription"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Technologies</div>
+                        <div class="info-value" id="modalTechnologies"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // n8n webhook URL
+        const N8N_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/0b8401b5-8d6d-426d-a92e-1d94b2e3fab4';
+        
+        // Supabase details (needed for n8n to make the request)
+        const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
+        
+        // Global variables
+        let allContacts = [];
+        let filteredContacts = [];
+        let currentPage = 1;
+        const contactsPerPage = 20;
+        let countries = [];
+        let industries = [];
+        
+        // DOM Elements
+        const searchForm = document.getElementById('searchForm');
+        const countrySelect = document.getElementById('country');
+        const industrySelect = document.getElementById('industry');
+        const searchAlert = document.getElementById('searchAlert');
+        const loading = document.getElementById('loading');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsNumber = document.getElementById('resultsNumber');
+        const resultsBody = document.getElementById('resultsBody');
+        const noResults = document.getElementById('noResults');
+        const resultsTable = document.getElementById('resultsTable');
+        const paginationContainer = document.getElementById('pagination');
+        const exportButton = document.getElementById('exportButton');
+        const contactModal = document.getElementById('contactModal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Show loading indicator
+            loading.style.display = 'block';
+            
+            try {
+                // Fetch initial data from Supabase via n8n
+                await fetchData();
+                
+                // Populate dropdowns
+                populateCountryDropdown();
+                populateIndustryDropdown();
+                
+                // Set up event listeners
+                searchForm.addEventListener('submit', handleSearch);
+                exportButton.addEventListener('click', exportToCSV);
+                closeModal.addEventListener('click', () => {
+                    contactModal.style.display = 'none';
+                });
+                
+                // Close modal when clicking outside of it
+                window.addEventListener('click', (event) => {
+                    if (event.target === contactModal) {
+                        contactModal.style.display = 'none';
+                    }
+                });
+                
+                // Show success message
+                showAlert("Connected to database successfully! Ready to search.", 'success');
+            } catch (error) {
+                console.error("Error initializing app:", error);
+                showAlert(`Error connecting to database: ${error.message}`, 'error');
+            } finally {
+                // Hide loading indicator
+                loading.style.display = 'none';
+            }
+        });
+        
+        // Fetch data from Supabase via n8n webhook
+        async function fetchData() {
+            try {
+                // Prepare the data to send to n8n
+                const requestData = {
+                    action: 'fetchAll',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'Unlimited leads database',
+                    limit: 1000
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Format contact names
+                allContacts = data.map(contact => {
+                    let fullName = '';
+                    
+                    if (contact['first name'] && contact['last name']) {
+                        fullName = `${contact['first name']} ${contact['last name']}`;
+                    } else if (contact['first name']) {
+                        fullName = contact['first name'];
+                    } else if (contact['last name']) {
+                        fullName = contact['last name'];
+                    } else {
+                        fullName = 'N/A';
+                    }
+                    
+                    return {
+                        ...contact,
+                        fullName
+                    };
+                });
+                
+                // Extract unique countries and industries for dropdowns
+                countries = [...new Set(allContacts.map(contact => contact.country).filter(Boolean).sort())];
+                industries = [...new Set(allContacts.map(contact => contact.industry).filter(Boolean).sort())];
+                
+                filteredContacts = allContacts;
+                
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                throw error;
+            }
+        }
+        
+        // Populate country dropdown
+        function populateCountryDropdown() {
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+        }
+        
+        // Populate industry dropdown
+        function populateIndustryDropdown() {
+            industries.forEach(industry => {
+                const option = document.createElement('option');
+                option.value = industry;
+                option.textContent = industry;
+                industrySelect.appendChild(option);
+            });
+        }
+        
+        // Search contacts from Supabase via n8n webhook
+        async function searchContacts(searchParams) {
+            try {
+                // Prepare the data to send to n8n
+                const requestData = {
+                    action: 'search',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'Unlimited leads database',
+                    searchParams: searchParams,
+                    limit: 1000
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Format contact names
+                return data.map(contact => {
+                    let fullName = '';
+                    
+                    if (contact['first name'] && contact['last name']) {
+                        fullName = `${contact['first name']} ${contact['last name']}`;
+                    } else if (contact['first name']) {
+                        fullName = contact['first name'];
+                    } else if (contact['last name']) {
+                        fullName = contact['last name'];
+                    } else {
+                        fullName = 'N/A';
+                    }
+                    
+                    return {
+                        ...contact,
+                        fullName
+                    };
+                });
+                
+            } catch (error) {
+                console.error("Error searching contacts:", error);
+                throw error;
+            }
+        }
+        
+        // Handle search form submission
+        async function handleSearch(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            loading.style.display = 'block';
+            resultsSection.style.display = 'none';
+            searchAlert.style.display = 'none';
+            
+            // Get form values
+            const country = countrySelect.value;
+            const industry = industrySelect.value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const companyName = document.getElementById('companyName').value;
+            const keywords = document.getElementById('keywords').value;
+            
+            try {
+                // If no search criteria are provided, use all contacts
+                if (!country && !industry && !jobTitle && !companyName && !keywords) {
+                    filteredContacts = allContacts;
+                } else {
+                    // Search contacts using n8n webhook
+                    filteredContacts = await searchContacts({
+                        country,
+                        industry,
+                        jobTitle,
+                        companyName,
+                        keywords
+                    });
+                }
+                
+                // Reset to first page
+                currentPage = 1;
+                
+                // Update the display
+                updateResultsDisplay();
+                
+                // Show search completion message
+                showAlert(`Search completed: Found ${filteredContacts.length} contacts.`, 'success');
+            } catch (error) {
+                showAlert(`Error: ${error.message}`, 'error');
+                filteredContacts = [];
+                updateResultsDisplay();
+            } finally {
+                // Hide loading indicator
+                loading.style.display = 'none';
+                resultsSection.style.display = 'block';
+            }
+        }
+        
+        // Update the results display
+        function updateResultsDisplay() {
+            // Update results count
+            resultsNumber.textContent = filteredContacts.length;
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredContacts.length / contactsPerPage);
+            const startIndex = (currentPage - 1) * contactsPerPage;
+            const endIndex = Math.min(startIndex + contactsPerPage, filteredContacts.length);
+            const currentContacts = filteredContacts.slice(startIndex, endIndex);
+            
+            // Show/hide no results message
+            if (filteredContacts.length === 0) {
+                noResults.style.display = 'block';
+                resultsTable.style.display = 'none';
+                paginationContainer.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                resultsTable.style.display = 'table';
+                paginationContainer.style.display = 'flex';
+                
+                // Clear previous results
+                resultsBody.innerHTML = '';
+                
+                // Populate results table
+                currentContacts.forEach((contact, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${contact.fullName || 'N/A'}</td>
+                        <td>${contact.title || 'N/A'}</td>
+                        <td>${contact.company || 'N/A'}</td>
+                        <td>${contact.email || 'N/A'}</td>
+                        <td>${contact.country || 'N/A'}</td>
+                        <td class="action-icons">
+                            <i class="fas fa-eye view-icon" data-index="${index}" title="View Details"></i>
+                            <i class="fas fa-envelope email-icon" data-email="${contact.email || ''}" title="Copy Email"></i>
+                            <i class="fas fa-phone phone-icon" data-phone="${contact.phone || ''}" title="Copy Phone"></i>
+                        </td>
+                    `;
+                    
+                    // Add event listeners to action icons
+                    row.querySelector('.view-icon').addEventListener('click', () => {
+                        showContactDetails(contact);
+                    });
+                    
+                    row.querySelector('.email-icon').addEventListener('click', () => {
+                        if (contact.email) {
+                            copyToClipboard(contact.email);
+                            showTooltip(row.querySelector('.email-icon'), 'Email copied!');
+                        } else {
+                            showTooltip(row.querySelector('.email-icon'), 'No email available');
+                        }
+                    });
+                    
+                    row.querySelector('.phone-icon').addEventListener('click', () => {
+                        if (contact.phone) {
+                            copyToClipboard(contact.phone);
+                            showTooltip(row.querySelector('.phone-icon'), 'Phone copied!');
+                        } else {
+                            showTooltip(row.querySelector('.phone-icon'), 'No phone available');
+                        }
+                    });
+                    
+                    resultsBody.appendChild(row);
+                });
+                
+                // Update pagination
+                updatePagination(totalPages);
+            }
+        }
+        
+        // Update pagination controls
+        function updatePagination(totalPages) {
+            paginationContainer.innerHTML = '';
+            
+            // Don't show pagination if only one page
+            if (totalPages <= 1) {
+                return;
+            }
+            
+            // Previous button
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '&laquo;';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateResultsDisplay();
+                }
+            });
+            paginationContainer.appendChild(prevButton);
+            
+            // Page buttons
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            // Adjust start page if needed
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    updateResultsDisplay();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+            
+            // Next button
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = '&raquo;';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateResultsDisplay();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        }
+        
+        // Show contact details in modal
+        function showContactDetails(contact) {
+            // Populate modal with contact details
+            document.getElementById('modalName').textContent = contact.fullName || 'Contact Details';
+            document.getElementById('modalFullName').textContent = contact.fullName || 'N/A';
+            document.getElementById('modalTitle').textContent = contact.title || 'N/A';
+            document.getElementById('modalDepartment').textContent = contact.department || 'N/A';
+            document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
+            document.getElementById('modalEmail').textContent = contact.email || 'N/A';
+            document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
+            
+            // Create LinkedIn link if available
+            const linkedInElement = document.getElementById('modalLinkedIn');
+            if (contact.linkedin) {
+                const linkedInUrl = contact.linkedin.startsWith('http') ? contact.linkedin : `https://${contact.linkedin}`;
+                linkedInElement.innerHTML = `<a href="${linkedInUrl}" target="_blank">${contact.linkedin}</a>`;
+            } else {
+                linkedInElement.textContent = 'Not available';
+            }
+            
+            // Format location
+            let location = '';
+            if (contact.city) location += contact.city;
+            if (contact.state) {
+                if (location) location += ', ';
+                location += contact.state;
+            }
+            if (contact.country) {
+                if (location) location += ', ';
+                location += contact.country;
+            }
+            document.getElementById('modalLocation').textContent = location || 'Not available';
+            
+            // Company information
+            document.getElementById('modalCompany').textContent = contact.company || 'N/A';
+            document.getElementById('modalIndustry').textContent = contact.industry || 'Not specified';
+            document.getElementById('modalCompanySize').textContent = contact.companysize || 'Not specified';
+            document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'Not available';
+            
+            // Create website link if available
+            const websiteElement = document.getElementById('modalWebsite');
+            if (contact.website) {
+                const websiteUrl = contact.website.startsWith('http') ? contact.website : `https://${contact.website}`;
+                websiteElement.innerHTML = `<a href="${websiteUrl}" target="_blank">${contact.website}</a>`;
+            } else {
+                websiteElement.textContent = 'Not available';
+            }
+            
+            // Format description (with truncation if needed)
+            const descriptionElement = document.getElementById('modalDescription');
+            if (contact.description) {
+                if (contact.description.length > 200) {
+                    descriptionElement.innerHTML = `
+                        <div class="short-desc">${contact.description.substring(0, 200)}... <a href="#" onclick="toggleDescription(event)">Read more</a></div>
+                        <div class="full-desc" style="display:none">${contact.description} <a href="#" onclick="toggleDescription(event)">Read less</a></div>
+                    `;
+                } else {
+                    descriptionElement.textContent = contact.description;
+                }
+            } else {
+                descriptionElement.textContent = 'Not available';
+            }
+            
+            // Social media links
+            const socialMediaElement = document.getElementById('modalSocialMedia');
+            socialMediaElement.innerHTML = '';
+            
+            if (contact.clinkedin || contact.cfacebook || contact.cx) {
+                const socialLinks = [];
+                
+                if (contact.clinkedin) {
+                    const url = contact.clinkedin.startsWith('http') ? contact.clinkedin : `https://${contact.clinkedin}`;
+                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>`);
+                }
+                
+                if (contact.cfacebook) {
+                    const url = contact.cfacebook.startsWith('http') ? contact.cfacebook : `https://${contact.cfacebook}`;
+                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>`);
+                }
+                
+                if (contact.cx) {
+                    const url = contact.cx.startsWith('http') ? contact.cx : `https://${contact.cx}`;
+                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>`);
+                }
+                
+                socialMediaElement.innerHTML = socialLinks.join(' · ');
+            } else {
+                socialMediaElement.textContent = 'Not available';
+            }
+            
+            // Format technologies as tags
+            const technologiesElement = document.getElementById('modalTechnologies');
+            if (contact.technologies) {
+                technologiesElement.innerHTML = '';
+                const techs = contact.technologies.split(',');
+                techs.forEach(tech => {
+                    const techSpan = document.createElement('span');
+                    techSpan.className = 'info-tag';
+                    techSpan.textContent = tech.trim();
+                    technologiesElement.appendChild(techSpan);
+                    // Add space between tags
+                    technologiesElement.appendChild(document.createTextNode(' '));
+                });
+            } else {
+                technologiesElement.textContent = 'Not specified';
+            }
+            
+            // Display the modal
+            contactModal.style.display = 'block';
+        }
+        
+        // Toggle between short and full description
+        function toggleDescription(event) {
+            event.preventDefault();
+            const parent = event.target.parentElement;
+            const isShortDesc = parent.classList.contains('short-desc');
+            
+            document.querySelector('.short-desc').style.display = isShortDesc ? 'none' : 'block';
+            document.querySelector('.full-desc').style.display = isShortDesc ? 'block' : 'none';
+        }
+        
+        // Make this function available globally for the onclick handler
+        window.toggleDescription = toggleDescription;
+        
+        // Copy text to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Success!
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                
+                // Fallback for browsers that don't support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+        }
+        
+        // Show tooltip on element
+        function showTooltip(element, message) {
+            // Create tooltip
+            const tooltip = document.createElement('div');
+            tooltip.style.position = 'absolute';
+            tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            tooltip.style.color = 'white';
+            tooltip.style.padding = '5px 10px';
+            tooltip.style.borderRadius = '5px';
+            tooltip.style.fontSize = '14px';
+            tooltip.style.zIndex = '1000';
+            tooltip.style.pointerEvents = 'none';
+            tooltip.textContent = message;
+            
+            // Position tooltip
+            const rect = element.getBoundingClientRect();
+            tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+            tooltip.style.left = `${rect.left + window.scrollX - 15}px`;
+            
+            // Add to body
+            document.body.appendChild(tooltip);
+            
+            // Remove after delay
+            setTimeout(() => {
+                document.body.removeChild(tooltip);
+            }, 2000);
+        }
+        
+        // Show alert message
+        function showAlert(message, type) {
+            searchAlert.textContent = message;
+            searchAlert.className = 'alert';
+            searchAlert.classList.add(`alert-${type}`);
+            searchAlert.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                searchAlert.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Export contacts to CSV
+        function exportToCSV() {
+            if (filteredContacts.length === 0) {
+                showAlert('No contacts to export.', 'error');
+                return;
+            }
+            
+            // Define the headers we want to export
+            const headers = [
+                'Name',
+                'Title',
+                'Department',
+                'Management Level',
+                'Company',
+                'Email',
+                'Phone',
+                'LinkedIn',
+                'Country',
+                'City',
+                'State',
+                'Industry',
+                'Company Size',
+                'Website',
+                'Company Phone',
+                'Technologies',
+                'Description'
+            ];
+            
+            // Map database field names to export headers
+            const fieldMapping = {
+                'Name': contact => contact.fullName || `${contact['first name'] || ''} ${contact['last name'] || ''}`.trim(),
+                'Title': 'title',
+                'Department': 'department',
+                'Management Level': 'managementlevel',
+                'Company': 'company',
+                'Email': 'email',
+                'Phone': 'phone',
+                'LinkedIn': 'linkedin',
+                'Country': 'country',
+                'City': 'city',
+                'State': 'state',
+                'Industry': 'industry',
+                'Company Size': 'companysize',
+                'Website': 'website',
+                'Company Phone': 'cphone',
+                'Technologies': 'technologies',
+                'Description': 'description'
+            };
+            
+            // Create CSV content
+            let csvContent = headers.join(',') + '\n';
+            
+            filteredContacts.forEach(contact => {
+                const row = headers.map(header => {
+                    const field = fieldMapping[header];
+                    let value;
+                    
+                    if (typeof field === 'function') {
+                        value = field(contact);
+                    } else {
+                        value = contact[field] || '';
+                    }
+                    
+                    return escapeCsvValue(value);
+                });
+                
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `business_contacts_${timestamp}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showAlert(`Exported ${filteredContacts.length} contacts to CSV.`, 'success');
+        }
+        
+        // Escape CSV value to handle commas and quotes
+        function escapeCsvValue(value) {
+            if (value === null || value === undefined) {
+                return '';
+            }
+            
+            const stringValue = String(value);
+            // If the value contains commas, quotes, or newlines, wrap it in quotes
+            if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+                // Double up any quotes
+                return '"' + stringValue.replace(/"/g, '""') + '"';
+            }
+            return stringValue;
+        }
+    </script>
+</body>
+</html>
