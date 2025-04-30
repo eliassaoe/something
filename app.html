@@ -523,22 +523,7 @@
             <div id="resultsInfo" class="results-info">
                 <div class="pagination-info">
                     Showing <span id="startRecord">0</span>-<span id="endRecord">0</span> of <span id="totalDisplayRecords">0</span> contacts 
-                    <span id="totalRecordInfo">(limited to first 250 for performance)</span>
                 </div>
-                <div class="pagination-controls">
-                    <div class="page-size-selector">
-                        <label for="pageSize">Show:</label>
-                        <select id="pageSize">
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="pagination" class="pagination">
-                <!-- Pagination buttons will be populated here -->
             </div>
         </section>
     </div>
@@ -653,12 +638,6 @@
         
         // Global variables
         let allContacts = [];
-        let filteredContacts = [];
-        let currentPage = 1;
-        let contactsPerPage = 25; // Default value
-        const MAX_DISPLAY_CONTACTS = 250; // Limit for stable performance
-        let countries = [];
-        let industries = [];
         
         // DOM Elements
         const searchForm = document.getElementById('searchForm');
@@ -671,11 +650,9 @@
         const resultsBody = document.getElementById('resultsBody');
         const noResults = document.getElementById('noResults');
         const resultsTable = document.getElementById('resultsTable');
-        const paginationContainer = document.getElementById('pagination');
         const exportButton = document.getElementById('exportButton');
         const contactModal = document.getElementById('contactModal');
         const closeModal = document.querySelector('.close-modal');
-        const pageSizeSelector = document.getElementById('pageSize');
         const startRecord = document.getElementById('startRecord');
         const endRecord = document.getElementById('endRecord');
         const totalDisplayRecords = document.getElementById('totalDisplayRecords');
@@ -689,7 +666,7 @@
                 // Fetch initial data from Supabase via n8n
                 await fetchData();
                 
-                // Display data immediately instead of waiting for search
+                // Display data immediately
                 displayInitialResults();
                 
                 // Populate dropdowns
@@ -701,13 +678,6 @@
                 exportButton.addEventListener('click', exportToCSV);
                 closeModal.addEventListener('click', () => {
                     contactModal.style.display = 'none';
-                });
-                
-                // Page size change event
-                pageSizeSelector.addEventListener('change', () => {
-                    contactsPerPage = parseInt(pageSizeSelector.value);
-                    currentPage = 1; // Reset to first page when changing page size
-                    updateResultsDisplay();
                 });
                 
                 // Close modal when clicking outside of it
@@ -727,23 +697,6 @@
                 loading.style.display = 'none';
             }
         });
-        
-        // Display initial results
-        function displayInitialResults() {
-            // Show results section
-            resultsSection.style.display = 'block';
-            
-            // Set filteredContacts to the first 250 contacts
-            filteredContacts = allContacts.slice(0, MAX_DISPLAY_CONTACTS);
-            
-            // Update display
-            updateResultsDisplay();
-            
-            // If we limit the results, show a notification
-            if (allContacts.length > MAX_DISPLAY_CONTACTS) {
-                showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${allContacts.length} for better performance. Use the search to narrow down results.`, 'warning');
-            }
-        }
         
         // Fetch data from Supabase via n8n webhook
         async function fetchData() {
@@ -783,32 +736,8 @@
                 
                 console.log(`Received ${data.length} contacts from API`);
                 
-                // Format contact names
-                allContacts = data.map(contact => {
-                    let fullName = '';
-                    
-                    if (contact['first name'] && contact['last name']) {
-                        fullName = `${contact['first name']} ${contact['last name']}`;
-                    } else if (contact['first name']) {
-                        fullName = contact['first name'];
-                    } else if (contact['last name']) {
-                        fullName = contact['last name'];
-                    } else {
-                        fullName = 'N/A';
-                    }
-                    
-                    return {
-                        ...contact,
-                        fullName
-                    };
-                });
-                
-                // Sort contacts alphabetically by name for better usability
-                allContacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-                
-                // Extract unique countries and industries for dropdowns
-                countries = [...new Set(allContacts.map(contact => contact.country).filter(Boolean).sort())];
-                industries = [...new Set(allContacts.map(contact => contact.industry).filter(Boolean).sort())];
+                // Store the data directly
+                allContacts = data;
                 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -818,6 +747,9 @@
         
         // Populate country dropdown
         function populateCountryDropdown() {
+            // Extract unique countries
+            const countries = [...new Set(allContacts.map(contact => contact.country).filter(Boolean).sort())];
+            
             countries.forEach(country => {
                 const option = document.createElement('option');
                 option.value = country;
@@ -828,6 +760,9 @@
         
         // Populate industry dropdown
         function populateIndustryDropdown() {
+            // Extract unique industries
+            const industries = [...new Set(allContacts.map(contact => contact.industry).filter(Boolean).sort())];
+            
             industries.forEach(industry => {
                 const option = document.createElement('option');
                 option.value = industry;
@@ -836,67 +771,67 @@
             });
         }
         
-        // Search contacts from Supabase via n8n webhook
-        async function searchContacts(searchParams) {
-            try {
-                // Prepare the data to send to n8n
-                const requestData = {
-                    action: 'search',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
-                    tableName: 'unlimited',  // Changed to new table name
-                    searchParams: searchParams,
-                    limit: 1000
-                };
-                
-                // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Validate that data is an array
-                if (!Array.isArray(data)) {
-                    console.error('Search response is not an array:', data);
-                    throw new Error('Expected array response from search API');
-                }
-                
-                // Format contact names
-                return data.map(contact => {
-                    let fullName = '';
-                    
-                    if (contact['first name'] && contact['last name']) {
-                        fullName = `${contact['first name']} ${contact['last name']}`;
-                    } else if (contact['first name']) {
-                        fullName = contact['first name'];
-                    } else if (contact['last name']) {
-                        fullName = contact['last name'];
-                    } else {
-                        fullName = 'N/A';
-                    }
-                    
-                    return {
-                        ...contact,
-                        fullName
-                    };
-                });
-                
-            } catch (error) {
-                console.error("Error searching contacts:", error);
-                throw error;
+        // Display initial results - SIMPLIFIÉ
+        function displayInitialResults() {
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Update the number of results
+            resultsNumber.textContent = allContacts.length;
+            
+            // Clear existing results
+            resultsBody.innerHTML = '';
+            
+            // Show or hide no results message
+            if (allContacts.length === 0) {
+                noResults.style.display = 'block';
+                resultsTable.style.display = 'none';
+                startRecord.textContent = '0';
+                endRecord.textContent = '0';
+                totalDisplayRecords.textContent = '0';
+                return;
+            } else {
+                noResults.style.display = 'none';
+                resultsTable.style.display = 'table';
             }
+            
+            // Display only the first 25 contacts
+            const displayContacts = allContacts.slice(0, 25);
+            
+            // Update pagination info
+            startRecord.textContent = '1';
+            endRecord.textContent = Math.min(25, allContacts.length);
+            totalDisplayRecords.textContent = allContacts.length;
+            
+            // Populate the table with contacts
+            displayContacts.forEach(contact => {
+                const row = document.createElement('tr');
+                
+                // Create cells for each column
+                row.innerHTML = `
+                    <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
+                    <td>${contact['job title'] || 'N/A'}</td>
+                    <td>${contact['company name'] || 'N/A'}</td>
+                    <td>${contact['email'] || 'N/A'}</td>
+                    <td>${contact['country'] || 'N/A'}</td>
+                    <td>
+                        <div class="action-icons">
+                            <i class="fas fa-eye" title="View Details"></i>
+                            <i class="fas fa-save" title="Save Contact"></i>
+                        </div>
+                    </td>
+                `;
+                
+                // Add event listener to view contact details
+                row.querySelector('.fa-eye').addEventListener('click', () => {
+                    showContactDetails(contact);
+                });
+                
+                resultsBody.appendChild(row);
+            });
         }
         
-        // Handle search form submission
+        // Handle search form submission - SIMPLIFIÉ
         async function handleSearch(e) {
             e.preventDefault();
             
@@ -905,54 +840,159 @@
             resultsSection.style.display = 'none';
             searchAlert.style.display = 'none';
             
-            // Get form values
-            const country = countrySelect.value;
-            const industry = industrySelect.value;
-            const jobTitle = document.getElementById('jobTitle').value;
-            const companyName = document.getElementById('companyName').value;
-            const keywords = document.getElementById('keywords').value;
-            
             try {
-                // If no search criteria are provided, use all contacts (limited to MAX_DISPLAY_CONTACTS)
-                if (!country && !industry && !jobTitle && !companyName && !keywords) {
-                    filteredContacts = allContacts.slice(0, MAX_DISPLAY_CONTACTS);
-                    
-                    if (allContacts.length > MAX_DISPLAY_CONTACTS) {
-                        showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${allContacts.length} for better performance. Use search filters to narrow down results.`, 'warning');
-                    }
-                } else {
-                    // Search contacts using n8n webhook
-                    let searchResults = await searchContacts({
-                        country,
-                        industry,
-                        jobTitle,
-                        companyName,
-                        keywords
-                    });
-                    
-                    // Apply limit if necessary
-                    if (searchResults.length > MAX_DISPLAY_CONTACTS) {
-                        filteredContacts = searchResults.slice(0, MAX_DISPLAY_CONTACTS);
-                        showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${searchResults.length} matching contacts. Try adding more specific filters to narrow down results.`, 'warning');
-                    } else {
-                        filteredContacts = searchResults;
+                // Get form values
+                const country = countrySelect.value;
+                const industry = industrySelect.value;
+                const jobTitle = document.getElementById('jobTitle').value;
+                const companyName = document.getElementById('companyName').value;
+                const keywords = document.getElementById('keywords').value;
+                
+                // If search criteria are provided, filter the data
+                if (country || industry || jobTitle || companyName || keywords) {
+                    try {
+                        // Search contacts using n8n webhook
+                        const requestData = {
+                            action: 'search',
+                            supabaseUrl: SUPABASE_URL,
+                            supabaseKey: SUPABASE_KEY,
+                            tableName: 'unlimited',
+                            searchParams: {
+                                country,
+                                industry,
+                                jobTitle,
+                                companyName,
+                                keywords
+                            },
+                            limit: 1000
+                        };
+                        
+                        // Make POST request to n8n webhook
+                        const response = await fetch(N8N_WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestData)
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`API error: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        
+                        // Update allContacts with search results
+                        allContacts = data;
+                        
+                        // Show search completion message
+                        showAlert(`Search completed: Found ${allContacts.length} contacts.`, 'success');
+                    } catch (error) {
+                        showAlert(`Error searching: ${error.message}`, 'error');
                     }
                 }
                 
-                // Reset to first page
-                currentPage = 1;
+                // Display the results (either original or filtered)
+                displayInitialResults();
                 
-                // Update the display
-                updateResultsDisplay();
-                
-                // Show search completion message
-                showAlert(`Search completed: Found ${filteredContacts.length} contacts.`, 'success');
             } catch (error) {
+                console.error("Error handling search:", error);
                 showAlert(`Error: ${error.message}`, 'error');
-                filteredContacts = [];
-                updateResultsDisplay();
             } finally {
                 // Hide loading indicator
                 loading.style.display = 'none';
                 resultsSection.style.display = 'block';
             }
+        }
+        
+        // Show contact details in modal
+        function showContactDetails(contact) {
+            // Fill in modal details
+            document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+            document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+            document.getElementById('modalTitle').textContent = contact['job title'] || 'N/A';
+            document.getElementById('modalDepartment').textContent = contact['department'] || 'N/A';
+            document.getElementById('modalManagementLevel').textContent = contact['management level'] || 'N/A';
+            document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
+            document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
+            document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
+            document.getElementById('modalLocation').textContent = contact['location'] || contact['country'] || 'N/A';
+            
+            document.getElementById('modalCompany').textContent = contact['company name'] || 'N/A';
+            document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
+            document.getElementById('modalCompanySize').textContent = contact['company size'] || 'N/A';
+            document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
+            document.getElementById('modalCompanyPhone').textContent = contact['company phone'] || 'N/A';
+            document.getElementById('modalSocialMedia').textContent = contact['social media'] || 'N/A';
+            document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
+            document.getElementById('modalTechnologies').textContent = contact['technologies'] || 'N/A';
+            
+            // Show the modal
+            contactModal.style.display = 'block';
+        }
+        
+        // Export contacts to CSV
+        function exportToCSV() {
+            if (allContacts.length === 0) {
+                showAlert('No contacts to export.', 'warning');
+                return;
+            }
+            
+            try {
+                // Define CSV headers - only select key columns for export
+                const headers = ['first name', 'last name', 'job title', 'company name', 'email', 'country', 'industry'];
+                
+                // Create CSV content
+                let csvContent = headers.join(',') + '\n';
+                
+                // Add all contacts to CSV
+                allContacts.forEach(contact => {
+                    const row = headers.map(header => {
+                        // Get value and handle null/undefined
+                        let value = contact[header] || '';
+                        
+                        // Handle values with commas by wrapping in quotes
+                        value = String(value).replace(/"/g, '""');
+                        if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                            value = `"${value}"`;
+                        }
+                        
+                        return value;
+                    });
+                    
+                    csvContent += row.join(',') + '\n';
+                });
+                
+                // Create download link
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'business_contacts_export.csv');
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showAlert('Contacts exported successfully!', 'success');
+            } catch (error) {
+                console.error('Error exporting to CSV:', error);
+                showAlert(`Error exporting contacts: ${error.message}`, 'error');
+            }
+        }
+        
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            searchAlert.textContent = message;
+            searchAlert.className = `alert alert-${type}`;
+            searchAlert.style.display = 'block';
+            
+            // Hide the alert after 5 seconds
+            setTimeout(() => {
+                searchAlert.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
