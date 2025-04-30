@@ -323,6 +323,12 @@
             color: #d33;
         }
         
+        .alert-warning {
+            background-color: rgba(255, 204, 153, 0.3);
+            border: 1px solid var(--warning);
+            color: #c73;
+        }
+        
         .no-results {
             text-align: center;
             padding: 40px 0;
@@ -363,6 +369,38 @@
             cursor: not-allowed;
         }
         
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+        
+        .pagination-info {
+            font-style: italic;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-size-selector {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .page-size-selector select {
+            padding: 5px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            background-color: var(--white);
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -388,6 +426,11 @@
             
             .results-table th, .results-table td {
                 padding: 10px;
+            }
+            
+            .results-info {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -476,6 +519,23 @@
                     <!-- Results will be populated here -->
                 </tbody>
             </table>
+            
+            <div id="resultsInfo" class="results-info">
+                <div class="pagination-info">
+                    Showing <span id="startRecord">0</span>-<span id="endRecord">0</span> of <span id="totalDisplayRecords">0</span> contacts 
+                    <span id="totalRecordInfo">(limited to first 250 for performance)</span>
+                </div>
+                <div class="pagination-controls">
+                    <div class="page-size-selector">
+                        <label for="pageSize">Show:</label>
+                        <select id="pageSize">
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             
             <div id="pagination" class="pagination">
                 <!-- Pagination buttons will be populated here -->
@@ -595,7 +655,8 @@
         let allContacts = [];
         let filteredContacts = [];
         let currentPage = 1;
-        const contactsPerPage = 20;
+        let contactsPerPage = 25; // Default value
+        const MAX_DISPLAY_CONTACTS = 250; // Limit for stable performance
         let countries = [];
         let industries = [];
         
@@ -614,6 +675,10 @@
         const exportButton = document.getElementById('exportButton');
         const contactModal = document.getElementById('contactModal');
         const closeModal = document.querySelector('.close-modal');
+        const pageSizeSelector = document.getElementById('pageSize');
+        const startRecord = document.getElementById('startRecord');
+        const endRecord = document.getElementById('endRecord');
+        const totalDisplayRecords = document.getElementById('totalDisplayRecords');
         
         // Initialize the app
         document.addEventListener('DOMContentLoaded', async () => {
@@ -624,6 +689,9 @@
                 // Fetch initial data from Supabase via n8n
                 await fetchData();
                 
+                // Display data immediately instead of waiting for search
+                displayInitialResults();
+                
                 // Populate dropdowns
                 populateCountryDropdown();
                 populateIndustryDropdown();
@@ -633,6 +701,13 @@
                 exportButton.addEventListener('click', exportToCSV);
                 closeModal.addEventListener('click', () => {
                     contactModal.style.display = 'none';
+                });
+                
+                // Page size change event
+                pageSizeSelector.addEventListener('change', () => {
+                    contactsPerPage = parseInt(pageSizeSelector.value);
+                    currentPage = 1; // Reset to first page when changing page size
+                    updateResultsDisplay();
                 });
                 
                 // Close modal when clicking outside of it
@@ -653,15 +728,35 @@
             }
         });
         
+        // Display initial results
+        function displayInitialResults() {
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Set filteredContacts to the first 250 contacts
+            filteredContacts = allContacts.slice(0, MAX_DISPLAY_CONTACTS);
+            
+            // Update display
+            updateResultsDisplay();
+            
+            // If we limit the results, show a notification
+            if (allContacts.length > MAX_DISPLAY_CONTACTS) {
+                showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${allContacts.length} for better performance. Use the search to narrow down results.`, 'warning');
+            }
+        }
+        
         // Fetch data from Supabase via n8n webhook
         async function fetchData() {
             try {
+                // Show loading indicator
+                loading.style.display = 'block';
+                
                 // Prepare the data to send to n8n
                 const requestData = {
                     action: 'fetchAll',
                     supabaseUrl: SUPABASE_URL,
                     supabaseKey: SUPABASE_KEY,
-                    tableName: 'Unlimited leads database',
+                    tableName: 'unlimited',  // Changed to new table name
                     limit: 1000
                 };
                 
@@ -679,6 +774,14 @@
                 }
                 
                 const data = await response.json();
+                
+                // Validate that data is an array
+                if (!Array.isArray(data)) {
+                    console.error('Response is not an array:', data);
+                    throw new Error('Expected array response from API');
+                }
+                
+                console.log(`Received ${data.length} contacts from API`);
                 
                 // Format contact names
                 allContacts = data.map(contact => {
@@ -700,11 +803,12 @@
                     };
                 });
                 
+                // Sort contacts alphabetically by name for better usability
+                allContacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+                
                 // Extract unique countries and industries for dropdowns
                 countries = [...new Set(allContacts.map(contact => contact.country).filter(Boolean).sort())];
                 industries = [...new Set(allContacts.map(contact => contact.industry).filter(Boolean).sort())];
-                
-                filteredContacts = allContacts;
                 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -740,7 +844,7 @@
                     action: 'search',
                     supabaseUrl: SUPABASE_URL,
                     supabaseKey: SUPABASE_KEY,
-                    tableName: 'Unlimited leads database',
+                    tableName: 'unlimited',  // Changed to new table name
                     searchParams: searchParams,
                     limit: 1000
                 };
@@ -759,6 +863,12 @@
                 }
                 
                 const data = await response.json();
+                
+                // Validate that data is an array
+                if (!Array.isArray(data)) {
+                    console.error('Search response is not an array:', data);
+                    throw new Error('Expected array response from search API');
+                }
                 
                 // Format contact names
                 return data.map(contact => {
@@ -803,18 +913,30 @@
             const keywords = document.getElementById('keywords').value;
             
             try {
-                // If no search criteria are provided, use all contacts
+                // If no search criteria are provided, use all contacts (limited to MAX_DISPLAY_CONTACTS)
                 if (!country && !industry && !jobTitle && !companyName && !keywords) {
-                    filteredContacts = allContacts;
+                    filteredContacts = allContacts.slice(0, MAX_DISPLAY_CONTACTS);
+                    
+                    if (allContacts.length > MAX_DISPLAY_CONTACTS) {
+                        showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${allContacts.length} for better performance. Use search filters to narrow down results.`, 'warning');
+                    }
                 } else {
                     // Search contacts using n8n webhook
-                    filteredContacts = await searchContacts({
+                    let searchResults = await searchContacts({
                         country,
                         industry,
                         jobTitle,
                         companyName,
                         keywords
                     });
+                    
+                    // Apply limit if necessary
+                    if (searchResults.length > MAX_DISPLAY_CONTACTS) {
+                        filteredContacts = searchResults.slice(0, MAX_DISPLAY_CONTACTS);
+                        showAlert(`Showing the first ${MAX_DISPLAY_CONTACTS} contacts out of ${searchResults.length} matching contacts. Try adding more specific filters to narrow down results.`, 'warning');
+                    } else {
+                        filteredContacts = searchResults;
+                    }
                 }
                 
                 // Reset to first page
@@ -834,416 +956,3 @@
                 loading.style.display = 'none';
                 resultsSection.style.display = 'block';
             }
-        }
-        
-        // Update the results display
-        function updateResultsDisplay() {
-            // Update results count
-            resultsNumber.textContent = filteredContacts.length;
-            
-            // Calculate pagination
-            const totalPages = Math.ceil(filteredContacts.length / contactsPerPage);
-            const startIndex = (currentPage - 1) * contactsPerPage;
-            const endIndex = Math.min(startIndex + contactsPerPage, filteredContacts.length);
-            const currentContacts = filteredContacts.slice(startIndex, endIndex);
-            
-            // Show/hide no results message
-            if (filteredContacts.length === 0) {
-                noResults.style.display = 'block';
-                resultsTable.style.display = 'none';
-                paginationContainer.style.display = 'none';
-            } else {
-                noResults.style.display = 'none';
-                resultsTable.style.display = 'table';
-                paginationContainer.style.display = 'flex';
-                
-                // Clear previous results
-                resultsBody.innerHTML = '';
-                
-                // Populate results table
-                currentContacts.forEach((contact, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${contact.fullName || 'N/A'}</td>
-                        <td>${contact.title || 'N/A'}</td>
-                        <td>${contact.company || 'N/A'}</td>
-                        <td>${contact.email || 'N/A'}</td>
-                        <td>${contact.country || 'N/A'}</td>
-                        <td class="action-icons">
-                            <i class="fas fa-eye view-icon" data-index="${index}" title="View Details"></i>
-                            <i class="fas fa-envelope email-icon" data-email="${contact.email || ''}" title="Copy Email"></i>
-                            <i class="fas fa-phone phone-icon" data-phone="${contact.phone || ''}" title="Copy Phone"></i>
-                        </td>
-                    `;
-                    
-                    // Add event listeners to action icons
-                    row.querySelector('.view-icon').addEventListener('click', () => {
-                        showContactDetails(contact);
-                    });
-                    
-                    row.querySelector('.email-icon').addEventListener('click', () => {
-                        if (contact.email) {
-                            copyToClipboard(contact.email);
-                            showTooltip(row.querySelector('.email-icon'), 'Email copied!');
-                        } else {
-                            showTooltip(row.querySelector('.email-icon'), 'No email available');
-                        }
-                    });
-                    
-                    row.querySelector('.phone-icon').addEventListener('click', () => {
-                        if (contact.phone) {
-                            copyToClipboard(contact.phone);
-                            showTooltip(row.querySelector('.phone-icon'), 'Phone copied!');
-                        } else {
-                            showTooltip(row.querySelector('.phone-icon'), 'No phone available');
-                        }
-                    });
-                    
-                    resultsBody.appendChild(row);
-                });
-                
-                // Update pagination
-                updatePagination(totalPages);
-            }
-        }
-        
-        // Update pagination controls
-        function updatePagination(totalPages) {
-            paginationContainer.innerHTML = '';
-            
-            // Don't show pagination if only one page
-            if (totalPages <= 1) {
-                return;
-            }
-            
-            // Previous button
-            const prevButton = document.createElement('button');
-            prevButton.innerHTML = '&laquo;';
-            prevButton.disabled = currentPage === 1;
-            prevButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updateResultsDisplay();
-                }
-            });
-            paginationContainer.appendChild(prevButton);
-            
-            // Page buttons
-            const maxVisiblePages = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            
-            // Adjust start page if needed
-            if (endPage - startPage + 1 < maxVisiblePages) {
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
-            }
-            
-            for (let i = startPage; i <= endPage; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.textContent = i;
-                if (i === currentPage) {
-                    pageButton.classList.add('active');
-                }
-                pageButton.addEventListener('click', () => {
-                    currentPage = i;
-                    updateResultsDisplay();
-                });
-                paginationContainer.appendChild(pageButton);
-            }
-            
-            // Next button
-            const nextButton = document.createElement('button');
-            nextButton.innerHTML = '&raquo;';
-            nextButton.disabled = currentPage === totalPages;
-            nextButton.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updateResultsDisplay();
-                }
-            });
-            paginationContainer.appendChild(nextButton);
-        }
-        
-        // Show contact details in modal
-        function showContactDetails(contact) {
-            // Populate modal with contact details
-            document.getElementById('modalName').textContent = contact.fullName || 'Contact Details';
-            document.getElementById('modalFullName').textContent = contact.fullName || 'N/A';
-            document.getElementById('modalTitle').textContent = contact.title || 'N/A';
-            document.getElementById('modalDepartment').textContent = contact.department || 'N/A';
-            document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
-            document.getElementById('modalEmail').textContent = contact.email || 'N/A';
-            document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
-            
-            // Create LinkedIn link if available
-            const linkedInElement = document.getElementById('modalLinkedIn');
-            if (contact.linkedin) {
-                const linkedInUrl = contact.linkedin.startsWith('http') ? contact.linkedin : `https://${contact.linkedin}`;
-                linkedInElement.innerHTML = `<a href="${linkedInUrl}" target="_blank">${contact.linkedin}</a>`;
-            } else {
-                linkedInElement.textContent = 'Not available';
-            }
-            
-            // Format location
-            let location = '';
-            if (contact.city) location += contact.city;
-            if (contact.state) {
-                if (location) location += ', ';
-                location += contact.state;
-            }
-            if (contact.country) {
-                if (location) location += ', ';
-                location += contact.country;
-            }
-            document.getElementById('modalLocation').textContent = location || 'Not available';
-            
-            // Company information
-            document.getElementById('modalCompany').textContent = contact.company || 'N/A';
-            document.getElementById('modalIndustry').textContent = contact.industry || 'Not specified';
-            document.getElementById('modalCompanySize').textContent = contact.companysize || 'Not specified';
-            document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'Not available';
-            
-            // Create website link if available
-            const websiteElement = document.getElementById('modalWebsite');
-            if (contact.website) {
-                const websiteUrl = contact.website.startsWith('http') ? contact.website : `https://${contact.website}`;
-                websiteElement.innerHTML = `<a href="${websiteUrl}" target="_blank">${contact.website}</a>`;
-            } else {
-                websiteElement.textContent = 'Not available';
-            }
-            
-            // Format description (with truncation if needed)
-            const descriptionElement = document.getElementById('modalDescription');
-            if (contact.description) {
-                if (contact.description.length > 200) {
-                    descriptionElement.innerHTML = `
-                        <div class="short-desc">${contact.description.substring(0, 200)}... <a href="#" onclick="toggleDescription(event)">Read more</a></div>
-                        <div class="full-desc" style="display:none">${contact.description} <a href="#" onclick="toggleDescription(event)">Read less</a></div>
-                    `;
-                } else {
-                    descriptionElement.textContent = contact.description;
-                }
-            } else {
-                descriptionElement.textContent = 'Not available';
-            }
-            
-            // Social media links
-            const socialMediaElement = document.getElementById('modalSocialMedia');
-            socialMediaElement.innerHTML = '';
-            
-            if (contact.clinkedin || contact.cfacebook || contact.cx) {
-                const socialLinks = [];
-                
-                if (contact.clinkedin) {
-                    const url = contact.clinkedin.startsWith('http') ? contact.clinkedin : `https://${contact.clinkedin}`;
-                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>`);
-                }
-                
-                if (contact.cfacebook) {
-                    const url = contact.cfacebook.startsWith('http') ? contact.cfacebook : `https://${contact.cfacebook}`;
-                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>`);
-                }
-                
-                if (contact.cx) {
-                    const url = contact.cx.startsWith('http') ? contact.cx : `https://${contact.cx}`;
-                    socialLinks.push(`<a href="${url}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>`);
-                }
-                
-                socialMediaElement.innerHTML = socialLinks.join(' · ');
-            } else {
-                socialMediaElement.textContent = 'Not available';
-            }
-            
-            // Format technologies as tags
-            const technologiesElement = document.getElementById('modalTechnologies');
-            if (contact.technologies) {
-                technologiesElement.innerHTML = '';
-                const techs = contact.technologies.split(',');
-                techs.forEach(tech => {
-                    const techSpan = document.createElement('span');
-                    techSpan.className = 'info-tag';
-                    techSpan.textContent = tech.trim();
-                    technologiesElement.appendChild(techSpan);
-                    // Add space between tags
-                    technologiesElement.appendChild(document.createTextNode(' '));
-                });
-            } else {
-                technologiesElement.textContent = 'Not specified';
-            }
-            
-            // Display the modal
-            contactModal.style.display = 'block';
-        }
-        
-        // Toggle between short and full description
-        function toggleDescription(event) {
-            event.preventDefault();
-            const parent = event.target.parentElement;
-            const isShortDesc = parent.classList.contains('short-desc');
-            
-            document.querySelector('.short-desc').style.display = isShortDesc ? 'none' : 'block';
-            document.querySelector('.full-desc').style.display = isShortDesc ? 'block' : 'none';
-        }
-        
-        // Make this function available globally for the onclick handler
-        window.toggleDescription = toggleDescription;
-        
-        // Copy text to clipboard
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Success!
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-                
-                // Fallback for browsers that don't support clipboard API
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            });
-        }
-        
-        // Show tooltip on element
-        function showTooltip(element, message) {
-            // Create tooltip
-            const tooltip = document.createElement('div');
-            tooltip.style.position = 'absolute';
-            tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            tooltip.style.color = 'white';
-            tooltip.style.padding = '5px 10px';
-            tooltip.style.borderRadius = '5px';
-            tooltip.style.fontSize = '14px';
-            tooltip.style.zIndex = '1000';
-            tooltip.style.pointerEvents = 'none';
-            tooltip.textContent = message;
-            
-            // Position tooltip
-            const rect = element.getBoundingClientRect();
-            tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
-            tooltip.style.left = `${rect.left + window.scrollX - 15}px`;
-            
-            // Add to body
-            document.body.appendChild(tooltip);
-            
-            // Remove after delay
-            setTimeout(() => {
-                document.body.removeChild(tooltip);
-            }, 2000);
-        }
-        
-        // Show alert message
-        function showAlert(message, type) {
-            searchAlert.textContent = message;
-            searchAlert.className = 'alert';
-            searchAlert.classList.add(`alert-${type}`);
-            searchAlert.style.display = 'block';
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-                searchAlert.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Export contacts to CSV
-        function exportToCSV() {
-            if (filteredContacts.length === 0) {
-                showAlert('No contacts to export.', 'error');
-                return;
-            }
-            
-            // Define the headers we want to export
-            const headers = [
-                'Name',
-                'Title',
-                'Department',
-                'Management Level',
-                'Company',
-                'Email',
-                'Phone',
-                'LinkedIn',
-                'Country',
-                'City',
-                'State',
-                'Industry',
-                'Company Size',
-                'Website',
-                'Company Phone',
-                'Technologies',
-                'Description'
-            ];
-            
-            // Map database field names to export headers
-            const fieldMapping = {
-                'Name': contact => contact.fullName || `${contact['first name'] || ''} ${contact['last name'] || ''}`.trim(),
-                'Title': 'title',
-                'Department': 'department',
-                'Management Level': 'managementlevel',
-                'Company': 'company',
-                'Email': 'email',
-                'Phone': 'phone',
-                'LinkedIn': 'linkedin',
-                'Country': 'country',
-                'City': 'city',
-                'State': 'state',
-                'Industry': 'industry',
-                'Company Size': 'companysize',
-                'Website': 'website',
-                'Company Phone': 'cphone',
-                'Technologies': 'technologies',
-                'Description': 'description'
-            };
-            
-            // Create CSV content
-            let csvContent = headers.join(',') + '\n';
-            
-            filteredContacts.forEach(contact => {
-                const row = headers.map(header => {
-                    const field = fieldMapping[header];
-                    let value;
-                    
-                    if (typeof field === 'function') {
-                        value = field(contact);
-                    } else {
-                        value = contact[field] || '';
-                    }
-                    
-                    return escapeCsvValue(value);
-                });
-                
-                csvContent += row.join(',') + '\n';
-            });
-            
-            // Create download link
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `business_contacts_${timestamp}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showAlert(`Exported ${filteredContacts.length} contacts to CSV.`, 'success');
-        }
-        
-        // Escape CSV value to handle commas and quotes
-        function escapeCsvValue(value) {
-            if (value === null || value === undefined) {
-                return '';
-            }
-            
-            const stringValue = String(value);
-            // If the value contains commas, quotes, or newlines, wrap it in quotes
-            if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
-                // Double up any quotes
-                return '"' + stringValue.replace(/"/g, '""') + '"';
-            }
-            return stringValue;
-        }
-    </script>
-</body>
-</html>
