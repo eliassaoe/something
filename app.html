@@ -766,18 +766,18 @@ function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
-    // Don't display any count initially - only show count after search
-    const trueCount = 0; // Default to 0 for initial load
+    // Make sure trueCount is defined - use a large number for initial display
+    const trueCount = 200000000;
     
     // Update the number of results
-    resultsNumber.textContent = "";
+    resultsNumber.textContent = trueCount;
     
     // Clear existing results
     resultsBody.innerHTML = '';
     
     // Show or hide no results message
     if (trueCount === 0) {
-        noResults.style.display = 'none'; // Hide no results initially
+        noResults.style.display = 'block';
         resultsTable.style.display = 'none';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
