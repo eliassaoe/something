@@ -645,46 +645,49 @@
         const endRecord = document.getElementById('endRecord');
         const totalDisplayRecords = document.getElementById('totalDisplayRecords');
         
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Show loading indicator
-            loading.style.display = 'block';
-            
-            try {
-                // Fetch initial data from Supabase via n8n
-                await fetchData();
-                
-                // Display data immediately
-                displayInitialResults();
-                
-                // Populate dropdowns
-                populateCountryDropdown();
-                populateIndustryDropdown();
-                
-                // Set up event listeners
-                searchForm.addEventListener('submit', handleSearch);
-                exportButton.addEventListener('click', exportToCSV);
-                closeModal.addEventListener('click', () => {
-                    contactModal.style.display = 'none';
-                });
-                
-                // Close modal when clicking outside of it
-                window.addEventListener('click', (event) => {
-                    if (event.target === contactModal) {
-                        contactModal.style.display = 'none';
-                    }
-                });
-                
-                // Show success message
-                showAlert("Connected to database successfully! Ready to search.", 'success');
-            } catch (error) {
-                console.error("Error initializing app:", error);
-                showAlert(`Error connecting to database: ${error.message}`, 'error');
-            } finally {
-                // Hide loading indicator
-                loading.style.display = 'none';
+       // Initialize the app
+document.addEventListener('DOMContentLoaded', async () => {
+    // Show loading indicator
+    loading.style.display = 'block';
+    
+    try {
+        // Fetch initial data from Supabase via n8n
+        await fetchData();
+        
+        // Get the total count separately
+        await fetchTotalCount();
+        
+        // Display data immediately
+        displayInitialResults();
+        
+        // Populate dropdowns
+        populateCountryDropdown();
+        populateIndustryDropdown();
+        
+        // Set up event listeners
+        searchForm.addEventListener('submit', handleSearch);
+        exportButton.addEventListener('click', exportToCSV);
+        closeModal.addEventListener('click', () => {
+            contactModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === contactModal) {
+                contactModal.style.display = 'none';
             }
         });
+        
+        // Show success message
+        showAlert("Connected to database successfully! Ready to search.", 'success');
+    } catch (error) {
+        console.error("Error initializing app:", error);
+        showAlert(`Error connecting to database: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+    }
+});
         
         // Fetch data from Supabase via n8n webhook
         async function fetchData() {
@@ -919,32 +922,64 @@ async function handleSearch(e) {
     }
 }
 
-// Également, il faut modifier la fonction exportToCSV pour utiliser les bons noms de colonnes
-function exportToCSV() {
-    if (allContacts.length === 0) {
-        showAlert('No contacts to export.', 'warning');
-        return;
-    }
-    
+async function exportToCSV() {
     try {
-        // Define CSV headers - only select key columns for export with corrected column names
-        const headers = ['first name', 'last name', 'title', 'email','phone', 'company', 'industry','linkedin','website','cphone','country'];
+        // Show loading screen
+        loading.style.display = 'block';
+        showAlert('Preparing export, please wait. This may take a moment for large datasets...', 'warning');
+        
+        // Make a specific API call to get all data for export
+        const requestData = {
+            action: 'export',
+            supabaseUrl: SUPABASE_URL,
+            supabaseKey: SUPABASE_KEY,
+            tableName: 'unlimited',
+            // Pass any active filters from the search form
+            searchParams: {
+                country: countrySelect.value,
+                industry: industrySelect.value,
+                title: document.getElementById('jobTitle').value,
+                company: document.getElementById('companyName').value,
+                keywords: document.getElementById('keywords').value
+            }
+        };
+        
+        // Make POST request to n8n webhook
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        // Get all the export data
+        const exportData = await response.json();
+        
+        if (!Array.isArray(exportData) || exportData.length === 0) {
+            showAlert('No contacts to export.', 'warning');
+            loading.style.display = 'none';
+            return;
+        }
+        
+        // Define CSV headers
+        const headers = ['first name', 'last name', 'title', 'email', 'phone', 'company', 'industry', 'linkedin', 'website', 'cphone', 'country'];
         
         // Create CSV content
         let csvContent = headers.join(',') + '\n';
         
         // Add all contacts to CSV
-        allContacts.forEach(contact => {
+        exportData.forEach(contact => {
             const row = headers.map(header => {
-                // Get value and handle null/undefined
                 let value = contact[header] || '';
-                
-                // Handle values with commas by wrapping in quotes
                 value = String(value).replace(/"/g, '""');
                 if (value.includes(',') || value.includes('"') || value.includes('\n')) {
                     value = `"${value}"`;
                 }
-                
                 return value;
             });
             
@@ -963,13 +998,56 @@ function exportToCSV() {
         link.click();
         document.body.removeChild(link);
         
-        showAlert('Contacts exported successfully!', 'success');
+        showAlert(`Exported ${exportData.length} contacts successfully!`, 'success');
     } catch (error) {
         console.error('Error exporting to CSV:', error);
         showAlert(`Error exporting contacts: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
     }
 }
+
+        async function fetchTotalCount() {
+    try {
+        const requestData = {
+            action: 'getCount',
+            supabaseUrl: SUPABASE_URL,
+            supabaseKey: SUPABASE_KEY,
+            tableName: 'unlimited',
+            searchParams: {
+                country: countrySelect.value,
+                industry: industrySelect.value,
+                title: document.getElementById('jobTitle').value,
+                company: document.getElementById('companyName').value,
+                keywords: document.getElementById('keywords').value
+            }
+        };
         
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Update the total count display
+        totalDisplayRecords.textContent = data.count;
+        resultsNumber.textContent = data.count;
+        
+        return data.count;
+    } catch (error) {
+        console.error("Error fetching count:", error);
+        return 0;
+    }
+}
         // Helper function to show alerts
         function showAlert(message, type) {
             searchAlert.textContent = message;
