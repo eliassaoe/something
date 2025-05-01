@@ -1020,55 +1020,42 @@ async function exportToCSV() {
 
         // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
-    try {
-        console.log("Fetching total count...");
-        
-        const requestData = {
-            action: 'getCount',
-            supabaseUrl: SUPABASE_URL,
-            supabaseKey: SUPABASE_KEY,
-            tableName: 'unlimited',
-            searchParams: {
-                country: countrySelect.value,
-                industry: industrySelect.value,
-                title: document.getElementById('jobTitle').value,
-                company: document.getElementById('companyName').value,
-                keywords: document.getElementById('keywords').value
-            }
-        };
-        
-        console.log("Count request data:", requestData);
-        
-        const response = await fetch(N8N_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // Add any API key headers if needed
-            },
-            body: JSON.stringify(requestData)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log("Count response:", data);
-        
-        // Update the total count display
-        if (data && data.count !== undefined) {
-            totalDisplayRecords.textContent = data.count;
-            resultsNumber.textContent = data.count;
-            return data.count;
-        } else {
-            console.error("Invalid count response format:", data);
-            return 0;
-        }
-    } catch (error) {
-        console.error("Error fetching count:", error);
-        return 0;
-    }
+  try {
+    const requestData = {
+      action: 'getCount',
+      supabaseUrl: SUPABASE_URL,
+      supabaseKey: SUPABASE_KEY,
+      tableName: 'unlimited',
+      searchParams: {
+        country: countrySelect.value,
+        industry: industrySelect.value,
+        title: document.getElementById('jobTitle').value,
+        company: document.getElementById('companyName').value,
+        keywords: document.getElementById('keywords').value
+      }
+    };
+
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestData)
+    });
+
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+
+    const data = await response.json();
+    // data is [count], so grab first element
+    const trueCount = Array.isArray(data) && typeof data[0] === 'number' ? data[0] : 0;
+
+    resultsNumber.textContent       = trueCount;
+    totalDisplayRecords.textContent = trueCount;
+    return trueCount;
+  } catch (err) {
+    console.error('Error fetching count:', err);
+    return 0;
+  }
 }
+
         // Helper function to show alerts
         function showAlert(message, type) {
             searchAlert.textContent = message;
