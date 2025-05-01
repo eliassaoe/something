@@ -608,21 +608,12 @@
                         <div class="info-label">Company Phone</div>
                         <div class="info-value" id="modalCompanyPhone"></div>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Social Media</div>
-                        <div class="info-value" id="modalSocialMedia"></div>
-                    </div>
-                    
+                
                     <div class="info-item">
                         <div class="info-label">Description</div>
                         <div class="info-value" id="modalDescription"></div>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Technologies</div>
-                        <div class="info-value" id="modalTechnologies"></div>
-                    </div>
+                 
                 </div>
             </div>
         </div>
@@ -850,10 +841,7 @@ function showContactDetails(contact) {
     document.getElementById('modalCompanySize').textContent = contact['companysize'] || 'N/A';
     document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
     document.getElementById('modalCompanyPhone').textContent = contact['cphone'] || 'N/A';
-    document.getElementById('modalSocialMedia').textContent = 
-        `LinkedIn: ${contact['clinkedin'] || 'N/A'}, Facebook: ${contact['cfacebook'] || 'N/A'}, Twitter: ${contact['cx'] || 'N/A'}`;
     document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
-    document.getElementById('modalTechnologies').textContent = contact['technologies'] || 'N/A';
     
     // Show the modal
     contactModal.style.display = 'block';
