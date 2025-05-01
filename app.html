@@ -766,18 +766,18 @@ function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
-    // Make sure trueCount is defined - use allContacts.length as fallback
-    const trueCount = 200000000;
+    // Don't display any count initially - only show count after search
+    const trueCount = 0; // Default to 0 for initial load
     
     // Update the number of results
-    resultsNumber.textContent = trueCount;
+    resultsNumber.textContent = "";
     
     // Clear existing results
     resultsBody.innerHTML = '';
     
     // Show or hide no results message
     if (trueCount === 0) {
-        noResults.style.display = 'block';
+        noResults.style.display = 'none'; // Hide no results initially
         resultsTable.style.display = 'none';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
