@@ -1008,8 +1008,11 @@ async function exportToCSV() {
     }
 }
 
-        async function fetchTotalCount() {
+        // Get the total count of contacts without fetching all data
+async function fetchTotalCount() {
     try {
+        console.log("Fetching total count...");
+        
         const requestData = {
             action: 'getCount',
             supabaseUrl: SUPABASE_URL,
@@ -1024,10 +1027,13 @@ async function exportToCSV() {
             }
         };
         
+        console.log("Count request data:", requestData);
+        
         const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
+                // Add any API key headers if needed
             },
             body: JSON.stringify(requestData)
         });
@@ -1037,12 +1043,17 @@ async function exportToCSV() {
         }
         
         const data = await response.json();
+        console.log("Count response:", data);
         
         // Update the total count display
-        totalDisplayRecords.textContent = data.count;
-        resultsNumber.textContent = data.count;
-        
-        return data.count;
+        if (data && data.count !== undefined) {
+            totalDisplayRecords.textContent = data.count;
+            resultsNumber.textContent = data.count;
+            return data.count;
+        } else {
+            console.error("Invalid count response format:", data);
+            return 0;
+        }
     } catch (error) {
         console.error("Error fetching count:", error);
         return 0;
