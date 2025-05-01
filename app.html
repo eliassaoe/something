@@ -771,216 +771,220 @@
             });
         }
         
-        // Display initial results - SIMPLIFIÉ
-        function displayInitialResults() {
-            // Show results section
-            resultsSection.style.display = 'block';
-            
-            // Update the number of results
-            resultsNumber.textContent = allContacts.length;
-            
-            // Clear existing results
-            resultsBody.innerHTML = '';
-            
-            // Show or hide no results message
-            if (allContacts.length === 0) {
-                noResults.style.display = 'block';
-                resultsTable.style.display = 'none';
-                startRecord.textContent = '0';
-                endRecord.textContent = '0';
-                totalDisplayRecords.textContent = '0';
-                return;
-            } else {
-                noResults.style.display = 'none';
-                resultsTable.style.display = 'table';
-            }
-            
-            // Display only the first 25 contacts
-            const displayContacts = allContacts.slice(0, 25);
-            
-            // Update pagination info
-            startRecord.textContent = '1';
-            endRecord.textContent = Math.min(25, allContacts.length);
-            totalDisplayRecords.textContent = allContacts.length;
-            
-            // Populate the table with contacts
-            displayContacts.forEach(contact => {
-                const row = document.createElement('tr');
+       // Correction de la fonction displayInitialResults pour afficher correctement les données
+function displayInitialResults() {
+    // Show results section
+    resultsSection.style.display = 'block';
+    
+    // Update the number of results
+    resultsNumber.textContent = allContacts.length;
+    
+    // Clear existing results
+    resultsBody.innerHTML = '';
+    
+    // Show or hide no results message
+    if (allContacts.length === 0) {
+        noResults.style.display = 'block';
+        resultsTable.style.display = 'none';
+        startRecord.textContent = '0';
+        endRecord.textContent = '0';
+        totalDisplayRecords.textContent = '0';
+        return;
+    } else {
+        noResults.style.display = 'none';
+        resultsTable.style.display = 'table';
+    }
+    
+    // Display only the first 25 contacts
+    const displayContacts = allContacts.slice(0, 25);
+    
+    // Update pagination info
+    startRecord.textContent = '1';
+    endRecord.textContent = Math.min(25, allContacts.length);
+    totalDisplayRecords.textContent = allContacts.length;
+    
+    // Populate the table with contacts
+    displayContacts.forEach(contact => {
+        const row = document.createElement('tr');
+        
+        // D'après votre échantillon de données, les noms des colonnes sont "first name", "last name", "title", "company"
+        // (au lieu de "job title" et "company name")
+        row.innerHTML = `
+            <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
+            <td>${contact['title'] || 'N/A'}</td>
+            <td>${contact['company'] || 'N/A'}</td>
+            <td>${contact['email'] || 'N/A'}</td>
+            <td>${contact['country'] || 'N/A'}</td>
+            <td>
+                <div class="action-icons">
+                    <i class="fas fa-eye" title="View Details"></i>
+                    <i class="fas fa-save" title="Save Contact"></i>
+                </div>
+            </td>
+        `;
+        
+        // Add event listener to view contact details
+        row.querySelector('.fa-eye').addEventListener('click', () => {
+            showContactDetails(contact);
+        });
+        
+        resultsBody.appendChild(row);
+    });
+}
+
+// Correction de la fonction showContactDetails pour afficher correctement les données
+function showContactDetails(contact) {
+    // Fill in modal details
+    document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+    document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+    document.getElementById('modalTitle').textContent = contact['title'] || 'N/A';
+    document.getElementById('modalDepartment').textContent = contact['department'] || 'N/A';
+    document.getElementById('modalManagementLevel').textContent = contact['managementlevel'] || 'N/A';
+    document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
+    document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
+    document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
+    document.getElementById('modalLocation').textContent = contact['city'] || contact['country'] || 'N/A';
+    
+    document.getElementById('modalCompany').textContent = contact['company'] || 'N/A';
+    document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
+    document.getElementById('modalCompanySize').textContent = contact['companysize'] || 'N/A';
+    document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
+    document.getElementById('modalCompanyPhone').textContent = contact['cphone'] || 'N/A';
+    document.getElementById('modalSocialMedia').textContent = 
+        `LinkedIn: ${contact['clinkedin'] || 'N/A'}, Facebook: ${contact['cfacebook'] || 'N/A'}, Twitter: ${contact['cx'] || 'N/A'}`;
+    document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
+    document.getElementById('modalTechnologies').textContent = contact['technologies'] || 'N/A';
+    
+    // Show the modal
+    contactModal.style.display = 'block';
+}
+
+// Également, il faut modifier la fonction handleSearch pour utiliser les bons noms de colonnes
+async function handleSearch(e) {
+    e.preventDefault();
+    
+    // Show loading indicator
+    loading.style.display = 'block';
+    resultsSection.style.display = 'none';
+    searchAlert.style.display = 'none';
+    
+    try {
+        // Get form values
+        const country = countrySelect.value;
+        const industry = industrySelect.value;
+        const jobTitle = document.getElementById('jobTitle').value;
+        const companyName = document.getElementById('companyName').value;
+        const keywords = document.getElementById('keywords').value;
+        
+        // If search criteria are provided, filter the data
+        if (country || industry || jobTitle || companyName || keywords) {
+            try {
+                // Search contacts using n8n webhook
+                const requestData = {
+                    action: 'search',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'unlimited',
+                    searchParams: {
+                        country,
+                        industry,
+                        // Utiliser le nom correct pour le champ job title
+                        title: jobTitle,  // Au lieu de jobTitle
+                        // Utiliser le nom correct pour le champ company name
+                        company: companyName,  // Au lieu de companyName
+                        keywords
+                    },
+                    limit: 1000
+                };
                 
-                // Create cells for each column
-                row.innerHTML = `
-                    <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
-                    <td>${contact['job title'] || 'N/A'}</td>
-                    <td>${contact['company name'] || 'N/A'}</td>
-                    <td>${contact['email'] || 'N/A'}</td>
-                    <td>${contact['country'] || 'N/A'}</td>
-                    <td>
-                        <div class="action-icons">
-                            <i class="fas fa-eye" title="View Details"></i>
-                            <i class="fas fa-save" title="Save Contact"></i>
-                        </div>
-                    </td>
-                `;
-                
-                // Add event listener to view contact details
-                row.querySelector('.fa-eye').addEventListener('click', () => {
-                    showContactDetails(contact);
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
                 });
                 
-                resultsBody.appendChild(row);
-            });
-        }
-        
-        // Handle search form submission - SIMPLIFIÉ
-        async function handleSearch(e) {
-            e.preventDefault();
-            
-            // Show loading indicator
-            loading.style.display = 'block';
-            resultsSection.style.display = 'none';
-            searchAlert.style.display = 'none';
-            
-            try {
-                // Get form values
-                const country = countrySelect.value;
-                const industry = industrySelect.value;
-                const jobTitle = document.getElementById('jobTitle').value;
-                const companyName = document.getElementById('companyName').value;
-                const keywords = document.getElementById('keywords').value;
-                
-                // If search criteria are provided, filter the data
-                if (country || industry || jobTitle || companyName || keywords) {
-                    try {
-                        // Search contacts using n8n webhook
-                        const requestData = {
-                            action: 'search',
-                            supabaseUrl: SUPABASE_URL,
-                            supabaseKey: SUPABASE_KEY,
-                            tableName: 'unlimited',
-                            searchParams: {
-                                country,
-                                industry,
-                                jobTitle,
-                                companyName,
-                                keywords
-                            },
-                            limit: 1000
-                        };
-                        
-                        // Make POST request to n8n webhook
-                        const response = await fetch(N8N_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(requestData)
-                        });
-                        
-                        if (!response.ok) {
-                            throw new Error(`API error: ${response.status}`);
-                        }
-                        
-                        const data = await response.json();
-                        
-                        // Update allContacts with search results
-                        allContacts = data;
-                        
-                        // Show search completion message
-                        showAlert(`Search completed: Found ${allContacts.length} contacts.`, 'success');
-                    } catch (error) {
-                        showAlert(`Error searching: ${error.message}`, 'error');
-                    }
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
                 }
                 
-                // Display the results (either original or filtered)
-                displayInitialResults();
+                const data = await response.json();
                 
+                // Update allContacts with search results
+                allContacts = data;
+                
+                // Show search completion message
+                showAlert(`Search completed: Found ${allContacts.length} contacts.`, 'success');
             } catch (error) {
-                console.error("Error handling search:", error);
-                showAlert(`Error: ${error.message}`, 'error');
-            } finally {
-                // Hide loading indicator
-                loading.style.display = 'none';
-                resultsSection.style.display = 'block';
+                showAlert(`Error searching: ${error.message}`, 'error');
             }
         }
         
-        // Show contact details in modal
-        function showContactDetails(contact) {
-            // Fill in modal details
-            document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-            document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-            document.getElementById('modalTitle').textContent = contact['job title'] || 'N/A';
-            document.getElementById('modalDepartment').textContent = contact['department'] || 'N/A';
-            document.getElementById('modalManagementLevel').textContent = contact['management level'] || 'N/A';
-            document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
-            document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
-            document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
-            document.getElementById('modalLocation').textContent = contact['location'] || contact['country'] || 'N/A';
-            
-            document.getElementById('modalCompany').textContent = contact['company name'] || 'N/A';
-            document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
-            document.getElementById('modalCompanySize').textContent = contact['company size'] || 'N/A';
-            document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
-            document.getElementById('modalCompanyPhone').textContent = contact['company phone'] || 'N/A';
-            document.getElementById('modalSocialMedia').textContent = contact['social media'] || 'N/A';
-            document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
-            document.getElementById('modalTechnologies').textContent = contact['technologies'] || 'N/A';
-            
-            // Show the modal
-            contactModal.style.display = 'block';
-        }
+        // Display the results (either original or filtered)
+        displayInitialResults();
         
-        // Export contacts to CSV
-        function exportToCSV() {
-            if (allContacts.length === 0) {
-                showAlert('No contacts to export.', 'warning');
-                return;
-            }
+    } catch (error) {
+        console.error("Error handling search:", error);
+        showAlert(`Error: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+        resultsSection.style.display = 'block';
+    }
+}
+
+// Également, il faut modifier la fonction exportToCSV pour utiliser les bons noms de colonnes
+function exportToCSV() {
+    if (allContacts.length === 0) {
+        showAlert('No contacts to export.', 'warning');
+        return;
+    }
+    
+    try {
+        // Define CSV headers - only select key columns for export with corrected column names
+        const headers = ['first name', 'last name', 'title', 'company', 'email', 'country', 'industry'];
+        
+        // Create CSV content
+        let csvContent = headers.join(',') + '\n';
+        
+        // Add all contacts to CSV
+        allContacts.forEach(contact => {
+            const row = headers.map(header => {
+                // Get value and handle null/undefined
+                let value = contact[header] || '';
+                
+                // Handle values with commas by wrapping in quotes
+                value = String(value).replace(/"/g, '""');
+                if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                    value = `"${value}"`;
+                }
+                
+                return value;
+            });
             
-            try {
-                // Define CSV headers - only select key columns for export
-                const headers = ['first name', 'last name', 'job title', 'company name', 'email', 'country', 'industry'];
-                
-                // Create CSV content
-                let csvContent = headers.join(',') + '\n';
-                
-                // Add all contacts to CSV
-                allContacts.forEach(contact => {
-                    const row = headers.map(header => {
-                        // Get value and handle null/undefined
-                        let value = contact[header] || '';
-                        
-                        // Handle values with commas by wrapping in quotes
-                        value = String(value).replace(/"/g, '""');
-                        if (value.includes(',') || value.includes('"') || value.includes('\n')) {
-                            value = `"${value}"`;
-                        }
-                        
-                        return value;
-                    });
-                    
-                    csvContent += row.join(',') + '\n';
-                });
-                
-                // Create download link
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.setAttribute('href', url);
-                link.setAttribute('download', 'business_contacts_export.csv');
-                link.style.visibility = 'hidden';
-                
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showAlert('Contacts exported successfully!', 'success');
-            } catch (error) {
-                console.error('Error exporting to CSV:', error);
-                showAlert(`Error exporting contacts: ${error.message}`, 'error');
-            }
-        }
+            csvContent += row.join(',') + '\n';
+        });
+        
+        // Create download link
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'business_contacts_export.csv');
+        link.style.visibility = 'hidden';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showAlert('Contacts exported successfully!', 'success');
+    } catch (error) {
+        console.error('Error exporting to CSV:', error);
+        showAlert(`Error exporting contacts: ${error.message}`, 'error');
+    }
+}
         
         // Helper function to show alerts
         function showAlert(message, type) {
