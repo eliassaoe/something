@@ -766,6 +766,9 @@ function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
+    // Make sure trueCount is defined - use allContacts.length as fallback
+    const trueCount = allContacts.length;
+    
     // Update the number of results
     resultsNumber.textContent = trueCount;
     
