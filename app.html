@@ -767,13 +767,13 @@ function displayInitialResults() {
     resultsSection.style.display = 'block';
     
     // Update the number of results
-    resultsNumber.textContent = allContacts.length;
+    resultsNumber.textContent = trueCount;
     
     // Clear existing results
     resultsBody.innerHTML = '';
     
     // Show or hide no results message
-    if (allContacts.length === 0) {
+    if (trueCount; === 0) {
         noResults.style.display = 'block';
         resultsTable.style.display = 'none';
         startRecord.textContent = '0';
@@ -790,8 +790,8 @@ function displayInitialResults() {
     
     // Update pagination info
     startRecord.textContent = '1';
-    endRecord.textContent = Math.min(25, allContacts.length);
-    totalDisplayRecords.textContent = allContacts.length;
+    endRecord.textContent = Math.min(25, trueCount);
+    totalDisplayRecords.textContent = trueCount;
     
     // Populate the table with contacts
     displayContacts.forEach(contact => {
