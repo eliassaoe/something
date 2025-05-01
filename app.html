@@ -900,9 +900,20 @@ async function handleSearch(e) {
                 
                 // Update allContacts with search results
                 allContacts = data;
+
+                    // ► NEW: fetch the true total count
+    const trueCount = await fetchTotalCount();
+    // update your UI with the count from the RPC
+    resultsNumber.textContent        = trueCount;
+    totalDisplayRecords.textContent  = trueCount;
+    startRecord.textContent          = trueCount > 0 ? '1' : '0';
+    endRecord.textContent            = trueCount > 0
+                                        ? Math.min(25, trueCount)
+                                        : '0';
+
                 
                 // Show search completion message
-                showAlert(`Search completed: Found ${allContacts.length} contacts.`, 'success');
+                    showAlert(`Search completed: Found ${trueCount} contacts.`, 'success');
             } catch (error) {
                 showAlert(`Error searching: ${error.message}`, 'error');
             }
