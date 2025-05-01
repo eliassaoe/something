@@ -762,12 +762,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
        // Correction de la fonction displayInitialResults pour afficher correctement les données
-function displayInitialResults() {
+async function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
     // Make sure trueCount is defined - use allContacts.length as fallback
-    const trueCount = allContacts.length;
+    const trueCount = await fetchTotalCount();
     
     // Update the number of results
     resultsNumber.textContent = trueCount;
