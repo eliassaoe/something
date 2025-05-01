@@ -560,6 +560,11 @@
                         <div class="info-label">Email</div>
                         <div class="info-value" id="modalEmail"></div>
                     </div>
+
+                    <div class="info-item">
+                         <div class="info-label">Phone</div>
+                       <div class="info-value" id="modalPhone"></div>
+                    </div>
                     
                     
                     <div class="info-item">
@@ -923,7 +928,7 @@ function exportToCSV() {
     
     try {
         // Define CSV headers - only select key columns for export with corrected column names
-        const headers = ['first name', 'last name', 'title', 'company', 'email', 'country', 'industry'];
+        const headers = ['first name', 'last name', 'title', 'email','phone', 'company', 'industry','linkedin','website','cphone','country'];
         
         // Create CSV content
         let csvContent = headers.join(',') + '\n';
