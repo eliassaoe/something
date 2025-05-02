@@ -464,9 +464,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="jobTitle">Job Title</label>
-                    <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g. CEO, Marketing Manager">
-                </div>
+    <label for="managementlevel">Management Level</label>
+    <select id="managementlevel" name="managementlevel">
+        <option value="">All Levels</option>
+        <!-- Management level options will be populated dynamically -->
+    </select>
+</div>
                 
                 <div class="form-group">
                     <label for="companyName">Company Name</label>
@@ -721,6 +724,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Populate dropdowns
         populateCountryDropdown();
         populateIndustryDropdown();
+
+        searchParams: {
+    country: countrySelect.value,
+    industry: industrySelect.value,
+    // Replace title with managementlevel
+    managementlevel: document.getElementById('managementlevel').value,
+    company: document.getElementById('companyName').value,
+    keywords: document.getElementById('keywords').value
+}
         
         // Set up event listeners
         searchForm.addEventListener('submit', handleSearch);
@@ -914,7 +926,7 @@ async function handleSearch(e) {
         // Get form values
         const country = countrySelect.value;
         const industry = industrySelect.value;
-        const jobTitle = document.getElementById('jobTitle').value;
+        cconst managementLevel = document.getElementById('managementlevel').value;
         const companyName = document.getElementById('companyName').value;
         const keywords = document.getElementById('keywords').value;
         
@@ -931,7 +943,7 @@ async function handleSearch(e) {
                         country,
                         industry,
                         // Utiliser le nom correct pour le champ job title
-                        title: jobTitle,  // Au lieu de jobTitle
+                        managementlevel: document.getElementById('managementlevel').value,
                         // Utiliser le nom correct pour le champ company name
                         company: companyName,  // Au lieu de companyName
                         keywords
@@ -1025,7 +1037,7 @@ async function exportToCSV() {
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
-                        title: document.getElementById('jobTitle').value,
+                        managementlevel: document.getElementById('managementlevel').value,
                         company: document.getElementById('companyName').value,
                         keywords: document.getElementById('keywords').value
                     }
