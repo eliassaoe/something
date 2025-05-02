@@ -962,8 +962,22 @@ async function handleSearch(e) {
 
 async function exportToCSV() {
     try {
-        // Show a confirmation popup about email delivery
-        if (confirm("Your export will be sent to your registered email address within the next 3 hours. Please check your spam folder if you don't see it. Would you like to proceed?")) {
+        // Show the custom export modal
+        const exportModal = document.getElementById('exportModal');
+        exportModal.style.display = 'block';
+        
+        // Add event listener for the close button
+        const closeExportModal = document.querySelector('.close-export-modal');
+        closeExportModal.addEventListener('click', () => {
+            exportModal.style.display = 'none';
+        });
+        
+        // Add event listener for the confirm button
+        const confirmExportBtn = document.getElementById('confirmExport');
+        confirmExportBtn.addEventListener('click', async () => {
+            // Hide the modal
+            exportModal.style.display = 'none';
+            
             // Show loading screen briefly while making the API call
             loading.style.display = 'block';
             
@@ -997,17 +1011,26 @@ async function exportToCSV() {
             }
             
             // Show success message
-            showAlert('Your export request has been processed. Please check your email within the next 3 hours. Remember to check your spam folder if you don\'t see it in your inbox.', 'success');
-        }
+            showAlert('Your export request has been processed. You will receive the contact list via email soon.', 'success');
+            
+            // Remove the event listener to prevent multiple attachments
+            confirmExportBtn.removeEventListener('click', arguments.callee);
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === exportModal) {
+                exportModal.style.display = 'none';
+            }
+        });
+        
     } catch (error) {
         console.error('Error processing export request:', error);
         showAlert(`Error processing export request: ${error.message}`, 'error');
-    } finally {
-        // Hide loading indicator
+        // Hide loading indicator if shown
         loading.style.display = 'none';
     }
 }
-
         // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
   try {
