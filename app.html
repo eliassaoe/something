@@ -825,22 +825,16 @@ function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
-    // Get the true count from our API call
-    const trueCount = globalTrueCount || 0;
-    
-    // Update the number of results
-    resultsNumber.textContent = trueCount;
-    
     // Clear existing results
     resultsBody.innerHTML = '';
     
-    // Show or hide no results message
-    if (trueCount === 0) {
+    // Show or hide no results message - don't calculate count here
+    if (allContacts.length === 0) {
         noResults.style.display = 'block';
         resultsTable.style.display = 'none';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
-        totalDisplayRecords.textContent = '0';
+        // Don't update count displays here - let fetchTotalCount handle this
         return;
     } else {
         noResults.style.display = 'none';
@@ -850,10 +844,10 @@ function displayInitialResults() {
     // Display only the first 25 contacts
     const displayContacts = allContacts.slice(0, 25);
     
-    // Update pagination info
-    startRecord.textContent = displayContacts.length > 0 ? '1' : '0';
+    // Update pagination info for records shown, but NOT the count
+    startRecord.textContent = '1';
     endRecord.textContent = displayContacts.length;
-    totalDisplayRecords.textContent = trueCount;
+    // Don't update totalDisplayRecords here - let fetchTotalCount do it
     
     // Populate the table with contacts
     displayContacts.forEach(contact => {
