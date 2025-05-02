@@ -616,7 +616,7 @@
         </div>
     </div>
 
-    <div id="exportModal" class="contact-modal">
+   <div id="exportModal" class="contact-modal">
     <div class="modal-content">
         <span class="close-export-modal">&times;</span>
         
@@ -627,9 +627,13 @@
         <div class="modal-body">
             <div class="info-item">
                 <div class="info-value">
-                    <p>Your export request is being processed. The contact list will be sent to your registered email address within the next 3 hours.</p>
-                    <p>Please remember to check your spam folder if you don't see it in your inbox.</p>
+                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
                 </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="exportLimit"><strong>Number of leads to export:</strong></label>
+                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 2px solid var(--gray); border-radius: 8px; font-size: 16px;">
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
