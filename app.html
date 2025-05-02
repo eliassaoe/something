@@ -937,84 +937,46 @@ async function handleSearch(e) {
 
 async function exportToCSV() {
     try {
-        // Show loading screen
-        loading.style.display = 'block';
-        showAlert('Preparing export, please wait. This may take a moment for large datasets...', 'warning');
-        
-        // Make a specific API call to get all data for export
-        const requestData = {
-            action: 'export',
-            supabaseUrl: SUPABASE_URL,
-            supabaseKey: SUPABASE_KEY,
-            tableName: 'unlimited',
-            // Pass any active filters from the search form
-            searchParams: {
-                country: countrySelect.value,
-                industry: industrySelect.value,
-                title: document.getElementById('jobTitle').value,
-                company: document.getElementById('companyName').value,
-                keywords: document.getElementById('keywords').value
-            }
-        };
-        
-        // Make POST request to n8n webhook
-        const response = await fetch(N8N_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-        }
-        
-        // Get all the export data
-        const exportData = await response.json();
-        
-        if (!Array.isArray(exportData) || exportData.length === 0) {
-            showAlert('No contacts to export.', 'warning');
-            loading.style.display = 'none';
-            return;
-        }
-        
-        // Define CSV headers
-        const headers = ['first name', 'last name', 'title', 'email', 'cphone', 'company', 'industry', 'linkedin', 'website', 'phone', 'country'];
-        
-        // Create CSV content
-        let csvContent = headers.join(',') + '\n';
-        
-        // Add all contacts to CSV
-        exportData.forEach(contact => {
-            const row = headers.map(header => {
-                let value = contact[header] || '';
-                value = String(value).replace(/"/g, '""');
-                if (value.includes(',') || value.includes('"') || value.includes('\n')) {
-                    value = `"${value}"`;
+        // Show a confirmation popup about email delivery
+        if (confirm("Your export will be sent to your registered email address within the next 3 hours. Please check your spam folder if you don't see it. Would you like to proceed?")) {
+            // Show loading screen briefly while making the API call
+            loading.style.display = 'block';
+            
+            // Make a specific API call to get all data for export
+            const requestData = {
+                action: 'export',
+                supabaseUrl: SUPABASE_URL,
+                supabaseKey: SUPABASE_KEY,
+                tableName: 'unlimited',
+                // Pass any active filters from the search form
+                searchParams: {
+                    country: countrySelect.value,
+                    industry: industrySelect.value,
+                    title: document.getElementById('jobTitle').value,
+                    company: document.getElementById('companyName').value,
+                    keywords: document.getElementById('keywords').value
                 }
-                return value;
+            };
+            
+            // Make POST request to n8n webhook
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
             });
             
-            csvContent += row.join(',') + '\n';
-        });
-        
-        // Create download link
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.setAttribute('href', url);
-        link.setAttribute('download', 'business_contacts_export.csv');
-        link.style.visibility = 'hidden';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        showAlert(`Exported ${exportData.length} contacts successfully!`, 'success');
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+            
+            // Show success message
+            showAlert('Your export request has been processed. Please check your email within the next 3 hours. Remember to check your spam folder if you don\'t see it in your inbox.', 'success');
+        }
     } catch (error) {
-        console.error('Error exporting to CSV:', error);
-        showAlert(`Error exporting contacts: ${error.message}`, 'error');
+        console.error('Error processing export request:', error);
+        showAlert(`Error processing export request: ${error.message}`, 'error');
     } finally {
         // Hide loading indicator
         loading.style.display = 'none';
