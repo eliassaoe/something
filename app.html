@@ -680,8 +680,10 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
         
         // Global variables
-        let allContacts = [];
+        // Global variables
         
+        let allContacts = [];
+        let globalTrueCount = 0;
         // DOM Elements
         const searchForm = document.getElementById('searchForm');
         const countrySelect = document.getElementById('country');
@@ -708,6 +710,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Fetch initial data from Supabase via n8n
         await fetchData();
+
+        globalTrueCount = await fetchTotalCount();
         
         // Get the total count separately
         
@@ -821,8 +825,8 @@ function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
     
-    // Make sure trueCount is defined - use allContacts.length as fallback
-    const trueCount = allContacts.length;
+    // Get the true count from our API call
+    const trueCount = globalTrueCount || 0;
     
     // Update the number of results
     resultsNumber.textContent = trueCount;
@@ -847,8 +851,8 @@ function displayInitialResults() {
     const displayContacts = allContacts.slice(0, 25);
     
     // Update pagination info
-    startRecord.textContent = '1';
-    endRecord.textContent = Math.min(25, trueCount);
+    startRecord.textContent = displayContacts.length > 0 ? '1' : '0';
+    endRecord.textContent = displayContacts.length;
     totalDisplayRecords.textContent = trueCount;
     
     // Populate the table with contacts
