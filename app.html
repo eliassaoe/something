@@ -1008,6 +1008,9 @@ async function exportToCSV() {
             // Hide the export modal
             exportModal.style.display = 'none';
             
+            // Get the export limit from the input field
+            const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+            
             // Show loading screen while making the API call
             loading.style.display = 'block';
             
@@ -1018,6 +1021,8 @@ async function exportToCSV() {
                     supabaseUrl: SUPABASE_URL,
                     supabaseKey: SUPABASE_KEY,
                     tableName: 'unlimited',
+                    // Add the export limit to the request
+                    limit: exportLimit,
                     // Pass any active filters from the search form
                     searchParams: {
                         country: countrySelect.value,
