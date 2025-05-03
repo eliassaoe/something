@@ -190,6 +190,127 @@
             background-color: var(--text-light);
             cursor: not-allowed;
         }
+
+        /* Notification popup styles */
+        .notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .notification-popup {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        
+        .notification-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .notification-overlay.active .notification-popup {
+            transform: scale(1);
+        }
+        
+        .notification-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .notification-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .notification-message {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .notification-actions {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .notification-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .notification-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .notification-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .timer-container {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        .timer-text {
+            margin-bottom: 0.5rem;
+        }
+        
+        .resend-button {
+            color: var(--primary-color);
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .resend-button:disabled {
+            color: var(--text-light);
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+        
+        .close-notification {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.25rem;
+            line-height: 1;
+        }
     </style>
 </head>
 <body>
@@ -235,7 +356,7 @@
             </button>
             <div class="message hidden" id="verifyMessage"></div>
             <div class="switch-form">
-                <a href="#" onclick="resendCode()">Didn't receive a code? Resend it</a>
+                <a href="#" id="resendCodeLink" onclick="resendCode()">Didn't receive a code? Resend it</a>
             </div>
         </div>
         
@@ -265,6 +386,23 @@
             <h2>Welcome!</h2>
             <p>You are now logged in to your account.</p>
             <button onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+    <!-- Notification Popup -->
+    <div class="notification-overlay" id="notificationOverlay">
+        <div class="notification-popup">
+            <button class="close-notification" onclick="closeNotification()">×</button>
+            <div class="notification-icon">✉️</div>
+            <h3 class="notification-title">Check Your Email</h3>
+            <p class="notification-message">We've sent a verification link to your email address. Please check your inbox and verify your account.</p>
+            <div class="timer-container">
+                <p class="timer-text">You can request another verification email in <span id="timerCount">30</span> seconds</p>
+                <button class="resend-button" id="resendTimerButton" disabled>Resend verification email</button>
+            </div>
+            <div class="notification-actions">
+                <button class="notification-button notification-primary" onclick="closeNotification()">Got it</button>
+            </div>
         </div>
     </div>
 
@@ -322,6 +460,78 @@
             }
         }
         
+        // Show notification popup
+        function showNotification() {
+            document.getElementById('notificationOverlay').classList.add('active');
+            startResendTimer();
+        }
+        
+        // Close notification popup
+        function closeNotification() {
+            document.getElementById('notificationOverlay').classList.remove('active');
+        }
+        
+        // Timer function for resend button
+        function startResendTimer() {
+            let timeLeft = 30;
+            const timerElement = document.getElementById('timerCount');
+            const resendButton = document.getElementById('resendTimerButton');
+            
+            resendButton.disabled = true;
+            timerElement.textContent = timeLeft;
+            
+            const timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    resendButton.disabled = false;
+                    timerElement.textContent = '0';
+                }
+            }, 1000);
+            
+            // Add event listener for resend button in popup
+            resendButton.onclick = function() {
+                if (!this.disabled) {
+                    const email = document.getElementById('verifyEmail').value || document.getElementById('registerEmail').value;
+                    resendVerificationEmail(email);
+                    // Reset timer
+                    timeLeft = 30;
+                    timerElement.textContent = timeLeft;
+                    this.disabled = true;
+                }
+            };
+        }
+        
+        // Resend verification email
+        function resendVerificationEmail(email) {
+            // API call to resend verification email
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'resendVerification',
+                    email: email
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to resend verification email');
+            })
+            .then(data => {
+                displayMessage('verifyMessage', 'Verification email resent successfully!');
+            })
+            .catch(error => {
+                console.error('Resend error:', error);
+                displayMessage('verifyMessage', 'Failed to resend verification email. Please try again.', true);
+            });
+        }
+        
         // For local demo mode
         const isLocalDemoMode = true; // Set to false for production with real server
         const localDB = {
@@ -362,6 +572,21 @@
             }
             
             try {
+                // Always send data to the webhook URL
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'register',
+                        email,
+                        password
+                    })
+                });
+                
+                console.log('Webhook response:', response);
+                
                 if (isLocalDemoMode) {
                     // In demo mode, use local storage
                     if (localDB.users[email]) {
@@ -382,36 +607,28 @@
                         createdAt: new Date().toISOString()
                     };
                     
-                    // For demo purposes, alert the code (in a real app, this would be sent via email)
-                    setTimeout(() => {
-                        alert(`For demonstration purposes, your verification code is: ${verificationCode}`);
-                        displayMessage('registerMessage', 'Account created. Please verify your email.');
-                        setButtonLoading('registerButton', false);
-                        showVerify(email);
-                    }, 1000);
-                } else {
-                    // In production mode, call your server endpoint
-                    const response = await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            action: 'register',
-                            email,
-                            password
-                        })
-                    });
+                    // Show notification popup instead of alert
+                    displayMessage('registerMessage', 'Account created. Please check your email for verification.');
+                    setButtonLoading('registerButton', false);
                     
+                    // Show the notification popup
+                    showNotification();
+                    
+                    // For demo purposes, store the code for later verification
+                    localStorage.setItem('demoVerificationCode', verificationCode);
+                } else {
+                    // In production mode
                     if (!response.ok) {
                         throw new Error('Registration failed');
                     }
                     
                     const data = await response.json();
                     
-                    displayMessage('registerMessage', 'Account created. Please check your email for a verification code.');
+                    displayMessage('registerMessage', 'Account created. Please check your email for verification.');
                     setButtonLoading('registerButton', false);
-                    showVerify(email);
+                    
+                    // Show notification popup
+                    showNotification();
                 }
             } catch (error) {
                 console.error('Registration error:', error);
@@ -451,6 +668,7 @@
                     // Send data to webhook
                     try {
                         const userData = {
+                            action: 'verify',
                             email: email,
                             verified: true,
                             verifiedAt: new Date().toISOString()
@@ -526,9 +744,26 @@
                 const verificationCode = generateVerificationCode();
                 localDB.verificationCodes[email] = verificationCode;
                 
-                // For demo purposes, alert the code
-                alert(`For demonstration purposes, your new verification code is: ${verificationCode}`);
-                displayMessage('verifyMessage', 'Verification code resent.');
+                // For demo purposes, store the code
+                localStorage.setItem('demoVerificationCode', verificationCode);
+                
+                // Send data to webhook
+                try {
+                    await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'resendCode',
+                            email
+                        })
+                    });
+                } catch (error) {
+                    console.error('Webhook error:', error);
+                }
+                
+                displayMessage('verifyMessage', 'Verification code resent. Please check your email.');
             } else {
                 try {
                     // In production mode, call your server endpoint
@@ -569,6 +804,23 @@
             }
             
             try {
+                // Send login data to webhook
+                const loginData = {
+                    action: 'login',
+                    email,
+                    password
+                };
+                
+                const webhookResponse = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+                
+                console.log('Login webhook response:', webhookResponse);
+                
                 if (isLocalDemoMode) {
                     // In demo mode, use local storage
                     const user = localDB.users[email];
@@ -605,36 +857,6 @@
                     localStorage.setItem('authToken', token);
                     localStorage.setItem('currentUser', email);
                     
-                    setTimeout(() => {
-                        setButtonLoading('loginButton', false);
-                        showWelcome();
-                    }, 1000);
-                } else {
-                    // In production mode, call your server endpoint
-                    const response = await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            action: 'login',
-                            email,
-                            password
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || 'Login failed');
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Store token
-                    localStorage.setItem('authToken', data.token);
-                    localStorage.setItem('currentUser', email);
-                    
-                    displayMessage('loginMessage', 'Login successful!');
                     setTimeout(() => {
                         setButtonLoading('loginButton', false);
                         showWelcome();
@@ -677,4 +899,21 @@
         }
         
         // Run on page load
-        window.onload = checkAuth;
+        window.onload = checkAuth;        showWelcome();
+                    }, 1000);
+                } else {
+                    // In production mode, check the API response
+                    if (!webhookResponse.ok) {
+                        const errorData = await webhookResponse.json();
+                        throw new Error(errorData.error || 'Login failed');
+                    }
+                    
+                    const data = await webhookResponse.json();
+                    
+                    // Store token
+                    localStorage.setItem('authToken', data.token || 'demo-token');
+                    localStorage.setItem('currentUser', email);
+                    
+                    displayMessage('loginMessage', 'Login successful!');
+                    setTimeout(() => {
+                        setButtonLoading('loginButton', false);
