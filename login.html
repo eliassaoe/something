@@ -128,16 +128,16 @@
                 });
                 
                 if (response.ok) {
-                    // Récupérer l'URL de redirection depuis la réponse
+                    // Récupérer la réponse du serveur
                     const data = await response.json();
                     
-                    if (data && data.redirectUrl) {
-                        // Rediriger l'utilisateur vers l'URL fournie par l'API
-                        window.location.href = data.redirectUrl;
+                    if (data && data.connexion_success === "yes" && data.redirect_link) {
+                        // Rediriger l'utilisateur vers le lien fourni
+                        window.location.href = data.redirect_link;
                     } else {
-                        // Message de succès si aucune redirection n'est fournie
-                        messageDiv.textContent = 'Login successful!';
-                        messageDiv.classList.add('success');
+                        // Afficher un message d'erreur si la connexion a échoué
+                        messageDiv.textContent = 'Login failed. Please check your credentials.';
+                        messageDiv.classList.add('error');
                         messageDiv.style.display = 'block';
                     }
                 } else {
