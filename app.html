@@ -29,66 +29,6 @@
             color: var(--secondary-color);
             line-height: 1.6;
         }
-
-        /* Styles pour les éléments liés à la session utilisateur */
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-name {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--secondary-color);
-    font-weight: 500;
-}
-
-.user-name i {
-    color: var(--primary-color);
-    font-size: 18px;
-}
-
-.logout-button {
-    background-color: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    padding: 6px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.logout-button:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
-}
-
-/* Styles pour l'écran de chargement de session */
-.session-loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-.session-loading-message {
-    margin-top: 15px;
-    font-size: 18px;
-    color: var(--secondary-color);
-}
         
         .container {
             max-width: 1200px;
@@ -496,12 +436,6 @@
     </style>
 </head>
 <body>
-
-    <div id="sessionLoading" class="session-loading">
-    <i class="fas fa-spinner" style="font-size: 40px; color: var(--primary-color); animation: spin 1s linear infinite;"></i>
-    <div class="session-loading-message">Chargement de votre session...</div>
-</div>
-    
     <div class="container">
         <header>
             <div class="logo">Business Contact Finder</div>
@@ -753,164 +687,10 @@
         // n8n webhook URL
         const N8N_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/0b8401b5-8d6d-426d-a92e-1d94b2e3fab4';
         
-      
-// Gestion de l'authentification et des sessions
-const SESSION_KEY = 'unlimited_leads_session';
-
-
-// Fonction pour extraire le token de l'URL
-function getTokenFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('UNIQUE_TOKEN');
-}
-
-// Fonction pour vérifier le token et créer une session
-async function verifyTokenAndCreateSession(token) {
-    try {
-        // Préparer les données pour n8n
-        const requestData = {
-            action: 'verifyToken',
-            token: token
-        };
+        // Supabase details (needed for n8n to make the request)
+        const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
         
-        // Faire la requête pour vérifier le token
-        const response = await fetch(N8N_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Impossible de vérifier le token');
-        }
-        
-        const userData = await response.json();
-        
-        // Si le token est valide, userData contiendra les informations de l'utilisateur
-        if (userData && userData.user_id) {
-            // Créer l'objet de session
-            const sessionData = {
-                userId: userData.user_id,
-                email: userData.email,
-                name: userData.name || userData.email,
-                token: token,
-                createdAt: new Date().toISOString(),
-                expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // Expire dans 24h
-            };
-            
-            // Sauvegarder dans localStorage
-            localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-            
-            return true;
-        }
-        
-        return false;
-    } catch (error) {
-        console.error('Erreur lors de la vérification du token:', error);
-        return false;
-    }
-}
-
-// Fonction pour vérifier si l'utilisateur a une session active
-function hasActiveSession() {
-    try {
-        const sessionData = JSON.parse(localStorage.getItem(SESSION_KEY));
-        
-        if (!sessionData) {
-            return false;
-        }
-        
-        // Vérifier si la session n'a pas expiré
-        const now = new Date();
-        const expiresAt = new Date(sessionData.expiresAt);
-        
-        return now < expiresAt;
-    } catch (error) {
-        console.error('Erreur lors de la vérification de la session:', error);
-        return false;
-    }
-}
-
-// Fonction pour obtenir les informations de session
-function getSessionInfo() {
-    try {
-        return JSON.parse(localStorage.getItem(SESSION_KEY)) || null;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des informations de session:', error);
-        return null;
-    }
-}
-
-// Fonction pour se déconnecter
-function logout() {
-    localStorage.removeItem(SESSION_KEY);
-    // Rediriger vers la page de connexion
-    window.location.href = 'https://unlimited-leads.online/login';
-}
-
-// Fonction pour protéger la page
-function protectPage() {
-    // Vérifier d'abord s'il y a un token dans l'URL
-    const token = getTokenFromUrl();
-    
-    if (token) {
-        // Si un token est présent, on essaie de créer une session
-        return verifyTokenAndCreateSession(token)
-            .then(isValid => {
-                if (!isValid) {
-                    // Si le token n'est pas valide, rediriger vers la page de connexion
-                    window.location.href = 'https://unlimited-leads.online/login';
-                    return false;
-                }
-                return true;
-            });
-    } else {
-        // S'il n'y a pas de token, vérifier s'il y a déjà une session active
-        if (!hasActiveSession()) {
-            // Si pas de session, rediriger vers la page de connexion
-            window.location.href = 'https://unlimited-leads.online/login';
-            return Promise.resolve(false);
-        }
-        
-        return Promise.resolve(true);
-    }
-}
-
-// Fonction pour mettre à jour l'interface avec les informations de l'utilisateur
-function updateUIWithUserInfo() {
-    const sessionInfo = getSessionInfo();
-    
-    if (sessionInfo) {
-        // Créer ou mettre à jour l'élément du header qui affiche les informations de l'utilisateur
-        let userInfoElement = document.getElementById('userInfo');
-        
-        if (!userInfoElement) {
-            // Créer l'élément s'il n'existe pas
-            userInfoElement = document.createElement('div');
-            userInfoElement.id = 'userInfo';
-            userInfoElement.className = 'user-info';
-            
-            // Ajouter au header
-            const header = document.querySelector('header');
-            header.appendChild(userInfoElement);
-        }
-        
-        // Mettre à jour le contenu
-        userInfoElement.innerHTML = `
-            <span class="user-name">
-                <i class="fas fa-user-circle"></i> ${sessionInfo.name}
-            </span>
-            <button id="logoutButton" class="logout-button">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        `;
-        
-        // Ajouter l'événement de déconnexion
-        document.getElementById('logoutButton').addEventListener('click', logout);
-    }
-}
         // Global variables
         // Global variables
         
@@ -934,72 +714,98 @@ function updateUIWithUserInfo() {
         const endRecord = document.getElementById('endRecord');
         const totalDisplayRecords = document.getElementById('totalDisplayRecords');
         
-
-
-        // Initialize the app
+       // Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
-    // ... code existant ...
-});
-
-async function fetchData() {
+    // Show loading indicator
+    loading.style.display = 'block';
+    
     try {
-        // Show loading indicator
-        loading.style.display = 'block';
+        // Fetch initial data from Supabase via n8n
+        await fetchData();
+
+        globalTrueCount = await fetchTotalCount();
         
-        // Prepare the data to send to n8n
-        const requestData = {
-            action: 'fetchAll',
-            tableName: 'unlimited',
-            limit: 1000
-        };
+        // Get the total count separately
         
-        // Ajouter le token d'authentification à la requête
-        const sessionInfo = getSessionInfo();
-        if (sessionInfo && sessionInfo.token) {
-            requestData.authToken = sessionInfo.token;
-        }
+        // Display data immediately
+        displayInitialResults();
         
-        // Make POST request to n8n webhook
-        const response = await fetch(N8N_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
+        // Populate dropdowns
+        populateCountryDropdown();
+        populateIndustryDropdown();
+        
+        // Set up event listeners
+        searchForm.addEventListener('submit', handleSearch);
+        exportButton.addEventListener('click', exportToCSV);
+        closeModal.addEventListener('click', () => {
+            contactModal.style.display = 'none';
         });
         
-        if (!response.ok) {
-            // Si la réponse indique une session expirée (401), déconnecter l'utilisateur
-            if (response.status === 401) {
-                logout();
-                throw new Error('Session expired. Please log in again.');
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === contactModal) {
+                contactModal.style.display = 'none';
             }
-            throw new Error(`API error: ${response.status}`);
-        }
+        });
         
-        const data = await response.json();
-        
-        // Validate that data is an array
-        if (!Array.isArray(data)) {
-            console.error('Response is not an array:', data);
-            throw new Error('Expected array response from API');
-        }
-        
-        console.log(`Received ${data.length} contacts from API`);
-        
-        // Store the data directly
-        allContacts = data;
-        
+        // Show success message
+        showAlert("Connected to database successfully! Ready to search.", 'success');
     } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
+        console.error("Error initializing app:", error);
+        showAlert(`Error connecting to database: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
     }
-}
+});
+        
+        // Fetch data from Supabase via n8n webhook
+        async function fetchData() {
+            try {
+                // Show loading indicator
+                loading.style.display = 'block';
+                
+                // Prepare the data to send to n8n
+                const requestData = {
+                    action: 'fetchAll',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'unlimited',  // Changed to new table name
+                    limit: 1000
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Validate that data is an array
+                if (!Array.isArray(data)) {
+                    console.error('Response is not an array:', data);
+                    throw new Error('Expected array response from API');
+                }
+                
+                console.log(`Received ${data.length} contacts from API`);
+                
+                // Store the data directly
+                allContacts = data;
+                
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                throw error;
+            }
+        }
 
-// Populate country dropdown
-function populateCountryDropdown() {
-    // ... code existant ...
-}
         
         
         // Populate country dropdown
@@ -1133,6 +939,8 @@ async function handleSearch(e) {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
                     tableName: 'unlimited',
                     searchParams: {
                         country,
@@ -1222,6 +1030,8 @@ async function exportToCSV() {
                 // Make a specific API call to get all data for export
                 const requestData = {
                     action: 'export',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
                     tableName: 'unlimited',
                     // Add the export limit to the request
                     limit: exportLimit,
@@ -1302,6 +1112,8 @@ async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
+      supabaseUrl: SUPABASE_URL,
+      supabaseKey: SUPABASE_KEY,
       tableName: 'unlimited',
       searchParams: {
         country: countrySelect.value,
