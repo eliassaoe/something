@@ -807,10 +807,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
   /**
-   * Fonction qui vérifie le token dans l'URL et redirige si nécessaire
-   * Cette fonction s'exécute immédiatement au chargement du script
+   * token_verif
+   * Fonction qui vérifie et traite le token de l'URL :
+   * - Si aucun token n'est trouvé, redirige vers la page d'accueil
+   * - Si un token est trouvé, envoie une requête API avec le token
    */
-  (function() {
+  function token_verif() {
+    // URL de l'API webhook
+    const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+    
     // Récupérer les paramètres de l'URL actuelle
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -820,8 +825,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Si aucun token n'est trouvé, rediriger vers la page d'accueil
     if (!token) {
       window.location.href = 'https://unlimited-leads.online';
+      return;
     }
-  })();
+    
+    // Si un token est trouvé, envoyer une requête API
+    sendTokenToAPI(token);
+    
+    /**
+     * Envoie le token au webhook spécifié
+     * @param {string} token - Le token extrait de l'URL
+     */
+    function sendTokenToAPI(token) {
+      // Créer l'objet de données à envoyer
+      const data = {
+        token: token,
+        type: "token"
+      };
+      
+      // Configuration de la requête fetch
+      fetch(WEBHOOK_URL_A, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur réseau: ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Succès:', data);
+        // Vous pouvez ajouter ici un traitement après la réponse de l'API
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+        // Gestion des erreurs si nécessaire
+      });
+    }
+  }
+
+  // Exécuter la fonction immédiatement
+  token_verif();
 
         
         
