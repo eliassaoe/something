@@ -92,7 +92,8 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required placeholder="Create a password">
+                <input type="password" id="password" required placeholder="Create a password" minlength="6">
+                <small style="color: #666; font-size: 0.8rem; margin-top: 0.3rem; display: block;">Password must be at least 6 characters long</small>
             </div>
             <button type="submit">Create Account</button>
         </form>
@@ -113,6 +114,14 @@
             // Clear previous messages
             messageDiv.textContent = '';
             messageDiv.className = 'message';
+            
+            // Validate password length
+            if (password.length < 6) {
+                messageDiv.textContent = 'Password must be at least 6 characters long.';
+                messageDiv.classList.add('error');
+                messageDiv.style.display = 'block';
+                return;
+            }
             
             try {
                 const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
