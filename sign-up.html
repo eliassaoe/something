@@ -493,6 +493,8 @@
     <script>
         // API endpoint for webhook
         const WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3';
+        // Application URL to redirect after login
+        const APP_URL = 'https://unlimited-leads.online/app';
         
         // DOM Elements
         const registerForm = document.getElementById('registerForm');
@@ -874,10 +876,9 @@
                 // Show success toast
                 showToast('Welcome Back', 'You have successfully logged in.', 'success');
                 
-                // Redirect to welcome screen
+                // Redirect to application page
                 setTimeout(() => {
-                    showForm(welcomeScreen);
-                    setButtonLoading(loginButton, false);
+                    window.location.href = APP_URL;
                 }, 1000);
                 
             } catch (error) {
@@ -902,7 +903,8 @@
             const email = localStorage.getItem('currentUser');
             
             if (token && email) {
-                showForm(welcomeScreen);
+                // Redirect to application if already logged in
+                window.location.href = APP_URL;
             } else {
                 showForm(registerForm);
             }
@@ -939,4 +941,3 @@
         
         // Initialize app - check auth status
         document.addEventListener('DOMContentLoaded', checkAuth);
-    </script>
