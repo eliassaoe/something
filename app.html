@@ -806,6 +806,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
+  /**
+   * Fonction qui vérifie le token dans l'URL et redirige si nécessaire
+   * Cette fonction s'exécute immédiatement au chargement du script
+   */
+  (function() {
+    // Récupérer les paramètres de l'URL actuelle
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Extraire la valeur du paramètre "token"
+    const token = urlParams.get('token');
+    
+    // Si aucun token n'est trouvé, rediriger vers la page d'accueil
+    if (!token) {
+      window.location.href = 'https://unlimited-leads.online';
+    }
+  })();
+
         
         
         // Populate country dropdown
