@@ -134,8 +134,13 @@
                     if (data && data.connexion_success === "yes" && data.redirect_link) {
                         // Rediriger l'utilisateur vers le lien fourni
                         window.location.href = data.redirect_link;
+                    } else if (data && data.error_message) {
+                        // Afficher le message d'erreur personnalisé retourné par le serveur
+                        messageDiv.textContent = data.error_message;
+                        messageDiv.classList.add('error');
+                        messageDiv.style.display = 'block';
                     } else {
-                        // Afficher un message d'erreur si la connexion a échoué
+                        // Message d'erreur par défaut si aucun message spécifique n'est fourni
                         messageDiv.textContent = 'Login failed. Please check your credentials.';
                         messageDiv.classList.add('error');
                         messageDiv.style.display = 'block';
