@@ -833,35 +833,21 @@
         
 // Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
-    // First check if user is authenticated
-    const isLoggedIn = checkAuth();
-    
-    // Set up auth event listeners (do this regardless of login state)
-    document.getElementById('loginButton').addEventListener('click', loginUser);
-    document.getElementById('registerButton').addEventListener('click', registerUser);
-    document.getElementById('showLoginLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('loginForm');
-    });
-    document.getElementById('showRegisterLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        showAuthForm('registerForm');
-    });
-    document.getElementById('logoutButton').addEventListener('click', logout);
-    
-    if (!isLoggedIn) {
-        // If not logged in, just exit - don't load the main app data
+    // Check if user is authenticated (redirects if not)
+    if (!checkAuth()) {
+        // User is not authenticated, checkAuth has redirected
         return;
     }
     
-    // If logged in, continue with normal app initialization
-    // Show loading indicator
+    // User is authenticated, so set up logout button
+    document.getElementById('logoutButton').addEventListener('click', logout);
+    
+    // Continue with normal app initialization
     loading.style.display = 'block';
     
     try {
         // Fetch initial data from Supabase via n8n
         await fetchData();
-
         globalTrueCount = await fetchTotalCount();
         
         // Display data immediately
@@ -943,7 +929,51 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
+        // Function to handle authentication from redirect
+function handleAuthRedirect() {
+    // Check URL for authentication parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const email = urlParams.get('email');
+    
+    if (token && email) {
+        // Found auth data in URL, store it
+        console.log('Received authentication data from redirect');
         
+        // Set expiration of 7 days
+        const expirationTime = Date.now() + (7 * 24 * 60 * 60 * 1000);
+        
+        const authData = {
+            token: token,
+            email: email,
+            expiresAt: expirationTime
+        };
+        
+        // Store in localStorage
+        localStorage.setItem('authData', JSON.stringify(authData));
+        
+        // Clean up URL by removing the auth parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+// Add this to the top of your DOMContentLoaded function
+document.addEventListener('DOMContentLoaded', async () => {
+    // First check if we're receiving a redirect with auth data
+    const gotAuthFromRedirect = handleAuthRedirect();
+    
+    // Then check if user is authenticated (redirects if not)
+    if (!checkAuth()) {
+        // User is not authenticated, checkAuth has redirected
+        return;
+    }
+    
+    // Rest of your initialization code...
+});
         
         // Populate country dropdown
         function populateCountryDropdown() {
@@ -1460,13 +1490,13 @@ function setAuthenticatedState(isLoggedIn, email = null) {
         showAuthForm('loginForm');
     }
 }
-
+// Updated checkAuth function
 function checkAuth() {
     const authDataString = localStorage.getItem('authData');
     
     if (!authDataString) {
-        // No auth data found
-        setAuthenticatedState(false);
+        // No auth data found, redirect to landing page
+        window.location.href = 'https://unlimited-leads.online';
         return false;
     }
     
@@ -1476,10 +1506,10 @@ function checkAuth() {
         
         // Check if the token has expired
         if (Date.now() > expiresAt) {
-            // Token has expired, log the user out
-            console.log('Auth token expired, logging out');
+            // Token has expired, redirect to landing page
+            console.log('Auth token expired, redirecting to landing page');
             localStorage.removeItem('authData');
-            setAuthenticatedState(false);
+            window.location.href = 'https://unlimited-leads.online';
             return false;
         }
         
@@ -1487,8 +1517,7 @@ function checkAuth() {
         setAuthenticatedState(true, email);
         
         // Refresh the expiration time to keep the user logged in
-        // This extends their session with each new visit
-        const newExpirationTime = Date.now() + (7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
+        const newExpirationTime = Date.now() + (7 * 24 * 60 * 60 * 1000); // 7 days
         const updatedAuthData = {
             ...authData,
             expiresAt: newExpirationTime
@@ -1498,7 +1527,8 @@ function checkAuth() {
         return true;
     } catch (error) {
         console.error('Error checking auth:', error);
-        setAuthenticatedState(false);
+        // Error processing auth data, redirect to landing page
+        window.location.href = 'https://unlimited-leads.online';
         return false;
     }
 }
