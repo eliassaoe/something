@@ -807,12 +807,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
   /**
-   * token_verif
-   * Fonction qui vérifie et traite le token de l'URL :
-   * - Si aucun token n'est trouvé, redirige vers la page d'accueil
-   * - Si un token est trouvé, envoie une requête API avec le token
-   */
-  function token_verif() {
+/**
+ * token_verif
+ * Fonction qui vérifie et traite le token de l'URL :
+ * - Si aucun token n'est trouvé, redirige vers la page d'accueil
+ * - Si un token est trouvé, envoie une requête API avec le token
+ */
+function token_verif() {
+    console.log("Fonction token_verif démarrée");
+    
     // URL de l'API webhook
     const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
     
@@ -821,54 +824,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Extraire la valeur du paramètre "token"
     const token = urlParams.get('token');
+    console.log("Token trouvé:", token);
     
     // Si aucun token n'est trouvé, rediriger vers la page d'accueil
     if (!token) {
-      window.location.href = 'https://unlimited-leads.online';
-      return;
+        console.log("Aucun token trouvé, redirection...");
+        window.location.href = 'https://unlimited-leads.online';
+        return;
     }
     
-    // Si un token est trouvé, envoyer une requête API
-    sendTokenToAPI(token);
+    console.log("Token valide, envoi de la requête API...");
     
-    /**
-     * Envoie le token au webhook spécifié
-     * @param {string} token - Le token extrait de l'URL
-     */
-    function sendTokenToAPI(token) {
-      // Créer l'objet de données à envoyer
-      const data = {
+    // Créer l'objet de données à envoyer (format similaire aux autres requêtes de la page)
+    const requestData = {
         token: token,
         type: "token"
-      };
-      
-      // Configuration de la requête fetch
-      fetch(WEBHOOK_URL_A, {
+    };
+    
+    console.log("Données à envoyer:", requestData);
+    
+    // Configuration de la requête fetch (méthode identique aux autres fetch de la page)
+    fetch(WEBHOOK_URL_A, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
+        body: JSON.stringify(requestData)
+    })
+    .then(response => {
+        console.log("Statut de la réponse:", response.status);
         if (!response.ok) {
-          throw new Error('Erreur réseau: ' + response.status);
+            throw new Error('Erreur réseau: ' + response.status);
         }
         return response.json();
-      })
-      .then(data => {
-        console.log('Succès:', data);
+    })
+    .then(data => {
+        console.log('Succès de la requête token:', data);
         // Vous pouvez ajouter ici un traitement après la réponse de l'API
-      })
-      .catch(error => {
-        console.error('Erreur:', error);
-        // Gestion des erreurs si nécessaire
-      });
-    }
-  }
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi du token:', error);
+    });
+}
 
-  // Exécuter la fonction immédiatement
-  token_verif();
+// Exécuter la fonction immédiatement
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page chargée, exécution de token_verif");
+    token_verif();
+});
+
+// Exécuter aussi immédiatement au cas où le script est chargé après DOMContentLoaded
+token_verif();
 
         
         
