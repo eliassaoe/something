@@ -123,14 +123,26 @@
         return;
     }
     
+    // Create payload with explicit string typing
+    const payload = {
+        email: email,
+        password: password,
+        type: "signup"  // Explicitly using double quotes for the string
+    };
+    
+    console.log('Sending payload:', payload);
+    
     try {
         const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ email, password, type: 'signup' })
+            body: JSON.stringify(payload)
         });
+        
+        console.log('Response status:', response.status);
         
         if (response.ok) {
             // Success message
@@ -141,6 +153,13 @@
             // Reset form
             document.getElementById('signupForm').reset();
         } else {
+            // Try to get error details if available
+            try {
+                const errorData = await response.text();
+                console.error('Server error response:', errorData);
+            } catch (e) {
+                console.error('Could not parse error response');
+            }
             throw new Error('Server responded with an error');
         }
     } catch (error) {
