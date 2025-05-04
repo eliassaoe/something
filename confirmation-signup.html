@@ -99,14 +99,33 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+    <!-- Ajout de la librairie Supabase JS -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="container">
-        <div class="logo">…</div>
+        <div class="logo">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <h1>Verifying your account</h1>
         <p>Please wait while we complete your account verification...</p>
-        <div class="status">…</div>
+        <div class="status">
+            <div class="spinner" id="spinner"></div>
+            <svg class="success-icon" id="success-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <svg class="error-icon" id="error-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <span id="status-text">Verifying...</span>
+        </div>
         <a href="#" class="button" id="continue-button" style="display: none;">Continue to Dashboard</a>
         <pre id="debug-info" style="display: none;"></pre>
     </div>
@@ -119,7 +138,6 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const confirmationUrl = urlParams.get('confirmation_url');
-            console.log('confirmation_url:', confirmationUrl);
 
             if (!confirmationUrl) {
                 showError("Verification link is missing.");
@@ -132,8 +150,6 @@
                 const token_hash = confirmUrlObj.searchParams.get('token_hash');
                 const type = confirmUrlObj.searchParams.get('type') || 'signup';
 
-                console.log('token:', token, 'token_hash:', token_hash, 'type:', type);
-
                 if (!token && !token_hash) {
                     showError("Invalid verification link. Token or token_hash is missing.");
                     return;
@@ -144,15 +160,11 @@
                     verificationParams = { type, token_hash };
                 } else {
                     let emailEncoded = confirmUrlObj.searchParams.get('email');
-                    let email = emailEncoded ? decodeURIComponent(emailEncoded) : "";
-                    console.log('decoded email:', email);
+                    let email = emailEncoded ? decodeURIComponent(emailEncoded) : "placeholder@example.com";
                     verificationParams = { type, token, email };
                 }
 
-                console.log('verificationParams:', verificationParams);
-
                 const { data, error } = await supabase.auth.verifyOtp(verificationParams);
-                console.log('verifyOtp response - data:', data, 'error:', error);
 
                 if (error) {
                     document.getElementById('debug-info').textContent = JSON.stringify({ error, params: verificationParams }, null, 2);
