@@ -409,69 +409,123 @@
             margin-bottom: 0;
         }
 
-       <!-- Pricing Section -->
-<section id="pricing" class="section">
-    <div class="container">
-        <div class="section-header text-center">
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-subtitle">One-time payment for lifetime access. No hidden fees.</p>
-        </div>
-        
-        <div class="pricing-grid">
-            <!-- Plan 1 -->
-            <div class="pricing-card">
-                <h3>Plan 1</h3>
-                <span class="pricing-amount">$99</span>
-                <span class="pricing-details">One-time payment</span>
-                <div class="pricing-description">
-                    <p>Lifetime access with monthly credits</p>
-                </div>
-                <ul class="pricing-features">
-                    <li><span class="highlight">5,000 verified</span> contact credits per month</li>
-                    <li>Unlimited access to all features</li>
-                    <li>Priority email support</li>
-                </ul>
-                <button class="btn btn-primary pricing-cta">Get Started</button>
-            </div>
-            
-            <!-- Plan 2 (Featured) -->
-            <div class="pricing-card featured">
-                <div class="featured-badge">Popular</div>
-                <h3>Plan 2</h3>
-                <span class="pricing-amount">$158</span>
-                <span class="pricing-details">One-time payment</span>
-                <div class="pricing-description">
-                    <p>Lifetime access with enhanced monthly credits</p>
-                </div>
-                <ul class="pricing-features">
-                    <li><span class="highlight">10,000 verified</span> contact credits per month</li>
-                    <li>Unlimited access to all features</li>
-                    <li>Priority email support</li>
-                    <li>Dedicated account manager</li>
-                </ul>
-                <button class="btn btn-primary pricing-cta">Get Started</button>
-            </div>
-            
-            <!-- Plan 3 -->
-            <div class="pricing-card">
-                <h3>Plan 3</h3>
-                <span class="pricing-amount">$237</span>
-                <span class="pricing-details">One-time payment</span>
-                <div class="pricing-description">
-                    <p>Lifetime access with maximum monthly credits</p>
-                </div>
-                <ul class="pricing-features">
-                    <li><span class="highlight">15,000 verified</span> contact credits per month</li>
-                    <li>Unlimited access to all features</li>
-                    <li>Priority email support</li>
-                    <li>Dedicated account manager</li>
-                    <li>Custom onboarding session</li>
-                </ul>
-                <button class="btn btn-primary pricing-cta">Get Started</button>
-            </div>
-        </div>
-    </div>
-</section>
+        /* Pricing Cards */
+        #pricing {
+            position: relative;
+            overflow: hidden;
+        }
+        #pricing:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58,79,231,0.05), rgba(14,165,233,0.05));
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+        }
+        #pricing:after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14,165,233,0.05), rgba(58,79,231,0.05));
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+        }
+        .pricing-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 3rem; 
+            margin-top: 2rem; 
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pricing-card { 
+            background: white; 
+            padding: 3rem 2.5rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow); 
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.03);
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 0.35rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        .pricing-card h3 { 
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+        }
+        .pricing-amount small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-600);
+            position: absolute;
+            top: 12px;
+        }
+        .pricing-description {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--gray-700);
+        }
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .leads-count {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .pricing-cta {
+            width: 100%;
+        }
 
         /* Waitlist */
         .waitlist-section {
