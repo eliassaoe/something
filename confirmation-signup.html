@@ -1,43 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Verification | Unlimited Leads</title>
+    <title>Account Verification</title>
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            color: #111827;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            padding: 0 1rem;
         }
         .container {
             max-width: 480px;
             text-align: center;
-        }
-        .logo {
-            margin-bottom: 2rem;
-        }
-        h1 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        p {
-            font-size: 1.125rem;
-            color: #4B5563;
-            margin-bottom: 2rem;
-        }
-        .status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
         }
         .spinner {
             border: 3px solid rgba(0, 0, 0, 0.1);
@@ -46,74 +22,49 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            margin-right: 0.75rem;
-        }
-        .success-icon, .error-icon {
-            margin-right: 0.75rem;
-            display: none;
-        }
-        .button {
-            display: inline-block;
-            background-color: #10B981;
-            color: white;
-            font-weight: 500;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            text-decoration: none;
-        }
-        pre {
-            background-color: #f7f7f7;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: left;
-            overflow: auto;
-            max-width: 100%;
-            margin-top: 1rem;
+            margin: 0 auto 20px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        #debug-info {
+            background-color: #f7f7f7;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
         <h1>Verifying your account</h1>
-        <p>Please wait while we complete your account verification...</p>
-        <div class="status">
-            <div class="spinner" id="spinner"></div>
-            <svg class="success-icon" id="success-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <svg class="error-icon" id="error-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="15" y1="9" x2="9" y2="15"></line>
-                <line x1="9" y1="9" x2="15" y2="15"></line>
-            </svg>
-            <span id="status-text">Verifying...</span>
+        <div class="spinner" id="spinner"></div>
+        <div id="status">Please wait...</div>
+        <pre id="debug-info"></pre>
+    </div>
 
     <script>
-        // Run as soon as the page loads
-        window.onload = function() {
+        // Execute immediately 
+        (function() {
+            // Debug function - logs to console and page
+            function log(msg, data) {
+                console.log(msg, data);
+                document.getElementById('debug-info').textContent += msg + "\n" + 
+                    (data ? JSON.stringify(data, null, 2) + "\n\n" : "");
+            }
+            
             // Get URL parameters
-            const params = new URLSearchParams(window.location.search);
-            const email = params.get('email') ? decodeURIComponent(params.get('email')) : "";
-            const token_hash = params.get('token_hash') || "";
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const token_hash = urlParams.get('token_hash');
+            const type = urlParams.get('type') || 'signup';
             
-            console.log("Email:", email);
-            console.log("Token hash:", token_hash);
+            log("URL parameters:", { email, token_hash, type });
             
-            // Check if we have the required parameters
             if (!email || !token_hash) {
-                showStatus(false, "Missing required parameters");
+                document.getElementById('status').textContent = "Error: Missing required parameters";
                 return;
             }
             
@@ -121,41 +72,38 @@
             fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
+                body: JSON.stringify({ 
                     email: email,
                     token_hash: token_hash,
                     type: 'confirmation'
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                log("Response status:", response.status);
+                return response.json();
+            })
             .then(data => {
-                console.log("Response:", data);
+                log("Server response:", data);
                 
-                if (data && data.success) {
-                    // Success - show button and redirect
-                    showStatus(true, "Your account has been verified!");
-                    const uuid = data.userUuid || '';
-                    const continueButton = document.getElementById('continue-button');
-                    continueButton.href = 'https://unlimited-leads.online/app?token=' + uuid;
-                    continueButton.style.display = 'inline-block';
+                if (data && data.success && data.userUuid) {
+                    document.getElementById('status').textContent = "Verification successful! Redirecting...";
+                    // CRITICAL FIX: Change "uuid" to "token" in the redirect URL
+                    const redirectUrl = 'https://unlimited-leads.online/app?token=' + data.userUuid;
+                    log("Redirecting to:", redirectUrl);
+                    
+                    // Force redirect after short delay
+                    setTimeout(function() {
+                        window.location.href = redirectUrl;
+                    }, 1500);
                 } else {
-                    // Error from server
-                    showStatus(false, data.message || "Verification failed");
+                    document.getElementById('status').textContent = "Error: " + (data.message || "Verification failed");
                 }
             })
             .catch(error => {
-                // Network error
-                console.error("Error:", error);
-                showStatus(false, "Connection error");
+                log("Error:", error.message);
+                document.getElementById('status').textContent = "Error: " + error.message;
             });
-        };
-        
-        // Helper function to update the UI
-        function showStatus(success, message) {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById(success ? 'success-icon' : 'error-icon').style.display = 'block';
-            document.getElementById('status-text').textContent = message;
-        }
+        })();
     </script>
 </body>
 </html>
