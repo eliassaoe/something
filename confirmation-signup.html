@@ -45,7 +45,7 @@
         .spinner {
             border: 3px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
-            border-top: 3px solid #4F46E5;
+            border-top: 3px solid #10B981;
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
@@ -63,7 +63,7 @@
         }
         .button {
             display: inline-block;
-            background-color: #4F46E5;
+            background-color: #10B981;
             color: white;
             font-weight: 500;
             padding: 0.75rem 1.5rem;
@@ -72,7 +72,17 @@
             transition: background-color 0.2s;
         }
         .button:hover {
-            background-color: #4338CA;
+            background-color: #059669;
+        }
+        pre {
+            background-color: #f7f7f7;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: left;
+            overflow: auto;
+            max-width: 100%;
+            margin-top: 1rem;
+            display: none;
         }
         @keyframes fadeIn {
             from {
@@ -96,9 +106,9 @@
     <div class="container">
         <div class="logo">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <h1>Verifying your account</h1>
@@ -117,34 +127,78 @@
             <span id="status-text">Verifying...</span>
         </div>
         <a href="#" class="button" id="continue-button" style="display: none;">Continue to Dashboard</a>
+        <pre id="debug-info" style="display: none;"></pre>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            // Extract the confirmation_url from the URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const confirmationUrl = urlParams.get('confirmation_url');
-            
-            if (!confirmationUrl) {
-                showError("Verification link is invalid or expired.");
-                return;
-            }
-            
-            // Initialiser le client Supabase
-            // Remplacez ces valeurs par celles de votre projet
+            // Initialiser le client Supabase avec votre URL et clé anon
             const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
             const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
             const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
             
-            // Écouter les changements d'état d'authentification
-            const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-                console.log('Auth event:', event);
+            // Extraire token_hash de l'URL 
+            const urlParams = new URLSearchParams(window.location.search);
+            const confirmationUrl = urlParams.get('confirmation_url');
+            
+            if (!confirmationUrl) {
+                showError("Verification link is missing.");
+                return;
+            }
+            
+            try {
+                // Extraire le token_hash du confirmation_url
+                const confirmUrlObj = new URL(confirmationUrl);
+                const token = confirmUrlObj.searchParams.get('token');
+                const token_hash = confirmUrlObj.searchParams.get('token_hash');
+                const type = confirmUrlObj.searchParams.get('type') || 'signup';
                 
-                if (event === 'SIGNED_IN' && session) {
-                    const userUuid = session.user.id;
-                    console.log('User UUID:', userUuid);
+                if (!token && !token_hash) {
+                    showError("Invalid verification link. Token or token_hash is missing.");
+                    return;
+                }
+                
+                // Vérifier avec token_hash si disponible, sinon utiliser token
+                let verificationParams;
+                if (token_hash) {
+                    verificationParams = {
+                        type: type,
+                        token_hash: token_hash
+                    };
+                } else if (token) {
+                    // Trouver l'email dans l'URL ou utiliser un placeholder
+                    let email = confirmUrlObj.searchParams.get('email');
+                    if (!email) {
+                        // Essayer d'extraire l'email d'une autre partie de l'URL si possible
+                        // Sinon, vous devrez gérer ce cas différemment
+                        email = "placeholder@example.com"; // Ceci est juste un placeholder
+                    }
                     
-                    // Afficher un message de succès
+                    verificationParams = {
+                        type: type,
+                        token: token,
+                        email: email
+                    };
+                }
+                
+                // Vérifier le token/token_hash avec Supabase
+                const { data, error } = await supabase.auth.verifyOtp(verificationParams);
+                
+                if (error) {
+                    document.getElementById('debug-info').textContent = JSON.stringify({ 
+                        error: error,
+                        params: verificationParams
+                    }, null, 2);
+                    document.getElementById('debug-info').style.display = 'block';
+                    
+                    showError("Verification failed: " + error.message);
+                    return;
+                }
+                
+                if (data && data.user) {
+                    const userUuid = data.user.id;
+                    
+                    // Afficher le succès
                     showSuccess("Your account has been successfully verified!");
                     
                     // Mettre à jour le bouton de redirection avec l'UUID
@@ -156,26 +210,19 @@
                     setTimeout(() => {
                         window.location.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
                     }, 3000);
+                } else {
+                    // Cas où la vérification réussit mais aucune donnée utilisateur n'est retournée
+                    showError("Verification completed, but no user data was returned.");
                 }
-            });
-            
-            try {
-                // Visiter l'URL de confirmation pour activer le compte
-                const verifyResponse = await fetch(confirmationUrl, {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                
-                if (!verifyResponse.ok) {
-                    showError("We couldn't verify your account. Please try again.");
-                }
-                
-                // Nous n'avons pas besoin de faire autre chose ici - l'écouteur onAuthStateChange
-                // interceptera l'événement SIGNED_IN et gérera la redirection
-                
             } catch (error) {
                 console.error('Verification error:', error);
-                showError("Connection error. Please check your internet connection and try again.");
+                document.getElementById('debug-info').textContent = JSON.stringify({ 
+                    error: error.toString(),
+                    stack: error.stack
+                }, null, 2);
+                document.getElementById('debug-info').style.display = 'block';
+                
+                showError("An unexpected error occurred. Please try again later.");
             }
         });
         
@@ -183,7 +230,6 @@
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('success-icon').style.display = 'block';
             document.getElementById('status-text').textContent = message;
-            document.getElementById('continue-button').style.display = 'inline-block';
         }
         
         function showError(message) {
