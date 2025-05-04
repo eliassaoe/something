@@ -132,106 +132,71 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            // Initialiser le client Supabase avec votre URL et clé anon
             const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
             const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
             const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
-            
-            // Extraire token_hash de l'URL 
+
             const urlParams = new URLSearchParams(window.location.search);
             const confirmationUrl = urlParams.get('confirmation_url');
-            
+
             if (!confirmationUrl) {
                 showError("Verification link is missing.");
                 return;
             }
-            
+
             try {
-                // Extraire le token_hash du confirmation_url
                 const confirmUrlObj = new URL(confirmationUrl);
                 const token = confirmUrlObj.searchParams.get('token');
                 const token_hash = confirmUrlObj.searchParams.get('token_hash');
                 const type = confirmUrlObj.searchParams.get('type') || 'signup';
-                
+
                 if (!token && !token_hash) {
                     showError("Invalid verification link. Token or token_hash is missing.");
                     return;
                 }
-                
-                // Vérifier avec token_hash si disponible, sinon utiliser token
+
                 let verificationParams;
                 if (token_hash) {
-                    verificationParams = {
-                        type: type,
-                        token_hash: token_hash
-                    };
-                } else if (token) {
-                    // Trouver l'email dans l'URL ou utiliser un placeholder
-                    let email = confirmUrlObj.searchParams.get('email');
-                    if (!email) {
-                        // Essayer d'extraire l'email d'une autre partie de l'URL si possible
-                        // Sinon, vous devrez gérer ce cas différemment
-                        email = "placeholder@example.com"; // Ceci est juste un placeholder
-                    }
-                    
-                    verificationParams = {
-                        type: type,
-                        token: token,
-                        email: email
-                    };
+                    verificationParams = { type, token_hash };
+                } else {
+                    let emailEncoded = confirmUrlObj.searchParams.get('email');
+                    let email = emailEncoded ? decodeURIComponent(emailEncoded) : "placeholder@example.com";
+                    verificationParams = { type, token, email };
                 }
-                
-                // Vérifier le token/token_hash avec Supabase
+
                 const { data, error } = await supabase.auth.verifyOtp(verificationParams);
-                
+
                 if (error) {
-                    document.getElementById('debug-info').textContent = JSON.stringify({ 
-                        error: error,
-                        params: verificationParams
-                    }, null, 2);
+                    document.getElementById('debug-info').textContent = JSON.stringify({ error, params: verificationParams }, null, 2);
                     document.getElementById('debug-info').style.display = 'block';
-                    
                     showError("Verification failed: " + error.message);
                     return;
                 }
-                
+
                 if (data && data.user) {
                     const userUuid = data.user.id;
-                    
-                    // Afficher le succès
                     showSuccess("Your account has been successfully verified!");
-                    
-                    // Mettre à jour le bouton de redirection avec l'UUID
                     const continueButton = document.getElementById('continue-button');
                     continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
                     continueButton.style.display = 'inline-block';
-                    
-                    // Redirection automatique après 3 secondes
-                    setTimeout(() => {
-                        window.location.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
-                    }, 3000);
+                    setTimeout(() => { window.location.href = continueButton.href; }, 3000);
                 } else {
-                    // Cas où la vérification réussit mais aucune donnée utilisateur n'est retournée
                     showError("Verification completed, but no user data was returned.");
                 }
             } catch (error) {
                 console.error('Verification error:', error);
-                document.getElementById('debug-info').textContent = JSON.stringify({ 
-                    error: error.toString(),
-                    stack: error.stack
-                }, null, 2);
+                document.getElementById('debug-info').textContent = JSON.stringify({ error: error.toString(), stack: error.stack }, null, 2);
                 document.getElementById('debug-info').style.display = 'block';
-                
                 showError("An unexpected error occurred. Please try again later.");
             }
         });
-        
+
         function showSuccess(message) {
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('success-icon').style.display = 'block';
             document.getElementById('status-text').textContent = message;
         }
-        
+
         function showError(message) {
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('error-icon').style.display = 'block';
