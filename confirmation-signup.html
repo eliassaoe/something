@@ -131,65 +131,78 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
-            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
-            const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
+       document.addEventListener('DOMContentLoaded', async function() {
+    const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
+    const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const YOUR_SERVER_URL = 'https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3';
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const confirmationUrl = urlParams.get('confirmation_url');
+    const urlParams = new URLSearchParams(window.location.search);
+    const confirmationUrl = urlParams.get('confirmation_url');
 
-            if (!confirmationUrl) {
-                showError("Verification link is missing.");
-                return;
-            }
+    if (!confirmationUrl) {
+        showError("Verification link is missing.");
+        return;
+    }
 
-            try {
-                const confirmUrlObj = new URL(confirmationUrl);
-                const token = confirmUrlObj.searchParams.get('token');
-                const token_hash = confirmUrlObj.searchParams.get('token_hash');
-                const type = confirmUrlObj.searchParams.get('type') || 'signup';
+    try {
+        const confirmUrlObj = new URL(confirmationUrl);
+        const token = confirmUrlObj.searchParams.get('token');
+        const token_hash = confirmUrlObj.searchParams.get('token_hash');
+        const type = confirmUrlObj.searchParams.get('type') || 'signup';
+        let emailEncoded = confirmUrlObj.searchParams.get('email');
+        let email = emailEncoded ? decodeURIComponent(emailEncoded) : "placeholder@example.com";
 
-                if (!token && !token_hash) {
-                    showError("Invalid verification link. Token or token_hash is missing.");
-                    return;
-                }
+        if (!token && !token_hash) {
+            showError("Invalid verification link. Token or token_hash is missing.");
+            return;
+        }
 
-                let verificationParams;
-                if (token_hash) {
-                    verificationParams = { type, token_hash };
-                } else {
-                    let emailEncoded = confirmUrlObj.searchParams.get('email');
-                    let email = emailEncoded ? decodeURIComponent(emailEncoded) : "placeholder@example.com";
-                    verificationParams = { type, token, email };
-                }
+        // Prepare the data to send to your server
+        const serverPayload = {
+            email: email,
+            auth_token: token || '', // Send an empty string if token doesn't exist
+            token_hash: token_hash || '', // Send an empty string if token_hash doesn't exist
+            type: 'confirmation'
+        };
 
-                const { data, error } = await supabase.auth.verifyOtp(verificationParams);
-
-                if (error) {
-                    document.getElementById('debug-info').textContent = JSON.stringify({ error, params: verificationParams }, null, 2);
-                    document.getElementById('debug-info').style.display = 'block';
-                    showError("Verification failed: " + error.message);
-                    return;
-                }
-
-                if (data && data.user) {
-                    const userUuid = data.user.id;
-                    showSuccess("Your account has been successfully verified!");
-                    const continueButton = document.getElementById('continue-button');
-                    continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
-                    continueButton.style.display = 'inline-block';
-                    setTimeout(() => { window.location.href = continueButton.href; }, 3000);
-                } else {
-                    showError("Verification completed, but no user data was returned.");
-                }
-            } catch (error) {
-                console.error('Verification error:', error);
-                document.getElementById('debug-info').textContent = JSON.stringify({ error: error.toString(), stack: error.stack }, null, 2);
-                document.getElementById('debug-info').style.display = 'block';
-                showError("An unexpected error occurred. Please try again later.");
-            }
+        // Send the data to your server first
+        const serverResponse = await fetch(YOUR_SERVER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(serverPayload)
         });
+
+        if (!serverResponse.ok) {
+            // If server responds with an error
+            const errorData = await serverResponse.json();
+            showError("Server verification failed: " + (errorData.message || 'Unknown error'));
+            return;
+        }
+
+        // Get the response from your server
+        const serverData = await serverResponse.json();
+
+        // If your server handled the authentication itself
+        if (serverData && serverData.success) {
+            showSuccess("Your account has been successfully verified!");
+            const continueButton = document.getElementById('continue-button');
+            const userUuid = serverData.userUuid || '';
+            continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
+            continueButton.style.display = 'inline-block';
+            setTimeout(() => { window.location.href = continueButton.href; }, 3000);
+        } else {
+            showError("Verification failed: " + (serverData.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Verification error:', error);
+        document.getElementById('debug-info').textContent = JSON.stringify({ error: error.toString(), stack: error.stack }, null, 2);
+        document.getElementById('debug-info').style.display = 'block';
+        showError("An unexpected error occurred. Please try again later.");
+    }
+});
 
         function showSuccess(message) {
             document.getElementById('spinner').style.display = 'none';
