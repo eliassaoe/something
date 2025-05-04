@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Verification | Unlimited Leads</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 1rem;
+        }
+        .container {
+            max-width: 480px;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .logo {
+            margin-bottom: 2rem;
+        }
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        p {
+            font-size: 1.125rem;
+            color: #4B5563;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #4F46E5;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin-right: 0.75rem;
+        }
+        .success-icon {
+            color: #10B981;
+            margin-right: 0.75rem;
+            display: none;
+        }
+        .error-icon {
+            color: #EF4444;
+            margin-right: 0.75rem;
+            display: none;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4F46E5;
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #4338CA;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Verifying your account</h1>
+        <p>Please wait while we complete your account verification...</p>
+        <div class="status">
+            <div class="spinner" id="spinner"></div>
+            <svg class="success-icon" id="success-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <svg class="error-icon" id="error-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <span id="status-text">Verifying...</span>
+        </div>
+        <a href="#" class="button" id="continue-button" style="display: none;">Continue to Dashboard</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Extract the confirmation_url from the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const confirmationUrl = urlParams.get('confirmation_url');
+            
+            if (!confirmationUrl) {
+                showError("Verification link is invalid or expired.");
+                return;
+            }
+            
+            try {
+                // First, send the confirmation URL to your webhook and wait for the UUID
+                const webhookResponse = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        confirmation_url: confirmationUrl,
+                        type: 'confirmation'
+                    })
+                });
+                
+                // Check if the webhook request was successful
+                if (webhookResponse.ok) {
+                    // Get the UUID from the response
+                    const responseData = await webhookResponse.json();
+                    
+                    // Now, actually verify the account by visiting the confirmation URL
+                    const verifyResponse = await fetch(confirmationUrl, {
+                        method: 'GET',
+                        redirect: 'follow'
+                    });
+                    
+                    if (verifyResponse.ok) {
+                        if (responseData && responseData.uuid) {
+                            // Show success message
+                            showSuccess("Your account has been successfully verified!");
+                            
+                            // Update continue button to redirect with the UUID
+                            const continueButton = document.getElementById('continue-button');
+                            continueButton.href = `https://unlimited-leads.online/app?token=${responseData.uuid}`;
+                            continueButton.style.display = 'inline-block';
+                            
+                            // Auto-redirect after 3 seconds
+                            setTimeout(() => {
+                                window.location.href = `https://unlimited-leads.online/app?token=${responseData.uuid}`;
+                            }, 3000);
+                        } else {
+                            showError("Verification complete, but we couldn't retrieve your user information.");
+                        }
+                    } else {
+                        showError("We couldn't verify your account. Please try again.");
+                    }
+                } else {
+                    showError("There was an error processing your verification. Please try again.");
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                showError("Connection error. Please check your internet connection and try again.");
+            }
+        });
+        
+        function showSuccess(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('success-icon').style.display = 'block';
+            document.getElementById('status-text').textContent = message;
+            document.getElementById('continue-button').style.display = 'inline-block';
+        }
+        
+        function showError(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('error-icon').style.display = 'block';
+            document.getElementById('status-text').textContent = message;
+        }
+    </script>
+</body>
+</html>
