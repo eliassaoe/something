@@ -137,36 +137,32 @@
     const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
     const YOUR_SERVER_URL = 'https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3';
 
+    // Get parameters directly from the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const confirmationUrl = urlParams.get('confirmation_url');
+    const token_hash = urlParams.get('token_hash');
+    const type = urlParams.get('type') || 'signup';
+    const emailEncoded = urlParams.get('email');
+    const email = emailEncoded ? decodeURIComponent(emailEncoded) : "";
 
-    if (!confirmationUrl) {
-        showError("Verification link is missing.");
+    console.log("URL parameters:", { token_hash, type, email });
+
+    if (!token_hash || !email) {
+        showError("Verification link is missing required parameters.");
         return;
     }
 
     try {
-        const confirmUrlObj = new URL(confirmationUrl);
-        const token = confirmUrlObj.searchParams.get('token');
-        const token_hash = confirmUrlObj.searchParams.get('token_hash');
-        const type = confirmUrlObj.searchParams.get('type') || 'signup';
-        let emailEncoded = confirmUrlObj.searchParams.get('email');
-        let email = emailEncoded ? decodeURIComponent(emailEncoded) : "placeholder@example.com";
-
-        if (!token && !token_hash) {
-            showError("Invalid verification link. Token or token_hash is missing.");
-            return;
-        }
-
         // Prepare the data to send to your server
         const serverPayload = {
             email: email,
-            auth_token: token || '', // Send an empty string if token doesn't exist
-            token_hash: token_hash || '', // Send an empty string if token_hash doesn't exist
+            auth_token: "", // Not using token anymore
+            token_hash: token_hash,
             type: 'confirmation'
         };
 
-        // Send the data to your server first
+        console.log("Sending to webhook:", serverPayload);
+
+        // Send the data to your server
         const serverResponse = await fetch(YOUR_SERVER_URL, {
             method: 'POST',
             headers: {
@@ -175,15 +171,31 @@
             body: JSON.stringify(serverPayload)
         });
 
+        console.log("Server response status:", serverResponse.status);
+
         if (!serverResponse.ok) {
             // If server responds with an error
-            const errorData = await serverResponse.json();
-            showError("Server verification failed: " + (errorData.message || 'Unknown error'));
+            let errorMessage = "Server verification failed";
+            try {
+                const errorData = await serverResponse.json();
+                errorMessage += ": " + (errorData.message || 'Unknown error');
+            } catch (e) {
+                errorMessage += " (Could not parse error response)";
+            }
+            
+            document.getElementById('debug-info').textContent = JSON.stringify({ 
+                error: errorMessage,
+                status: serverResponse.status 
+            }, null, 2);
+            document.getElementById('debug-info').style.display = 'block';
+            
+            showError(errorMessage);
             return;
         }
 
         // Get the response from your server
         const serverData = await serverResponse.json();
+        console.log("Server response data:", serverData);
 
         // If your server handled the authentication itself
         if (serverData && serverData.success) {
@@ -198,7 +210,10 @@
         }
     } catch (error) {
         console.error('Verification error:', error);
-        document.getElementById('debug-info').textContent = JSON.stringify({ error: error.toString(), stack: error.stack }, null, 2);
+        document.getElementById('debug-info').textContent = JSON.stringify({ 
+            error: error.toString(), 
+            stack: error.stack 
+        }, null, 2);
         document.getElementById('debug-info').style.display = 'block';
         showError("An unexpected error occurred. Please try again later.");
     }
