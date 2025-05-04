@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UnlimitedLeads | B2B Database & Waitlist</title>
-    <meta name="description" content="UnlimitedLeads - Access 450M+ verified contacts and enjoy unlimited lead exports with one-time payment!" />
+    <title>UnlimitedLeads | Premium B2B Database & Contact Platform</title>
+    <meta name="description" content="UnlimitedLeads - Access 450M+ verified B2B contacts with unlimited exports for a one-time payment. Limited time: Join now for 1,000 free leads!" />
 
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,91 +16,968 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
 
     <!-- Fonts & Styles -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
             --secondary: #0ea5e9;
+            --secondary-dark: #0284c7;
+            --accent: #0d9488;
             --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
-            --gray-800: #1f2937;
+            --gray-300: #d1d5db;
             --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --border-radius: 0.5rem;
-            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius-lg: 1rem;
+            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
             --transition: all 0.3s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
+        }
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+        .container { 
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
         a { text-decoration: none; color: inherit; }
-        .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
-        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--box-shadow); }
-        .btn-secondary { background: var(--secondary); color: white; }
-        .btn-secondary:hover { background: var(--primary); }
-        .btn-large { font-size: 1rem; padding: 1rem 2rem; }
-        .section { padding: 4rem 0; }
-        h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--gray-800); text-align: center; }
-        h3, h4 { margin-bottom: 0.75rem; color: var(--gray-800); }
-        p { margin-bottom: 1rem; color: var(--gray-600); }
-        ul { list-style: disc inside; color: var(--gray-600); }
-
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.85rem 1.75rem; 
+            border-radius: 0.5rem; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+        }
+        .btn-secondary { 
+            background: white; 
+            color: var(--primary);
+            border: 1px solid var(--gray-200);
+        }
+        .btn-secondary:hover { 
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .btn-large { 
+            font-size: 1.1rem; 
+            padding: 1rem 2.25rem; 
+        }
+        .section { 
+            padding: 5rem 0; 
+        }
+        .section-title {
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            text-align: center; 
+            position: relative;
+        }
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 1rem auto 0;
+            border-radius: 4px;
+        }
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
         /* Header */
-        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        .nav-links { display: flex; gap: 1.5rem; font-weight: 500; }
-        .cta-group { display: flex; gap: 1rem; }
-        .logo-text { font-size: 1.5rem; font-weight: 700; }
-        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
+            padding: 1.25rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            font-weight: 500; 
+        }
+        .nav-link {
+            color: var(--gray-700);
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        .nav-link:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        .cta-group { 
+            display: flex; 
+            gap: 1rem; 
+            align-items: center;
+        }
+        .logo-text { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .gradient-text { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
 
         /* Hero */
-        .hero { text-align: center; padding: 6rem 0 4rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
-        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; color: var(--gray-800); }
-        .hero p { font-size: 1.25rem; margin-bottom: 2rem; }
+        .hero { 
+            text-align: center; 
+            padding: 8rem 0 6rem; 
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 1;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+        .hero p { 
+            font-size: 1.35rem; 
+            margin-bottom: 2.5rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        /* Limited offer banner */
+        .limited-offer {
+            background: linear-gradient(135deg, #4338ca, #3b82f6);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .limited-offer:before {
+            content: "LIMITED TIME";
+            position: absolute;
+            background: var(--warning);
+            color: var(--gray-900);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 2rem;
+            top: 0.5rem;
+            left: -1.5rem;
+            transform: rotate(-45deg);
+        }
 
         /* Stats */
-        .stats { display: flex; justify-content: space-around; text-align: center; margin-top: 2rem; }
-        .stat { flex: 1; }
-        .stat h3 { font-size: 2rem; color: var(--primary); }
-        .stat p { font-weight: 600; color: var(--gray-800); }
+        .stats { 
+            display: flex; 
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .stat { 
+            flex: 1; 
+            min-width: 200px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .stat:not(:last-child):after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: var(--gray-200);
+        }
+        .stat h3 { 
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .stat p { 
+            font-weight: 600; 
+            color: var(--gray-700);
+            margin-bottom: 0;
+        }
 
         /* Steps */
-        .steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 2rem; margin-top: 2rem; }
-        .step { text-align: center; padding: 1.5rem; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
-        .step i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem; }
-        .step h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .steps {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem;
+        }
+        .step {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        .step-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        .step-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        .step h4 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        .step p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
 
         /* Features */
-        .features { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 2rem; margin-top: 2rem; }
-        .feature-card { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; transition: transform 0.3s ease; }
-        .feature-card:hover { transform: translateY(-5px); }
-        .feature-card i { font-size: 2rem; margin-bottom: 1rem; color: var(--primary); }
+        #features {
+            background: var(--gray-50);
+        }
+        .features { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem; 
+        }
+        .feature-card { 
+            background: white; 
+            padding: 2.5rem 2rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--box-shadow); 
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+            border: 1px solid var(--gray-100);
+        }
+        .feature-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--box-shadow-lg);
+        }
+        .feature-icon { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        .feature-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        .feature-card h3 { 
+            font-size: 1.35rem; 
+            margin-bottom: 1rem; 
+            color: var(--gray-900); 
+        }
+        .feature-card p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
 
         /* Pricing Cards */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; margin-top: 2rem; }
-        .pricing-card { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; }
+        #pricing {
+            position: relative;
+            overflow: hidden;
+        }
+        #pricing:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58,79,231,0.05), rgba(14,165,233,0.05));
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+        }
+        #pricing:after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14,165,233,0.05), rgba(58,79,231,0.05));
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+        }
+        .pricing-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 3rem; 
+            margin-top: 2rem; 
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pricing-card { 
+            background: white; 
+            padding: 3rem 2.5rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow); 
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.03);
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 0.35rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        .pricing-card h3 { 
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+        }
+        .pricing-amount small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-600);
+            position: absolute;
+            top: 12px;
+        }
+        .pricing-description {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--gray-700);
+        }
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .leads-count {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .pricing-cta {
+            width: 100%;
+        }
 
         /* Waitlist */
-        .waitlist-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 600px; margin: 0 auto; text-align: center; }
-        .waitlist-form input[type="email"] { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); margin-bottom: 1.5rem; }
+        .waitlist-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .waitlist-section:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            top: -150px;
+            left: -150px;
+        }
+        .waitlist-section:after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            bottom: -150px;
+            right: -150px;
+        }
+        .waitlist-section .section-title {
+            color: white;
+        }
+        .waitlist-section .section-title:after {
+            background: white;
+        }
+        .waitlist-section .section-subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+        .waitlist-form { 
+            background: white; 
+            padding: 3rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow-lg); 
+            max-width: 600px; 
+            margin: 0 auto; 
+            position: relative;
+            z-index: 1;
+        }
+        .waitlist-form h3 {
+            text-align: center;
+            font-size: 1.75rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        .waitlist-form p {
+            text-align: center;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+        .waitlist-form input[type="email"] { 
+            width: 100%; 
+            padding: 1rem 1.25rem; 
+            border: 1px solid var(--gray-200); 
+            border-radius: var(--border-radius); 
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .waitlist-form input[type="email"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .free-leads-badge {
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
 
         /* Testimonials */
-        .testimonials { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; margin-top: 2rem; }
-        .testimonial { background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
-        .testimonial p { font-style: italic; margin-bottom: 1rem; }
-        .testimonial h4 { font-weight: 600; color: var(--gray-800); }
+        .testimonials-heading {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .testimonials { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem; 
+        }
+        .testimonial { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--box-shadow);
+            position: relative;
+            border: 1px solid var(--gray-100);
+        }
+        .testimonial:after {
+            content: """;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 5rem;
+            line-height: 1;
+            font-family: serif;
+            color: var(--gray-200);
+            z-index: 0;
+        }
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-text { 
+            font-style: italic; 
+            margin-bottom: 1.5rem;
+            color: var(--gray-700);
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .testimonial-info h4 { 
+            font-weight: 600; 
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+        .testimonial-info p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Trust badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .trust-badge i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .trust-badge h4 {
+            font-size: 1.15rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        .trust-badge p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
+        }
 
         /* Footer */
-        .footer { background: var(--gray-800); color: white; padding: 2rem 0; text-align: center; }
-        .footer a { color: var(--gray-200); margin: 0 0.5rem; }
-
-        @media (max-width:768px) { .hero h1 { font-size: 2.5rem; } .stats { flex-direction: column; } }
+        .footer { 
+            background: var(--gray-900); 
+            color: white; 
+            padding: 4rem 0 2rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-column h4 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .footer-column h4:after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            margin-top: 0.75rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: color 0.2s ease;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-300);
+        }
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Floating Element */
+        .floating-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+            border: 1px solid var(--gray-200);
+        }
+        .floating-badge-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+        }
+        .floating-badge-text {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .floating-badge-cta {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .section { padding: 4rem 0; }
+            .section-title { font-size: 2.25rem; }
+            .hero h1 { font-size: 2.75rem; }
+            .hero p { font-size: 1.2rem; }
+            .stat h3 { font-size: 2.25rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: scale(1); }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content { 
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .logo-link {
+                margin-right: auto;
+            }
+            .nav-links { 
+                display: none;
+            }
+            .cta-group {
+                margin-left: auto;
+            }
+            .hero { padding: 6rem 0 4rem; }
+            .hero h1 { font-size: 2.25rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-cta { 
+                flex-direction: column; 
+                align-items: center;
+                gap: 1rem;
+            }
+            .hero-cta .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .stats { 
+                flex-direction: column; 
+                padding: 1.5rem;
+            }
+            .stat {
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 1px solid var(--gray-200);
+                margin-bottom: 0.5rem;
+            }
+            .stat:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+            .stat:not(:last-child):after { display: none; }
+            .waitlist-form { padding: 2rem 1.5rem; }
+            
+            /* More mobile optimizations */
+            .section { padding: 3rem 0; }
+            .section-title { font-size: 1.75rem; }
+            .section-subtitle { font-size: 1rem; }
+            .steps, .features, .testimonials {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+            .pricing-amount {
+                font-size: 2.5rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .floating-badge {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                width: auto;
+                justify-content: center;
+            }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; }
+            .hero h1 { font-size: 1.75rem; }
+            .cta-group .btn {
+                padding: 0.65rem 1rem;
+                font-size: 0.9rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
     </style>
 </head>
 <body>
+    <!-- Limited-time offer banner -->
+    <div class="limited-offer">
+        🔥 LIMITED TIME OFFER: Sign up now to get 1,000 verified B2B leads FREE! Don't miss this opportunity.
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container header-content">
@@ -109,14 +986,15 @@
                 <span class="logo-text"><span class="gradient-text">UnlimitedLeads</span></span>
             </a>
             <nav class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#testimonials">Success Stories</a>
-                <a href="#contact">Contact Sales</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#testimonials" class="nav-link">Success Stories</a>
+                <a href="#contact" class="nav-link">Contact Sales</a>
             </nav>
             <div class="cta-group">
                 <a href="#" class="btn btn-secondary">Log in</a>
-                <a href="#waitlist" class="btn btn-primary">Sign up free</a>
+                <a href="#signup" class="btn btn-primary">Sign up</a>
             </div>
         </div>
     </header>
@@ -124,9 +1002,12 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Access 450M+ Verified Contacts<br><span class="gradient-text">with Unlimited Exports</span></h1>
-            <p>Unlock 63M+ B2B companies, filter your ideal customers, and never run out of leads—one-time payment, unlimited downloads.</p>
-            <a href="#waitlist" class="btn btn-primary btn-large">Join the Waitlist</a>
+            <h1>Access 450M+ Verified B2B Contacts<br><span class="gradient-text">with Lifetime Access</span></h1>
+            <p>The ultimate lead generation platform for B2B professionals. Find your ideal customers, enrich with verified contact data, and access premium leads—with a one-time payment.</p>
+            <div class="hero-cta">
+                <a href="#waitlist" class="btn btn-primary btn-large animate-pulse">Get 1,000 Free Leads</a>
+                <a href="#pricing" class="btn btn-secondary btn-large">View Pricing Plans</a>
+            </div>
             <div class="stats">
                 <div class="stat">
                     <h3>450M+</h3>
@@ -137,8 +1018,12 @@
                     <p>B2B Companies</p>
                 </div>
                 <div class="stat">
+                    <h3>99%</h3>
+                    <p>Accuracy Rate</p>
+                </div>
+                <div class="stat">
                     <h3>∞</h3>
-                    <p>Unlimited Exports</p>
+                    <p>Lifetime Access</p>
                 </div>
             </div>
         </div>
@@ -146,116 +1031,231 @@
 
     <!-- How It Works -->
     <section id="how-it-works" class="section container">
-        <h2>How It Works</h2>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to unlock your unlimited lead generation potential</p>
         <div class="steps">
             <div class="step">
-                <i class="fas fa-search"></i>
-                <h4>Select</h4>
-                <p>Filter by industry, company size, tech stack, funding, and growth signals.</p>
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>Define Your Target</h4>
+                <p>Precisely filter your ideal customer profile by industry, company size, revenue, tech stack, funding, and growth signals to find perfect-fit prospects.</p>
             </div>
             <div class="step">
-                <i class="fas fa-check-circle"></i>
-                <h4>Verify</h4>
-                <p>Enrich your lists with accurate emails and phone numbers in one click.</p>
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h4>Verify & Enrich</h4>
+                <p>Automatically validate and enhance your prospect list with direct contact information, including verified emails, direct dials, and detailed professional profiles.</p>
             </div>
             <div class="step">
-                <i class="fas fa-download"></i>
-                <h4>Export</h4>
-                <p>Download unlimited leads with a single purchase—stay stocked with prospects forever.</p>
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h4>Export & Use</h4>
+                <p>Download unlimited leads with a single lifetime purchase—scale your outreach without limits and never worry about running out of fresh prospects again.</p>
             </div>
         </div>
     </section>
 
     <!-- Features -->
     <section id="features" class="section container">
-        <h2>Key Features</h2>
+        <h2 class="section-title">Enterprise-Grade Features</h2>
+        <p class="section-subtitle">Everything you need to supercharge your B2B lead generation and sales outreach</p>
         <div class="features">
             <div class="feature-card">
-                <i class="fas fa-infinity"></i>
-                <h3>Unlimited Exports</h3>
-                <p>One-time payment gives you infinite downloads of verified leads—no caps, no surprises.</p>
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3>Lifetime Access</h3>
+                <p>One-time payment grants you permanent access to verified leads—no monthly caps, no unexpected charges, just lifetime value.</p>
             </div>
             <div class="feature-card">
-                <i class="fas fa-filter"></i>
-                <h3>Advanced Filters</h3>
-                <p>Narrow down your ICP by revenue, size, tech stack, funding, and hiring trends.</p>
+                <div class="feature-icon">
+                    <i class="fas fa-filter"></i>
+                </div>
+                <h3>Advanced Filtering</h3>
+                <p>Precisely target your ideal customers with 30+ advanced filters including revenue bands, headcount growth, tech stack, funding rounds, and hiring trends.</p>
             </div>
             <div class="feature-card">
-                <i class="fas fa-database"></i>
-                <h3>Massive Database</h3>
-                <p>Tap into 450M+ contacts and 63M+ B2B companies worldwide—always fresh, always verified.</p>
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Comprehensive Database</h3>
+                <p>Access 450M+ verified contacts and 63M+ B2B companies worldwide—refreshed weekly to ensure you're always working with the most current information.</p>
             </div>
             <div class="feature-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>99% Accuracy</p>
-                <p>Enjoy one of the highest email and phone verification rates on the market.</p>
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>99% Data Accuracy</h3>
+                <p>Enjoy industry-leading verification rates through our proprietary 12-point validation system that ensures the highest quality contact information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Real-Time Enrichment</h3>
+                <p>Instantly enhance your existing prospect lists with current titles, direct dials, verified emails, and social profiles for seamless outreach.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Growth Intelligence</h3>
+                <p>Identify companies showing growth signals like new funding, executive hires, or expansion—the perfect timing indicators for your sales outreach.</p>
             </div>
         </div>
     </section>
 
     <!-- Pricing -->
-    <section id="pricing" class="section container" style="background: var(--gray-50);">
-        <h2>One-Time Payment Plans</h2>
-        <p style="color: var(--gray-600); text-align:center;">Choose your plan and get unlimited exports forever. Sign up now and receive 1,000 leads free!</p>
+    <section id="pricing" class="section container">
+        <h2 class="section-title">One-Time Payment, Lifetime Access</h2>
+        <p class="section-subtitle">No recurring fees or hidden costs—just a single payment for unlimited lead exports forever</p>
         <div class="pricing-grid">
             <div class="pricing-card">
                 <h3>Starter Plan</h3>
-                <p><strong>$97</strong> — 58M Leads</p>
-                <ul>
-                    <li>40M US leads</li>
-                    <li>8M UK leads</li>
-                    <li>5M Canada leads</li>
-                    <li>3M Australia leads</li>
-                    <li>267M Worldwide leads</li>
+                <span class="pricing-amount">$97<small>one-time</small></span>
+                <p class="pricing-description">Perfect for small businesses and startups entering the B2B space</p>
+                <ul class="pricing-features">
+                    <li><span class="leads-count">40M</span> US leads</li>
+                    <li><span class="leads-count">8M</span> UK leads</li>
+                    <li><span class="leads-count">5M</span> Canada leads</li>
+                    <li><span class="leads-count">3M</span> Australia leads</li>
+                    <li><span class="leads-count">2M</span> growth-stage companies</li>
+                    <li>Basic filtering options</li>
+                    <li>Email & phone verification</li>
+                    <li>Lifetime access</li>
                 </ul>
-                <button class="btn btn-primary btn-large">Buy Now</button>
+                <a href="#signup" class="btn btn-primary pricing-cta">Get Started + 1,000 Free Leads</a>
             </div>
-            <div class="pricing-card">
+            <div class="pricing-card featured">
+                <div class="featured-badge">BEST VALUE</div>
                 <h3>All Access Plan</h3>
-                <p><strong>$149</strong> — 392M Leads</p>
-                <ul>
-                    <li>93M US leads</li>
-                    <li>16M UK leads</li>
-                    <li>10.2M Canada leads</li>
-                    <li>6.6M Australia leads</li>
-                    <li>267M Worldwide leads</li>
+                <span class="pricing-amount">$149<small>one-time</small></span>
+                <p class="pricing-description">Complete solution for serious sales teams and growth-focused companies</p>
+                <ul class="pricing-features">
+                    <li><span class="leads-count">93M</span> US leads</li>
+                    <li><span class="leads-count">16M</span> UK leads</li>
+                    <li><span class="leads-count">10.2M</span> Canada leads</li>
+                    <li><span class="leads-count">6.6M</span> Australia leads</li>
+                    <li><span class="leads-count">267M</span> Worldwide leads</li>
+                    <li>All 30+ advanced filters</li>
+                    <li>Premium data enrichment</li>
+                    <li>Growth signals & triggers</li>
+                    <li>Tech stack identification</li>
+                    <li>Lifetime access</li>
                 </ul>
-                <button class="btn btn-primary btn-large">Buy Now</button>
+                <a href="#signup" class="btn btn-primary pricing-cta">Get Access + 1,000 Free Leads</a>
+            </div>
+        </div>
+        
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-lock"></i>
+                <h4>Secure Payment</h4>
+                <p>256-bit SSL encryption</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Data Privacy</h4>
+                <p>GDPR & CCPA compliant</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-undo"></i>
+                <h4>30-Day Guarantee</h4>
+                <p>Risk-free satisfaction</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-headset"></i>
+                <h4>24/7 Support</h4>
+                <p>Always here to help</p>
             </div>
         </div>
     </section>
 
     <!-- Waitlist -->
-    <section id="waitlist" class="section container">
-        <h2>Join the Waitlist</h2>
-        <p style="text-align:center; color: var(--gray-600);">Our ultimate B2B database is launching soon. Sign up now to secure exclusive early access and grab your 1,000 free leads!</p>
-        <div class="waitlist-form">
-            <form action="#" method="POST">
-                <input type="email" name="email" placeholder="Your work email" required />
-                <button type="submit" class="btn btn-primary btn-large">Get Early Access</button>
-            </form>
+    <section id="signup" class="waitlist-section">
+        <div class="container">
+            <h2 class="section-title">Limited-Time Opportunity</h2>
+            <p class="section-subtitle">Sign up now and get 1,000 verified B2B leads completely free</p>
+            <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
+                <a href="#" class="btn btn-white btn-large">Sign Up Now</a>
+            </div>
         </div>
     </section>
 
     <!-- Testimonials -->
     <section id="testimonials" class="section container">
-        <h2>Trusted by Professionals</h2>
+        <div class="testimonials-heading">
+            <h2 class="section-title">Trusted by B2B Professionals</h2>
+            <p class="section-subtitle">See how UnlimitedLeads is transforming lead generation for companies worldwide</p>
+        </div>
         <div class="testimonials">
             <div class="testimonial">
-                <p>“This database is a game-changer—I’ve already booked 3 meetings!”</p>
-                <h4>Antonio Romero, CEO</h4>
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"This database has completely transformed our outreach strategy. Within the first week, we booked 6 meetings with perfect-fit prospects. The unlimited access model is brilliant."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AR</div>
+                        <div class="testimonial-info">
+                            <h4>Antonio Romero</h4>
+                            <p>CEO, TechScale Solutions</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="testimonial">
-                <p>“Unlimited exports mean I never run out of prospects. Love it!”</p>
-                <h4>Julien Perrière, Growth Lead</h4>
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The quality of the data is exceptional. 95% of emails are deliverable, and the direct phone numbers actually connect to the right people. Best lead generation investment we've ever made."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JP</div>
+                        <div class="testimonial-info">
+                            <h4>Julien Perrière</h4>
+                            <p>Growth Lead, Metrix Analytics</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="testimonial">
-                <p>“One purchase, infinite downloads—perfect for scaling our outreach.”</p>
-                <h4>Kate Kurnevych, Sales Manager</h4>
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The one-time payment model is refreshing—no more monthly fees eating into our margins. The lifetime access has been a game-changer."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KK</div>
+                        <div class="testimonial-info">
+                            <h4>Kate Kurnevych</h4>
+                            <p>Sales Director, NovaSphere</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="testimonial">
-                <p>“I cancelled my other tools—UnlimitedLeads covers everything I need.”</p>
-                <h4>Joseph Barnard, Business Dev</h4>
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The advanced filtering options are game-changing. We've identified companies using competitors' products that are showing growth signals—perfect timing for our solution. Already closed 3 major deals."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JB</div>
+                        <div class="testimonial-info">
+                            <h4>Joseph Barnard</h4>
+                            <p>VP Business Development, Quantic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Don't Miss This Limited-Time Opportunity</h2>
+                <p>Sign up today to claim your 1,000 free verified leads and get immediate access to UnlimitedLeads—the only B2B database with one-time payment and lifetime access.</p>
+                <div class="cta-buttons">
+                    <a href="#signup" class="btn btn-white btn-large">Get Your 1,000 Free Leads</a>
+                </div>
             </div>
         </div>
     </section>
@@ -263,11 +1263,68 @@
     <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="container">
-            <p>© 2025 UnlimitedLeads. All rights reserved.</p>
-            <p>
-                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-            </p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>UnlimitedLeads</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:sales@unlimitedleads.com">sales@unlimitedleads.com</a></li>
+                        <li><a href="tel:+18888888888">+1 (888) 888-8888</a></li>
+                        <li><a href="#">Schedule a Demo</a></li>
+                        <li><a href="#">Request Custom Plan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+                <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">GDPR Compliance</a>
+                </p>
+            </div>
         </div>
     </footer>
+    
+    <!-- Floating Badge -->
+    <div class="floating-badge">
+        <div class="floating-badge-icon">
+            <i class="fas fa-gift"></i>
+        </div>
+        <div>
+            <div class="floating-badge-text">Get 1,000 Free B2B Leads</div>
+            <a href="#signup" class="floating-badge-cta">Sign Up Now</a>
+        </div>
+    </div>
 </body>
 </html>
