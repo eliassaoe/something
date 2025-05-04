@@ -89,6 +89,8 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+    <!-- Ajout de la librairie Supabase JS -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="container">
@@ -128,53 +130,49 @@
                 return;
             }
             
+            // Initialiser le client Supabase
+            // Remplacez ces valeurs par celles de votre projet
+            const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
+            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
+            const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
+            
+            // Écouter les changements d'état d'authentification
+            const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+                console.log('Auth event:', event);
+                
+                if (event === 'SIGNED_IN' && session) {
+                    const userUuid = session.user.id;
+                    console.log('User UUID:', userUuid);
+                    
+                    // Afficher un message de succès
+                    showSuccess("Your account has been successfully verified!");
+                    
+                    // Mettre à jour le bouton de redirection avec l'UUID
+                    const continueButton = document.getElementById('continue-button');
+                    continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
+                    continueButton.style.display = 'inline-block';
+                    
+                    // Redirection automatique après 3 secondes
+                    setTimeout(() => {
+                        window.location.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
+                    }, 3000);
+                }
+            });
+            
             try {
-                // First, send the confirmation URL to your webhook and wait for the UUID
-                const webhookResponse = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        confirmation_url: confirmationUrl,
-                        type: 'confirmation'
-                    })
+                // Visiter l'URL de confirmation pour activer le compte
+                const verifyResponse = await fetch(confirmationUrl, {
+                    method: 'GET',
+                    redirect: 'follow'
                 });
                 
-                // Check if the webhook request was successful
-                if (webhookResponse.ok) {
-                    // Get the UUID from the response
-                    const responseData = await webhookResponse.json();
-                    
-                    // Now, actually verify the account by visiting the confirmation URL
-                    const verifyResponse = await fetch(confirmationUrl, {
-                        method: 'GET',
-                        redirect: 'follow'
-                    });
-                    
-                    if (verifyResponse.ok) {
-                        if (responseData && responseData.uuid) {
-                            // Show success message
-                            showSuccess("Your account has been successfully verified!");
-                            
-                            // Update continue button to redirect with the UUID
-                            const continueButton = document.getElementById('continue-button');
-                            continueButton.href = `https://unlimited-leads.online/app?token=${responseData.uuid}`;
-                            continueButton.style.display = 'inline-block';
-                            
-                            // Auto-redirect after 3 seconds
-                            setTimeout(() => {
-                                window.location.href = `https://unlimited-leads.online/app?token=${responseData.uuid}`;
-                            }, 3000);
-                        } else {
-                            showError("Verification complete, but we couldn't retrieve your user information.");
-                        }
-                    } else {
-                        showError("We couldn't verify your account. Please try again.");
-                    }
-                } else {
-                    showError("There was an error processing your verification. Please try again.");
+                if (!verifyResponse.ok) {
+                    showError("We couldn't verify your account. Please try again.");
                 }
+                
+                // Nous n'avons pas besoin de faire autre chose ici - l'écouteur onAuthStateChange
+                // interceptera l'événement SIGNED_IN et gérera la redirection
+                
             } catch (error) {
                 console.error('Verification error:', error);
                 showError("Connection error. Please check your internet connection and try again.");
