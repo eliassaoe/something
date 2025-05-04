@@ -19,7 +19,6 @@
         .container {
             max-width: 480px;
             text-align: center;
-            animation: fadeIn 0.6s ease-out;
         }
         .logo {
             margin-bottom: 2rem;
@@ -28,13 +27,11 @@
             font-size: 1.875rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            line-height: 1.2;
         }
         p {
             font-size: 1.125rem;
             color: #4B5563;
             margin-bottom: 2rem;
-            line-height: 1.6;
         }
         .status {
             display: flex;
@@ -51,13 +48,7 @@
             animation: spin 1s linear infinite;
             margin-right: 0.75rem;
         }
-        .success-icon {
-            color: #10B981;
-            margin-right: 0.75rem;
-            display: none;
-        }
-        .error-icon {
-            color: #EF4444;
+        .success-icon, .error-icon {
             margin-right: 0.75rem;
             display: none;
         }
@@ -69,10 +60,6 @@
             padding: 0.75rem 1.5rem;
             border-radius: 0.375rem;
             text-decoration: none;
-            transition: background-color 0.2s;
-        }
-        .button:hover {
-            background-color: #059669;
         }
         pre {
             background-color: #f7f7f7;
@@ -82,25 +69,12 @@
             overflow: auto;
             max-width: 100%;
             margin-top: 1rem;
-            display: none;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
     </style>
-    <!-- Ajout de la librairie Supabase JS -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="container">
@@ -127,100 +101,65 @@
             <span id="status-text">Verifying...</span>
         </div>
         <a href="#" class="button" id="continue-button" style="display: none;">Continue to Dashboard</a>
-        <pre id="debug-info" style="display: none;"></pre>
+        <pre id="debug-info"></pre>
     </div>
 
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    // Debug display function
-    function showDebug(message, data) {
-        console.log(message, data);
-        let debugInfo = document.getElementById('debug-info');
-        debugInfo.textContent += message + "\n" + JSON.stringify(data, null, 2) + "\n\n";
-        debugInfo.style.display = 'block';
-    }
-    
-    // Always show debug for troubleshooting
-    document.getElementById('debug-info').style.display = 'block';
-    showDebug("Script started", {time: new Date().toISOString()});
-
-    try {
-        // Get parameters directly from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const token_hash = urlParams.get('token_hash');
-        const type = urlParams.get('type') || 'signup';
-        const emailEncoded = urlParams.get('email');
-        const email = emailEncoded ? decodeURIComponent(emailEncoded) : "";
-
-        showDebug("URL parameters:", { token_hash, type, email });
-
-        if (!token_hash || !email) {
-            showError("Verification link is missing required parameters.");
-            return;
-        }
-
-        // Prepare the data to send to your server
-        const serverPayload = {
-            email: email,
-            token_hash: token_hash,
-            type: 'confirmation'
+        // Run as soon as the page loads
+        window.onload = function() {
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('email') ? decodeURIComponent(params.get('email')) : "";
+            const token_hash = params.get('token_hash') || "";
+            
+            console.log("Email:", email);
+            console.log("Token hash:", token_hash);
+            
+            // Check if we have the required parameters
+            if (!email || !token_hash) {
+                showStatus(false, "Missing required parameters");
+                return;
+            }
+            
+            // Send to webhook
+            fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    token_hash: token_hash,
+                    type: 'confirmation'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response:", data);
+                
+                if (data && data.success) {
+                    // Success - show button and redirect
+                    showStatus(true, "Your account has been verified!");
+                    const uuid = data.userUuid || '';
+                    const continueButton = document.getElementById('continue-button');
+                    continueButton.href = 'https://unlimited-leads.online/app?token=' + uuid;
+                    continueButton.style.display = 'inline-block';
+                } else {
+                    // Error from server
+                    showStatus(false, data.message || "Verification failed");
+                }
+            })
+            .catch(error => {
+                // Network error
+                console.error("Error:", error);
+                showStatus(false, "Connection error");
+            });
         };
-
-        showDebug("About to send to webhook:", serverPayload);
-
-        // Use vanilla fetch - no dependencies
-        fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(serverPayload)
-        })
-        .then(response => {
-            showDebug("Server response status:", {status: response.status, ok: response.ok});
-            
-            if (!response.ok) {
-                throw new Error(`Server returned ${response.status}`);
-            }
-            
-            return response.json();
-        })
-        .then(data => {
-            showDebug("Server response data:", data);
-            
-            if (data && data.success) {
-                showSuccess("Your account has been successfully verified!");
-                const continueButton = document.getElementById('continue-button');
-                const userUuid = data.userUuid || '';
-                continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
-                continueButton.style.display = 'inline-block';
-            } else {
-                showError("Verification failed: " + (data.message || 'Unknown error'));
-            }
-        })
-        .catch(error => {
-            showError("Fetch error: " + error.message);
-            showDebug("Fetch error details:", {message: error.message, stack: error.stack});
-        });
-    } catch (error) {
-        showError("Script error: " + error.message);
-        showDebug("Script error details:", {message: error.message, stack: error.stack});
-    }
-
-    function showSuccess(message) {
-        document.getElementById('spinner').style.display = 'none';
-        document.getElementById('success-icon').style.display = 'block';
-        document.getElementById('status-text').textContent = message;
-        showDebug("Success:", {message});
-    }
-
-    function showError(message) {
-        document.getElementById('spinner').style.display = 'none';
-        document.getElementById('error-icon').style.display = 'block';
-        document.getElementById('status-text').textContent = message;
-        showDebug("Error:", {message});
-    }
-});
+        
+        // Helper function to update the UI
+        function showStatus(success, message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById(success ? 'success-icon' : 'error-icon').style.display = 'block';
+            document.getElementById('status-text').textContent = message;
+        }
     </script>
 </body>
 </html>
