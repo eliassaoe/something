@@ -131,30 +131,31 @@
                     // Récupérer la réponse du serveur
                     const data = await response.json();
                     
-                    // Vérifier si la réponse est un tableau contenant un objet avec access_token (format Supabase)
-                    if (Array.isArray(data) && data.length > 0 && data[0].access_token) {
-                        // Connexion réussie avec Supabase, rediriger vers la page d'accueil ou tableau de bord
-                        // Vous pouvez stocker le token dans localStorage si nécessaire
+                    // Check for the new token format
+                    if (data && data.token) {
+                        // Redirect to app with the token
+                        window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
+                    }
+                    // Handle legacy response formats if needed
+                    else if (Array.isArray(data) && data.length > 0 && data[0].access_token) {
                         localStorage.setItem('supabase_access_token', data[0].access_token);
                         localStorage.setItem('supabase_user', JSON.stringify(data[0].user));
-                        
-                        // Rediriger vers la page d'accueil (à ajuster selon votre application)
                         window.location.href = 'https://unlimited-leads.online/dashboard';
-                    } else if (data && data.connexion_success === "yes" && data.redirect_link) {
-                        // Format alternatif - rediriger vers le lien fourni
+                    } 
+                    else if (data && data.connexion_success === "yes" && data.redirect_link) {
                         window.location.href = data.redirect_link;
-                    } else if (data && data.connexion_success === "no") {
-                        // Cas spécifique: connexion échouée
+                    } 
+                    else if (data && data.connexion_success === "no") {
                         messageDiv.textContent = 'Invalid email or password. Please try again.';
                         messageDiv.classList.add('error');
                         messageDiv.style.display = 'block';
-                    } else if (data && data.error_message) {
-                        // Afficher le message d'erreur personnalisé retourné par le serveur
+                    } 
+                    else if (data && data.error_message) {
                         messageDiv.textContent = data.error_message;
                         messageDiv.classList.add('error');
                         messageDiv.style.display = 'block';
-                    } else {
-                        // Message d'erreur par défaut si aucun message spécifique n'est fourni
+                    } 
+                    else {
                         messageDiv.textContent = 'Login failed. Please check your credentials.';
                         messageDiv.classList.add('error');
                         messageDiv.style.display = 'block';
