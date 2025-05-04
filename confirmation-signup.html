@@ -131,105 +131,96 @@
     </div>
 
     <script>
-       document.addEventListener('DOMContentLoaded', async function() {
-    const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
-    const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
-    const YOUR_SERVER_URL = 'https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3';
-
-    // Get parameters directly from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const token_hash = urlParams.get('token_hash');
-    const type = urlParams.get('type') || 'signup';
-    const emailEncoded = urlParams.get('email');
-    const email = emailEncoded ? decodeURIComponent(emailEncoded) : "";
-
-    console.log("URL parameters:", { token_hash, type, email });
-
-    if (!token_hash || !email) {
-        showError("Verification link is missing required parameters.");
-        return;
+       document.addEventListener('DOMContentLoaded', function() {
+    // Debug display function
+    function showDebug(message, data) {
+        console.log(message, data);
+        let debugInfo = document.getElementById('debug-info');
+        debugInfo.textContent += message + "\n" + JSON.stringify(data, null, 2) + "\n\n";
+        debugInfo.style.display = 'block';
     }
+    
+    // Always show debug for troubleshooting
+    document.getElementById('debug-info').style.display = 'block';
+    showDebug("Script started", {time: new Date().toISOString()});
 
     try {
+        // Get parameters directly from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token_hash = urlParams.get('token_hash');
+        const type = urlParams.get('type') || 'signup';
+        const emailEncoded = urlParams.get('email');
+        const email = emailEncoded ? decodeURIComponent(emailEncoded) : "";
+
+        showDebug("URL parameters:", { token_hash, type, email });
+
+        if (!token_hash || !email) {
+            showError("Verification link is missing required parameters.");
+            return;
+        }
+
         // Prepare the data to send to your server
         const serverPayload = {
             email: email,
-            auth_token: "", // Not using token anymore
             token_hash: token_hash,
             type: 'confirmation'
         };
 
-        console.log("Sending to webhook:", serverPayload);
+        showDebug("About to send to webhook:", serverPayload);
 
-        // Send the data to your server
-        const serverResponse = await fetch(YOUR_SERVER_URL, {
+        // Use vanilla fetch - no dependencies
+        fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(serverPayload)
-        });
-
-        console.log("Server response status:", serverResponse.status);
-
-        if (!serverResponse.ok) {
-            // If server responds with an error
-            let errorMessage = "Server verification failed";
-            try {
-                const errorData = await serverResponse.json();
-                errorMessage += ": " + (errorData.message || 'Unknown error');
-            } catch (e) {
-                errorMessage += " (Could not parse error response)";
+        })
+        .then(response => {
+            showDebug("Server response status:", {status: response.status, ok: response.ok});
+            
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
             }
             
-            document.getElementById('debug-info').textContent = JSON.stringify({ 
-                error: errorMessage,
-                status: serverResponse.status 
-            }, null, 2);
-            document.getElementById('debug-info').style.display = 'block';
+            return response.json();
+        })
+        .then(data => {
+            showDebug("Server response data:", data);
             
-            showError(errorMessage);
-            return;
-        }
-
-        // Get the response from your server
-        const serverData = await serverResponse.json();
-        console.log("Server response data:", serverData);
-
-        // If your server handled the authentication itself
-        if (serverData && serverData.success) {
-            showSuccess("Your account has been successfully verified!");
-            const continueButton = document.getElementById('continue-button');
-            const userUuid = serverData.userUuid || '';
-            continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
-            continueButton.style.display = 'inline-block';
-            setTimeout(() => { window.location.href = continueButton.href; }, 3000);
-        } else {
-            showError("Verification failed: " + (serverData.message || 'Unknown error'));
-        }
+            if (data && data.success) {
+                showSuccess("Your account has been successfully verified!");
+                const continueButton = document.getElementById('continue-button');
+                const userUuid = data.userUuid || '';
+                continueButton.href = `https://unlimited-leads.online/app?uuid=${userUuid}`;
+                continueButton.style.display = 'inline-block';
+            } else {
+                showError("Verification failed: " + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            showError("Fetch error: " + error.message);
+            showDebug("Fetch error details:", {message: error.message, stack: error.stack});
+        });
     } catch (error) {
-        console.error('Verification error:', error);
-        document.getElementById('debug-info').textContent = JSON.stringify({ 
-            error: error.toString(), 
-            stack: error.stack 
-        }, null, 2);
-        document.getElementById('debug-info').style.display = 'block';
-        showError("An unexpected error occurred. Please try again later.");
+        showError("Script error: " + error.message);
+        showDebug("Script error details:", {message: error.message, stack: error.stack});
+    }
+
+    function showSuccess(message) {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('success-icon').style.display = 'block';
+        document.getElementById('status-text').textContent = message;
+        showDebug("Success:", {message});
+    }
+
+    function showError(message) {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('error-icon').style.display = 'block';
+        document.getElementById('status-text').textContent = message;
+        showDebug("Error:", {message});
     }
 });
-
-        function showSuccess(message) {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById('success-icon').style.display = 'block';
-            document.getElementById('status-text').textContent = message;
-        }
-
-        function showError(message) {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById('error-icon').style.display = 'block';
-            document.getElementById('status-text').textContent = message;
-        }
     </script>
 </body>
 </html>
