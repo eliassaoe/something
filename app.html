@@ -241,6 +241,64 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .main-menu {
+    background-color: var(--light-bg);
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 0;
+}
+
+.menu-link {
+    display: inline-block;
+    padding: 15px 25px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.menu-link:hover {
+    background-color: rgba(26, 119, 240, 0.1);
+    color: var(--primary-color);
+}
+
+.menu-item.active .menu-link {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.menu-link i {
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .menu-list {
+        flex-direction: column;
+    }
+    
+    .menu-item {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .menu-item:last-child {
+        border-bottom: none;
+    }
+    
+    .menu-link {
+        display: block;
+        width: 100%;
+    }
+}
         
         .contact-modal {
             display: none;
@@ -476,6 +534,21 @@
         </button>
     </div>
 </header>
+
+        <div class="main-menu">
+    <ul class="menu-list">
+        <li class="menu-item active">
+            <a href="#" class="menu-link">
+                <i class="fas fa-search"></i> Search Leads
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" onclick="redirectToApolloFinder();" class="menu-link">
+                <i class="fas fa-rocket"></i> Apollo Finder
+            </a>
+        </li>
+    </ul>
+</div>
 
         
 <section class="search-section">
@@ -1428,6 +1501,12 @@ async function fetchTotalCount() {
     console.error('Error fetching count:', err);
     return 0;
   }
+}
+
+        // Add this function to your script section
+function redirectToApolloFinder() {
+    // Use the userToken global variable that's already defined in your code
+    window.location.href = `https://unlimited-leads.online/app-apollofinder?token=${userToken}`;
 }
 
         function logout() {
