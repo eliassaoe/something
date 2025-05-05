@@ -50,16 +50,15 @@
             font-weight: bold;
             color: var(--primary-color);
         }
-        .user-credits-container {
+      
+.user-credits-container {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.logout-button {
+.logout-button, .upgrade-button {
     background-color: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
     border-radius: 20px;
     padding: 8px 15px;
     font-weight: bold;
@@ -70,12 +69,28 @@
     transition: all 0.3s;
 }
 
+.logout-button {
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.upgrade-button {
+    color: white;
+    background-color: #F0A030;
+    border: 2px solid #F0A030;
+}
+
 .logout-button:hover {
     background-color: var(--primary-color);
     color: white;
 }
 
-.logout-button i {
+.upgrade-button:hover {
+    background-color: #E09020;
+    border-color: #E09020;
+}
+
+.logout-button i, .upgrade-button i {
     font-size: 16px;
 }
         
@@ -529,6 +544,9 @@
         <div id="userCredits" class="user-credits">
             <i class="fas fa-coins"></i> 0 crédits
         </div>
+        <button id="upgradeButton" class="upgrade-button">
+            <i class="fas fa-crown"></i> Upgrade
+        </button>
         <button id="logoutButton" class="logout-button">
             <i class="fas fa-sign-out-alt"></i> Logout
         </button>
@@ -1508,6 +1526,21 @@ function redirectToApolloFinder() {
     // Use the userToken global variable that's already defined in your code
     window.location.href = `https://unlimited-leads.online/app-apollofinder?token=${userToken}`;
 }
+
+        // Upgrade function
+function upgrade() {
+    // Get the token from localStorage
+    const token = localStorage.getItem('sessionToken');
+    
+    // Redirect to the pricing page with the token
+    if (token) {
+        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+    } else {
+        // If no token, just go to pricing page
+        window.location.href = 'https://unlimited-leads.online/pricing';
+    }
+}
+
 
         function logout() {
     // Clear the sessionToken from localStorage
