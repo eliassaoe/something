@@ -1144,7 +1144,6 @@ async function handleSearch(e) {
         resultsSection.style.display = 'block';
     }
 }
-
 async function exportToCSV() {
     try {
         // Show the custom export modal
@@ -1204,16 +1203,10 @@ async function exportToCSV() {
                 // Hide loading screen
                 loading.style.display = 'none';
                 
-                // Check if the response contains an error about insufficient credits
-                if (responseData && responseData.error && responseData.error.code === 403 && 
-                    responseData.error.message === "You do not have enough credit. Upgrade your account to receive new credits automatically each month.") {
-                    
+                // Check if the response contains a 403 error code
+                if (responseData && responseData.error && responseData.error.code === 403) {
                     // Show error message
-                    showAlert(responseData.error.message, 'error');
-                    
-                    // Create and show credit upgrade modal
-                    showCreditUpgradeModal();
-                    
+                    showAlert("You do not have enough credit. Upgrade your account to receive new credits automatically each month.", 'error');
                 } else {
                     // If no error, show the confirmation modal
                     const confirmationModal = document.getElementById('exportConfirmationModal');
@@ -1229,13 +1222,6 @@ async function exportToCSV() {
                     const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
                     closeConfirmationBtn.addEventListener('click', () => {
                         confirmationModal.style.display = 'none';
-                    });
-                    
-                    // Close modal when clicking outside of it
-                    window.addEventListener('click', (event) => {
-                        if (event.target === confirmationModal) {
-                            confirmationModal.style.display = 'none';
-                        }
                     });
                 }
                 
