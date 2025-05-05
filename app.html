@@ -1210,7 +1210,7 @@ if (Array.isArray(responseData) &&
     responseData[0].error && 
     responseData[0].error.code === 403) {
     // Show error message
-    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month.", 'error');
+    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account , come back next month for more credits or buy more credits", 'error');
     // Optionally show credit upgrade modal
     showCreditUpgradeModal();
 } else {
