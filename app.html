@@ -1181,12 +1181,12 @@ async function exportToCSV() {
                     token: userToken,
                     // Pass any active filters from the search form
                     searchParams: {
-    country: countrySelect.value,
-    industry: industrySelect.value,
-    managementlevel: document.getElementById('managementLevel').value,
-    company: document.getElementById('companyName').value,
-    keywords: document.getElementById('keywords').value
-}
+                        country: countrySelect.value,
+                        industry: industrySelect.value,
+                        managementlevel: document.getElementById('managementLevel').value,
+                        company: document.getElementById('companyName').value,
+                        keywords: document.getElementById('keywords').value
+                    }
                 };
                 
                 // Make POST request to n8n webhook
@@ -1198,35 +1198,46 @@ async function exportToCSV() {
                     body: JSON.stringify(requestData)
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
+                // Parse the response as JSON
+                const responseData = await response.json();
                 
                 // Hide loading screen
                 loading.style.display = 'none';
                 
-                // Show the confirmation modal (more visible than just an alert)
-                const confirmationModal = document.getElementById('exportConfirmationModal');
-                confirmationModal.style.display = 'block';
-                
-                // Set up close button for confirmation modal
-                const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-                closeConfirmBtn.addEventListener('click', () => {
-                    confirmationModal.style.display = 'none';
-                });
-                
-                // Set up "Got it" button
-                const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-                closeConfirmationBtn.addEventListener('click', () => {
-                    confirmationModal.style.display = 'none';
-                });
-                
-                // Close modal when clicking outside of it
-                window.addEventListener('click', (event) => {
-                    if (event.target === confirmationModal) {
+                // Check if the response contains an error about insufficient credits
+                if (responseData && responseData.error && responseData.error.code === 403 && 
+                    responseData.error.message === "You do not have enough credit. Upgrade your account to receive new credits automatically each month.") {
+                    
+                    // Show error message
+                    showAlert(responseData.error.message, 'error');
+                    
+                    // Create and show credit upgrade modal
+                    showCreditUpgradeModal();
+                    
+                } else {
+                    // If no error, show the confirmation modal
+                    const confirmationModal = document.getElementById('exportConfirmationModal');
+                    confirmationModal.style.display = 'block';
+                    
+                    // Set up close button for confirmation modal
+                    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+                    closeConfirmBtn.addEventListener('click', () => {
                         confirmationModal.style.display = 'none';
-                    }
-                });
+                    });
+                    
+                    // Set up "Got it" button
+                    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+                    closeConfirmationBtn.addEventListener('click', () => {
+                        confirmationModal.style.display = 'none';
+                    });
+                    
+                    // Close modal when clicking outside of it
+                    window.addEventListener('click', (event) => {
+                        if (event.target === confirmationModal) {
+                            confirmationModal.style.display = 'none';
+                        }
+                    });
+                }
                 
             } catch (error) {
                 console.error('Error processing export:', error);
@@ -1250,6 +1261,65 @@ async function exportToCSV() {
         showAlert(`Error: ${error.message}`, 'error');
         loading.style.display = 'none';
     }
+}
+
+// Add this new function to create and show the credit upgrade modal
+function showCreditUpgradeModal() {
+    // Check if the modal already exists
+    let creditUpgradeModal = document.getElementById('creditUpgradeModal');
+    
+    // If the modal doesn't exist, create it
+    if (!creditUpgradeModal) {
+        creditUpgradeModal = document.createElement('div');
+        creditUpgradeModal.id = 'creditUpgradeModal';
+        creditUpgradeModal.className = 'contact-modal';
+        
+        // Create the modal content
+        creditUpgradeModal.innerHTML = `
+            <div class="modal-content" style="border-left: 4px solid #FF9999;">
+                <span class="close-credit-upgrade-modal">&times;</span>
+                
+                <div class="modal-header" style="border-bottom-color: #FF9999;">
+                    <h2 class="modal-title"><i class="fas fa-exclamation-circle" style="color: #d33;"></i> Insufficient Credits</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="info-item" style="text-align: center;">
+                        <div class="info-value">
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough credits to export these leads.</strong></p>
+                            <p>Upgrade your account to receive new credits automatically each month and unlock unlimited exports.</p>
+                            <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue accessing leads data.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://unlimited-leads.online/pricing" class="search-button" style="max-width: 200px; text-decoration: none; display: inline-block;">
+                            <i class="fas fa-crown"></i> Upgrade Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add the modal to the document
+        document.body.appendChild(creditUpgradeModal);
+    }
+    
+    // Show the modal
+    creditUpgradeModal.style.display = 'block';
+    
+    // Add event listener for the close button
+    const closeBtn = creditUpgradeModal.querySelector('.close-credit-upgrade-modal');
+    closeBtn.addEventListener('click', () => {
+        creditUpgradeModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === creditUpgradeModal) {
+            creditUpgradeModal.style.display = 'none';
+        }
+    });
 }
  // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
