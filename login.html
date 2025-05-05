@@ -103,82 +103,69 @@
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const messageDiv = document.getElementById('message');
-            
-            // Clear previous messages
-            messageDiv.textContent = '';
-            messageDiv.className = 'message';
-            
-            try {
-                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        email, 
-                        password,
-                        type: 'login' // Identificateur pour différencier les appels
-                    })
-                });
-                
-                if (response.ok) {
-                    // Récupérer la réponse du serveur
-                    const data = await response.json();
-                    
-                    // Check for the new token format
-                    if (data && data.token) {
-                        // Redirect to app with the token
-                        window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
-                    }
-                    // Handle legacy response formats if needed
-                    else if (Array.isArray(data) && data.length > 0 && data[0].access_token) {
-                        localStorage.setItem('supabase_access_token', data[0].access_token);
-                        localStorage.setItem('supabase_user', JSON.stringify(data[0].user));
-                        window.location.href = 'https://unlimited-leads.online/dashboard';
-                    } 
-                    else if (data && data.connexion_success === "yes" && data.redirect_link) {
-                        window.location.href = data.redirect_link;
-                    } 
-                    else if (data && data.connexion_success === "no") {
-                        messageDiv.textContent = 'Invalid email or password. Please try again.';
-                        messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
-                    } 
-                    else if (data && data.error_message) {
-                        messageDiv.textContent = data.error_message;
-                        messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
-                    } 
-                    else {
-                        messageDiv.textContent = 'Login failed. Please check your credentials.';
-                        messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
-                    }
-                } else {
-                    // Récupérer le message d'erreur s'il existe
-                    const errorData = await response.json().catch(() => null);
-                    if (errorData && errorData.message) {
-                        messageDiv.textContent = errorData.message;
-                    } else {
-                        messageDiv.textContent = 'Invalid email or password. Please try again.';
-                    }
-                    messageDiv.classList.add('error');
-                    messageDiv.style.display = 'block';
-                }
-            } catch (error) {
-                // Message d'erreur
-                messageDiv.textContent = 'An error occurred. Please try again later.';
-                messageDiv.classList.add('error');
-                messageDiv.style.display = 'block';
-                console.error('Error:', error);
-            }
+       document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const messageDiv = document.getElementById('message');
+    
+    // Clear previous messages
+    messageDiv.textContent = '';
+    messageDiv.className = 'message';
+    
+    try {
+        // Afficher un message de chargement
+        messageDiv.textContent = 'Logging in...';
+        messageDiv.classList.add('info');
+        messageDiv.style.display = 'block';
+        
+        const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                email, 
+                password,
+                type: 'login'
+            })
         });
+        
+        const data = await response.json();
+        console.log('Server response:', data);
+        
+        if (response.ok) {
+            // Vérifier si on a le token UUID dans la réponse
+            if (data && data.token) {
+                // Redirection vers l'app avec le token
+                window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
+            } 
+            // Si on a un format de réponse different
+            else if (data && data.userUuid) {
+                // Redirection vers l'app avec le userUuid
+                window.location.href = `https://unlimited-leads.online/app?token=${data.userUuid}`;
+            }
+            else {
+                // Message d'erreur si pas de token dans la réponse
+                messageDiv.textContent = 'Login successful but no token received. Please contact support.';
+                messageDiv.classList.remove('info');
+                messageDiv.classList.add('error');
+            }
+        } else {
+            // Gestion des erreurs
+            messageDiv.textContent = data.message || 'Invalid email or password. Please try again.';
+            messageDiv.classList.remove('info');
+            messageDiv.classList.add('error');
+        }
+    } catch (error) {
+        // Message d'erreur en cas d'exception
+        messageDiv.textContent = 'An error occurred. Please try again later.';
+        messageDiv.classList.remove('info');
+        messageDiv.classList.add('error');
+        console.error('Error:', error);
+    }
+});
     </script>
 </body>
 </html>
