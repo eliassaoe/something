@@ -1198,32 +1198,38 @@ async function exportToCSV() {
                 });
                 
                 // Parse the response as JSON
-                const responseData = await response.json();
-                
-                // Hide loading screen
-                loading.style.display = 'none';
-                
-                // Check if the response contains a 403 error code
-                if (responseData && responseData.error && responseData.error.code === 403) {
-                    // Show error message
-                    showAlert("You do not have enough credit. Upgrade your account to receive new credits automatically each month.", 'error');
-                } else {
-                    // If no error, show the confirmation modal
-                    const confirmationModal = document.getElementById('exportConfirmationModal');
-                    confirmationModal.style.display = 'block';
-                    
-                    // Set up close button for confirmation modal
-                    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-                    closeConfirmBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
-                    });
-                    
-                    // Set up "Got it" button
-                    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-                    closeConfirmationBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
-                    });
-                }
+               // Parse the response as JSON
+const responseData = await response.json();
+
+// Hide loading screen
+loading.style.display = 'none';
+
+// Check if the response is an array with an error object
+if (Array.isArray(responseData) && 
+    responseData[0] && 
+    responseData[0].error && 
+    responseData[0].error.code === 403) {
+    // Show error message
+    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month.", 'error');
+    // Optionally show credit upgrade modal
+    showCreditUpgradeModal();
+} else {
+    // If no error, show the confirmation modal
+    const confirmationModal = document.getElementById('exportConfirmationModal');
+    confirmationModal.style.display = 'block';
+    
+    // Set up close button for confirmation modal
+    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+    closeConfirmBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+    
+    // Set up "Got it" button
+    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+    closeConfirmationBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+}
                 
             } catch (error) {
                 console.error('Error processing export:', error);
