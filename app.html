@@ -920,6 +920,7 @@
         const totalDisplayRecords = document.getElementById('totalDisplayRecords');
         
        // Initialize the app
+// Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
     // Show loading indicator
     loading.style.display = 'block';
@@ -927,14 +928,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Fetch initial data from Supabase via n8n
         await fetchData();
-
         globalTrueCount = await fetchTotalCount();
-        
-        // Get the total count separately
         
         // Display data immediately
         displayInitialResults();
-        
         
         // Set up event listeners
         searchForm.addEventListener('submit', handleSearch);
@@ -942,6 +939,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         closeModal.addEventListener('click', () => {
             contactModal.style.display = 'none';
         });
+        
+        // Add event listener for the upgrade button
+        const upgradeButton = document.getElementById('upgradeButton');
+        if (upgradeButton) {
+            upgradeButton.addEventListener('click', function() {
+                // Get the token from localStorage
+                const token = localStorage.getItem('sessionToken');
+                
+                // Redirect to the pricing page with the token
+                if (token) {
+                    window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                } else {
+                    // If no token, just go to pricing page
+                    window.location.href = 'https://unlimited-leads.online/pricing';
+                }
+            });
+            console.log('Upgrade button event listener attached');
+        } else {
+            console.error('Upgrade button not found in the DOM');
+        }
+        
+        // Add event listener for the logout button
+        const logoutButton = document.getElementById('logoutButton');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                // Clear the sessionToken from localStorage
+                localStorage.removeItem('sessionToken');
+                
+                // Redirect to the home page
+                window.location.href = 'https://unlimited-leads.online/en';
+            });
+            console.log('Logout button event listener attached');
+        }
         
         // Close modal when clicking outside of it
         window.addEventListener('click', (event) => {
@@ -960,53 +990,53 @@ document.addEventListener('DOMContentLoaded', async () => {
         loading.style.display = 'none';
     }
 });
+
+// Fetch data from Supabase via n8n webhook
+async function fetchData() {
+    try {
+        // Show loading indicator
+        loading.style.display = 'block';
         
-        // Fetch data from Supabase via n8n webhook
-        async function fetchData() {
-            try {
-                // Show loading indicator
-                loading.style.display = 'block';
-                
-                // Prepare the data to send to n8n
-                const requestData = {
-                    action: 'fetchAll',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
-                    tableName: 'unlimited',  // Changed to new table name
-                    limit: 1000
-                };
-                
-                // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Validate that data is an array
-                if (!Array.isArray(data)) {
-                    console.error('Response is not an array:', data);
-                    throw new Error('Expected array response from API');
-                }
-                
-                console.log(`Received ${data.length} contacts from API`);
-                
-                // Store the data directly
-                allContacts = data;
-                
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                throw error;
-            }
+        // Prepare the data to send to n8n
+        const requestData = {
+            action: 'fetchAll',
+            supabaseUrl: SUPABASE_URL,
+            supabaseKey: SUPABASE_KEY,
+            tableName: 'unlimited',  // Changed to new table name
+            limit: 1000
+        };
+        
+        // Make POST request to n8n webhook
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
         }
+        
+        const data = await response.json();
+        
+        // Validate that data is an array
+        if (!Array.isArray(data)) {
+            console.error('Response is not an array:', data);
+            throw new Error('Expected array response from API');
+        }
+        
+        console.log(`Received ${data.length} contacts from API`);
+        
+        // Store the data directly
+        allContacts = data;
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+}
 
   /**
 /**
