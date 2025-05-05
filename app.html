@@ -1164,6 +1164,20 @@ async function exportToCSV() {
             // Get the export limit from the input field
             const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
             
+            // Récupérer le token de session
+            const token = localStorage.getItem('sessionToken');
+            if (!token) {
+                showAlert("Session expirée, veuillez vous reconnecter.", 'error');
+                return;
+            }
+            
+            // Vérifier les crédits disponibles avant l'export
+            const hasSufficientCredits = await checkCredits(token, exportLimit);
+            if (!hasSufficientCredits) {
+                showAlert("Crédits insuffisants pour cette exportation. Veuillez réduire le nombre de leads ou recharger vos crédits.", 'error');
+                return;
+            }
+            
             // Show loading screen while making the API call
             loading.style.display = 'block';
             
@@ -1178,12 +1192,14 @@ async function exportToCSV() {
                     limit: exportLimit,
                     // Pass any active filters from the search form
                     searchParams: {
-    country: countrySelect.value,
-    industry: industrySelect.value,
-    managementlevel: document.getElementById('managementLevel').value,
-    company: document.getElementById('companyName').value,
-    keywords: document.getElementById('keywords').value
-}
+                        country: countrySelect.value,
+                        industry: industrySelect.value,
+                        managementlevel: document.getElementById('managementLevel').value,
+                        company: document.getElementById('companyName').value,
+                        keywords: document.getElementById('keywords').value
+                    },
+                    // Ajout du token pour la mise à jour des crédits
+                    token: token
                 };
                 
                 // Make POST request to n8n webhook
@@ -1198,6 +1214,9 @@ async function exportToCSV() {
                 if (!response.ok) {
                     throw new Error(`API error: ${response.status}`);
                 }
+                
+                // Déduire les crédits après un export réussi
+                await updateCreditsAfterExport(token, exportLimit);
                 
                 // Hide loading screen
                 loading.style.display = 'none';
@@ -1247,6 +1266,84 @@ async function exportToCSV() {
         showAlert(`Error: ${error.message}`, 'error');
         loading.style.display = 'none';
     }
+}
+
+// Fonction pour vérifier si l'utilisateur a suffisamment de crédits
+async function checkCredits(token, exportAmount) {
+    try {
+        const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+        
+        const requestData = {
+            token: token,
+            type: "credit_check"
+        };
+        
+        const response = await fetch(WEBHOOK_URL_A, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error('Erreur réseau');
+        }
+        
+        const data = await response.json();
+        
+        // Vérifier si l'utilisateur a suffisamment de crédits
+        if (data && typeof data.credit === 'number') {
+            // Mettre à jour l'affichage des crédits
+            displayUserCredits(data.credit);
+            
+            // Vérifier si les crédits sont suffisants
+            return data.credit >= exportAmount;
+        }
+        
+        return false;
+    } catch (error) {
+        console.error('Erreur lors de la vérification des crédits:', error);
+        return false;
+    }
+}
+
+// Fonction pour mettre à jour les crédits après un export
+async function updateCreditsAfterExport(token, exportAmount) {
+    try {
+        const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+        
+        const requestData = {
+            token: token,
+            type: "credit",
+            amount: exportAmount
+        };
+        
+        const response = await fetch(WEBHOOK_URL_A, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error('Erreur réseau');
+        }
+        
+        const data = await response.json();
+        
+        // Mettre à jour l'affichage des crédits avec la nouvelle valeur
+        if (data && typeof data.credit === 'number') {
+            displayUserCredits(data.credit);
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour des crédits:', error);
+        return false;
+    }
+}
 }
  // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
