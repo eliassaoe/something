@@ -692,10 +692,10 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
         
         // Global variables
-        // Global variables
         
         let allContacts = [];
         let globalTrueCount = 0;
+        let userToken = null;
         // DOM Elements
         const searchForm = document.getElementById('searchForm');
         const countrySelect = document.getElementById('country');
@@ -858,6 +858,8 @@ function token_verif() {
         window.location.href = 'https://unlimited-leads.online';
         return;
     }
+
+    userToken = token;
     
     console.log("Token valide, envoi de la requête API...");
     
@@ -1176,6 +1178,7 @@ async function exportToCSV() {
                     tableName: 'unlimited',
                     // Add the export limit to the request
                     limit: exportLimit,
+                    token: userToken,
                     // Pass any active filters from the search form
                     searchParams: {
     country: countrySelect.value,
