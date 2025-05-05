@@ -815,6 +815,10 @@ document.addEventListener('DOMContentLoaded', async () => {
  * - Si aucun token n'est trouvé, redirige vers la page d'accueil
  * - Si un token est trouvé, l'ajoute à l'URL si nécessaire et envoie une requête API avec le token
  */
+/**
+ * token_verif
+ * Fonction qui vérifie le token et affiche les crédits de l'utilisateur
+ */
 function token_verif() {
     console.log("Fonction token_verif démarrée");
     
@@ -882,13 +886,56 @@ function token_verif() {
     })
     .then(data => {
         console.log('Succès de la requête token:', data);
-        // Vous pouvez ajouter ici un traitement après la réponse de l'API
+        
+        // Vérifier si la réponse contient des crédits
+        if (data && typeof data.credit === 'number') {
+            // Afficher les crédits dans l'interface
+            displayUserCredits(data.credit);
+        }
     })
     .catch(error => {
         console.error('Erreur lors de l\'envoi du token:', error);
-        // En cas d'erreur d'authentification, on pourrait supprimer le token
-        // localStorage.removeItem('sessionToken');
     });
+}
+
+// Fonction pour afficher les crédits utilisateur
+function displayUserCredits(credits) {
+    // Création d'un élément dans le header pour afficher les crédits
+    const header = document.querySelector('header');
+    
+    // Vérifier si l'élément des crédits existe déjà
+    let creditsElement = document.getElementById('userCredits');
+    
+    if (!creditsElement) {
+        // Créer l'élément s'il n'existe pas
+        creditsElement = document.createElement('div');
+        creditsElement.id = 'userCredits';
+        creditsElement.className = 'user-credits';
+        header.appendChild(creditsElement);
+        
+        // Ajouter du CSS pour cet élément
+        const style = document.createElement('style');
+        style.textContent = `
+            .user-credits {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .user-credits i {
+                font-size: 16px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Mettre à jour le contenu avec le nombre de crédits
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} crédits`;
 }
 
 // Exécuter la fonction immédiatement
