@@ -808,10 +808,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /**
 /**
+/**
  * token_verif
  * Fonction qui vérifie et traite le token de l'URL :
+ * - Récupère le token depuis l'URL ou le localStorage
  * - Si aucun token n'est trouvé, redirige vers la page d'accueil
- * - Si un token est trouvé, envoie une requête API avec le token
+ * - Si un token est trouvé, l'ajoute à l'URL si nécessaire et envoie une requête API avec le token
  */
 function token_verif() {
     console.log("Fonction token_verif démarrée");
@@ -823,10 +825,30 @@ function token_verif() {
     const urlParams = new URLSearchParams(window.location.search);
     
     // Extraire la valeur du paramètre "token"
-    const token = urlParams.get('token');
-    console.log("Token trouvé:", token);
+    let token = urlParams.get('token');
     
-    // Si aucun token n'est trouvé, rediriger vers la page d'accueil
+    // Si aucun token dans l'URL, vérifier dans le localStorage
+    if (!token) {
+        token = localStorage.getItem('sessionToken');
+        console.log("Token récupéré du localStorage:", token);
+        
+        // Si un token existe dans le localStorage, l'ajouter à l'URL
+        if (token) {
+            // Créer une nouvelle URL avec le token
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('token', token);
+            
+            // Mettre à jour l'URL sans recharger la page
+            window.history.replaceState({}, '', currentUrl.toString());
+            console.log("URL mise à jour avec le token du localStorage");
+        }
+    } else {
+        // Si un token est présent dans l'URL, le sauvegarder dans le localStorage
+        localStorage.setItem('sessionToken', token);
+        console.log("Token sauvegardé dans le localStorage:", token);
+    }
+    
+    // Vérifier si on a un token (soit de l'URL, soit du localStorage)
     if (!token) {
         console.log("Aucun token trouvé, redirection...");
         window.location.href = 'https://unlimited-leads.online';
@@ -835,7 +857,7 @@ function token_verif() {
     
     console.log("Token valide, envoi de la requête API...");
     
-    // Créer l'objet de données à envoyer (format similaire aux autres requêtes de la page)
+    // Créer l'objet de données à envoyer
     const requestData = {
         token: token,
         type: "token"
@@ -843,7 +865,7 @@ function token_verif() {
     
     console.log("Données à envoyer:", requestData);
     
-    // Configuration de la requête fetch (méthode identique aux autres fetch de la page)
+    // Configuration de la requête fetch
     fetch(WEBHOOK_URL_A, {
         method: 'POST',
         headers: {
@@ -864,6 +886,8 @@ function token_verif() {
     })
     .catch(error => {
         console.error('Erreur lors de l\'envoi du token:', error);
+        // En cas d'erreur d'authentification, on pourrait supprimer le token
+        // localStorage.removeItem('sessionToken');
     });
 }
 
