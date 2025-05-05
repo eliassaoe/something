@@ -50,6 +50,34 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+        .user-credits-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logout-button {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.logout-button i {
+    font-size: 16px;
+}
         
         .search-section {
             background-color: var(--light-bg);
@@ -438,8 +466,17 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">Business Contact Finder</div>
-        </header>
+    <div class="logo">Business Contact Finder</div>
+    <div class="user-credits-container">
+        <div id="userCredits" class="user-credits">
+            <i class="fas fa-coins"></i> 0 crédits
+        </div>
+        <button id="logoutButton" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</header>
+
         
 <section class="search-section">
     <h2 class="search-title">Find Business Contacts</h2>
@@ -1391,6 +1428,31 @@ async function fetchTotalCount() {
     console.error('Error fetching count:', err);
     return 0;
   }
+}
+
+        function logout() {
+    // Clear the sessionToken from localStorage
+    localStorage.removeItem('sessionToken');
+    
+    // Redirect to the home page
+    window.location.href = 'https://unlimited-leads.online/en';
+}
+
+// Add event listener to the logout button
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', logout);
+    }
+});
+
+// Also add this to the existing token_verif function to handle showing/hiding the logout button
+// Add this at the end of the displayUserCredits function (around line 865):
+
+// Make sure the logout button is visible
+const logoutButton = document.getElementById('logoutButton');
+if (logoutButton) {
+    logoutButton.style.display = 'flex';
 }
 
         // Helper function to show alerts
