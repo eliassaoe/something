@@ -1146,9 +1146,9 @@
                 const currentHref = link.getAttribute('href');
                 // Check if the URL already has parameters
                 if (currentHref.includes('?')) {
-                    link.setAttribute('href', `${currentHref}&token=${token}`);
+                    link.setAttribute('href', `${currentHref}&client_reference_id=${token}`);
                 } else {
-                    link.setAttribute('href', `${currentHref}?token=${token}`);
+                    link.setAttribute('href', `${currentHref}?client_reference_id=${token}`);
                 }
             });
             
