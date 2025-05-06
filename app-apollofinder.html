@@ -535,49 +535,49 @@
                 console.log('Logout button event listener attached');
             }
             
-            // Set up confirm extraction button
-            document.getElementById('confirmExtractionBtn').addEventListener('click', () => {
-                confirmModal.style.display = 'none';
-                loading.style.display = 'block';
-                
-                // API webhook URL
-                const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
-                
-                // Create data object to send with Apollo URL
-                const requestData = {
-                    token: userToken,
-                    type: "apollo_extraction",
-                    apollo_url: apolloUrlValue
-                };
-                
-                console.log("Sending Apollo extraction request:", requestData);
-                
-                // Make the API call
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                })
-                .then(response => {
-                    console.log("Response status:", response.status);
-                    if (!response.ok) {
-                        throw new Error('Network error: ' + response.status);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Apollo extraction request success:', data);
-                    loading.style.display = 'none';
-                    successModal.style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error sending Apollo extraction request:', error);
-                    loading.style.display = 'none';
-                    showAlert("Error processing your request. Please try again.", 'error');
-                });
-            });
+           // Set up confirm extraction button
+document.getElementById('confirmExtractionBtn').addEventListener('click', () => {
+    confirmModal.style.display = 'none';
+    loading.style.display = 'block';
+    
+    // Separate webhook URL for Apollo extraction
+    const WEBHOOK_URL_APOLLO = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    
+    // Create data object to send with Apollo URL
+    const requestData = {
+        token: userToken,
+        type: "apollo_extraction",
+        apollo_url: apolloUrlValue
+    };
+    
+    console.log("Sending Apollo extraction request:", requestData);
+    
+    // Make the API call
+    fetch(WEBHOOK_URL_APOLLO, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+            throw new Error('Network error: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Apollo extraction request success:', data);
+        loading.style.display = 'none';
+        successModal.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error sending Apollo extraction request:', error);
+        loading.style.display = 'none';
+        showAlert("Error processing your request. Please try again.", 'error');
+    });
+});
             
             // Close success modal button
             document.getElementById('closeSuccessBtn').addEventListener('click', () => {
