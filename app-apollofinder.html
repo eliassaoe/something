@@ -535,7 +535,14 @@
                 }
                 
                // Modify the confirmExtractionBtn click event listener to include the Apollo URL in the API call
-
+  // Execute token_verif immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Page loaded, executing token_verif");
+            token_verif();
+        });
+        
+        // Also execute immediately in case the script loads after DOMContentLoaded
+        token_verif();
 // Add this modification to your existing JavaScript code:
 
 document.getElementById('confirmExtractionBtn').addEventListener('click', () => {
@@ -746,14 +753,6 @@ document.getElementById('confirmExtractionBtn').addEventListener('click', () => 
             }, 5000);
         }
         
-        // Execute token_verif immediately
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Page loaded, executing token_verif");
-            token_verif();
-        });
-        
-        // Also execute immediately in case the script loads after DOMContentLoaded
-        token_verif();
     </script>
 </body>
 </html>
