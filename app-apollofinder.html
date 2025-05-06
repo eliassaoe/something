@@ -478,244 +478,278 @@
     </div>
     
     <script>
-        // Global variables
-        let userToken = null;
-        
-        // DOM Elements
-        const apolloForm = document.getElementById('apolloForm');
-        const searchAlert = document.getElementById('searchAlert');
-        const loading = document.getElementById('loading');
-        const confirmModal = document.getElementById('confirmModal');
-        const successModal = document.getElementById('successModal');
-        
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Set up event listeners
-                apolloForm.addEventListener('submit', handleSubmit);
-                
-                // Set up modal close buttons
-                document.querySelector('.close-confirm-modal').addEventListener('click', () => {
-                    confirmModal.style.display = 'none';
-                });
-                
-                document.querySelector('.close-success-modal').addEventListener('click', () => {
-                    successModal.style.display = 'none';
-                });
-                
-                // Add event listener for the upgrade button
-                const upgradeButton = document.getElementById('upgradeButton');
-                if (upgradeButton) {
-                    upgradeButton.addEventListener('click', function() {
-                        // Get the token from localStorage
-                        const token = localStorage.getItem('sessionToken');
-                        
-                        // Redirect to the pricing page with the token
-                        if (token) {
-                            window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-                        } else {
-                            // If no token, just go to pricing page
-                            window.location.href = 'https://unlimited-leads.online/pricing';
-                        }
-                    });
-                    console.log('Upgrade button event listener attached');
-                }
-                
-                // Add event listener for the logout button
-                const logoutButton = document.getElementById('logoutButton');
-                if (logoutButton) {
-                    logoutButton.addEventListener('click', function() {
-                        // Clear the sessionToken from localStorage
-                        localStorage.removeItem('sessionToken');
-                        
-                        // Redirect to the home page
-                        window.location.href = 'https://unlimited-leads.online/en';
-                    });
-                    console.log('Logout button event listener attached');
-                }
-                
-                // Set up confirm extraction button
-                document.getElementById('confirmExtractionBtn').addEventListener('click', () => {
-                    confirmModal.style.display = 'none';
-                    loading.style.display = 'block';
-                    
-                    // Simulate processing time (in real implementation, you'd make an API call here)
-                    setTimeout(() => {
-                        loading.style.display = 'none';
-                        successModal.style.display = 'block';
-                    }, 2000);
-                });
-                
-                // Close success modal button
-                document.getElementById('closeSuccessBtn').addEventListener('click', () => {
-                    successModal.style.display = 'none';
-                });
-                
-                // Close modals when clicking outside
-                window.addEventListener('click', (event) => {
-                    if (event.target === confirmModal) {
-                        confirmModal.style.display = 'none';
-                    }
-                    if (event.target === successModal) {
-                        successModal.style.display = 'none';
-                    }
-                });
-                
-            } catch (error) {
-                console.error("Error initializing app:", error);
-                showAlert(`Error: ${error.message}`, 'error');
-            }
-        });
-        
-        // Handle form submission
-        function handleSubmit(e) {
-            e.preventDefault();
+    // Global variables
+    let userToken = null;
+    let apolloUrlValue = ""; // New global variable to store the Apollo URL
+    
+    // DOM Elements
+    const apolloForm = document.getElementById('apolloForm');
+    const searchAlert = document.getElementById('searchAlert');
+    const loading = document.getElementById('loading');
+    const confirmModal = document.getElementById('confirmModal');
+    const successModal = document.getElementById('successModal');
+    
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Set up event listeners
+            apolloForm.addEventListener('submit', handleSubmit);
             
-            const apolloUrl = document.getElementById('apolloUrl').value.trim();
-            
-            if (!apolloUrl) {
-                showAlert("Please enter an Apollo search URL", 'error');
-                return;
-            }
-            
-            // Validate URL format (basic check)
-            if (!apolloUrl.startsWith('https://app.apollo.io')) {
-                showAlert("Please enter a valid Apollo search URL (starting with https://app.apollo.io)", 'error');
-                return;
-            }
-            
-            // Show confirmation modal
-            confirmModal.style.display = 'block';
-        }
-        
-        // Function to redirect to lead finder page
-        function redirectToLeadFinder() {
-            // Get the token from localStorage
-            const token = localStorage.getItem('sessionToken');
-            
-            // Redirect to the lead finder page with the token
-            if (token) {
-                window.location.href = `https://unlimited-leads.online/app?token=${token}`;
-            } else {
-                // If no token, redirect to home
-                window.location.href = 'https://unlimited-leads.online/en';
-            }
-        }
-        
-        /**
-         * token_verif
-         * Function to verify token and display user credits
-         */
-        function token_verif() {
-            console.log("token_verif started");
-            
-            // API webhook URL
-            const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
-            
-            // Get URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            // Extract token parameter
-            let token = urlParams.get('token');
-            
-            // If no token in URL, check localStorage
-            if (!token) {
-                token = localStorage.getItem('sessionToken');
-                console.log("Token retrieved from localStorage:", token);
-                
-                // If token exists in localStorage, add to URL
-                if (token) {
-                    // Create new URL with token
-                    const currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('token', token);
-                    
-                    // Update URL without reloading page
-                    window.history.replaceState({}, '', currentUrl.toString());
-                    console.log("URL updated with token from localStorage");
-                }
-            } else {
-                // If token is in URL, save to localStorage
-                localStorage.setItem('sessionToken', token);
-                console.log("Token saved to localStorage:", token);
-            }
-            
-            // Check if we have a token (either from URL or localStorage)
-            if (!token) {
-                console.log("No token found, redirecting...");
-                window.location.href = 'https://unlimited-leads.online/en';
-                return;
-            }
-            
-            userToken = token;
-            
-            console.log("Valid token, sending API request...");
-            
-            // Create data object to send
-            const requestData = {
-                token: token,
-                type: "token"
-            };
-            
-            console.log("Data to send:", requestData);
-            
-            // Configure fetch request
-            fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => {
-                console.log("Response status:", response.status);
-                if (!response.ok) {
-                    throw new Error('Network error: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Token request success:', data);
-                
-                // Check if response contains credits
-                if (data && typeof data.credit === 'number') {
-                    // Display credits in interface
-                    displayUserCredits(data.credit);
-                }
-            })
-            .catch(error => {
-                console.error('Error sending token:', error);
+            // Set up modal close buttons
+            document.querySelector('.close-confirm-modal').addEventListener('click', () => {
+                confirmModal.style.display = 'none';
             });
-        }
-        
-        // Function to display user credits
-        function displayUserCredits(credits) {
-            // Get the credits element
-            let creditsElement = document.getElementById('userCredits');
             
-            // Update content with credits
-            creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} crédits`;
-        }
-        
-        // Helper function to show alerts
-        function showAlert(message, type) {
-            searchAlert.textContent = message;
-            searchAlert.className = `alert alert-${type}`;
-            searchAlert.style.display = 'block';
+            document.querySelector('.close-success-modal').addEventListener('click', () => {
+                successModal.style.display = 'none';
+            });
             
-            // Hide the alert after 5 seconds
-            setTimeout(() => {
-                searchAlert.style.display = 'none';
-            }, 5000);
+            // Add event listener for the upgrade button
+            const upgradeButton = document.getElementById('upgradeButton');
+            if (upgradeButton) {
+                upgradeButton.addEventListener('click', function() {
+                    // Get the token from localStorage
+                    const token = localStorage.getItem('sessionToken');
+                    
+                    // Redirect to the pricing page with the token
+                    if (token) {
+                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                    } else {
+                        // If no token, just go to pricing page
+                        window.location.href = 'https://unlimited-leads.online/pricing';
+                    }
+                });
+                console.log('Upgrade button event listener attached');
+            }
+            
+            // Add event listener for the logout button
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    // Clear the sessionToken from localStorage
+                    localStorage.removeItem('sessionToken');
+                    
+                    // Redirect to the home page
+                    window.location.href = 'https://unlimited-leads.online/en';
+                });
+                console.log('Logout button event listener attached');
+            }
+            
+            // Set up confirm extraction button
+            document.getElementById('confirmExtractionBtn').addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                loading.style.display = 'block';
+                
+                // API webhook URL
+                const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+                
+                // Create data object to send with Apollo URL
+                const requestData = {
+                    token: userToken,
+                    type: "apollo_extraction",
+                    apollo_url: apolloUrlValue
+                };
+                
+                console.log("Sending Apollo extraction request:", requestData);
+                
+                // Make the API call
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => {
+                    console.log("Response status:", response.status);
+                    if (!response.ok) {
+                        throw new Error('Network error: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Apollo extraction request success:', data);
+                    loading.style.display = 'none';
+                    successModal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error sending Apollo extraction request:', error);
+                    loading.style.display = 'none';
+                    showAlert("Error processing your request. Please try again.", 'error');
+                });
+            });
+            
+            // Close success modal button
+            document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+                successModal.style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === confirmModal) {
+                    confirmModal.style.display = 'none';
+                }
+                if (event.target === successModal) {
+                    successModal.style.display = 'none';
+                }
+            });
+            
+        } catch (error) {
+            console.error("Error initializing app:", error);
+            showAlert(`Error: ${error.message}`, 'error');
+        }
+    });
+    
+    // Handle form submission
+    function handleSubmit(e) {
+        e.preventDefault();
+        
+        // Store the Apollo URL in the global variable
+        apolloUrlValue = document.getElementById('apolloUrl').value.trim();
+        
+        if (!apolloUrlValue) {
+            showAlert("Please enter an Apollo search URL", 'error');
+            return;
         }
         
-        // Execute token_verif immediately
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Page loaded, executing token_verif");
-            token_verif();
+        // Validate URL format (basic check)
+        if (!apolloUrlValue.startsWith('https://app.apollo.io')) {
+            showAlert("Please enter a valid Apollo search URL (starting with https://app.apollo.io)", 'error');
+            return;
+        }
+        
+        // Show confirmation modal
+        confirmModal.style.display = 'block';
+    }
+    
+    // Function to redirect to lead finder page
+    function redirectToLeadFinder() {
+        // Get the token from localStorage
+        const token = localStorage.getItem('sessionToken');
+        
+        // Redirect to the lead finder page with the token
+        if (token) {
+            window.location.href = `https://unlimited-leads.online/app?token=${token}`;
+        } else {
+            // If no token, redirect to home
+            window.location.href = 'https://unlimited-leads.online/en';
+        }
+    }
+    
+    /**
+     * token_verif
+     * Function to verify token and display user credits
+     */
+    function token_verif() {
+        console.log("token_verif started");
+        
+        // API webhook URL
+        const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+        
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Extract token parameter
+        let token = urlParams.get('token');
+        
+        // If no token in URL, check localStorage
+        if (!token) {
+            token = localStorage.getItem('sessionToken');
+            console.log("Token retrieved from localStorage:", token);
+            
+            // If token exists in localStorage, add to URL
+            if (token) {
+                // Create new URL with token
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('token', token);
+                
+                // Update URL without reloading page
+                window.history.replaceState({}, '', currentUrl.toString());
+                console.log("URL updated with token from localStorage");
+            }
+        } else {
+            // If token is in URL, save to localStorage
+            localStorage.setItem('sessionToken', token);
+            console.log("Token saved to localStorage:", token);
+        }
+        
+        // Check if we have a token (either from URL or localStorage)
+        if (!token) {
+            console.log("No token found, redirecting...");
+            window.location.href = 'https://unlimited-leads.online/en';
+            return;
+        }
+        
+        userToken = token;
+        
+        console.log("Valid token, sending API request...");
+        
+        // Create data object to send
+        const requestData = {
+            token: token,
+            type: "token"
+        };
+        
+        console.log("Data to send:", requestData);
+        
+        // Configure fetch request
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            console.log("Response status:", response.status);
+            if (!response.ok) {
+                throw new Error('Network error: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Token request success:', data);
+            
+            // Check if response contains credits
+            if (data && typeof data.credit === 'number') {
+                // Display credits in interface
+                displayUserCredits(data.credit);
+            }
+        })
+        .catch(error => {
+            console.error('Error sending token:', error);
         });
+    }
+    
+    // Function to display user credits
+    function displayUserCredits(credits) {
+        // Get the credits element
+        let creditsElement = document.getElementById('userCredits');
         
-        // Also execute immediately in case the script loads after DOMContentLoaded
+        // Update content with credits
+        creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} crédits`;
+    }
+    
+    // Helper function to show alerts
+    function showAlert(message, type) {
+        searchAlert.textContent = message;
+        searchAlert.className = `alert alert-${type}`;
+        searchAlert.style.display = 'block';
+        
+        // Hide the alert after 5 seconds
+        setTimeout(() => {
+            searchAlert.style.display = 'none';
+        }, 5000);
+    }
+    
+    // Execute token_verif immediately
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Page loaded, executing token_verif");
         token_verif();
-    </script>
+    });
+    
+    // Also execute immediately in case the script loads after DOMContentLoaded
+    token_verif();
+</script>
 </body>
 </html>
