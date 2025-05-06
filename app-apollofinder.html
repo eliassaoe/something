@@ -632,6 +632,9 @@
         // Initialize the app
         document.addEventListener('DOMContentLoaded', () => {
             try {
+                // Get token and display user credits
+                token_verif();
+                
                 // Set up event listeners
                 apolloForm.addEventListener('submit', handleSubmit);
                 
@@ -742,9 +745,6 @@
                 showAlert(`Error: ${error.message}`, 'error');
             }
         });
-        
-        // Call token_verif immediately after script is loaded
-        token_verif();
     </script>
 </body>
 </html>
