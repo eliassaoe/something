@@ -542,10 +542,8 @@ document.getElementById('confirmExtractionBtn').addEventListener('click', () => 
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Separate webhook URL for Apollo extraction
     const WEBHOOK_URL_APOLLO = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
     
-    // Create data object to send with Apollo URL
     const requestData = {
         token: userToken,
         type: "apollo_extraction",
@@ -554,7 +552,7 @@ document.getElementById('confirmExtractionBtn').addEventListener('click', () => 
     
     console.log("Sending Apollo extraction request:", requestData);
     
-    // Make the API call but don't wait for the response
+    // Updated to wait for response and handle insufficient credits
     fetch(WEBHOOK_URL_APOLLO, {
         method: 'POST',
         headers: {
@@ -564,18 +562,32 @@ document.getElementById('confirmExtractionBtn').addEventListener('click', () => 
     })
     .then(response => {
         console.log("Response status:", response.status);
+        return response.json();
+    })
+    .then(data => {
+        loading.style.display = 'none';
+        
+        // If the response indicates insufficient credits
+        if (!data.success && data.error === "INSUFFICIENT_CREDITS") {
+            // Display error message to user
+            showAlert(data.message || "Insufficient credits for this extraction", 'error');
+            
+            // Update displayed credits if they're returned
+            if (typeof data.availableCredits === 'number') {
+                displayUserCredits(data.availableCredits);
+            }
+        } else {
+            // Success case - show success modal
+            successModal.style.display = 'block';
+        }
     })
     .catch(error => {
         console.error('Error sending Apollo extraction request:', error);
-    });
-    
-    // Show success message immediately after sending the API call
-    // No need to wait for the response
-    setTimeout(() => {
         loading.style.display = 'none';
-        successModal.style.display = 'block';
-    }, 1000); // Short delay for loading animation
+        showAlert("An error occurred while processing your request. Please try again later.", 'error');
+    });
 });
+    
             // Close success modal button
             document.getElementById('closeSuccessBtn').addEventListener('click', () => {
                 successModal.style.display = 'none';
