@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited Leads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+    :root {
+        --primary-color: #1A77F0;
+        --secondary-color: #192B47;
+        --light-bg: #EAF1FF;
+        --white: #ffffff;
+        --success: #AAF0D1;
+        --warning: #FFCC99;
+        --danger: #FF9999;
+        --gray: #ccc;
+        --font-primary: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+        --font-secondary: 'Poppins', 'Arial', sans-serif;
+        --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --shadow-medium: 0 6px 16px rgba(0, 0, 0, 0.08);
+        --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --radius-sm: 6px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --transition-standard: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-primary);
+    }
+    
+    body {
+        background-color: #f9fafc;
+        color: var(--secondary-color);
+        line-height: 1.6;
+        font-size: 15px;
+        letter-spacing: 0.01em;
+    }
+    
+    body:before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(to right, rgba(26, 119, 240, 0.02) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(26, 119, 240, 0.02) 1px, transparent 1px);
+        background-size: 24px 24px;
+        z-index: -1;
+    }
+    
+    .container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    h1, h2, h3, h4, h5 {
+        font-family: var(--font-secondary);
+        font-weight: 600;
+        margin-bottom: 0.8em;
+        line-height: 1.3;
+    }
+    
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+        margin-bottom: 30px;
+        background-color: white;
+        box-shadow: var(--shadow-soft);
+    }
+    
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo:before {
+        content: '';
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        background-color: var(--primary-color);
+        border-radius: 8px;
+        margin-right: 10px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.88-11.71L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z'/%3E%3C/svg%3E");
+        background-size: 16px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    .user-credits-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .user-credits {
+        background-color: rgba(26, 119, 240, 0.1);
+        color: var(--primary-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+    }
+    
+    .logout-button, .upgrade-button {
+        background-color: transparent;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition-standard);
+        font-size: 14px;
+    }
+    
+    .logout-button {
+        color: #455873;
+        border: 1px solid rgba(25, 43, 71, 0.15);
+    }
+    
+    .upgrade-button {
+        color: white;
+        background-color: #F0A030;
+        border: 1px solid #F0A030;
+        box-shadow: 0 4px 12px rgba(240, 160, 48, 0.2);
+    }
+    
+    .logout-button:hover {
+        background-color: rgba(25, 43, 71, 0.05);
+        border-color: rgba(25, 43, 71, 0.2);
+    }
+    
+    .upgrade-button:hover {
+        background-color: #E09020;
+        border-color: #E09020;
+        box-shadow: 0 6px 14px rgba(240, 160, 48, 0.25);
+        transform: translateY(-1px);
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 16px;
+    }
+    
+    .main-menu {
+        background-color: white;
+        margin-bottom: 20px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(25, 43, 71, 0.06);
+    }
+    
+    .menu-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+    
+    .menu-item {
+        padding: 0;
+    }
+    
+    .menu-link {
+        display: inline-block;
+        padding: 18px 28px;
+        color: #455873;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition-standard);
+        font-size: 14px;
+    }
+    
+    .menu-link:hover {
+        background-color: rgba(26, 119, 240, 0.05);
+        color: var(--primary-color);
+    }
+    
+    .menu-item.active .menu-link {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+        background-color: rgba(26, 119, 240, 0.03);
+    }
+    
+    .menu-link i {
+        margin-right: 10px;
+    }
+    
+    .search-section {
+        background-color: white;
+        border-radius: var(--radius-lg);
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: var(--shadow-medium);
+        border: 1px solid rgba(25, 43, 71, 0.06);
+    }
+    
+    .search-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--secondary-color);
+        margin-bottom: 24px;
+    }
+    
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .info-box {
+        background-color: rgba(26, 119, 240, 0.04);
+        border-left: 4px solid var(--primary-color);
+        padding: 18px 20px;
+        margin-bottom: 25px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+    }
+    
+    .info-box:before {
+        content: '';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A77F0'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    .info-box p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #455873;
+    }
+    
+    .form-group {
+        flex: 1 1 200px;
+    }
+    
+    .form-group label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #455873;
+        margin-bottom: 10px;
+        display: block;
+    }
+    
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid rgba(25, 43, 71, 0.15);
+        border-radius: var(--radius-md);
+        font-size: 15px;
+        transition: var(--transition-standard);
+        background-color: #FCFDFF;
+        color: #192B47;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(26, 119, 240, 0.15);
+        background-color: white;
+    }
+    
+    .search-button {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-md);
+        padding: 14px 28px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-standard);
+        margin-top: 28px;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(26, 119, 240, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .search-button:hover {
+        background-color: #0D62D9;
+        box-shadow: 0 6px 14px rgba(26, 119, 240, 0.25);
+        transform: translateY(-1px);
+    }
+    
+    .results-section {
+        background-color: white;
+        border-radius: var(--radius-lg);
+        padding: 30px;
+        box-shadow: var(--shadow-medium);
+        border: 1px solid rgba(25, 43, 71, 0.06);
+        margin-top: 30px;
+    }
+    
+    .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .results-count {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--secondary-color);
+    }
+    
+    .export-button {
+        background-color: var(--white);
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: var(--radius-md);
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-standard);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .export-button:hover {
+        background-color: rgba(26, 119, 240, 0.05);
+        color: var(--primary-color);
+        box-shadow: 0 2px 8px rgba(26, 119, 240, 0.1);
+    }
+    
+    .results-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(25, 43, 71, 0.08);
+    }
+    
+    .results-table th {
+        background-color: #F5F8FF;
+        color: #455873;
+        text-align: left;
+        padding: 16px 20px;
+        font-weight: 600;
+        font-size: 14px;
+        border-bottom: 1px solid rgba(26, 119, 240, 0.15);
+        position: relative;
+    }
+    
+    .results-table th:not(:last-child):after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 25%;
+        height: 50%;
+        width: 1px;
+        background-color: rgba(25, 43, 71, 0.08);
+    }
+    
+    .results-table td {
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+        color: #192B47;
+        font-size: 14px;
+    }
+    
+    .results-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .results-table tr:hover {
+        background-color: rgba(26, 119, 240, 0.03);
+    }
+    
+    .action-icons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    .action-icons i {
+        color: #8C9AAC;
+        cursor: pointer;
+        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: var(--transition-standard);
+    }
+    
+    .action-icons i:hover {
+        color: var(--primary-color);
+        background-color: rgba(26, 119, 240, 0.1);
+    }
+    
+    .loading {
+        display: none;
+        text-align: center;
+        padding: 40px;
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-medium);
+        margin: 30px 0;
+    }
+    
+    .loading i {
+        color: var(--primary-color);
+        font-size: 36px;
+        animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        margin-bottom: 16px;
+    }
+    
+    .loading p {
+        color: #455873;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .contact-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 23, 42, 0.65);
+        z-index: 1000;
+        overflow-y: auto;
+        backdrop-filter: blur(2px);
+    }
+    
+    .modal-content {
+        position: relative;
+        background-color: var(--white);
+        margin: 60px auto;
+        padding: 30px;
+        width: 80%;
+        max-width: 800px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-strong);
+        border: 1px solid rgba(25, 43, 71, 0.08);
+        animation: modal-fade-in 0.3s ease-out;
+    }
+    
+    @keyframes modal-fade-in {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-size: 22px;
+        color: #8C9AAC;
+        cursor: pointer;
+        transition: var(--transition-standard);
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .close-modal:hover {
+        color: var(--primary-color);
+        background-color: rgba(26, 119, 240, 0.1);
+    }
+    
+    .modal-header {
+        margin-bottom: 25px;
+        border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+        padding-bottom: 20px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+        color: var(--secondary-color);
+        font-weight: 600;
+    }
+    
+    .modal-body {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+    
+    .contact-info, .company-info {
+        flex: 1 1 300px;
+    }
+    
+    .info-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid rgba(26, 119, 240, 0.1);
+    }
+    
+    .info-item {
+        margin-bottom: 18px;
+    }
+    
+    .info-label {
+        font-weight: 500;
+        color: #455873;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+    
+    .info-value {
+        color: var(--secondary-color);
+        font-weight: 500;
+    }
+    
+    .info-tag {
+        display: inline-block;
+        background-color: rgba(26, 119, 240, 0.05);
+        color: var(--primary-color);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+    
+    /* Alert styles */
+    .alert {
+        padding: 16px 20px;
+        border-radius: var(--radius-md);
+        margin: 15px 0;
+        display: none;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .alert-success {
+        background-color: rgba(170, 240, 209, 0.15);
+        border: 1px solid var(--success);
+        color: #2a6;
+    }
+    
+    .alert-error {
+        background-color: rgba(255, 153, 153, 0.15);
+        border: 1px solid var(--danger);
+        color: #d33;
+    }
+    
+    .alert-warning {
+        background-color: rgba(255, 204, 153, 0.15);
+        border: 1px solid var(--warning);
+        color: #c73;
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 50px 0;
+        color: #8C9AAC;
+        font-size: 16px;
+        display: none;
+    }
+    
+    .no-results i {
+        font-size: 48px;
+        color: #C7D2E1;
+        margin-bottom: 20px;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        gap: 10px;
+    }
+    
+    .pagination button {
+        background-color: var(--white);
+        color: #455873;
+        border: 1px solid rgba(25, 43, 71, 0.15);
+        border-radius: var(--radius-md);
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition-standard);
+    }
+    
+    .pagination button.active {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border-color: var(--primary-color);
+    }
+    
+    .pagination button:hover:not(.active) {
+        background-color: rgba(26, 119, 240, 0.05);
+        border-color: rgba(26, 119, 240, 0.2);
+    }
+    
+    .pagination button:disabled {
+        border-color: #E1E7EF;
+        color: #C7D2E1;
+        cursor: not-allowed;
+    }
+    
+    .results-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #455873;
+        border-top: 1px solid rgba(25, 43, 71, 0.08);
+        padding-top: 15px;
+    }
+    
+    .pagination-info {
+        font-style: italic;
+    }
+    
+    .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .page-size-selector {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .page-size-selector select {
+        padding: 6px 10px;
+        border: 1px solid rgba(25, 43, 71, 0.15);
+        border-radius: var(--radius-sm);
+        background-color: var(--white);
+        font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+        
+        .search-form {
+            flex-direction: column;
+        }
+        
+        .form-group {
+            flex: 1 1 100%;
+        }
+        
+        .modal-content {
+            width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .results-table {
+            font-size: 14px;
+        }
+        
+        .results-table th, .results-table td {
+            padding: 12px 15px;
+        }
+        
+        .results-info {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .menu-list {
+            flex-direction: column;
+        }
+        
+        .menu-item {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-link {
+            display: block;
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+    <div class="logo">Unlimited leads</div>
+    <div class="user-credits-container">
+        <div id="userCredits" class="user-credits">
+            <i class="fas fa-coins"></i> 0 credits
+        </div>
+        <button id="upgradeButton" class="upgrade-button">
+            <i class="fas fa-crown"></i> Upgrade
+        </button>
+        <button id="logoutButton" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</header>
+
+        <div class="main-menu">
+    <ul class="menu-list">
+        <li class="menu-item active">
+            <a href="#" class="menu-link">
+                <i class="fas fa-search"></i> Search Leads
+            </a>
+        </li>
+       
+    </ul>
+</div>
+
+        
+<section class="search-section">
+    <h2 class="search-title">Find Business Contacts</h2>
+    
+    <div id="searchAlert" class="alert"></div>
+
+    <div class="info-box">
+         <p><strong>How it works:</strong> Search for contacts using our filters. Your leads will be verified and delivered to you by <strong>EMAIL within 3 hours. Check your INBOX and spam !</strong></p>
+    </div>
+    
+    <form id="searchForm" class="search-form">
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="">All Countries</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Canada">Canada</option>
+                <option value="France">France</option>
+                <option value="India">India</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+                <option value="Germany">Germany</option>
+                <option value="South Africa">South Africa</option>
+                <!-- Add more countries as needed -->
+            </select>
+        </div>
+                
+        <div class="form-group">
+    <label for="industry">Industry</label>
+    <select id="industry" name="industry">
+        <option value="">All Industries</option> 
+        <option value="Accounting">Accounting</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Airlines/aviation">Airlines/aviation</option>
+        <option value="Animation">Animation</option>
+        <option value="Apparel & fashion">Apparel & fashion</option>
+        <option value="Architecture & planning">Architecture & planning</option>
+        <option value="Arts & crafts">Arts & crafts</option>
+        <option value="Automotive">Automotive</option>
+        <option value="Aviation & aerospace">Aviation & aerospace</option>
+        <option value="Banking">Banking</option>
+        <option value="Biotechnology">Biotechnology</option>
+        <option value="Broadcast media">Broadcast media</option>
+        <option value="Building materials">Building materials</option>
+        <option value="Business supplies & equipment">Business supplies & equipment</option>
+        <option value="Capital markets">Capital markets</option>
+        <option value="Chemicals">Chemicals</option>
+        <option value="Civic & social organization">Civic & social organization</option>
+        <option value="Civil engineering">Civil engineering</option>
+        <option value="Clean energy">Clean energy</option>
+        <option value="Computer & network security">Computer & network security</option>
+        <option value="Computer networking">Computer networking</option>
+        <option value="Computer software">Computer software</option>
+        <option value="Construction">Construction</option>
+        <option value="Consumer electronics">Consumer electronics</option>
+        <option value="Consumer goods">Consumer goods</option>
+        <option value="Consumer services">Consumer services</option>
+        <option value="Defense & space">Defense & space</option>
+        <option value="Design">Design</option>
+        <option value="Education">Education</option>
+        <option value="Electrical/electronic manufacturing">Electrical/electronic manufacturing</option>
+        <option value="Environmental services & clean energy">Environmental services & clean energy</option>
+        <option value="Events services">Events services</option>
+        <option value="Facilities & services">Facilities & services</option>
+        <option value="Finance">Finance</option>
+        <option value="Food & beverages">Food & beverages</option>
+        <option value="Food production">Food production</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Government administration">Government administration</option>
+        <option value="Health, Wellness & fitness">Health, Wellness & fitness</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Hospital & health care">Hospital & health care</option>
+        <option value="Hospitality">Hospitality</option>
+        <option value="Information technology & services">Information technology & services</option>
+        <option value="Insurance">Insurance</option>
+        <option value="Internet">Internet</option>
+        <option value="Legal services">Legal services</option>
+        <option value="Leisure, Travel & tourism">Leisure, Travel & tourism</option>
+        <option value="Logistics & supply chain">Logistics & supply chain</option>
+        <option value="Luxury goods & jewelry">Luxury goods & jewelry</option>
+        <option value="Machinery">Machinery</option>
+        <option value="Management consulting">Management consulting</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Maritime">Maritime</option>
+        <option value="Marketing & advertising">Marketing & advertising</option>
+        <option value="Media production">Media production</option>
+        <option value="Paper & forest products">Paper & forest products</option>
+        <option value="Political organization">Political organization</option>
+        <option value="Public safety">Public safety</option>
+        <option value="Real estate">Real estate</option>
+        <option value="Restaurants">Restaurants</option>
+        <option value="Retail">Retail</option>
+        <option value="Sporting goods">Sporting goods</option>
+        <option value="Staffing & recruiting">Staffing & recruiting</option>
+        <option value="Technology">Technology</option>
+        <option value="Telecommunications">Telecommunications</option>
+        <option value="Transportation">Transportation</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Venture capital & private equity">Venture capital & private equity</option>
+        <option value="Warehousing">Warehousing</option>
+        <option value="Wholesale">Wholesale</option>
+        <option value="Wine & spirits">Wine & spirits</option>
+        <option value="Writing & editing">Writing & editing</option>
+    </select>
+</div>
+                
+        <div class="form-group">
+            <label for="managementLevel">Management Level</label>
+            <select id="managementLevel" name="managementLevel">
+                <option value="">All Levels</option>
+                <option value="Owner">Owner</option>
+                <option value="C_suite">C_suite</option>
+                <option value="Founder">Founder</option>
+                <option value="Director">Director</option>
+                <option value="Head">Head</option>
+                <option value="Manager">Manager</option>
+                <option value="Partner">Partner</option>
+                <option value="Senior">Senior</option>
+                <option value="Entry">Entry</option>
+            </select>
+        </div>
+                
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" name="companyName" placeholder="e.g. Acme Inc">
+        </div>
+                
+        <div class="form-group">
+            <label for="keywords">ONE Keyword</label>
+            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
+        </div>
+                
+        <div class="form-group">
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i> Search Contacts
+            </button>
+        </div>
+    </form>
+</section>
+        </section>
+        
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+        </div>
+        
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <div class="results-count">Found <span id="resultsNumber">0</span> contacts</div>
+                <button id="exportButton" class="export-button">
+                    <i class="fas fa-download"></i> Export to CSV
+                </button>
+            </div>
+            
+            <div id="noResults" class="no-results">
+                <i class="fas fa-search" style="font-size: 40px; margin-bottom: 15px;"></i>
+                <p>No contacts found. Try adjusting your search criteria.</p>
+            </div>
+            
+            <table id="resultsTable" class="results-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+            
+            <div id="resultsInfo" class="results-info">
+                <div class="pagination-info">
+                    Showing <span id="startRecord">0</span>-<span id="endRecord">0</span> of <span id="totalDisplayRecords">0</span> contacts 
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalName">Contact Details</h2>
+            </div>
+            
+            <div class="modal-body">
+                <div class="contact-info">
+                    <h3 class="info-section-title">Contact Information</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value" id="modalFullName"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Job Title</div>
+                        <div class="info-value" id="modalTitle"></div>
+                    </div>
+                    
+
+                    <div class="info-item">
+                        <div class="info-label">Management Level</div>
+                        <div class="info-value" id="modalManagementLevel"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" id="modalEmail"></div>
+                    </div>
+
+                    <div class="info-item">
+                         <div class="info-label">Phone</div>
+                       <div class="info-value" id="modalPhone"></div>
+                    </div>
+                    
+                    
+                    <div class="info-item">
+                        <div class="info-label">LinkedIn</div>
+                        <div class="info-value" id="modalLinkedIn"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Location</div>
+                        <div class="info-value" id="modalLocation"></div>
+                    </div>
+                </div>
+                
+                <div class="company-info">
+                    <h3 class="info-section-title">Company Information</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company</div>
+                        <div class="info-value" id="modalCompany"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Industry</div>
+                        <div class="info-value" id="modalIndustry"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company Size</div>
+                        <div class="info-value" id="modalCompanySize"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Website</div>
+                        <div class="info-value" id="modalWebsite"></div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Company Phone</div>
+                        <div class="info-value" id="modalCompanyPhone"></div>
+                    </div>
+                
+                    <div class="info-item">
+                        <div class="info-label">Description</div>
+                        <div class="info-value" id="modalDescription"></div>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <div id="exportModal" class="contact-modal">
+    <div class="modal-content">
+        <span class="close-export-modal">&times;</span>
+        
+        <div class="modal-header">
+            <h2 class="modal-title">Export Contacts</h2>
+        </div>
+        
+        <div class="modal-body">
+            <div class="info-item">
+                <div class="info-value">
+                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="exportLimit"><strong>Number of leads to export:</strong></label>
+                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 2px solid var(--gray); border-radius: 8px; font-size: 16px;">
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="confirmExport" class="search-button" style="max-width: 200px;">
+                    <i class="fas fa-check"></i> Confirm Export
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="exportConfirmationModal" class="contact-modal">
+    <div class="modal-content" style="border-left: 4px solid #AAF0D1;">
+        <span class="close-export-confirmation-modal">&times;</span>
+        
+        <div class="modal-header" style="border-bottom-color: #AAF0D1;">
+            <h2 class="modal-title"><i class="fas fa-check-circle" style="color: #2a6;"></i> Export Request Confirmed</h2>
+        </div>
+        
+        <div class="modal-body">
+            <div class="info-item" style="text-align: center;">
+                <div class="info-value">
+                    <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully!</strong></p>
+                    <p>The contact list will be delivered to your email within the next 3 hours.</p>
+                    <p style="color: #2a6; margin-top: 15px;"><i class="fas fa-envelope"></i> Please check your inbox and spam folder.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button id="closeConfirmationBtn" class="search-button" style="max-width: 200px; background-color: #2a6;">
+                    <i class="fas fa-thumbs-up"></i> Got it
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <script>
+        // n8n webhook URL
+        const N8N_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/0b8401b5-8d6d-426d-a92e-1d94b2e3fab4';
+        
+        // Supabase details (needed for n8n to make the request)
+        const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
+        
+        // Global variables
+        
+        let allContacts = [];
+        let globalTrueCount = 0;
+        let userToken = null;
+        // DOM Elements
+        const searchForm = document.getElementById('searchForm');
+        const countrySelect = document.getElementById('country');
+        const industrySelect = document.getElementById('industry');
+        const searchAlert = document.getElementById('searchAlert');
+        const loading = document.getElementById('loading');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsNumber = document.getElementById('resultsNumber');
+        const resultsBody = document.getElementById('resultsBody');
+        const noResults = document.getElementById('noResults');
+        const resultsTable = document.getElementById('resultsTable');
+        const exportButton = document.getElementById('exportButton');
+        const contactModal = document.getElementById('contactModal');
+        const closeModal = document.querySelector('.close-modal');
+        const startRecord = document.getElementById('startRecord');
+        const endRecord = document.getElementById('endRecord');
+        const totalDisplayRecords = document.getElementById('totalDisplayRecords');
+        
+       // Initialize the app
+// Initialize the app
+document.addEventListener('DOMContentLoaded', async () => {
+    // Show loading indicator
+    loading.style.display = 'block';
+    
+    try {
+        // Fetch initial data from Supabase via n8n
+        await fetchData();
+        globalTrueCount = await fetchTotalCount();
+        
+        // Display data immediately
+        displayInitialResults();
+        
+        // Set up event listeners
+        searchForm.addEventListener('submit', handleSearch);
+        exportButton.addEventListener('click', exportToCSV);
+        closeModal.addEventListener('click', () => {
+            contactModal.style.display = 'none';
+        });
+        
+        // Add event listener for the upgrade button
+        const upgradeButton = document.getElementById('upgradeButton');
+        if (upgradeButton) {
+            upgradeButton.addEventListener('click', function() {
+                // Get the token from localStorage
+                const token = localStorage.getItem('sessionToken');
+                
+                // Redirect to the pricing page with the token
+                if (token) {
+                    window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                } else {
+                    // If no token, just go to pricing page
+                    window.location.href = 'https://unlimited-leads.online/pricing';
+                }
+            });
+            console.log('Upgrade button event listener attached');
+        } else {
+            console.error('Upgrade button not found in the DOM');
+        }
+        
+        // Add event listener for the logout button
+        const logoutButton = document.getElementById('logoutButton');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                // Clear the sessionToken from localStorage
+                localStorage.removeItem('sessionToken');
+                
+                // Redirect to the home page
+                window.location.href = 'https://unlimited-leads.online/en';
+            });
+            console.log('Logout button event listener attached');
+        }
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === contactModal) {
+                contactModal.style.display = 'none';
+            }
+        });
+        
+        // Show success message
+        showAlert("Connected to database successfully! Ready to search.", 'success');
+    } catch (error) {
+        console.error("Error initializing app:", error);
+        showAlert(`Error connecting to database: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+    }
+});
+
+// Fetch data from Supabase via n8n webhook
+async function fetchData() {
+    try {
+        // Show loading indicator
+        loading.style.display = 'block';
+        
+        // Prepare the data to send to n8n
+        const requestData = {
+            action: 'fetchAll',
+            supabaseUrl: SUPABASE_URL,
+            supabaseKey: SUPABASE_KEY,
+            tableName: 'unlimited',  // Changed to new table name
+            limit: 1000
+        };
+        
+        // Make POST request to n8n webhook
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Validate that data is an array
+        if (!Array.isArray(data)) {
+            console.error('Response is not an array:', data);
+            throw new Error('Expected array response from API');
+        }
+        
+        console.log(`Received ${data.length} contacts from API`);
+        
+        // Store the data directly
+        allContacts = data;
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+}
+
+  /**
+/**
+/**
+ * token_verif
+ * Fonction qui vérifie et traite le token de l'URL :
+ * - Récupère le token depuis l'URL ou le localStorage
+ * - Si aucun token n'est trouvé, redirige vers la page d'accueil
+ * - Si un token est trouvé, l'ajoute à l'URL si nécessaire et envoie une requête API avec le token
+ */
+/**
+ * token_verif
+ * Fonction qui vérifie le token et affiche les crédits de l'utilisateur
+ */
+function token_verif() {
+    console.log("Fonction token_verif démarrée");
+    
+    // URL de l'API webhook
+    const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
+    
+    // Récupérer les paramètres de l'URL actuelle
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Extraire la valeur du paramètre "token"
+    let token = urlParams.get('token');
+    
+    // Si aucun token dans l'URL, vérifier dans le localStorage
+    if (!token) {
+        token = localStorage.getItem('sessionToken');
+        console.log("Token récupéré du localStorage:", token);
+        
+        // Si un token existe dans le localStorage, l'ajouter à l'URL
+        if (token) {
+            // Créer une nouvelle URL avec le token
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('token', token);
+            
+            // Mettre à jour l'URL sans recharger la page
+            window.history.replaceState({}, '', currentUrl.toString());
+            console.log("URL mise à jour avec le token du localStorage");
+        }
+    } else {
+        // Si un token est présent dans l'URL, le sauvegarder dans le localStorage
+        localStorage.setItem('sessionToken', token);
+        console.log("Token sauvegardé dans le localStorage:", token);
+    }
+    
+    // Vérifier si on a un token (soit de l'URL, soit du localStorage)
+    if (!token) {
+        console.log("Aucun token trouvé, redirection...");
+        window.location.href = 'https://unlimited-leads.online/en';
+        return;
+    }
+
+    userToken = token;
+    
+    console.log("Token valide, envoi de la requête API...");
+    
+    // Créer l'objet de données à envoyer
+    const requestData = {
+        token: token,
+        type: "token"
+    };
+    
+    console.log("Données à envoyer:", requestData);
+    
+    // Configuration de la requête fetch
+    fetch(WEBHOOK_URL_A, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => {
+        console.log("Statut de la réponse:", response.status);
+        if (!response.ok) {
+            throw new Error('Erreur réseau: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Succès de la requête token:', data);
+        
+        // Vérifier si la réponse contient des crédits
+        if (data && typeof data.credit === 'number') {
+            // Afficher les crédits dans l'interface
+            displayUserCredits(data.credit);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi du token:', error);
+    });
+}
+
+// Fonction pour afficher les crédits utilisateur
+function displayUserCredits(credits) {
+    // Création d'un élément dans le header pour afficher les crédits
+    const header = document.querySelector('header');
+    
+    // Vérifier si l'élément des crédits existe déjà
+    let creditsElement = document.getElementById('userCredits');
+    
+    if (!creditsElement) {
+        // Créer l'élément s'il n'existe pas
+        creditsElement = document.createElement('div');
+        creditsElement.id = 'userCredits';
+        creditsElement.className = 'user-credits';
+        header.appendChild(creditsElement);
+        
+        // Ajouter du CSS pour cet élément
+        const style = document.createElement('style');
+        style.textContent = `
+            .user-credits {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .user-credits i {
+                font-size: 16px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Mettre à jour le contenu avec le nombre de crédits
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+}
+
+// Exécuter la fonction immédiatement
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page chargée, exécution de token_verif");
+    token_verif();
+});
+
+// Exécuter aussi immédiatement au cas où le script est chargé après DOMContentLoaded
+token_verif();
+
+        
+       // Correction de la fonction displayInitialResults pour afficher correctement les données
+function displayInitialResults() {
+    // Show results section
+    resultsSection.style.display = 'block';
+    
+    // Clear existing results
+    resultsBody.innerHTML = '';
+    
+    // Show or hide no results message - don't calculate count here
+    if (allContacts.length === 0) {
+        noResults.style.display = 'block';
+        resultsTable.style.display = 'none';
+        startRecord.textContent = '0';
+        endRecord.textContent = '0';
+        // Don't update count displays here - let fetchTotalCount handle this
+        return;
+    } else {
+        noResults.style.display = 'none';
+        resultsTable.style.display = 'table';
+    }
+    
+    // Display only the first 25 contacts
+    const displayContacts = allContacts.slice(0, 25);
+    
+    // Update pagination info for records shown, but NOT the count
+    startRecord.textContent = '1';
+    endRecord.textContent = displayContacts.length;
+    // Don't update totalDisplayRecords here - let fetchTotalCount do it
+    
+    // Populate the table with contacts
+    displayContacts.forEach(contact => {
+        const row = document.createElement('tr');
+        
+        // D'après votre échantillon de données, les noms des colonnes sont "first name", "last name", "title", "company"
+        // (au lieu de "job title" et "company name")
+        row.innerHTML = `
+            <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
+            <td>${contact['title'] || 'N/A'}</td>
+            <td>${contact['company'] || 'N/A'}</td>
+            <td>${contact['email'] || 'N/A'}</td>
+            <td>${contact['country'] || 'N/A'}</td>
+            <td>
+                <div class="action-icons">
+                    <i class="fas fa-eye" title="View Details"></i>
+                    <i class="fas fa-save" title="Save Contact"></i>
+                </div>
+            </td>
+        `;
+        
+        // Add event listener to view contact details
+        row.querySelector('.fa-eye').addEventListener('click', () => {
+            showContactDetails(contact);
+        });
+        
+        resultsBody.appendChild(row);
+    });
+}
+
+// Correction de la fonction showContactDetails pour afficher correctement les données
+function showContactDetails(contact) {
+    // Fill in modal details
+    document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+    document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
+    document.getElementById('modalTitle').textContent = contact['title'] || 'N/A';
+    document.getElementById('modalManagementLevel').textContent = contact['managementlevel'] || 'N/A';
+    document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
+    document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
+    document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
+    document.getElementById('modalLocation').textContent = contact['city'] || contact['country'] || 'N/A';
+    
+    document.getElementById('modalCompany').textContent = contact['company'] || 'N/A';
+    document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
+    document.getElementById('modalCompanySize').textContent = contact['companysize'] || 'N/A';
+    document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
+    document.getElementById('modalCompanyPhone').textContent = contact['cphone'] || 'N/A';
+    document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
+    
+    // Show the modal
+    contactModal.style.display = 'block';
+}
+
+// Également, il faut modifier la fonction handleSearch pour utiliser les bons noms de colonnes
+async function handleSearch(e) {
+    e.preventDefault();
+    
+    // Show loading indicator
+    loading.style.display = 'block';
+    resultsSection.style.display = 'none';
+    searchAlert.style.display = 'none';
+    
+    try {
+        // Get form values
+        const country = countrySelect.value;
+        const industry = industrySelect.value;
+        const managementLevel = document.getElementById('managementLevel').value;
+        const companyName = document.getElementById('companyName').value;
+        const keywords = document.getElementById('keywords').value;
+        
+        // If search criteria are provided, filter the data
+        if (country || industry || managementLevel || companyName || keywords) {
+            try {
+                // Search contacts using n8n webhook
+                const requestData = {
+                    action: 'search',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'unlimited',
+                    searchParams: {
+                        country,
+                        industry,
+                        managementlevel: managementLevel,
+                        // Utiliser le nom correct pour le champ company name
+                        company: companyName,  // Au lieu de companyName
+                        keywords
+                    },
+                    limit: 1000
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Update allContacts with search results
+                allContacts = data;
+
+                    // ► NEW: fetch the true total count
+    const trueCount = await fetchTotalCount();
+    // update your UI with the count from the RPC
+    resultsNumber.textContent        = trueCount;
+    totalDisplayRecords.textContent  = trueCount;
+    startRecord.textContent          = trueCount > 0 ? '1' : '0';
+    endRecord.textContent            = trueCount > 0
+                                        ? Math.min(25, trueCount)
+                                        : '0';
+
+                
+                // Show search completion message
+                    showAlert(`Search completed: Found ${trueCount} contacts.`, 'success');
+            } catch (error) {
+                showAlert(`Error searching: ${error.message}`, 'error');
+            }
+        }
+        
+        // Display the results (either original or filtered)
+        displayInitialResults();
+        
+    } catch (error) {
+        console.error("Error handling search:", error);
+        showAlert(`Error: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+        resultsSection.style.display = 'block';
+    }
+}
+async function exportToCSV() {
+    try {
+        // Show the custom export modal
+        const exportModal = document.getElementById('exportModal');
+        exportModal.style.display = 'block';
+        
+        // Add event listener for the close button
+        const closeExportModal = document.querySelector('.close-export-modal');
+        closeExportModal.addEventListener('click', () => {
+            exportModal.style.display = 'none';
+        });
+        
+        // Add event listener for the confirm button
+        const confirmExportBtn = document.getElementById('confirmExport');
+        confirmExportBtn.addEventListener('click', async () => {
+            // Hide the export modal
+            exportModal.style.display = 'none';
+            
+            // Get the export limit from the input field
+            const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+            
+            // Show loading screen while making the API call
+            loading.style.display = 'block';
+            
+            try {
+                // Make a specific API call to get all data for export
+                const requestData = {
+                    action: 'export',
+                    supabaseUrl: SUPABASE_URL,
+                    supabaseKey: SUPABASE_KEY,
+                    tableName: 'unlimited',
+                    // Add the export limit to the request
+                    limit: exportLimit,
+                    token: userToken,
+                    // Pass any active filters from the search form
+                    searchParams: {
+                        country: countrySelect.value,
+                        industry: industrySelect.value,
+                        managementlevel: document.getElementById('managementLevel').value,
+                        company: document.getElementById('companyName').value,
+                        keywords: document.getElementById('keywords').value
+                    }
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                // Parse the response as JSON
+               // Parse the response as JSON
+const responseData = await response.json();
+
+// Hide loading screen
+loading.style.display = 'none';
+
+// Check if the response is an array with an error object
+if (Array.isArray(responseData) && 
+    responseData[0] && 
+    responseData[0].error && 
+    responseData[0].error.code === 403) {
+    // Show error message
+    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account , come back next month for more credits or buy more credits", 'error');
+    // Optionally show credit upgrade modal
+    showCreditUpgradeModal();
+} else {
+    // If no error, show the confirmation modal
+    const confirmationModal = document.getElementById('exportConfirmationModal');
+    confirmationModal.style.display = 'block';
+    
+    // Set up close button for confirmation modal
+    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+    closeConfirmBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+    
+    // Set up "Got it" button
+    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+    closeConfirmationBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+}
+                
+            } catch (error) {
+                console.error('Error processing export:', error);
+                loading.style.display = 'none';
+                showAlert(`Error: ${error.message}`, 'error');
+            }
+            
+            // Remove the event listener to prevent multiple attachments
+            confirmExportBtn.removeEventListener('click', arguments.callee);
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === exportModal) {
+                exportModal.style.display = 'none';
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error initiating export process:', error);
+        showAlert(`Error: ${error.message}`, 'error');
+        loading.style.display = 'none';
+    }
+}
+
+// Add this new function to create and show the credit upgrade modal
+function showCreditUpgradeModal() {
+    // Check if the modal already exists
+    let creditUpgradeModal = document.getElementById('creditUpgradeModal');
+    
+    // If the modal doesn't exist, create it
+    if (!creditUpgradeModal) {
+        creditUpgradeModal = document.createElement('div');
+        creditUpgradeModal.id = 'creditUpgradeModal';
+        creditUpgradeModal.className = 'contact-modal';
+        
+        // Create the modal content
+        creditUpgradeModal.innerHTML = `
+            <div class="modal-content" style="border-left: 4px solid #FF9999;">
+                <span class="close-credit-upgrade-modal">&times;</span>
+                
+                <div class="modal-header" style="border-bottom-color: #FF9999;">
+                    <h2 class="modal-title"><i class="fas fa-exclamation-circle" style="color: #d33;"></i> Insufficient Credits</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="info-item" style="text-align: center;">
+                        <div class="info-value">
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough credits to export these leads.</strong></p>
+                            <p>Upgrade your account to receive new credits automatically each month and unlock unlimited exports.</p>
+                            <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue accessing leads data.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://unlimited-leads.online/pricing" class="search-button" style="max-width: 200px; text-decoration: none; display: inline-block;">
+                            <i class="fas fa-crown"></i> Upgrade Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add the modal to the document
+        document.body.appendChild(creditUpgradeModal);
+    }
+    
+    // Show the modal
+    creditUpgradeModal.style.display = 'block';
+    
+    // Add event listener for the close button
+    const closeBtn = creditUpgradeModal.querySelector('.close-credit-upgrade-modal');
+    closeBtn.addEventListener('click', () => {
+        creditUpgradeModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === creditUpgradeModal) {
+            creditUpgradeModal.style.display = 'none';
+        }
+    });
+}
+ // Get the total count of contacts without fetching all data
+async function fetchTotalCount() {
+  try {
+    const requestData = {
+      action: 'getCount',
+      supabaseUrl: SUPABASE_URL,
+      supabaseKey: SUPABASE_KEY,
+      tableName: 'unlimited',
+      searchParams: {
+        country: countrySelect.value,
+        industry: industrySelect.value,
+        managementlevel: document.getElementById('managementLevel').value,
+        company: document.getElementById('companyName').value,
+        keywords: document.getElementById('keywords').value
+      }
+    };
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestData)
+    });
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    const data = await response.json();
+    // data is [count], so grab first element
+    const trueCount = Array.isArray(data) && typeof data[0] === 'number' ? data[0] : 0;
+    resultsNumber.textContent       = trueCount;
+    totalDisplayRecords.textContent = trueCount;
+    return trueCount;
+  } catch (err) {
+    console.error('Error fetching count:', err);
+    return 0;
+  }
+}
+
+        // Add this function to your script section
+function redirectToApolloFinder() {
+    // Use the userToken global variable that's already defined in your code
+    window.location.href = `https://unlimited-leads.online/app-apollofinder?token=${userToken}`;
+}
+
+        // Upgrade function
+function upgrade() {
+    // Get the token from localStorage
+    const token = localStorage.getItem('sessionToken');
+    
+    // Redirect to the pricing page with the token
+    if (token) {
+        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+    } else {
+        // If no token, just go to pricing page
+        window.location.href = 'https://unlimited-leads.online/pricing';
+    }
+}
+
+
+        function logout() {
+    // Clear the sessionToken from localStorage
+    localStorage.removeItem('sessionToken');
+    
+    // Redirect to the home page
+    window.location.href = 'https://unlimited-leads.online/en';
+}
+
+// Add event listener to the logout button
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', logout);
+    }
+});
+
+// Also add this to the existing token_verif function to handle showing/hiding the logout button
+// Add this at the end of the displayUserCredits function (around line 865):
+
+// Make sure the logout button is visible
+const logoutButton = document.getElementById('logoutButton');
+if (logoutButton) {
+    logoutButton.style.display = 'flex';
+}
+
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            searchAlert.textContent = message;
+            searchAlert.className = `alert alert-${type}`;
+            searchAlert.style.display = 'block';
+            
+            // Hide the alert after 5 seconds
+            setTimeout(() => {
+                searchAlert.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
