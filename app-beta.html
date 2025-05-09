@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+   
     <style>
     /* Font imports */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
@@ -811,6 +812,32 @@
             display: block;
             width: 100%;
         }
+        .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+        .mobile-menu-toggle {
+            display: block;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .user-credits-container {
+            display: none;
+        }
+        
+        .user-credits-container.active {
+            display: flex;
+            margin-top: 15px;
+        }
+    }
         /* Enhanced Mobile Responsiveness */
 
 /* Improved base responsive settings */
@@ -833,7 +860,6 @@
     .search-button, .export-button, .logout-button, .upgrade-button {
         padding: 12px 20px;
     }
-}
 
 @media (max-width: 768px) {
     /* Header improvements for mobile */
@@ -967,6 +993,23 @@
 <body>
     <div class="container">
         <header>
+            
+            <div class="logo"><i class="fas fa-rocket"></i> Unlimited Leads</div>
+    <button id="mobileMenuToggle" class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="user-credits-container">
+        <div id="userCredits" class="user-credits">
+            <i class="fas fa-coins"></i> 0 credits
+        </div>
+        <button id="upgradeButton" class="upgrade-button">
+            <i class="fas fa-crown"></i> Upgrade
+        </button>
+        <button id="logoutButton" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+            
     <div class="logo">Unlimited leads</div>
     <div class="user-credits-container">
         <div id="userCredits" class="user-credits">
@@ -2017,6 +2060,98 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutButton) {
         logoutButton.addEventListener('click', logout);
     }
+});
+         // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const userCreditsContainer = document.querySelector('.user-credits-container');
+        
+        if (mobileMenuToggle && userCreditsContainer) {
+            mobileMenuToggle.addEventListener('click', function() {
+                userCreditsContainer.classList.toggle('active');
+            });
+        }
+    });
+
+        function enhanceTableForMobile() {
+    // Check if we're on a mobile device
+    if (window.innerWidth <= 768) {
+        const table = document.getElementById('resultsTable');
+        if (!table) return;
+        
+        // Add data attributes to help with CSS styling
+        const headerCells = table.querySelectorAll('th');
+        const headerTexts = Array.from(headerCells).map(cell => cell.textContent.trim());
+        
+        // Add data attributes to each cell
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            cells.forEach((cell, index) => {
+                if (index < headerTexts.length) {
+                    cell.setAttribute('data-label', headerTexts[index]);
+                }
+            });
+        });
+    }
+}
+
+        function enhanceModalForMobile() {
+    const modals = document.querySelectorAll('.contact-modal');
+    
+    modals.forEach(modal => {
+        modal.addEventListener('touchmove', function(e) {
+            e.stopPropagation();
+        }, { passive: true });
+        
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.addEventListener('touchmove', function(e) {
+                e.stopPropagation();
+            }, { passive: true });
+        }
+    });
+}
+
+        function enhanceFormForMobile() {
+    const searchForm = document.getElementById('searchForm');
+    
+    if (searchForm) {
+        // Improve form submission feedback on mobile
+        searchForm.addEventListener('submit', function() {
+            // Hide keyboard after form submission on mobile
+            document.activeElement.blur();
+            
+            // Scroll to top to see loading indicator
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+}
+
+        document.addEventListener('DOMContentLoaded', function() {
+    enhanceTableForMobile();
+    enhanceModalForMobile();
+    enhanceFormForMobile();
+    
+    // Re-apply table enhancements whenever search results change
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList' && 
+                mutation.target.id === 'resultsBody') {
+                enhanceTableForMobile();
+            }
+        });
+    });
+    
+    const resultsBody = document.getElementById('resultsBody');
+    if (resultsBody) {
+        observer.observe(resultsBody, { childList: true });
+    }
+    
+    // Handle window resize events
+    window.addEventListener('resize', function() {
+        enhanceTableForMobile();
+    });
 });
 
 // Also add this to the existing token_verif function to handle showing/hiding the logout button
