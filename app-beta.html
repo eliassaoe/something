@@ -811,6 +811,156 @@
             display: block;
             width: 100%;
         }
+        /* Enhanced Mobile Responsiveness */
+
+/* Improved base responsive settings */
+@media (max-width: 992px) {
+    .container { 
+        padding: 0 1rem; 
+        max-width: 100%;
+    }
+    
+    .search-title { 
+        font-size: 1.5rem; 
+    }
+    
+    /* Better form spacing on tablets */
+    .search-form {
+        gap: 15px;
+    }
+    
+    /* Adjust button sizes for touch */
+    .search-button, .export-button, .logout-button, .upgrade-button {
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Header improvements for mobile */
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 10px;
+    }
+    
+    .user-credits-container {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+    
+    /* Menu improvements */
+    .menu-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .menu-link {
+        padding: 12px 20px;
+    }
+    
+    /* Form improvements */
+    .form-group {
+        flex: 1 1 100%;
+    }
+    
+    .form-group input,
+    .form-group select {
+        height: 45px; /* Larger touch targets */
+    }
+    
+    /* Table improvements */
+    .results-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .export-button {
+        align-self: flex-start;
+    }
+    
+    /* Modal improvements */
+    .modal-content {
+        width: 95%;
+        padding: 20px 15px;
+        margin: 10px auto;
+    }
+    
+    .modal-body {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    /* Pagination improvements */
+    .results-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* Small phone improvements */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.25rem;
+    }
+    
+    .search-section {
+        padding: 20px 15px;
+    }
+    
+    .info-box {
+        padding: 15px;
+    }
+    
+    .results-section {
+        padding: 20px 15px;
+    }
+    
+    .action-icons {
+        gap: 8px;
+    }
+    
+    .action-icons i {
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Enhance table display on very small screens */
+    .results-table td, .results-table th {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    /* Hide less important columns on small screens */
+    .results-table th:nth-child(5),
+    .results-table td:nth-child(5) {
+        display: none;
+    }
+    
+    /* Stack buttons in modal */
+    .user-credits-container {
+        flex-direction: column;
+    }
+    
+    .pagination button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
     }
 </style>
 </head>
