@@ -814,55 +814,42 @@
             }
             
             // Set up confirm verification button
-            document.getElementById('confirmVerificationBtn').addEventListener('click', () => {
-                confirmModal.style.display = 'none';
-                loading.style.display = 'block';
-                
-                // Here you would implement the actual file upload and verification process
-                const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
-                
-                // Create a FormData object to handle the file
-                const formData = new FormData();
-                formData.append('file', selectedFile);
-                formData.append('token', userToken || '');
-                formData.append('type', 'email_verification');
-                
-                // Convert file to base64 for sending as JSON
-                const reader = new FileReader();
-                reader.readAsDataURL(selectedFile);
-                
-                reader.onload = function() {
-                    const base64File = reader.result.split(',')[1];
-                    
-                    const requestData = {
-                        token: userToken || '',
-                        type: "email_verification",
-                        filename: selectedFile.name,
-                        file_data: base64File
-                    };
-                    
-                    fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(requestData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Verification response:', data);
-                        loading.style.display = 'none';
-                        
-                        // Show success modal
-                        successModal.style.display = 'block';
-                    })
-                    .catch(error => {
-                        console.error('Error sending verification request:', error);
-                        loading.style.display = 'none';
-                        showAlert("An error occurred while processing your request. Please try again later.", 'error');
-                    });
-                };
-            });
+           // Set up confirm verification button
+document.getElementById('confirmVerificationBtn').addEventListener('click', () => {
+    confirmModal.style.display = 'none';
+    loading.style.display = 'block';
+    
+    // Here you would implement the actual file upload and verification process
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    
+    // Create a FormData object to handle the file as binary data
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('token', userToken || '');
+    formData.append('type', 'email_verification');
+    formData.append('filename', selectedFile.name);
+    
+    // Send the FormData object directly with the file as binary data
+    fetch(WEBHOOK_URL, {
+        method: 'POST',
+        // Important: Do NOT set Content-Type header when sending FormData
+        // The browser will automatically set the correct multipart/form-data content type with boundary
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Verification response:', data);
+        loading.style.display = 'none';
+        
+        // Show success modal
+        successModal.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error sending verification request:', error);
+        loading.style.display = 'none';
+        showAlert("An error occurred while processing your request. Please try again later.", 'error');
+    });
+});
             
             // Close success modal button
             document.getElementById('closeSuccessBtn').addEventListener('click', () => {
