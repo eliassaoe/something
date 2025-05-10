@@ -1605,9 +1605,10 @@ async function handleSearch(e) {
                         country,
                         industry,
                         managementlevel: managementLevel,
-                        // Utiliser le nom correct pour le champ company name
-                        company: companyName,  // Au lieu de companyName
-                        keywords
+                        company: companyName,  
+                        keywords,
+                        jobtitle: jobTitle,  
+                        companysize: companySize
                     },
                     limit: 1000
                 };
@@ -1849,7 +1850,9 @@ async function fetchTotalCount() {
         industry: industrySelect.value,
         managementlevel: document.getElementById('managementLevel').value,
         company: document.getElementById('companyName').value,
-        keywords: document.getElementById('keywords').value
+        keywords: document.getElementById('keywords').value,
+        jobtitle: document.getElementById('jobTitle').value,
+        companysize: document.getElementById('companySize').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
