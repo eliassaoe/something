@@ -971,6 +971,30 @@
                 <option value="Entry">Entry</option>
             </select>
         </div>
+
+        <div class="form-group">
+                <label for="companySize">Company Size:</label>
+                <select id="companySize" name="companySize">
+                    <option value="">Select company size</option>
+                    <option value="Solo Entrepreneur">Solo Entrepreneur</option>
+                    <option value="Small Team">Small Team</option>
+                    <option value="Growing Startup">Growing Startup</option>
+                    <option value="Emerging Business">Emerging Business</option>
+                    <option value="Small Enterprise">Small Enterprise</option>
+                    <option value="Medium Enterprise">Medium Enterprise</option>
+                    <option value="Established Company">Established Company</option>
+                    <option value="Large Company">Large Company</option>
+                    <option value="Major Enterprise">Major Enterprise</option>
+                    <option value="Leading Organization">Leading Organization</option>
+                    <option value="Corporate Giant">Corporate Giant</option>
+                    <option value="Global Corporation">Global Corporation</option>
+                </select>
+            </div>
+
+         <div class="form-group">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g Ceo">
+            </div>
                 
         <div class="form-group">
             <label for="companyName">Company Name</label>
@@ -978,7 +1002,7 @@
         </div>
                 
         <div class="form-group">
-            <label for="keywords">ONE Keyword</label>
+            <label for="keywords">One Keyword</label>
             <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
         </div>
                 
@@ -1567,6 +1591,8 @@ async function handleSearch(e) {
         const managementLevel = document.getElementById('managementLevel').value;
         const companyName = document.getElementById('companyName').value;
         const keywords = document.getElementById('keywords').value;
+        const jobTitle = document.getElementById('jobTitle').value;
+        const companySize = document.getElementById('companySize').value;
         
         // If search criteria are provided, filter the data
         if (country || industry || managementLevel || companyName || keywords) {
@@ -1581,9 +1607,10 @@ async function handleSearch(e) {
                         country,
                         industry,
                         managementlevel: managementLevel,
-                        // Utiliser le nom correct pour le champ company name
-                        company: companyName,  // Au lieu de companyName
-                        keywords
+                        company: companyName,  
+                        keywords,
+                        jobtitle: jobTitle,  
+                        companysize: companySize
                     },
                     limit: 1000
                 };
@@ -1661,6 +1688,9 @@ async function exportToCSV() {
             loading.style.display = 'block';
             
             try {
+                // Always fetch the latest count before exporting
+                const currentCount = await fetchTotalCount();
+                
                 // Make a specific API call to get all data for export
                 const requestData = {
                     action: 'export',
@@ -1670,13 +1700,18 @@ async function exportToCSV() {
                     // Add the export limit to the request
                     limit: exportLimit,
                     token: userToken,
+                    // Include the most current count of available records
+                    totalCount: currentCount,
                     // Pass any active filters from the search form
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
                         managementlevel: document.getElementById('managementLevel').value,
                         company: document.getElementById('companyName').value,
-                        keywords: document.getElementById('keywords').value
+                        keywords: document.getElementById('keywords').value,
+                        // Add the new filter values
+                        jobtitle: document.getElementById('jobTitle').value,
+                        companysize: document.getElementById('companySize').value
                     }
                 };
                 
@@ -1690,38 +1725,37 @@ async function exportToCSV() {
                 });
                 
                 // Parse the response as JSON
-               // Parse the response as JSON
-const responseData = await response.json();
+                const responseData = await response.json();
 
-// Hide loading screen
-loading.style.display = 'none';
+                // Hide loading screen
+                loading.style.display = 'none';
 
-// Check if the response is an array with an error object
-if (Array.isArray(responseData) && 
-    responseData[0] && 
-    responseData[0].error && 
-    responseData[0].error.code === 403) {
-    // Show error message
-    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account , come back next month for more credits or buy more credits", 'error');
-    // Optionally show credit upgrade modal
-    showCreditUpgradeModal();
-} else {
-    // If no error, show the confirmation modal
-    const confirmationModal = document.getElementById('exportConfirmationModal');
-    confirmationModal.style.display = 'block';
-    
-    // Set up close button for confirmation modal
-    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-    closeConfirmBtn.addEventListener('click', () => {
-        confirmationModal.style.display = 'none';
-    });
-    
-    // Set up "Got it" button
-    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-    closeConfirmationBtn.addEventListener('click', () => {
-        confirmationModal.style.display = 'none';
-    });
-}
+                // Check if the response is an array with an error object
+                if (Array.isArray(responseData) && 
+                    responseData[0] && 
+                    responseData[0].error && 
+                    responseData[0].error.code === 403) {
+                    // Show error message
+                    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account, come back next month for more credits or buy more credits", 'error');
+                    // Optionally show credit upgrade modal
+                    showCreditUpgradeModal();
+                } else {
+                    // If no error, show the confirmation modal
+                    const confirmationModal = document.getElementById('exportConfirmationModal');
+                    confirmationModal.style.display = 'block';
+                    
+                    // Set up close button for confirmation modal
+                    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+                    closeConfirmBtn.addEventListener('click', () => {
+                        confirmationModal.style.display = 'none';
+                    });
+                    
+                    // Set up "Got it" button
+                    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+                    closeConfirmationBtn.addEventListener('click', () => {
+                        confirmationModal.style.display = 'none';
+                    });
+                }
                 
             } catch (error) {
                 console.error('Error processing export:', error);
@@ -1818,7 +1852,9 @@ async function fetchTotalCount() {
         industry: industrySelect.value,
         managementlevel: document.getElementById('managementLevel').value,
         company: document.getElementById('companyName').value,
-        keywords: document.getElementById('keywords').value
+        keywords: document.getElementById('keywords').value,
+        jobtitle: document.getElementById('jobTitle').value,
+        companysize: document.getElementById('companySize').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
