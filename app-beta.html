@@ -980,6 +980,152 @@ header {
         align-items: flex-start;
         gap: 10px;
     }
+    /* Additional mobile-friendly improvements */
+
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+/* Mobile menu styles */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    header {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .user-credits-container {
+        margin-left: auto;
+    }
+    
+    .user-credits {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    /* Menu transformation */
+    .main-menu {
+        position: relative;
+    }
+    
+    .menu-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        z-index: 100;
+        box-shadow: var(--box-shadow);
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+    
+    .menu-list.active {
+        display: flex;
+    }
+    
+    .menu-item {
+        width: 100%;
+        border-bottom: 1px solid var(--gray-100);
+    }
+    
+    .menu-link {
+        width: 100%;
+        padding: 15px;
+        display: block;
+    }
+    
+    /* Form adjustments */
+    .search-form {
+        gap: 12px;
+    }
+    
+    .form-group {
+        flex: 1 1 100%;
+    }
+
+    /* Table adjustments for mobile */
+    .results-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .results-table th, 
+    .results-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .modal-body {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    /* Header reorganization on very small screens */
+    @media (max-width: 640px) {
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .user-credits-container {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .results-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        .export-button {
+            align-self: stretch;
+            text-align: center;
+            justify-content: center;
+        }
+    }
 }
 
 /* Small phone improvements */
