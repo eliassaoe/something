@@ -815,75 +815,37 @@
             
             // Set up confirm verification button
            // Set up confirm verification button
-// Update the confirmVerificationBtn click handler to use base64 encoding
 document.getElementById('confirmVerificationBtn').addEventListener('click', () => {
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Webhook URL remains the same
-    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    // Base webhook URL
+    const baseWebhookUrl = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
     
-    // Use FileReader to convert file to base64
-    const reader = new FileReader();
+    // Add only the token to the URL query parameters
+    const webhookUrl = new URL(baseWebhookUrl);
+    webhookUrl.searchParams.append('token', userToken || '');
     
-    reader.onload = function(event) {
-        // Get base64 string from the FileReader result
-        // The result comes as: "data:application/csv;base64,ACTUALBASE64STRING"
-        // We need to remove the prefix part
-        const base64String = event.target.result.split(',')[1];
-        
-        // Create the data object to send to n8n
-        const requestData = {
-            fileData: base64String,
-            token: userToken || '',
-            type: 'email_verification',
-            filename: selectedFile.name,
-            fileType: selectedFile.type || 'text/csv',
-            fileSize: selectedFile.size
-        };
-        
-        // Log the data being sent to ensure it's correct
-        console.log('Sending data to webhook:', {
-            ...requestData,
-            fileData: requestData.fileData.substring(0, 20) + '...' // Log just a preview of the base64
-        });
-        
-        // Send the data as JSON
-        fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Server responded with status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Verification response:', data);
-            loading.style.display = 'none';
-            
-            // Show success modal
-            successModal.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Error sending verification request:', error);
-            loading.style.display = 'none';
-            showAlert("An error occurred while processing your request. Please try again later.", 'error');
-        });
-    };
-    
-    reader.onerror = function() {
-        console.error('Error reading file');
+    // Send only the binary file
+    fetch(webhookUrl.toString(), {
+        method: 'POST',
+        // Important: Do NOT set Content-Type header when sending binary file
+        // The browser will automatically set the correct content type
+        body: selectedFile // Send only the file as binary data
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Verification response:', data);
         loading.style.display = 'none';
-        showAlert("Error reading file. Please try again.", 'error');
-    };
-    
-    // Start reading the file as a data URL (which gives us base64)
-    reader.readAsDataURL(selectedFile);
+        
+        // Show success modal
+        successModal.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error sending verification request:', error);
+        loading.style.display = 'none';
+        showAlert("An error occurred while processing your request. Please try again later.", 'error');
+    });
 });
             
             // Close success modal button
