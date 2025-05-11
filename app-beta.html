@@ -1637,6 +1637,7 @@ async function handleSearch(e) {
 
                     // ► NEW: fetch the true total count
     const trueCount = await fetchTotalCount();
+    globalTrueCount = trueCount;
     // update your UI with the count from the RPC
     resultsNumber.textContent        = trueCount;
     totalDisplayRecords.textContent  = trueCount;
