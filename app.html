@@ -997,6 +997,10 @@
         <option value="Writing & editing">Writing & editing</option>
     </select>
 </div>
+        <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="e.g. New York">
+        </div>
                 
 
          <div class="form-group">
@@ -1601,6 +1605,7 @@ async function handleSearch(e) {
         const keywords = document.getElementById('keywords').value;
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
+        const city = document.getElementById('city').value;
         
         // If search criteria are provided, filter the data
         if (country || industry || managementLevel || companyName || keywords) {
@@ -1618,7 +1623,8 @@ async function handleSearch(e) {
                         company: companyName,  
                         keywords,
                         jobtitle: jobTitle,  
-                        companysize: companySize
+                        companysize: companySize,
+                        city: city
                     },
                     limit: 1000
                 };
@@ -1722,7 +1728,7 @@ async function exportToCSV() {
                         managementlevel: document.getElementById('managementLevel').value,
                         company: document.getElementById('companyName').value,
                         keywords: document.getElementById('keywords').value,
-                        // Add the new filter values
+                        city: document.getElementById('city').value,
                         jobtitle: document.getElementById('jobTitle').value,
                         companysize: document.getElementById('companySize').value
                     }
@@ -1867,7 +1873,8 @@ async function fetchTotalCount() {
         company: document.getElementById('companyName').value,
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
-        companysize: document.getElementById('companySize').value
+        companysize: document.getElementById('companySize').value,
+          city: document.getElementById('city').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
