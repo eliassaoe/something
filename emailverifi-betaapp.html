@@ -820,25 +820,22 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     loading.style.display = 'block';
     
     // Base webhook URL
-    const baseWebhookUrl = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
     
-    // Add only the token to the URL query parameters
-    const webhookUrl = new URL(baseWebhookUrl);
-    webhookUrl.searchParams.append('token', userToken || '');
+    // Create a FormData object and ONLY append the file
+    const formData = new FormData();
+    formData.append('file', selectedFile);  // Just the file with field name 'file'
     
-    // Send only the binary file
-    fetch(webhookUrl.toString(), {
+    // Send the FormData with ONLY the file
+    fetch(WEBHOOK_URL, {
         method: 'POST',
-        // Important: Do NOT set Content-Type header when sending binary file
-        // The browser will automatically set the correct content type
-        body: selectedFile // Send only the file as binary data
+        // Don't set Content-Type - let the browser set it correctly with boundary
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
         console.log('Verification response:', data);
         loading.style.display = 'none';
-        
-        // Show success modal
         successModal.style.display = 'block';
     })
     .catch(error => {
