@@ -873,6 +873,8 @@
                 <option value="Australia">Australia</option>
                 <option value="Netherlands">Netherlands</option>
                 <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
                 <!-- Add more countries as needed -->
             </select>
         </div>
@@ -1162,7 +1164,7 @@
             
             <div class="form-group" style="margin-top: 20px;">
                 <label for="exportLimit"><strong>Number of leads to export:</strong></label>
-                <input type="number" id="exportLimit" name="exportLimit" value="" min="1" max="5000" style="width: 100%; padding: 10px; border: 2px solid var(--gray); border-radius: 8px; font-size: 16px;">
+                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 2px solid var(--gray); border-radius: 8px; font-size: 16px;">
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
@@ -1668,9 +1670,6 @@ async function exportToCSV() {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
-
-        const exportLimitInput = document.getElementById('exportLimit');
-        exportLimitInput.value = Math.min(globalTrueCount, 1000);
         
         // Add event listener for the close button
         const closeExportModal = document.querySelector('.close-export-modal');
@@ -1685,7 +1684,7 @@ async function exportToCSV() {
             exportModal.style.display = 'none';
             
             // Get the export limit from the input field
-        const exportLimit = parseInt(document.getElementById('exportLimit').value) || Math.min(globalTrueCount, 1000);
+            const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
             
             // Show loading screen while making the API call
             loading.style.display = 'block';
