@@ -1012,6 +1012,16 @@
             <label for="keywords">One Keyword</label>
             <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
         </div>
+
+         <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="e.g. New York">
+        </div>
+
+        <div class="form-group">
+                    <label for="state">State/Province</label>
+                    <input type="text" id="state" name="state" placeholder="e.g. California">
+        </div>
                 
         <div class="form-group">
             <button type="submit" class="search-button">
@@ -1600,9 +1610,11 @@ async function handleSearch(e) {
         const keywords = document.getElementById('keywords').value;
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
         
         // If search criteria are provided, filter the data
-        if (country || industry || managementLevel || companyName || keywords) {
+        if (country || industry || managementLevel || companyName || keywords || city || state) {
             try {
                 // Search contacts using n8n webhook
                 const requestData = {
@@ -1617,7 +1629,9 @@ async function handleSearch(e) {
                         company: companyName,  
                         keywords,
                         jobtitle: jobTitle,  
-                        companysize: companySize
+                        companysize: companySize,
+                        city: city,
+                        state: state
                     },
                     limit: 1000
                 };
@@ -1721,9 +1735,12 @@ async function exportToCSV() {
                         managementlevel: document.getElementById('managementLevel').value,
                         company: document.getElementById('companyName').value,
                         keywords: document.getElementById('keywords').value,
-                        // Add the new filter values
                         jobtitle: document.getElementById('jobTitle').value,
-                        companysize: document.getElementById('companySize').value
+                        companysize: document.getElementById('companySize').value,
+                        city: document.getElementById('city').value,
+                        state: document.getElementById('state').value,
+                        city: document.getElementById('city').value,
+                        state: document.getElementById('state').value
                     }
                 };
                 
