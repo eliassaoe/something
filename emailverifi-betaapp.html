@@ -838,8 +838,15 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
             token: userToken || '',
             type: 'email_verification',
             filename: selectedFile.name,
-            fileType: selectedFile.type || 'text/csv' // Provide fallback MIME type if not available
+            fileType: selectedFile.type || 'text/csv',
+            fileSize: selectedFile.size
         };
+        
+        // Log the data being sent to ensure it's correct
+        console.log('Sending data to webhook:', {
+            ...requestData,
+            fileData: requestData.fileData.substring(0, 20) + '...' // Log just a preview of the base64
+        });
         
         // Send the data as JSON
         fetch(WEBHOOK_URL, {
@@ -849,7 +856,12 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
             },
             body: JSON.stringify(requestData)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Verification response:', data);
             loading.style.display = 'none';
