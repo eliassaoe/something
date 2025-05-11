@@ -1670,6 +1670,8 @@ async function exportToCSV() {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
+
+        document.getElementById('exportLimit').value = globalTrueCount;
         
         // Add event listener for the close button
         const closeExportModal = document.querySelector('.close-export-modal');
@@ -1686,8 +1688,10 @@ async function exportToCSV() {
             // Get the export limit from the input field
             const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
             
+            
             // Show loading screen while making the API call
             loading.style.display = 'block';
+            
             
             try {
                 // Always fetch the latest count before exporting
