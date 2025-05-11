@@ -815,40 +815,63 @@
             
             // Set up confirm verification button
            // Set up confirm verification button
+// Update the confirmVerificationBtn click handler to use base64 encoding
 document.getElementById('confirmVerificationBtn').addEventListener('click', () => {
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Here you would implement the actual file upload and verification process
+    // Webhook URL remains the same
     const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
     
-    // Create a FormData object to handle the file as binary data
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('token', userToken || '');
-    formData.append('type', 'email_verification');
-    formData.append('filename', selectedFile.name);
+    // Use FileReader to convert file to base64
+    const reader = new FileReader();
     
-    // Send the FormData object directly with the file as binary data
-    fetch(WEBHOOK_URL, {
-        method: 'POST',
-        // Important: Do NOT set Content-Type header when sending FormData
-        // The browser will automatically set the correct multipart/form-data content type with boundary
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Verification response:', data);
-        loading.style.display = 'none';
+    reader.onload = function(event) {
+        // Get base64 string from the FileReader result
+        // The result comes as: "data:application/csv;base64,ACTUALBASE64STRING"
+        // We need to remove the prefix part
+        const base64String = event.target.result.split(',')[1];
         
-        // Show success modal
-        successModal.style.display = 'block';
-    })
-    .catch(error => {
-        console.error('Error sending verification request:', error);
+        // Create the data object to send to n8n
+        const requestData = {
+            fileData: base64String,
+            token: userToken || '',
+            type: 'email_verification',
+            filename: selectedFile.name,
+            fileType: selectedFile.type || 'text/csv' // Provide fallback MIME type if not available
+        };
+        
+        // Send the data as JSON
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Verification response:', data);
+            loading.style.display = 'none';
+            
+            // Show success modal
+            successModal.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error sending verification request:', error);
+            loading.style.display = 'none';
+            showAlert("An error occurred while processing your request. Please try again later.", 'error');
+        });
+    };
+    
+    reader.onerror = function() {
+        console.error('Error reading file');
         loading.style.display = 'none';
-        showAlert("An error occurred while processing your request. Please try again later.", 'error');
-    });
+        showAlert("Error reading file. Please try again.", 'error');
+    };
+    
+    // Start reading the file as a data URL (which gives us base64)
+    reader.readAsDataURL(selectedFile);
 });
             
             // Close success modal button
