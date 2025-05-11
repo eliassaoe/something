@@ -1883,7 +1883,9 @@ async function fetchTotalCount() {
         company: document.getElementById('companyName').value,
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
-        companysize: document.getElementById('companySize').value
+        companysize: document.getElementById('companySize').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
