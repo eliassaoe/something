@@ -819,24 +819,50 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Here you would implement the actual file upload and verification process
+    // Get the token
+    const token = userToken || '';
+    
+    // Create the webhook URL
     const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    
+    console.log("Sending request to:", WEBHOOK_URL);
     
     // Create a FormData object to handle the file as binary data
     const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('token', userToken || '');
-    formData.append('type', 'email_verification');
-    formData.append('filename', selectedFile.name);
     
-    // Send the FormData object directly with the file as binary data
+    // Generate a unique identifier for the file
+    const fileId = `file_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    
+    // Use 'file0' as the field name to match what n8n expects
+    formData.append('file0', selectedFile, selectedFile.name);
+    
+    // Make sure to preserve the file extension
+    let fileName = selectedFile.name;
+    if (!fileName.toLowerCase().endsWith('.csv') && selectedFile.type === 'text/csv') {
+        fileName += '.csv';
+    }
+    
+    // Add important metadata as separate fields
+    formData.append('fileId', fileId);
+    formData.append('fileName', fileName);
+    formData.append('fileType', 'text/csv');  // Force CSV MIME type
+    formData.append('type', 'email_verification');
+    
+    // Prepare headers with the token
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);  // Standard Authorization header
+    headers.append('X-User-Token', token);              // Custom header for token
+    
+    // Send the FormData object with token in headers
     fetch(WEBHOOK_URL, {
         method: 'POST',
-        // Important: Do NOT set Content-Type header when sending FormData
-        // The browser will automatically set the correct multipart/form-data content type with boundary
+        headers: headers,
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log("Response status:", response.status);
+        return response.json();
+    })
     .then(data => {
         console.log('Verification response:', data);
         loading.style.display = 'none';
@@ -850,7 +876,6 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
         showAlert("An error occurred while processing your request. Please try again later.", 'error');
     });
 });
-            
             // Close success modal button
             document.getElementById('closeSuccessBtn').addEventListener('click', () => {
                 successModal.style.display = 'none';
