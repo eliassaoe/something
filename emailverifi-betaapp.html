@@ -819,23 +819,36 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Base webhook URL
     const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
     
-    // Create a FormData object and ONLY append the file
+    // Create a FormData object to handle the file as binary data
     const formData = new FormData();
-    formData.append('file', selectedFile);  // Just the file with field name 'file'
     
-    // Send the FormData with ONLY the file
+    // Generate a unique identifier for the file
+    const fileId = `file_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    
+    // Add the file with explicit name and ID in the field name
+    formData.append('data', selectedFile, selectedFile.name);
+    
+    // Add important metadata as separate fields
+    formData.append('fileId', fileId);
+    formData.append('fileName', selectedFile.name);
+    formData.append('fileType', selectedFile.type || 'application/octet-stream');
+    formData.append('token', userToken || '');
+    formData.append('type', 'email_verification');
+    
+    // Send the FormData object directly with the file as binary data
     fetch(WEBHOOK_URL, {
         method: 'POST',
-        // Don't set Content-Type - let the browser set it correctly with boundary
+        // Important: Do NOT set Content-Type header when sending FormData
         body: formData
     })
     .then(response => response.json())
     .then(data => {
         console.log('Verification response:', data);
         loading.style.display = 'none';
+        
+        // Show success modal
         successModal.style.display = 'block';
     })
     .catch(error => {
