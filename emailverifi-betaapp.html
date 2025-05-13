@@ -819,7 +819,9 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    // Add token to the webhook URL as a query parameter
+    const token = userToken || '';
+    const WEBHOOK_URL = `https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015?token=${encodeURIComponent(token)}`;
     
     // Create a FormData object to handle the file as binary data
     const formData = new FormData();
@@ -827,14 +829,21 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     // Generate a unique identifier for the file
     const fileId = `file_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     
-    // Add the file with explicit name and ID in the field name
-    formData.append('data', selectedFile, selectedFile.name);
+    // Use 'file0' as the field name to match what n8n expects
+    formData.append('file0', selectedFile, selectedFile.name);
+    
+    // Make sure to preserve the file extension
+    // Check if the file name already has .csv extension
+    let fileName = selectedFile.name;
+    if (!fileName.toLowerCase().endsWith('.csv') && selectedFile.type === 'text/csv') {
+        fileName += '.csv';
+    }
     
     // Add important metadata as separate fields
     formData.append('fileId', fileId);
-    formData.append('fileName', selectedFile.name);
-    formData.append('fileType', selectedFile.type || 'application/octet-stream');
-    formData.append('token', userToken || '');
+    formData.append('fileName', fileName);
+    formData.append('fileType', 'text/csv');  // Force CSV MIME type
+    formData.append('token', token);  // Still include token in form data for redundancy
     formData.append('type', 'email_verification');
     
     // Send the FormData object directly with the file as binary data
