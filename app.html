@@ -1321,8 +1321,6 @@ async function fetchData() {
         // Prepare the data to send to n8n
         const requestData = {
             action: 'fetchAll',
-            supabaseUrl: SUPABASE_URL,
-            supabaseKey: SUPABASE_KEY,
             tableName: 'unlimited',  // Changed to new table name
             limit: 1000
         };
@@ -1610,8 +1608,6 @@ async function handleSearch(e) {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
                     tableName: 'unlimited',
                     searchParams: {
                         country,
@@ -1710,8 +1706,6 @@ async function exportToCSV() {
                 // Make a specific API call to get all data for export
                 const requestData = {
                     action: 'export',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
                     tableName: 'unlimited',
                     // Add the export limit to the request
                     limit: exportLimit,
@@ -1860,8 +1854,6 @@ async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
-      supabaseUrl: SUPABASE_URL,
-      supabaseKey: SUPABASE_KEY,
       tableName: 'unlimited',
       searchParams: {
         country: countrySelect.value,
