@@ -819,9 +819,13 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     confirmModal.style.display = 'none';
     loading.style.display = 'block';
     
-    // Add token to the webhook URL as a query parameter
+    // Get the token
     const token = userToken || '';
-    const WEBHOOK_URL = `https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015?token=${encodeURIComponent(token)}`;
+    
+    // Create the webhook URL
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/0b6d43b4-aa6d-4a64-a035-e7581d858015";
+    
+    console.log("Sending request to:", WEBHOOK_URL);
     
     // Create a FormData object to handle the file as binary data
     const formData = new FormData();
@@ -833,7 +837,6 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     formData.append('file0', selectedFile, selectedFile.name);
     
     // Make sure to preserve the file extension
-    // Check if the file name already has .csv extension
     let fileName = selectedFile.name;
     if (!fileName.toLowerCase().endsWith('.csv') && selectedFile.type === 'text/csv') {
         fileName += '.csv';
@@ -843,16 +846,23 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
     formData.append('fileId', fileId);
     formData.append('fileName', fileName);
     formData.append('fileType', 'text/csv');  // Force CSV MIME type
-    formData.append('token', token);  // Still include token in form data for redundancy
     formData.append('type', 'email_verification');
     
-    // Send the FormData object directly with the file as binary data
+    // Prepare headers with the token
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);  // Standard Authorization header
+    headers.append('X-User-Token', token);              // Custom header for token
+    
+    // Send the FormData object with token in headers
     fetch(WEBHOOK_URL, {
         method: 'POST',
-        // Important: Do NOT set Content-Type header when sending FormData
+        headers: headers,
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log("Response status:", response.status);
+        return response.json();
+    })
     .then(data => {
         console.log('Verification response:', data);
         loading.style.display = 'none';
@@ -866,7 +876,6 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
         showAlert("An error occurred while processing your request. Please try again later.", 'error');
     });
 });
-            
             // Close success modal button
             document.getElementById('closeSuccessBtn').addEventListener('click', () => {
                 successModal.style.display = 'none';
