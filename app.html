@@ -1320,8 +1320,7 @@ async function fetchData() {
         
         // Prepare the data to send to n8n
         const requestData = {
-            action: 'fetchAll',
-            tableName: 'unlimited',  // Changed to new table name
+            action: 'fetchAll', // Changed to new table name
             limit: 1000
         };
         
@@ -1608,7 +1607,6 @@ async function handleSearch(e) {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
-                    tableName: 'unlimited',
                     searchParams: {
                         country,
                         industry,
@@ -1706,7 +1704,6 @@ async function exportToCSV() {
                 // Make a specific API call to get all data for export
                 const requestData = {
                     action: 'export',
-                    tableName: 'unlimited',
                     // Add the export limit to the request
                     limit: exportLimit,
                     token: userToken,
@@ -1854,7 +1851,6 @@ async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
-      tableName: 'unlimited',
       searchParams: {
         country: countrySelect.value,
         industry: industrySelect.value,
