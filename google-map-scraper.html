@@ -59,12 +59,13 @@
     .highlight-text { color: var(--primary); font-weight: 600; }
 
     .loading-message {
-      padding: 1rem;
+      padding: 1.5rem;
       background: #10b981;
       color: white;
       border-radius: var(--border-radius);
       text-align: center;
       margin-top: 1rem;
+      line-height: 1.5;
     }
     
     .spinner {
@@ -96,6 +97,18 @@
       background-color: var(--primary);
       width: 0%;
       transition: width 0.3s;
+    }
+    
+    .time-estimate {
+      font-weight: 600;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .background-note {
+      font-style: italic;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -129,7 +142,9 @@
 
       <div id="loadingMessage" class="loading-message" style="display:none;">
         <div class="spinner"></div>
-        Scraping data from Google Maps... Your download will start automatically when complete.
+        <strong>Scraping Google Maps for leads...</strong>
+        <div class="time-estimate">This process takes up to 5 minutes to complete.</div>
+        <div class="background-note">You can keep this page in the background - the scraping will continue and your download will start automatically when complete.</div>
       </div>
     </div>
   </section>
@@ -227,7 +242,7 @@
         // Simulate progress (since we can't know actual progress from API)
         let progress = 0;
         const progressInterval = setInterval(() => {
-          progress += Math.random() * 5;
+          progress += Math.random() * 3; // Slower progress to reflect 5-minute timeframe
           if (progress > 90) {
             progress = 90; // Cap at 90% until download starts
             clearInterval(progressInterval);
