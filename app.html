@@ -98,19 +98,20 @@
     }
     
     /* Updated header with logo style */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.25rem 0;
-        border-bottom: 1px solid rgba(25, 43, 71, 0.08);
-        margin-bottom: 30px;
-        background-color: white;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
+   header {
+    display: flex;
+    justify-content: flex-end; /* Change from space-between to flex-end */
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
     
     .logo {
         font-size: 1.5rem;
@@ -751,6 +752,117 @@
         background-color: white;
         font-size: 14px;
     }
+
+        @media (max-width: 768px) {
+    /* Reduce container padding to prevent horizontal scroll */
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    /* Make header elements smaller */
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo i {
+        font-size: 1.2rem;
+    }
+    
+    /* Adjust header buttons */
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+    }
+    
+    /* Keep menu items horizontal on small screens */
+    .menu-list {
+        flex-direction: row !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        border-bottom: none !important;
+        width: 50%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Adjust user-credits-container */
+   .user-credits-container {
+    gap: 8px;
+    margin-left: auto; /* This pushes the container to the right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Aligns contents to the right */
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+    header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+    
+    .logo {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 1rem;
+        margin-right: 4px;
+    }
+    
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Further simplify menu */
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    /* Make table scroll horizontally instead of breaking layout */
+    .results-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
     
     /* Animation */
     @keyframes pulse {
@@ -817,12 +929,18 @@
             width: 100%;
         }
     }
+
+        body {
+    overflow-x: hidden;
+}
+
+     
 </style>
 </head>
 <body>
+    
     <div class="container">
         <header>
-    <div class="logo">Unlimited leads</div>
     <div class="user-credits-container">
         <div id="userCredits" class="user-credits">
             <i class="fas fa-coins"></i> 0 credits
