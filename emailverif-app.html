@@ -724,6 +724,82 @@
             font-size: 36px;
             margin-bottom: 10px;
         }
+
+        /* Ajoutez ces styles responsifs à votre deuxième fichier CSS */
+
+/* Pour tablettes */
+@media (max-width: 768px) {
+    /* Logo et icône */
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .logo i {
+        font-size: 1.1rem;
+        margin-right: 6px;
+    }
+    
+    /* Boutons et crédits */
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Réduire l'espacement entre les éléments */
+    .user-credits-container {
+        gap: 10px;
+    }
+}
+
+/* Pour mobiles */
+@media (max-width: 480px) {
+    /* Logo plus petit */
+    .logo {
+        font-size: 0.9rem;
+    }
+    
+    .logo i {
+        font-size: 0.9rem;
+        margin-right: 4px;
+    }
+    
+    /* Ajustement des boutons */
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Réduire davantage l'espacement */
+    .user-credits-container {
+        gap: 6px;
+    }
+}
+
+/* Pour très petits écrans */
+@media (max-width: 360px) {
+    /* Ajustements supplémentaires */
+    .user-credits-container {
+        gap: 4px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.35rem 0.6rem;
+    }
+}
     }
 </style>
 </head>
