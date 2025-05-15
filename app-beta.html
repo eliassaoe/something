@@ -751,6 +751,108 @@
         background-color: white;
         font-size: 14px;
     }
+
+        @media (max-width: 768px) {
+    /* Reduce container padding to prevent horizontal scroll */
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    /* Make header elements smaller */
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo i {
+        font-size: 1.2rem;
+    }
+    
+    /* Adjust header buttons */
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+    }
+    
+    /* Keep menu items horizontal on small screens */
+    .menu-list {
+        flex-direction: row !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        border-bottom: none !important;
+        width: 50%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Adjust user-credits-container */
+    .user-credits-container {
+        gap: 8px;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+    header {
+        padding: 0.75rem 0;
+    }
+    
+    .logo {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 1rem;
+        margin-right: 4px;
+    }
+    
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Further simplify menu */
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    /* Make table scroll horizontally instead of breaking layout */
+    .results-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
     
     /* Animation */
     @keyframes pulse {
@@ -817,9 +919,19 @@
             width: 100%;
         }
     }
+
+        body {
+    overflow-x: hidden;
+}
+
+        header {
+    max-width: 100%;
+}
+        
 </style>
 </head>
 <body>
+    
     <div class="container">
         <header>
     <div class="logo">Unlimited leads</div>
@@ -880,9 +992,45 @@
                 <option value="Italy">Italy</option>
                 <option value="Spain">Spain</option>
                 <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Arab Emirates">Saudi Arabia</option>
                 <!-- Add more countries as needed -->
             </select>
         </div>
+
+         <div class="form-group">
+            <label for="managementLevel">Management Level</label>
+            <select id="managementLevel" name="managementLevel">
+                <option value="">All Levels</option>
+                <option value="Owner">Owner</option>
+                <option value="C_suite">C_suite</option>
+                <option value="Founder">Founder</option>
+                <option value="Director">Director</option>
+                <option value="Head">Head</option>
+                <option value="Manager">Manager</option>
+                <option value="Partner">Partner</option>
+                <option value="Senior">Senior</option>
+                <option value="Entry">Entry</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+                <label for="companySize">Company Size:</label>
+                <select id="companySize" name="companySize">
+                    <option value="">Select company size</option>
+                    <option value="Solo Entrepreneur">Solo Entrepreneur</option>
+                    <option value="Small Team">Small Team</option>
+                    <option value="Growing Startup">Growing Startup</option>
+                    <option value="Emerging Business">Emerging Business</option>
+                    <option value="Small Enterprise">Small Enterprise</option>
+                    <option value="Medium Enterprise">Medium Enterprise</option>
+                    <option value="Established Company">Established Company</option>
+                    <option value="Large Company">Large Company</option>
+                    <option value="Major Enterprise">Major Enterprise</option>
+                    <option value="Leading Organization">Leading Organization</option>
+                    <option value="Corporate Giant">Corporate Giant</option>
+                    <option value="Global Corporation">Global Corporation</option>
+                </select>
+            </div>
                 
         <div class="form-group">
     <label for="industry">Industry</label>
@@ -944,6 +1092,7 @@
         <option value="Marketing & advertising">Marketing & advertising</option>
         <option value="Media production">Media production</option>
         <option value="Paper & forest products">Paper & forest products</option>
+        <option value="Paper & forest products">Printing</option>
         <option value="Political organization">Political organization</option>
         <option value="Public safety">Public safety</option>
         <option value="Real estate">Real estate</option>
@@ -962,41 +1111,11 @@
         <option value="Writing & editing">Writing & editing</option>
     </select>
 </div>
-                
         <div class="form-group">
-            <label for="managementLevel">Management Level</label>
-            <select id="managementLevel" name="managementLevel">
-                <option value="">All Levels</option>
-                <option value="Owner">Owner</option>
-                <option value="C_suite">C_suite</option>
-                <option value="Founder">Founder</option>
-                <option value="Director">Director</option>
-                <option value="Head">Head</option>
-                <option value="Manager">Manager</option>
-                <option value="Partner">Partner</option>
-                <option value="Senior">Senior</option>
-                <option value="Entry">Entry</option>
-            </select>
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="e.g. New York">
         </div>
-
-        <div class="form-group">
-                <label for="companySize">Company Size:</label>
-                <select id="companySize" name="companySize">
-                    <option value="">Select company size</option>
-                    <option value="Solo Entrepreneur">Solo Entrepreneur</option>
-                    <option value="Small Team">Small Team</option>
-                    <option value="Growing Startup">Growing Startup</option>
-                    <option value="Emerging Business">Emerging Business</option>
-                    <option value="Small Enterprise">Small Enterprise</option>
-                    <option value="Medium Enterprise">Medium Enterprise</option>
-                    <option value="Established Company">Established Company</option>
-                    <option value="Large Company">Large Company</option>
-                    <option value="Major Enterprise">Major Enterprise</option>
-                    <option value="Leading Organization">Leading Organization</option>
-                    <option value="Corporate Giant">Corporate Giant</option>
-                    <option value="Global Corporation">Global Corporation</option>
-                </select>
-            </div>
+                
 
          <div class="form-group">
                 <label for="jobTitle">Job Title:</label>
@@ -1011,16 +1130,6 @@
         <div class="form-group">
             <label for="keywords">One Keyword</label>
             <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
-        </div>
-
-         <div class="form-group">
-                    <label for="city">City</label>
-                    <input type="text" id="city" name="city" placeholder="e.g. New York">
-        </div>
-
-        <div class="form-group">
-                    <label for="state">State/Province</label>
-                    <input type="text" id="state" name="state" placeholder="e.g. California">
         </div>
                 
         <div class="form-group">
@@ -1221,11 +1330,6 @@
         // n8n webhook URL
         const N8N_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/0b8401b5-8d6d-426d-a92e-1d94b2e3fab4';
         
-        // Supabase details (needed for n8n to make the request)
-        const SUPABASE_URL = 'https://snxhsboboatjywgwdeds.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo';
-        
-        // Global variables
         
         let allContacts = [];
         let globalTrueCount = 0;
@@ -1328,10 +1432,7 @@ async function fetchData() {
         
         // Prepare the data to send to n8n
         const requestData = {
-            action: 'fetchAll',
-            supabaseUrl: SUPABASE_URL,
-            supabaseKey: SUPABASE_KEY,
-            tableName: 'unlimited',  // Changed to new table name
+            action: 'fetchAll', // Changed to new table name
             limit: 1000
         };
         
@@ -1611,17 +1712,13 @@ async function handleSearch(e) {
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
-        const state = document.getElementById('state').value;
         
         // If search criteria are provided, filter the data
-        if (country || industry || managementLevel || companyName || keywords || city || state) {
+        if (country || industry || managementLevel || companyName || keywords) {
             try {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
-                    tableName: 'unlimited',
                     searchParams: {
                         country,
                         industry,
@@ -1630,8 +1727,7 @@ async function handleSearch(e) {
                         keywords,
                         jobtitle: jobTitle,  
                         companysize: companySize,
-                        city: city,
-                        state: state
+                        city: city
                     },
                     limit: 1000
                 };
@@ -1720,9 +1816,6 @@ async function exportToCSV() {
                 // Make a specific API call to get all data for export
                 const requestData = {
                     action: 'export',
-                    supabaseUrl: SUPABASE_URL,
-                    supabaseKey: SUPABASE_KEY,
-                    tableName: 'unlimited',
                     // Add the export limit to the request
                     limit: exportLimit,
                     token: userToken,
@@ -1735,12 +1828,9 @@ async function exportToCSV() {
                         managementlevel: document.getElementById('managementLevel').value,
                         company: document.getElementById('companyName').value,
                         keywords: document.getElementById('keywords').value,
+                        city: document.getElementById('city').value,
                         jobtitle: document.getElementById('jobTitle').value,
-                        companysize: document.getElementById('companySize').value,
-                        city: document.getElementById('city').value,
-                        state: document.getElementById('state').value,
-                        city: document.getElementById('city').value,
-                        state: document.getElementById('state').value
+                        companysize: document.getElementById('companySize').value
                     }
                 };
                 
@@ -1873,9 +1963,6 @@ async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
-      supabaseUrl: SUPABASE_URL,
-      supabaseKey: SUPABASE_KEY,
-      tableName: 'unlimited',
       searchParams: {
         country: countrySelect.value,
         industry: industrySelect.value,
@@ -1884,8 +1971,7 @@ async function fetchTotalCount() {
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
         companysize: document.getElementById('companySize').value,
-        city: document.getElementById('city').value,
-        state: document.getElementById('state').value
+          city: document.getElementById('city').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
