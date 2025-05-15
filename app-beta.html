@@ -805,16 +805,25 @@
     }
     
     /* Adjust user-credits-container */
-    .user-credits-container {
-        gap: 8px;
+   .user-credits-container {
+    gap: 8px;
+    margin-left: auto; /* This pushes the container to the right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Aligns contents to the right */
     }
 }
 
 /* Even smaller screens */
 @media (max-width: 480px) {
     header {
-        padding: 0.75rem 0;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
     
     .logo {
         font-size: 1rem;
@@ -924,10 +933,7 @@
     overflow-x: hidden;
 }
 
-        header {
-    max-width: 100%;
-}
-        
+     
 </style>
 </head>
 <body>
