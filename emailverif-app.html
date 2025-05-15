@@ -65,6 +65,104 @@
         font-family: var(--font-primary);
     }
     
+    header {
+    max-width: 100%;
+}
+    
+/* Header responsiveness updates */
+@media (max-width: 768px) {
+    /* Reduce container padding to prevent horizontal scroll */
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+        /* Make header elements smaller */
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo i {
+        font-size: 1.2rem;
+    }
+    
+    /* Adjust header buttons */
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+    }
+    
+    /* Keep menu items horizontal on small screens */
+    .menu-list {
+        flex-direction: row !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        border-bottom: none !important;
+        width: 50%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Adjust user-credits-container */
+    .user-credits-container {
+        gap: 8px;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+    header {
+        padding: 0.75rem 0;
+    }
+    
+    .logo {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 1rem;
+        margin-right: 4px;
+    }
+    
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Further simplify menu */
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
     body {
         background-color: #ffffff;
         color: var(--gray-800);
