@@ -99,19 +99,20 @@
     }
     
     /* Updated header with logo style */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.25rem 0;
-        border-bottom: 1px solid rgba(25, 43, 71, 0.08);
-        margin-bottom: 30px;
-        background-color: white;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
+   header {
+    display: flex;
+    justify-content: flex-end; /* Change from space-between to flex-end */
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
     
     .logo {
         font-size: 1.5rem;
