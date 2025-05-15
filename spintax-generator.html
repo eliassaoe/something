@@ -628,14 +628,15 @@
                         throw new Error(`Server responded with status: ${response.status}`);
                     }
                     
-                    const data = await response.json();
+                    // Get the text response directly
+                    const spintaxText = await response.text();
                     
-                    if (data.spintaxEmail) {
-                        spintaxResult.value = data.spintaxEmail;
+                    if (spintaxText && spintaxText.trim()) {
+                        spintaxResult.value = spintaxText;
                         resultArea.style.display = 'block';
                         
                         // Calculate approximate variations
-                        const matches = (data.spintaxEmail.match(/{[^{}]+}/g) || []);
+                        const matches = (spintaxText.match(/{[^{}]+}/g) || []);
                         let totalVariations = 1;
                         
                         matches.forEach(match => {
