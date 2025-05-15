@@ -5,37 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
+        /* Base styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
+            margin: 0;
+            padding: 16px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
+        
         .container {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            margin: 0 auto;
         }
+        
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 1.5rem;
+            font-size: 1.75rem;
         }
+        
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
+        
         label {
             display: block;
             margin-bottom: 0.5rem;
             color: #555;
             font-weight: 500;
         }
+        
         input {
             width: 100%;
             padding: 0.75rem;
@@ -44,47 +53,165 @@
             font-size: 1rem;
             box-sizing: border-box;
         }
+        
         input:focus {
             outline: none;
             border-color: #4a90e2;
             box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
         }
+        
         button {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.85rem;
             background-color: #4a90e2;
             color: white;
             border: none;
             border-radius: 4px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s;
         }
+        
         button:hover {
             background-color: #3a7bc8;
         }
+        
+        /* Message styling - improved visibility */
+        .message-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 100;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .message-container.visible {
+            transform: translateY(0);
+        }
+        
         .message {
             text-align: center;
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 4px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 90%;
+            font-weight: 500;
+        }
+        
+        .success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .error {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .signup-link a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 1.25rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Loading indicator */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        button.loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+        }
+        
+        /* Static message element */
+        .static-message {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 16px;
+            text-align: center;
+            border: 1px solid #dee2e6;
             display: none;
         }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        
+        .static-message.visible {
+            display: block;
+            animation: fade-in 0.5s ease-in-out;
         }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Forgot password link */
+        .forgot-password {
+            text-align: right;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .forgot-password a {
+            color: #6c757d;
+            text-decoration: none;
+        }
+        
+        .forgot-password a:hover {
+            color: #4a90e2;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1>Login to Your Account</h1>
         <form id="loginForm">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -94,12 +221,23 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" required placeholder="Enter your password">
             </div>
-            <button type="submit">Login</button>
+            <div class="forgot-password">
+                <a href="https://unlimited-leads.online/reset-password">Forgot password?</a>
+            </div>
+            <button type="submit" id="submitButton">Login</button>
         </form>
-        <div id="message" class="message"></div>
-        <div style="text-align: center; margin-top: 1.5rem;">
-            <p>Don't have an account? <a href="https://unlimited-leads.online/sign-up" style="color: #4a90e2; text-decoration: none;">Sign up</a></p>
+        
+        <!-- Static message for displaying persistent information -->
+        <div id="staticMessage" class="static-message"></div>
+        
+        <div class="signup-link">
+            <p>Don't have an account? <a href="https://unlimited-leads.online/sign-up">Sign up</a></p>
         </div>
+    </div>
+    
+    <!-- Fixed position message that slides in from top -->
+    <div id="messageContainer" class="message-container">
+        <div id="message" class="message"></div>
     </div>
 
     <script>
@@ -109,10 +247,21 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const messageDiv = document.getElementById('message');
+            const messageContainer = document.getElementById('messageContainer');
+            const staticMessage = document.getElementById('staticMessage');
+            const submitButton = document.getElementById('submitButton');
             
             // Clear previous messages
             messageDiv.textContent = '';
             messageDiv.className = 'message';
+            messageContainer.className = 'message-container';
+            staticMessage.textContent = '';
+            staticMessage.className = 'static-message';
+            
+            // Show loading state
+            submitButton.innerHTML = '<span class="spinner"></span> Logging in...';
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
             
             try {
                 const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
@@ -123,60 +272,119 @@
                     body: JSON.stringify({ 
                         email, 
                         password,
-                        type: 'login' // Identificateur pour différencier les appels
+                        type: 'login'
                     })
                 });
                 
                 if (response.ok) {
-                    // Récupérer la réponse du serveur
+                    // Parse the response data
                     const data = await response.json();
                     
                     // Check for the new token format
                     if (data && data.token) {
+                        // Show success message before redirect
+                        messageDiv.textContent = 'Login successful! Redirecting...';
+                        messageDiv.classList.add('success');
+                        messageContainer.classList.add('visible');
+                        
                         // Redirect to app with the token
-                        window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
+                        setTimeout(() => {
+                            window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
+                        }, 1000);
                     }
                     // Handle legacy response formats if needed
                     else if (Array.isArray(data) && data.length > 0 && data[0].access_token) {
+                        // Show success message before redirect
+                        messageDiv.textContent = 'Login successful! Redirecting...';
+                        messageDiv.classList.add('success');
+                        messageContainer.classList.add('visible');
+                        
                         localStorage.setItem('supabase_access_token', data[0].access_token);
                         localStorage.setItem('supabase_user', JSON.stringify(data[0].user));
-                        window.location.href = 'https://unlimited-leads.online/dashboard';
+                        
+                        setTimeout(() => {
+                            window.location.href = 'https://unlimited-leads.online/dashboard';
+                        }, 1000);
                     } 
                     else if (data && data.connexion_success === "yes" && data.redirect_link) {
-                        window.location.href = data.redirect_link;
+                        // Show success message before redirect
+                        messageDiv.textContent = 'Login successful! Redirecting...';
+                        messageDiv.classList.add('success');
+                        messageContainer.classList.add('visible');
+                        
+                        setTimeout(() => {
+                            window.location.href = data.redirect_link;
+                        }, 1000);
                     } 
                     else if (data && data.connexion_success === "no") {
                         messageDiv.textContent = 'Invalid email or password. Please try again.';
                         messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
+                        messageContainer.classList.add('visible');
+                        
+                        // Show static message with more info
+                        staticMessage.textContent = 'If you haven\'t verified your email yet, please check your inbox and click the verification link.';
+                        staticMessage.classList.add('visible');
+                        
+                        // Auto hide the top message after 5 seconds
+                        setTimeout(() => {
+                            messageContainer.classList.remove('visible');
+                        }, 5000);
                     } 
                     else if (data && data.error_message) {
                         messageDiv.textContent = data.error_message;
                         messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
+                        messageContainer.classList.add('visible');
+                        
+                        // Auto hide the top message after 5 seconds
+                        setTimeout(() => {
+                            messageContainer.classList.remove('visible');
+                        }, 5000);
                     } 
                     else {
                         messageDiv.textContent = 'Login failed. Please check your credentials.';
                         messageDiv.classList.add('error');
-                        messageDiv.style.display = 'block';
+                        messageContainer.classList.add('visible');
+                        
+                        // Auto hide the top message after 5 seconds
+                        setTimeout(() => {
+                            messageContainer.classList.remove('visible');
+                        }, 5000);
                     }
                 } else {
-                    // Récupérer le message d'erreur s'il existe
+                    // Try to get the error message
                     const errorData = await response.json().catch(() => null);
+                    
                     if (errorData && errorData.message) {
                         messageDiv.textContent = errorData.message;
                     } else {
                         messageDiv.textContent = 'Invalid email or password. Please try again.';
                     }
+                    
                     messageDiv.classList.add('error');
-                    messageDiv.style.display = 'block';
+                    messageContainer.classList.add('visible');
+                    
+                    // Auto hide the top message after 5 seconds
+                    setTimeout(() => {
+                        messageContainer.classList.remove('visible');
+                    }, 5000);
                 }
             } catch (error) {
-                // Message d'erreur
+                // Error message
                 messageDiv.textContent = 'An error occurred. Please try again later.';
                 messageDiv.classList.add('error');
-                messageDiv.style.display = 'block';
+                messageContainer.classList.add('visible');
+                
+                // Auto hide the top message after 5 seconds
+                setTimeout(() => {
+                    messageContainer.classList.remove('visible');
+                }, 5000);
+                
                 console.error('Error:', error);
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = 'Login';
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
             }
         });
     </script>
