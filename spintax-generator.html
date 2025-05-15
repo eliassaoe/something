@@ -710,4 +710,93 @@
                 });
             });
             
-            // Process spint
+            // Process spintax to generate a random variation
+            function processSpintax(text) {
+                // Process all spintax in the text
+                let result = text;
+                let match;
+                const regex = /{([^{}]+)}/g;
+                
+                // Keep processing until all spintax is resolved
+                while ((match = regex.exec(result)) !== null) {
+                    const options = match[1].split('|');
+                    const randomOption = options[Math.floor(Math.random() * options.length)];
+                    
+                    // Replace this instance of spintax with a random option
+                    result = result.substring(0, match.index) + 
+                             randomOption + 
+                             result.substring(match.index + match[0].length);
+                    
+                    // Reset regex to start from the beginning since we modified the string
+                    regex.lastIndex = 0;
+                }
+                
+                return result;
+            }
+            
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            // Demo example
+            emailInput.placeholder = "Example:\n\nSubject: Partnership opportunity with [Company Name]\n\nHi [First Name],\n\nI noticed that [Company Name] has been doing great work in the [industry] space, and I thought our solutions might complement each other well.\n\nWould you be open to a quick 15-minute call next week to explore potential synergies?\n\nBest regards,\n[Your Name]";
+        });
+    </script>
+
+    <!-- SEO Content -->
+    <section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.75rem;">How to Use Spintax to Improve Your Cold Email Campaigns</h2>
+            
+            <p style="margin-bottom: 1rem;">Cold email outreach remains one of the most effective ways to generate leads and grow your business. However, as inbox providers become increasingly sophisticated at filtering out mass emails, using spintax has become essential for serious email marketers.</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">What Makes Our Spintax Generator Different</h3>
+            
+            <p style="margin-bottom: 1rem;">Unlike basic spintax tools that simply swap a few words, our AI-powered generator analyzes your entire email to identify strategic opportunities for variation. This includes:</p>
+            
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Subject line optimization</strong> - The first thing recipients see and the most important factor in open rates</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Opening line variations</strong> - Create multiple engaging ways to start your conversation</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Call-to-action alternatives</strong> - Test different approaches to increase response rates</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Natural language patterns</strong> - Ensure all variations sound like they were written by a human</li>
+            </ul>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">Best Practices for Using Spintax in Cold Emails</h3>
+            
+            <ol style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Focus on high-impact areas:</strong> Subject lines, greetings, and calls-to-action benefit most from variation.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Maintain message consistency:</strong> While varying wording, ensure all versions convey the same core value proposition.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Combine with personalization:</strong> Use both spintax AND custom fields like {First_Name} or {Company} for truly personalized emails.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Test different variations:</strong> Track which spintax combinations perform best and refine your approach over time.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Don't overdo it:</strong> Focus on quality variations rather than maximizing the number of possible combinations.
+                </li>
+            </ol>
+            
+            <p style="margin-bottom: 1.5rem;">By following these best practices and using our powerful spintax generator, you can create cold email campaigns that not only reach the inbox but also generate more responses and leads for your business.</p>
+            
+            <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);">
+                <h4 style="margin-bottom: 0.75rem; color: var(--primary);">Ready to take your cold emails to the next level?</h4>
+                <p style="margin-bottom: 0;">Try our free spintax generator today and see the difference it can make in your open and response rates. For advanced users, check out our premium plans that include AI writing assistance, automated A/B testing, and integrated analytics.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
