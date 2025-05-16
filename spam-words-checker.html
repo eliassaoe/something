@@ -624,7 +624,6 @@
 
     <!-- Scripts -->
     <script>
-
         // Spam word Checker
         document.addEventListener('DOMContentLoaded', function() {
             const emailInput = document.getElementById('emailInput');
@@ -684,316 +683,151 @@
                     'Consider a complete rewrite focusing on personalization and valuable content rather than promotional language.'
                 ]
             };
-           
-                // Spam word Checker
-document.addEventListener('DOMContentLoaded', function() {
-    const emailInput = document.getElementById('emailInput');
-    const checkBtn = document.getElementById('checkBtn');
-    const resultArea = document.getElementById('resultArea');
-    const copyBtn = document.getElementById('copyBtn');
-    const fixEmailBtn = document.getElementById('fixEmailBtn');
-    const statusMessage = document.getElementById('statusMessage');
-    const totalwords = document.getElementById('totalwords');
-    const wordCount = document.getElementById('wordCount');
-    const readTime = document.getElementById('readTime');
-    const spamScore = document.getElementById('spamScore');
-    const progressBar = document.getElementById('progressBar');
-    const categoriesContainer = document.getElementById('categoriesContainer');
-    const analysisContainer = document.getElementById('analysisContainer');
-    
-    // Category icons mapping
-    const categoryIcons = {
-        'Urgent': 'fas fa-exclamation-circle',
-        'Suspicious': 'fas fa-question-circle',
-        'Financial': 'fas fa-dollar-sign',
-        'Unnatural': 'fas fa-robot',
-        'Promotional': 'fas fa-tag',
-        'Clickbait': 'fas fa-mouse-pointer',
-        'Overselling': 'fas fa-chart-line'
-    };
-    
-    // Category descriptions
-    const categoryDescriptions = {
-        'Urgent': 'Creating a sense of immediate action or fear of missing out.',
-        'Suspicious': 'Too-good-to-be-true offers or obscure terms that can make recipients suspicious.',
-        'Financial': 'Focusing on quick wealth, guaranteed returns, or financial urgency.',
-        'Unnatural': 'Awkward, forced, or repetitive language that feels robotic or off-putting.',
-        'Promotional': 'Overly sales-focused language that triggers promotional content filters.',
-        'Clickbait': 'Sensational or misleading language designed to force engagement.',
-        'Overselling': 'Exaggerated claims or promises that seem unrealistic to readers.'
-    };
-    
-    // Analysis recommendations based on score
-    const analysisRecommendations = {
-        'low': [
-            'Your email looks good! It has few spam triggers and should have good deliverability.',
-            'Consider personalizing your email further to improve engagement rates.',
-            'Testing with a small segment before sending to your full list is always recommended.'
-        ],
-        'medium': [
-            'Your email contains some spam triggers that might affect deliverability.',
-            'Try rephrasing sentences with spam words to convey the same message differently.',
-            'Add more personalization to balance out any necessary promotional language.',
-            'Consider reducing urgency-based language and focus on value proposition instead.'
-        ],
-        'high': [
-            'Your email contains multiple spam triggers that will likely affect deliverability.',
-            'Urgent action is needed to rewrite sections containing spam words.',
-            'Remove or rephrase all suspicious or financial promises in your copy.',
-            'Break up any sections with concentrated spam words into more natural language.',
-            'Consider a complete rewrite focusing on personalization and valuable content rather than promotional language.'
-        ]
-    };
-    
-    // Check Email
-    checkBtn.addEventListener('click', function() {
-        console.log("Check button clicked"); // Debug
-        const emailText = emailInput.value.trim();
-        
-        if (!emailText) {
-            showStatus('Please enter your email text first.', 'error');
-            return;
-        }
-        
-        showStatus('<span class="loader"></span> Analyzing your email for spam words...', 'loading');
-        
-        // For debugging - add a simple test without API
-        // Comment this out when your API is working
-        /*
-        setTimeout(() => {
-            console.log("Using test data");
-            const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
-            displaySimpleResults(testSpamWords);
-            resultArea.style.display = 'block';
-            showStatus('Analysis complete!', 'success');
-            resultArea.scrollIntoView({ behavior: 'smooth' });
-        }, 1500);
-        return; // Remove this when your API is working
-        */
-        
-        console.log("Sending fetch request to API...");
-        
-        // Fetch with more explicit error handling
-        fetch('https://eliasse-n8n.onrender.com/webhook/d1464188-f42f-4994-ad9d-1e6005d23622', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Origin': window.location.origin
-            },
-            body: JSON.stringify({ text: emailText })
-        })
-        .then(response => {
-            console.log("Received response:", response);
-            if (!response.ok) {
-                throw new Error(`Server responded with status: ${response.status} - ${response.statusText}`);
-            }
-            return response.text(); // First get as text
-        })
-        .then(text => {
-            console.log("Response text:", text);
             
-            // Try to parse as JSON
-            try {
-                const data = JSON.parse(text);
-                console.log("Parsed JSON data:", data);
+            // Check Email
+            checkBtn.addEventListener('click', function() {
+                console.log("Check button clicked"); // Debug
+                const emailText = emailInput.value.trim();
                 
-                if (Array.isArray(data)) {
-                    // Simple array of spam words
-                    displaySimpleResults(data);
-                } else if (typeof data === 'object') {
-                    // JSON object with more details
-                    displayDetailedResults(data);
+                if (!emailText) {
+                    showStatus('Please enter your email text first.', 'error');
+                    return;
                 }
                 
-                resultArea.style.display = 'block';
-                showStatus('Analysis complete!', 'success');
-                resultArea.scrollIntoView({ behavior: 'smooth' });
-            } catch (jsonError) {
-                console.log("Not JSON, using as text");
-                // If not valid JSON, treat as comma-separated list
-                const wordList = text.split(',').map(word => word.trim()).filter(word => word);
-                console.log("Word list:", wordList);
-                displaySimpleResults(wordList);
-                resultArea.style.display = 'block';
-                showStatus('Analysis complete!', 'success');
-                resultArea.scrollIntoView({ behavior: 'smooth' });
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            showStatus(`Failed to analyze email: ${error.message}`, 'error');
+                showStatus('<span class="loader"></span> Analyzing your email for spam words...', 'loading');
+                
+                // For debugging - add a simple test without API
+                // Comment this out when your API is working
+                /*
+                setTimeout(() => {
+                    console.log("Using test data");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Analysis complete!', 'success');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+                return; // Remove this when your API is working
+                */
+                
+                console.log("Sending fetch request to API...");
+                
+                // Fetch with more explicit error handling
+                fetch('https://eliasse-n8n.onrender.com/webhook/d1464188-f42f-4994-ad9d-1e6005d23622', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify({ text: emailText })
+                })
+                .then(response => {
+                    console.log("Received response:", response);
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.text(); // First get as text
+                })
+                .then(text => {
+                    console.log("Response text:", text);
+                    
+                    // Try to parse as JSON
+                    try {
+                        const data = JSON.parse(text);
+                        console.log("Parsed JSON data:", data);
+                        
+                        if (Array.isArray(data)) {
+                            // Simple array of spam words
+                            displaySimpleResults(data);
+                        } else if (typeof data === 'object') {
+                            // JSON object with more details
+                            displayDetailedResults(data);
+                        }
+                        
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    } catch (jsonError) {
+                        console.log("Not JSON, using as text");
+                        // If not valid JSON, treat as comma-separated list
+                        const wordList = text.split(',').map(word => word.trim()).filter(word => word);
+                        console.log("Word list:", wordList);
+                        displaySimpleResults(wordList);
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    showStatus(`Failed to analyze email: ${error.message}`, 'error');
+                    
+                    // Fallback to display something for testing
+                    console.log("Using fallback test data due to error");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Using test data due to API error', 'error');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
             
-            // Fallback to display something for testing
-            console.log("Using fallback test data due to error");
-            const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
-            displaySimpleResults(testSpamWords);
-            resultArea.style.display = 'block';
-            showStatus('Using test data due to API error', 'error');
-            resultArea.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-    
-    // Display Simple Results (for array of spam words)
-    function displaySimpleResults(spamWords) {
-        console.log("Displaying simple results with words:", spamWords);
-        
-        // Calculate word count from user input
-        const words = emailInput.value.trim().split(/\s+/).length;
-        
-        // Set basic stats
-        totalwords.textContent = spamWords.length || 0;
-        wordCount.textContent = words;
-        readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
-        
-        // Set spam score
-        let scoreText = '';
-        let scorePercent = 0;
-        
-        if (spamWords.length === 0) {
-            scoreText = 'Perfect! No spam words found.';
-            scorePercent = 0;
-        } else {
-            // Calculate score as percentage (assumed max of 20 words is 100% spammy)
-            scorePercent = Math.min(Math.round((spamWords.length / 20) * 100), 100);
-            
-            if (scorePercent < 30) {
-                scoreText = 'Low Spam Risk';
-            } else if (scorePercent < 70) {
-                scoreText = 'Medium Spam Risk';
-            } else {
-                scoreText = 'High Spam Risk';
-            }
-        }
-        
-        spamScore.textContent = scoreText;
-        progressBar.style.width = `${scorePercent}%`;
-        
-        // Clear previous categories
-        categoriesContainer.innerHTML = '';
-        
-        // Create a single category with all spam words
-        if (spamWords.length > 0) {
-            const categoryEl = document.createElement('div');
-            categoryEl.classList.add('category-section');
-            
-            categoryEl.innerHTML = `
-                <div class="category-title">
-                    <div class="category-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    Spam words
-                    <span class="matches-count">${spamWords.length} matches</span>
-                </div>
-                <div class="category-description">
-                    These words or phrases might trigger spam filters and affect your email deliverability.
-                </div>
-                <div class="word-list">
-                    ${spamWords.map(word => `
-                        <div class="word-item">
-                            <span class="word-text">${word}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            categoriesContainer.appendChild(categoryEl);
-        } else {
-            categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
-        }
-        
-        // Set analysis recommendations
-        analysisContainer.innerHTML = '';
-        
-        let recommendationType = 'low';
-        if (scorePercent >= 70) {
-            recommendationType = 'high';
-        } else if (scorePercent >= 30) {
-            recommendationType = 'medium';
-        }
-        
-        const recommendations = analysisRecommendations[recommendationType];
-        recommendations.forEach(rec => {
-            const item = document.createElement('div');
-            item.classList.add('analysis-item');
-            item.textContent = rec;
-            analysisContainer.appendChild(item);
-        });
-    }
-    
-    // Display Detailed Results (for JSON response with categories)
-    function displayDetailedResults(data) {
-        console.log("Displaying detailed results:", data);
-        
-        // Set basic stats
-        totalwords.textContent = data.totalSpamwords || 0;
-        
-        // If we have word count and read time from server, use it
-        // Otherwise calculate a rough estimate
-        if (data.wordCount) {
-            wordCount.textContent = data.wordCount;
-        } else {
-            const words = emailInput.value.trim().split(/\s+/).length;
-            wordCount.textContent = words;
-        }
-        
-        if (data.readTimeSeconds) {
-            readTime.textContent = data.readTimeSeconds;
-        } else {
-            const words = parseInt(wordCount.textContent);
-            readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
-        }
-        
-        // Set spam score
-        let scoreText = '';
-        let scorePercent = 0;
-        const spamwordsCount = data.totalSpamwords || 0;
-        
-        if (spamwordsCount === 0) {
-            scoreText = 'Perfect! No spam words found.';
-            scorePercent = 0;
-        } else {
-            // Calculate score as percentage (assumed max of 20 words is 100% spammy)
-            scorePercent = Math.min(Math.round((spamwordsCount / 20) * 100), 100);
-            
-            if (scorePercent < 30) {
-                scoreText = 'Low Spam Risk';
-            } else if (scorePercent < 70) {
-                scoreText = 'Medium Spam Risk';
-            } else {
-                scoreText = 'High Spam Risk';
-            }
-        }
-        
-        spamScore.textContent = scoreText;
-        progressBar.style.width = `${scorePercent}%`;
-        
-        // Clear previous categories
-        categoriesContainer.innerHTML = '';
-        
-        // Add categories if available
-        if (data.categories && data.categories.length > 0) {
-            data.categories.forEach(category => {
-                if (category.words && category.words.length > 0) {
+            // Display Simple Results (for array of spam words)
+            function displaySimpleResults(spamWords) {
+                console.log("Displaying simple results with words:", spamWords);
+                
+                // Calculate word count from user input
+                const words = emailInput.value.trim().split(/\s+/).length;
+                
+                // Set basic stats
+                totalwords.textContent = spamWords.length || 0;
+                wordCount.textContent = words;
+                readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                
+                if (spamWords.length === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamWords.length / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Create a single category with all spam words
+                if (spamWords.length > 0) {
                     const categoryEl = document.createElement('div');
                     categoryEl.classList.add('category-section');
-                    
-                    const categoryName = category.name || 'Unknown';
-                    const icon = categoryIcons[categoryName] || 'fas fa-exclamation-triangle';
-                    const description = categoryDescriptions[categoryName] || 'Words that may trigger spam filters.';
                     
                     categoryEl.innerHTML = `
                         <div class="category-title">
                             <div class="category-icon">
-                                <i class="${icon}"></i>
+                                <i class="fas fa-exclamation-triangle"></i>
                             </div>
-                            ${categoryName}
-                            <span class="matches-count">${category.words.length} matches</span>
+                            Spam words
+                            <span class="matches-count">${spamWords.length} matches</span>
                         </div>
                         <div class="category-description">
-                            ${description}
+                            These words or phrases might trigger spam filters and affect your email deliverability.
                         </div>
                         <div class="word-list">
-                            ${category.words.map(word => `
+                            ${spamWords.map(word => `
                                 <div class="word-item">
                                     <span class="word-text">${word}</span>
                                 </div>
@@ -1002,134 +836,239 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     
                     categoriesContainer.appendChild(categoryEl);
+                } else {
+                    categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
                 }
-            });
-        } else {
-            const fallbackWords = data.spamWords || [];
-            if (fallbackWords.length > 0) {
-                const categoryEl = document.createElement('div');
-                categoryEl.classList.add('category-section');
                 
-                categoryEl.innerHTML = `
-                    <div class="category-title">
-                        <div class="category-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        Spam words
-                        <span class="matches-count">${fallbackWords.length} matches</span>
-                    </div>
-                    <div class="category-description">
-                        These words or phrases might trigger spam filters and affect your email deliverability.
-                    </div>
-                    <div class="word-list">
-                        ${fallbackWords.map(word => `
-                            <div class="word-item">
-                                <span class="word-text">${word}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
                 
-                categoriesContainer.appendChild(categoryEl);
-            } else {
-                categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
             }
-        }
-        
-        // Set analysis recommendations
-        analysisContainer.innerHTML = '';
-        
-        let recommendationType = 'low';
-        if (scorePercent >= 70) {
-            recommendationType = 'high';
-        } else if (scorePercent >= 30) {
-            recommendationType = 'medium';
-        }
-        
-        const recommendations = analysisRecommendations[recommendationType];
-        recommendations.forEach(rec => {
-            const item = document.createElement('div');
-            item.classList.add('analysis-item');
-            item.textContent = rec;
-            analysisContainer.appendChild(item);
-        });
-    }
-    
-    // Copy Results
-    copyBtn.addEventListener('click', function() {
-        // Create a text representation of the results
-        const totalwordsVal = totalwords.textContent;
-        const wordCountVal = wordCount.textContent;
-        const readTimeVal = readTime.textContent;
-        const spamScoreVal = spamScore.textContent;
-        
-        let resultText = `Spam word Analysis by UnlimitedLeads\n\n`;
-        resultText += `Email contains ${totalwordsVal} spam words out of ${wordCountVal} words.\n`;
-        resultText += `Estimated read time: ${readTimeVal} seconds\n`;
-        resultText += `Overall rating: ${spamScoreVal}\n\n`;
-        
-        // Add categories
-        const categories = categoriesContainer.querySelectorAll('.category-section');
-        categories.forEach(category => {
-            const titleEl = category.querySelector('.category-title');
-            const title = titleEl.textContent.trim().split('\n')[0].trim();
-            const matchesCount = titleEl.querySelector('.matches-count').textContent;
             
-            resultText += `${title}: ${matchesCount}\n`;
-            
-            const words = category.querySelectorAll('.word-item');
-            words.forEach(word => {
-                const wordText = word.querySelector('.word-text');
-                if (wordText) {
-                    resultText += `- ${wordText.textContent}\n`;
+            // Display Detailed Results (for JSON response with categories)
+            function displayDetailedResults(data) {
+                console.log("Displaying detailed results:", data);
+                
+                // Set basic stats
+                totalwords.textContent = data.totalSpamwords || 0;
+                
+                // If we have word count and read time from server, use it
+                // Otherwise calculate a rough estimate
+                if (data.wordCount) {
+                    wordCount.textContent = data.wordCount;
+                } else {
+                    const words = emailInput.value.trim().split(/\s+/).length;
+                    wordCount.textContent = words;
                 }
+                
+                if (data.readTimeSeconds) {
+                    readTime.textContent = data.readTimeSeconds;
+                } else {
+                    const words = parseInt(wordCount.textContent);
+                    readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
+                }
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                const spamwordsCount = data.totalSpamwords || 0;
+                
+                if (spamwordsCount === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamwordsCount / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Add categories if available
+                if (data.categories && data.categories.length > 0) {
+                    data.categories.forEach(category => {
+                        if (category.words && category.words.length > 0) {
+                            const categoryEl = document.createElement('div');
+                            categoryEl.classList.add('category-section');
+                            
+                            const categoryName = category.name || 'Unknown';
+                            const icon = categoryIcons[categoryName] || 'fas fa-exclamation-triangle';
+                            const description = categoryDescriptions[categoryName] || 'Words that may trigger spam filters.';
+                            
+                            categoryEl.innerHTML = `
+                                <div class="category-title">
+                                    <div class="category-icon">
+                                        <i class="${icon}"></i>
+                                    </div>
+                                    ${categoryName}
+                                    <span class="matches-count">${category.words.length} matches</span>
+                                </div>
+                                <div class="category-description">
+                                    ${description}
+                                </div>
+                                <div class="word-list">
+                                    ${category.words.map(word => `
+                                        <div class="word-item">
+                                            <span class="word-text">${word}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                            
+                            categoriesContainer.appendChild(categoryEl);
+                        }
+                    });
+                } else {
+                    const fallbackWords = data.spamWords || [];
+                    if (fallbackWords.length > 0) {
+                        const categoryEl = document.createElement('div');
+                        categoryEl.classList.add('category-section');
+                        
+                        categoryEl.innerHTML = `
+                            <div class="category-title">
+                                <div class="category-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                Spam words
+                                <span class="matches-count">${fallbackWords.length} matches</span>
+                            </div>
+                            <div class="category-description">
+                                These words or phrases might trigger spam filters and affect your email deliverability.
+                            </div>
+                            <div class="word-list">
+                                ${fallbackWords.map(word => `
+                                    <div class="word-item">
+                                        <span class="word-text">${word}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        
+                        categoriesContainer.appendChild(categoryEl);
+                    } else {
+                        categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                    }
+                }
+                
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
+                
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
+            }
+            
+            // Copy Results
+            copyBtn.addEventListener('click', function() {
+                // Create a text representation of the results
+                const totalwordsVal = totalwords.textContent;
+                const wordCountVal = wordCount.textContent;
+                const readTimeVal = readTime.textContent;
+                const spamScoreVal = spamScore.textContent;
+                
+                let resultText = `Spam word Analysis by UnlimitedLeads\n\n`;
+                resultText += `Email contains ${totalwordsVal} spam words out of ${wordCountVal} words.\n`;
+                resultText += `Estimated read time: ${readTimeVal} seconds\n`;
+                resultText += `Overall rating: ${spamScoreVal}\n\n`;
+                
+                // Add categories
+                const categories = categoriesContainer.querySelectorAll('.category-section');
+                categories.forEach(category => {
+                    const titleEl = category.querySelector('.category-title');
+                    const title = titleEl.textContent.trim().split('\n')[0].trim();
+                    const matchesCount = titleEl.querySelector('.matches-count').textContent;
+                    
+                    resultText += `${title}: ${matchesCount}\n`;
+                    
+                    const words = category.querySelectorAll('.word-item');
+                    words.forEach(word => {
+                        const wordText = word.querySelector('.word-text');
+                        if (wordText) {
+                            resultText += `- ${wordText.textContent}\n`;
+                        }
+                    });
+                    
+                    resultText += '\n';
+                });
+                
+                // Add recommendations
+                resultText += `Recommendations:\n`;
+                const recommendations = analysisContainer.querySelectorAll('.analysis-item');
+                recommendations.forEach(rec => {
+                    resultText += `- ${rec.textContent}\n`;
+                });
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(resultText).then(() => {
+                    const originalText = this.querySelector('span').textContent;
+                    this.querySelector('span').textContent = 'Copied!';
+                    
+                    setTimeout(() => {
+                        this.querySelector('span').textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
             });
             
-            resultText += '\n';
-        });
-        
-        // Add recommendations
-        resultText += `Recommendations:\n`;
-        const recommendations = analysisContainer.querySelectorAll('.analysis-item');
-        recommendations.forEach(rec => {
-            resultText += `- ${rec.textContent}\n`;
-        });
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(resultText).then(() => {
-            const originalText = this.querySelector('span').textContent;
-            this.querySelector('span').textContent = 'Copied!';
+            // Fix Email Button
+            fixEmailBtn.addEventListener('click', function() {
+                // This would typically open a premium feature or modal
+                // For now, we'll just show a status message
+                showStatus('This is a premium feature. Upgrade to fix your email automatically!', 'success');
+            });
             
-            setTimeout(() => {
-                this.querySelector('span').textContent = originalText;
-            }, 2000);
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-        });
-    });
-    
-    // Fix Email Button
-    fixEmailBtn.addEventListener('click', function() {
-        // This would typically open a premium feature or modal
-        // For now, we'll just show a status message
-        showStatus('This is a premium feature. Upgrade to fix your email automatically!', 'success');
-    });
-    
-    // Status message helper
-    function showStatus(message, type) {
-        statusMessage.innerHTML = message;
-        statusMessage.className = `status status-${type}`;
-        statusMessage.style.display = 'block';
-        
-        if (type !== 'loading') {
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 5000);
-        }
-    }
-    
-    console.log("Spam Word Checker initialized");
-});
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            // Add debugging console log to help identify if script is loaded properly
+            console.log("Spam Word Checker initialized");
             
             // Demo example
             emailInput.placeholder = "Example:\n\nSubject: Limited Time Offer - Act Now!\n\nDear Valued Customer,\n\nAre you struggling to generate leads? Our guaranteed solution has helped thousands make quick money and boost sales by 500%!\n\nThis exclusive deal won't last forever. Click here to unlock your FREE access to our revolutionary system.\n\nDon't miss out on this once-in-a-lifetime opportunity!\n\nBest regards,\nThe Marketing Team";
