@@ -1,0 +1,220 @@
+name: Translate Website
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  translate-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Create translation script
+        run: |
+          # Créer un script de traduction en Python (pas besoin de node_modules)
+          cat > translate.py <<'EOL'
+          import os
+          import re
+          import json
+          import urllib.request
+          import urllib.parse
+          import time
+          from html.parser import HTMLParser
+
+          # Configuration
+          API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI'
+          LANGUAGES = [
+              {'code': 'ar', 'name': 'arabe'},
+              {'code': 'pt', 'name': 'portugais'},
+              {'code': 'es', 'name': 'espagnol'},
+              {'code': 'fr', 'name': 'français'},
+              {'code': 'nl', 'name': 'néerlandais'}
+          ]
+
+          # Créer les dossiers pour chaque langue
+          for lang in LANGUAGES:
+              lang_dir = f"./{lang['code']}"
+              if not os.path.exists(lang_dir):
+                  os.makedirs(lang_dir)
+                  print(f"Dossier créé: {lang_dir}")
+
+          # Trouver tous les fichiers HTML à la racine
+          html_files = [f for f in os.listdir('./') if f.endswith('.html') and os.path.isfile(f)]
+          print(f"Fichiers HTML trouvés: {', '.join(html_files)}")
+
+          # Fonction pour traduire du texte avec l'API Google Translate
+          def translate_text(text, target_language):
+              if not text.strip():
+                  return text
+                  
+              # Éviter de surcharger l'API
+              time.sleep(0.5)
+              
+              url = f"https://translation.googleapis.com/language/translate/v2?key={API_KEY}"
+              data = {
+                  'q': text,
+                  'target': target_language,
+                  'format': 'html'  # Pour préserver les balises HTML internes
+              }
+              
+              # Convertir les données en chaîne encodée pour POST
+              data = urllib.parse.urlencode(data).encode('utf-8')
+              
+              try:
+                  request = urllib.request.Request(url, data=data, method='POST')
+                  request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+                  
+                  with urllib.request.urlopen(request) as response:
+                      response_data = json.loads(response.read().decode('utf-8'))
+                      
+                      # Extraire la traduction
+                      if 'data' in response_data and 'translations' in response_data['data']:
+                          return response_data['data']['translations'][0]['translatedText']
+                      else:
+                          print(f"Erreur: Réponse API inattendue: {response_data}")
+                          return text
+              except Exception as e:
+                  print(f"Erreur lors de la traduction: {e}")
+                  return text
+
+          # Classe pour analyser et modifier le HTML
+          class HTMLTranslator(HTMLParser):
+              def __init__(self, target_language):
+                  super().__init__()
+                  self.target_language = target_language
+                  self.result = []
+                  self.in_body = False
+                  self.in_footer = False
+                  self.in_head = False
+                  self.in_script = False
+                  self.in_style = False
+                  self.current_tag = None
+                  
+              def handle_starttag(self, tag, attrs):
+                  self.current_tag = tag
+                  attrs_dict = dict(attrs)
+                  
+                  # Mettre à jour l'attribut lang sur la balise html
+                  if tag == 'html':
+                      attrs_dict['lang'] = self.target_language
+                      attrs = [(k, v) for k, v in attrs_dict.items()]
+                  
+                  # Savoir si on est dans body, footer, head, script ou style
+                  if tag == 'body':
+                      self.in_body = True
+                  elif tag == 'footer':
+                      self.in_footer = True
+                  elif tag == 'head':
+                      self.in_head = True
+                  elif tag == 'script':
+                      self.in_script = True
+                  elif tag == 'style':
+                      self.in_style = True
+                  
+                  # Reconstruire la balise d'ouverture
+                  attr_str = ' '.join(f'{k}="{v}"' for k, v in attrs)
+                  self.result.append(f"<{tag}{' ' + attr_str if attr_str else ''}>")
+              
+              def handle_endtag(self, tag):
+                  self.current_tag = None
+                  
+                  # Sortir des sections spéciales
+                  if tag == 'body':
+                      self.in_body = False
+                  elif tag == 'footer':
+                      self.in_footer = False
+                  elif tag == 'head':
+                      self.in_head = False
+                  elif tag == 'script':
+                      self.in_script = False
+                  elif tag == 'style':
+                      self.in_style = False
+                  
+                  # Reconstruire la balise de fermeture
+                  self.result.append(f"</{tag}>")
+              
+              def handle_data(self, data):
+                  # Ne pas traduire le contenu des scripts et styles
+                  if self.in_script or self.in_style:
+                      self.result.append(data)
+                      return
+                  
+                  # Traduire le titre et les méta-descriptions
+                  if self.in_head and self.current_tag in ['title']:
+                      translated_data = translate_text(data, self.target_language)
+                      self.result.append(translated_data)
+                      return
+                  
+                  # Traduire le contenu du body et footer
+                  if (self.in_body or self.in_footer) and data.strip() and self.current_tag not in ['script', 'style']:
+                      if len(data.strip()) > 2:  # Ignorer les très courts textes (souvent des espaces ou sauts de ligne)
+                          translated_data = translate_text(data, self.target_language)
+                          self.result.append(translated_data)
+                      else:
+                          self.result.append(data)
+                  else:
+                      self.result.append(data)
+              
+              def handle_comment(self, data):
+                  self.result.append(f"<!--{data}-->")
+                  
+              def handle_entityref(self, name):
+                  self.result.append(f"&{name};")
+                  
+              def handle_charref(self, name):
+                  self.result.append(f"&#{name};")
+                  
+              def get_result(self):
+                  return ''.join(self.result)
+
+          # Fonction pour traduire un fichier HTML
+          def translate_file(filename, lang):
+              print(f"Traduction de {filename} en {lang['name']}...")
+              
+              # Lire le contenu HTML
+              with open(filename, 'r', encoding='utf-8') as f:
+                  html_content = f.read()
+              
+              # Traduire les méta descriptions (avec regex pour éviter de parser tout le HTML)
+              meta_desc_pattern = re.compile(r'<meta\s+name=["\'](description|keywords)["\'].*?content=["\'](.*?)["\']', re.IGNORECASE | re.DOTALL)
+              
+              def replace_meta(match):
+                  meta_name = match.group(1)
+                  meta_content = match.group(2)
+                  translated_content = translate_text(meta_content, lang['code'])
+                  return f'<meta name="{meta_name}" content="{translated_content}"'
+              
+              html_content = meta_desc_pattern.sub(replace_meta, html_content)
+              
+              # Utiliser le parseur HTML pour traduire le contenu
+              translator = HTMLTranslator(lang['code'])
+              translator.feed(html_content)
+              translated_html = translator.get_result()
+              
+              # Enregistrer le fichier traduit
+              output_file = f"./{lang['code']}/{filename}"
+              with open(output_file, 'w', encoding='utf-8') as f:
+                  f.write(translated_html)
+              
+              print(f"✓ Fichier traduit: {lang['code']}/{filename}")
+
+          # Traduire tous les fichiers
+          for html_file in html_files:
+              for lang in LANGUAGES:
+                  translate_file(html_file, lang)
+
+          print("Traduction terminée!")
+          EOL
+          
+          # Exécuter le script Python
+          python3 translate.py
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Traduction des pages HTML"
+          git push
