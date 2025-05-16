@@ -530,14 +530,6 @@
                         <div id="totalwords" class="stat-value">0</div>
                         <div class="stat-label">Spam words</div>
                     </div>
-                    <div class="stat-box">
-                        <div id="wordCount" class="stat-value">0</div>
-                        <div class="stat-label">Words</div>
-                    </div>
-                    <div class="stat-box">
-                        <div id="readTime" class="stat-value">0</div>
-                        <div class="stat-label">Second Read Time</div>
-                    </div>
                 </div>
 
                 <div id="categoriesContainer" class="categories-container">
@@ -555,10 +547,6 @@
                     <button id="copyBtn" class="btn btn-secondary">
                         <i class="fas fa-copy"></i>
                         <span>Copy Results</span>
-                    </button>
-                    <button id="fixEmailBtn" class="btn btn-primary">
-                        <i class="fas fa-magic"></i>
-                        <span>Fix My Email</span>
                     </button>
                 </div>
             </div>
@@ -630,11 +618,8 @@
             const checkBtn = document.getElementById('checkBtn');
             const resultArea = document.getElementById('resultArea');
             const copyBtn = document.getElementById('copyBtn');
-            const fixEmailBtn = document.getElementById('fixEmailBtn');
             const statusMessage = document.getElementById('statusMessage');
             const totalwords = document.getElementById('totalwords');
-            const wordCount = document.getElementById('wordCount');
-            const readTime = document.getElementById('readTime');
             const spamScore = document.getElementById('spamScore');
             const progressBar = document.getElementById('progressBar');
             const categoriesContainer = document.getElementById('categoriesContainer');
@@ -776,13 +761,8 @@
             function displaySimpleResults(spamWords) {
                 console.log("Displaying simple results with words:", spamWords);
                 
-                // Calculate word count from user input
-                const words = emailInput.value.trim().split(/\s+/).length;
-                
                 // Set basic stats
                 totalwords.textContent = spamWords.length || 0;
-                wordCount.textContent = words;
-                readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
                 
                 // Set spam score
                 let scoreText = '';
@@ -865,22 +845,6 @@
                 
                 // Set basic stats
                 totalwords.textContent = data.totalSpamwords || 0;
-                
-                // If we have word count and read time from server, use it
-                // Otherwise calculate a rough estimate
-                if (data.wordCount) {
-                    wordCount.textContent = data.wordCount;
-                } else {
-                    const words = emailInput.value.trim().split(/\s+/).length;
-                    wordCount.textContent = words;
-                }
-                
-                if (data.readTimeSeconds) {
-                    readTime.textContent = data.readTimeSeconds;
-                } else {
-                    const words = parseInt(wordCount.textContent);
-                    readTime.textContent = Math.ceil(words / 3); // Rough estimate: 3 words per second
-                }
                 
                 // Set spam score
                 let scoreText = '';
@@ -998,13 +962,10 @@
             copyBtn.addEventListener('click', function() {
                 // Create a text representation of the results
                 const totalwordsVal = totalwords.textContent;
-                const wordCountVal = wordCount.textContent;
-                const readTimeVal = readTime.textContent;
                 const spamScoreVal = spamScore.textContent;
                 
                 let resultText = `Spam word Analysis by UnlimitedLeads\n\n`;
-                resultText += `Email contains ${totalwordsVal} spam words out of ${wordCountVal} words.\n`;
-                resultText += `Estimated read time: ${readTimeVal} seconds\n`;
+                resultText += `Email contains ${totalwordsVal} spam words.\n`;
                 resultText += `Overall rating: ${spamScoreVal}\n\n`;
                 
                 // Add categories
@@ -1047,12 +1008,7 @@
                 });
             });
             
-            // Fix Email Button
-            fixEmailBtn.addEventListener('click', function() {
-                // This would typically open a premium feature or modal
-                // For now, we'll just show a status message
-                showStatus('This is a premium feature. Upgrade to fix your email automatically!', 'success');
-            });
+            // Remove the unused fixEmailBtn event listener
             
             // Status message helper
             function showStatus(message, type) {
