@@ -169,6 +169,71 @@
             margin-bottom: 0.75rem;
             font-weight: 600;
         }
+         /* Other Tools Section */
+        .other-tools {
+            padding: 3rem 0;
+            background: var(--gray-50);
+        }
+        .other-tools h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .tool-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary);
+        }
+        .tool-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--gray-50);
+            border-radius: 50%;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .tool-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .tool-card p {
+            color: var(--gray-800);
+            margin-bottom: 1.25rem;
+        }
+        .tool-link {
+            color: var(--primary);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tool-link i {
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+        .tool-link:hover i {
+            transform: translateX(3px);
+        }
+
 
         /* FAQ Section */
         .faq {
