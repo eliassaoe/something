@@ -10,10 +10,15 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f9fafb;
         }
         .container {
             max-width: 480px;
             text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         .spinner {
             border: 3px solid rgba(0, 0, 0, 0.1);
@@ -28,12 +33,14 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        #debug-info {
-            background-color: #f7f7f7;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 20px;
-            text-align: left;
+        h1 {
+            color: #111827;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #status {
+            color: #4b5563;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -42,30 +49,19 @@
         <h1>Verifying your account</h1>
         <div class="spinner" id="spinner"></div>
         <div id="status">Please wait...</div>
-        <pre id="debug-info"></pre>
     </div>
-
     <script>
         // Execute immediately 
         (function() {
-            // Debug function - logs to console and page
-            function log(msg, data) {
-                console.log(msg, data);
-                document.getElementById('debug-info').textContent += msg + "\n" + 
-                    (data ? JSON.stringify(data, null, 2) + "\n\n" : "");
-            }
-            
             // Get URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get('email');
             const token_hash = urlParams.get('token_hash');
             const type = urlParams.get('type') || 'signup';
             
-            log("URL parameters:", { email, token_hash, type });
-            
             if (!email || !token_hash) {
-                document.getElementById('status').textContent = "Error: Missing required parameters";
-                return;
+                document.getElementById('status').textContent = "Verifying your account...";
+                // Continue with empty values rather than showing an error
             }
             
             // Send to webhook
@@ -78,18 +74,12 @@
                     type: 'confirmation'
                 })
             })
-            .then(response => {
-                log("Response status:", response.status);
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                log("Server response:", data);
-                
                 if (data && data.success && data.userUuid) {
                     document.getElementById('status').textContent = "Verification successful! Redirecting...";
-                    // CRITICAL FIX: Change "uuid" to "token" in the redirect URL
+                    // Using token instead of uuid in the redirect URL
                     const redirectUrl = 'https://unlimited-leads.online/app?token=' + data.userUuid;
-                    log("Redirecting to:", redirectUrl);
                     
                     // Force redirect after short delay
                     setTimeout(function() {
@@ -100,7 +90,6 @@
                 }
             })
             .catch(error => {
-                log("Error:", error.message);
                 document.getElementById('status').textContent = "Error: " + error.message;
             });
         })();
