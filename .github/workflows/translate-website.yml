@@ -12,23 +12,41 @@ permissions:
 jobs:
   translate-website:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [fr, ar, es, pt, de, nl]
+        language_name: [francais, arabic, espanol, portugais, allemand, neerlandais]
     steps:
-      - name: Checkout repository
+      - name: Checkout repository on language branch
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
-      
-      - name: Get last modified file
-        id: get_file
+          ref: ${{ matrix.language_name }}
+          fetch-depth: 0
+        continue-on-error: true
+        
+      - name: Create language branch if it doesn't exist
+        if: ${{ failure() }}
         run: |
-          MODIFIED_FILE=$(git diff --name-only HEAD^ HEAD | grep '\.html$' | head -n 1)
-          if [ -n "$MODIFIED_FILE" ]; then
-            echo "file=$MODIFIED_FILE" >> $GITHUB_OUTPUT
-            echo "Le fichier HTML modifié est: $MODIFIED_FILE"
-          else
-            echo "Aucun fichier HTML modifié dans le dernier commit."
-            exit 0
+          git fetch origin main
+          git checkout -b ${{ matrix.language_name }} origin/main
+          git push -u origin ${{ matrix.language_name }}
+      
+      - name: Get latest repository state
+        run: |
+          git fetch origin main
+      
+      - name: Get last modified file from main
+        run: |
+          MODIFIED_FILE=$(git diff --name-only origin/main...HEAD -- '*.html' | head -n 1)
+          if [ -z "$MODIFIED_FILE" ]; then
+            # Get the most recent HTML file modified in main
+            git checkout origin/main -- '*.html'
+            MODIFIED_FILE=$(find . -maxdepth 1 -name "*.html" -type f | sort -r | head -n 1)
+            MODIFIED_FILE=${MODIFIED_FILE#./}
           fi
+          echo "file=$MODIFIED_FILE" >> $GITHUB_OUTPUT
+          echo "Le fichier HTML modifié est: $MODIFIED_FILE"
+        id: get_file
       
       - name: Setup Node.js
         if: steps.get_file.outputs.file != ''
@@ -50,6 +68,8 @@ jobs:
           
           // Le fichier à traduire (passé comme argument)
           const fileToTranslate = process.argv[2];
+          // La langue cible (passée comme deuxième argument)
+          const targetLanguage = process.argv[3];
           
           // Configuration
           const API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI';
@@ -169,38 +189,25 @@ jobs:
               process.exit(1);
             }
             
-            console.log(`🔄 Traduction du fichier: ${fileToTranslate}`);
+            console.log(`🔄 Traduction du fichier: ${fileToTranslate} en ${targetLanguage}`);
             
             // Lire le contenu du fichier
             const fileContent = fs.readFileSync(fileToTranslate, 'utf8');
             
-            // Créer les dossiers de langue s'ils n'existent pas
-            for (const lang of TARGET_LANGUAGES) {
-              const langDir = `./${lang}`;
-              if (!fs.existsSync(langDir)) {
-                fs.mkdirSync(langDir, { recursive: true });
-                console.log(`📁 Dossier créé: ${langDir}`);
-              }
+            // Créer le dossier de langue s'il n'existe pas
+            const langDir = `./${targetLanguage}`;
+            if (!fs.existsSync(langDir)) {
+              fs.mkdirSync(langDir, { recursive: true });
+              console.log(`📁 Dossier créé: ${langDir}`);
             }
             
-            // Traduire le fichier dans chaque langue
-            for (const lang of TARGET_LANGUAGES) {
-              console.log(`\n🌍 Traduction en ${lang}...`);
-              
-              try {
-                // Traduire le contenu
-                const translatedContent = await translateHtml(fileContent, lang, fileToTranslate);
-                
-                // Sauvegarder le fichier traduit
-                const outputPath = `./${lang}/${fileToTranslate}`;
-                fs.writeFileSync(outputPath, translatedContent);
-                console.log(`✅ Fichier traduit: ${outputPath}`);
-              } catch (error) {
-                console.error(`❌ Erreur lors de la traduction en ${lang}: ${error.message}`);
-              }
-            }
+            // Traduire le contenu
+            const translatedContent = await translateHtml(fileContent, targetLanguage, fileToTranslate);
             
-            console.log("\n🎉 Traduction terminée!");
+            // Sauvegarder le fichier traduit
+            const outputPath = `./${targetLanguage}/${fileToTranslate}`;
+            fs.writeFileSync(outputPath, translatedContent);
+            console.log(`✅ Fichier traduit: ${outputPath}`);
           }
           
           // Exécuter la fonction principale
@@ -210,27 +217,20 @@ jobs:
           });
           EOL
       
-      - name: Execute translation script
+      - name: Execute translation script for single language
         if: steps.get_file.outputs.file != ''
-        run: node translate-file.js "${{ steps.get_file.outputs.file }}"
+        run: node translate-file.js "${{ steps.get_file.outputs.file }}" "${{ matrix.language }}"
       
       - name: Clean up node_modules
         if: steps.get_file.outputs.file != ''
         run: rm -rf node_modules
       
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ github.token }}
-          commit-message: "🌐 Traduction de ${{ steps.get_file.outputs.file }}"
-          title: "Traduction de ${{ steps.get_file.outputs.file }}"
-          body: |
-            Traduction automatique de ${{ steps.get_file.outputs.file }} en:
-            - Français
-            - Arabe
-            - Portugais
-            - Espagnol
-            - Néerlandais
-            - Allemand
-          branch: "translate-html"
-          base: main
+      - name: Commit and push changes to language branch
+        if: steps.get_file.outputs.file != ''
+        run: |
+          mkdir -p ${{ matrix.language }}
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "🌐 Traduction de ${{ steps.get_file.outputs.file }} en ${{ matrix.language }}"
+          git push origin ${{ matrix.language_name }}
