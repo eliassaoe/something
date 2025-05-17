@@ -1,0 +1,24 @@
+name: Create gitignore
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  create-gitignore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Create gitignore file
+        run: |
+          echo "# Ignore node modules" > .gitignore
+          echo "node_modules/" >> .gitignore
+          echo ".translation-log.json" >> .gitignore
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "Add .gitignore to exclude node_modules"
+          title: "Add .gitignore"
+          body: "Adds .gitignore file to exclude node_modules directory and translation log"
+          branch: add-gitignore
+          base: main
