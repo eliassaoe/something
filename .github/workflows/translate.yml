@@ -1,4 +1,4 @@
-name: Continuous Translation
+name: Translate HTML to Spanish
 
 on:
   push:
@@ -14,16 +14,83 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      
-      - uses: yunwei37/OpenAI-Continuous-Translator@master
         with:
-          git_repo_url: https://github.com/eliassaoe/something
-          api_key: ${{ secrets.OPENAI_API_KEY }}
-          target_language: "Spanish"
-          file_types: "html"
+          fetch-depth: 0  # Get full history
       
-      - name: Add & Commit
-        uses: EndBug/add-and-commit@v9.1.1
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          message: 'Add Spanish translations'
-          default_author: github_actions
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: pip install openai beautifulsoup4 lxml
+      
+      - name: Translate HTML files
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          import os
+          import glob
+          import openai
+          from bs4 import BeautifulSoup
+          
+          # Configure OpenAI API
+          client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+          
+          # Find HTML files
+          html_files = glob.glob("**/*.html", recursive=True)
+          print(f"Found {len(html_files)} HTML files")
+          
+          for file_path in html_files:
+              # Skip files that are already in language folders
+              if '/es/' in file_path or file_path.startswith('es/'):
+                  print(f"Skipping {file_path} - already a translation")
+                  continue
+                  
+              print(f"Processing {file_path}")
+              
+              # Read HTML file
+              with open(file_path, 'r', encoding='utf-8') as f:
+                  html_content = f.read()
+              
+              # Parse HTML
+              soup = BeautifulSoup(html_content, 'lxml')
+              
+              # Translate content
+              print(f"Translating {file_path} to Spanish...")
+              try:
+                  response = client.chat.completions.create(
+                      model="gpt-4",
+                      messages=[
+                          {"role": "system", "content": "You are a professional translator specializing in website localization. Translate HTML to Spanish while preserving all HTML tags, attributes, classes, and IDs. Only translate the text content that would be visible to users."},
+                          {"role": "user", "content": f"Translate this HTML to Spanish, keeping all HTML tags and attributes intact:\n\n{html_content}"}
+                      ],
+                      temperature=0.2
+                  )
+                  
+                  translated_html = response.choices[0].message.content
+                  
+                  # Create output directory structure
+                  dir_name = os.path.dirname(file_path)
+                  base_name = os.path.basename(file_path)
+                  output_dir = os.path.join(dir_name, 'es') if dir_name else 'es'
+                  os.makedirs(output_dir, exist_ok=True)
+                  
+                  # Save translated file
+                  output_path = os.path.join(output_dir, base_name)
+                  with open(output_path, 'w', encoding='utf-8') as f:
+                      f.write(translated_html)
+                      
+                  print(f"Translation saved to {output_path}")
+                  
+              except Exception as e:
+                  print(f"Error translating {file_path}: {e}")
+        shell: python
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add --all
+          git diff --staged --quiet || git commit -m "Add Spanish translations"
+          git push
