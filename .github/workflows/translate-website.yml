@@ -1,81 +1,345 @@
-name: Create Language Folders
+name: Translate Website with Google Translate
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Déclenchement manuel uniquement
 permissions:
   contents: write
 jobs:
-  create-language-folders:
+  translate-website:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
-      - name: Create language folders script
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install axios slugify
+        
+      - name: Create translation script
         run: |
-          cat > create-language-folders.js <<'EOL'
+          cat > translate-website.js <<'EOL'
           const fs = require('fs');
+          const path = require('path');
+          const axios = require('axios');
+          const slugify = require('slugify');
           
-          // Langues cibles
-          const LANGUAGES = [
-            { code: 'ar', name: 'Arabe' },
-            { code: 'pt', name: 'Portugais' },
-            { code: 'es', name: 'Espagnol' },
-            { code: 'fr', name: 'Français' },
-            { code: 'nl', name: 'Néerlandais' }
-          ];
+          // Configuration - PARAMÉTRABLE COMME DEEPL ACTION
+          const API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI';
+          const TARGET_LANGUAGES = ['fr', 'ar', 'pt', 'es', 'nl', 'de'];
+          const SOURCE_LANGUAGE = 'en'; // La langue d'origine
+          const BASE_URL = 'https://unlimited-leads.online';
           
-          // Contenu HTML de base pour chaque langue
-          function getHtmlContent(langCode, langName) {
-            return `<!DOCTYPE html>
-          <html lang="${langCode}">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Page en ${langName}</title>
-          </head>
-          <body>
-            <h1>Bienvenue sur la version ${langName}</h1>
-            <p>Cette page est une démonstration de la version ${langName} du site.</p>
-          </body>
-          </html>`;
+          // Définitions des langues pour l'affichage
+          const LANGUAGE_NAMES = {
+            'fr': 'français',
+            'ar': 'arabe',
+            'pt': 'portugais',
+            'es': 'espagnol',
+            'nl': 'néerlandais',
+            'de': 'allemand'
+          };
+          
+          // Fonction pour traduire du texte avec l'API Google Translate
+          async function translateText(text, targetLanguage) {
+            // Éviter de traduire du texte vide
+            if (!text || !text.trim()) return text;
+            
+            // Limiter la fréquence des appels API pour éviter les erreurs
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            try {
+              const response = await axios({
+                method: 'post',
+                url: `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+                data: {
+                  q: text,
+                  target: targetLanguage,
+                  source: SOURCE_LANGUAGE,
+                  format: 'html'
+                }
+              });
+              
+              return response.data.data.translations[0].translatedText;
+            } catch (error) {
+              console.error(`Erreur de traduction: ${error.message}`);
+              // En cas d'erreur d'API, attendre et réessayer une fois
+              if (error.response && (error.response.status === 429 || error.response.status === 503)) {
+                console.log('Trop de requêtes, attente de 2 secondes avant de réessayer...');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                try {
+                  const retryResponse = await axios({
+                    method: 'post',
+                    url: `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+                    data: {
+                      q: text,
+                      target: targetLanguage,
+                      source: SOURCE_LANGUAGE,
+                      format: 'html'
+                    }
+                  });
+                  return retryResponse.data.data.translations[0].translatedText;
+                } catch (retryError) {
+                  console.error(`Échec de la nouvelle tentative: ${retryError.message}`);
+                  return text; // Retourner le texte original
+                }
+              }
+              return text; // Retourner le texte original
+            }
           }
           
-          // Créer les dossiers de langue et les fichiers index.html
-          try {
-            // Créer ou vérifier chaque dossier de langue
-            LANGUAGES.forEach(lang => {
-              const dirPath = `./${lang.code}`;
+          // Fonction pour traduire et slugifier un nom de fichier
+          async function translateAndSlugifyFilename(filename, targetLanguage) {
+            // Si c'est index.html, on le garde tel quel
+            if (filename === 'index.html') {
+              return 'index.html';
+            }
+            
+            try {
+              // Extraire le nom sans extension
+              const extension = path.extname(filename);
+              const nameWithoutExt = path.basename(filename, extension);
               
-              // Créer le dossier s'il n'existe pas
-              if (!fs.existsSync(dirPath)) {
-                fs.mkdirSync(dirPath, { recursive: true });
-                console.log(`✓ Dossier créé: ${dirPath}`);
-              } else {
-                console.log(`Le dossier ${dirPath} existe déjà.`);
+              // Remplacer les tirets par des espaces pour une meilleure traduction
+              const nameWithSpaces = nameWithoutExt.replace(/-/g, ' ');
+              
+              // Traduire le nom de fichier
+              const translatedName = await translateText(nameWithSpaces, targetLanguage);
+              
+              // Slugifier le nom traduit (convertir en format URL-friendly)
+              const slugConfig = {
+                lower: true,      // Convertir en minuscules
+                strict: true,     // Supprimer les caractères spéciaux
+                locale: targetLanguage === 'ar' ? 'ar' : 'en' // Gestion spéciale pour l'arabe
+              };
+              
+              const sluggedName = slugify(translatedName, slugConfig);
+              
+              // Retourner le nom complet avec extension
+              return sluggedName + extension;
+            } catch (error) {
+              console.error(`Erreur lors de la traduction du nom de fichier: ${error.message}`);
+              return filename; // En cas d'erreur, renvoyer le nom original
+            }
+          }
+          
+          // Fonction pour traduire le contenu HTML
+          async function translateHtml(html, targetLanguage, originalFilename, translatedFilename) {
+            try {
+              // 1. Traduire le titre avec une regex simple
+              const titleRegex = /<title>(.*?)<\/title>/i;
+              const titleMatch = html.match(titleRegex);
+              
+              if (titleMatch && titleMatch[1]) {
+                const translatedTitle = await translateText(titleMatch[1], targetLanguage);
+                html = html.replace(titleMatch[0], `<title>${translatedTitle}</title>`);
               }
               
-              // Créer le fichier index.html
-              const filePath = `${dirPath}/index.html`;
-              const content = getHtmlContent(lang.code, lang.name);
+              // 2. Traduire les meta descriptions et keywords
+              const metaRegex = /<meta\s+(?:name|property)=["'](description|keywords|og:title|og:description)["']\s+content=["'](.*?)["']/gi;
+              let metaMatch;
               
-              fs.writeFileSync(filePath, content);
-              console.log(`✓ Fichier créé: ${filePath}`);
-            });
-            
-            console.log('Création des dossiers de langue terminée avec succès.');
-          } catch (error) {
-            console.error('Erreur:', error);
-            process.exit(1);
+              while ((metaMatch = metaRegex.exec(html)) !== null) {
+                const [fullMatch, metaName, metaContent] = metaMatch;
+                const translatedContent = await translateText(metaContent, targetLanguage);
+                html = html.replace(fullMatch, fullMatch.replace(metaContent, translatedContent));
+              }
+              
+              // 3. Définir la langue du document
+              html = html.replace(/<html\b([^>]*)>/i, `<html$1 lang="${targetLanguage}">`);
+              
+              // 4. Ajouter des balises hreflang pour le SEO
+              let hreflangTags = '';
+              for (const lang of TARGET_LANGUAGES) {
+                const langFilename = lang === targetLanguage ? 
+                  translatedFilename : 
+                  await translateAndSlugifyFilename(originalFilename, lang);
+                
+                hreflangTags += `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${langFilename}" />\n    `;
+              }
+              
+              // Ajouter la balise hreflang x-default
+              const xDefaultTag = `<link rel="alternate" hreflang="x-default" href="${BASE_URL}/${originalFilename}" />`;
+              
+              // Insérer les balises hreflang dans la section head
+              html = html.replace(/<\/head>/i, `    ${xDefaultTag}\n    ${hreflangTags}</head>`);
+              
+              // 5. Extraire et traduire les blocs de texte visibles
+              // COMME DEEPL, on utilise une approche qui préserve les balises
+              const textBlocks = [
+                { regex: /<p\b[^>]*>(.*?)<\/p>/gis, tag: 'p' },
+                { regex: /<h[1-6]\b[^>]*>(.*?)<\/h[1-6]>/gis, tag: 'h' },
+                { regex: /<span\b[^>]*>((?!<span|<div|<p|<h).+?)<\/span>/gis, tag: 'span' },
+                { regex: /<div\b[^>]*>((?!<div|<p|<h).+?)<\/div>/gis, tag: 'div' },
+                { regex: /<a\b[^>]*>((?!<div|<p|<h).+?)<\/a>/gis, tag: 'a' },
+                { regex: /<li\b[^>]*>((?!<div|<p|<h).+?)<\/li>/gis, tag: 'li' },
+                { regex: /<button\b[^>]*>((?!<div|<p|<h).+?)<\/button>/gis, tag: 'button' },
+                { regex: /<label\b[^>]*>((?!<div|<p|<h).+?)<\/label>/gis, tag: 'label' },
+                { regex: /<footer\b[^>]*>(.*?)<\/footer>/gis, tag: 'footer' }
+              ];
+              
+              // Traiter chaque type de bloc de texte
+              for (const block of textBlocks) {
+                let match;
+                while ((match = block.regex.exec(html)) !== null) {
+                  const fullMatch = match[0];
+                  const textContent = match[1];
+                  
+                  // Ne pas traduire le contenu vide ou les balises script/style
+                  if (!textContent || !textContent.trim() || /<script|<style/i.test(textContent)) {
+                    continue;
+                  }
+                  
+                  // Si le contenu contient des balises HTML complexes imbriquées, on saute
+                  if (textContent.includes('</') && textContent.includes('<')) {
+                    continue;
+                  }
+                  
+                  try {
+                    const translatedContent = await translateText(textContent, targetLanguage);
+                    if (translatedContent && translatedContent !== textContent) {
+                      html = html.replace(fullMatch, fullMatch.replace(textContent, translatedContent));
+                    }
+                  } catch (e) {
+                    console.log(`Échec de traduction pour: ${textContent.slice(0, 50)}...`);
+                  }
+                }
+              }
+              
+              // 6. Mettre à jour les liens internes pour pointer vers les versions traduites
+              const linkRegex = /<a\b[^>]*href=["']([^"']+\.html)["'][^>]*>/gi;
+              let linkMatch;
+              
+              while ((linkMatch = linkRegex.exec(html)) !== null) {
+                const [fullMatch, href] = linkMatch;
+                
+                // Ignorer les liens externes
+                if (href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) {
+                  continue;
+                }
+                
+                // Traduire et slugifier le nom du fichier lié
+                const linkedFilename = path.basename(href);
+                try {
+                  const translatedLinkedFilename = await translateAndSlugifyFilename(linkedFilename, targetLanguage);
+                  const newHref = href.replace(linkedFilename, translatedLinkedFilename);
+                  html = html.replace(fullMatch, fullMatch.replace(href, `/${targetLanguage}/${newHref}`));
+                } catch (e) {
+                  console.error(`Erreur lors de la traduction de lien: ${e.message}`);
+                }
+              }
+              
+              return html;
+            } catch (error) {
+              console.error(`Erreur lors de la traduction HTML: ${error.message}`);
+              return html; // Retourner le HTML original en cas d'erreur
+            }
           }
+          
+          // Fonction principale - COMME DEEPL ACTION
+          async function translateWebsite() {
+            console.log("🌐 Démarrage de la traduction du site web...");
+            
+            // Trouver tous les fichiers HTML à la racine
+            const htmlFiles = fs.readdirSync('./').filter(file => 
+              file.endsWith('.html') && fs.statSync(file).isFile()
+            );
+            
+            if (htmlFiles.length === 0) {
+              console.log("⚠️ Aucun fichier HTML trouvé dans le répertoire racine.");
+              return;
+            }
+            
+            console.log(`📄 Fichiers HTML trouvés (${htmlFiles.length}): ${htmlFiles.join(', ')}`);
+            
+            // Pour chaque langue cible, créer le dossier s'il n'existe pas
+            for (const lang of TARGET_LANGUAGES) {
+              const langDir = `./${lang}`;
+              if (!fs.existsSync(langDir)) {
+                fs.mkdirSync(langDir, { recursive: true });
+                console.log(`📁 Dossier créé: ${langDir}`);
+              }
+            }
+            
+            // Traduire chaque fichier HTML dans chaque langue
+            for (const file of htmlFiles) {
+              console.log(`\n🔄 Traitement du fichier: ${file}`);
+              const originalContent = fs.readFileSync(file, 'utf8');
+              
+              for (const lang of TARGET_LANGUAGES) {
+                console.log(`\n  🌍 Traduction en ${LANGUAGE_NAMES[lang]}...`);
+                
+                try {
+                  // 1. Traduire le nom du fichier (slug)
+                  const translatedFilename = await translateAndSlugifyFilename(file, lang);
+                  console.log(`  📝 Nom traduit: ${file} → ${translatedFilename}`);
+                  
+                  // 2. Traduire le contenu HTML
+                  const translatedContent = await translateHtml(originalContent, lang, file, translatedFilename);
+                  
+                  // 3. Sauvegarder le fichier traduit avec le nom traduit
+                  const outputPath = `./${lang}/${translatedFilename}`;
+                  fs.writeFileSync(outputPath, translatedContent);
+                  console.log(`  ✅ Fichier traduit créé: ${outputPath}`);
+                } catch (error) {
+                  console.error(`  ❌ Erreur lors de la traduction en ${LANGUAGE_NAMES[lang]}: ${error.message}`);
+                }
+              }
+            }
+            
+            // Créer un sitemap.xml multilingue
+            try {
+              console.log("\n📑 Création du sitemap multilingue...");
+              
+              let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+              sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+              sitemap += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+              
+              // Pour chaque fichier HTML original
+              for (const file of htmlFiles) {
+                const originalUrl = `${BASE_URL}/${file}`;
+                sitemap += '  <url>\n';
+                sitemap += `    <loc>${originalUrl}</loc>\n`;
+                sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${originalUrl}" />\n`;
+                
+                // Ajouter les alternatives pour chaque langue
+                for (const lang of TARGET_LANGUAGES) {
+                  const translatedFilename = await translateAndSlugifyFilename(file, lang);
+                  sitemap += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${translatedFilename}" />\n`;
+                }
+                
+                sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
+                sitemap += '  </url>\n';
+              }
+              
+              sitemap += '</urlset>';
+              
+              // Sauvegarder le sitemap
+              fs.writeFileSync('sitemap_multilingual.xml', sitemap);
+              console.log("✅ Sitemap multilingue créé: sitemap_multilingual.xml");
+            } catch (error) {
+              console.error(`❌ Erreur lors de la création du sitemap: ${error.message}`);
+            }
+            
+            console.log("\n🎉 Traduction du site terminée!");
+          }
+          
+          // Exécuter la fonction principale
+          translateWebsite().catch(error => {
+            console.error("❌ Erreur générale:", error.message);
+            process.exit(1);
+          });
           EOL
-      
-      - name: Execute script
-        run: node create-language-folders.js
-      
+          
+      - name: Execute translation script
+        run: node translate-website.js
+        
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "Ajout des dossiers de langue" || echo "Pas de changements à commiter"
+          git commit -m "🌐 Traduction multilingue du site web" || echo "Pas de changements à commiter"
           git push
