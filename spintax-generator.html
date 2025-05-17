@@ -732,7 +732,7 @@
                 const tempPreview = document.createElement('div');
                 tempPreview.className = 'status status-success';
                 tempPreview.style.marginTop = '1rem';
-                tempPreview.innerHTML = `
+                tempPreview.innerHTML = ` 
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                         <strong>Random Preview:</strong>
                         <span class="close-preview" style="cursor: pointer; color: var(--primary);">×</span>
@@ -740,7 +740,7 @@
                     <div style="white-space: pre-wrap;">${randomVariation}</div>
                 `;
                 
-                // Remove any existing preview
+                // Remove any existing preview 
                 const existingPreview = document.querySelector('.close-preview');
                 if (existingPreview) {
                     existingPreview.closest('.status').remove();
