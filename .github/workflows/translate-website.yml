@@ -30,13 +30,6 @@ jobs:
             exit 0
           fi
       
-      - name: Generate branch name
-        if: steps.get_file.outputs.file != ''
-        id: branch_name
-        run: |
-          BRANCH_NAME="translate-$(echo "${{ steps.get_file.outputs.file }}" | sed 's/\./-/g')"
-          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-      
       - name: Setup Node.js
         if: steps.get_file.outputs.file != ''
         uses: actions/setup-node@v3
@@ -286,6 +279,16 @@ jobs:
         if: steps.get_file.outputs.file != ''
         run: rm -rf node_modules
       
+      - name: Simple branch name
+        if: steps.get_file.outputs.file != ''
+        id: simple_branch
+        run: |
+          # Create a simple branch name without special characters
+          FILENAME="${{ steps.get_file.outputs.file }}"
+          SIMPLE_NAME=$(echo "$FILENAME" | sed 's/\.html/-html/g')
+          echo "name=translate-$SIMPLE_NAME" >> $GITHUB_OUTPUT
+          echo "Branch name will be: translate-$SIMPLE_NAME"
+      
       - name: Create Pull Request
         if: steps.get_file.outputs.file != ''
         uses: peter-evans/create-pull-request@v5
@@ -300,6 +303,5 @@ jobs:
             - Espagnol
             - Néerlandais
             - Allemand
-          branch: ${{ steps.branch_name.outputs.name }}
+          branch: ${{ steps.simple_branch.outputs.name }}
           base: main
-          delete-branch: true
