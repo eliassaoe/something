@@ -1,4 +1,4 @@
-name: Translate HTML Content to Spanish
+name: Translate Changed HTML Content to Spanish
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 2  # Need at least 2 commits to detect changes
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -25,20 +25,29 @@ jobs:
       - name: Install dependencies
         run: pip install openai beautifulsoup4 lxml
       
-      - name: Extract, Translate and Replace Content
+      - name: Extract, Translate and Replace Content of Changed Files Only
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           import os
-          import glob
           import openai
           from bs4 import BeautifulSoup, NavigableString
           import time
-          import json
-          import re
+          import subprocess
           
           # Configure OpenAI API
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+          
+          # Get list of HTML files changed in the most recent commit
+          def get_changed_html_files():
+              result = subprocess.run(
+                  ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], 
+                  capture_output=True, 
+                  text=True
+              )
+              files = result.stdout.strip().split('\n')
+              # Filter for only HTML files that exist
+              return [f for f in files if f.endswith('.html') and os.path.exists(f)]
           
           def extract_translatable_content(soup):
               """Extract text content that should be translated."""
@@ -228,11 +237,11 @@ jobs:
               
               return str(soup)
           
-          # Find HTML files
-          html_files = glob.glob("**/*.html", recursive=True)
-          print(f"Found {len(html_files)} HTML files")
+          # Get HTML files changed in the most recent commit
+          changed_html_files = get_changed_html_files()
+          print(f"Found {len(changed_html_files)} changed HTML files")
           
-          for file_path in html_files:
+          for file_path in changed_html_files:
               # Skip files that are already in language folders
               if '/es/' in file_path or file_path.startswith('es/'):
                   print(f"Skipping {file_path} - already a translation")
@@ -299,5 +308,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add --all
-          git diff --staged --quiet || git commit -m "Add Spanish translations"
+          git diff --staged --quiet || git commit -m "Add Spanish translations for changed files"
           git push
