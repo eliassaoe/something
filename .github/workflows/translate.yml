@@ -1,4 +1,4 @@
-name: Translate HTML to Spanish
+name: Translate HTML Content to Spanish
 
 on:
   push:
@@ -25,87 +25,208 @@ jobs:
       - name: Install dependencies
         run: pip install openai beautifulsoup4 lxml
       
-      - name: Translate HTML files
+      - name: Extract, Translate and Replace Content
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           import os
           import glob
           import openai
-          from bs4 import BeautifulSoup, Comment
-          import re
+          from bs4 import BeautifulSoup, NavigableString
           import time
+          import json
+          import re
           
           # Configure OpenAI API
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
           
-          def split_html_for_translation(soup):
-              """Split HTML into manageable chunks for translation."""
-              # Strategy: Split by main sections (body content)
+          def extract_translatable_content(soup):
+              """Extract text content that should be translated."""
+              elements_to_skip = ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']
+              translatable_nodes = []
               
-              # 1. Extract head separately - it's usually small
-              head_html = str(soup.head) if soup.head else ""
+              # Extract text from title tag
+              if soup.title:
+                  translatable_nodes.append({
+                      'type': 'title',
+                      'text': soup.title.string,
+                      'node_id': 'title'
+                  })
               
-              # 2. Process body content by breaking at logical section breaks
-              chunks = []
+              # Extract text from meta tags (description, keywords)
+              for meta in soup.find_all('meta'):
+                  if meta.get('name') in ['description', 'keywords'] and meta.get('content'):
+                      translatable_nodes.append({
+                          'type': 'meta',
+                          'text': meta['content'],
+                          'node_id': f"meta_{meta['name']}"
+                      })
               
+              # Function to process nodes recursively
+              def process_node(node, node_path=''):
+                  if node.name in elements_to_skip:
+                      return
+                  
+                  # For text nodes
+                  if isinstance(node, NavigableString) and node.strip():
+                      parent_id = f"{node_path}_{id(node)}"
+                      translatable_nodes.append({
+                          'type': 'text',
+                          'text': str(node).strip(),
+                          'node_id': parent_id
+                      })
+                  # For elements with attributes that need translation
+                  elif node.name:
+                      # Handle alt text in images
+                      if node.name == 'img' and node.get('alt'):
+                          translatable_nodes.append({
+                              'type': 'attribute',
+                              'text': node['alt'],
+                              'node_id': f"img_alt_{id(node)}",
+                              'element': str(node),
+                              'attribute': 'alt'
+                          })
+                      
+                      # Handle placeholder text in input fields
+                      if node.get('placeholder'):
+                          translatable_nodes.append({
+                              'type': 'attribute',
+                              'text': node['placeholder'],
+                              'node_id': f"placeholder_{id(node)}",
+                              'element': str(node),
+                              'attribute': 'placeholder'
+                          })
+                      
+                      # Process children recursively
+                      for child in node.children:
+                          new_path = f"{node_path}_{node.name}" if node_path else node.name
+                          process_node(child, new_path)
+              
+              # Start processing from body
               if soup.body:
-                  # Find all top-level elements in the body
-                  main_elements = list(soup.body.children)
-                  
-                  current_chunk = []
-                  current_size = 0
-                  max_chunk_size = 3000  # Conservative token estimate
-                  
-                  for element in main_elements:
-                      # Skip comments and whitespace
-                      if isinstance(element, Comment) or (isinstance(element, str) and element.strip() == ''):
-                          continue
-                      
-                      element_str = str(element)
-                      element_size = len(element_str) / 4  # Rough token estimation
-                      
-                      if current_size + element_size > max_chunk_size and current_chunk:
-                          # This chunk is getting too large, save it and start a new one
-                          chunks.append(''.join(current_chunk))
-                          current_chunk = [element_str]
-                          current_size = element_size
-                      else:
-                          # Add to current chunk
-                          current_chunk.append(element_str)
-                          current_size += element_size
-                  
-                  # Add the last chunk if there's anything left
-                  if current_chunk:
-                      chunks.append(''.join(current_chunk))
+                  process_node(soup.body, 'body')
               
-              return head_html, chunks
+              return translatable_nodes
           
-          def translate_chunk(chunk, is_head=False):
-              """Translate a single HTML chunk."""
-              if is_head:
-                  system_prompt = "You are a professional translator. Translate the HTML head section to Spanish. Keep all HTML tags, attributes, and scripts exactly as they are. Only translate text content that would be visible to users. Leave meta titles, descriptions, and other SEO elements translated."
-              else:
-                  system_prompt = "You are a professional translator. Translate this HTML chunk to Spanish while preserving all HTML tags, attributes, classes, and IDs exactly as they are. Only translate the text content that would be visible to users."
+          def translate_text_batch(texts, target_lang="Spanish"):
+              """Translate a batch of texts."""
+              if not texts:
+                  return []
+                  
+              # Prepare the text for translation
+              combined_text = "\n---ITEM---\n".join(texts)
               
               try:
                   response = client.chat.completions.create(
                       model="gpt-4",
                       messages=[
-                          {"role": "system", "content": system_prompt},
-                          {"role": "user", "content": f"Translate this HTML to Spanish, keeping all HTML tags and attributes intact:\n\n{chunk}"}
+                          {"role": "system", "content": f"You are a professional translator. Translate the following texts from French to {target_lang}. Maintain the same tone, style, and formatting. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
+                          {"role": "user", "content": combined_text}
                       ],
                       temperature=0.2
                   )
-                  return response.choices[0].message.content
+                  
+                  # Split the translated text back into individual items
+                  translation = response.choices[0].message.content
+                  translated_texts = translation.split("\n---ITEM---\n")
+                  
+                  # Clean up any extra formatting
+                  translated_texts = [text.strip() for text in translated_texts]
+                  
+                  # Make sure we got the same number of translations as inputs
+                  if len(translated_texts) != len(texts):
+                      print(f"Warning: Got {len(translated_texts)} translations for {len(texts)} inputs")
+                      # Pad with empty strings if needed
+                      if len(translated_texts) < len(texts):
+                          translated_texts.extend([''] * (len(texts) - len(translated_texts)))
+                      else:
+                          translated_texts = translated_texts[:len(texts)]
+                  
+                  return translated_texts
+                  
               except Exception as e:
                   print(f"Error in translation: {e}")
                   # If we hit rate limits, wait and retry
                   if "rate limit" in str(e).lower():
                       print("Rate limited, waiting 20 seconds...")
                       time.sleep(20)
-                      return translate_chunk(chunk, is_head)
-                  return None
+                      return translate_text_batch(texts, target_lang)
+                  return [''] * len(texts)
+          
+          def apply_translations(html_content, translatable_nodes, translations):
+              """Apply translations back to the HTML content."""
+              soup = BeautifulSoup(html_content, 'lxml')
+              
+              # Create a translation dictionary for easy lookup
+              translation_dict = {node['node_id']: translation 
+                                 for node, translation in zip(translatable_nodes, translations)
+                                 if translation.strip()}
+              
+              # Apply title translation
+              if 'title' in translation_dict and soup.title:
+                  soup.title.string = translation_dict['title']
+              
+              # Apply meta tag translations
+              for meta in soup.find_all('meta'):
+                  if meta.get('name') in ['description', 'keywords']:
+                      node_id = f"meta_{meta['name']}"
+                      if node_id in translation_dict:
+                          meta['content'] = translation_dict[node_id]
+              
+              # Function to find and replace text nodes
+              def find_and_replace_text(node, node_path=''):
+                  if node.name in ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']:
+                      return
+                  
+                  # For text nodes
+                  if isinstance(node, NavigableString) and node.strip():
+                      parent_id = f"{node_path}_{id(node)}"
+                      if parent_id in translation_dict:
+                          # Replace this text node with its translation
+                          node.replace_with(NavigableString(translation_dict[parent_id]))
+                  
+                  # For elements with attributes
+                  elif node.name:
+                      # Handle alt text in images
+                      if node.name == 'img' and node.get('alt'):
+                          node_id = f"img_alt_{id(node)}"
+                          if node_id in translation_dict:
+                              node['alt'] = translation_dict[node_id]
+                      
+                      # Handle placeholder text
+                      if node.get('placeholder'):
+                          node_id = f"placeholder_{id(node)}"
+                          if node_id in translation_dict:
+                              node['placeholder'] = translation_dict[node_id]
+                      
+                      # Process children recursively
+                      for child in list(node.children):  # Create a copy of children to avoid issues during modification
+                          new_path = f"{node_path}_{node.name}" if node_path else node.name
+                          find_and_replace_text(child, new_path)
+              
+              # Start replacing from body
+              if soup.body:
+                  find_and_replace_text(soup.body, 'body')
+              
+              # Add hreflang tags
+              head = soup.head or soup.new_tag('head')
+              if not soup.head:
+                  if soup.html:
+                      soup.html.insert(0, head)
+                  else:
+                      soup.insert(0, soup.new_tag('html'))
+                      soup.html.insert(0, head)
+              
+              # Remove existing hreflang tags
+              for link in head.find_all('link', rel='alternate', href=True):
+                  if 'hreflang' in link.attrs:
+                      link.extract()
+              
+              # Add language attribute to html tag
+              if soup.html:
+                  soup.html['lang'] = 'es'
+              
+              return str(soup)
           
           # Find HTML files
           html_files = glob.glob("**/*.html", recursive=True)
@@ -127,59 +248,48 @@ jobs:
                   # Parse HTML
                   soup = BeautifulSoup(html_content, 'lxml')
                   
-                  # Split into manageable chunks
-                  print(f"Splitting {file_path} into chunks...")
-                  head_html, body_chunks = split_html_for_translation(soup)
+                  # Extract translatable content
+                  print(f"Extracting translatable content from {file_path}...")
+                  translatable_nodes = extract_translatable_content(soup)
+                  print(f"Found {len(translatable_nodes)} translatable items")
                   
-                  # Translate the head
-                  print(f"Translating head section...")
-                  translated_head = translate_chunk(head_html, is_head=True)
+                  if not translatable_nodes:
+                      print(f"No translatable content found in {file_path}, skipping")
+                      continue
                   
-                  # Translate body chunks
-                  print(f"Translating {len(body_chunks)} body chunks...")
-                  translated_chunks = []
-                  for i, chunk in enumerate(body_chunks):
-                      print(f"Translating chunk {i+1}/{len(body_chunks)}...")
-                      translated_chunk = translate_chunk(chunk)
-                      if translated_chunk:
-                          translated_chunks.append(translated_chunk)
-                      else:
-                          print(f"Failed to translate chunk {i+1}")
-                      
-                      # Add a small delay between chunks to avoid rate limits
-                      if i < len(body_chunks) - 1:
-                          time.sleep(2)
+                  # Batch translations (process in chunks of 50 items to avoid token limits)
+                  all_translations = []
+                  batch_size = 50
                   
-                  # Reconstruct the HTML
-                  if translated_head and translated_chunks:
-                      # Basic structure with doctype
-                      final_html = "<!DOCTYPE html>\n<html lang=\"es\">\n"
-                      # Add translated head
-                      head_soup = BeautifulSoup(translated_head, 'lxml')
-                      final_html += str(head_soup.head) if head_soup.head else "<head></head>\n"
-                      # Start body tag
-                      final_html += "<body>\n"
-                      # Add translated body chunks
-                      for chunk in translated_chunks:
-                          final_html += chunk + "\n"
-                      # Close body and html tags
-                      final_html += "</body>\n</html>"
+                  for i in range(0, len(translatable_nodes), batch_size):
+                      batch = translatable_nodes[i:i+batch_size]
+                      texts_to_translate = [node['text'] for node in batch]
                       
-                      # Create output directory structure
-                      dir_name = os.path.dirname(file_path)
-                      base_name = os.path.basename(file_path)
-                      output_dir = os.path.join(dir_name, 'es') if dir_name else 'es'
-                      os.makedirs(output_dir, exist_ok=True)
+                      print(f"Translating batch {i//batch_size + 1}/{(len(translatable_nodes) + batch_size - 1)//batch_size}...")
+                      translations = translate_text_batch(texts_to_translate)
+                      all_translations.extend(translations)
                       
-                      # Save translated file
-                      output_path = os.path.join(output_dir, base_name)
-                      with open(output_path, 'w', encoding='utf-8') as f:
-                          f.write(final_html)
-                          
-                      print(f"Translation saved to {output_path}")
-                  else:
-                      print(f"Failed to translate {file_path} - missing translated parts")
+                      # Add a delay between batches to avoid rate limits
+                      if i + batch_size < len(translatable_nodes):
+                          time.sleep(5)
+                  
+                  # Apply translations back to HTML
+                  print(f"Applying translations to {file_path}...")
+                  translated_html = apply_translations(html_content, translatable_nodes, all_translations)
+                  
+                  # Create output directory structure
+                  dir_name = os.path.dirname(file_path)
+                  base_name = os.path.basename(file_path)
+                  output_dir = os.path.join(dir_name, 'es') if dir_name else 'es'
+                  os.makedirs(output_dir, exist_ok=True)
+                  
+                  # Save translated file
+                  output_path = os.path.join(output_dir, base_name)
+                  with open(output_path, 'w', encoding='utf-8') as f:
+                      f.write(translated_html)
                       
+                  print(f"Translation saved to {output_path}")
+                  
               except Exception as e:
                   print(f"Error processing {file_path}: {e}")
         shell: python
