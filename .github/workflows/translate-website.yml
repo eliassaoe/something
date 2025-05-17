@@ -1,2 +1,22 @@
-- name: DeepL Translate Github Action
-  uses: lyqht/deepl-translate-github-action@v2.1.1
+name: Translate Website
+on:
+  push:
+    branches: [ main ]  # or 'master' depending on your default branch
+    paths:
+      - '**.html'       # Only trigger when HTML files change
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # This is important for allowing commits
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: DeepL Translate Github Action
+        uses: lyqht/deepl-translate-github-action@v2.1.1
+        with:
+          target_languages: es    # Add more with commas: es,fr,de
+          input_file_path: "**/*.html"  # Translate all HTML files
+          output_file_name_pattern: "{dirname}/{language}/{basename}"  # This puts translations in language folders
+          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
