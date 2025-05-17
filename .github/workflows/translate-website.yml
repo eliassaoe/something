@@ -1,6 +1,11 @@
-name: Translate Website with Google Translate
+name: Translate Last Modified HTML
 on:
-  workflow_dispatch:  # Déclenchement manuel uniquement
+  workflow_dispatch:  # Déclenchement manuel
+  push:
+    branches:
+      - main
+    paths:
+      - '*.html'      # Ne se déclenche que lorsque des fichiers HTML sont modifiés
 permissions:
   contents: write
 jobs:
@@ -20,34 +25,66 @@ jobs:
         
       - name: Create translation script
         run: |
-          cat > translate-website.js <<'EOL'
+          cat > translate-last-modified.js <<'EOL'
           const fs = require('fs');
           const path = require('path');
           const axios = require('axios');
           const slugify = require('slugify');
           
-          // Configuration - PARAMÉTRABLE COMME DEEPL ACTION
+          // Configuration
           const API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI';
           const TARGET_LANGUAGES = ['fr', 'ar', 'pt', 'es', 'nl', 'de'];
-          const SOURCE_LANGUAGE = 'en'; // La langue d'origine
           const BASE_URL = 'https://unlimited-leads.online';
           
-          // Définitions des langues pour l'affichage
-          const LANGUAGE_NAMES = {
-            'fr': 'français',
-            'ar': 'arabe',
-            'pt': 'portugais',
-            'es': 'espagnol',
-            'nl': 'néerlandais',
-            'de': 'allemand'
-          };
+          // Fichier de journal des traductions
+          const TRANSLATION_LOG_FILE = '.translation-log.json';
           
-          // Fonction pour traduire du texte avec l'API Google Translate
+          // Trouver le fichier HTML le plus récemment modifié
+          function findLastModifiedHtmlFile() {
+            const htmlFiles = fs.readdirSync('./').filter(file => 
+              file.endsWith('.html') && fs.statSync(file).isFile()
+            );
+            
+            if (htmlFiles.length === 0) {
+              return null;
+            }
+            
+            // Lire le journal des traductions
+            let translationLog = {};
+            if (fs.existsSync(TRANSLATION_LOG_FILE)) {
+              try {
+                translationLog = JSON.parse(fs.readFileSync(TRANSLATION_LOG_FILE, 'utf8'));
+              } catch (error) {
+                console.error(`Erreur lors de la lecture du journal: ${error.message}`);
+              }
+            }
+            
+            // Trier les fichiers par date de modification décroissante
+            htmlFiles.sort((a, b) => {
+              const statsA = fs.statSync(a);
+              const statsB = fs.statSync(b);
+              return statsB.mtimeMs - statsA.mtimeMs;
+            });
+            
+            // Trouver le premier fichier qui a été modifié depuis sa dernière traduction
+            for (const file of htmlFiles) {
+              const stats = fs.statSync(file);
+              
+              // Vérifier si le fichier a déjà été traduit
+              if (!translationLog[file] || stats.mtimeMs > translationLog[file].lastModified) {
+                return file;
+              }
+            }
+            
+            // Si tous les fichiers sont à jour, retourner null
+            return null;
+          }
+          
+          // Fonction pour traduire du texte
           async function translateText(text, targetLanguage) {
-            // Éviter de traduire du texte vide
             if (!text || !text.trim()) return text;
             
-            // Limiter la fréquence des appels API pour éviter les erreurs
+            // Pause pour éviter de surcharger l'API
             await new Promise(resolve => setTimeout(resolve, 100));
             
             try {
@@ -57,7 +94,6 @@ jobs:
                 data: {
                   q: text,
                   target: targetLanguage,
-                  source: SOURCE_LANGUAGE,
                   format: 'html'
                 }
               });
@@ -65,70 +101,39 @@ jobs:
               return response.data.data.translations[0].translatedText;
             } catch (error) {
               console.error(`Erreur de traduction: ${error.message}`);
-              // En cas d'erreur d'API, attendre et réessayer une fois
-              if (error.response && (error.response.status === 429 || error.response.status === 503)) {
-                console.log('Trop de requêtes, attente de 2 secondes avant de réessayer...');
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                try {
-                  const retryResponse = await axios({
-                    method: 'post',
-                    url: `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-                    data: {
-                      q: text,
-                      target: targetLanguage,
-                      source: SOURCE_LANGUAGE,
-                      format: 'html'
-                    }
-                  });
-                  return retryResponse.data.data.translations[0].translatedText;
-                } catch (retryError) {
-                  console.error(`Échec de la nouvelle tentative: ${retryError.message}`);
-                  return text; // Retourner le texte original
-                }
-              }
-              return text; // Retourner le texte original
+              return text;
             }
           }
           
           // Fonction pour traduire et slugifier un nom de fichier
           async function translateAndSlugifyFilename(filename, targetLanguage) {
-            // Si c'est index.html, on le garde tel quel
+            // Garder index.html tel quel
             if (filename === 'index.html') {
               return 'index.html';
             }
             
+            const extension = path.extname(filename);
+            const nameWithoutExt = path.basename(filename, extension);
+            const nameWithSpaces = nameWithoutExt.replace(/-/g, ' ');
+            
             try {
-              // Extraire le nom sans extension
-              const extension = path.extname(filename);
-              const nameWithoutExt = path.basename(filename, extension);
-              
-              // Remplacer les tirets par des espaces pour une meilleure traduction
-              const nameWithSpaces = nameWithoutExt.replace(/-/g, ' ');
-              
-              // Traduire le nom de fichier
               const translatedName = await translateText(nameWithSpaces, targetLanguage);
+              const sluggedName = slugify(translatedName, {
+                lower: true,
+                strict: true
+              });
               
-              // Slugifier le nom traduit (convertir en format URL-friendly)
-              const slugConfig = {
-                lower: true,      // Convertir en minuscules
-                strict: true,     // Supprimer les caractères spéciaux
-                locale: targetLanguage === 'ar' ? 'ar' : 'en' // Gestion spéciale pour l'arabe
-              };
-              
-              const sluggedName = slugify(translatedName, slugConfig);
-              
-              // Retourner le nom complet avec extension
               return sluggedName + extension;
             } catch (error) {
-              console.error(`Erreur lors de la traduction du nom de fichier: ${error.message}`);
-              return filename; // En cas d'erreur, renvoyer le nom original
+              console.error(`Erreur de traduction du nom: ${error.message}`);
+              return filename;
             }
           }
           
           // Fonction pour traduire le contenu HTML
           async function translateHtml(html, targetLanguage, originalFilename, translatedFilename) {
             try {
-              // 1. Traduire le titre avec une regex simple
+              // 1. Traduire le titre
               const titleRegex = /<title>(.*?)<\/title>/i;
               const titleMatch = html.match(titleRegex);
               
@@ -137,7 +142,7 @@ jobs:
                 html = html.replace(titleMatch[0], `<title>${translatedTitle}</title>`);
               }
               
-              // 2. Traduire les meta descriptions et keywords
+              // 2. Traduire les meta descriptions
               const metaRegex = /<meta\s+(?:name|property)=["'](description|keywords|og:title|og:description)["']\s+content=["'](.*?)["']/gi;
               let metaMatch;
               
@@ -150,7 +155,7 @@ jobs:
               // 3. Définir la langue du document
               html = html.replace(/<html\b([^>]*)>/i, `<html$1 lang="${targetLanguage}">`);
               
-              // 4. Ajouter des balises hreflang pour le SEO
+              // 4. Ajouter des balises hreflang
               let hreflangTags = '';
               for (const lang of TARGET_LANGUAGES) {
                 const langFilename = lang === targetLanguage ? 
@@ -160,14 +165,10 @@ jobs:
                 hreflangTags += `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${langFilename}" />\n    `;
               }
               
-              // Ajouter la balise hreflang x-default
               const xDefaultTag = `<link rel="alternate" hreflang="x-default" href="${BASE_URL}/${originalFilename}" />`;
-              
-              // Insérer les balises hreflang dans la section head
               html = html.replace(/<\/head>/i, `    ${xDefaultTag}\n    ${hreflangTags}</head>`);
               
-              // 5. Extraire et traduire les blocs de texte visibles
-              // COMME DEEPL, on utilise une approche qui préserve les balises
+              // 5. Traduire les blocs de texte visibles
               const textBlocks = [
                 { regex: /<p\b[^>]*>(.*?)<\/p>/gis, tag: 'p' },
                 { regex: /<h[1-6]\b[^>]*>(.*?)<\/h[1-6]>/gis, tag: 'h' },
@@ -180,19 +181,18 @@ jobs:
                 { regex: /<footer\b[^>]*>(.*?)<\/footer>/gis, tag: 'footer' }
               ];
               
-              // Traiter chaque type de bloc de texte
               for (const block of textBlocks) {
                 let match;
                 while ((match = block.regex.exec(html)) !== null) {
                   const fullMatch = match[0];
                   const textContent = match[1];
                   
-                  // Ne pas traduire le contenu vide ou les balises script/style
+                  // Ignorer les contenus vides ou scripts
                   if (!textContent || !textContent.trim() || /<script|<style/i.test(textContent)) {
                     continue;
                   }
                   
-                  // Si le contenu contient des balises HTML complexes imbriquées, on saute
+                  // Ignorer les contenus avec balises HTML complètes
                   if (textContent.includes('</') && textContent.includes('<')) {
                     continue;
                   }
@@ -203,12 +203,12 @@ jobs:
                       html = html.replace(fullMatch, fullMatch.replace(textContent, translatedContent));
                     }
                   } catch (e) {
-                    console.log(`Échec de traduction pour: ${textContent.slice(0, 50)}...`);
+                    console.log(`Échec de traduction pour un texte`);
                   }
                 }
               }
               
-              // 6. Mettre à jour les liens internes pour pointer vers les versions traduites
+              // 6. Mettre à jour les liens internes
               const linkRegex = /<a\b[^>]*href=["']([^"']+\.html)["'][^>]*>/gi;
               let linkMatch;
               
@@ -220,41 +220,41 @@ jobs:
                   continue;
                 }
                 
-                // Traduire et slugifier le nom du fichier lié
                 const linkedFilename = path.basename(href);
                 try {
                   const translatedLinkedFilename = await translateAndSlugifyFilename(linkedFilename, targetLanguage);
                   const newHref = href.replace(linkedFilename, translatedLinkedFilename);
                   html = html.replace(fullMatch, fullMatch.replace(href, `/${targetLanguage}/${newHref}`));
                 } catch (e) {
-                  console.error(`Erreur lors de la traduction de lien: ${e.message}`);
+                  console.error(`Erreur lors de la traduction de lien`);
                 }
               }
               
               return html;
             } catch (error) {
               console.error(`Erreur lors de la traduction HTML: ${error.message}`);
-              return html; // Retourner le HTML original en cas d'erreur
+              return html;
             }
           }
           
-          // Fonction principale - COMME DEEPL ACTION
-          async function translateWebsite() {
-            console.log("🌐 Démarrage de la traduction du site web...");
+          // Fonction principale
+          async function translateLastModified() {
+            console.log("🔍 Recherche du fichier HTML le plus récemment modifié...");
             
-            // Trouver tous les fichiers HTML à la racine
-            const htmlFiles = fs.readdirSync('./').filter(file => 
-              file.endsWith('.html') && fs.statSync(file).isFile()
-            );
+            // Trouver le fichier HTML le plus récemment modifié
+            const fileToTranslate = findLastModifiedHtmlFile();
             
-            if (htmlFiles.length === 0) {
-              console.log("⚠️ Aucun fichier HTML trouvé dans le répertoire racine.");
+            if (!fileToTranslate) {
+              console.log("✅ Tous les fichiers HTML sont à jour. Aucune traduction nécessaire.");
               return;
             }
             
-            console.log(`📄 Fichiers HTML trouvés (${htmlFiles.length}): ${htmlFiles.join(', ')}`);
+            console.log(`🔄 Fichier à traduire: ${fileToTranslate}`);
             
-            // Pour chaque langue cible, créer le dossier s'il n'existe pas
+            // Lire le contenu du fichier
+            const fileContent = fs.readFileSync(fileToTranslate, 'utf8');
+            
+            // Créer les dossiers de langue s'ils n'existent pas
             for (const lang of TARGET_LANGUAGES) {
               const langDir = `./${lang}`;
               if (!fs.existsSync(langDir)) {
@@ -263,42 +263,63 @@ jobs:
               }
             }
             
-            // Traduire chaque fichier HTML dans chaque langue
-            for (const file of htmlFiles) {
-              console.log(`\n🔄 Traitement du fichier: ${file}`);
-              const originalContent = fs.readFileSync(file, 'utf8');
+            // Traduire le fichier dans chaque langue
+            const translatedFiles = {};
+            
+            for (const lang of TARGET_LANGUAGES) {
+              console.log(`\n🌍 Traduction en ${lang}...`);
               
-              for (const lang of TARGET_LANGUAGES) {
-                console.log(`\n  🌍 Traduction en ${LANGUAGE_NAMES[lang]}...`);
+              try {
+                // Traduire le nom du fichier
+                const translatedFilename = await translateAndSlugifyFilename(fileToTranslate, lang);
+                console.log(`📝 Nom traduit: ${fileToTranslate} → ${translatedFilename}`);
                 
-                try {
-                  // 1. Traduire le nom du fichier (slug)
-                  const translatedFilename = await translateAndSlugifyFilename(file, lang);
-                  console.log(`  📝 Nom traduit: ${file} → ${translatedFilename}`);
-                  
-                  // 2. Traduire le contenu HTML
-                  const translatedContent = await translateHtml(originalContent, lang, file, translatedFilename);
-                  
-                  // 3. Sauvegarder le fichier traduit avec le nom traduit
-                  const outputPath = `./${lang}/${translatedFilename}`;
-                  fs.writeFileSync(outputPath, translatedContent);
-                  console.log(`  ✅ Fichier traduit créé: ${outputPath}`);
-                } catch (error) {
-                  console.error(`  ❌ Erreur lors de la traduction en ${LANGUAGE_NAMES[lang]}: ${error.message}`);
-                }
+                // Traduire le contenu
+                const translatedContent = await translateHtml(fileContent, lang, fileToTranslate, translatedFilename);
+                
+                // Sauvegarder le fichier traduit
+                const outputPath = `./${lang}/${translatedFilename}`;
+                fs.writeFileSync(outputPath, translatedContent);
+                console.log(`✅ Fichier traduit: ${outputPath}`);
+                
+                // Enregistrer le nom traduit
+                translatedFiles[lang] = translatedFilename;
+              } catch (error) {
+                console.error(`❌ Erreur lors de la traduction en ${lang}: ${error.message}`);
               }
             }
             
-            // Créer un sitemap.xml multilingue
+            // Mettre à jour le journal des traductions
+            let translationLog = {};
+            if (fs.existsSync(TRANSLATION_LOG_FILE)) {
+              try {
+                translationLog = JSON.parse(fs.readFileSync(TRANSLATION_LOG_FILE, 'utf8'));
+              } catch (error) {
+                console.error(`Erreur lors de la lecture du journal: ${error.message}`);
+              }
+            }
+            
+            // Enregistrer les informations de traduction
+            translationLog[fileToTranslate] = {
+              lastModified: fs.statSync(fileToTranslate).mtimeMs,
+              lastTranslated: Date.now(),
+              languages: translatedFiles
+            };
+            
+            // Sauvegarder le journal
+            fs.writeFileSync(TRANSLATION_LOG_FILE, JSON.stringify(translationLog, null, 2), 'utf8');
+            console.log(`📝 Journal des traductions mis à jour pour ${fileToTranslate}`);
+            
+            // Mettre à jour le sitemap
             try {
-              console.log("\n📑 Création du sitemap multilingue...");
+              console.log("\n📑 Mise à jour du sitemap multilingue...");
               
               let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
               sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
               sitemap += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
               
-              // Pour chaque fichier HTML original
-              for (const file of htmlFiles) {
+              // Ajouter tous les fichiers HTML du journal
+              for (const file in translationLog) {
                 const originalUrl = `${BASE_URL}/${file}`;
                 sitemap += '  <url>\n';
                 sitemap += `    <loc>${originalUrl}</loc>\n`;
@@ -306,8 +327,11 @@ jobs:
                 
                 // Ajouter les alternatives pour chaque langue
                 for (const lang of TARGET_LANGUAGES) {
-                  const translatedFilename = await translateAndSlugifyFilename(file, lang);
-                  sitemap += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${translatedFilename}" />\n`;
+                  const entry = translationLog[file];
+                  if (entry && entry.languages && entry.languages[lang]) {
+                    const translatedFilename = entry.languages[lang];
+                    sitemap += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${translatedFilename}" />\n`;
+                  }
                 }
                 
                 sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
@@ -318,28 +342,28 @@ jobs:
               
               // Sauvegarder le sitemap
               fs.writeFileSync('sitemap_multilingual.xml', sitemap);
-              console.log("✅ Sitemap multilingue créé: sitemap_multilingual.xml");
+              console.log("✅ Sitemap multilingue mis à jour: sitemap_multilingual.xml");
             } catch (error) {
               console.error(`❌ Erreur lors de la création du sitemap: ${error.message}`);
             }
             
-            console.log("\n🎉 Traduction du site terminée!");
+            console.log("\n🎉 Traduction terminée!");
           }
           
           // Exécuter la fonction principale
-          translateWebsite().catch(error => {
+          translateLastModified().catch(error => {
             console.error("❌ Erreur générale:", error.message);
             process.exit(1);
           });
           EOL
           
       - name: Execute translation script
-        run: node translate-website.js
+        run: node translate-last-modified.js
         
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "🌐 Traduction multilingue du site web" || echo "Pas de changements à commiter"
+          git commit -m "🌐 Traduction de la dernière page modifiée" || echo "Pas de changements à commiter"
           git push
