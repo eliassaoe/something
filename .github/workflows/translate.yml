@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 2  # Need at least 2 commits to detect changes
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -73,12 +73,6 @@ jobs:
                           'text': meta['content'],
                           'node_id': f"meta_{meta['name']}"
                       })
-                  elif meta.get('property') in ['og:title', 'og:description'] and meta.get('content'):
-                      translatable_nodes.append({
-                          'type': 'meta',
-                          'text': meta['content'],
-                          'node_id': f"meta_{meta['property'].replace(':', '_')}"
-                      })
               
               # Extract canonical and og:url URLs if they exist
               canonical_link = soup.find('link', rel='canonical')
@@ -132,55 +126,6 @@ jobs:
                                       'url': href,
                                       'element': link
                                   })
-              
-              # Specifically handle FAQ questions - they often have special formatting
-              for faq_question in soup.select('.faq-question'):
-                  # Get the text directly from the element, excluding children
-                  question_text = ''.join(child for child in faq_question.contents if isinstance(child, NavigableString)).strip()
-                  if question_text:
-                      node_counter += 1
-                      translatable_nodes.append({
-                          'type': 'faq_question',
-                          'text': question_text,
-                          'node_id': f"faq_question_{node_counter}",
-                          'element': faq_question
-                      })
-              
-              # Handle all strong tags - they often contain important translatable content
-              for strong in soup.find_all('strong'):
-                  if strong.string and strong.string.strip():
-                      node_counter += 1
-                      translatable_nodes.append({
-                          'type': 'strong',
-                          'text': strong.string.strip(),
-                          'node_id': f"strong_{node_counter}",
-                          'element': strong
-                      })
-              
-              # Handle list items specifically
-              for li in soup.find_all('li'):
-                  # First get direct text content excluding children
-                  direct_text = ''.join(child for child in li.contents if isinstance(child, NavigableString)).strip()
-                  if direct_text:
-                      node_counter += 1
-                      translatable_nodes.append({
-                          'type': 'li_direct',
-                          'text': direct_text,
-                          'node_id': f"li_direct_{node_counter}",
-                          'element': li
-                      })
-                  
-                  # Also get text from HTML inside <li> tags that don't have children nodes
-                  # This is for cases like <li><strong>Text</strong> - More text</li>
-                  full_text = li.get_text().strip()
-                  if full_text and not any(child.name for child in li.children if child.name):
-                      node_counter += 1
-                      translatable_nodes.append({
-                          'type': 'li_full',
-                          'text': full_text,
-                          'node_id': f"li_full_{node_counter}",
-                          'element': li
-                      })
               
               # Function to recursively process all text nodes
               def process_node(node, path=''):
@@ -364,10 +309,6 @@ jobs:
                       node_id = f"meta_{meta['name']}"
                       if node_id in translation_dict:
                           meta['content'] = translation_dict[node_id]
-                  elif meta.get('property') in ['og:title', 'og:description']:
-                      node_id = f"meta_{meta['property'].replace(':', '_')}"
-                      if node_id in translation_dict:
-                          meta['content'] = translation_dict[node_id]
               
               # Update canonical and og:url URLs if they exist
               canonical_link = soup.find('link', rel='canonical')
@@ -388,65 +329,9 @@ jobs:
                           og_url['content'] = original_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
                           break
               
-              # Apply FAQ question translations
-              for faq_question in soup.select('.faq-question'):
-                  for node in translatable_nodes:
-                      if node['type'] == 'faq_question' and 'element' in node and node['element'] == faq_question:
-                          if node['node_id'] in translation_dict:
-                              # We need to replace just the text content, not the icon
-                              # First, get all children that are not NavigableString
-                              non_text_children = [c for c in faq_question.children if not isinstance(c, NavigableString)]
-                              # Clear the element
-                              faq_question.clear()
-                              # Add the translated text
-                              faq_question.append(NavigableString(translation_dict[node['node_id']]))
-                              # Add back the non-text children
-                              for child in non_text_children:
-                                  faq_question.append(child)
-                              break
-              
-              # Apply strong tag translations
-              for strong in soup.find_all('strong'):
-                  if strong.string and strong.string.strip():
-                      for node in translatable_nodes:
-                          if node['type'] == 'strong' and node['text'] == strong.string.strip():
-                              if node['node_id'] in translation_dict:
-                                  strong.string = translation_dict[node['node_id']]
-                                  break
-              
-              # Apply list item translations
-              for li in soup.find_all('li'):
-                  # Try to find matching li_full nodes first (for full element text)
-                  full_text = li.get_text().strip()
-                  for node in translatable_nodes:
-                      if node['type'] == 'li_full' and node['text'] == full_text:
-                          if node['node_id'] in translation_dict:
-                              li.clear()
-                              li.append(NavigableString(translation_dict[node['node_id']]))
-                              break
-                  
-                  # Then try direct text (for text nodes without HTML)
-                  direct_text = ''.join(child for child in li.contents if isinstance(child, NavigableString)).strip()
-                  if direct_text:
-                      for node in translatable_nodes:
-                          if node['type'] == 'li_direct' and node['text'] == direct_text:
-                              if node['node_id'] in translation_dict:
-                                  # Replace only the direct text nodes
-                                  for child in list(li.children):
-                                      if isinstance(child, NavigableString):
-                                          child.replace_with(NavigableString(''))
-                                  # Add the translated text at the beginning
-                                  li.insert(0, NavigableString(translation_dict[node['node_id']]))
-                                  break
-              
               # Update internal links with translated slugs
               for link in soup.find_all('a', href=True):
                   href = link['href']
-                  
-                  # Fix duplicate 'es/es' in links
-                  if href.startswith('https://unlimited-leads.online/es/es'):
-                      link['href'] = href.replace('/es/es', '/es')
-                  
                   # Skip external links, anchors, and javascript links
                   if (href.startswith('http') and 'unlimited-leads.online' in href) or \
                      (not href.startswith('http') and not href.startswith('#') and not href.startswith('javascript:')):
@@ -632,7 +517,6 @@ jobs:
                       translations = translate_text_batch(texts_to_translate)
                       all_translations.extend(translations)
                       
-                      # Add a delay between batches to avoid rate limits
                       # Add a delay between batches to avoid rate limits
                       if i + batch_size < len(translatable_nodes):
                           time.sleep(5)
