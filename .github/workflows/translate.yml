@@ -31,9 +31,10 @@ jobs:
         run: |
           import os
           import openai
-          from bs4 import BeautifulSoup, NavigableString
+          from bs4 import BeautifulSoup, NavigableString, Comment
           import time
           import subprocess
+          import re
           
           # Configure OpenAI API
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -50,12 +51,14 @@ jobs:
               return [f for f in files if f.endswith('.html') and os.path.exists(f)]
           
           def extract_translatable_content(soup):
-              """Extract text content that should be translated."""
+              """Extract text content that should be translated - improved version."""
               elements_to_skip = ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']
               translatable_nodes = []
+              node_counter = 0
+              url_slugs = set()  # To keep track of unique URL slugs
               
               # Extract text from title tag
-              if soup.title:
+              if soup.title and soup.title.string:
                   translatable_nodes.append({
                       'type': 'title',
                       'text': soup.title.string,
@@ -71,49 +74,165 @@ jobs:
                           'node_id': f"meta_{meta['name']}"
                       })
               
-              # Function to process nodes recursively
-              def process_node(node, node_path=''):
+              # Extract canonical and og:url URLs if they exist
+              canonical_link = soup.find('link', rel='canonical')
+              if canonical_link and canonical_link.get('href'):
+                  url = canonical_link['href']
+                  # Extract the slug part (after the last /)
+                  slug_match = re.search(r'/([^/]+)/?$', url)
+                  if slug_match and not slug_match.group(1).endswith('.html'):
+                      slug = slug_match.group(1)
+                      translatable_nodes.append({
+                          'type': 'canonical_slug',
+                          'text': slug,
+                          'node_id': 'canonical_slug',
+                          'url': url
+                      })
+              
+              og_url = soup.find('meta', property='og:url')
+              if og_url and og_url.get('content'):
+                  url = og_url['content']
+                  # Extract the slug part (after the last /)
+                  slug_match = re.search(r'/([^/]+)/?$', url)
+                  if slug_match and not slug_match.group(1).endswith('.html'):
+                      slug = slug_match.group(1)
+                      translatable_nodes.append({
+                          'type': 'og_url_slug',
+                          'text': slug,
+                          'node_id': 'og_url_slug',
+                          'url': url
+                      })
+              
+              # Find all internal links and extract slugs for translation
+              for link in soup.find_all('a', href=True):
+                  href = link['href']
+                  # Skip external links, anchors, and javascript links
+                  if (href.startswith('http') and 'unlimited-leads.online' in href) or \
+                     (not href.startswith('http') and not href.startswith('#') and not href.startswith('javascript:')):
+                      
+                      # Extract the slug part (after the last /)
+                      slug_match = re.search(r'/([^/]+)/?$', href)
+                      if slug_match and not slug_match.group(1).endswith('.html'):
+                          slug = slug_match.group(1)
+                          # Skip if it's already in es folder
+                          if not '/es/' in href and not slug.startswith('es/'):
+                              if slug not in url_slugs:  # Only add unique slugs
+                                  url_slugs.add(slug)
+                                  node_counter += 1
+                                  translatable_nodes.append({
+                                      'type': 'url_slug',
+                                      'text': slug,
+                                      'node_id': f"url_slug_{node_counter}",
+                                      'url': href,
+                                      'element': link
+                                  })
+              
+              # Function to recursively process all text nodes
+              def process_node(node, path=''):
+                  nonlocal node_counter
+                  
+                  # Skip certain elements
                   if node.name in elements_to_skip:
                       return
                   
-                  # For text nodes
+                  # Skip comments
+                  if isinstance(node, Comment):
+                      return
+                  
+                  # For text nodes with content
                   if isinstance(node, NavigableString) and node.strip():
-                      parent_id = f"{node_path}_{id(node)}"
+                      node_counter += 1
+                      node_id = f"text_{node_counter}"
                       translatable_nodes.append({
                           'type': 'text',
                           'text': str(node).strip(),
-                          'node_id': parent_id
+                          'node_id': node_id,
+                          'element': node.parent.name if node.parent else None,
+                          'path': path
                       })
-                  # For elements with attributes that need translation
-                  elif node.name:
-                      # Handle alt text in images
+                  
+                  # Process element nodes
+                  elif hasattr(node, 'name') and node.name:
+                      # Process attributes that should be translated
                       if node.name == 'img' and node.get('alt'):
+                          node_counter += 1
                           translatable_nodes.append({
                               'type': 'attribute',
                               'text': node['alt'],
-                              'node_id': f"img_alt_{id(node)}",
-                              'element': str(node),
-                              'attribute': 'alt'
+                              'node_id': f"img_alt_{node_counter}",
+                              'element': node.name,
+                              'attribute': 'alt',
+                              'path': path
                           })
                       
-                      # Handle placeholder text in input fields
                       if node.get('placeholder'):
+                          node_counter += 1
                           translatable_nodes.append({
                               'type': 'attribute',
                               'text': node['placeholder'],
-                              'node_id': f"placeholder_{id(node)}",
-                              'element': str(node),
-                              'attribute': 'placeholder'
+                              'node_id': f"placeholder_{node_counter}",
+                              'element': node.name,
+                              'attribute': 'placeholder',
+                              'path': path
                           })
                       
-                      # Process children recursively
+                      if node.name == 'a' and node.get('title'):
+                          node_counter += 1
+                          translatable_nodes.append({
+                              'type': 'attribute',
+                              'text': node['title'],
+                              'node_id': f"a_title_{node_counter}",
+                              'element': node.name,
+                              'attribute': 'title',
+                              'path': path
+                          })
+                      
+                      # Special handling for text in header, p, li, button, span, div elements
+                      if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'button', 'span', 'div', 'a', 'label']:
+                          # Check if this element has direct text (not just from children)
+                          if node.string and node.string.strip():
+                              node_counter += 1
+                              node_id = f"{node.name}_{node_counter}"
+                              translatable_nodes.append({
+                                  'type': 'direct_text',
+                                  'text': node.string.strip(),
+                                  'node_id': node_id,
+                                  'element': node.name,
+                                  'path': path
+                              })
+                          # If this node contains a mix of text and other elements
+                          elif any(isinstance(child, NavigableString) and child.strip() for child in node.children):
+                              # Create a mapping of text nodes to their content
+                              text_map = {}
+                              for child in node.children:
+                                  if isinstance(child, NavigableString) and child.strip():
+                                      node_counter += 1
+                                      text_id = f"mixed_{node.name}_{node_counter}"
+                                      text_map[child] = text_id
+                                      translatable_nodes.append({
+                                          'type': 'mixed_text',
+                                          'text': child.strip(),
+                                          'node_id': text_id,
+                                          'element': node.name,
+                                          'path': path
+                                      })
+                      
+                      # Recursively process all children
+                      new_path = f"{path}/{node.name}" if path else node.name
                       for child in node.children:
-                          new_path = f"{node_path}_{node.name}" if node_path else node.name
                           process_node(child, new_path)
               
-              # Start processing from body
-              if soup.body:
-                  process_node(soup.body, 'body')
+              # Start processing from the whole document
+              process_node(soup)
+              
+              # Log some stats
+              print(f"Extracted {len(translatable_nodes)} translatable items:")
+              type_counts = {}
+              for node in translatable_nodes:
+                  type_counts[node['type']] = type_counts.get(node['type'], 0) + 1
+              
+              for type_name, count in type_counts.items():
+                  print(f"  - {type_name}: {count} items")
               
               return translatable_nodes
           
@@ -129,7 +248,7 @@ jobs:
                   response = client.chat.completions.create(
                       model="gpt-4",
                       messages=[
-                          {"role": "system", "content": f"You are a professional translator. Translate the following texts from French to {target_lang}. Maintain the same tone, style, and formatting. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
+                          {"role": "system", "content": f"You are a professional translator specializing in website localization. Translate the following texts from French or English to {target_lang}. For URL slugs, create SEO-friendly translations that use hyphens instead of spaces and only contain lowercase letters, numbers, and hyphens. Maintain the same tone, style, and formatting for all other text. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
                           {"role": "user", "content": combined_text}
                       ],
                       temperature=0.2
@@ -171,6 +290,15 @@ jobs:
                                  for node, translation in zip(translatable_nodes, translations)
                                  if translation.strip()}
               
+              # Create URL slug translation mapping
+              url_slug_translations = {}
+              for node, translation in zip(translatable_nodes, translations):
+                  if node['type'] in ['url_slug', 'canonical_slug', 'og_url_slug'] and translation:
+                      # Store both the original slug and its translation
+                      original_slug = node['text']
+                      translated_slug = translation.replace(' ', '-').lower()
+                      url_slug_translations[original_slug] = translated_slug
+              
               # Apply title translation
               if 'title' in translation_dict and soup.title:
                   soup.title.string = translation_dict['title']
@@ -182,40 +310,123 @@ jobs:
                       if node_id in translation_dict:
                           meta['content'] = translation_dict[node_id]
               
-              # Function to find and replace text nodes
-              def find_and_replace_text(node, node_path=''):
-                  if node.name in ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']:
+              # Update canonical and og:url URLs if they exist
+              canonical_link = soup.find('link', rel='canonical')
+              if canonical_link and canonical_link.get('href') and 'canonical_slug' in translation_dict:
+                  original_url = canonical_link['href']
+                  for original_slug, translated_slug in url_slug_translations.items():
+                      # Replace the original slug with the translated one
+                      if f"/{original_slug}" in original_url:
+                          canonical_link['href'] = original_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
+                          break
+              
+              og_url = soup.find('meta', property='og:url')
+              if og_url and og_url.get('content') and 'og_url_slug' in translation_dict:
+                  original_url = og_url['content']
+                  for original_slug, translated_slug in url_slug_translations.items():
+                      # Replace the original slug with the translated one
+                      if f"/{original_slug}" in original_url:
+                          og_url['content'] = original_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
+                          break
+              
+              # Update internal links with translated slugs
+              for link in soup.find_all('a', href=True):
+                  href = link['href']
+                  # Skip external links, anchors, and javascript links
+                  if (href.startswith('http') and 'unlimited-leads.online' in href) or \
+                     (not href.startswith('http') and not href.startswith('#') and not href.startswith('javascript:')):
+                      
+                      # Extract the slug part
+                      slug_match = re.search(r'/([^/]+)/?$', href)
+                      if slug_match and not slug_match.group(1).endswith('.html'):
+                          original_slug = slug_match.group(1)
+                          
+                          # Skip if it's already in es folder
+                          if not '/es/' in href and not original_slug.startswith('es/'):
+                              # Look for translated version
+                              if original_slug in url_slug_translations:
+                                  translated_slug = url_slug_translations[original_slug]
+                                  # Update the href
+                                  if href.startswith('http'):
+                                      # For absolute URLs
+                                      new_href = href.replace(f"/{original_slug}", f"/es/{translated_slug}")
+                                  else:
+                                      # For relative URLs
+                                      new_href = href.replace(f"{original_slug}", f"es/{translated_slug}")
+                                  
+                                  link['href'] = new_href
+              
+              # Create a mapping of paths for mixed content elements
+              path_element_map = {}
+              for node in translatable_nodes:
+                  if 'path' in node and node['node_id'] in translation_dict:
+                      if node['path'] not in path_element_map:
+                          path_element_map[node['path']] = []
+                      path_element_map[node['path']].append({
+                          'node_id': node['node_id'],
+                          'type': node['type'],
+                          'translation': translation_dict[node['node_id']]
+                      })
+              
+              # Function to recursively replace text
+              def replace_text(element, path=''):
+                  # Skip certain elements
+                  if element.name in ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']:
                       return
                   
                   # For text nodes
-                  if isinstance(node, NavigableString) and node.strip():
-                      parent_id = f"{node_path}_{id(node)}"
-                      if parent_id in translation_dict:
-                          # Replace this text node with its translation
-                          node.replace_with(NavigableString(translation_dict[parent_id]))
-                  
-                  # For elements with attributes
-                  elif node.name:
-                      # Handle alt text in images
-                      if node.name == 'img' and node.get('alt'):
-                          node_id = f"img_alt_{id(node)}"
-                          if node_id in translation_dict:
-                              node['alt'] = translation_dict[node_id]
-                      
-                      # Handle placeholder text
-                      if node.get('placeholder'):
-                          node_id = f"placeholder_{id(node)}"
-                          if node_id in translation_dict:
-                              node['placeholder'] = translation_dict[node_id]
-                      
-                      # Process children recursively
-                      for child in list(node.children):  # Create a copy of children to avoid issues during modification
-                          new_path = f"{node_path}_{node.name}" if node_path else node.name
-                          find_and_replace_text(child, new_path)
+                  for child in list(element.children):
+                      if isinstance(child, NavigableString) and child.strip():
+                          # Look for matching translations
+                          for node in translatable_nodes:
+                              if (node['type'] == 'text' or node['type'] == 'mixed_text') and 'path' in node and node['path'] == path:
+                                  if node['text'] == child.strip() and node['node_id'] in translation_dict:
+                                      new_text = translation_dict[node['node_id']]
+                                      if new_text:
+                                          child.replace_with(NavigableString(new_text))
+                                          break
+                      elif hasattr(child, 'name') and child.name:
+                          # Handle attributes
+                          if child.name == 'img' and child.get('alt'):
+                              for node in translatable_nodes:
+                                  if node['type'] == 'attribute' and node['element'] == 'img' and node['attribute'] == 'alt':
+                                      if node['text'] == child['alt'] and node['node_id'] in translation_dict:
+                                          child['alt'] = translation_dict[node['node_id']]
+                                          break
+                          
+                          if child.get('placeholder'):
+                              for node in translatable_nodes:
+                                  if node['type'] == 'attribute' and node['attribute'] == 'placeholder':
+                                      if node['text'] == child['placeholder'] and node['node_id'] in translation_dict:
+                                          child['placeholder'] = translation_dict[node['node_id']]
+                                          break
+                          
+                          if child.name == 'a' and child.get('title'):
+                              for node in translatable_nodes:
+                                  if node['type'] == 'attribute' and node['element'] == 'a' and node['attribute'] == 'title':
+                                      if node['text'] == child['title'] and node['node_id'] in translation_dict:
+                                          child['title'] = translation_dict[node['node_id']]
+                                          break
+                          
+                          # Special handling for text in header, p, li, etc.
+                          if child.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'button', 'span', 'div', 'a', 'label']:
+                              if child.string and child.string.strip():
+                                  for node in translatable_nodes:
+                                      if node['type'] == 'direct_text' and node['element'] == child.name:
+                                          if node['text'] == child.string.strip() and node['node_id'] in translation_dict:
+                                              child.string = translation_dict[node['node_id']]
+                                              break
+                          
+                          # Recursively process children
+                          new_path = f"{path}/{child.name}" if path else child.name
+                          replace_text(child, new_path)
               
-              # Start replacing from body
-              if soup.body:
-                  find_and_replace_text(soup.body, 'body')
+              # Start replacing from the document
+              replace_text(soup)
+              
+              # Add language attribute to html tag
+              if soup.html:
+                  soup.html['lang'] = 'es'
               
               # Add hreflang tags
               head = soup.head or soup.new_tag('head')
@@ -231,9 +442,37 @@ jobs:
                   if 'hreflang' in link.attrs:
                       link.extract()
               
-              # Add language attribute to html tag
-              if soup.html:
-                  soup.html['lang'] = 'es'
+              # Add new hreflang tags
+              # 1. Add hreflang for original language (en)
+              en_link = soup.new_tag('link')
+              en_link['rel'] = 'alternate'
+              en_link['hreflang'] = 'en'
+              base_url = "https://unlimited-leads.online"  # Replace with your actual domain
+              if canonical_link and canonical_link.get('href'):
+                  en_link['href'] = canonical_link['href']
+              else:
+                  # Construct from the current page
+                  file_name = os.path.basename(file_path)
+                  en_link['href'] = f"{base_url}/{file_name}"
+              head.append(en_link)
+              
+              # 2. Add hreflang for Spanish
+              es_link = soup.new_tag('link')
+              es_link['rel'] = 'alternate'
+              es_link['hreflang'] = 'es'
+              if canonical_link and canonical_link.get('href'):
+                  # Use the modified canonical URL
+                  es_url = canonical_link['href']
+                  for original_slug, translated_slug in url_slug_translations.items():
+                      if f"/{original_slug}" in es_url:
+                          es_url = es_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
+                          break
+                  es_link['href'] = es_url
+              else:
+                  # Construct from the current page
+                  file_name = os.path.basename(file_path)
+                  es_link['href'] = f"{base_url}/es/{file_name}"
+              head.append(es_link)
               
               return str(soup)
           
