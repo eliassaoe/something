@@ -217,11 +217,20 @@ jobs:
       - name: Clean up node_modules
         if: steps.get_file.outputs.file != ''
         run: rm -rf node_modules
-        
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "🌐 Traduction automatique"
-          git push
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ github.token }}
+          commit-message: "🌐 Traduction de ${{ steps.get_file.outputs.file }}"
+          title: "Traduction de ${{ steps.get_file.outputs.file }}"
+          body: |
+            Traduction automatique de ${{ steps.get_file.outputs.file }} en:
+            - Français
+            - Arabe
+            - Portugais
+            - Espagnol
+            - Néerlandais
+            - Allemand
+          branch: "translate-html"
+          base: main
