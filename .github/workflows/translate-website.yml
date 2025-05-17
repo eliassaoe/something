@@ -13,46 +13,60 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v4
         with:
-          fetch-depth: 2  # Get enough history to identify changes
+          python-version: '3.x'
 
-      # Manually find changed HTML files
-      - name: Find changed HTML files
-        id: changed_files
-        run: |
-          git diff --name-only HEAD~1 HEAD | grep "\.html$" || echo "No HTML files changed"
-          mkdir -p $GITHUB_WORKSPACE/translations
+      - name: Install OpenAI
+        run: pip install openai
 
-      # Translate each changed HTML file separately
       - name: Translate HTML files
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          for file in $(git diff --name-only HEAD~1 HEAD | grep "\.html$" || echo ""); do
-            if [ -n "$file" ] && [ -f "$file" ]; then
-              echo "Translating $file"
-              mkdir -p $(dirname "$GITHUB_WORKSPACE/translations/es/$file")
+          import os
+          import glob
+          import openai
+          
+          # Set up OpenAI client
+          client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+          
+          # Find all HTML files
+          html_files = glob.glob("**/*.html", recursive=True)
+          
+          for file_path in html_files:
+              print(f"Translating {file_path}...")
               
-              # Create a temporary file with just this HTML file
-              cp "$file" "$GITHUB_WORKSPACE/temp_file.html"
+              # Read the HTML file
+              with open(file_path, "r", encoding="utf-8") as f:
+                  content = f.read()
               
-              # Run the translation action for this specific file
-              docker run --rm \
-                -e API_KEY=${{ secrets.OPENAI_API_KEY }} \
-                -e AI_SERVICE=openai \
-                -e AI_MODEL=gpt-4 \
-                -e TARGET_LANG=Spanish \
-                -e TARGET_LANG_CODE=es \
-                -e FILE_EXTS=html \
-                -e OUTPUT_FORMAT="translations/es/{basename}" \
-                -v $GITHUB_WORKSPACE:/github/workspace \
-                -w /github/workspace \
-                imaun/gpt-translate-action:v1.9.0 \
-                -i "temp_file.html"
-            fi
-          done
+              # Translate with OpenAI
+              response = client.chat.completions.create(
+                  model="gpt-4",
+                  messages=[
+                      {"role": "system", "content": "You are a translator specializing in software development. Preserve HTML markup and technical terms. Only translate the text content to Spanish."},
+                      {"role": "user", "content": f"Translate this HTML to Spanish, preserving all HTML tags:\n\n{content}"}
+                  ]
+              )
+              
+              translated_content = response.choices[0].message.content
+              
+              # Create output directory
+              os.makedirs(f"translations/es/{os.path.dirname(file_path)}", exist_ok=True)
+              
+              # Save translated file
+              output_path = f"translations/es/{file_path}"
+              with open(output_path, "w", encoding="utf-8") as f:
+                  f.write(translated_content)
+              
+              print(f"Saved to {output_path}")
+        shell: python
 
-      # Upload translations as artifacts
       - name: Upload Translations
         uses: actions/upload-artifact@v3
         with:
           name: spanish-translations
-          path: ${{ github.workspace }}/translations
+          path: translations
