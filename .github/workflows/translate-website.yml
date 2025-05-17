@@ -30,6 +30,13 @@ jobs:
             exit 0
           fi
       
+      - name: Generate branch name
+        if: steps.get_file.outputs.file != ''
+        id: branch_name
+        run: |
+          BRANCH_NAME="translate-$(echo "${{ steps.get_file.outputs.file }}" | sed 's/\./-/g')"
+          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      
       - name: Setup Node.js
         if: steps.get_file.outputs.file != ''
         uses: actions/setup-node@v3
@@ -293,6 +300,6 @@ jobs:
             - Espagnol
             - Néerlandais
             - Allemand
-          branch: translate-${{ steps.get_file.outputs.file | replace('.', '-') }}
+          branch: ${{ steps.branch_name.outputs.name }}
           base: main
           delete-branch: true
