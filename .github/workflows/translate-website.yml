@@ -293,6 +293,6 @@ jobs:
             - Espagnol
             - Néerlandais
             - Allemand
-          branch: translate-${{ steps.get_file.outputs.file }}
+          branch: translate-${{ steps.get_file.outputs.file | replace('.', '-') }}
           base: main
           delete-branch: true
