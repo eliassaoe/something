@@ -1,18 +1,18 @@
-name: Create Language Folders
+name: Create Language Folders PR
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_dispatch:  # Déclenchement manuel uniquement
 permissions:
   contents: write
   pull-requests: write
 jobs:
-  create-folders:
+  create-folders-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: main
+      
       - name: Create language folders
         run: |
           # Créer des dossiers pour chaque langue
@@ -22,6 +22,7 @@ jobs:
           echo "<html lang='es'><head><title>Spanish Page</title></head><body>Spanish content</body></html>" > es/index.html
           echo "<html lang='fr'><head><title>French Page</title></head><body>French content</body></html>" > fr/index.html
           echo "<html lang='nl'><head><title>Dutch Page</title></head><body>Dutch content</body></html>" > nl/index.html
+      
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
@@ -31,5 +32,5 @@ jobs:
           body: |
             This PR adds language folders for Arabic, Portuguese, Spanish, French, and Dutch.
             Created by GitHub Actions.
-          branch: add-language-folders
+          branch: add-language-folders-auto
           base: main
