@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Get full history
+          fetch-depth: 0
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -32,10 +32,80 @@ jobs:
           import os
           import glob
           import openai
-          from bs4 import BeautifulSoup
+          from bs4 import BeautifulSoup, Comment
+          import re
+          import time
           
           # Configure OpenAI API
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+          
+          def split_html_for_translation(soup):
+              """Split HTML into manageable chunks for translation."""
+              # Strategy: Split by main sections (body content)
+              
+              # 1. Extract head separately - it's usually small
+              head_html = str(soup.head) if soup.head else ""
+              
+              # 2. Process body content by breaking at logical section breaks
+              chunks = []
+              
+              if soup.body:
+                  # Find all top-level elements in the body
+                  main_elements = list(soup.body.children)
+                  
+                  current_chunk = []
+                  current_size = 0
+                  max_chunk_size = 3000  # Conservative token estimate
+                  
+                  for element in main_elements:
+                      # Skip comments and whitespace
+                      if isinstance(element, Comment) or (isinstance(element, str) and element.strip() == ''):
+                          continue
+                      
+                      element_str = str(element)
+                      element_size = len(element_str) / 4  # Rough token estimation
+                      
+                      if current_size + element_size > max_chunk_size and current_chunk:
+                          # This chunk is getting too large, save it and start a new one
+                          chunks.append(''.join(current_chunk))
+                          current_chunk = [element_str]
+                          current_size = element_size
+                      else:
+                          # Add to current chunk
+                          current_chunk.append(element_str)
+                          current_size += element_size
+                  
+                  # Add the last chunk if there's anything left
+                  if current_chunk:
+                      chunks.append(''.join(current_chunk))
+              
+              return head_html, chunks
+          
+          def translate_chunk(chunk, is_head=False):
+              """Translate a single HTML chunk."""
+              if is_head:
+                  system_prompt = "You are a professional translator. Translate the HTML head section to Spanish. Keep all HTML tags, attributes, and scripts exactly as they are. Only translate text content that would be visible to users. Leave meta titles, descriptions, and other SEO elements translated."
+              else:
+                  system_prompt = "You are a professional translator. Translate this HTML chunk to Spanish while preserving all HTML tags, attributes, classes, and IDs exactly as they are. Only translate the text content that would be visible to users."
+              
+              try:
+                  response = client.chat.completions.create(
+                      model="gpt-4",
+                      messages=[
+                          {"role": "system", "content": system_prompt},
+                          {"role": "user", "content": f"Translate this HTML to Spanish, keeping all HTML tags and attributes intact:\n\n{chunk}"}
+                      ],
+                      temperature=0.2
+                  )
+                  return response.choices[0].message.content
+              except Exception as e:
+                  print(f"Error in translation: {e}")
+                  # If we hit rate limits, wait and retry
+                  if "rate limit" in str(e).lower():
+                      print("Rate limited, waiting 20 seconds...")
+                      time.sleep(20)
+                      return translate_chunk(chunk, is_head)
+                  return None
           
           # Find HTML files
           html_files = glob.glob("**/*.html", recursive=True)
@@ -49,42 +119,69 @@ jobs:
                   
               print(f"Processing {file_path}")
               
-              # Read HTML file
-              with open(file_path, 'r', encoding='utf-8') as f:
-                  html_content = f.read()
-              
-              # Parse HTML
-              soup = BeautifulSoup(html_content, 'lxml')
-              
-              # Translate content
-              print(f"Translating {file_path} to Spanish...")
               try:
-                  response = client.chat.completions.create(
-                      model="gpt-4",
-                      messages=[
-                          {"role": "system", "content": "You are a professional translator specializing in website localization. Translate HTML to Spanish while preserving all HTML tags, attributes, classes, and IDs. Only translate the text content that would be visible to users."},
-                          {"role": "user", "content": f"Translate this HTML to Spanish, keeping all HTML tags and attributes intact:\n\n{html_content}"}
-                      ],
-                      temperature=0.2
-                  )
+                  # Read HTML file
+                  with open(file_path, 'r', encoding='utf-8') as f:
+                      html_content = f.read()
                   
-                  translated_html = response.choices[0].message.content
+                  # Parse HTML
+                  soup = BeautifulSoup(html_content, 'lxml')
                   
-                  # Create output directory structure
-                  dir_name = os.path.dirname(file_path)
-                  base_name = os.path.basename(file_path)
-                  output_dir = os.path.join(dir_name, 'es') if dir_name else 'es'
-                  os.makedirs(output_dir, exist_ok=True)
+                  # Split into manageable chunks
+                  print(f"Splitting {file_path} into chunks...")
+                  head_html, body_chunks = split_html_for_translation(soup)
                   
-                  # Save translated file
-                  output_path = os.path.join(output_dir, base_name)
-                  with open(output_path, 'w', encoding='utf-8') as f:
-                      f.write(translated_html)
+                  # Translate the head
+                  print(f"Translating head section...")
+                  translated_head = translate_chunk(head_html, is_head=True)
+                  
+                  # Translate body chunks
+                  print(f"Translating {len(body_chunks)} body chunks...")
+                  translated_chunks = []
+                  for i, chunk in enumerate(body_chunks):
+                      print(f"Translating chunk {i+1}/{len(body_chunks)}...")
+                      translated_chunk = translate_chunk(chunk)
+                      if translated_chunk:
+                          translated_chunks.append(translated_chunk)
+                      else:
+                          print(f"Failed to translate chunk {i+1}")
                       
-                  print(f"Translation saved to {output_path}")
+                      # Add a small delay between chunks to avoid rate limits
+                      if i < len(body_chunks) - 1:
+                          time.sleep(2)
                   
+                  # Reconstruct the HTML
+                  if translated_head and translated_chunks:
+                      # Basic structure with doctype
+                      final_html = "<!DOCTYPE html>\n<html lang=\"es\">\n"
+                      # Add translated head
+                      head_soup = BeautifulSoup(translated_head, 'lxml')
+                      final_html += str(head_soup.head) if head_soup.head else "<head></head>\n"
+                      # Start body tag
+                      final_html += "<body>\n"
+                      # Add translated body chunks
+                      for chunk in translated_chunks:
+                          final_html += chunk + "\n"
+                      # Close body and html tags
+                      final_html += "</body>\n</html>"
+                      
+                      # Create output directory structure
+                      dir_name = os.path.dirname(file_path)
+                      base_name = os.path.basename(file_path)
+                      output_dir = os.path.join(dir_name, 'es') if dir_name else 'es'
+                      os.makedirs(output_dir, exist_ok=True)
+                      
+                      # Save translated file
+                      output_path = os.path.join(output_dir, base_name)
+                      with open(output_path, 'w', encoding='utf-8') as f:
+                          f.write(final_html)
+                          
+                      print(f"Translation saved to {output_path}")
+                  else:
+                      print(f"Failed to translate {file_path} - missing translated parts")
+                      
               except Exception as e:
-                  print(f"Error translating {file_path}: {e}")
+                  print(f"Error processing {file_path}: {e}")
         shell: python
       
       - name: Commit changes
