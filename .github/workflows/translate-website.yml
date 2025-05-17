@@ -1,4 +1,4 @@
-name: Translate Website
+name: Create Language Folders
 on:
   push:
     branches:
@@ -7,133 +7,24 @@ on:
 permissions:
   contents: write
 jobs:
-  translate-website:
+  create-folders:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Create translation script
+      - name: Create language folders
         run: |
-          cat > translate.py <<'EOL'
-          import os
-          import re
-          import json
-          import urllib.request
-          import urllib.parse
-          
-          # Configuration
-          API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI'
-          LANGUAGES = [
-              {'code': 'ar', 'name': 'arabe'},
-              {'code': 'pt', 'name': 'portugais'},
-              {'code': 'es', 'name': 'espagnol'},
-              {'code': 'fr', 'name': 'français'},
-              {'code': 'nl', 'name': 'néerlandais'}
-          ]
-          
-          # Créer les dossiers pour chaque langue
-          for lang in LANGUAGES:
-              os.makedirs(f"./{lang['code']}", exist_ok=True)
-          
-          # Fonction pour traduire du texte
-          def translate_text(text, target_language):
-              if not text.strip():
-                  return text
-                  
-              url = f"https://translation.googleapis.com/language/translate/v2?key={API_KEY}"
-              data = urllib.parse.urlencode({
-                  'q': text,
-                  'target': target_language,
-                  'format': 'html'
-              }).encode('utf-8')
-              
-              try:
-                  request = urllib.request.Request(url, data=data, method='POST')
-                  request.add_header('Content-Type', 'application/x-www-form-urlencoded')
-                  
-                  with urllib.request.urlopen(request) as response:
-                      response_data = json.loads(response.read().decode('utf-8'))
-                      return response_data['data']['translations'][0]['translatedText']
-              except Exception as e:
-                  print(f"Erreur de traduction: {e}")
-                  return text
-          
-          # Traduire chaque fichier HTML
-          for filename in [f for f in os.listdir('./') if f.endswith('.html') and os.path.isfile(f)]:
-              print(f"Traitement de {filename}")
-              
-              # Lire le fichier HTML
-              with open(filename, 'r', encoding='utf-8') as f:
-                  content = f.read()
-              
-              for lang in LANGUAGES:
-                  print(f"→ Traduction en {lang['name']}...")
-                  
-                  # 1. Définir l'attribut lang
-                  translated = re.sub(r'<html(.*?)>', f'<html\\1 lang="{lang["code"]}">', content)
-                  
-                  # 2. Traduire le titre
-                  title_match = re.search(r'<title>(.*?)</title>', translated)
-                  if title_match:
-                      title_text = title_match.group(1)
-                      translated_title = translate_text(title_text, lang['code'])
-                      translated = translated.replace(f"<title>{title_text}</title>", f"<title>{translated_title}</title>")
-                  
-                  # 3. Traduire les meta descriptions
-                  meta_matches = re.finditer(r'<meta\s+name=["\'](description|keywords)["\'].*?content=["\'](.*?)["\']', translated)
-                  for match in meta_matches:
-                      meta_name = match.group(1)
-                      meta_content = match.group(2)
-                      translated_content = translate_text(meta_content, lang['code'])
-                      translated = translated.replace(f'content="{meta_content}"', f'content="{translated_content}"')
-                  
-                  # 4. Extraire et traduire tous les textes du body (simplification majeure)
-                  body_match = re.search(r'<body.*?>(.*?)</body>', translated, re.DOTALL)
-                  if body_match:
-                      body_content = body_match.group(1)
-                      
-                      # Protéger les balises script et style
-                      scripts = []
-                      def save_script(match):
-                          scripts.append(match.group(0))
-                          return f"SCRIPT_PLACEHOLDER_{len(scripts)-1}"
-                      
-                      protected = re.sub(r'<script.*?>.*?</script>', save_script, body_content, flags=re.DOTALL)
-                      
-                      # Protéger les balises
-                      pattern = r'(<[^>]*>)'
-                      chunks = re.split(pattern, protected)
-                      
-                      # Traduire uniquement le texte
-                      for i in range(len(chunks)):
-                          if i % 2 == 0 and chunks[i].strip():  # C'est du texte, pas une balise
-                              chunks[i] = translate_text(chunks[i], lang['code'])
-                      
-                      # Reconstruire le contenu
-                      translated_body = ''.join(chunks)
-                      
-                      # Remettre les scripts
-                      for i, script in enumerate(scripts):
-                          translated_body = translated_body.replace(f"SCRIPT_PLACEHOLDER_{i}", script)
-                      
-                      # Remplacer le body dans le document
-                      translated = translated.replace(body_match.group(0), f"<body>{translated_body}</body>")
-                  
-                  # Enregistrer la version traduite
-                  output_path = f"./{lang['code']}/{filename}"
-                  with open(output_path, 'w', encoding='utf-8') as f:
-                      f.write(translated)
-                  
-                  print(f"✓ Créé: {output_path}")
-          
-          print("Traduction terminée!")
-          EOL
-          
-          python3 translate.py
+          # Créer des dossiers pour chaque langue
+          mkdir -p ar pt es fr nl
+          echo "<html lang='ar'><head><title>Arabic Page</title></head><body>Arabic content</body></html>" > ar/index.html
+          echo "<html lang='pt'><head><title>Portuguese Page</title></head><body>Portuguese content</body></html>" > pt/index.html
+          echo "<html lang='es'><head><title>Spanish Page</title></head><body>Spanish content</body></html>" > es/index.html
+          echo "<html lang='fr'><head><title>French Page</title></head><body>French content</body></html>" > fr/index.html
+          echo "<html lang='nl'><head><title>Dutch Page</title></head><body>Dutch content</body></html>" > nl/index.html
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "Traduction des pages HTML" || echo "Pas de changements à commiter"
+          git commit -m "Create language folders" || echo "No changes to commit"
           git push
