@@ -1,84 +1,61 @@
-name: Translate Last Modified HTML
+name: Translate Modified HTML File
 on:
-  workflow_dispatch:  # Déclenchement manuel
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - '*.html'      # Ne se déclenche que lorsque des fichiers HTML sont modifiés
+      - '*.html'
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   translate-website:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+        with:
+          fetch-depth: 2
+      
+      - name: Get last modified file
+        id: get_file
+        run: |
+          MODIFIED_FILE=$(git diff --name-only HEAD^ HEAD | grep '\.html$' | head -n 1)
+          if [ -n "$MODIFIED_FILE" ]; then
+            echo "file=$MODIFIED_FILE" >> $GITHUB_OUTPUT
+            echo "Le fichier HTML modifié est: $MODIFIED_FILE"
+          else
+            echo "Aucun fichier HTML modifié dans le dernier commit."
+            exit 0
+          fi
+      
       - name: Setup Node.js
+        if: steps.get_file.outputs.file != ''
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
+      
       - name: Install dependencies
+        if: steps.get_file.outputs.file != ''
         run: npm install axios slugify
-        
+      
       - name: Create translation script
+        if: steps.get_file.outputs.file != ''
         run: |
-          cat > translate-last-modified.js <<'EOL'
+          cat > translate-file.js <<'EOL'
           const fs = require('fs');
           const path = require('path');
           const axios = require('axios');
           const slugify = require('slugify');
           
+          // Le fichier à traduire (passé comme argument)
+          const fileToTranslate = process.argv[2];
+          
           // Configuration
           const API_KEY = 'AIzaSyC3m8ihaQF54PqboogrbwTjAxgtBtaNbQI';
           const TARGET_LANGUAGES = ['fr', 'ar', 'pt', 'es', 'nl', 'de'];
           const BASE_URL = 'https://unlimited-leads.online';
-          
-          // Fichier de journal des traductions
-          const TRANSLATION_LOG_FILE = '.translation-log.json';
-          
-          // Trouver le fichier HTML le plus récemment modifié
-          function findLastModifiedHtmlFile() {
-            const htmlFiles = fs.readdirSync('./').filter(file => 
-              file.endsWith('.html') && fs.statSync(file).isFile()
-            );
-            
-            if (htmlFiles.length === 0) {
-              return null;
-            }
-            
-            // Lire le journal des traductions
-            let translationLog = {};
-            if (fs.existsSync(TRANSLATION_LOG_FILE)) {
-              try {
-                translationLog = JSON.parse(fs.readFileSync(TRANSLATION_LOG_FILE, 'utf8'));
-              } catch (error) {
-                console.error(`Erreur lors de la lecture du journal: ${error.message}`);
-              }
-            }
-            
-            // Trier les fichiers par date de modification décroissante
-            htmlFiles.sort((a, b) => {
-              const statsA = fs.statSync(a);
-              const statsB = fs.statSync(b);
-              return statsB.mtimeMs - statsA.mtimeMs;
-            });
-            
-            // Trouver le premier fichier qui a été modifié depuis sa dernière traduction
-            for (const file of htmlFiles) {
-              const stats = fs.statSync(file);
-              
-              // Vérifier si le fichier a déjà été traduit
-              if (!translationLog[file] || stats.mtimeMs > translationLog[file].lastModified) {
-                return file;
-              }
-            }
-            
-            // Si tous les fichiers sont à jour, retourner null
-            return null;
-          }
           
           // Fonction pour traduire du texte
           async function translateText(text, targetLanguage) {
@@ -238,18 +215,13 @@ jobs:
           }
           
           // Fonction principale
-          async function translateLastModified() {
-            console.log("🔍 Recherche du fichier HTML le plus récemment modifié...");
-            
-            // Trouver le fichier HTML le plus récemment modifié
-            const fileToTranslate = findLastModifiedHtmlFile();
-            
-            if (!fileToTranslate) {
-              console.log("✅ Tous les fichiers HTML sont à jour. Aucune traduction nécessaire.");
-              return;
+          async function translateFile() {
+            if (!fileToTranslate || !fs.existsSync(fileToTranslate)) {
+              console.error(`❌ Le fichier ${fileToTranslate} n'existe pas.`);
+              process.exit(1);
             }
             
-            console.log(`🔄 Fichier à traduire: ${fileToTranslate}`);
+            console.log(`🔄 Traduction du fichier: ${fileToTranslate}`);
             
             // Lire le contenu du fichier
             const fileContent = fs.readFileSync(fileToTranslate, 'utf8');
@@ -289,81 +261,38 @@ jobs:
               }
             }
             
-            // Mettre à jour le journal des traductions
-            let translationLog = {};
-            if (fs.existsSync(TRANSLATION_LOG_FILE)) {
-              try {
-                translationLog = JSON.parse(fs.readFileSync(TRANSLATION_LOG_FILE, 'utf8'));
-              } catch (error) {
-                console.error(`Erreur lors de la lecture du journal: ${error.message}`);
-              }
-            }
-            
-            // Enregistrer les informations de traduction
-            translationLog[fileToTranslate] = {
-              lastModified: fs.statSync(fileToTranslate).mtimeMs,
-              lastTranslated: Date.now(),
-              languages: translatedFiles
-            };
-            
-            // Sauvegarder le journal
-            fs.writeFileSync(TRANSLATION_LOG_FILE, JSON.stringify(translationLog, null, 2), 'utf8');
-            console.log(`📝 Journal des traductions mis à jour pour ${fileToTranslate}`);
-            
-            // Mettre à jour le sitemap
-            try {
-              console.log("\n📑 Mise à jour du sitemap multilingue...");
-              
-              let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-              sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
-              sitemap += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
-              
-              // Ajouter tous les fichiers HTML du journal
-              for (const file in translationLog) {
-                const originalUrl = `${BASE_URL}/${file}`;
-                sitemap += '  <url>\n';
-                sitemap += `    <loc>${originalUrl}</loc>\n`;
-                sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${originalUrl}" />\n`;
-                
-                // Ajouter les alternatives pour chaque langue
-                for (const lang of TARGET_LANGUAGES) {
-                  const entry = translationLog[file];
-                  if (entry && entry.languages && entry.languages[lang]) {
-                    const translatedFilename = entry.languages[lang];
-                    sitemap += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${translatedFilename}" />\n`;
-                  }
-                }
-                
-                sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
-                sitemap += '  </url>\n';
-              }
-              
-              sitemap += '</urlset>';
-              
-              // Sauvegarder le sitemap
-              fs.writeFileSync('sitemap_multilingual.xml', sitemap);
-              console.log("✅ Sitemap multilingue mis à jour: sitemap_multilingual.xml");
-            } catch (error) {
-              console.error(`❌ Erreur lors de la création du sitemap: ${error.message}`);
-            }
-            
             console.log("\n🎉 Traduction terminée!");
           }
           
           // Exécuter la fonction principale
-          translateLastModified().catch(error => {
+          translateFile().catch(error => {
             console.error("❌ Erreur générale:", error.message);
             process.exit(1);
           });
           EOL
-          
+      
       - name: Execute translation script
-        run: node translate-last-modified.js
-        
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add .
-          git commit -m "🌐 Traduction de la dernière page modifiée" || echo "Pas de changements à commiter"
-          git push
+        if: steps.get_file.outputs.file != ''
+        run: node translate-file.js "${{ steps.get_file.outputs.file }}"
+      
+      - name: Clean up node_modules
+        if: steps.get_file.outputs.file != ''
+        run: rm -rf node_modules
+      
+      - name: Create Pull Request
+        if: steps.get_file.outputs.file != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "🌐 Traduction de ${{ steps.get_file.outputs.file }}"
+          title: "Traduction de ${{ steps.get_file.outputs.file }}"
+          body: |
+            Traduction automatique de ${{ steps.get_file.outputs.file }} en:
+            - Français
+            - Arabe
+            - Portugais
+            - Espagnol
+            - Néerlandais
+            - Allemand
+          branch: translate-${{ steps.get_file.outputs.file }}
+          base: main
+          delete-branch: true
