@@ -38,7 +38,7 @@ jobs:
       
       - name: Install dependencies
         if: steps.get_file.outputs.file != ''
-        run: npm install axios slugify
+        run: npm install axios
       
       - name: Create translation script
         if: steps.get_file.outputs.file != ''
@@ -47,7 +47,6 @@ jobs:
           const fs = require('fs');
           const path = require('path');
           const axios = require('axios');
-          const slugify = require('slugify');
           
           // Le fichier à traduire (passé comme argument)
           const fileToTranslate = process.argv[2];
@@ -61,7 +60,6 @@ jobs:
           async function translateText(text, targetLanguage) {
             if (!text || !text.trim()) return text;
             
-            // Pause pour éviter de surcharger l'API
             await new Promise(resolve => setTimeout(resolve, 100));
             
             try {
@@ -82,33 +80,8 @@ jobs:
             }
           }
           
-          // Fonction pour traduire et slugifier un nom de fichier
-          async function translateAndSlugifyFilename(filename, targetLanguage) {
-            // Garder index.html tel quel
-            if (filename === 'index.html') {
-              return 'index.html';
-            }
-            
-            const extension = path.extname(filename);
-            const nameWithoutExt = path.basename(filename, extension);
-            const nameWithSpaces = nameWithoutExt.replace(/-/g, ' ');
-            
-            try {
-              const translatedName = await translateText(nameWithSpaces, targetLanguage);
-              const sluggedName = slugify(translatedName, {
-                lower: true,
-                strict: true
-              });
-              
-              return sluggedName + extension;
-            } catch (error) {
-              console.error(`Erreur de traduction du nom: ${error.message}`);
-              return filename;
-            }
-          }
-          
           // Fonction pour traduire le contenu HTML
-          async function translateHtml(html, targetLanguage, originalFilename, translatedFilename) {
+          async function translateHtml(html, targetLanguage, originalFilename) {
             try {
               // 1. Traduire le titre
               const titleRegex = /<title>(.*?)<\/title>/i;
@@ -135,11 +108,7 @@ jobs:
               // 4. Ajouter des balises hreflang
               let hreflangTags = '';
               for (const lang of TARGET_LANGUAGES) {
-                const langFilename = lang === targetLanguage ? 
-                  translatedFilename : 
-                  await translateAndSlugifyFilename(originalFilename, lang);
-                
-                hreflangTags += `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${langFilename}" />\n    `;
+                hreflangTags += `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${originalFilename}" />\n    `;
               }
               
               const xDefaultTag = `<link rel="alternate" hreflang="x-default" href="${BASE_URL}/${originalFilename}" />`;
@@ -148,14 +117,15 @@ jobs:
               // 5. Traduire les blocs de texte visibles
               const textBlocks = [
                 { regex: /<p\b[^>]*>(.*?)<\/p>/gis, tag: 'p' },
-                { regex: /<h[1-6]\b[^>]*>(.*?)<\/h[1-6]>/gis, tag: 'h' },
+                { regex: /<h1\b[^>]*>(.*?)<\/h1>/gis, tag: 'h1' },
+                { regex: /<h2\b[^>]*>(.*?)<\/h2>/gis, tag: 'h2' },
+                { regex: /<h3\b[^>]*>(.*?)<\/h3>/gis, tag: 'h3' },
+                { regex: /<h4\b[^>]*>(.*?)<\/h4>/gis, tag: 'h4' },
                 { regex: /<span\b[^>]*>((?!<span|<div|<p|<h).+?)<\/span>/gis, tag: 'span' },
-                { regex: /<div\b[^>]*>((?!<div|<p|<h).+?)<\/div>/gis, tag: 'div' },
                 { regex: /<a\b[^>]*>((?!<div|<p|<h).+?)<\/a>/gis, tag: 'a' },
                 { regex: /<li\b[^>]*>((?!<div|<p|<h).+?)<\/li>/gis, tag: 'li' },
                 { regex: /<button\b[^>]*>((?!<div|<p|<h).+?)<\/button>/gis, tag: 'button' },
-                { regex: /<label\b[^>]*>((?!<div|<p|<h).+?)<\/label>/gis, tag: 'label' },
-                { regex: /<footer\b[^>]*>(.*?)<\/footer>/gis, tag: 'footer' }
+                { regex: /<label\b[^>]*>((?!<div|<p|<h).+?)<\/label>/gis, tag: 'label' }
               ];
               
               for (const block of textBlocks) {
@@ -182,28 +152,6 @@ jobs:
                   } catch (e) {
                     console.log(`Échec de traduction pour un texte`);
                   }
-                }
-              }
-              
-              // 6. Mettre à jour les liens internes
-              const linkRegex = /<a\b[^>]*href=["']([^"']+\.html)["'][^>]*>/gi;
-              let linkMatch;
-              
-              while ((linkMatch = linkRegex.exec(html)) !== null) {
-                const [fullMatch, href] = linkMatch;
-                
-                // Ignorer les liens externes
-                if (href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) {
-                  continue;
-                }
-                
-                const linkedFilename = path.basename(href);
-                try {
-                  const translatedLinkedFilename = await translateAndSlugifyFilename(linkedFilename, targetLanguage);
-                  const newHref = href.replace(linkedFilename, translatedLinkedFilename);
-                  html = html.replace(fullMatch, fullMatch.replace(href, `/${targetLanguage}/${newHref}`));
-                } catch (e) {
-                  console.error(`Erreur lors de la traduction de lien`);
                 }
               }
               
@@ -236,26 +184,17 @@ jobs:
             }
             
             // Traduire le fichier dans chaque langue
-            const translatedFiles = {};
-            
             for (const lang of TARGET_LANGUAGES) {
               console.log(`\n🌍 Traduction en ${lang}...`);
               
               try {
-                // Traduire le nom du fichier
-                const translatedFilename = await translateAndSlugifyFilename(fileToTranslate, lang);
-                console.log(`📝 Nom traduit: ${fileToTranslate} → ${translatedFilename}`);
-                
                 // Traduire le contenu
-                const translatedContent = await translateHtml(fileContent, lang, fileToTranslate, translatedFilename);
+                const translatedContent = await translateHtml(fileContent, lang, fileToTranslate);
                 
                 // Sauvegarder le fichier traduit
-                const outputPath = `./${lang}/${translatedFilename}`;
+                const outputPath = `./${lang}/${fileToTranslate}`;
                 fs.writeFileSync(outputPath, translatedContent);
                 console.log(`✅ Fichier traduit: ${outputPath}`);
-                
-                // Enregistrer le nom traduit
-                translatedFiles[lang] = translatedFilename;
               } catch (error) {
                 console.error(`❌ Erreur lors de la traduction en ${lang}: ${error.message}`);
               }
@@ -278,30 +217,11 @@ jobs:
       - name: Clean up node_modules
         if: steps.get_file.outputs.file != ''
         run: rm -rf node_modules
-      
-      - name: Simple branch name
-        if: steps.get_file.outputs.file != ''
-        id: simple_branch
+        
+      - name: Commit changes
         run: |
-          # Create a simple branch name without special characters
-          FILENAME="${{ steps.get_file.outputs.file }}"
-          SIMPLE_NAME=$(echo "$FILENAME" | sed 's/\.html/-html/g')
-          echo "name=translate-$SIMPLE_NAME" >> $GITHUB_OUTPUT
-          echo "Branch name will be: translate-$SIMPLE_NAME"
-      
-      - name: Create Pull Request
-        if: steps.get_file.outputs.file != ''
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: "🌐 Traduction de ${{ steps.get_file.outputs.file }}"
-          title: "Traduction de ${{ steps.get_file.outputs.file }}"
-          body: |
-            Traduction automatique de ${{ steps.get_file.outputs.file }} en:
-            - Français
-            - Arabe
-            - Portugais
-            - Espagnol
-            - Néerlandais
-            - Allemand
-          branch: ${{ steps.simple_branch.outputs.name }}
-          base: main
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "🌐 Traduction automatique"
+          git push
