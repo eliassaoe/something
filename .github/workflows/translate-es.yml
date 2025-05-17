@@ -34,7 +34,6 @@ jobs:
           from bs4 import BeautifulSoup, NavigableString, Comment
           import time
           import subprocess
-          import re
           
           # Configure OpenAI API
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -55,7 +54,6 @@ jobs:
               elements_to_skip = ['script', 'style', 'noscript', 'iframe', 'canvas', 'svg', 'code', 'pre']
               translatable_nodes = []
               node_counter = 0
-              url_slugs = set()  # To keep track of unique URL slugs
               
               # Extract text from title tag
               if soup.title and soup.title.string:
@@ -73,59 +71,6 @@ jobs:
                           'text': meta['content'],
                           'node_id': f"meta_{meta['name']}"
                       })
-              
-              # Extract canonical and og:url URLs if they exist
-              canonical_link = soup.find('link', rel='canonical')
-              if canonical_link and canonical_link.get('href'):
-                  url = canonical_link['href']
-                  # Extract the slug part (after the last /)
-                  slug_match = re.search(r'/([^/]+)/?$', url)
-                  if slug_match and not slug_match.group(1).endswith('.html'):
-                      slug = slug_match.group(1)
-                      translatable_nodes.append({
-                          'type': 'canonical_slug',
-                          'text': slug,
-                          'node_id': 'canonical_slug',
-                          'url': url
-                      })
-              
-              og_url = soup.find('meta', property='og:url')
-              if og_url and og_url.get('content'):
-                  url = og_url['content']
-                  # Extract the slug part (after the last /)
-                  slug_match = re.search(r'/([^/]+)/?$', url)
-                  if slug_match and not slug_match.group(1).endswith('.html'):
-                      slug = slug_match.group(1)
-                      translatable_nodes.append({
-                          'type': 'og_url_slug',
-                          'text': slug,
-                          'node_id': 'og_url_slug',
-                          'url': url
-                      })
-              
-              # Find all internal links and extract slugs for translation
-              for link in soup.find_all('a', href=True):
-                  href = link['href']
-                  # Skip external links, anchors, and javascript links
-                  if (href.startswith('http') and 'unlimited-leads.online' in href) or \
-                     (not href.startswith('http') and not href.startswith('#') and not href.startswith('javascript:')):
-                      
-                      # Extract the slug part (after the last /)
-                      slug_match = re.search(r'/([^/]+)/?$', href)
-                      if slug_match and not slug_match.group(1).endswith('.html'):
-                          slug = slug_match.group(1)
-                          # Skip if it's already in es folder
-                          if not '/es/' in href and not slug.startswith('es/'):
-                              if slug not in url_slugs:  # Only add unique slugs
-                                  url_slugs.add(slug)
-                                  node_counter += 1
-                                  translatable_nodes.append({
-                                      'type': 'url_slug',
-                                      'text': slug,
-                                      'node_id': f"url_slug_{node_counter}",
-                                      'url': href,
-                                      'element': link
-                                  })
               
               # Function to recursively process all text nodes
               def process_node(node, path=''):
@@ -248,7 +193,7 @@ jobs:
                   response = client.chat.completions.create(
                       model="gpt-4",
                       messages=[
-                          {"role": "system", "content": f"You are a professional translator specializing in website localization. Translate the following texts from French or English to {target_lang}. For URL slugs, create SEO-friendly translations that use hyphens instead of spaces and only contain lowercase letters, numbers, and hyphens. Maintain the same tone, style, and formatting for all other text. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
+                          {"role": "system", "content": f"You are a professional translator. Translate the following texts from French to {target_lang}. Maintain the same tone, style, and formatting. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
                           {"role": "user", "content": combined_text}
                       ],
                       temperature=0.2
@@ -290,15 +235,6 @@ jobs:
                                  for node, translation in zip(translatable_nodes, translations)
                                  if translation.strip()}
               
-              # Create URL slug translation mapping
-              url_slug_translations = {}
-              for node, translation in zip(translatable_nodes, translations):
-                  if node['type'] in ['url_slug', 'canonical_slug', 'og_url_slug'] and translation:
-                      # Store both the original slug and its translation
-                      original_slug = node['text']
-                      translated_slug = translation.replace(' ', '-').lower()
-                      url_slug_translations[original_slug] = translated_slug
-              
               # Apply title translation
               if 'title' in translation_dict and soup.title:
                   soup.title.string = translation_dict['title']
@@ -309,52 +245,6 @@ jobs:
                       node_id = f"meta_{meta['name']}"
                       if node_id in translation_dict:
                           meta['content'] = translation_dict[node_id]
-              
-              # Update canonical and og:url URLs if they exist
-              canonical_link = soup.find('link', rel='canonical')
-              if canonical_link and canonical_link.get('href') and 'canonical_slug' in translation_dict:
-                  original_url = canonical_link['href']
-                  for original_slug, translated_slug in url_slug_translations.items():
-                      # Replace the original slug with the translated one
-                      if f"/{original_slug}" in original_url:
-                          canonical_link['href'] = original_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
-                          break
-              
-              og_url = soup.find('meta', property='og:url')
-              if og_url and og_url.get('content') and 'og_url_slug' in translation_dict:
-                  original_url = og_url['content']
-                  for original_slug, translated_slug in url_slug_translations.items():
-                      # Replace the original slug with the translated one
-                      if f"/{original_slug}" in original_url:
-                          og_url['content'] = original_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
-                          break
-              
-              # Update internal links with translated slugs
-              for link in soup.find_all('a', href=True):
-                  href = link['href']
-                  # Skip external links, anchors, and javascript links
-                  if (href.startswith('http') and 'unlimited-leads.online' in href) or \
-                     (not href.startswith('http') and not href.startswith('#') and not href.startswith('javascript:')):
-                      
-                      # Extract the slug part
-                      slug_match = re.search(r'/([^/]+)/?$', href)
-                      if slug_match and not slug_match.group(1).endswith('.html'):
-                          original_slug = slug_match.group(1)
-                          
-                          # Skip if it's already in es folder
-                          if not '/es/' in href and not original_slug.startswith('es/'):
-                              # Look for translated version
-                              if original_slug in url_slug_translations:
-                                  translated_slug = url_slug_translations[original_slug]
-                                  # Update the href
-                                  if href.startswith('http'):
-                                      # For absolute URLs
-                                      new_href = href.replace(f"/{original_slug}", f"/es/{translated_slug}")
-                                  else:
-                                      # For relative URLs
-                                      new_href = href.replace(f"{original_slug}", f"es/{translated_slug}")
-                                  
-                                  link['href'] = new_href
               
               # Create a mapping of paths for mixed content elements
               path_element_map = {}
@@ -441,38 +331,6 @@ jobs:
               for link in head.find_all('link', rel='alternate', href=True):
                   if 'hreflang' in link.attrs:
                       link.extract()
-              
-              # Add new hreflang tags
-              # 1. Add hreflang for original language (en)
-              en_link = soup.new_tag('link')
-              en_link['rel'] = 'alternate'
-              en_link['hreflang'] = 'en'
-              base_url = "https://unlimited-leads.online"  # Replace with your actual domain
-              if canonical_link and canonical_link.get('href'):
-                  en_link['href'] = canonical_link['href']
-              else:
-                  # Construct from the current page
-                  file_name = os.path.basename(file_path)
-                  en_link['href'] = f"{base_url}/{file_name}"
-              head.append(en_link)
-              
-              # 2. Add hreflang for Spanish
-              es_link = soup.new_tag('link')
-              es_link['rel'] = 'alternate'
-              es_link['hreflang'] = 'es'
-              if canonical_link and canonical_link.get('href'):
-                  # Use the modified canonical URL
-                  es_url = canonical_link['href']
-                  for original_slug, translated_slug in url_slug_translations.items():
-                      if f"/{original_slug}" in es_url:
-                          es_url = es_url.replace(f"/{original_slug}", f"/es/{translated_slug}")
-                          break
-                  es_link['href'] = es_url
-              else:
-                  # Construct from the current page
-                  file_name = os.path.basename(file_path)
-                  es_link['href'] = f"{base_url}/es/{file_name}"
-              head.append(es_link)
               
               return str(soup)
           
