@@ -1,11 +1,19 @@
-name: Translate Files
+name: Generate Translations
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**.html'
+  workflow_dispatch:  # Run manually from the Actions tab
+    inputs:
+      file_path:
+        description: 'Path to HTML file to translate'
+        required: true
+      target_language:
+        description: 'Target language (e.g., Spanish, French)'
+        required: true
+        default: 'Spanish'
+      target_code:
+        description: 'Language code (e.g., es, fr)'
+        required: true
+        default: 'es'
 
 jobs:
   translate:
@@ -14,59 +22,88 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+      - name: Install Python and OpenAI
+        run: |
+          pip install openai beautifulsoup4 lxml
 
-      - name: Install OpenAI
-        run: pip install openai
-
-      - name: Translate HTML files
+      - name: Translate HTML
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          FILE_PATH: ${{ github.event.inputs.file_path }}
+          TARGET_LANG: ${{ github.event.inputs.target_language }}
+          TARGET_CODE: ${{ github.event.inputs.target_code }}
         run: |
           import os
-          import glob
           import openai
+          from bs4 import BeautifulSoup
+          
+          # Set up paths
+          file_path = os.environ["FILE_PATH"]
+          target_lang = os.environ["TARGET_LANG"]
+          target_code = os.environ["TARGET_CODE"]
+          
+          # Create output directory
+          output_dir = f"{target_code}"
+          os.makedirs(output_dir, exist_ok=True)
+          
+          # Get the base filename
+          basename = os.path.basename(file_path)
+          output_path = f"{output_dir}/{basename}"
           
           # Set up OpenAI client
           client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
           
-          # Find all HTML files
-          html_files = glob.glob("**/*.html", recursive=True)
+          # Read the HTML file
+          with open(file_path, "r", encoding="utf-8") as f:
+              html_content = f.read()
           
-          for file_path in html_files:
-              print(f"Translating {file_path}...")
-              
-              # Read the HTML file
-              with open(file_path, "r", encoding="utf-8") as f:
-                  content = f.read()
-              
-              # Translate with OpenAI
-              response = client.chat.completions.create(
-                  model="gpt-4",
-                  messages=[
-                      {"role": "system", "content": "You are a translator specializing in software development. Preserve HTML markup and technical terms. Only translate the text content to Spanish."},
-                      {"role": "user", "content": f"Translate this HTML to Spanish, preserving all HTML tags:\n\n{content}"}
-                  ]
-              )
-              
-              translated_content = response.choices[0].message.content
-              
-              # Create output directory
-              os.makedirs(f"translations/es/{os.path.dirname(file_path)}", exist_ok=True)
-              
-              # Save translated file
-              output_path = f"translations/es/{file_path}"
-              with open(output_path, "w", encoding="utf-8") as f:
-                  f.write(translated_content)
-              
-              print(f"Saved to {output_path}")
+          # Parse the HTML
+          soup = BeautifulSoup(html_content, 'lxml')
+          
+          # Translate with OpenAI
+          response = client.chat.completions.create(
+              model="gpt-4",
+              messages=[
+                  {"role": "system", "content": f"You are a translator specializing in website localization. Translate HTML to {target_lang} while preserving all HTML tags, attributes, and structure. Do not translate variable names, function names, class names, IDs, or technical terms."},
+                  {"role": "user", "content": f"Translate this HTML file to {target_lang}, preserving all HTML structure:\n\n{html_content}"}
+              ]
+          )
+          
+          translated_content = response.choices[0].message.content
+          
+          # Parse the translated HTML
+          translated_soup = BeautifulSoup(translated_content, 'lxml')
+          
+          # Add hreflang tags to head
+          head = translated_soup.head
+          if not head:
+              head = translated_soup.new_tag("head")
+              if translated_soup.html:
+                  translated_soup.html.insert(0, head)
+          
+          # Add English hreflang
+          en_link = translated_soup.new_tag("link")
+          en_link["rel"] = "alternate"
+          en_link["hreflang"] = "en"
+          en_link["href"] = f"https://{os.environ.get('GITHUB_REPOSITORY_OWNER')}.github.io/{file_path}"
+          head.append(en_link)
+          
+          # Add target language hreflang
+          lang_link = translated_soup.new_tag("link")
+          lang_link["rel"] = "alternate"
+          lang_link["hreflang"] = target_code
+          lang_link["href"] = f"https://{os.environ.get('GITHUB_REPOSITORY_OWNER')}.github.io/{output_path}"
+          head.append(lang_link)
+          
+          # Write the translated HTML to file
+          with open(output_path, "w", encoding="utf-8") as f:
+              f.write(str(translated_soup))
+          
+          print(f"Translation saved to {output_path}")
         shell: python
 
       - name: Upload Translations
         uses: actions/upload-artifact@v3
         with:
-          name: spanish-translations
-          path: translations
+          name: translations-${{ github.event.inputs.target_code }}
+          path: ${{ github.event.inputs.target_code }}
