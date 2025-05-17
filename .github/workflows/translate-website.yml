@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   create-folders:
     runs-on: ubuntu-latest
@@ -21,10 +22,14 @@ jobs:
           echo "<html lang='es'><head><title>Spanish Page</title></head><body>Spanish content</body></html>" > es/index.html
           echo "<html lang='fr'><head><title>French Page</title></head><body>French content</body></html>" > fr/index.html
           echo "<html lang='nl'><head><title>Dutch Page</title></head><body>Dutch content</body></html>" > nl/index.html
-      - name: Commit changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add .
-          git commit -m "Create language folders" || echo "No changes to commit"
-          git push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Add language folders
+          title: Add language folders
+          body: |
+            This PR adds language folders for Arabic, Portuguese, Spanish, French, and Dutch.
+            Created by GitHub Actions.
+          branch: add-language-folders
+          base: main
