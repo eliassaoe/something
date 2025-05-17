@@ -2,10 +2,10 @@ name: Continuous Translation
 
 on:
   push:
-    branches: [ main ]  # or your default branch
+    branches: [ main ]
     paths:
-      - '**.html'       # Only trigger for HTML files
-  workflow_dispatch:    # Allow manual triggering
+      - '**.html'
+  workflow_dispatch:
 
 jobs:
   translate:
@@ -17,7 +17,7 @@ jobs:
       
       - uses: yunwei37/OpenAI-Continuous-Translator@master
         with:
-          git_repo_url: https://github.com/yourusername/yourrepo  # Replace with your actual repo URL
+          git_repo_url: https://github.com/eliassaoe/something
           api_key: ${{ secrets.OPENAI_API_KEY }}
           target_language: "Spanish"
           file_types: "html"
