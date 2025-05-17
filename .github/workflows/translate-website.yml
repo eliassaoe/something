@@ -1,22 +1,32 @@
-name: Translate Website
+name: Translate Files
+
 on:
   push:
-    branches: [ main ]  # or 'master' depending on your default branch
+    branches:
+      - main  # or master, depending on your default branch
     paths:
-      - '**.html'       # Only trigger when HTML files change
+      - '**.html'  # Only trigger for HTML files
 
 jobs:
   translate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # This is important for allowing commits
+      contents: write  # Required for committing changes
+
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: DeepL Translate Github Action
-        uses: lyqht/deepl-translate-github-action@v2.1.1
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          target_languages: es    # Add more with commas: es,fr,de
-          input_file_path: "**/*.html"  # Translate all HTML files
-          output_file_name_pattern: "{dirname}/{language}/{basename}"  # This puts translations in language folders
-          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+          fetch-depth: 0  # Get full history for detecting changes
+
+      - name: GPT Translate Action
+        uses: imaun/gpt-translate-action@v1.9.0
+        with:
+          api_key: ${{ secrets.OPENAI_API_KEY }}
+          ai_service: "openai"
+          ai_model: "gpt-4"  # You can use gpt-3.5-turbo for a cheaper option
+          target_lang: "Spanish"
+          target_lang_code: "es"
+          file_extensions: "html"
+          output_format: "{dirname}/{lang}/{basename}"
+          base_branch: main  # Match your default branch
