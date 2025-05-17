@@ -10,18 +10,20 @@ on:
 jobs:
   translate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       
       - uses: yunwei37/OpenAI-Continuous-Translator@master
         with:
-          git_repo_url: https://github.com/yourusername/yourrepo
+          git_repo_url: https://github.com/yourusername/yourrepo  # Replace with your actual repo URL
           api_key: ${{ secrets.OPENAI_API_KEY }}
-          target_language: "Spanish"  # Change to your desired language
+          target_language: "Spanish"
           file_types: "html"
       
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.1
         with:
-          title: 'Spanish Translation Updates'
-          body: 'This PR contains automatically translated content. Please review before merging.'
+          message: 'Add Spanish translations'
+          default_author: github_actions
