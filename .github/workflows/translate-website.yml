@@ -1,36 +1,81 @@
-name: Create Language Folders PR
+name: Create Language Folders
 on:
-  workflow_dispatch:  # Déclenchement manuel uniquement
+  workflow_dispatch:
 permissions:
   contents: write
-  pull-requests: write
 jobs:
-  create-folders-pr:
+  create-language-folders:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          ref: main
       
-      - name: Create language folders
+      - name: Create language folders script
         run: |
-          # Créer des dossiers pour chaque langue
-          mkdir -p ar pt es fr nl
-          echo "<html lang='ar'><head><title>Arabic Page</title></head><body>Arabic content</body></html>" > ar/index.html
-          echo "<html lang='pt'><head><title>Portuguese Page</title></head><body>Portuguese content</body></html>" > pt/index.html
-          echo "<html lang='es'><head><title>Spanish Page</title></head><body>Spanish content</body></html>" > es/index.html
-          echo "<html lang='fr'><head><title>French Page</title></head><body>French content</body></html>" > fr/index.html
-          echo "<html lang='nl'><head><title>Dutch Page</title></head><body>Dutch content</body></html>" > nl/index.html
+          cat > create-language-folders.js <<'EOL'
+          const fs = require('fs');
+          
+          // Langues cibles
+          const LANGUAGES = [
+            { code: 'ar', name: 'Arabe' },
+            { code: 'pt', name: 'Portugais' },
+            { code: 'es', name: 'Espagnol' },
+            { code: 'fr', name: 'Français' },
+            { code: 'nl', name: 'Néerlandais' }
+          ];
+          
+          // Contenu HTML de base pour chaque langue
+          function getHtmlContent(langCode, langName) {
+            return `<!DOCTYPE html>
+          <html lang="${langCode}">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Page en ${langName}</title>
+          </head>
+          <body>
+            <h1>Bienvenue sur la version ${langName}</h1>
+            <p>Cette page est une démonstration de la version ${langName} du site.</p>
+          </body>
+          </html>`;
+          }
+          
+          // Créer les dossiers de langue et les fichiers index.html
+          try {
+            // Créer ou vérifier chaque dossier de langue
+            LANGUAGES.forEach(lang => {
+              const dirPath = `./${lang.code}`;
+              
+              // Créer le dossier s'il n'existe pas
+              if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath, { recursive: true });
+                console.log(`✓ Dossier créé: ${dirPath}`);
+              } else {
+                console.log(`Le dossier ${dirPath} existe déjà.`);
+              }
+              
+              // Créer le fichier index.html
+              const filePath = `${dirPath}/index.html`;
+              const content = getHtmlContent(lang.code, lang.name);
+              
+              fs.writeFileSync(filePath, content);
+              console.log(`✓ Fichier créé: ${filePath}`);
+            });
+            
+            console.log('Création des dossiers de langue terminée avec succès.');
+          } catch (error) {
+            console.error('Erreur:', error);
+            process.exit(1);
+          }
+          EOL
       
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Add language folders
-          title: Add language folders
-          body: |
-            This PR adds language folders for Arabic, Portuguese, Spanish, French, and Dutch.
-            Created by GitHub Actions.
-          branch: add-language-folders-auto
-          base: main
+      - name: Execute script
+        run: node create-language-folders.js
+      
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "Ajout des dossiers de langue" || echo "Pas de changements à commiter"
+          git push
