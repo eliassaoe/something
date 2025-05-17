@@ -3,30 +3,48 @@ name: Translate Files
 on:
   push:
     branches:
-      - main  # or master, depending on your default branch
+      - main
     paths:
-      - '**.html'  # Only trigger for HTML files
+      - '**.html'
 
 jobs:
   translate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Required for committing changes
+      contents: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Get full history for detecting changes
+          fetch-depth: 0
 
       - name: GPT Translate Action
         uses: imaun/gpt-translate-action@v1.9.0
         with:
           api_key: ${{ secrets.OPENAI_API_KEY }}
           ai_service: "openai"
-          ai_model: "gpt-4"  # You can use gpt-3.5-turbo for a cheaper option
+          ai_model: "gpt-4"
           target_lang: "Spanish"
           target_lang_code: "es"
-          file_exts: "html"  # Corrected from file_extensions to file_exts
-          output_format: "{dirname}/{lang}/{basename}"
-          base_branch: main  # Match your default branch
+          file_exts: "html"
+          output_format: "*-{lang}.{ext}"
+          base_branch: main
+
+      # Add a step to reorganize the translated files into language directories
+      - name: Organize translations into language folders
+        run: |
+          for file in $(find . -name "*-es.html"); do
+            dirname=$(dirname "$file")
+            basename=$(basename "$file" | sed 's/-es.html/.html/')
+            mkdir -p "$dirname/es"
+            mv "$file" "$dirname/es/$basename"
+          done
+          
+      - name: Commit reorganized translations
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git diff --staged --quiet || git commit -m "Organize translations into language folders"
+          git push
