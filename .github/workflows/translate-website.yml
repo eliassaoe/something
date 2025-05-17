@@ -12,13 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}  # Add this line for proper authentication
 
       - name: GPT Translate Action
         uses: imaun/gpt-translate-action@v1.9.0
@@ -29,26 +27,5 @@ jobs:
           target_lang: "Spanish"
           target_lang_code: "es"
           file_exts: "html"
-          output_format: "*-{lang}.{ext}"
+          output_format: "es/{basename}"  # This will create files directly in an es/ folder
           base_branch: main
-
-      # Add a step to reorganize the translated files into language directories
-      - name: Organize translations into language folders
-        run: |
-          # Make sure git permissions are set properly
-          sudo chown -R $USER:$USER .
-          
-          for file in $(find . -name "*-es.html"); do
-            dirname=$(dirname "$file")
-            basename=$(basename "$file" | sed 's/-es.html/.html/')
-            mkdir -p "$dirname/es"
-            mv "$file" "$dirname/es/$basename"
-          done
-          
-      - name: Commit reorganized translations
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git diff --staged --quiet || git commit -m "Organize translations into language folders"
-          git push
