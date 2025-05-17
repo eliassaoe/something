@@ -10,22 +10,49 @@ on:
 jobs:
   translate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: GPT Translate Action
-        uses: imaun/gpt-translate-action@v1.9.0
         with:
-          api_key: ${{ secrets.OPENAI_API_KEY }}
-          ai_service: "openai"
-          ai_model: "gpt-4"
-          target_lang: "Spanish"
-          target_lang_code: "es"
-          file_exts: "html"
-          output_format: "es/{basename}"  # This will create files directly in an es/ folder
-          base_branch: main
+          fetch-depth: 2  # Get enough history to identify changes
+
+      # Manually find changed HTML files
+      - name: Find changed HTML files
+        id: changed_files
+        run: |
+          git diff --name-only HEAD~1 HEAD | grep "\.html$" || echo "No HTML files changed"
+          mkdir -p $GITHUB_WORKSPACE/translations
+
+      # Translate each changed HTML file separately
+      - name: Translate HTML files
+        run: |
+          for file in $(git diff --name-only HEAD~1 HEAD | grep "\.html$" || echo ""); do
+            if [ -n "$file" ] && [ -f "$file" ]; then
+              echo "Translating $file"
+              mkdir -p $(dirname "$GITHUB_WORKSPACE/translations/es/$file")
+              
+              # Create a temporary file with just this HTML file
+              cp "$file" "$GITHUB_WORKSPACE/temp_file.html"
+              
+              # Run the translation action for this specific file
+              docker run --rm \
+                -e API_KEY=${{ secrets.OPENAI_API_KEY }} \
+                -e AI_SERVICE=openai \
+                -e AI_MODEL=gpt-4 \
+                -e TARGET_LANG=Spanish \
+                -e TARGET_LANG_CODE=es \
+                -e FILE_EXTS=html \
+                -e OUTPUT_FORMAT="translations/es/{basename}" \
+                -v $GITHUB_WORKSPACE:/github/workspace \
+                -w /github/workspace \
+                imaun/gpt-translate-action:v1.9.0 \
+                -i "temp_file.html"
+            fi
+          done
+
+      # Upload translations as artifacts
+      - name: Upload Translations
+        uses: actions/upload-artifact@v3
+        with:
+          name: spanish-translations
+          path: ${{ github.workspace }}/translations
