@@ -1,0 +1,872 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title> Verificador de palavras de spam grátis | UnlimitedLeads </title><meta name="description" content="Verificador de palavras de spam gratuito - Melhore a entrega de e-mails identificando gatilhos de spam em seus e-mails frios"/><!-- Preconnect externals --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com"><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><!-- Open Graph --><meta property="og:type" content="website" /><meta property="og:url" content="https://unlimited-leads.online/spam-words-checker" /><meta property="og:title" content="Verificador de palavras de spam | UnlimitedLeads" /><meta property="og:description" content="Verificador de palavras de spam gratuito - Melhore a entrega de e-mails identificando gatilhos de spam em seus e-mails frios" /><meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" /><!-- Fonts & Icons --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Styles --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* Checker Form */
+        .checker-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 900px; margin: 0 auto 3rem; }
+        textarea { 
+            width: 100%; 
+            padding: 1rem; 
+            border: 1px solid var(--gray-200); 
+            border-radius: var(--border-radius); 
+            resize: vertical; 
+            margin-bottom: 1.5rem; 
+            height: 250px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--border-radius); 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+        }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { width: 100%; font-size: 1rem; padding: 1rem; }
+
+        /* Result Area */
+        .result-area { 
+            display: none; 
+            margin-top: 2rem;
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .result-header h3 {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        .result-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .stat-box {
+            flex: 1;
+            min-width: 200px;
+            background: var(--gray-50);
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+        .categories-container {
+            margin-top: 2rem;
+        }
+        .category-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        .category-icon {
+            margin-right: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(79,70,229,0.1);
+            color: var(--primary);
+        }
+        .category-description {
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            margin-left: 2.75rem;
+        }
+        .matches-count {
+            margin-left: auto;
+            background: rgba(79,70,229,0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .word-list {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+            margin-left: 2.75rem;
+        }
+        .word-item {
+            display: flex;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            align-items: center;
+        }
+        .word-item:last-child {
+            border-bottom: none;
+        }
+        .word-text {
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+        .word-context {
+            margin-left: auto;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            font-style: italic;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: var(--gray-200);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 0.5rem;
+            background: linear-gradient(to right, var(--success), var(--warning), var(--danger));
+            border-radius: 1rem;
+            transition: width 0.5s ease;
+        }
+
+        /* Actions */
+        .actions { 
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem; 
+        }
+        .actions .btn { 
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary);
+        }
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 3rem 0 4rem;
+            background: var(--gray-50);
+        }
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background: white;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 500px;
+        }
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Status Messages */
+        .status {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .status-error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .status-loading {
+            background-color: rgba(79, 70, 229, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-loading .loader {
+            border: 2px solid rgba(79, 70, 229, 0.3);
+            border-top-color: var(--primary);
+        }
+        
+        .result-analysis {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .result-analysis h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+        .analysis-item {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .analysis-item:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer { 
+            background: var(--gray-800); 
+            color: white; 
+            padding: 3rem 0 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+        .footer-bottom p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-bottom a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style></head><body><!-- Header --><header class="header"><div class="container"><div class="header-content"> <a href="https://unlimited-leads.online/en" class="logo-link"><i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i><span class="logo-text"><span class="gradient-text">leads ilimitados</span></span></a></div></div></header><!-- Hero --><section class="hero"><div class="container"><h1> Verificador de palavras de spam</h1><p> Melhore a entregabilidade dos seus e-mails identificando gatilhos de spam em seus e-mails frios. Compare seu texto com nosso banco de dados de palavras-chave conhecidas de spam para garantir que suas mensagens cheguem à caixa de entrada. </p></div></section><!-- Checker Form --><section class="container"><div class="checker-form"><div id="statusMessage" class="status"></div><textarea id="emailInput" placeholder="Paste your cold email here... Our AI will analyze it for spam triggers that might harm your deliverability."></textarea> <button id="checkBtn" class="btn btn-primary btn-large"><span>Verifique se há palavras de spam</span></button><div id="resultArea" class="result-area"><div class="result-header"><h3> Resultados da análise de spam </h3><div id="spamScore" style="font-size: 1.25rem; font-weight: bold;"></div></div><div class="progress-container"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div><div class="result-stats"><div class="stat-box"><div id="totalwords" class="stat-value">0</div><div class="stat-label"> Palavras de spam </div></div></div><div id="categoriesContainer" class="categories-container"><!-- Categories will be dynamically added here --></div><div class="result-analysis"><h4> Análise e Recomendações </h4><div id="analysisContainer"><!-- Analysis items will be dynamically added here --></div></div><div class="actions"> <button id="copyBtn" class="btn btn-secondary"><i class="fas fa-copy"></i><span>Copiar resultados</span></button> </div></div></div></section><!-- Features Section --><section class="features"><div class="container"><h2>Por que verificar se há palavras de spam em seus e-mails? </h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-inbox"></i></div><h3> Aumente o posicionamento na caixa de entrada</h3><p> Identifique e remova gatilhos de spam que podem enviar seus e-mails diretamente para a pasta de lixo eletrônico, melhorando drasticamente as taxas de entrega. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3> Aumentar as taxas de abertura</h3><p> E-mails que chegam à caixa de entrada são abertos com mais frequência. Um texto limpo e sem spam pode aumentar suas taxas de abertura em até 30%. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3> Proteja a reputação do remetente</h3><p> Evite ser sinalizado como spammer e mantenha uma reputação de domínio positiva com provedores de serviços de e-mail.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-brain"></i></div><h3>Análise com tecnologia de IA</h3><p> Nosso algoritmo não apenas encontra correspondências exatas, como também identifica padrões e frases que podem acionar filtros de spam modernos. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-bullseye"></i></div><h3> Detecção baseada em categoria</h3><p> Veja exatamente quais tipos de gatilhos de spam seu e-mail contém – desde táticas de urgência até ofertas suspeitas e linguagem promocional.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-lightbulb"></i></div><h3>Recomendações inteligentes</h3><p> Receba sugestões práticas para melhorar seu texto, não apenas avisos. Ajudamos você a corrigir problemas, mantendo sua mensagem.</p></div></div></div></section><!-- Scripts --><script>
+        // Spam word Checker
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('emailInput');
+            const checkBtn = document.getElementById('checkBtn');
+            const resultArea = document.getElementById('resultArea');
+            const copyBtn = document.getElementById('copyBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const totalwords = document.getElementById('totalwords');
+            const spamScore = document.getElementById('spamScore');
+            const progressBar = document.getElementById('progressBar');
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            const analysisContainer = document.getElementById('analysisContainer');
+            
+            // Category icons mapping
+            const categoryIcons = {
+                'Urgent': 'fas fa-exclamation-circle',
+                'Suspicious': 'fas fa-question-circle',
+                'Financial': 'fas fa-dollar-sign',
+                'Unnatural': 'fas fa-robot',
+                'Promotional': 'fas fa-tag',
+                'Clickbait': 'fas fa-mouse-pointer',
+                'Overselling': 'fas fa-chart-line'
+            };
+            
+            // Category descriptions
+            const categoryDescriptions = {
+                'Urgent': 'Creating a sense of immediate action or fear of missing out.',
+                'Suspicious': 'Too-good-to-be-true offers or obscure terms that can make recipients suspicious.',
+                'Financial': 'Focusing on quick wealth, guaranteed returns, or financial urgency.',
+                'Unnatural': 'Awkward, forced, or repetitive language that feels robotic or off-putting.',
+                'Promotional': 'Overly sales-focused language that triggers promotional content filters.',
+                'Clickbait': 'Sensational or misleading language designed to force engagement.',
+                'Overselling': 'Exaggerated claims or promises that seem unrealistic to readers.'
+            };
+            
+            // Analysis recommendations based on score
+            const analysisRecommendations = {
+                'low': [
+                    'Your email looks good! It has few spam triggers and should have good deliverability.',
+                    'Consider personalizing your email further to improve engagement rates.',
+                    'Testing with a small segment before sending to your full list is always recommended.'
+                ],
+                'medium': [
+                    'Your email contains some spam triggers that might affect deliverability.',
+                    'Try rephrasing sentences with spam words to convey the same message differently.',
+                    'Add more personalization to balance out any necessary promotional language.',
+                    'Consider reducing urgency-based language and focus on value proposition instead.'
+                ],
+                'high': [
+                    'Your email contains multiple spam triggers that will likely affect deliverability.',
+                    'Urgent action is needed to rewrite sections containing spam words.',
+                    'Remove or rephrase all suspicious or financial promises in your copy.',
+                    'Break up any sections with concentrated spam words into more natural language.',
+                    'Consider a complete rewrite focusing on personalization and valuable content rather than promotional language.'
+                ]
+            };
+            
+            // Check Email
+            checkBtn.addEventListener('click', function() {
+                console.log("Check button clicked"); // Debug
+                const emailText = emailInput.value.trim();
+                
+                if (!emailText) {
+                    showStatus('Please enter your email text first.', 'error');
+                    return;
+                }
+                
+                showStatus('<span class="loader"></span> Analyzing your email for spam words...', 'loading');
+                
+                // For debugging - add a simple test without API
+                // Comment this out when your API is working
+                /*
+                setTimeout(() => {
+                    console.log("Using test data");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Analysis complete!', 'success');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+                return; // Remove this when your API is working
+                */
+                
+                console.log("Sending fetch request to API...");
+                
+                // Fetch with more explicit error handling
+                fetch('https://eliasse-n8n.onrender.com/webhook/d1464188-f42f-4994-ad9d-1e6005d23622', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify({ text: emailText })
+                })
+                .then(response => {
+                    console.log("Received response:", response);
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.text(); // First get as text
+                })
+                .then(text => {
+                    console.log("Response text:", text);
+                    
+                    // Try to parse as JSON
+                    try {
+                        const data = JSON.parse(text);
+                        console.log("Parsed JSON data:", data);
+                        
+                        if (Array.isArray(data)) {
+                            // Simple array of spam words
+                            displaySimpleResults(data);
+                        } else if (typeof data === 'object') {
+                            // JSON object with more details
+                            displayDetailedResults(data);
+                        }
+                        
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    } catch (jsonError) {
+                        console.log("Not JSON, using as text");
+                        // If not valid JSON, treat as comma-separated list
+                        const wordList = text.split(',').map(word => word.trim()).filter(word => word);
+                        console.log("Word list:", wordList);
+                        displaySimpleResults(wordList);
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    showStatus(`Failed to analyze email: ${error.message}`, 'error');
+                    
+                    // Fallback to display something for testing
+                    console.log("Using fallback test data due to error");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Using test data due to API error', 'error');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Display Simple Results (for array of spam words)
+            function displaySimpleResults(spamWords) {
+                console.log("Displaying simple results with words:", spamWords);
+                
+                // Set basic stats
+                totalwords.textContent = spamWords.length || 0;
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                
+                if (spamWords.length === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamWords.length / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Create a single category with all spam words
+                if (spamWords.length > 0) {
+                    const categoryEl = document.createElement('div');
+                    categoryEl.classList.add('category-section');
+                    
+                    categoryEl.innerHTML = `
+                        <div class="category-title">
+                            <div class="category-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            Spam words
+                            <span class="matches-count">${spamWords.length} matches</span>
+                        </div>
+                        <div class="category-description">
+                            These words or phrases might trigger spam filters and affect your email deliverability.
+                        </div>
+                        <div class="word-list">
+                            ${spamWords.map(word => `
+                                <div class="word-item">
+                                    <span class="word-text">${word}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    categoriesContainer.appendChild(categoryEl);
+                } else {
+                    categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                }
+                
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
+                
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
+            }
+            
+            // Display Detailed Results (for JSON response with categories)
+            function displayDetailedResults(data) {
+                console.log("Displaying detailed results:", data);
+                
+                // Set basic stats
+                totalwords.textContent = data.totalSpamwords || 0;
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                const spamwordsCount = data.totalSpamwords || 0;
+                
+                if (spamwordsCount === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamwordsCount / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Add categories if available
+                if (data.categories && data.categories.length > 0) {
+                    data.categories.forEach(category => {
+                        if (category.words && category.words.length > 0) {
+                            const categoryEl = document.createElement('div');
+                            categoryEl.classList.add('category-section');
+                            
+                            const categoryName = category.name || 'Unknown';
+                            const icon = categoryIcons[categoryName] || 'fas fa-exclamation-triangle';
+                            const description = categoryDescriptions[categoryName] || 'Words that may trigger spam filters.';
+                            
+                            categoryEl.innerHTML = `
+                                <div class="category-title">
+                                    <div class="category-icon">
+                                        <i class="${icon}"></i>
+                                    </div>
+                                    ${categoryName}
+                                    <span class="matches-count">${category.words.length} matches</span>
+                                </div>
+                                <div class="category-description">
+                                    ${description}
+                                </div>
+                                <div class="word-list">
+                                    ${category.words.map(word => `
+                                        <div class="word-item">
+                                            <span class="word-text">${word}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                            
+                            categoriesContainer.appendChild(categoryEl);
+                        }
+                    });
+                } else {
+                    const fallbackWords = data.spamWords || [];
+                    if (fallbackWords.length > 0) {
+                        const categoryEl = document.createElement('div');
+                        categoryEl.classList.add('category-section');
+                        
+                        categoryEl.innerHTML = `
+                            <div class="category-title">
+                                <div class="category-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                Spam words
+                                <span class="matches-count">${fallbackWords.length} matches</span>
+                            </div>
+                            <div class="category-description">
+                                These words or phrases might trigger spam filters and affect your email deliverability.
+                            </div>
+                            <div class="word-list">
+                                ${fallbackWords.map(word => `
+                                    <div class="word-item">
+                                        <span class="word-text">${word}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        
+                        categoriesContainer.appendChild(categoryEl);
+                    } else {
+                        categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                    }
+                }
+                
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
+                
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
+            }
+            
+            // Copy Results
+            copyBtn.addEventListener('click', function() {
+                // Create a text representation of the results
+                const totalwordsVal = totalwords.textContent;
+                const spamScoreVal = spamScore.textContent;
+                
+                let resultText = `Spam word Analysis by UnlimitedLeads\n\n`;
+                resultText += `Email contains ${totalwordsVal} spam words.\n`;
+                resultText += `Overall rating: ${spamScoreVal}\n\n`;
+                
+                // Add categories
+                const categories = categoriesContainer.querySelectorAll('.category-section');
+                categories.forEach(category => {
+                    const titleEl = category.querySelector('.category-title');
+                    const title = titleEl.textContent.trim().split('\n')[0].trim();
+                    const matchesCount = titleEl.querySelector('.matches-count').textContent;
+                    
+                    resultText += `${title}: ${matchesCount}\n`;
+                    
+                    const words = category.querySelectorAll('.word-item');
+                    words.forEach(word => {
+                        const wordText = word.querySelector('.word-text');
+                        if (wordText) {
+                            resultText += `- ${wordText.textContent}\n`;
+                        }
+                    });
+                    
+                    resultText += '\n';
+                });
+                
+                // Add recommendations
+                resultText += `Recommendations:\n`;
+                const recommendations = analysisContainer.querySelectorAll('.analysis-item');
+                recommendations.forEach(rec => {
+                    resultText += `- ${rec.textContent}\n`;
+                });
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(resultText).then(() => {
+                    const originalText = this.querySelector('span').textContent;
+                    this.querySelector('span').textContent = 'Copied!';
+                    
+                    setTimeout(() => {
+                        this.querySelector('span').textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+            
+            // Remove the unused fixEmailBtn event listener
+            
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            // Add debugging console log to help identify if script is loaded properly
+            console.log("Spam Word Checker initialized");
+            
+            // Demo example
+            emailInput.placeholder = "Example:\n\nSubject: Limited Time Offer - Act Now!\n\nDear Valued Customer,\n\nAre you struggling to generate leads? Our guaranteed solution has helped thousands make quick money and boost sales by 500%!\n\nThis exclusive deal won't last forever. Click here to unlock your FREE access to our revolutionary system.\n\nDon't miss out on this once-in-a-lifetime opportunity!\n\nBest regards,\nThe Marketing Team";
+        });
+    </script><!-- SEO Content --><section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;"><div style="max-width: 800px; margin: 0 auto;"><h2 style="margin-bottom: 1.5rem; font-size: 1.75rem;"> Como palavras de spam afetam a entregabilidade de seus e-mails frios</h2><p style="margin-bottom: 1rem;"> No mundo competitivo da divulgação por e-mail frio, fazer com que sua mensagem chegue à caixa de entrada é metade da batalha. Mesmo a oferta mais atraente é inútil se o seu e-mail for pego pelos filtros de spam antes mesmo de ser lido.</p><h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;"> Os perigos ocultos dos gatilhos de spam</h3><p style="margin-bottom: 1rem;"> Os filtros de spam modernos são sofisticados e estão em constante evolução. Eles não procuram apenas palavras de spam óbvias como &quot;Viagra&quot; ou &quot;ganhe dinheiro rápido&quot; – eles analisam diversos fatores, incluindo:</p><ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;"><li style="margin-bottom: 0.5rem;"> <strong>Padrões de linguagem</strong> que indicam conteúdo promocional</li><li style="margin-bottom: 0.5rem;"> <strong>Táticas de urgência</strong> que pressionam os destinatários a agir rapidamente</li><li style="margin-bottom: 0.5rem;"> <strong>Promessas excessivas</strong> que parecem boas demais para ser verdade</li><li style="margin-bottom: 0.5rem;"> <strong>Frases artificiais</strong> que parecem robóticas ou padronizadas</li><li style="margin-bottom: 0.5rem;"> <strong>Pontuação excessivamente entusiasmada,</strong> como vários pontos de exclamação</li></ul><h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;"> O custo real da baixa entregabilidade</h3><p style="margin-bottom: 1rem;"> Quando seus e-mails vão parar nas caixas de spam, as consequências vão além daquela campanha:</p><ol style="margin-bottom: 1.5rem; padding-left: 1.5rem;"><li style="margin-bottom: 0.75rem;"> <strong>Recursos desperdiçados:</strong> você está pagando por ferramentas de e-mail e gastando tempo em campanhas que nem estão sendo vistas.</li><li style="margin-bottom: 0.75rem;"> <strong>Reputação do remetente prejudicada:</strong> provedores de e-mail rastreiam quais domínios enviam e-mails que os usuários marcam como spam. Uma vez prejudicada, a reputação de um remetente pode levar meses para ser reconstruída.</li><li style="margin-bottom: 0.75rem;"> <strong>Eficácia reduzida da campanha:</strong> suas métricas ficam distorcidas ao considerar e-mails que nunca foram entregues corretamente.</li><li style="margin-bottom: 0.75rem;"> <strong>Possível lista negra:</strong> em casos extremos, seu domínio pode acabar em listas negras de e-mail compartilhadas entre provedores.</li></ol><h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;"> Como escrever e-mails frios eficazes que cheguem à caixa de entrada</h3><p style="margin-bottom: 1rem;"> Os melhores e-mails frios equilibram persuasão e entregabilidade. Veja como escrever e-mails que passam pelos filtros:</p><ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;"><li style="margin-bottom: 0.5rem;"> <strong>Concentre-se no valor, não no exagero</strong> - Explique os benefícios genuínos em vez de fazer afirmações excessivas</li><li style="margin-bottom: 0.5rem;"> <strong>Personalize genuinamente</strong> - Mencione detalhes específicos sobre o negócio ou função do destinatário</li><li style="margin-bottom: 0.5rem;"> <strong>Use linguagem natural</strong> - Escreva como faria em uma conversa profissional</li><li style="margin-bottom: 0.5rem;"> <strong>Evite LETRAS MAIÚSCULAS e pontuação excessiva!!!</strong> - Esses são sinais clássicos de spam</li><li style="margin-bottom: 0.5rem;"> <strong>Limite links e anexos</strong> - Vários links ou anexos em e-mails frios geralmente acionam filtros </li></ul><div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);"><h4 style="margin-bottom: 0.75rem; color: var(--primary);"> Pronto para melhorar a entregabilidade dos seus e-mails frios?</h4><p style="margin-bottom: 0;"> Experimente hoje mesmo nosso verificador de spam gratuito para identificar possíveis problemas de entrega antes do envio. Para usuários avançados, confira nossos planos premium, que incluem otimização de e-mail com tecnologia de IA e monitoramento de entrega. </p></div></div></section></body><!-- Footer --><footer class="footer"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Ferramentas gratuitas</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Encontrar e-mail de número de telefone</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Pesquisa de mx em massa</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extrator de e-mail</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper.html">Raspador de mapas do Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Localizador de e-mail Apollo</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparar</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa ao ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa ContactOut</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contate-nos</h4><ul class="footer-links"><li> <a href="mailto:contact@unlimitedleads.com">contato@unlimitedleads.com</a></li><li> <a href="mailto:contact@unlimitedleads.com">Solicitar Plano Personalizado</a></li></ul></div></div><div class="footer-social"> <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Todos os direitos reservados.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Política de Privacidade</a> | <a href="https://unlimited-leads.online/legal-notice">Termos de Serviço</a></p></div></div></footer></html>
