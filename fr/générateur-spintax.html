@@ -1,0 +1,491 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title> Générateur Spintax | UnlimitedLeads </title><meta name="description" content="Générateur Spintax gratuit - Créez des variantes uniques de vos e-mails froids pour améliorer la délivrabilité et les taux de réponse"/><!-- Preconnect externals --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com"><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><!-- Open Graph --><meta property="og:type" content="website" /><meta property="og:url" content="https://unlimited-leads.online/spintax-generator" /><meta property="og:title" content="Générateur Spintax | UnlimitedLeads" /><meta property="og:description" content="Générateur Spintax gratuit - Créez des variantes uniques de vos e-mails froids pour améliorer la délivrabilité et les taux de réponse" /><meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" /><!-- Fonts & Icons --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Styles --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* Spintax Form */
+        .spintax-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 900px; margin: 0 auto 3rem; }
+        textarea { 
+            width: 100%; 
+            padding: 1rem; 
+            border: 1px solid var(--gray-200); 
+            border-radius: var(--border-radius); 
+            resize: vertical; 
+            margin-bottom: 1.5rem; 
+            height: 250px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--border-radius); 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+        }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { width: 100%; font-size: 1rem; padding: 1rem; }
+
+        /* Result Area */
+        .result-area { 
+            display: none; 
+            margin-top: 2rem;
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .result-header h3 {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .result-area textarea { 
+            background: var(--gray-50); 
+            border: 1px solid var(--gray-300);
+        }
+        .actions { 
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem; 
+        }
+        .actions .btn { 
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary);
+        }
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 3rem 0 4rem;
+            background: var(--gray-50);
+        }
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background: white;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 500px;
+        }
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Status Messages */
+        .status {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .status-error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .status-loading {
+            background-color: rgba(79, 70, 229, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-loading .loader {
+            border: 2px solid rgba(79, 70, 229, 0.3);
+            border-top-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer { 
+            background: var(--gray-800); 
+            color: white; 
+            padding: 3rem 0 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+        .footer-bottom p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-bottom a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style></head><body><!-- Header --><header class="header"><div class="container"><div class="header-content"> <a href="https://unlimited-leads.online/en" class="logo-link"><i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i><span class="logo-text"><span class="gradient-text">prospects illimités</span></span></a></div></div></header><!-- Hero --><section class="hero"><div class="container"><h1> Générateur Spintax</h1><p> Transformez vos e-mails froids habituels en messages à fort taux de conversion grâce à notre générateur de spintax basé sur l&#39;IA. Boostez vos taux d&#39;ouverture et évitez les filtres anti-spam grâce à des variantes uniques pour chaque destinataire. </p></div></section><!-- Spintax Form --><section class="container"><div class="spintax-form"><div id="statusMessage" class="status"></div><textarea id="emailInput" placeholder="Paste your cold email here... Our AI will transform it into a spintax-enabled version to boost your response rates."></textarea> <button id="generateBtn" class="btn btn-primary btn-large"><span>Générer Spintax</span></button><div id="resultArea" class="result-area"><div class="result-header"><h3> Votre e-mail optimisé par Spintax </h3><span id="variationsCount" style="color: var(--primary); font-weight: 500;"></span></div><textarea id="spintaxResult" readonly placeholder="Your spintax-enhanced email will appear here..."></textarea><div class="actions"> <button id="copyBtn" class="btn btn-secondary"><i class="fas fa-copy"></i><span>Copier dans le presse-papiers</span></button> </div></div></div></section><!-- Features Section --><section class="features"><div class="container"><h2>Pourquoi utiliser notre générateur Spintax ? </h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3> Augmenter les taux de réponse</h3><p> Notre IA analyse les e-mails froids les plus performants pour créer des variantes qui engagent les destinataires et génèrent plus de réponses. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3> Évitez les filtres anti-spam</h3><p> Chaque destinataire reçoit une variante d&#39;e-mail unique, vous aidant à contourner les déclencheurs de spam et à augmenter la délivrabilité de la boîte de réception.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3> Économisez des heures de travail</h3><p> Générez des milliers de variantes uniques en quelques secondes au lieu d&#39;écrire manuellement différentes versions vous-même.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-brain"></i></div><h3>Suggestions basées sur l&#39;IA</h3><p> Notre algorithme avancé identifie les meilleurs points de variation et suggère des alternatives éprouvées qui convertissent.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-magic"></i></div><h3>Copie au son naturel</h3><p> Contrairement aux outils de spintax de base, notre IA garantit que toutes les variations semblent naturelles et conservent l&#39;intention de votre message d&#39;origine. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div><h3> Développez votre rayonnement</h3><p> Envoyez des e-mails personnalisés à grande échelle tout en maintenant la qualité et l&#39;efficacité de vos campagnes.</p></div></div></div></section><!-- FAQ Section --><section class="faq"><div class="container"><h2>Questions fréquemment posées</h2><div class="faq-item"><div class="faq-question"> Qu&#39;est-ce que le spintax ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Spintax (abréviation de « spin syntax ») est un format qui permet de créer plusieurs variantes de texte en utilisant une structure spécifique. Dans les e-mails à froid, il vous permet de créer des variantes uniques de votre message pour chaque destinataire, rendant ainsi votre communication plus personnalisée et moins s&#39;apparentant à du spam de masse.</p></div></div><div class="faq-item"><div class="faq-question"> Comment fonctionne le spintax ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Spintax utilise des accolades {} pour encadrer des variantes de mots ou d&#39;expressions, séparées par des barres verticales |. Par exemple, la fonction spintax {Bonjour|Salut|Hey} choisirait aléatoirement « Bonjour », « Salut » ou « Hey » à chaque génération du message. Notre outil identifie automatiquement les possibilités de variantes et crée la syntaxe appropriée.</p></div></div><div class="faq-item"><div class="faq-question"> L’utilisation de Spintax améliorera-t-elle la délivrabilité de mes e-mails ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Oui ! Les fournisseurs de messagerie et les filtres anti-spam signalent de plus en plus les messages identiques envoyés en masse. Grâce à Spintax, chaque destinataire reçoit une version unique de votre e-mail, ce qui réduit considérablement les risques d&#39;être repéré par les algorithmes anti-spam. Nos utilisateurs constatent généralement une amélioration de 15 à 30 % de leur classement en boîte de réception.</p></div></div><div class="faq-item"><div class="faq-question"> Combien de variations puis-je générer avec spintax ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Le nombre de variantes augmente avec chaque élément de spintax inclus. Par exemple, si vous proposez trois options différentes à cinq endroits différents, vous pouvez générer jusqu&#39;à 3^5 = 243 variantes uniques de votre e-mail. Notre outil vous indique le nombre total de combinaisons possibles après avoir généré votre spintax.</p></div></div><div class="faq-item"><div class="faq-question"> Puis-je utiliser Spintax avec mon logiciel de marketing par e-mail ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> La plupart des plateformes modernes de cold emailing comme Lemlist, Mailshake et Reply.io prennent en charge Spintax nativement. Pour d&#39;autres plateformes comme Gmail ou Outlook, vous pouvez utiliser des extensions dédiées qui traitent Spintax avant l&#39;envoi. Consultez la documentation de votre outil de messagerie pour connaître les exigences syntaxiques spécifiques : notre générateur crée un Spintax standard compatible avec la plupart des plateformes.</p></div></div><div class="faq-item"><div class="faq-question"> Y a-t-il une limite à la fréquence à laquelle je peux utiliser cet outil ?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Notre générateur de spintax de base est entièrement gratuit et sans limite d&#39;utilisation. Pour des fonctionnalités plus avancées comme la réécriture assistée par IA, la rotation au niveau des paragraphes et l&#39;intégration à notre plateforme de cold emailing, découvrez nos offres premium chez UnlimitedLeads. </p></div></div></div></section><section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;"><div style="max-width: 800px; margin: 0 auto;"><h2 style="margin-bottom: 1.5rem; font-size: 1.75rem;"> Comment utiliser Spintax pour améliorer vos campagnes d&#39;e-mailing à froid</h2><p style="margin-bottom: 1rem;"> La prospection par e-mail à froid reste l&#39;un des moyens les plus efficaces pour générer des prospects et développer votre activité. Cependant, les fournisseurs de messagerie devenant de plus en plus sophistiqués pour filtrer les e-mails de masse, l&#39;utilisation de Spintax est devenue essentielle pour les spécialistes du marketing par e-mail.</p><h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;"> Ce qui rend notre générateur Spintax différent</h3><p style="margin-bottom: 1rem;"> Contrairement aux outils de spintax classiques qui se contentent de remplacer quelques mots, notre générateur basé sur l&#39;IA analyse l&#39;intégralité de votre e-mail pour identifier des opportunités stratégiques de variation. Cela comprend :</p><ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;"><li style="margin-bottom: 0.5rem;"> <strong>Optimisation de la ligne d&#39;objet</strong> - La première chose que les destinataires voient et le facteur le plus important dans les taux d&#39;ouverture</li><li style="margin-bottom: 0.5rem;"> <strong>Variations de phrases d&#39;ouverture</strong> - Créez plusieurs manières engageantes de démarrer votre conversation</li><li style="margin-bottom: 0.5rem;"> <strong>Alternatives d&#39;appel à l&#39;action</strong> - Testez différentes approches pour augmenter les taux de réponse</li><li style="margin-bottom: 0.5rem;"> <strong>Modèles de langage naturel</strong> - Assurez-vous que toutes les variantes semblent avoir été écrites par un humain</li></ul><h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;"> Bonnes pratiques pour utiliser Spintax dans les e-mails à froid</h3><ol style="margin-bottom: 1.5rem; padding-left: 1.5rem;"><li style="margin-bottom: 0.75rem;"> <strong>Concentrez-vous sur les domaines à fort impact :</strong> les lignes d’objet, les salutations et les appels à l’action bénéficient le plus de la variation.</li><li style="margin-bottom: 0.75rem;"> <strong>Maintenir la cohérence du message :</strong> tout en variant la formulation, assurez-vous que toutes les versions transmettent la même proposition de valeur fondamentale.</li><li style="margin-bottom: 0.75rem;"> <strong>Combinez avec la personnalisation :</strong> utilisez à la fois Spintax ET des champs personnalisés comme {First_Name} ou {Company} pour des e-mails vraiment personnalisés.</li><li style="margin-bottom: 0.75rem;"> <strong>Testez différentes variantes :</strong> suivez les combinaisons de spintax les plus performantes et affinez votre approche au fil du temps.</li><li style="margin-bottom: 0.75rem;"> <strong>N&#39;en faites pas trop :</strong> concentrez-vous sur les variations de qualité plutôt que de maximiser le nombre de combinaisons possibles.</li></ol><p style="margin-bottom: 1.5rem;"> En suivant ces meilleures pratiques et en utilisant notre puissant générateur de spintax, vous pouvez créer des campagnes d&#39;e-mails froids qui non seulement atteignent la boîte de réception, mais génèrent également plus de réponses et de prospects pour votre entreprise. </p><div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);"><h4 style="margin-bottom: 0.75rem; color: var(--primary);"> Prêt à faire passer vos e-mails froids au niveau supérieur ?</h4><p style="margin-bottom: 0;"> Essayez dès aujourd&#39;hui notre générateur de spintax gratuit et constatez l&#39;impact qu&#39;il peut avoir sur vos taux d&#39;ouverture et de réponse. Pour les utilisateurs avancés, découvrez nos formules premium qui incluent l&#39;assistance à la rédaction par IA, les tests A/B automatisés et les analyses intégrées. </p></div></div></section></body><!-- Footer --><footer class="footer"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Outils gratuits</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Rechercher un e-mail à partir d&#39;un numéro de téléphone</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Recherche MX en masse</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extracteur d&#39;e-mails</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper.html">Grattoir de cartes Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Recherche d&#39;e-mails Apollo</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparer</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternative à Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternative à ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternative à Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternative à Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternative à ContactOut</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contactez-nous</h4><ul class="footer-links"><li> <a href="mailto:contact@unlimitedleads.com">contact@unlimitedleads.com</a></li><li> <a href="mailto:contact@unlimitedleads.com">Demander un plan personnalisé</a></li></ul></div></div><div class="footer-social"> <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Tous droits réservés.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Politique de confidentialité</a> | <a href="https://unlimited-leads.online/legal-notice">Conditions d&#39;utilisation</a></p></div></div></footer><!-- Scripts --><script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Spintax Generation
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('emailInput');
+            const generateBtn = document.getElementById('generateBtn');
+            const spintaxResult = document.getElementById('spintaxResult');
+            const resultArea = document.getElementById('resultArea');
+            const copyBtn = document.getElementById('copyBtn');
+            const previewBtn = document.getElementById('previewBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const variationsCount = document.getElementById('variationsCount');
+            
+            // Generate Spintax
+            generateBtn.addEventListener('click', async function() {
+                const emailText = emailInput.value.trim();
+                
+                if (!emailText) {
+                    showStatus('Please enter your email text first.', 'error');
+                    return;
+                }
+                
+                showStatus('<span class="loader"></span> Generating spintax variations...', 'loading');
+                
+                try {
+                    // API call to your backend
+                    const response = await fetch('https://eliasse-n8n.onrender.com/webhook/1f7c3f3b-15ae-45c7-8409-c108b9eae970', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: emailText })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status}`);
+                    }
+                    
+                    // Get the text response directly
+                    const spintaxText = await response.text();
+                    
+                    if (spintaxText && spintaxText.trim()) {
+                        spintaxResult.value = spintaxText;
+                        resultArea.style.display = 'block';
+                        
+                        // Calculate approximate variations
+                        const matches = (spintaxText.match(/{[^{}]+}/g) || []);
+                        let totalVariations = 1;
+                        
+                        matches.forEach(match => {
+                            const options = match.slice(1, -1).split('|');
+                            totalVariations *= options.length;
+                        });
+                        
+                        if (totalVariations > 1) {
+                            variationsCount.textContent = `${totalVariations.toLocaleString()} possible variations`;
+                        } else {
+                            variationsCount.textContent = '';
+                        }
+                        
+                        showStatus('Spintax generated successfully!', 'success');
+                        
+                        // Scroll to result
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        showStatus('No spintax was returned from the server.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showStatus('Failed to generate spintax. Please try again.', 'error');
+                }
+            });
+            
+            // Copy to Clipboard
+            copyBtn.addEventListener('click', function() {
+                spintaxResult.select();
+                document.execCommand('copy');
+                
+                const originalText = this.querySelector('span').textContent;
+                this.querySelector('span').textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    this.querySelector('span').textContent = originalText;
+                }, 2000);
+            });
+            
+            // Preview Random Variation
+            previewBtn.addEventListener('click', function() {
+                const spintaxText = spintaxResult.value;
+                
+                if (!spintaxText) return;
+                
+                // Generate a random variation
+                const randomVariation = processSpintax(spintaxText);
+                
+                // Show in a temporary preview
+                const tempPreview = document.createElement('div');
+                tempPreview.className = 'status status-success';
+                tempPreview.style.marginTop = '1rem';
+                tempPreview.innerHTML = ` 
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <strong>Random Preview:</strong>
+                        <span class="close-preview" style="cursor: pointer; color: var(--primary);">×</span>
+                    </div>
+                    <div style="white-space: pre-wrap;">${randomVariation}</div>
+                `;
+                
+                // Remove any existing preview 
+                const existingPreview = document.querySelector('.close-preview');
+                if (existingPreview) {
+                    existingPreview.closest('.status').remove();
+                }
+                
+                resultArea.appendChild(tempPreview);
+                
+                // Close button functionality
+                tempPreview.querySelector('.close-preview').addEventListener('click', function() {
+                    tempPreview.remove();
+                });
+            });
+            
+            // Process spintax to generate a random variation
+            function processSpintax(text) {
+                // Process all spintax in the text
+                let result = text;
+                let match;
+                const regex = /{([^{}]+)}/g;
+                
+                // Keep processing until all spintax is resolved
+                while ((match = regex.exec(result)) !== null) {
+                    const options = match[1].split('|');
+                    const randomOption = options[Math.floor(Math.random() * options.length)];
+                    
+                    // Replace this instance of spintax with a random option
+                    result = result.substring(0, match.index) + 
+                             randomOption + 
+                             result.substring(match.index + match[0].length);
+                    
+                    // Reset regex to start from the beginning since we modified the string
+                    regex.lastIndex = 0;
+                }
+                
+                return result;
+            }
+            
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            // Demo example
+            emailInput.placeholder = "Example:\n\nSubject: Partnership opportunity with [Company Name]\n\nHi [First Name],\n\nI noticed that [Company Name] has been doing great work in the [industry] space, and I thought our solutions might complement each other well.\n\nWould you be open to a quick 15-minute call next week to explore potential synergies?\n\nBest regards,\n[Your Name]";
+        });
+    </script></html>
