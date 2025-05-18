@@ -193,7 +193,7 @@ jobs:
                   response = client.chat.completions.create(
                       model="gpt-4",
                       messages=[
-                          {"role": "system", "content": f"You are a professional translator. Translate the following texts from French to {target_lang}. Maintain the same tone, style, and formatting. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
+                          {"role": "system", "content": f"You are a professional translator. Translate the following texts from English to {target_lang}. Maintain the same tone, style, and formatting. Return ONLY the translations, separated by '---ITEM---', in the same order as the input."},
                           {"role": "user", "content": combined_text}
                       ],
                       temperature=0.2
@@ -404,6 +404,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git pull --rebase origin main  # Add this line to pull latest changes before pushing
           git add --all
           git diff --staged --quiet || git commit -m "Add Spanish translations for changed files"
           git push
