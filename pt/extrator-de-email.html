@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title> Extrator de e-mail | Extraindo e-mail de CSV ou texto </title><meta name="description" content="Extrator de e-mail gratuito - Extraia endereços de e-mail de qualquer CSV ou texto com nossa ferramenta gratuita"/><!-- Preconnect externals --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com"><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png"><!-- Open Graph --><meta property="og:type" content="website" /><meta property="og:url" content="https://unlimited-leads.online/extractor" /><meta property="og:title" content="Extrator de e-mail | Extraindo e-mail de CSV ou texto" /><meta property="og:description" content="Extrator de e-mail gratuito - Extraia endereços de e-mail de qualquer CSV ou texto com nossa ferramenta gratuita" /><meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" /><!-- Fonts & Icons --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript><!-- Branding & Extractor Styles --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-200: #e5e7eb;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Extractor Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; }
+
+        /* Extractor Form */
+        .extractor-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 800px; margin: 0 auto; }
+        .file-upload { border: 2px dashed var(--gray-200); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: var(--transition); }
+        .file-upload:hover { border-color: var(--primary); background: rgba(79,70,229,0.05); }
+        .divider { display: flex; align-items: center; margin: 1.5rem 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+        .divider span { padding: 0 1rem; color: var(--gray-200); }
+        textarea { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); resize: vertical; margin-bottom: 1.5rem; height: 300px }
+        .btn { display: inline-block; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); transition: var(--transition); cursor: pointer; text-align: center; }
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { width: 100%; font-size: 1rem; padding: 1rem; }
+        .loader { display: inline-block; width: 1.25rem; height: 1.25rem; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 0.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result Area */
+        .result-area { display: none; margin-top: 2rem; }
+        .result-area textarea { background: var(--gray-50); }
+        .actions { margin-top: 1rem; }
+        .actions .btn { margin-right: 0.5rem; }
+
+        /* Footer */
+        .footer { background: var(--gray-800); color: white; padding: 2rem 0; text-align: center; }
+        .footer a { color: var(--gray-200); }
+
+        @media (max-width:768px) { .hero h1 { font-size: 2rem; } }
+    </style></head><body><!-- Header --><header class="header"><div class="container"><div class="header-content"> <a href="https://unlimited-leads.online/en" class="logo-link"><i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i><span class="logo-text"><span class="gradient-text">leads ilimitados</span></span></a></div></div></header><!-- Hero Extractor --><section class="hero"><div class="container"><h1> Extrator de e-mail</h1><p> Extraia facilmente endereços de e-mail de qualquer texto ou arquivo. </p></div></section><!-- Extractor Form --><section class="container"><div class="extractor-form"><div class="file-upload" id="dropZone"><input type="file" id="fileInput" style="display:none;"><p> Arraste e solte seu arquivo <strong>.txt</strong> , <strong>.csv</strong> ou cole o texto abaixo.</p></div><div class="divider"> <span>OU</span></div><textarea id="emailsSource" placeholder="Paste your text here..."></textarea> <button id="extractBtn" class="btn btn-primary btn-large"><span>Extrair e-mails</span><span class="loader" style="display:none;"></span></button> <div id="resultArea" class="result-area"><textarea id="emailsResult" readonly placeholder="Emails extracted..."></textarea><div class="actions"> <button id="copyBtn" class="btn btn-secondary">Colar</button> <button id="downloadBtn" class="btn btn-primary">Download</button> </div></div></div></section><!-- Footer --><!-- Footer --><footer id="contact" class="footer"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Ferramentas gratuitas</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Encontrar e-mail de número de telefone</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Pesquisa de mx em massa</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extrator de e-mail</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper.html">Coletor de mapas do Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Localizador de e-mail Apollo</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparar</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa ao ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa ContactOut</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contate-nos</h4><ul class="footer-links"><li> <a href="mailto:contact@unlimitedleads.com">contato@unlimitedleads.com</a></li><li> <a href="mailto:contact@unlimitedleads.com">Solicitar Plano Personalizado</a></li></ul></div><div class="footer-social"> <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Todos os direitos reservados.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Política de Privacidade</a> | <a href="https://unlimited-leads.online/legal-notice">Termos de Serviço</a></p></div></div></div></footer><!-- Scripts --><script>
+        function extractEmailsFromText(text) {
+            if (!text) return { emails: [], count: 0 };
+            const clean = text.replace(/<[^>]*>/g,' ');
+            const words = clean.split(/\s+/);
+            const candidates = words.filter(w=> w.includes('@'));
+            const cleanList = candidates.map(e=> e.replace(/^[.,;:()"'<>\[\]{}]+|[.,;:!?)"'<>\[\]{}]+$/g,''));
+            const unique = [...new Set(cleanList)];
+            return { emails: unique, count: unique.length };
+        }
+        document.getElementById('extractBtn').addEventListener('click', function(){
+            const txt = document.getElementById('emailsSource').value;
+            const btn = this.querySelector('span'); const loader = this.querySelector('.loader');
+            btn.textContent='Extraction en cours...'; loader.style.display='inline-block';
+            setTimeout(()=>{
+                const res = extractEmailsFromText(txt);
+                document.getElementById('emailsResult').value = res.emails.join('\n');
+                document.getElementById('resultArea').style.display='block';
+                btn.textContent='Extraire les emails'; loader.style.display='none';
+            },500);
+        });
+        document.getElementById('copyBtn').addEventListener('click', function(){
+            const out = document.getElementById('emailsResult'); out.select(); document.execCommand('copy'); this.textContent='Copié !'; setTimeout(()=>this.textContent='Copier',2000);
+        });
+        document.getElementById('downloadBtn').addEventListener('click', function(){
+            const data = document.getElementById('emailsResult').value;
+            const blob = new Blob([data],{type:'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a=document.createElement('a'); a.href=url; a.download='emails.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        });
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.style.borderColor='var(--primary)'; });
+        dropZone.addEventListener('dragleave', ()=>{ dropZone.style.borderColor='var(--gray-200)'; });
+        dropZone.addEventListener('drop', e=>{ e.preventDefault(); dropZone.style.borderColor='var(--gray-200)'; const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=e=>document.getElementById('emailsSource').value=e.target.result; r.readAsText(f);} });
+        document.getElementById('fileInput').addEventListener('change', e=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=e=>document.getElementById('emailsSource').value=e.target.result; r.readAsText(f);} });
+    </script><section class="seo-description container" style="padding:2rem 0;"><h2>Como usar nosso extrator de e-mail gratuito</h2><p> Chega de copiar e colar manualmente — nosso <strong>extrator de e-mails gratuito</strong> oferece uma lista limpa de endereços em segundos. Basta seguir estes três passos simples:</p><ol><li> <strong>Carregar ou colar conteúdo:</strong> arraste e solte seu arquivo CSV, TXT ou Excel ou cole qualquer texto na caixa.</li><li> <strong>Clique em “Extrair”:</strong> clique no botão e veja nosso <strong>extrator de e-mail</strong> escanear em busca de endereços válidos.</li><li> <strong>Obtenha seus resultados:</strong> veja um e-mail por linha, pronto para copiar, baixar ou importar para seu CRM.</li></ol><h2> Por que escolher nosso extrator de e-mail para extrair e-mails de um arquivo CSV ou de um texto</h2><p> Quer você precise de um <strong>extrator de e-mail CSV</strong> ou queira extrair endereços diretamente do texto bruto, nossa ferramenta cuida de tudo:</p><ul><li> <strong>Suporte a CSV:</strong> pegue instantaneamente todos os e-mails de qualquer arquivo CSV sem abrir planilhas.</li><li> <strong>Multiformato:</strong> funciona com TXT, Excel, trechos de HTML e muito mais, sem necessidade de plugins extras.</li><li> <strong>Remoção de duplicatas:</strong> filtra automaticamente as repetições para que você mantenha apenas endereços exclusivos.</li></ul><h2> Como funciona o nosso extrator de e-mail do Gmail</h2><p> Para profissionais de marketing que usam o Gmail, nosso fluxo de trabalho especializado <strong>de extração de e-mails do Gmail</strong> garante que você nunca perca um lead:<h2> Principais benefícios da nossa ferramenta de extração de e-mail</h2><p> De startups a grandes empresas, veja por que nosso <strong>extrator de e-mail</strong> se destaca:</p><ul><li> <strong>Economia de tempo:</strong> automatize extrações em larga escala e concentre-se na sua estratégia de campanha.</li><li> <strong>Alta precisão:</strong> correspondência avançada de padrões e expressões regulares garante que apenas e-mails válidos sejam selecionados.</li><li> <strong>Gratuito para usar:</strong> Nosso <strong>extrator de e-mail gratuito</strong> oferece extrações ilimitadas sem acesso pago.</li><li> <strong>Escalável:</strong> gerencie milhares de linhas ou caixas de entrada cheias do Gmail de uma só vez.</li><li> <strong>Download instantâneo:</strong> exporte em .txt ou .csv e conecte diretamente no Mailchimp, HubSpot ou seu ESP favorito.</li></ul></section></body></html>
