@@ -1260,73 +1260,87 @@ document.addEventListener('DOMContentLoaded', function() {
     const newSearchBtn = document.getElementById('newSearchBtn');
     
     findEmailBtn.addEventListener('click', async function() {
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName = document.getElementById('lastName').value.trim();
-        const companyDomain = document.getElementById('companyDomain').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const companyDomain = document.getElementById('companyDomain').value.trim();
+    
+    if (!firstName || !lastName || !companyDomain) {
+        showStatus('Please fill in all fields to find an email address.', 'error');
+        return;
+    }
+    
+    // Disable the search button and show loading state
+    findEmailBtn.disabled = true;
+    findEmailBtn.innerHTML = '<span class="loader"></span> Searching...';
+    showStatus('<span class="loader"></span> Finding email address. This may take up to 1 minute...', 'loading');
+    
+    try {
+        // Set up timeout mechanism - create a promise that rejects after 2 minutes (120000ms)
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Request timed out. The server might be busy.')), 120000);
+        });
         
-        if (!firstName || !lastName || !companyDomain) {
-            showStatus('Please fill in all fields to find an email address.', 'error');
-            return;
+        // This is your actual API call promise
+        const fetchPromise = fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: 'individual',
+                firstName: firstName,
+                lastName: lastName,
+                companyDomain: companyDomain
+            })
+        });
+        
+        // Race the API call against the timeout
+        const response = await Promise.race([fetchPromise, timeoutPromise]);
+        
+        if (!response.ok) {
+            throw new Error('Failed to communicate with the server');
         }
         
-        // Disable the search button and show loading state
-        findEmailBtn.disabled = true;
-        findEmailBtn.innerHTML = '<span class="loader"></span> Searching...';
-        showStatus('<span class="loader"></span> Finding email address. This may take up to 30 seconds...', 'loading');
+        const data = await response.json();
         
-        try {
-            // Make the API call to the specified endpoint
-            const response = await fetch(API_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    type: 'individual',
-                    firstName: firstName,
-                    lastName: lastName,
-                    companyDomain: companyDomain
-                })
-            });
+        // Re-enable button and restore text ONLY after data is received
+        findEmailBtn.disabled = false;
+        findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+        
+        // If we have a valid response with an email
+        if (data && data.email) {
+            // Update result table with the response data
+            document.getElementById('resultFirstName').textContent = firstName;
+            document.getElementById('resultLastName').textContent = lastName;
+            document.getElementById('resultCompany').textContent = companyDomain;
+            document.getElementById('resultEmail').textContent = data.email;
+            document.getElementById('resultConfidence').textContent = data.confidence || 'High (95%)';
             
-            // Re-enable button and restore text
-            findEmailBtn.disabled = false;
-            findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+            // Show result area
+            singleResultArea.style.display = 'block';
+            showStatus('Email found successfully!', 'success');
             
-            if (!response.ok) {
-                throw new Error('Failed to communicate with the server');
-            }
-            
-            const data = await response.json();
-            
-            // If we have a valid response with an email
-            if (data && data.email) {
-                // Update result table with the response data
-                document.getElementById('resultFirstName').textContent = firstName;
-                document.getElementById('resultLastName').textContent = lastName;
-                document.getElementById('resultCompany').textContent = companyDomain;
-                document.getElementById('resultEmail').textContent = data.email;
-                document.getElementById('resultConfidence').textContent = data.confidence || 'High (95%)';
-                
-                // Show result area
-                singleResultArea.style.display = 'block';
-                showStatus('Email found successfully!', 'success');
-                
-                // Scroll to result
-                singleResultArea.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                // Handle case where email wasn't found
-                showStatus('Email not found for this contact. Please verify the information.', 'error');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showStatus('Failed to find email. Please try again.', 'error');
-            
-            // Make sure button is re-enabled
-            findEmailBtn.disabled = false;
-            findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+            // Scroll to result
+            singleResultArea.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // Handle case where email wasn't found
+            showStatus('Email not found for this contact. Please verify the information.', 'error');
         }
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        
+        // Check if it's a timeout error
+        if (error.message === 'Request timed out. The server might be busy.') {
+            showStatus('The request is taking longer than expected. The server might be busy. Please try again later.', 'error');
+        } else {
+            showStatus('Failed to find email: ' + error.message + '. Please try again.', 'error');
+        }
+        
+        // Make sure button is re-enabled
+        findEmailBtn.disabled = false;
+        findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+    }
+});
     
     // Copy Email to Clipboard
     copyEmailBtn.addEventListener('click', function() {
