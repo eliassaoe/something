@@ -1624,51 +1624,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Download Results
-    downloadResultsBtn.addEventListener('click', function() {
-        if (!processedCsvData) {
-            showStatus('No processed data available. Please upload a CSV file first.', 'error');
-            return;
+  // Download Results
+downloadResultsBtn.addEventListener('click', function() {
+    if (!processedCsvData) {
+        showStatus('No processed data available. Please upload a CSV file first.', 'error');
+        return;
+    }
+    
+    // Show download loading state
+    const originalBtnText = this.innerHTML;
+    this.disabled = true;
+    this.innerHTML = '<span class="loader"></span> Preparing download...';
+    
+    setTimeout(() => {
+        try {
+            // Convert the processed data back to CSV - CHANGED TO MATCH YOUR FORMAT
+            let csvContent = 'first_name,last_name,company_domain,email,confidence\n';
+            
+            const results = processedCsvData; // Your server returns an array directly
+            
+            results.forEach(row => {
+                // QUICK FIX: Use address instead of email
+                const firstName = escapeCsvValue(row.first_name || '');
+                const lastName = escapeCsvValue(row.last_name || '');
+                const domain = escapeCsvValue(row.domain || '');
+                const email = escapeCsvValue(row.address || ''); // CHANGED: Use address field
+                const confidence = escapeCsvValue('Medium (75%)'); // Default since you have email_state
+                
+                csvContent += `${firstName},${lastName},${domain},${email},${confidence}\n`;
+            });
+            
+            downloadCsv(csvContent, 'enriched_contacts.csv');
+            
+            // Restore button state
+            this.disabled = false;
+            this.innerHTML = originalBtnText;
+        } catch (error) {
+            console.error('Error preparing download:', error);
+            showStatus('Failed to prepare download. Please try again.', 'error');
+            
+            // Restore button state
+            this.disabled = false;
+            this.innerHTML = originalBtnText;
         }
-        
-        // Show download loading state
-        const originalBtnText = this.innerHTML;
-        this.disabled = true;
-        this.innerHTML = '<span class="loader"></span> Preparing download...';
-        
-        setTimeout(() => {
-            try {
-                // Convert the processed data back to CSV
-                let csvContent = 'first_name,last_name,company_domain,email,confidence\n';
-                
-                // Check if data is an array or has results property
-                const results = Array.isArray(processedCsvData) ? processedCsvData : (processedCsvData.results || []);
-                
-                results.forEach(row => {
-                    const firstName = escapeCsvValue(row.first_name || row.firstName || '');
-                    const lastName = escapeCsvValue(row.last_name || row.lastName || '');
-                    const domain = escapeCsvValue(row.company_domain || row.companyDomain || '');
-                    const email = escapeCsvValue(row.email || '');
-                    const confidence = escapeCsvValue(row.confidence || 'High (95%)');
-                    
-                    csvContent += `${firstName},${lastName},${domain},${email},${confidence}\n`;
-                });
-                
-                downloadCsv(csvContent, 'enriched_contacts.csv');
-                
-                // Restore button state
-                this.disabled = false;
-                this.innerHTML = originalBtnText;
-            } catch (error) {
-                console.error('Error preparing download:', error);
-                showStatus('Failed to prepare download. Please try again.', 'error');
-                
-                // Restore button state
-                this.disabled = false;
-                this.innerHTML = originalBtnText;
-            }
-        }, 500); // Small delay to allow the UI to update
-    });
+    }, 500);
+});
     
     // New Bulk Search
     newBulkSearchBtn.addEventListener('click', function() {
