@@ -539,149 +539,107 @@
         </div>
     </section>
 
-    <!-- Email Finder Form -->
-    <section class="container">
-        <div class="finder-form">
-            <div id="statusMessage" class="status"></div>
-            
-            <!-- Tabs -->
-            <div class="tabs">
-                <button id="singleTabBtn" class="tab active">Individual Search</button>
-                <button id="bulkTabBtn" class="tab">Bulk CSV Upload</button>
+  <!-- Bulk Email Finder Form -->
+<!-- Bulk Email Finder Form -->
+<div id="bulkFinderForm" style="display: none;">
+    <p style="margin-bottom: 1.5rem;">Upload a CSV file with columns for first name, last name, and company domain. We'll find the email addresses for all your contacts.</p>
+    
+    <!-- Email Delivery Info Box -->
+    <div style="margin-bottom: 1.5rem; padding: 1rem; background-color: rgba(14, 165, 233, 0.1); border: 1px solid var(--secondary); border-radius: var(--border-radius);">
+        <h4 style="margin-bottom: 0.75rem; font-weight: 600; color: var(--secondary);">
+            <i class="fas fa-info-circle"></i> Delivery Information
+        </h4>
+        <p style="margin-bottom: 0.5rem;">We'll send the results to your email address. Please check both your inbox and spam folder.</p>
+        <p style="margin-bottom: 0;"><strong>Note:</strong> Processing may take up to a few hours for large files.</p>
+    </div>
+    
+    <!-- Email Input Field -->
+    <div class="form-group">
+        <label for="userEmail">Your Email Address <span style="color: var(--danger);">*</span></label>
+        <input type="email" id="userEmail" class="form-control" placeholder="you@example.com" required>
+        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--gray-400);">Your results will be sent to this email address.</p>
+    </div>
+    
+    <div class="csv-example">
+        <h3>Your CSV should look like this:</h3>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>first_name</th>
+                    <th>last_name</th>
+                    <th>company_domain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>Smith</td>
+                    <td>company.com</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>Doe</td>
+                    <td>acme.com</td>
+                </tr>
+                <tr>
+                    <td>Michael</td>
+                    <td>Johnson</td>
+                    <td>example.org</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="csv-input-area" id="csvDropArea">
+        <i class="fas fa-file-csv"></i>
+        <h3>Drag & Drop CSV File Here</h3>
+        <p>or</p>
+        <button class="btn btn-primary" style="margin-top: 1rem;">Select CSV File</button>
+        <input type="file" id="csvFileInput" class="file-input" accept=".csv">
+    </div>
+    
+    <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--gray-400); text-align: center;">Max file size: 5MB (up to 1000 contacts)</p>
+    
+    <!-- Processing Time Notice -->
+    <div style="margin-top: 1.5rem; padding: 1rem; background-color: rgba(245, 158, 11, 0.1); border: 1px solid var(--warning); border-radius: var(--border-radius);">
+        <h4 style="margin-bottom: 0.75rem; font-weight: 600; color: var(--warning);">
+            <i class="fas fa-clock"></i> Processing Time
+        </h4>
+        <p style="margin-bottom: 0.5rem;">You have two options to receive your results:</p>
+        <ul style="padding-left: 1.5rem; margin-bottom: 0;">
+            <li>Keep this page open for immediate download when processing completes</li>
+            <li>Check your email (including spam folder) within a few hours</li>
+        </ul>
+    </div>
+    
+    <div id="bulkResultArea" class="csv-results">
+        <div class="csv-stats">
+            <div class="csv-stat-item">
+                <h4 id="totalContacts">0</h4>
+                <p>TOTAL CONTACTS</p>
             </div>
-            
-            <!-- Single Email Finder Form -->
-            <div id="singleFinderForm">
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" class="form-control" placeholder="John">
-                </div>
-                
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" class="form-control" placeholder="Smith">
-                </div>
-                
-                <div class="form-group">
-                    <label for="companyDomain">Company Domain</label>
-                    <input type="text" id="companyDomain" class="form-control" placeholder="company.com">
-                </div>
-                
-                <button id="findEmailBtn" class="btn btn-primary btn-large">
-                    <span>Find Email Address</span>
-                </button>
-                
-                <div id="singleResultArea" class="result-area">
-                    <div class="result-header">
-                        <h3>Email Found!</h3>
-                    </div>
-                    
-                    <table class="result-table">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Company</th>
-                                <th>Email Address</th>
-                                <th>Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="resultFirstName"></td>
-                                <td id="resultLastName"></td>
-                                <td id="resultCompany"></td>
-                                <td id="resultEmail" class="email-cell"></td>
-                                <td id="resultConfidence"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="actions">
-                        <button id="copyEmailBtn" class="btn btn-secondary">
-                            <i class="fas fa-copy"></i>
-                            <span>Copy Email</span>
-                        </button>
-                        <button id="newSearchBtn" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                            <span>New Search</span>
-                        </button>
-                    </div>
-                </div>
+            <div class="csv-stat-item">
+                <h4 id="emailsFound">0</h4>
+                <p>EMAILS FOUND</p>
             </div>
-            
-            <!-- Bulk Email Finder Form -->
-            <div id="bulkFinderForm" style="display: none;">
-                <p style="margin-bottom: 1.5rem;">Upload a CSV file with columns for first name, last name, and company domain. We'll find the email addresses for all your contacts.</p>
-                
-                <div class="csv-example">
-                    <h3>Your CSV should look like this:</h3>
-                    <table class="csv-table">
-                        <thead>
-                            <tr>
-                                <th>first_name</th>
-                                <th>last_name</th>
-                                <th>company_domain</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>John</td>
-                                <td>Smith</td>
-                                <td>company.com</td>
-                            </tr>
-                            <tr>
-                                <td>Jane</td>
-                                <td>Doe</td>
-                                <td>acme.com</td>
-                            </tr>
-                            <tr>
-                                <td>Michael</td>
-                                <td>Johnson</td>
-                                <td>example.org</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="csv-input-area" id="csvDropArea">
-                    <i class="fas fa-file-csv"></i>
-                    <h3>Drag & Drop CSV File Here</h3>
-                    <p>or</p>
-                    <button class="btn btn-primary" style="margin-top: 1rem;">Select CSV File</button>
-                    <input type="file" id="csvFileInput" class="file-input" accept=".csv">
-                </div>
-                
-                <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--gray-400); text-align: center;">Max file size: 5MB (up to 1000 contacts)</p>
-                
-                <div id="bulkResultArea" class="csv-results">
-                    <div class="csv-stats">
-                        <div class="csv-stat-item">
-                            <h4 id="totalContacts">0</h4>
-                            <p>TOTAL CONTACTS</p>
-                        </div>
-                        <div class="csv-stat-item">
-                            <h4 id="emailsFound">0</h4>
-                            <p>EMAILS FOUND</p>
-                        </div>
-                        <div class="csv-stat-item">
-                            <h4 id="successRate">0%</h4>
-                            <p>SUCCESS RATE</p>
-                        </div>
-                    </div>
-                    
-                    <div class="actions">
-                        <button id="downloadResultsBtn" class="btn btn-secondary">
-                            <i class="fas fa-download"></i>
-                            <span>Download Results</span>
-                        </button>
-                        <button id="newBulkSearchBtn" class="btn btn-primary">
-                            <i class="fas fa-upload"></i>
-                            <span>Upload New File</span>
-                        </button>
-                    </div>
-                </div>
+            <div class="csv-stat-item">
+                <h4 id="successRate">0%</h4>
+                <p>SUCCESS RATE</p>
             </div>
+        </div>
+        
+        <div class="actions">
+            <button id="downloadResultsBtn" class="btn btn-secondary">
+                <i class="fas fa-download"></i>
+                <span>Download Results</span>
+            </button>
+            <button id="newBulkSearchBtn" class="btn btn-primary">
+                <i class="fas fa-upload"></i>
+                <span>Upload New File</span>
+            </button>
+        </div>
+    </div>
+</div>
         </div>
     </section>
 
@@ -906,6 +864,7 @@
 
     <!-- Scripts -->
     <script>
+<script>
 // Tab Switching
 document.addEventListener('DOMContentLoaded', function() {
     // CSV Header Standardizer 
@@ -1378,6 +1337,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, false);
     
+    // Email validation function
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+    
     /**
      * Process a file with header standardization before sending to API
      * @param {File} file - The uploaded CSV file
@@ -1392,6 +1357,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (file.size > 5 * 1024 * 1024) { // 5MB limit
             showStatus('File size exceeds the 5MB limit.', 'error');
+            return;
+        }
+        
+        // Get and validate email address
+        const userEmail = document.getElementById('userEmail').value.trim();
+        if (!userEmail) {
+            showStatus('Please enter your email address to receive the results.', 'error');
+            return;
+        }
+        
+        if (!validateEmail(userEmail)) {
+            showStatus('Please enter a valid email address.', 'error');
             return;
         }
         
@@ -1428,10 +1405,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 
                 // Now process this standardized file
-                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders);
+                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders, userEmail);
             } else {
                 // Headers are already correct, proceed with original file
-                processCSVWithAPI(file, loadingElement);
+                processCSVWithAPI(file, loadingElement, null, userEmail);
             }
         } catch (error) {
             console.error('Error processing CSV:', error);
@@ -1467,8 +1444,9 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {File} file - Standardized CSV file
      * @param {HTMLElement} loadingElement - Loading indicator element
      * @param {Object} originalHeaders - Original headers (for reporting changes)
+     * @param {string} userEmail - User's email address for receiving results
      */
-    async function processCSVWithAPI(file, loadingElement, originalHeaders) {
+    async function processCSVWithAPI(file, loadingElement, originalHeaders, userEmail) {
         try {
             // Update loading message to show we're now processing with API
             if (loadingElement && loadingElement.querySelector('h3')) {
@@ -1490,6 +1468,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('type', 'bulk');
             formData.append('file', file);
+            formData.append('email', userEmail); // Add email to the form data
             
             // Send the file to the API endpoint
             const response = await fetch(API_ENDPOINT, {
@@ -1544,13 +1523,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 bulkResultArea.insertAdjacentHTML('afterbegin', headerInfo);
             }
             
-            showStatus('CSV processed successfully! Download your enriched file below.', 'success');
+            // Add a message about email delivery
+            const emailDeliveryInfo = `
+                <div style="margin-top: 1rem; padding: 0.75rem; border-radius: 4px; background-color: rgba(79, 70, 229, 0.1); color: var(--primary); border: 1px solid var(--primary);">
+                    <strong>Processing your request:</strong><br>
+                    • Your results are being processed and will be sent to <strong>${userEmail}</strong><br>
+                    • Please check both your inbox and spam folder within the next few hours<br>
+                    • You can also download your results directly below when processing completes
+                </div>
+            `;
+            bulkResultArea.insertAdjacentHTML('afterbegin', emailDeliveryInfo);
+            
+            showStatus('CSV processed successfully! Download your enriched file below or check your email for the results.', 'success');
             
             // Scroll to result
             bulkResultArea.scrollIntoView({ behavior: 'smooth' });
         } catch (error) {
             console.error('Error with API:', error);
-            showStatus('Failed to process CSV file with our email finder. Please try again.', 'error');
+            showStatus('Failed to process CSV file with our email finder: ' + error.message, 'error');
             
             // Remove loading element and show the drop area again
             if (loadingElement.parentNode) {
@@ -1618,6 +1608,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const headerInfo = bulkResultArea.querySelector('div[style*="background-color: rgba(16, 185, 129, 0.1)"]');
         if (headerInfo) {
             headerInfo.remove();
+        }
+        
+        // Remove any email delivery messages
+        const emailInfo = bulkResultArea.querySelector('div[style*="background-color: rgba(79, 70, 229, 0.1)"]');
+        if (emailInfo) {
+            emailInfo.remove();
         }
     });
     
@@ -1777,7 +1773,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
+</script>
+        
     </script>
 </body>
 </html>
