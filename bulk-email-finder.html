@@ -1450,7 +1450,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingElement = createLoadingElement('Standardizing CSV headers...');
         csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
         
-        showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes...', 'loading');
+        showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes... It can take up to 1 hours for large files. You can keep this page in background . The result will also be sent to your inbox.', 'loading');
         
         try {
             // First step: Standardize the CSV headers
