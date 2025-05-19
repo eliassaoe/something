@@ -1,0 +1,4 @@
+// config.js
+window.APP_CONFIG = {
+  N8N_WEBHOOK_URL: 'PLACEHOLDER_WEBHOOK_URL'
+};
