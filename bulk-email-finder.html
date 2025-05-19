@@ -906,239 +906,484 @@
 
     <!-- Scripts -->
     <script>
-        // Tab Switching
-        document.addEventListener('DOMContentLoaded', function() {
-            const singleTabBtn = document.getElementById('singleTabBtn');
-            const bulkTabBtn = document.getElementById('bulkTabBtn');
-            const singleFinderForm = document.getElementById('singleFinderForm');
-            const bulkFinderForm = document.getElementById('bulkFinderForm');
-            
-            singleTabBtn.addEventListener('click', function() {
-                singleTabBtn.classList.add('active');
-                bulkTabBtn.classList.remove('active');
-                singleFinderForm.style.display = 'block';
-                bulkFinderForm.style.display = 'none';
-            });
-            
-            bulkTabBtn.addEventListener('click', function() {
-                bulkTabBtn.classList.add('active');
-                singleTabBtn.classList.remove('active');
-                bulkFinderForm.style.display = 'block';
-                singleFinderForm.style.display = 'none';
-            });
-            
-            // FAQ Accordion
-            document.querySelectorAll('.faq-question').forEach(question => {
-                question.addEventListener('click', () => {
-                    const item = question.parentElement;
-                    item.classList.toggle('active');
-                });
-            });
-            
-            // Single Email Finder
-            const findEmailBtn = document.getElementById('findEmailBtn');
-            const singleResultArea = document.getElementById('singleResultArea');
-            const statusMessage = document.getElementById('statusMessage');
-            const copyEmailBtn = document.getElementById('copyEmailBtn');
-            const newSearchBtn = document.getElementById('newSearchBtn');
-            
-            findEmailBtn.addEventListener('click', async function() {
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const companyDomain = document.getElementById('companyDomain').value.trim();
-                
-                if (!firstName || !lastName || !companyDomain) {
-                    showStatus('Please fill in all fields to find an email address.', 'error');
-                    return;
-                }
-                
-                showStatus('<span class="loader"></span> Finding email address...', 'loading');
-                
-                try {
-                    // Simulate an API call with a timeout
-                    setTimeout(() => {
-                        // Generate a fake email based on inputs
-                        const emailFormats = [
-                            `${firstName.toLowerCase()}@${companyDomain}`,
-                            `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${companyDomain}`,
-                            `${firstName.toLowerCase()[0]}${lastName.toLowerCase()}@${companyDomain}`,
-                            `${firstName.toLowerCase()}_${lastName.toLowerCase()}@${companyDomain}`,
-                            `${lastName.toLowerCase()}.${firstName.toLowerCase()}@${companyDomain}`
-                        ];
-                        
-                        const randomFormat = emailFormats[Math.floor(Math.random() * emailFormats.length)];
-                        const confidenceLevels = ['High (95%)', 'Medium (85%)', 'High (90%)'];
-                        const randomConfidence = confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)];
-                        
-                        // Update result table
-                        document.getElementById('resultFirstName').textContent = firstName;
-                        document.getElementById('resultLastName').textContent = lastName;
-                        document.getElementById('resultCompany').textContent = companyDomain;
-                        document.getElementById('resultEmail').textContent = randomFormat;
-                        document.getElementById('resultConfidence').textContent = randomConfidence;
-                        
-                        // Show result area
-                        singleResultArea.style.display = 'block';
-                        
-                        showStatus('Email found successfully!', 'success');
-                        
-                        // Scroll to result
-                        singleResultArea.scrollIntoView({ behavior: 'smooth' });
-                    }, 1500);
-                } catch (error) {
-                    console.error('Error:', error);
-                    showStatus('Failed to find email. Please try again.', 'error');
-                }
-            });
-            
-            // Copy Email to Clipboard
-            copyEmailBtn.addEventListener('click', function() {
-                const emailText = document.getElementById('resultEmail').textContent;
-                navigator.clipboard.writeText(emailText).then(function() {
-                    const originalText = this.querySelector('span').textContent;
-                    this.querySelector('span').textContent = 'Copied!';
-                    
-                    setTimeout(() => {
-                        this.querySelector('span').textContent = originalText;
-                    }, 2000);
-                }.bind(this));
-            });
-            
-            // New Search
-            newSearchBtn.addEventListener('click', function() {
-                document.getElementById('firstName').value = '';
-                document.getElementById('lastName').value = '';
-                document.getElementById('companyDomain').value = '';
-                singleResultArea.style.display = 'none';
-                statusMessage.style.display = 'none';
-            });
-            
-            // Bulk CSV Upload
-            const csvDropArea = document.getElementById('csvDropArea');
-            const csvFileInput = document.getElementById('csvFileInput');
-            const bulkResultArea = document.getElementById('bulkResultArea');
-            const downloadResultsBtn = document.getElementById('downloadResultsBtn');
-            const newBulkSearchBtn = document.getElementById('newBulkSearchBtn');
-            
-            // Handle file selection via button
-            csvDropArea.addEventListener('click', function() {
-                csvFileInput.click();
-            });
-            
-            // Handle file drop
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                csvDropArea.addEventListener(eventName, preventDefaults, false);
-            });
-            
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            ['dragenter', 'dragover'].forEach(eventName => {
-                csvDropArea.addEventListener(eventName, highlight, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                csvDropArea.addEventListener(eventName, unhighlight, false);
-            });
-            
-            function highlight() {
-                csvDropArea.style.borderColor = 'var(--primary)';
-                csvDropArea.style.backgroundColor = 'rgba(79, 70, 229, 0.05)';
-            }
-            
-            function unhighlight() {
-                csvDropArea.style.borderColor = 'var(--gray-300)';
-                csvDropArea.style.backgroundColor = 'white';
-            }
-            
-            csvDropArea.addEventListener('drop', handleDrop, false);
-            csvFileInput.addEventListener('change', handleFiles, false);
-            
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                handleFiles({ target: { files: files } });
-            }
-            
-            function handleFiles(e) {
-                const file = e.target.files[0];
-                
-                if (!file) return;
-                
-                if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
-                    showStatus('Please upload a CSV file (.csv extension only).', 'error');
-                    return;
-                }
-                
-                if (file.size > 5 * 1024 * 1024) { // 5MB limit
-                    showStatus('File size exceeds the 5MB limit.', 'error');
-                    return;
-                }
-                
-                showStatus('<span class="loader"></span> Processing CSV file...', 'loading');
-                
-                // Simulate processing with a timeout
-                setTimeout(() => {
-                    // Generate random stats
-                    const totalContacts = Math.floor(Math.random() * 500) + 100;
-                    const emailsFound = Math.floor(totalContacts * (Math.random() * 0.3 + 0.7)); // 70-100% success rate
-                    const successRate = Math.round((emailsFound / totalContacts) * 100);
-                    
-                    // Update stats
-                    document.getElementById('totalContacts').textContent = totalContacts;
-                    document.getElementById('emailsFound').textContent = emailsFound;
-                    document.getElementById('successRate').textContent = successRate + '%';
-                    
-                    // Show result area
-                    bulkResultArea.style.display = 'block';
-                    
-                    showStatus('CSV processed successfully! Download your enriched file below.', 'success');
-                    
-                    // Scroll to result
-                    bulkResultArea.scrollIntoView({ behavior: 'smooth' });
-                }, 3000);
-            }
-            
-            // Download Results
-            downloadResultsBtn.addEventListener('click', function() {
-                // Create a sample CSV content
-                const csvContent = 'first_name,last_name,company_domain,email,confidence\nJohn,Smith,company.com,john.smith@company.com,High (95%)\nJane,Doe,acme.com,j.doe@acme.com,Medium (80%)\nMichael,Johnson,example.org,michael@example.org,High (90%)';
-                
-                // Create a blob and download link
-                const blob = new Blob([csvContent], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                
-                a.href = url;
-                a.download = 'enriched_contacts.csv';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-            });
-            
-            // New Bulk Search
-            newBulkSearchBtn.addEventListener('click', function() {
-                csvFileInput.value = '';
-                bulkResultArea.style.display = 'none';
-                statusMessage.style.display = 'none';
-            });
-            
-            // Status message helper
-            function showStatus(message, type) {
-                statusMessage.innerHTML = message;
-                statusMessage.className = `status status-${type}`;
-                statusMessage.style.display = 'block';
-                
-                if (type !== 'loading') {
-                    setTimeout(() => {
-                        statusMessage.style.display = 'none';
-                    }, 5000);
-                }
-            }
+      // This code should replace the JavaScript section at the bottom of your HTML file
+
+// Tab Switching
+document.addEventListener('DOMContentLoaded', function() {
+    const singleTabBtn = document.getElementById('singleTabBtn');
+    const bulkTabBtn = document.getElementById('bulkTabBtn');
+    const singleFinderForm = document.getElementById('singleFinderForm');
+    const bulkFinderForm = document.getElementById('bulkFinderForm');
+    
+    singleTabBtn.addEventListener('click', function() {
+        singleTabBtn.classList.add('active');
+        bulkTabBtn.classList.remove('active');
+        singleFinderForm.style.display = 'block';
+        bulkFinderForm.style.display = 'none';
+    });
+    
+    bulkTabBtn.addEventListener('click', function() {
+        bulkTabBtn.classList.add('active');
+        singleTabBtn.classList.remove('active');
+        bulkFinderForm.style.display = 'block';
+        singleFinderForm.style.display = 'none';
+    });
+    
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            item.classList.toggle('active');
         });
+    });
+    
+    // API endpoint
+    const API_ENDPOINT = 'https://eliasse-n8n.onrender.com/webhook/8e8025c2-4521-4b75-9e7f-f0cb70d3cd3b';
+    
+    // Single Email Finder
+    const findEmailBtn = document.getElementById('findEmailBtn');
+    const singleResultArea = document.getElementById('singleResultArea');
+    const statusMessage = document.getElementById('statusMessage');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const newSearchBtn = document.getElementById('newSearchBtn');
+    
+    findEmailBtn.addEventListener('click', async function() {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const companyDomain = document.getElementById('companyDomain').value.trim();
+        
+        if (!firstName || !lastName || !companyDomain) {
+            showStatus('Please fill in all fields to find an email address.', 'error');
+            return;
+        }
+        
+        // Disable the search button and show loading state
+        findEmailBtn.disabled = true;
+        findEmailBtn.innerHTML = '<span class="loader"></span> Searching...';
+        showStatus('<span class="loader"></span> Finding email address. This may take up to 30 seconds...', 'loading');
+        
+        try {
+            // Make the API call to the specified endpoint
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: 'individual',
+                    firstName: firstName,
+                    lastName: lastName,
+                    companyDomain: companyDomain
+                })
+            });
+            
+            // Re-enable button and restore text
+            findEmailBtn.disabled = false;
+            findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+            
+            if (!response.ok) {
+                throw new Error('Failed to communicate with the server');
+            }
+            
+            const data = await response.json();
+            
+            // If we have a valid response with an email
+            if (data && data.email) {
+                // Update result table with the response data
+                document.getElementById('resultFirstName').textContent = firstName;
+                document.getElementById('resultLastName').textContent = lastName;
+                document.getElementById('resultCompany').textContent = companyDomain;
+                document.getElementById('resultEmail').textContent = data.email;
+                document.getElementById('resultConfidence').textContent = data.confidence || 'High (95%)';
+                
+                // Show result area
+                singleResultArea.style.display = 'block';
+                showStatus('Email found successfully!', 'success');
+                
+                // Scroll to result
+                singleResultArea.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Handle case where email wasn't found
+                showStatus('Email not found for this contact. Please verify the information.', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showStatus('Failed to find email. Please try again.', 'error');
+            
+            // Make sure button is re-enabled
+            findEmailBtn.disabled = false;
+            findEmailBtn.innerHTML = '<span>Find Email Address</span>';
+        }
+    });
+    
+    // Copy Email to Clipboard
+    copyEmailBtn.addEventListener('click', function() {
+        const emailText = document.getElementById('resultEmail').textContent;
+        navigator.clipboard.writeText(emailText).then(function() {
+            const originalText = this.querySelector('span').textContent;
+            this.querySelector('span').textContent = 'Copied!';
+            
+            setTimeout(() => {
+                this.querySelector('span').textContent = originalText;
+            }, 2000);
+        }.bind(this));
+    });
+    
+    // New Search
+    newSearchBtn.addEventListener('click', function() {
+        document.getElementById('firstName').value = '';
+        document.getElementById('lastName').value = '';
+        document.getElementById('companyDomain').value = '';
+        singleResultArea.style.display = 'none';
+        statusMessage.style.display = 'none';
+    });
+    
+    // Bulk CSV Upload
+    const csvDropArea = document.getElementById('csvDropArea');
+    const csvFileInput = document.getElementById('csvFileInput');
+    const bulkResultArea = document.getElementById('bulkResultArea');
+    const downloadResultsBtn = document.getElementById('downloadResultsBtn');
+    const newBulkSearchBtn = document.getElementById('newBulkSearchBtn');
+    
+    let processedCsvData = null; // Store processed CSV data for download
+    
+    // Handle file selection via button
+    csvDropArea.addEventListener('click', function() {
+        csvFileInput.click();
+    });
+    
+    // Handle file drop
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        csvDropArea.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        csvDropArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        csvDropArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        csvDropArea.style.borderColor = 'var(--primary)';
+        csvDropArea.style.backgroundColor = 'rgba(79, 70, 229, 0.05)';
+    }
+    
+    function unhighlight() {
+        csvDropArea.style.borderColor = 'var(--gray-300)';
+        csvDropArea.style.backgroundColor = 'white';
+    }
+    
+    csvDropArea.addEventListener('drop', handleDrop, false);
+    csvFileInput.addEventListener('change', handleFiles, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles({ target: { files: files } });
+    }
+    
+    async function handleFiles(e) {
+        const file = e.target.files[0];
+        
+        if (!file) return;
+        
+        if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+            showStatus('Please upload a CSV file (.csv extension only).', 'error');
+            return;
+        }
+        
+        if (file.size > 5 * 1024 * 1024) { // 5MB limit
+            showStatus('File size exceeds the 5MB limit.', 'error');
+            return;
+        }
+        
+        // Update the UI to show a prominent loading state
+        csvDropArea.style.display = 'none';
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'csv-processing-loading';
+        loadingElement.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem;">
+                <div class="loader" style="width: 3rem; height: 3rem; margin: 0 auto 1.5rem;"></div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);">Processing Your CSV File</h3>
+                <p style="margin-bottom: 0.5rem;">This may take a few minutes for large files.</p>
+                <p style="color: var(--gray-400);">Please don't close this page.</p>
+                <div style="margin-top: 1.5rem; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
+                    <div class="progress-bar" style="height: 100%; width: 0; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+        `;
+        csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
+        
+        // Start progress animation
+        const progressBar = loadingElement.querySelector('.progress-bar');
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            // Simulate progress but never reach 100% until we get the response
+            if (progress < 90) {
+                progress += Math.random() * 5;
+                progressBar.style.width = `${progress}%`;
+            }
+        }, 500);
+        
+        showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes...', 'loading');
+        
+        try {
+            // Create FormData to send the file
+            const formData = new FormData();
+            formData.append('type', 'bulk');
+            formData.append('file', file);
+            
+            // Send the file to the API endpoint
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                body: formData
+            });
+            
+            // Complete the progress bar animation
+            clearInterval(progressInterval);
+            progressBar.style.width = '100%';
+            
+            // Remove the loading element after a short delay
+            setTimeout(() => {
+                if (loadingElement.parentNode) {
+                    loadingElement.parentNode.removeChild(loadingElement);
+                }
+                csvDropArea.style.display = 'block';
+            }, 500);
+            
+            if (!response.ok) {
+                throw new Error('Failed to process CSV file');
+            }
+            
+            const data = await response.json();
+            
+            // Store the processed data for download
+            processedCsvData = data;
+            
+            // Calculate statistics
+            const totalContacts = data.totalContacts || data.length || 0;
+            const emailsFound = data.emailsFound || data.filter(row => row.email).length || 0;
+            const successRate = totalContacts > 0 ? Math.round((emailsFound / totalContacts) * 100) : 0;
+            
+            // Update stats
+            document.getElementById('totalContacts').textContent = totalContacts;
+            document.getElementById('emailsFound').textContent = emailsFound;
+            document.getElementById('successRate').textContent = successRate + '%';
+            
+            // Show result area
+            bulkResultArea.style.display = 'block';
+            showStatus('CSV processed successfully! Download your enriched file below.', 'success');
+            
+            // Scroll to result
+            bulkResultArea.scrollIntoView({ behavior: 'smooth' });
+        } catch (error) {
+            console.error('Error processing CSV:', error);
+            showStatus('Failed to process CSV file. Please try again.', 'error');
+            
+            // Remove loading element and show the drop area again
+            clearInterval(progressInterval);
+            if (loadingElement.parentNode) {
+                loadingElement.parentNode.removeChild(loadingElement);
+            }
+            csvDropArea.style.display = 'block';
+        }
+    }
+    
+    // Download Results
+    downloadResultsBtn.addEventListener('click', function() {
+        if (!processedCsvData) {
+            showStatus('No processed data available. Please upload a CSV file first.', 'error');
+            return;
+        }
+        
+        // Show download loading state
+        const originalBtnText = this.innerHTML;
+        this.disabled = true;
+        this.innerHTML = '<span class="loader"></span> Preparing download...';
+        
+        setTimeout(() => {
+            try {
+                // Convert the processed data back to CSV
+                let csvContent = 'first_name,last_name,company_domain,email,confidence\n';
+                
+                // Check if data is an array or has results property
+                const results = Array.isArray(processedCsvData) ? processedCsvData : (processedCsvData.results || []);
+                
+                results.forEach(row => {
+                    const firstName = escapeCsvValue(row.first_name || row.firstName || '');
+                    const lastName = escapeCsvValue(row.last_name || row.lastName || '');
+                    const domain = escapeCsvValue(row.company_domain || row.companyDomain || '');
+                    const email = escapeCsvValue(row.email || '');
+                    const confidence = escapeCsvValue(row.confidence || 'High (95%)');
+                    
+                    csvContent += `${firstName},${lastName},${domain},${email},${confidence}\n`;
+                });
+                
+                downloadCsv(csvContent, 'enriched_contacts.csv');
+                
+                // Restore button state
+                this.disabled = false;
+                this.innerHTML = originalBtnText;
+            } catch (error) {
+                console.error('Error preparing download:', error);
+                showStatus('Failed to prepare download. Please try again.', 'error');
+                
+                // Restore button state
+                this.disabled = false;
+                this.innerHTML = originalBtnText;
+            }
+        }, 500); // Small delay to allow the UI to update
+    });
+    
+    // Helper function to escape CSV values
+    function escapeCsvValue(value) {
+        if (value === null || value === undefined) return '';
+        value = String(value);
+        
+        // If the value contains a comma, newline, or double quote, enclose it in double quotes
+        if (value.includes(',') || value.includes('\n') || value.includes('"')) {
+            // Replace any double quotes with two double quotes
+            value = value.replace(/"/g, '""');
+            return `"${value}"`;
+        }
+        return value;
+    }
+    
+    function downloadCsv(csvContent, filename) {
+        // Create a blob and download link
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
+    
+    // New Bulk Search
+    newBulkSearchBtn.addEventListener('click', function() {
+        csvFileInput.value = '';
+        bulkResultArea.style.display = 'none';
+        statusMessage.style.display = 'none';
+        processedCsvData = null;
+    });
+    
+    // Add CSS for loading indicators to the existing styles
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            /* Enhanced Loading States */
+            .loader {
+                display: inline-block;
+                width: 1.25rem;
+                height: 1.25rem;
+                border: 3px solid rgba(255,255,255,0.3);
+                border-top-color: white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            .loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.8);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                backdrop-filter: blur(3px);
+            }
+            
+            .btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            
+            .status-loading {
+                background-color: rgba(79, 70, 229, 0.1);
+                border: 1px solid var(--primary);
+                color: var(--primary);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .status-loading .loader {
+                border: 2px solid rgba(79, 70, 229, 0.3);
+                border-top-color: var(--primary);
+                margin-right: 0.5rem;
+            }
+            
+            /* Custom loader for CSV processing */
+            .csv-processing-loading .loader {
+                border: 3px solid rgba(79, 70, 229, 0.3);
+                border-top-color: var(--primary);
+            }
+            
+            @keyframes spin { to { transform: rotate(360deg); } }
+            
+            /* Timeout warning */
+            .timeout-warning {
+                display: none;
+                margin-top: 1rem;
+                padding: 0.75rem;
+                background-color: rgba(245, 158, 11, 0.1);
+                border: 1px solid var(--warning);
+                color: var(--warning);
+                border-radius: var(--border-radius);
+                font-size: 0.875rem;
+                text-align: center;
+            }
+        </style>
+    `);
+    
+    // Status message helper with timeout warning
+    function showStatus(message, type) {
+        statusMessage.innerHTML = message;
+        statusMessage.className = `status status-${type}`;
+        statusMessage.style.display = 'block';
+        
+        // Clear any existing timeout warning
+        const existingWarning = document.querySelector('.timeout-warning');
+        if (existingWarning) {
+            existingWarning.parentNode.removeChild(existingWarning);
+        }
+        
+        // For loading status, add a timeout warning after 30 seconds
+        if (type === 'loading') {
+            setTimeout(() => {
+                if (statusMessage.classList.contains('status-loading')) {
+                    const timeoutWarning = document.createElement('div');
+                    timeoutWarning.className = 'timeout-warning';
+                    timeoutWarning.innerHTML = `
+                        <strong>Taking longer than expected?</strong><br>
+                        The server might be busy. Please be patient, your request is still processing.
+                    `;
+                    statusMessage.parentNode.insertBefore(timeoutWarning, statusMessage.nextSibling);
+                    timeoutWarning.style.display = 'block';
+                }
+            }, 30000);  // Show warning after 30 seconds
+        } else if (type !== 'loading') {
+            // Hide status message after some time for non-loading messages
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 5000);
+        }
+    }
+});
     </script>
 </body>
 </html>
