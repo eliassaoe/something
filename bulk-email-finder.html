@@ -906,8 +906,7 @@
 
     <!-- Scripts -->
     <script>
-
-        // Tab Switching
+// Tab Switching
 document.addEventListener('DOMContentLoaded', function() {
     // CSV Header Standardizer 
     const CSVStandardizer = {
@@ -960,25 +959,26 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get headers from first line
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
             
-            // Find relevant column indices
+            // Find relevant column indices with improved domain detection
             const firstNameIndex = this.findColumnIndex(headers, [
                 'first name', 'firstname', 'fname', 'first', 'given name', 'name', 'givenname'
-            ]);
+            ], 'firstname');
             
             const lastNameIndex = this.findColumnIndex(headers, [
                 'last name', 'lastname', 'lname', 'last', 'surname', 'family name', 'familyname'
-            ]);
+            ], 'lastname');
             
+            // For domain, use our specialized domain detection which avoids treating company name as domain
             const domainIndex = this.findColumnIndex(headers, [
-                'domain', 'company domain', 'company', 'website', 'url', 'email domain',
-                'companydomain', 'email', 'company_domain', 'company_url', 'company_website'
-            ]);
+                'domain', 'company domain', 'website', 'url', 'email domain',
+                'companydomain', 'email', 'company_domain', 'company_url', 'company_website', 'web'
+            ], 'domain');
             
             // Check if we found all required columns
             const missingColumns = [];
             if (firstNameIndex === -1) missingColumns.push('first name');
             if (lastNameIndex === -1) missingColumns.push('last name');
-            if (domainIndex === -1) missingColumns.push('domain/company');
+            if (domainIndex === -1) missingColumns.push('website/domain');
             
             if (missingColumns.length > 0) {
                 return { 
@@ -1035,12 +1035,45 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         
         /**
-         * Find column index based on possible header names
+         * Find column index based on possible header names with improved domain matching
          * @param {Array<string>} headers - CSV headers
          * @param {Array<string>} possibleNames - Possible header names
+         * @param {string} columnType - Type of column being searched for
          * @returns {number} - Index or -1 if not found
          */
-        findColumnIndex: function(headers, possibleNames) {
+        findColumnIndex: function(headers, possibleNames, columnType) {
+            // For domain columns, prioritize actual domain-related terms first
+            if (columnType === 'domain') {
+                // First priority: exact matches for domain/website-specific terms
+                const domainSpecificTerms = ['domain', 'website', 'url', 'email domain', 'company_domain', 'company domain', 'companydomain', 'web'];
+                for (const term of domainSpecificTerms) {
+                    const index = headers.findIndex(h => h === term);
+                    if (index !== -1) return index;
+                }
+                
+                // Second priority: partial matches for domain/website-specific terms
+                for (const term of domainSpecificTerms) {
+                    const index = headers.findIndex(h => h.includes(term));
+                    if (index !== -1) return index;
+                }
+                
+                // Lower priority: company-related terms (only if no domain terms were found)
+                const companyTerms = ['company', 'company_url', 'company_website'];
+                for (const term of companyTerms) {
+                    const index = headers.findIndex(h => h === term);
+                    if (index !== -1) return index;
+                }
+                
+                // Lowest priority: partial matches for company terms
+                for (const term of companyTerms) {
+                    const index = headers.findIndex(h => h.includes(term));
+                    if (index !== -1) return index;
+                }
+                
+                return -1;
+            }
+            
+            // For other columns, use the original logic
             // First try exact matches
             for (const name of possibleNames) {
                 const index = headers.findIndex(h => h === name);
@@ -1507,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         • "${originalHeaders.last_name}" → "last_name"<br>
                         • "${originalHeaders.company_domain}" → "company_domain"
                     </div>
-                `;
+                    `;
                 bulkResultArea.insertAdjacentHTML('afterbegin', headerInfo);
             }
             
@@ -1695,7 +1728,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             @keyframes spin { to { transform: rotate(360deg); } }
             
-           /* Timeout warning */
+            /* Timeout warning */
             .timeout-warning {
                 display: none;
                 margin-top: 1rem;
@@ -1744,6 +1777,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
     </script>
 </body>
 </html>
