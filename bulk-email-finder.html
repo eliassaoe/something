@@ -906,10 +906,260 @@
 
     <!-- Scripts -->
     <script>
-      // This code should replace the JavaScript section at the bottom of your HTML file
 
-// Tab Switching
+        // Tab Switching
 document.addEventListener('DOMContentLoaded', function() {
+    // CSV Header Standardizer 
+    const CSVStandardizer = {
+        /**
+         * Process a CSV file and standardize its headers
+         * @param {File} file - The CSV file to process
+         * @returns {Promise<Object>} - Result object with status and data
+         */
+        processFile: function(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) {
+                    reject(new Error('No file provided'));
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = (event) => {
+                    try {
+                        const result = this.processCSVContent(event.target.result);
+                        resolve(result);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                
+                reader.onerror = () => {
+                    reject(new Error('Failed to read file'));
+                };
+                
+                reader.readAsText(file);
+            });
+        },
+        
+        /**
+         * Process CSV content as string
+         * @param {string} csvString - CSV content as string
+         * @returns {Object} - Processing result
+         */
+        processCSVContent: function(csvString) {
+            // Split CSV into lines
+            const lines = csvString.split(/\r?\n/);
+            if (lines.length < 2) {
+                return { 
+                    success: false, 
+                    error: "CSV file appears to be empty or invalid"
+                };
+            }
+            
+            // Get headers from first line
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            
+            // Find relevant column indices
+            const firstNameIndex = this.findColumnIndex(headers, [
+                'first name', 'firstname', 'fname', 'first', 'given name', 'name', 'givenname'
+            ]);
+            
+            const lastNameIndex = this.findColumnIndex(headers, [
+                'last name', 'lastname', 'lname', 'last', 'surname', 'family name', 'familyname'
+            ]);
+            
+            const domainIndex = this.findColumnIndex(headers, [
+                'domain', 'company domain', 'company', 'website', 'url', 'email domain',
+                'companydomain', 'email', 'company_domain', 'company_url', 'company_website'
+            ]);
+            
+            // Check if we found all required columns
+            const missingColumns = [];
+            if (firstNameIndex === -1) missingColumns.push('first name');
+            if (lastNameIndex === -1) missingColumns.push('last name');
+            if (domainIndex === -1) missingColumns.push('domain/company');
+            
+            if (missingColumns.length > 0) {
+                return { 
+                    success: false, 
+                    error: `Your CSV file is missing the following required columns: ${missingColumns.join(', ')}`,
+                    foundHeaders: headers
+                };
+            }
+            
+            // Process data rows
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                // Skip empty lines
+                if (!lines[i].trim()) continue;
+                
+                // Handle CSV parsing properly (simple approach)
+                const values = this.parseCSVLine(lines[i]);
+                
+                // Skip if line doesn't have enough values
+                if (values.length <= Math.max(firstNameIndex, lastNameIndex, domainIndex)) {
+                    continue;
+                }
+                
+                // Create standardized row
+                data.push({
+                    first_name: values[firstNameIndex] || '',
+                    last_name: values[lastNameIndex] || '',
+                    company_domain: this.cleanDomain(values[domainIndex] || '')
+                });
+            }
+            
+            if (data.length === 0) {
+                return {
+                    success: false,
+                    error: "No valid data rows found in the CSV file",
+                    foundHeaders: headers
+                };
+            }
+            
+            // Create standardized CSV content
+            const standardizedCSV = this.convertToCSV(data);
+            
+            return {
+                success: true,
+                data: data,
+                originalHeaders: {
+                    first_name: headers[firstNameIndex],
+                    last_name: headers[lastNameIndex],
+                    company_domain: headers[domainIndex]
+                },
+                standardizedCSV: standardizedCSV,
+                totalRows: data.length
+            };
+        },
+        
+        /**
+         * Find column index based on possible header names
+         * @param {Array<string>} headers - CSV headers
+         * @param {Array<string>} possibleNames - Possible header names
+         * @returns {number} - Index or -1 if not found
+         */
+        findColumnIndex: function(headers, possibleNames) {
+            // First try exact matches
+            for (const name of possibleNames) {
+                const index = headers.findIndex(h => h === name);
+                if (index !== -1) return index;
+            }
+            
+            // Then try partial matches
+            for (const name of possibleNames) {
+                const index = headers.findIndex(h => h.includes(name));
+                if (index !== -1) return index;
+            }
+            
+            return -1;
+        },
+        
+        /**
+         * Parse a CSV line, handling quoted values
+         * @param {string} line - CSV line to parse
+         * @returns {Array<string>} - Array of values
+         */
+        parseCSVLine: function(line) {
+            const result = [];
+            let currentValue = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(currentValue.trim());
+                    currentValue = '';
+                } else {
+                    currentValue += char;
+                }
+            }
+            
+            // Add the last value
+            result.push(currentValue.trim());
+            return result;
+        },
+        
+        /**
+         * Clean domain format (remove http://, www, etc)
+         * @param {string} domain - Domain to clean
+         * @returns {string} - Cleaned domain
+         */
+        cleanDomain: function(domain) {
+            if (!domain) return '';
+            
+            // Remove http://, https://, www.
+            let clean = domain
+                .replace(/^https?:\/\//i, '')
+                .replace(/^www\./i, '');
+            
+            // Remove everything after the first slash
+            clean = clean.split('/')[0];
+            
+            // If it's an email address, extract the domain part
+            if (clean.includes('@')) {
+                clean = clean.split('@')[1];
+            }
+            
+            return clean;
+        },
+        
+        /**
+         * Convert data to CSV format
+         * @param {Array<Object>} data - Data array
+         * @returns {string} - CSV string
+         */
+        convertToCSV: function(data) {
+            // Create header row
+            const csvContent = ['first_name,last_name,company_domain'];
+            
+            // Add data rows
+            data.forEach(row => {
+                const firstName = this.escapeCsvValue(row.first_name);
+                const lastName = this.escapeCsvValue(row.last_name);
+                const domain = this.escapeCsvValue(row.company_domain);
+                
+                csvContent.push(`${firstName},${lastName},${domain}`);
+            });
+            
+            return csvContent.join('\n');
+        },
+        
+        /**
+         * Escape CSV value (handle commas, quotes, etc.)
+         * @param {string} value - Value to escape
+         * @returns {string} - Escaped value
+         */
+        escapeCsvValue: function(value) {
+            if (value === null || value === undefined) return '';
+            value = String(value);
+            
+            // If value contains comma, newline or double quote, enclose in quotes
+            if (value.includes(',') || value.includes('\n') || value.includes('"')) {
+                // Replace double quotes with two double quotes
+                value = value.replace(/"/g, '""');
+                return `"${value}"`;
+            }
+            
+            return value;
+        },
+        
+        /**
+         * Create File object from standardized CSV
+         * @param {string} csvContent - CSV content
+         * @param {string} fileName - Original file name
+         * @returns {File} - File object
+         */
+        createFileFromCSV: function(csvContent, fileName) {
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            return new File([blob], fileName || 'standardized.csv', { type: 'text/csv' });
+        }
+    };
+
     const singleTabBtn = document.getElementById('singleTabBtn');
     const bulkTabBtn = document.getElementById('bulkTabBtn');
     const singleFinderForm = document.getElementById('singleFinderForm');
@@ -1080,18 +1330,26 @@ document.addEventListener('DOMContentLoaded', function() {
         csvDropArea.style.backgroundColor = 'white';
     }
     
-    csvDropArea.addEventListener('drop', handleDrop, false);
-    csvFileInput.addEventListener('change', handleFiles, false);
-    
-    function handleDrop(e) {
+    // Modified handlers to include header standardization
+    csvDropArea.addEventListener('drop', function(e) {
         const dt = e.dataTransfer;
         const files = dt.files;
-        handleFiles({ target: { files: files } });
-    }
+        if (files && files.length) {
+            handleStandardizedFile(files[0]);
+        }
+    }, false);
     
-    async function handleFiles(e) {
-        const file = e.target.files[0];
-        
+    csvFileInput.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files.length) {
+            handleStandardizedFile(e.target.files[0]);
+        }
+    }, false);
+    
+    /**
+     * Process a file with header standardization before sending to API
+     * @param {File} file - The uploaded CSV file
+     */
+    async function handleStandardizedFile(file) {
         if (!file) return;
         
         if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
@@ -1104,37 +1362,97 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Update the UI to show a prominent loading state
+        // Display loading state
         csvDropArea.style.display = 'none';
-        const loadingElement = document.createElement('div');
-        loadingElement.className = 'csv-processing-loading';
-        loadingElement.innerHTML = `
-            <div style="text-align: center; padding: 3rem 1rem;">
-                <div class="loader" style="width: 3rem; height: 3rem; margin: 0 auto 1.5rem;"></div>
-                <h3 style="margin-bottom: 1rem; color: var(--primary);">Processing Your CSV File</h3>
-                <p style="margin-bottom: 0.5rem;">This may take a few minutes for large files.</p>
-                <p style="color: var(--gray-400);">Please don't close this page.</p>
-                <div style="margin-top: 1.5rem; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
-                    <div class="progress-bar" style="height: 100%; width: 0; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease;"></div>
-                </div>
-            </div>
-        `;
+        const loadingElement = createLoadingElement('Standardizing CSV headers...');
         csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
-        
-        // Start progress animation
-        const progressBar = loadingElement.querySelector('.progress-bar');
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-            // Simulate progress but never reach 100% until we get the response
-            if (progress < 90) {
-                progress += Math.random() * 5;
-                progressBar.style.width = `${progress}%`;
-            }
-        }, 500);
         
         showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes...', 'loading');
         
         try {
+            // First step: Standardize the CSV headers
+            const standardizationResult = await CSVStandardizer.processFile(file);
+            
+            if (!standardizationResult.success) {
+                throw new Error(standardizationResult.error || 'Failed to standardize CSV headers');
+            }
+            
+            // Show standardization result if headers were changed
+            const originalHeaders = standardizationResult.originalHeaders;
+            const wereHeadersChanged = 
+                originalHeaders.first_name !== 'first_name' || 
+                originalHeaders.last_name !== 'last_name' || 
+                originalHeaders.company_domain !== 'company_domain';
+            
+            if (wereHeadersChanged) {
+                // Update loading message to show we're fixing headers
+                loadingElement.querySelector('h3').textContent = 'Fixing CSV Headers...';
+                
+                // Create a standardized file with corrected headers
+                const standardizedFile = CSVStandardizer.createFileFromCSV(
+                    standardizationResult.standardizedCSV,
+                    file.name.replace('.csv', '_standardized.csv')
+                );
+                
+                // Now process this standardized file
+                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders);
+            } else {
+                // Headers are already correct, proceed with original file
+                processCSVWithAPI(file, loadingElement);
+            }
+        } catch (error) {
+            console.error('Error processing CSV:', error);
+            
+            // Show error based on the type of error
+            if (error.message.includes('missing') || error.message.includes('required columns')) {
+                // This is a column identification error
+                let errorMessage = error.message;
+                
+                // Add information about found headers if available
+                if (error.foundHeaders) {
+                    errorMessage += '<br><br>Found these columns instead:<br>' + 
+                        error.foundHeaders.map(h => `• ${h}`).join('<br>');
+                }
+                
+                showStatus(errorMessage, 'error');
+            } else {
+                showStatus('Failed to process CSV file: ' + error.message, 'error');
+            }
+            
+            // Remove loading element
+            if (loadingElement.parentNode) {
+                loadingElement.parentNode.removeChild(loadingElement);
+            }
+            
+            // Show drop area again
+            csvDropArea.style.display = 'block';
+        }
+    }
+    
+    /**
+     * Send standardized CSV file to API
+     * @param {File} file - Standardized CSV file
+     * @param {HTMLElement} loadingElement - Loading indicator element
+     * @param {Object} originalHeaders - Original headers (for reporting changes)
+     */
+    async function processCSVWithAPI(file, loadingElement, originalHeaders) {
+        try {
+            // Update loading message to show we're now processing with API
+            if (loadingElement && loadingElement.querySelector('h3')) {
+                loadingElement.querySelector('h3').textContent = 'Processing Your CSV File';
+            }
+            
+            // Start progress animation
+            const progressBar = loadingElement.querySelector('.progress-bar');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                // Simulate progress but never reach 100% until we get the response
+                if (progress < 90) {
+                    progress += Math.random() * 5;
+                    progressBar.style.width = `${progress}%`;
+                }
+            }, 500);
+            
             // Create FormData to send the file
             const formData = new FormData();
             formData.append('type', 'bulk');
@@ -1159,7 +1477,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
             
             if (!response.ok) {
-                throw new Error('Failed to process CSV file');
+                throw new Error('Failed to process CSV file with API');
             }
             
             const data = await response.json();
@@ -1179,19 +1497,33 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show result area
             bulkResultArea.style.display = 'block';
+            
+            // If headers were changed, add an info message about the standardization
+            if (originalHeaders) {
+                const headerInfo = `
+                    <div style="margin-top: 1rem; padding: 0.75rem; border-radius: 4px; background-color: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success);">
+                        <strong>CSV headers were automatically standardized:</strong><br>
+                        • "${originalHeaders.first_name}" → "first_name"<br>
+                        • "${originalHeaders.last_name}" → "last_name"<br>
+                        • "${originalHeaders.company_domain}" → "company_domain"
+                    </div>
+                `;
+                bulkResultArea.insertAdjacentHTML('afterbegin', headerInfo);
+            }
+            
             showStatus('CSV processed successfully! Download your enriched file below.', 'success');
             
             // Scroll to result
             bulkResultArea.scrollIntoView({ behavior: 'smooth' });
         } catch (error) {
-            console.error('Error processing CSV:', error);
-            showStatus('Failed to process CSV file. Please try again.', 'error');
+            console.error('Error with API:', error);
+            showStatus('Failed to process CSV file with our email finder. Please try again.', 'error');
             
             // Remove loading element and show the drop area again
-            clearInterval(progressInterval);
             if (loadingElement.parentNode) {
                 loadingElement.parentNode.removeChild(loadingElement);
             }
+            
             csvDropArea.style.display = 'block';
         }
     }
@@ -1242,6 +1574,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500); // Small delay to allow the UI to update
     });
     
+    // New Bulk Search
+    newBulkSearchBtn.addEventListener('click', function() {
+        csvFileInput.value = '';
+        bulkResultArea.style.display = 'none';
+        statusMessage.style.display = 'none';
+        processedCsvData = null;
+        
+        // Remove any standardization messages
+        const headerInfo = bulkResultArea.querySelector('div[style*="background-color: rgba(16, 185, 129, 0.1)"]');
+        if (headerInfo) {
+            headerInfo.remove();
+        }
+    });
+    
+    /**
+     * Create loading element for CSV processing
+     * @param {string} message - Loading message to display
+     * @returns {HTMLElement} - Loading element
+     */
+    function createLoadingElement(message) {
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'csv-processing-loading';
+        loadingElement.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem;">
+                <div class="loader" style="width: 3rem; height: 3rem; margin: 0 auto 1.5rem;"></div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);">${message}</h3>
+                <p style="margin-bottom: 0.5rem;">This may take a few minutes for large files.</p>
+                <p style="color: var(--gray-400);">Please don't close this page.</p>
+                <div style="margin-top: 1.5rem; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
+                    <div class="progress-bar" style="height: 100%; width: 0; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+        `;
+        return loadingElement;
+    }
+    
     // Helper function to escape CSV values
     function escapeCsvValue(value) {
         if (value === null || value === undefined) return '';
@@ -1269,14 +1637,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
     }
-    
-    // New Bulk Search
-    newBulkSearchBtn.addEventListener('click', function() {
-        csvFileInput.value = '';
-        bulkResultArea.style.display = 'none';
-        statusMessage.style.display = 'none';
-        processedCsvData = null;
-    });
     
     // Add CSS for loading indicators to the existing styles
     document.head.insertAdjacentHTML('beforeend', `
@@ -1335,7 +1695,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             @keyframes spin { to { transform: rotate(360deg); } }
             
-            /* Timeout warning */
+           /* Timeout warning */
             .timeout-warning {
                 display: none;
                 margin-top: 1rem;
