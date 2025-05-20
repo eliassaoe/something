@@ -777,9 +777,9 @@ header {
                         <label for="emailFile" class="file-upload-label">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Drop your file here or click to browse</span>
-                            <p>Supported formats: CSV, XLSX, XLS (max 10MB)</p>
+                            <p>Supported formats: CSV (max 10MB)</p>
                         </label>
-                        <input type="file" id="emailFile" name="emailFile" accept=".csv,.xlsx,.xls">
+                        <input type="file" id="emailFile" name="emailFile" accept=".csv">
                     </div>
                     <div id="fileInfo" class="file-info">
                         <i class="fas fa-file-alt"></i>
@@ -1017,7 +1017,7 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
         }
         
         // Check file type
-        const validTypes = ['.csv', '.xlsx', '.xls', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'];
+        const validTypes = ['.csv', 'text/csv'];
         const fileType = file.type;
         const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
         
