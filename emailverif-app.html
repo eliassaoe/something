@@ -768,7 +768,7 @@ header {
             <div id="searchAlert" class="alert"></div>
             
             <div class="info-box">
-                <p><strong>How it works:</strong> Upload your CSV or Excel file containing email addresses, and we'll verify the deliverability of each email. Make sure you have ONE header email in your file . The verified list will be delivered to your email within 3 hours. This service is completely <strong>UNLIMITED</strong>!</p>
+                <p><strong>How it works:</strong> Upload your CSV containing email addresses, and we'll verify the deliverability of each email. Make sure you have ONE header email in your file . The verified list will be delivered to your email within 3 hours. This service is completely <strong>UNLIMITED</strong>!</p>
             </div>
             
             <form id="emailVerifierForm" class="search-form">
@@ -1022,7 +1022,7 @@ document.getElementById('confirmVerificationBtn').addEventListener('click', () =
         const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
         
         if (!validTypes.includes(fileType) && !validTypes.includes(fileExtension)) {
-            showAlert("Please upload a valid CSV or Excel file.", 'error');
+            showAlert("Please upload a valid CSV file", 'error');
             fileInput.value = '';
             fileInfo.style.display = 'none';
             verifyButton.disabled = true;
