@@ -1932,7 +1932,7 @@ async function exportToCSV() {
     }
 }
         
-// Add this function to convert JSON to CSV and trigger download
+// Add or update the downloadCSV function
 function downloadCSV(data) {
     // Check if data exists and is an array
     if (!Array.isArray(data) || data.length === 0) {
@@ -1941,6 +1941,8 @@ function downloadCSV(data) {
     }
     
     try {
+        console.log("Processing CSV download for", data.length, "contacts");
+        
         // Get headers from the first object's keys
         const headers = Object.keys(data[0]);
         
@@ -1951,10 +1953,13 @@ function downloadCSV(data) {
         data.forEach(item => {
             const row = headers.map(header => {
                 // Get the value or empty string if null/undefined
-                let value = item[header] || '';
+                let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
                 
-                // Handle values that contain commas or quotes
-                if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                // Convert to string if it's not already
+                value = String(value);
+                
+                // Handle values that contain commas, quotes or newlines
+                if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
                     // Escape double quotes by doubling them and wrap in quotes
                     value = '"' + value.replace(/"/g, '""') + '"';
                 }
@@ -1979,11 +1984,22 @@ function downloadCSV(data) {
         
         // Add to document, trigger click and remove
         document.body.appendChild(link);
+        
+        console.log("Triggering CSV download");
         link.click();
-        document.body.removeChild(link);
+        
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            console.log("Download link cleaned up");
+        }, 100);
+        
+        return true;
     } catch (error) {
         console.error('Error generating CSV:', error);
-        showAlert('Failed to generate CSV file', 'error');
+        showAlert('Failed to generate CSV file: ' + error.message, 'error');
+        return false;
     }
 }
 
