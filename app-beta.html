@@ -1003,29 +1003,12 @@
             </select>
         </div>
 
-         <div class="form-group">
-            <label for="managementLevel">Management Level</label>
-            <select id="managementLevel" name="managementLevel">
-                <option value="">All Levels</option>
-                <option value="Owner">Owner</option>
-                <option value="C_suite">C_suite</option>
-                <option value="Founder">Founder</option>
-                <option value="Director">Director</option>
-                <option value="Head">Head</option>
-                <option value="Manager">Manager</option>
-                <option value="Partner">Partner</option>
-                <option value="Senior">Senior</option>
-                <option value="Entry">Entry</option>
-            </select>
-        </div>
-
         <div class="form-group">
                 <label for="companySize">Company Size:</label>
                 <select id="companySize" name="companySize">
                     <option value="">Select company size</option>
                     <option value="Solo Entrepreneur">Solo Entrepreneur</option>
                     <option value="Small Team">Small Team</option>
-                    <option value="Growing Startup">Growing Startup</option>
                     <option value="Emerging Business">Emerging Business</option>
                     <option value="Small Enterprise">Small Enterprise</option>
                     <option value="Medium Enterprise">Medium Enterprise</option>
@@ -1135,7 +1118,7 @@
                 
         <div class="form-group">
             <label for="keywords">One Keyword</label>
-            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B">
+            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS">
         </div>
                 
         <div class="form-group">
@@ -1712,7 +1695,6 @@ async function handleSearch(e) {
         // Get form values
         const country = countrySelect.value;
         const industry = industrySelect.value;
-        const managementLevel = document.getElementById('managementLevel').value;
         const companyName = document.getElementById('companyName').value;
         const keywords = document.getElementById('keywords').value;
         const jobTitle = document.getElementById('jobTitle').value;
@@ -1720,7 +1702,7 @@ async function handleSearch(e) {
         const city = document.getElementById('city').value;
         
         // If search criteria are provided, filter the data
-        if (country || industry || managementLevel || companyName || keywords) {
+        if (country || industry || companyName || keywords) {
             try {
                 // Search contacts using n8n webhook
                 const requestData = {
@@ -1728,7 +1710,6 @@ async function handleSearch(e) {
                     searchParams: {
                         country,
                         industry,
-                        managementlevel: managementLevel,
                         company: companyName,  
                         keywords,
                         jobtitle: jobTitle,  
@@ -1831,7 +1812,6 @@ async function exportToCSV() {
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
-                        managementlevel: document.getElementById('managementLevel').value,
                         company: document.getElementById('companyName').value,
                         keywords: document.getElementById('keywords').value,
                         city: document.getElementById('city').value,
@@ -1972,7 +1952,6 @@ async function fetchTotalCount() {
       searchParams: {
         country: countrySelect.value,
         industry: industrySelect.value,
-        managementlevel: document.getElementById('managementLevel').value,
         company: document.getElementById('companyName').value,
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
