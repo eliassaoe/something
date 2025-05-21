@@ -1924,6 +1924,40 @@ async function exportToCSV() {
                     if (!response.ok) {
                         throw new Error(`API error: ${response.status} ${response.statusText}`);
                     }
+
+                         // Check for CSV content type
+const contentType = response.headers.get('content-type');
+
+if (contentType && contentType.includes('text/csv')) {
+    // It's a CSV file - handle direct download
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    
+    // Get filename from Content-Disposition header if available
+    const contentDisposition = response.headers.get('content-disposition');
+    let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+    if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+        if (filenameMatch) filename = filenameMatch[1];
+    }
+    
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    
+    // Show success message
+    showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
+    
+    // Show the confirmation modal
+    showExportConfirmation("your contacts");
+    
+    return; // Exit early - we've handled the CSV response
+}
                     
                     console.log("Received response from export webhook, parsing JSON...");
                     
