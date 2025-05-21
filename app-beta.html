@@ -2053,7 +2053,7 @@ function showExportConfirmation(recordCount) {
     });
 }
 
-// Function to download CSV data
+// Function to download CSV data - FIXED SYNTAX
 function downloadCSV(data) {
     if (!Array.isArray(data) || data.length === 0) {
         console.warn("No data to export");
@@ -2112,28 +2112,6 @@ function downloadCSV(data) {
         // Clean up
         setTimeout(() => {
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 100);
-        
-        return true;
-    } catch (error) {
-        console.error('Error generating CSV:', error);
-        showAlert('Failed to generate CSV file: ' + error.message, 'error');
-        return false;
-    }
-});
-            URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 100);
-        
-        return true;
-    } catch (error) {
-        console.error('Error generating CSV:', error);
-        showAlert('Failed to generate CSV file: ' + error.message, 'error');
-        return false;
-    }
-});
             URL.revokeObjectURL(url);
             console.log("Download link cleaned up");
         }, 100);
