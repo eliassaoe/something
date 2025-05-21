@@ -1806,10 +1806,6 @@ async function exportToCSV() {
         newConfirmExportBtn.addEventListener('click', async () => {
             try {
                 
-                // Disable the button and show a spinner
-                newConfirmExportBtn.disabled = true;
-                newConfirmExportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                
                 // Hide the export modal
                 exportModal.style.display = 'none';
                 
