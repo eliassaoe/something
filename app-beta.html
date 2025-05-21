@@ -1769,6 +1769,8 @@ async function handleSearch(e) {
     }
 }
 
+// Replace the existing exportToCSV function with this fixed version
+// Replace the existing exportToCSV function with this fixed version
 // Global flag to prevent multiple exports
 let isExporting = false;
 
@@ -1820,8 +1822,8 @@ async function exportToCSV() {
                 // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
                 
-                // Fixed expected max duration (10 minutes)
-                const maxDurationMinutes = 10;
+                // Calculate estimated wait time based on number of records
+                const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
                 
                 // Start time for tracking
                 const startTime = new Date();
@@ -1829,68 +1831,69 @@ async function exportToCSV() {
                 // Show loading screen with clear message to keep page open and time estimate
                 loading.style.display = 'block';
                 
-                // Apply custom styling to make loading integrate with the page design
-                loading.style.padding = "30px";
-                loading.style.boxShadow = "var(--box-shadow)";
-                loading.style.maxWidth = "100%";
-                loading.style.margin = "30px 0";
-                loading.style.borderRadius = "var(--radius-lg)";
+                // Apply custom styling to make loading more prominent
+                loading.style.padding = "40px 30px";
+                loading.style.border = "3px solid var(--primary)";
+                loading.style.boxShadow = "0 10px 30px rgba(37, 99, 235, 0.2)";
+                loading.style.maxWidth = "600px";
+                loading.style.margin = "30px auto";
                 
                 loading.innerHTML = `
                     <div style="text-align: center;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 36px; color: var(--primary); margin-bottom: 15px;"></i>
+                        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--primary); margin-bottom: 20px;"></i>
                         
-                        <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--primary);">
-                            Generating Your Export
-                        </p>
-                        
-                        <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
-                            <p style="font-size: 15px; color: var(--primary-dark); margin: 0; text-align: left;">
-                                <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
-                                Please keep this page open while we process your data.
+                        <div style="background-color: #FFF7E5; border: 2px dashed #FF9800; padding: 15px; margin: 20px 0; border-radius: 8px;">
+                            <p style="font-size: 22px; font-weight: 700; color: #FF6D00; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                DO NOT CLOSE THIS PAGE
+                            </p>
+                            <p style="font-size: 16px; color: #E65100;">
+                                Your export is being processed and will download automatically
                             </p>
                         </div>
                         
-                        <p style="font-size: 14px; margin-bottom: 15px; color: var(--gray-700);">
-                            Your browser will automatically download the file when ready.
+                        <p style="font-size: 20px; font-weight: 700; margin: 20px 0 15px; color: var(--primary);">
+                            Generating Your Export
                         </p>
                         
-                        <div class="progress-container" style="margin: 20px auto; max-width: 450px; background: var(--gray-100); height: 10px; border-radius: 5px; overflow: hidden;">
-                            <div id="progressBar" class="progress-bar" style="width: 5%; height: 100%; background: var(--primary); transition: width 1s ease;"></div>
+                        <p style="font-size: 16px; margin-bottom: 15px;">
+                            This export may take up to <strong>${estimatedMinutes} minutes</strong> to complete.
+                        </p>
+                        
+                        <div style="background-color: var(--primary-light); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <p style="font-size: 15px; color: var(--primary-dark); margin: 0;">
+                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                                Your browser will automatically download the file when ready.
+                            </p>
                         </div>
                         
-                        <div id="exportTimer" style="margin-top: 10px; font-size: 14px; font-weight: 500; color: var(--gray-700);">
-                            Time elapsed: 0s out of ${maxDurationMinutes} minutes
+                        <div id="exportTimer" style="margin-top: 25px; font-size: 16px; font-weight: 600; color: var(--gray-700); background: #F3F4F6; padding: 10px; border-radius: 30px; display: inline-block;">
+                            Time elapsed: 0 minutes
                         </div>
                     </div>
                 `;
                 
-                // Get progress bar element
-                const progressBar = document.getElementById('progressBar');
-                
-                // Set up a timer to show elapsed time and update progress bar
+                // Set up a timer to show elapsed time
                 const timerElement = document.getElementById('exportTimer');
                 const timerInterval = setInterval(() => {
-                    const elapsedMs = (new Date() - startTime);
-                    const elapsedMinutes = Math.floor(elapsedMs / 60000);
-                    const elapsedSeconds = Math.floor((elapsedMs % 60000) / 1000);
+                    const elapsedMinutes = Math.floor((new Date() - startTime) / 60000);
+                    timerElement.textContent = `Time elapsed: ${elapsedMinutes} minute${elapsedMinutes !== 1 ? 's' : ''}`;
                     
-                    // Calculate progress percentage (max 95% until completion)
-                    const progressPercent = Math.min(95, (elapsedMs / (maxDurationMinutes * 60000)) * 100);
-                    
-                    // Update progress bar
-                    progressBar.style.width = progressPercent + '%';
-                    
-                    // Format elapsed time
-                    let timeText;
-                    if (elapsedMinutes > 0) {
-                        timeText = `${elapsedMinutes}m ${elapsedSeconds}s out of ${maxDurationMinutes} minutes`;
-                    } else {
-                        timeText = `${elapsedSeconds}s out of ${maxDurationMinutes} minutes`;
+                    // After 3 minutes, start pulsing the timer to draw attention
+                    if (elapsedMinutes >= 3 && !timerElement.classList.contains('animate-pulse')) {
+                        timerElement.classList.add('animate-pulse');
                     }
-                    
-                    timerElement.textContent = `Time elapsed: ${timeText}`;
-                }, 1000); // Update every second
+                }, 60000); // Update every minute
+                
+                // Also update the seconds for the first few minutes
+                const secondsInterval = setInterval(() => {
+                    const elapsedMinutes = Math.floor((new Date() - startTime) / 60000);
+                    if (elapsedMinutes < 3) {
+                        const elapsedSeconds = Math.floor(((new Date() - startTime) % 60000) / 1000);
+                        timerElement.textContent = `Time elapsed: ${elapsedMinutes}m ${elapsedSeconds}s`;
+                    } else {
+                        clearInterval(secondsInterval); // Stop updating seconds after 3 minutes
+                    }
+                }, 1000);
                 
                 // Always fetch the latest count before exporting
                 const currentCount = await fetchTotalCount();
@@ -1914,9 +1917,9 @@ async function exportToCSV() {
                 
                 console.log("Sending export request to export webhook with data:", requestData);
                 
-                // Create a special fetch with a long timeout
+                // Create a special fetch with a very long timeout
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15 * 60 * 1000); // 15 minute timeout
+                const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000); // 30 minute timeout
                 
                 try {
                     // Make POST request to EXPORT webhook (using the new URL)
@@ -1932,12 +1935,6 @@ async function exportToCSV() {
                     
                     // Clear the timeout since we got a response
                     clearTimeout(timeoutId);
-                    
-                    // Stop the timer
-                    clearInterval(timerInterval);
-                    
-                    // Hide loading immediately when response arrives
-                    loading.style.display = 'none';
                     
                     if (!response.ok) {
                         throw new Error(`API error: ${response.status} ${response.statusText}`);
@@ -1966,7 +1963,7 @@ async function exportToCSV() {
                         const processingMinutes = Math.floor((new Date() - startTime) / 60000);
                         const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
                         const timeStr = processingMinutes > 0 ? 
-                            `${processingMinutes}m ${processingSecs}s` : 
+                            `${processingMinutes} min ${processingSecs} sec` : 
                             `${processingSecs} seconds`;
                         
                         // Show success message
@@ -1982,15 +1979,9 @@ async function exportToCSV() {
                 } catch (error) {
                     console.error("Export fetch error:", error);
                     
-                    // Stop the timer
-                    clearInterval(timerInterval);
-                    
-                    // Hide loading
-                    loading.style.display = 'none';
-                    
                     // Check if this was a timeout error
                     if (error.name === 'AbortError') {
-                        showAlert(`Export timed out after 15 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
+                        showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
                     } else {
                         showAlert(`Export error: ${error.message}. Please try again.`, 'error');
                     }
@@ -1999,6 +1990,22 @@ async function exportToCSV() {
                 console.error("General export error:", generalError);
                 showAlert(`Error processing export: ${generalError.message}`, 'error');
             } finally {
+                // Stop any running timers
+                clearInterval(timerInterval);
+                if (typeof secondsInterval !== 'undefined') {
+                    clearInterval(secondsInterval);
+                }
+                
+                // Reset loading style
+                loading.style.padding = "";
+                loading.style.border = "";
+                loading.style.boxShadow = "";
+                loading.style.maxWidth = "";
+                loading.style.margin = "30px 0";
+                
+                // Hide loading screen
+                loading.style.display = 'none';
+                
                 // Reset the export flag and button state
                 isExporting = false;
                 newConfirmExportBtn.disabled = false;
@@ -2053,7 +2060,7 @@ function showExportConfirmation(recordCount) {
     });
 }
 
-// Function to download CSV data - FIXED SYNTAX
+// Function to download CSV data
 function downloadCSV(data) {
     if (!Array.isArray(data) || data.length === 0) {
         console.warn("No data to export");
