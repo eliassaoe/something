@@ -1799,14 +1799,7 @@ async function exportToCSV() {
         // Add event listener to the new button
         newConfirmExportBtn.addEventListener('click', async () => {
             try {
-                
-                // Disable the button and show a spinner
-                newConfirmExportBtn.disabled = true;
-                newConfirmExportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                
-                // Hide the export modal
-                exportModal.style.display = 'none';
-                
+     
                 // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
                 
