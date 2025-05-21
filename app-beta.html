@@ -1260,7 +1260,7 @@
         </div>
     </div>
 
-   <div id="exportModal" class="contact-modal">
+<div id="exportModal" class="contact-modal">
     <div class="modal-content">
         <span class="close-export-modal">&times;</span>
         
@@ -1280,6 +1280,12 @@
                 <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
             
+            <!-- Add the verification checkbox here -->
+            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
+                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
+                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong> (10 minutes)</label>
+            </div>
+            
             <div style="text-align: center; margin-top: 20px;">
                 <button id="confirmExport" class="search-button" style="max-width: 200px;">
                     <i class="fas fa-check"></i> Confirm Export
@@ -1288,6 +1294,7 @@
         </div>
     </div>
 </div>
+
 
     <div id="exportConfirmationModal" class="contact-modal">
     <div class="modal-content" style="border-left: 4px solid #AAF0D1;">
@@ -1773,7 +1780,6 @@ async function handleSearch(e) {
 // Define the export-specific webhook URL
 const EXPORT_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/3360bbb2-cbac-4989-89dc-55bfcc46946d';
 
-// Function to export contacts to CSV
 async function exportToCSV() {
     
     try {
@@ -1810,6 +1816,9 @@ async function exportToCSV() {
                 // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
                 
+                // NEW: Get the verification checkbox status
+                const verifyBeforeExport = document.getElementById('verifyBeforeExport').checked;
+                
                 // Calculate estimated wait time based on number of records
                 const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
                 
@@ -1831,7 +1840,7 @@ async function exportToCSV() {
                         <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
 
                           <p style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray-800);">
-                              Verifying your leads and Preparing your export...
+                              ${verifyBeforeExport ? 'Verifying your leads and preparing your export...' : 'Preparing your export...'}
                               </p>
                         
                        <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
@@ -1845,7 +1854,7 @@ async function exportToCSV() {
                          Your download will start automatically when ready. You will also receive your lead list in your Inbox.
                        </p>
                         <p style="font-size: 16px; margin-bottom: 15px;">
-                            This export may take up to <strong>10 minutes</strong> to complete.
+                            This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete.
                         </p>
                         
                         
@@ -1854,29 +1863,6 @@ async function exportToCSV() {
                             </div>
                     </div>
                 `;
-                
-                // Set up a timer to show elapsed time
-                const timerElement = document.getElementById('exportTimer');
-                const timerInterval = setInterval(() => {
-                    const elapsedMinutes = Math.floor((new Date() - startTime) / 60000);
-                    timerElement.textContent = `Time elapsed: ${elapsedMinutes} minute${elapsedMinutes !== 1 ? 's' : ''}`;
-                    
-                    // After 3 minutes, start pulsing the timer to draw attention
-                    if (elapsedMinutes >= 3 && !timerElement.classList.contains('animate-pulse')) {
-                        timerElement.classList.add('animate-pulse');
-                    }
-                }, 60000); // Update every minute
-                
-                // Also update the seconds for the first few minutes
-                const secondsInterval = setInterval(() => {
-                    const elapsedMinutes = Math.floor((new Date() - startTime) / 60000);
-                    if (elapsedMinutes < 3) {
-                        const elapsedSeconds = Math.floor(((new Date() - startTime) % 60000) / 1000);
-                        timerElement.textContent = `Time elapsed: ${elapsedMinutes}m ${elapsedSeconds}s`;
-                    } else {
-                        clearInterval(secondsInterval); // Stop updating seconds after 3 minutes
-                    }
-                }, 1000);
                 
                 // Always fetch the latest count before exporting
                 const currentCount = await fetchTotalCount();
@@ -1887,6 +1873,8 @@ async function exportToCSV() {
                     limit: exportLimit,
                     token: userToken,
                     totalCount: currentCount,
+                    // NEW: Add verification type to the request
+                    type: verifyBeforeExport ? 'verify' : 'unverified',
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
