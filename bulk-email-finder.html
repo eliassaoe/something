@@ -1442,7 +1442,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingElement = createLoadingElement('Standardizing CSV headers...');
         csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
         
-        showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes... It can take up to 1 hours for large files. You can keep this page in background . The result will also be sent to your inbox.', 'loading');
+        showStatus('<span class="loader"></span> Processing CSV file. This may take several minutes... It can take up to 1 hours for large files. You can keep this page in background . ', 'loading');
         
         try {
             // First step: Standardize the CSV headers
@@ -1829,7 +1829,7 @@ downloadResultsBtn.addEventListener('click', function() {
                     statusMessage.parentNode.insertBefore(timeoutWarning, statusMessage.nextSibling);
                     timeoutWarning.style.display = 'block';
                 }
-            }, 30000);  // Show warning after 30 seconds
+            }, 60000);  // Show warning after 30 seconds
         } else if (type !== 'loading') {
             // Hide status message after some time for non-loading messages
             setTimeout(() => {
