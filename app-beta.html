@@ -1917,9 +1917,6 @@ async function exportToCSV() {
                     clearTimeout(timeoutId);
 
                     loading.style.display = 'none';
-
-                    clearInterval(timerInterval);
-                    clearInterval(secondsInterval);
                     
                     if (!response.ok) {
                         throw new Error(`API error: ${response.status} ${response.statusText}`);
