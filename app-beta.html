@@ -1769,23 +1769,13 @@ async function handleSearch(e) {
     }
 }
 
-// Replace the existing exportToCSV function with this fixed version
-// Replace the existing exportToCSV function with this fixed version
-// Global flag to prevent multiple exports
-let isExporting = false;
 
 // Define the export-specific webhook URL
 const EXPORT_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/3360bbb2-cbac-4989-89dc-55bfcc46946d';
 
 // Function to export contacts to CSV
 async function exportToCSV() {
-    // If already exporting, do nothing
-    if (isExporting) {
-        console.log("Export already in progress, ignoring additional clicks");
-        showAlert("Export already in progress. Please wait...", 'warning');
-        return;
-    }
-
+    
     try {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
@@ -1809,8 +1799,6 @@ async function exportToCSV() {
         // Add event listener to the new button
         newConfirmExportBtn.addEventListener('click', async () => {
             try {
-                // Set the global flag to prevent multiple exports
-                isExporting = true;
                 
                 // Disable the button and show a spinner
                 newConfirmExportBtn.disabled = true;
@@ -2023,7 +2011,6 @@ async function exportToCSV() {
         console.error('Error initiating export process:', error);
         showAlert(`Error: ${error.message}`, 'error');
         loading.style.display = 'none';
-        isExporting = false; // Reset the flag in case of error
     }
 }
 
