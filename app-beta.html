@@ -1768,6 +1768,8 @@ async function handleSearch(e) {
         resultsSection.style.display = 'block';
     }
 }
+
+// Replace the existing exportToCSV function with this updated version
 async function exportToCSV() {
     try {
         // Show the custom export modal
@@ -1782,94 +1784,129 @@ async function exportToCSV() {
             exportModal.style.display = 'none';
         });
         
+        // Flag to prevent multiple API calls
+        let isExporting = false;
+        
         // Add event listener for the confirm button
         const confirmExportBtn = document.getElementById('confirmExport');
         confirmExportBtn.addEventListener('click', async () => {
             // Hide the export modal
             exportModal.style.display = 'none';
             
+            // Show the confirmation modal
+            const confirmationModal = document.getElementById('exportConfirmationModal');
+            confirmationModal.style.display = 'block';
+            
             // Get the export limit from the input field
             const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
             
+            // Set up the "Got it" button to trigger the actual export
+            const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
             
-            // Show loading screen while making the API call
-            loading.style.display = 'block';
+            // Remove any existing event listeners to prevent duplicates
+            const newCloseConfirmationBtn = closeConfirmationBtn.cloneNode(true);
+            closeConfirmationBtn.parentNode.replaceChild(newCloseConfirmationBtn, closeConfirmationBtn);
             
-            
-            try {
-                // Always fetch the latest count before exporting
-                const currentCount = await fetchTotalCount();
+            // Add event listener for the "Got it" button
+            newCloseConfirmationBtn.addEventListener('click', async () => {
+                // Prevent multiple clicks
+                if (isExporting) return;
+                isExporting = true;
                 
-                // Make a specific API call to get all data for export
-                const requestData = {
-                    action: 'export',
-                    // Add the export limit to the request
-                    limit: exportLimit,
-                    token: userToken,
-                    // Include the most current count of available records
-                    totalCount: currentCount,
-                    // Pass any active filters from the search form
-                    searchParams: {
-                        country: countrySelect.value,
-                        industry: industrySelect.value,
-                        company: document.getElementById('companyName').value,
-                        keywords: document.getElementById('keywords').value,
-                        city: document.getElementById('city').value,
-                        jobtitle: document.getElementById('jobTitle').value,
-                        companysize: document.getElementById('companySize').value
+                // Disable the button and show a spinner
+                newCloseConfirmationBtn.disabled = true;
+                newCloseConfirmationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                // Hide the confirmation modal
+                confirmationModal.style.display = 'none';
+                
+                // Show loading screen with message to keep page open
+                loading.style.display = 'block';
+                loading.innerHTML = `
+                    <i class="fas fa-spinner"></i>
+                    <p>Generating your export. Please keep this page open in the background...</p>
+                    <p style="font-size: 14px; color: var(--gray-600); margin-top: 10px;">This may take a few minutes for large exports.</p>
+                `;
+                
+                try {
+                    // Always fetch the latest count before exporting
+                    const currentCount = await fetchTotalCount();
+                    
+                    // Make a specific API call to get all data for export
+                    const requestData = {
+                        action: 'export',
+                        // Add the export limit to the request
+                        limit: exportLimit,
+                        token: userToken,
+                        // Include the most current count of available records
+                        totalCount: currentCount,
+                        // Pass any active filters from the search form
+                        searchParams: {
+                            country: countrySelect.value,
+                            industry: industrySelect.value,
+                            company: document.getElementById('companyName').value,
+                            keywords: document.getElementById('keywords').value,
+                            city: document.getElementById('city').value,
+                            jobtitle: document.getElementById('jobTitle').value,
+                            companysize: document.getElementById('companySize').value
+                        }
+                    };
+                    
+                    // Make POST request to n8n webhook
+                    const response = await fetch(N8N_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+                    
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+                    
+                    // Reset the export flag
+                    isExporting = false;
+                    newCloseConfirmationBtn.disabled = false;
+                    newCloseConfirmationBtn.innerHTML = '<i class="fas fa-thumbs-up"></i> Got it';
+                    
+                    // Hide loading screen
+                    loading.style.display = 'none';
+                    
+                    // Check if the response is an array with an error object
+                    if (Array.isArray(responseData) && 
+                        responseData[0] && 
+                        responseData[0].error && 
+                        responseData[0].error.code === 403) {
+                        // Show error message
+                        showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account, come back next month for more credits or buy more credits", 'error');
+                        // Show credit upgrade modal
+                        showCreditUpgradeModal();
+                    } else if (Array.isArray(responseData) && responseData.length > 0) {
+                        // Convert JSON to CSV and download
+                        downloadCSV(responseData);
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded ${responseData.length} contacts.`, 'success');
+                    } else {
+                        // Show general success message if the response is not in the expected format
+                        showAlert("Export request processed. If you don't see a download, check your email for the export file.", 'success');
                     }
-                };
-                
-                // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                // Parse the response as JSON
-                const responseData = await response.json();
-
-                // Hide loading screen
-                loading.style.display = 'none';
-
-                // Check if the response is an array with an error object
-                if (Array.isArray(responseData) && 
-                    responseData[0] && 
-                    responseData[0].error && 
-                    responseData[0].error.code === 403) {
-                    // Show error message
-                    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account, come back next month for more credits or buy more credits", 'error');
-                    // Optionally show credit upgrade modal
-                    showCreditUpgradeModal();
-                } else {
-                    // If no error, show the confirmation modal
-                    const confirmationModal = document.getElementById('exportConfirmationModal');
-                    confirmationModal.style.display = 'block';
                     
-                    // Set up close button for confirmation modal
-                    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-                    closeConfirmBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
-                    });
-                    
-                    // Set up "Got it" button
-                    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-                    closeConfirmationBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
-                    });
+                } catch (error) {
+                    console.error('Error processing export:', error);
+                    loading.style.display = 'none';
+                    isExporting = false;
+                    newCloseConfirmationBtn.disabled = false;
+                    newCloseConfirmationBtn.innerHTML = '<i class="fas fa-thumbs-up"></i> Got it';
+                    showAlert(`Error: ${error.message}`, 'error');
                 }
-                
-            } catch (error) {
-                console.error('Error processing export:', error);
-                loading.style.display = 'none';
-                showAlert(`Error: ${error.message}`, 'error');
-            }
+            });
             
-            // Remove the event listener to prevent multiple attachments
-            confirmExportBtn.removeEventListener('click', arguments.callee);
+            // Add event listener for the close button in the confirmation modal
+            const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+            closeConfirmBtn.addEventListener('click', () => {
+                confirmationModal.style.display = 'none';
+            });
         });
         
         // Close modal when clicking outside of it
@@ -1885,6 +1922,62 @@ async function exportToCSV() {
         loading.style.display = 'none';
     }
 }
+
+// Add this function to convert JSON to CSV and trigger download
+function downloadCSV(data) {
+    // Check if data exists and is an array
+    if (!Array.isArray(data) || data.length === 0) {
+        showAlert("No data to export", 'warning');
+        return;
+    }
+    
+    try {
+        // Get headers from the first object's keys
+        const headers = Object.keys(data[0]);
+        
+        // Create CSV header row
+        let csvContent = headers.join(',') + '\r\n';
+        
+        // Add data rows
+        data.forEach(item => {
+            const row = headers.map(header => {
+                // Get the value or empty string if null/undefined
+                let value = item[header] || '';
+                
+                // Handle values that contain commas or quotes
+                if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                    // Escape double quotes by doubling them and wrap in quotes
+                    value = '"' + value.replace(/"/g, '""') + '"';
+                }
+                
+                return value;
+            });
+            
+            csvContent += row.join(',') + '\r\n';
+        });
+        
+        // Create a Blob with the CSV content
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        
+        // Create a download link
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        // Set properties for download
+        link.setAttribute('href', url);
+        link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
+        link.style.visibility = 'hidden';
+        
+        // Add to document, trigger click and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error generating CSV:', error);
+        showAlert('Failed to generate CSV file', 'error');
+    }
+}
+
 
 // Add this new function to create and show the credit upgrade modal
 function showCreditUpgradeModal() {
