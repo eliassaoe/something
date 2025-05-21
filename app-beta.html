@@ -1692,6 +1692,19 @@ function showContactDetails(contact) {
 // Également, il faut modifier la fonction handleSearch pour utiliser les bons noms de colonnes
 async function handleSearch(e) {
     e.preventDefault();
+
+     loading.innerHTML = `
+        <i class="fas fa-spinner"></i>
+        <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+    `;
+    
+    // Reset any custom styles applied during export
+    loading.style.padding = "";
+    loading.style.border = "";
+    loading.style.boxShadow = "";
+    loading.style.maxWidth = "";
+    loading.style.margin = "30px 0";
+    
     
     // Show loading indicator
     loading.style.display = 'block';
