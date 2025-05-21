@@ -1839,36 +1839,31 @@ async function exportToCSV() {
                 loading.style.margin = "30px auto";
                 
                 loading.innerHTML = `
-                    <div style="text-align: center;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--primary); margin-bottom: 20px;"></i>
+                   <div style="text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
+
+                          <p style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray-800);">
+                              Verifying your leads and Preparing your export...
+                              </p>
                         
-                        <div style="background-color: #FFF7E5; border: 2px dashed #FF9800; padding: 15px; margin: 20px 0; border-radius: 8px;">
-                            <p style="font-size: 22px; font-weight: 700; color: #FF6D00; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
-                                DO NOT CLOSE THIS PAGE
-                            </p>
-                            <p style="font-size: 16px; color: #E65100;">
-                                Your export is being processed and will download automatically
-                            </p>
-                        </div>
-                        
-                        <p style="font-size: 20px; font-weight: 700; margin: 20px 0 15px; color: var(--primary);">
-                            Generating Your Export
-                        </p>
-                        
+                       <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
+                          <p style="font-size: 14px; color: var(--primary-dark); margin: 0; text-align: left;">
+                         <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                              Please keep this page open while we process your data
+                          </p>
+                      </div>
+        
+                     <p style="font-size: 14px; color: var(--gray-600); margin: 10px 0;">
+                         Your download will start automatically when ready
+                       </p>
                         <p style="font-size: 16px; margin-bottom: 15px;">
                             This export may take up to <strong>${estimatedMinutes} minutes</strong> to complete.
                         </p>
                         
-                        <div style="background-color: var(--primary-light); padding: 15px; border-radius: 8px; margin-top: 20px;">
-                            <p style="font-size: 15px; color: var(--primary-dark); margin: 0;">
-                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                                Your browser will automatically download the file when ready.
-                            </p>
-                        </div>
                         
-                        <div id="exportTimer" style="margin-top: 25px; font-size: 16px; font-weight: 600; color: var(--gray-700); background: #F3F4F6; padding: 10px; border-radius: 30px; display: inline-block;">
-                            Time elapsed: 0 minutes
-                        </div>
+                        <div id="exportTimer" style="margin-top: 10px; font-size: 14px; color: var(--gray-700);">
+                          Processing...
+                            </div>
                     </div>
                 `;
                 
