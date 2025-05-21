@@ -1260,7 +1260,7 @@
         </div>
     </div>
 
-   <div id="exportModal" class="contact-modal">
+<div id="exportModal" class="contact-modal">
     <div class="modal-content">
         <span class="close-export-modal">&times;</span>
         
@@ -1280,6 +1280,12 @@
                 <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
             
+            <!-- Add the verification checkbox here -->
+            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
+                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
+                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong> (10 minutes)</label>
+            </div>
+            
             <div style="text-align: center; margin-top: 20px;">
                 <button id="confirmExport" class="search-button" style="max-width: 200px;">
                     <i class="fas fa-check"></i> Confirm Export
@@ -1288,6 +1294,7 @@
         </div>
     </div>
 </div>
+
 
     <div id="exportConfirmationModal" class="contact-modal">
     <div class="modal-content" style="border-left: 4px solid #AAF0D1;">
@@ -1685,6 +1692,19 @@ function showContactDetails(contact) {
 // Également, il faut modifier la fonction handleSearch pour utiliser les bons noms de colonnes
 async function handleSearch(e) {
     e.preventDefault();
+
+     loading.innerHTML = `
+        <i class="fas fa-spinner"></i>
+        <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+    `;
+    
+    // Reset any custom styles applied during export
+    loading.style.padding = "";
+    loading.style.border = "";
+    loading.style.boxShadow = "";
+    loading.style.maxWidth = "";
+    loading.style.margin = "30px 0";
+    
     
     // Show loading indicator
     loading.style.display = 'block';
@@ -1768,7 +1788,13 @@ async function handleSearch(e) {
         resultsSection.style.display = 'block';
     }
 }
+
+
+// Define the export-specific webhook URL
+const EXPORT_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/3360bbb2-cbac-4989-89dc-55bfcc46946d';
+
 async function exportToCSV() {
+    
     try {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
@@ -1784,31 +1810,80 @@ async function exportToCSV() {
         
         // Add event listener for the confirm button
         const confirmExportBtn = document.getElementById('confirmExport');
-        confirmExportBtn.addEventListener('click', async () => {
-            // Hide the export modal
-            exportModal.style.display = 'none';
-            
-            // Get the export limit from the input field
-            const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
-            
-            
-            // Show loading screen while making the API call
-            loading.style.display = 'block';
-            
-            
+        
+        // Create a new button to replace the original (to remove any existing event listeners)
+        const newConfirmExportBtn = confirmExportBtn.cloneNode(true);
+        confirmExportBtn.parentNode.replaceChild(newConfirmExportBtn, confirmExportBtn);
+        
+        // Add event listener to the new button
+        newConfirmExportBtn.addEventListener('click', async () => {
             try {
+                
+                // Hide the export modal
+                exportModal.style.display = 'none';
+                
+                // Get the export limit from the input field
+                const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+                
+                // NEW: Get the verification checkbox status
+                const verifyBeforeExport = document.getElementById('verifyBeforeExport').checked;
+                
+                // Calculate estimated wait time based on number of records
+                const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
+                
+                // Start time for tracking
+                const startTime = new Date();
+                
+                // Show loading screen with clear message to keep page open and time estimate
+                loading.style.display = 'block';
+                
+                // Apply custom styling to make loading more prominent
+                loading.style.padding = "40px 30px";
+                loading.style.border = "3px solid var(--primary)";
+                loading.style.boxShadow = "0 10px 30px rgba(37, 99, 235, 0.2)";
+                loading.style.maxWidth = "600px";
+                loading.style.margin = "30px auto";
+                
+                loading.innerHTML = `
+                   <div style="text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
+
+                          <p style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray-800);">
+                              ${verifyBeforeExport ? 'Verifying your leads and preparing your export...' : 'Preparing your export...'}
+                              </p>
+                        
+                       <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
+                          <p style="font-size: 14px; color: var(--primary-dark); margin: 0; text-align: left;">
+                         <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                              Please keep this page open while we process your data
+                          </p>
+                      </div>
+        
+                     <p style="font-size: 14px; color: var(--gray-600); margin: 10px 0;">
+                         Your download will start automatically when ready. You will also receive your lead list in your Inbox.
+                       </p>
+                        <p style="font-size: 16px; margin-bottom: 15px;">
+                            This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete.
+                        </p>
+                        
+                        
+                        <div id="exportTimer" style="margin-top: 10px; font-size: 14px; color: var(--gray-700);">
+                          Processing...
+                            </div>
+                    </div>
+                `;
+                
                 // Always fetch the latest count before exporting
                 const currentCount = await fetchTotalCount();
                 
-                // Make a specific API call to get all data for export
+                // Prepare the data to send to the export webhook
                 const requestData = {
                     action: 'export',
-                    // Add the export limit to the request
                     limit: exportLimit,
                     token: userToken,
-                    // Include the most current count of available records
                     totalCount: currentCount,
-                    // Pass any active filters from the search form
+                    // NEW: Add verification type to the request
+                    type: verifyBeforeExport ? 'verify' : 'unverified',
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
@@ -1820,56 +1895,153 @@ async function exportToCSV() {
                     }
                 };
                 
-                // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
+                console.log("Sending export request to export webhook with data:", requestData);
                 
-                // Parse the response as JSON
-                const responseData = await response.json();
-
-                // Hide loading screen
-                loading.style.display = 'none';
-
-                // Check if the response is an array with an error object
-                if (Array.isArray(responseData) && 
-                    responseData[0] && 
-                    responseData[0].error && 
-                    responseData[0].error.code === 403) {
-                    // Show error message
-                    showAlert(responseData[0].error.message || "You do not have enough credit. Upgrade your account to receive new credits automatically each month. If you already on paid account, come back next month for more credits or buy more credits", 'error');
-                    // Optionally show credit upgrade modal
-                    showCreditUpgradeModal();
-                } else {
-                    // If no error, show the confirmation modal
-                    const confirmationModal = document.getElementById('exportConfirmationModal');
-                    confirmationModal.style.display = 'block';
-                    
-                    // Set up close button for confirmation modal
-                    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-                    closeConfirmBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
+                // Create a special fetch with a very long timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000); // 30 minute timeout
+                
+                try {
+                    // Make POST request to EXPORT webhook (using the new URL)
+                    const response = await fetch(EXPORT_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData),
+                        signal: controller.signal,
+                        keepalive: true // Add keepalive flag for long requests
                     });
                     
-                    // Set up "Got it" button
-                    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-                    closeConfirmationBtn.addEventListener('click', () => {
-                        confirmationModal.style.display = 'none';
-                    });
+                    // Clear the timeout since we got a response
+                    clearTimeout(timeoutId);
+
+                    loading.style.display = 'none';
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status} ${response.statusText}`);
+                    }
+
+                         // Check for CSV content type
+                   const contentType = response.headers.get('content-type');
+
+                       if (contentType && contentType.includes('text/csv')) {
+    // It's a CSV file - handle direct download
+                          const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+        a.style.display = 'none';
+    a.href = url;
+    
+    // Get filename from Content-Disposition header if available
+    const contentDisposition = response.headers.get('content-disposition');
+    let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+    if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+        if (filenameMatch) filename = filenameMatch[1];
+    }
+    
+    a.download = filename;
+    document.body.appendChild(a);
+    
+    // MODIFIED: Add console logging
+    console.log("Starting CSV download with blob size:", blob.size);
+    console.log("Download URL:", url);
+    console.log("Download filename:", filename);
+    
+    // MODIFIED: Force a small delay before clicking
+    setTimeout(() => {
+        a.click();
+        console.log("Download click triggered");
+        
+        // MODIFIED: Add a longer delay before cleanup
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            console.log("Download link cleaned up");
+        }, 1000); // Wait 1 second before cleanup
+    }, 100); // Wait 100ms before triggering click
+    
+    // Show success message
+    showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
+    
+    // Show the confirmation modal
+    showExportConfirmation("your contacts");
+    
+    return; // Exit early - we've handled the CSV response
+}
+ 
+                    console.log("Received response from export webhook, parsing JSON...");
+                    
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+                    
+                    console.log(`Parsed JSON response with ${responseData.length} records`);
+                    
+                    // Process the response data
+                    if (Array.isArray(responseData) && 
+                        responseData[0] && 
+                        responseData[0].error && 
+                        responseData[0].error.code === 403) {
+                        // Handle insufficient credits error
+                        showAlert(responseData[0].error.message || "You do not have enough credits to export these contacts.", 'error');
+                        showCreditUpgradeModal();
+                    } else if (Array.isArray(responseData) && responseData.length > 0) {
+                        // Download the data as CSV
+                        downloadCSV(responseData);
+                        
+                        // Calculate the total processing time
+                        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
+                        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
+                        const timeStr = processingMinutes > 0 ? 
+                            `${processingMinutes} min ${processingSecs} sec` : 
+                            `${processingSecs} seconds`;
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation(responseData.length);
+                    } else {
+                        // Handle unexpected response format
+                        console.warn("Unexpected response format:", responseData);
+                        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
+                    }
+                } catch (error) {
+                    console.error("Export fetch error:", error);
+                    
+                    // Check if this was a timeout error
+                    if (error.name === 'AbortError') {
+                        showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
+                    } else {
+                        showAlert(`Export error: ${error.message}. Please try again.`, 'error');
+                    }
+                }
+            } catch (generalError) {
+                console.error("General export error:", generalError);
+                showAlert(`Error processing export: ${generalError.message}`, 'error');
+            } finally {
+                // Stop any running timers
+                clearInterval(timerInterval);
+                if (typeof secondsInterval !== 'undefined') {
+                    clearInterval(secondsInterval);
                 }
                 
-            } catch (error) {
-                console.error('Error processing export:', error);
+                // Reset loading style
+                loading.style.padding = "";
+                loading.style.border = "";
+                loading.style.boxShadow = "";
+                loading.style.maxWidth = "";
+                loading.style.margin = "30px 0";
+                
+                // Hide loading screen
                 loading.style.display = 'none';
-                showAlert(`Error: ${error.message}`, 'error');
+                
+                // Reset the export flag and button state
+                isExporting = false;
+                newConfirmExportBtn.disabled = false;
+                newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
             }
-            
-            // Remove the event listener to prevent multiple attachments
-            confirmExportBtn.removeEventListener('click', arguments.callee);
         });
         
         // Close modal when clicking outside of it
@@ -1878,11 +2050,115 @@ async function exportToCSV() {
                 exportModal.style.display = 'none';
             }
         });
-        
     } catch (error) {
         console.error('Error initiating export process:', error);
         showAlert(`Error: ${error.message}`, 'error');
         loading.style.display = 'none';
+    }
+}
+
+// Function to show export confirmation modal
+function showExportConfirmation(recordCount) {
+    const confirmationModal = document.getElementById('exportConfirmationModal');
+    
+    // Update the confirmation message
+    const infoValue = confirmationModal.querySelector('.info-value');
+    if (infoValue) {
+        infoValue.innerHTML = `
+            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully!</strong></p>
+            <p>We've downloaded <strong>${recordCount} contacts</strong> to your device.</p>
+            <p style="margin-top: 10px;">If you don't see the file, check your downloads folder.</p>
+        `;
+    }
+    
+    confirmationModal.style.display = 'block';
+    
+    // Set up close button for confirmation modal
+    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+    const newCloseConfirmBtn = closeConfirmBtn.cloneNode(true);
+    closeConfirmBtn.parentNode.replaceChild(newCloseConfirmBtn, closeConfirmBtn);
+    newCloseConfirmBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+    
+    // Set up "Got it" button
+    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+    const newCloseConfirmationBtn = closeConfirmationBtn.cloneNode(true);
+    closeConfirmationBtn.parentNode.replaceChild(newCloseConfirmationBtn, closeConfirmationBtn);
+    newCloseConfirmationBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+    });
+}
+
+// Replace your entire downloadCSV function with this improved version:
+
+function downloadCSV(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data to export");
+        showAlert("No data to export", 'warning');
+        return false;
+    }
+    
+    try {
+        console.log(`Processing CSV download for ${data.length} contacts`);
+        
+        // Get headers from the first object's keys
+        const headers = Object.keys(data[0]);
+        
+        // Create CSV header row
+        let csvContent = headers.join(',') + '\r\n';
+        
+        // Add data rows
+        data.forEach(item => {
+            const row = headers.map(header => {
+                // Get the value or empty string if null/undefined
+                let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
+                
+                // Convert to string if it's not already
+                value = String(value);
+                
+                // Handle values that contain commas, quotes or newlines
+                if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
+                    // Escape double quotes by doubling them and wrap in quotes
+                    value = '"' + value.replace(/"/g, '""') + '"';
+                }
+                
+                return value;
+            });
+            
+            csvContent += row.join(',') + '\r\n';
+        });
+        
+        // Create a Blob with the CSV content
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        
+        // Create a download link
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        // Set properties for download
+        link.setAttribute('href', url);
+        link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
+        link.style.visibility = 'hidden';
+        
+        // Add to document, trigger click and remove
+        document.body.appendChild(link);
+        
+        console.log("Triggering CSV download");
+        link.click();
+        
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            console.log("Download link cleaned up");
+        }, 100);
+        
+        return true;
+    } catch (error) {
+        console.error('Error generating CSV:', error);
+        showAlert('Failed to generate CSV file: ' + error.message, 'error');
+        return false;
     }
 }
 
