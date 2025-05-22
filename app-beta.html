@@ -2016,13 +2016,7 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                 console.error("General export error:", generalError);
                 showAlert(`Error processing export: ${generalError.message}`, 'error');
             } finally {
-                // Stop any running timers
-                clearInterval(timerInterval);
-                if (typeof secondsInterval !== 'undefined') {
-                    clearInterval(secondsInterval);
-                }
-                
-                // Reset loading style
+
                 loading.style.padding = "";
                 loading.style.border = "";
                 loading.style.boxShadow = "";
