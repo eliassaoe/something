@@ -1899,6 +1899,7 @@ async function exportToCSV() {
                 
                 // Create a special fetch with a very long timeout
                 const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000); // 30 minute timeout
                 
                 try {
                     // Make POST request to EXPORT webhook (using the new URL)
@@ -1907,9 +1908,13 @@ async function exportToCSV() {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(requestData)
+                        body: JSON.stringify(requestData),
+                        signal: controller.signal,
+                        keepalive: true // Add keepalive flag for long requests
                     });
-
+                    
+                    // Clear the timeout since we got a response
+                    clearTimeout(timeoutId);
 
                     loading.style.display = 'none';
                     
@@ -1919,12 +1924,13 @@ async function exportToCSV() {
 
                          // Check for CSV content type
                    const contentType = response.headers.get('content-type');
-if (contentType && contentType.includes('text/csv')) {
+
+                       if (contentType && contentType.includes('text/csv')) {
     // It's a CSV file - handle direct download
-    const blob = await response.blob();
+                          const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.style.display = 'none';
+        a.style.display = 'none';
     a.href = url;
     
     // Get filename from Content-Disposition header if available
@@ -1938,69 +1944,118 @@ if (contentType && contentType.includes('text/csv')) {
     a.download = filename;
     document.body.appendChild(a);
     
+    // MODIFIED: Add console logging
     console.log("Starting CSV download with blob size:", blob.size);
+    console.log("Download URL:", url);
+    console.log("Download filename:", filename);
     
+    // MODIFIED: Force a small delay before clicking
     setTimeout(() => {
         a.click();
         console.log("Download click triggered");
         
+        // MODIFIED: Add a longer delay before cleanup
         setTimeout(() => {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
             console.log("Download link cleaned up");
-        }, 1000);
-    }, 100);
+        }, 1000); // Wait 1 second before cleanup
+    }, 100); // Wait 100ms before triggering click
     
+    // Show success message
     showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
-    showExportConfirmation("your contacts");
-    return;
-} else {
-    // Handle JSON response
-    const responseData = await response.json();
-    console.log("Parsed JSON response:", responseData);
     
-    // Check if it's the completion message
-    if (responseData && responseData.message) {
-        loading.style.display = 'none';
-        showExportConfirmation("your contacts");
-        return;
-    }
+    // Show the confirmation modal
+    showExportConfirmation("your contacts");
+    
+    return; // Exit early - we've handled the CSV response
+}
  
-    if (responseData && responseData.code === 403) {
-        // Handle insufficient credits error
-        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
-        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
-        showCreditUpgradeModal();
-        return;
-    }
-    if (responseData && responseData.code === 401) {
-        // Handle success message from verification
+                    console.log("Received response from export webhook, parsing JSON...");
+                    
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+
+                     console.log("Parsed JSON response:", responseData);
+                    
+if (responseData && responseData.code === 403) {
+                        // Handle insufficient credits error
+                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+                        showCreditUpgradeModal();
+                        return;
+                    }
+if (Array.isArray(responseData) && responseData.length > 0) {
+                        // Download the data as CSV
+                        downloadCSV(responseData);
+                        
+                        // Calculate the total processing time
+                        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
+                        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
+                        const timeStr = processingMinutes > 0 ? 
+                            `${processingMinutes} min ${processingSecs} sec` : 
+                            `${processingSecs} seconds`;
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation(responseData.length);
+                    } else {
+                        // Handle unexpected response format
+                        console.warn("Unexpected response format:", responseData);
+                        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
+                    }
+                } catch (error) {
+                    console.error("Export fetch error:", error);
+                    
+                    // Check if this was a timeout error
+                    if (error.name === 'AbortError') {
+                        showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
+                    } else {
+                        showAlert(`Export error: ${error.message}. Please try again.`, 'error');
+                    }
+                }
+            } catch (generalError) {
+                console.error("General export error:", generalError);
+                showAlert(`Error processing export: ${generalError.message}`, 'error');
+            } finally {
+                // Stop any running timers
+                clearInterval(timerInterval);
+                if (typeof secondsInterval !== 'undefined') {
+                    clearInterval(secondsInterval);
+                }
+                
+                // Reset loading style
+                loading.style.padding = "";
+                loading.style.border = "";
+                loading.style.boxShadow = "";
+                loading.style.maxWidth = "";
+                loading.style.margin = "30px 0";
+                
+                // Hide loading screen
+                loading.style.display = 'none';
+                
+                // Reset the export flag and button state
+                isExporting = false;
+                newConfirmExportBtn.disabled = false;
+                newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
+            }
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === exportModal) {
+                exportModal.style.display = 'none';
+            }
+        });
+    } catch (error) {
+        console.error('Error initiating export process:', error);
+        showAlert(`Error: ${error.message}`, 'error');
         loading.style.display = 'none';
-        showExportConfirmation("your contacts");
-        return;
-    }
-    if (Array.isArray(responseData) && responseData.length > 0) {
-        // Download the data as CSV
-        downloadCSV(responseData);
-        
-        // Calculate the total processing time
-        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
-        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
-        const timeStr = processingMinutes > 0 ? 
-            `${processingMinutes} min ${processingSecs} sec` : 
-            `${processingSecs} seconds`;
-        
-        // Show success message
-        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
-        
-        // Show the confirmation modal
-        showExportConfirmation(responseData.length);
-    } else {
-        // Handle unexpected response format
-        console.warn("Unexpected response format:", responseData);
-        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
     }
 }
+
 // Function to show export confirmation modal
 function showExportConfirmation(recordCount) {
     const confirmationModal = document.getElementById('exportConfirmationModal');
