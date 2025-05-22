@@ -1975,8 +1975,8 @@ async function exportToCSV() {
                     
                     // Parse the response as JSON
                     const responseData = await response.json();
-                    
-                    console.log(`Parsed JSON response with ${responseData.length} records`);
+
+                     console.log("Parsed JSON response:", responseData);
                     
                     // Process the response data
                     if (Array.isArray(responseData) && 
