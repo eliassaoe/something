@@ -1965,86 +1965,42 @@ if (contentType && contentType.includes('text/csv')) {
         showExportConfirmation("your contacts");
         return;
     }
-}
  
-if (responseData && responseData.code === 403) {
-                        // Handle insufficient credits error
-                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
-                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
-                        showCreditUpgradeModal();
-                        return;
-                    }
-                    if (responseData && responseData.code === 401) {
-    // Handle success message from verification
-    loading.style.display = 'none';
-    showExportConfirmation("your contacts");
-    return;
-                    }
-if (Array.isArray(responseData) && responseData.length > 0) {
-                        // Download the data as CSV
-                        downloadCSV(responseData);
-                        
-                        // Calculate the total processing time
-                        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
-                        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
-                        const timeStr = processingMinutes > 0 ? 
-                            `${processingMinutes} min ${processingSecs} sec` : 
-                            `${processingSecs} seconds`;
-                        
-                        // Show success message
-                        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
-                        
-                        // Show the confirmation modal
-                        showExportConfirmation(responseData.length);
-                    } else {
-                        // Handle unexpected response format
-                        console.warn("Unexpected response format:", responseData);
-                        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
-                    }
-                } catch (error) {
-                    console.error("Export fetch error:", error);
-                    
-                    // Check if this was a timeout error
-                    if (error.name === 'AbortError') {
-                        showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
-                    } else {
-                        showAlert(`Export error: ${error.message}. Please try again.`, 'error');
-                    }
-                }
-            } catch (generalError) {
-                console.error("General export error:", generalError);
-                showAlert(`Error processing export: ${generalError.message}`, 'error');
-            } finally {
-
-                loading.style.padding = "";
-                loading.style.border = "";
-                loading.style.boxShadow = "";
-                loading.style.maxWidth = "";
-                loading.style.margin = "30px 0";
-                
-                // Hide loading screen
-                loading.style.display = 'none';
-                
-                // Reset the export flag and button state
-                isExporting = false;
-                newConfirmExportBtn.disabled = false;
-                newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
-            }
-        });
-        
-        // Close modal when clicking outside of it
-        window.addEventListener('click', (event) => {
-            if (event.target === exportModal) {
-                exportModal.style.display = 'none';
-            }
-        });
-    } catch (error) {
-        console.error('Error initiating export process:', error);
-        showAlert(`Error: ${error.message}`, 'error');
+    if (responseData && responseData.code === 403) {
+        // Handle insufficient credits error
+        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+        showCreditUpgradeModal();
+        return;
+    }
+    if (responseData && responseData.code === 401) {
+        // Handle success message from verification
         loading.style.display = 'none';
+        showExportConfirmation("your contacts");
+        return;
+    }
+    if (Array.isArray(responseData) && responseData.length > 0) {
+        // Download the data as CSV
+        downloadCSV(responseData);
+        
+        // Calculate the total processing time
+        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
+        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
+        const timeStr = processingMinutes > 0 ? 
+            `${processingMinutes} min ${processingSecs} sec` : 
+            `${processingSecs} seconds`;
+        
+        // Show success message
+        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
+        
+        // Show the confirmation modal
+        showExportConfirmation(responseData.length);
+    } else {
+        // Handle unexpected response format
+        console.warn("Unexpected response format:", responseData);
+        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
     }
 }
-
 // Function to show export confirmation modal
 function showExportConfirmation(recordCount) {
     const confirmationModal = document.getElementById('exportConfirmationModal');
