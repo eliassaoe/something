@@ -1978,21 +1978,13 @@ async function exportToCSV() {
 
                      console.log("Parsed JSON response:", responseData);
                     
-                    // Process the response data
-                    // CHECK FOR INSUFFICIENT CREDITS ERROR FIRST
-if (Array.isArray(responseData) && 
-    responseData.length > 0 &&
-    responseData[0] && 
-    responseData[0].error && 
-    responseData[0].error.code === 403) {
-    // Handle insufficient credits error
-    console.log("*** INSUFFICIENT CREDITS DETECTED ***");
-    showAlert(responseData[0].error.message || "You do not have enough credits to export these contacts.", 'error');
-    showCreditUpgradeModal();
-    return;
-}
-
-// SEPARATE CHECK FOR SUCCESSFUL DATA
+if (responseData && responseData.code === 403) {
+                        // Handle insufficient credits error
+                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+                        showCreditUpgradeModal();
+                        return;
+                    }
 if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
