@@ -1919,13 +1919,12 @@ async function exportToCSV() {
 
                          // Check for CSV content type
                    const contentType = response.headers.get('content-type');
-
-                       if (contentType && contentType.includes('text/csv')) {
+if (contentType && contentType.includes('text/csv')) {
     // It's a CSV file - handle direct download
-                          const blob = await response.blob();
+    const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-        a.style.display = 'none';
+    a.style.display = 'none';
     a.href = url;
     
     // Get filename from Content-Disposition header if available
@@ -1939,31 +1938,33 @@ async function exportToCSV() {
     a.download = filename;
     document.body.appendChild(a);
     
-    // MODIFIED: Add console logging
     console.log("Starting CSV download with blob size:", blob.size);
-    console.log("Download URL:", url);
-    console.log("Download filename:", filename);
     
-    // MODIFIED: Force a small delay before clicking
     setTimeout(() => {
         a.click();
         console.log("Download click triggered");
         
-        // MODIFIED: Add a longer delay before cleanup
         setTimeout(() => {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
             console.log("Download link cleaned up");
-        }, 1000); // Wait 1 second before cleanup
-    }, 100); // Wait 100ms before triggering click
+        }, 1000);
+    }, 100);
     
-    // Show success message
     showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
-    
-    // Show the confirmation modal
     showExportConfirmation("your contacts");
+    return;
+} else {
+    // Handle JSON response
+    const responseData = await response.json();
+    console.log("Parsed JSON response:", responseData);
     
-    return; // Exit early - we've handled the CSV response
+    // Check if it's the completion message
+    if (responseData && responseData.message) {
+        loading.style.display = 'none';
+        showExportConfirmation("your contacts");
+        return;
+    }
 }
  
                     console.log("Received response from export webhook, parsing JSON...");
