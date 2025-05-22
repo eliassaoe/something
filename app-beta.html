@@ -1981,6 +1981,12 @@ if (responseData && responseData.code === 403) {
                         showCreditUpgradeModal();
                         return;
                     }
+                    if (responseData && responseData.code === 401) {
+    // Handle success message from verification
+    loading.style.display = 'none';
+    showExportConfirmation(responseData.message);
+    return;
+                     }
 if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
