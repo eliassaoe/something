@@ -1899,7 +1899,6 @@ async function exportToCSV() {
                 
                 // Create a special fetch with a very long timeout
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000); // 30 minute timeout
                 
                 try {
                     // Make POST request to EXPORT webhook (using the new URL)
@@ -1908,13 +1907,9 @@ async function exportToCSV() {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(requestData),
-                        signal: controller.signal,
-                        keepalive: true // Add keepalive flag for long requests
+                        body: JSON.stringify(requestData)
                     });
-                    
-                    // Clear the timeout since we got a response
-                    clearTimeout(timeoutId);
+
 
                     loading.style.display = 'none';
                     
