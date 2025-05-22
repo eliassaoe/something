@@ -1975,18 +1975,17 @@ async function exportToCSV() {
                     
                     // Parse the response as JSON
                     const responseData = await response.json();
+
+                     console.log("Parsed JSON response:", responseData);
                     
-                    console.log(`Parsed JSON response with ${responseData.length} records`);
-                    
-                    // Process the response data
-                    if (Array.isArray(responseData) && 
-                        responseData[0] && 
-                        responseData[0].error && 
-                        responseData[0].error.code === 403) {
+if (responseData && responseData.code === 403) {
                         // Handle insufficient credits error
-                        showAlert(responseData[0].error.message || "You do not have enough credits to export these contacts.", 'error');
+                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
                         showCreditUpgradeModal();
-                    } else if (Array.isArray(responseData) && responseData.length > 0) {
+                        return;
+                    }
+if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
                         
