@@ -1939,19 +1939,6 @@ async function exportToCSV() {
     if (contentDisposition) {
         const filenameMatch = contentDisposition.match(/filename="(.+)"/);
         if (filenameMatch) filename = filenameMatch[1];
-    } else {
-    // Handle JSON response
-    const responseData = await response.json();
-    console.log("Parsed JSON response:", responseData);
-    
-    // Check if it's the completion message
-    if (responseData && responseData.message) {
-        // Hide loading
-        loading.style.display = 'none';
-        
-        // Show your existing confirmation modal
-        showExportConfirmation("your contacts");
-        return; // Exit successfully
     }
     
     a.download = filename;
