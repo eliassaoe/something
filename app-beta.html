@@ -1967,13 +1967,6 @@ if (contentType && contentType.includes('text/csv')) {
     }
 }
  
-                    console.log("Received response from export webhook, parsing JSON...");
-                    
-                    // Parse the response as JSON
-                    const responseData = await response.json();
-
-                     console.log("Parsed JSON response:", responseData);
-                    
 if (responseData && responseData.code === 403) {
                         // Handle insufficient credits error
                         console.log("*** INSUFFICIENT CREDITS DETECTED ***");
