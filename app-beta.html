@@ -1964,8 +1964,15 @@ if (contentType && contentType.includes('text/csv')) {
         loading.style.display = 'none';
         showExportConfirmation("your contacts");
         return;
-
+    }
 }
+ 
+                    console.log("Received response from export webhook, parsing JSON...");
+                    
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+
+                     console.log("Parsed JSON response:", responseData);
                     
 if (responseData && responseData.code === 403) {
                         // Handle insufficient credits error
@@ -1974,12 +1981,6 @@ if (responseData && responseData.code === 403) {
                         showCreditUpgradeModal();
                         return;
                     }
-                    if (responseData && responseData.code === 401) {
-    // Handle success message from verification
-    loading.style.display = 'none';
-    showExportConfirmation(responseData.message);
-    return;
-                     }
 if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
