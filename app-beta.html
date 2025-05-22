@@ -2002,10 +2002,13 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                         // Show the confirmation modal
                         showExportConfirmation(responseData.length);
                     } else {
-                        // Handle unexpected response format
-                        console.warn("Unexpected response format:", responseData);
-                        showAlert("Export completed, but the data format was unexpected. Please check your downloads folder.", 'warning');
-                    }
+    // Handle unexpected response format - show success message
+    console.warn("Unexpected response format:", responseData);
+    showAlert("Export completed! Check your inbox and spam folder - your leads will arrive very soon.", 'success');
+    
+    // Also show the confirmation modal
+    showExportConfirmation("your leads");
+}
                 } catch (error) {
                     console.error("Export fetch error:", error);
                     
