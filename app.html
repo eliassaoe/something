@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
+   <style>
     /* Font imports */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
     
@@ -70,6 +70,9 @@
         line-height: 1.7;
         font-size: 15px;
         letter-spacing: 0.01em;
+        overflow-x: hidden;
+        width: 100vw;
+        max-width: 100vw;
     }
     
     body:before {
@@ -88,6 +91,9 @@
         max-width: 1280px;
         margin: 0 auto;
         padding: 0 2rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
     
     h1, h2, h3, h4, h5 {
@@ -292,6 +298,8 @@
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .info-box {
@@ -432,6 +440,8 @@
         overflow: hidden;
         box-shadow: var(--box-shadow);
         border: 1px solid var(--gray-100);
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .results-table th {
@@ -503,6 +513,8 @@
         border-radius: var(--radius-lg);
         box-shadow: var(--box-shadow);
         margin: 30px 0;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .loading i {
@@ -552,6 +564,8 @@
         box-shadow: var(--box-shadow-lg);
         border: 1px solid var(--gray-100);
         animation: modal-fade-in 0.3s ease-out;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     @keyframes modal-fade-in {
@@ -648,6 +662,8 @@
         display: none;
         font-size: 14px;
         font-weight: 500;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .alert-success {
@@ -753,134 +769,192 @@
         font-size: 14px;
     }
 
-        @media (max-width: 768px) {
-    /* Reduce container padding to prevent horizontal scroll */
-    .container {
-        padding: 0 0.5rem;
-    }
-    
-    /* Make header elements smaller */
-    .logo {
-        font-size: 1.2rem;
-    }
-    
-    .logo i {
-        font-size: 1.2rem;
-    }
-    
-    /* Adjust header buttons */
-    .user-credits {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-    
-    .logout-button, .upgrade-button {
-        padding: 0.5rem 1rem;
-        font-size: 12px;
-    }
-    
-    /* Keep menu items horizontal on small screens */
-    .menu-list {
-        flex-direction: row !important;
-        justify-content: space-between;
-        width: 100%;
-    }
-    
-    .menu-item {
-        border-bottom: none !important;
-        width: 50%;
-        text-align: center;
-    }
-    
-    .menu-link {
-        padding: 14px 10px;
-        font-size: 13px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .menu-link i {
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
-    
-    /* Adjust user-credits-container */
-   .user-credits-container {
-    gap: 8px;
-    margin-left: auto; /* This pushes the container to the right */
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Aligns contents to the right */
-    }
-}
-
-/* Even smaller screens */
-@media (max-width: 480px) {
-    header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 0;
-}
-
-    
-    .logo {
-        font-size: 1rem;
-    }
-    
-    .logo i {
-        font-size: 1rem;
-        margin-right: 4px;
-    }
-    
-    .user-credits {
-        padding: 4px 8px;
-        font-size: 11px;
-    }
-    
-    .logout-button, .upgrade-button {
-        padding: 0.4rem 0.7rem;
-        font-size: 11px;
-    }
-    
-    .logout-button i, .upgrade-button i {
-        font-size: 12px;
-    }
-    
-    /* Further simplify menu */
-    .menu-link {
-        padding: 10px 5px;
-        font-size: 12px;
-    }
-    
-    /* Make table scroll horizontally instead of breaking layout */
-    .results-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-}
-
-    
-    /* Animation */
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-    
-    .animate-pulse {
-        animation: pulse 2s infinite ease-in-out;
-    }
-    
-    @media (max-width: 992px) {
-        .container { padding: 0 1.5rem; }
-        .search-title { font-size: 1.5rem; }
-    }
-    
+    /* Mobile-friendly modal fixes */
     @media (max-width: 768px) {
+        .contact-modal {
+            padding: 10px;
+        }
+        
+        .modal-content {
+            width: calc(100vw - 20px) !important;
+            max-width: calc(100vw - 20px) !important;
+            margin: 10px auto !important;
+            padding: 15px !important;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            position: relative;
+            box-sizing: border-box;
+        }
+        
+        /* Make alert messages mobile-friendly */
+        .alert {
+            margin: 10px 0 !important;
+            padding: 12px 15px !important;
+            font-size: 13px !important;
+            border-radius: 6px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Fix loading screen for mobile */
+        .loading {
+            margin: 15px 0 !important;
+            padding: 20px 15px !important;
+            max-width: calc(100vw - 30px) !important;
+            box-sizing: border-box;
+        }
+        
+        /* Mobile table as cards */
+        .results-table {
+            font-size: 12px !important;
+        }
+        
+        .results-table thead {
+            display: none;
+        }
+        
+        .results-table,
+        .results-table tbody,
+        .results-table tr,
+        .results-table td {
+            display: block;
+            width: 100%;
+        }
+        
+        .results-table tr {
+            border: 1px solid var(--gray-200);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .results-table td {
+            border: none !important;
+            border-bottom: 1px solid var(--gray-100);
+            position: relative;
+            padding: 8px 10px 8px 35% !important;
+            text-align: left;
+        }
+        
+        .results-table td:before {
+            content: attr(data-label) ": ";
+            position: absolute;
+            left: 10px;
+            width: 30%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 11px;
+        }
+        
+        .results-table td:last-child {
+            border-bottom: none;
+            text-align: center;
+            padding: 10px !important;
+        }
+        
+        .results-table td:last-child:before {
+            display: none;
+        }
+        
+        /* Fix form elements for mobile */
+        .form-group input,
+        .form-group select {
+            font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+        
+        /* Fix buttons for mobile */
+        .search-button,
+        .export-button,
+        .logout-button,
+        .upgrade-button {
+            min-height: 44px; /* iOS touch target minimum */
+        }
+        
+        /* Fix header for mobile */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Fix results section for mobile */
+        .results-header {
+            flex-direction: column !important;
+            gap: 10px !important;
+            align-items: stretch !important;
+        }
+        
+        .export-button {
+            width: 100% !important;
+            justify-content: center !important;
+        }
+
+        /* Reduce container padding to prevent horizontal scroll */
+        .container {
+            padding: 0 0.5rem;
+        }
+        
+        /* Make header elements smaller */
+        .logo {
+            font-size: 1.2rem;
+        }
+        
+        .logo i {
+            font-size: 1.2rem;
+        }
+        
+        /* Adjust header buttons */
+        .user-credits {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        
+        .logout-button, .upgrade-button {
+            padding: 0.5rem 1rem;
+            font-size: 12px;
+        }
+        
+        /* Keep menu items horizontal on small screens */
+        .menu-list {
+            flex-direction: row !important;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .menu-item {
+            border-bottom: none !important;
+            width: 50%;
+            text-align: center;
+        }
+        
+        .menu-link {
+            padding: 14px 10px;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .menu-link i {
+            margin-right: 0;
+            margin-bottom: 5px;
+        }
+        
+        /* Adjust user-credits-container */
+       .user-credits-container {
+        gap: 8px;
+        margin-left: auto; /* This pushes the container to the right */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end; /* Aligns contents to the right */
+        }
+        
         .container {
             padding: 0 1rem;
         }
@@ -930,12 +1004,96 @@
         }
     }
 
-        body {
-    overflow-x: hidden;
-}
+    /* Even smaller screens */
+    @media (max-width: 480px) {
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+    }
 
-     
-</style>
+        
+        .logo {
+            font-size: 1rem;
+        }
+        
+        .logo i {
+            font-size: 1rem;
+            margin-right: 4px;
+        }
+        
+        .user-credits {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+        
+        .logout-button, .upgrade-button {
+            padding: 0.4rem 0.7rem;
+            font-size: 11px;
+        }
+        
+        .logout-button i, .upgrade-button i {
+            font-size: 12px;
+        }
+        
+        /* Further simplify menu */
+        .menu-link {
+            padding: 10px 5px;
+            font-size: 12px;
+        }
+        
+        .modal-content {
+            width: calc(100vw - 10px) !important;
+            margin: 5px auto !important;
+            padding: 10px !important;
+        }
+        
+        .search-section,
+        .results-section {
+            padding: 10px !important;
+            border-radius: 8px !important;
+        }
+        
+        .user-credits-container {
+            justify-content: center !important;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+        }
+    }
+
+        
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .search-title { font-size: 1.5rem; }
+        }
+
+        /* Prevent any element from causing horizontal scroll */
+        .search-form,
+        .results-table,
+        .modal-content,
+        .alert,
+        .loading {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+    </style>
 </head>
 <body>
     
@@ -2067,8 +2225,8 @@ function showExportConfirmation(recordCount) {
     const infoValue = confirmationModal.querySelector('.info-value');
     if (infoValue) {
         infoValue.innerHTML = `
-            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully and will be sent to your Inbox !</strong></p>
-            <p>You will receive your leads in your Inbox in 10 minutes </p>
+            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are being verified !</strong></p>
+            <p>You will receive your verified leads in your Inbox in 10-15 minutes </p>
             <p style="margin-top: 10px;">Check your Inbox and your Spam folder to find your lead list</p>
         `;
     }
@@ -2092,8 +2250,6 @@ function showExportConfirmation(recordCount) {
     });
 }
 
-// Replace your entire downloadCSV function with this improved version:
-
 function downloadCSV(data) {
     if (!Array.isArray(data) || data.length === 0) {
         console.warn("No data to export");
@@ -2113,15 +2269,10 @@ function downloadCSV(data) {
         // Add data rows
         data.forEach(item => {
             const row = headers.map(header => {
-                // Get the value or empty string if null/undefined
                 let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
-                
-                // Convert to string if it's not already
                 value = String(value);
                 
-                // Handle values that contain commas, quotes or newlines
                 if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
-                    // Escape double quotes by doubling them and wrap in quotes
                     value = '"' + value.replace(/"/g, '""') + '"';
                 }
                 
@@ -2134,29 +2285,76 @@ function downloadCSV(data) {
         // Create a Blob with the CSV content
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         
-        // Create a download link
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
+        // Mobile-friendly download approach
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Set properties for download
-        link.setAttribute('href', url);
-        link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
-        link.style.visibility = 'hidden';
+        if (isMobile) {
+            // For mobile: Use a different approach
+            const url = URL.createObjectURL(blob);
+            const filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+            
+            // Try multiple mobile download methods
+            try {
+                // Method 1: Direct window.open (works on most mobile browsers)
+                const downloadWindow = window.open(url, '_blank');
+                if (downloadWindow) {
+                    // If window opened successfully, close it after a short delay
+                    setTimeout(() => downloadWindow.close(), 1000);
+                }
+                
+                // Method 2: Fallback link click (for browsers that block window.open)
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    // For mobile, we need to add to DOM and trigger with user gesture context
+                    document.body.appendChild(link);
+                    
+                    // Use both click() and dispatchEvent for maximum compatibility
+                    link.click();
+                    
+                    const clickEvent = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    link.dispatchEvent(clickEvent);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                }, 100);
+                
+            } catch (mobileError) {
+                console.error('Mobile download failed:', mobileError);
+                // Show user-friendly message for mobile
+                showAlert('Download prepared! If file didn\'t download automatically, you\'ll receive it via email.', 'warning');
+            }
+            
+        } else {
+            // Desktop: Use the existing method
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
         
-        // Add to document, trigger click and remove
-        document.body.appendChild(link);
-        
-        console.log("Triggering CSV download");
-        link.click();
-        
-        // Clean up
-        setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 100);
-        
+        console.log("CSV download initiated");
         return true;
+        
     } catch (error) {
         console.error('Error generating CSV:', error);
         showAlert('Failed to generate CSV file: ' + error.message, 'error');
