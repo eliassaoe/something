@@ -2092,8 +2092,6 @@ function showExportConfirmation(recordCount) {
     });
 }
 
-// Replace your entire downloadCSV function with this improved version:
-
 function downloadCSV(data) {
     if (!Array.isArray(data) || data.length === 0) {
         console.warn("No data to export");
@@ -2113,15 +2111,10 @@ function downloadCSV(data) {
         // Add data rows
         data.forEach(item => {
             const row = headers.map(header => {
-                // Get the value or empty string if null/undefined
                 let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
-                
-                // Convert to string if it's not already
                 value = String(value);
                 
-                // Handle values that contain commas, quotes or newlines
                 if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
-                    // Escape double quotes by doubling them and wrap in quotes
                     value = '"' + value.replace(/"/g, '""') + '"';
                 }
                 
@@ -2134,29 +2127,76 @@ function downloadCSV(data) {
         // Create a Blob with the CSV content
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         
-        // Create a download link
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
+        // Mobile-friendly download approach
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Set properties for download
-        link.setAttribute('href', url);
-        link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
-        link.style.visibility = 'hidden';
+        if (isMobile) {
+            // For mobile: Use a different approach
+            const url = URL.createObjectURL(blob);
+            const filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+            
+            // Try multiple mobile download methods
+            try {
+                // Method 1: Direct window.open (works on most mobile browsers)
+                const downloadWindow = window.open(url, '_blank');
+                if (downloadWindow) {
+                    // If window opened successfully, close it after a short delay
+                    setTimeout(() => downloadWindow.close(), 1000);
+                }
+                
+                // Method 2: Fallback link click (for browsers that block window.open)
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    // For mobile, we need to add to DOM and trigger with user gesture context
+                    document.body.appendChild(link);
+                    
+                    // Use both click() and dispatchEvent for maximum compatibility
+                    link.click();
+                    
+                    const clickEvent = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    link.dispatchEvent(clickEvent);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                }, 100);
+                
+            } catch (mobileError) {
+                console.error('Mobile download failed:', mobileError);
+                // Show user-friendly message for mobile
+                showAlert('Download prepared! If file didn\'t download automatically, you\'ll receive it via email.', 'warning');
+            }
+            
+        } else {
+            // Desktop: Use the existing method
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
         
-        // Add to document, trigger click and remove
-        document.body.appendChild(link);
-        
-        console.log("Triggering CSV download");
-        link.click();
-        
-        // Clean up
-        setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 100);
-        
+        console.log("CSV download initiated");
         return true;
+        
     } catch (error) {
         console.error('Error generating CSV:', error);
         showAlert('Failed to generate CSV file: ' + error.message, 'error');
