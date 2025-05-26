@@ -201,11 +201,214 @@
         .forgot-password a {
             color: #6c757d;
             text-decoration: none;
+            cursor: pointer;
         }
         
         .forgot-password a:hover {
             color: #4a90e2;
             text-decoration: underline;
+        }
+
+        /* Modal/Popup styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 420px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .modal-subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .modal-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            min-width: 80px;
+        }
+
+        .modal-button-cancel {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+
+        .modal-button-cancel:hover {
+            background-color: #e9ecef;
+            color: #5a6268;
+        }
+
+        .modal-button-submit {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .modal-button-submit:hover {
+            background-color: #3a7bc8;
+        }
+
+        .modal-button-submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Success message in modal */
+        .modal-success {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .modal-success-icon {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .modal-success-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-success-message {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-success-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .modal-success-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Mobile optimizations for modal */
+        @media (max-width: 480px) {
+            .modal-overlay {
+                padding: 10px;
+            }
+            
+            .modal {
+                max-width: 100%;
+            }
+            
+            .modal-title {
+                font-size: 1.25rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column-reverse;
+                gap: 0.5rem;
+            }
+            
+            .modal-button {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -222,7 +425,7 @@
                 <input type="password" id="password" required placeholder="Enter your password">
             </div>
             <div class="forgot-password">
-                <a href="https://unlimited-leads.online/reset-password">Forgot password?</a>
+                <a href="#" id="forgotPasswordLink">Forgot password?</a>
             </div>
             <button type="submit" id="submitButton">Login</button>
         </form>
@@ -240,7 +443,137 @@
         <div id="message" class="message"></div>
     </div>
 
+    <!-- Password Reset Modal -->
+    <div id="resetPasswordModal" class="modal-overlay">
+        <div class="modal">
+            <div id="resetForm" class="reset-form">
+                <div class="modal-header">
+                    <h2 class="modal-title">Forgot password ?</h2>
+                    <p class="modal-subtitle">Hi there! Please submit your registered email address and we'll send you an email with your password !</p>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-form-group">
+                        <label for="resetEmail" class="modal-label">Email Address</label>
+                        <input type="email" id="resetEmail" class="modal-input" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-button modal-button-cancel" id="cancelResetButton">Cancel</button>
+                    <button type="button" class="modal-button modal-button-submit" id="submitResetButton">Submit</button>
+                </div>
+            </div>
+            
+            <div id="resetSuccess" class="modal-success" style="display: none;">
+                <div class="modal-success-icon">✅</div>
+                <h3 class="modal-success-title">Reset Link Sent!</h3>
+                <p class="modal-success-message">We've sent a password reset link to your email address. Please check your inbox and follow the instructions to reset your password.</p>
+                <button type="button" class="modal-success-button" id="closeSuccessButton">Got it!</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Modal functionality
+        const resetModal = document.getElementById('resetPasswordModal');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const cancelResetButton = document.getElementById('cancelResetButton');
+        const submitResetButton = document.getElementById('submitResetButton');
+        const closeSuccessButton = document.getElementById('closeSuccessButton');
+        const resetForm = document.getElementById('resetForm');
+        const resetSuccess = document.getElementById('resetSuccess');
+        const resetEmailInput = document.getElementById('resetEmail');
+
+        // Open modal
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            resetModal.classList.add('active');
+            resetEmailInput.focus();
+        });
+
+        // Close modal
+        function closeModal() {
+            resetModal.classList.remove('active');
+            resetForm.style.display = 'block';
+            resetSuccess.style.display = 'none';
+            resetEmailInput.value = '';
+            submitResetButton.disabled = false;
+            submitResetButton.innerHTML = 'Submit';
+        }
+
+        cancelResetButton.addEventListener('click', closeModal);
+        closeSuccessButton.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        resetModal.addEventListener('click', function(e) {
+            if (e.target === resetModal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && resetModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Handle password reset submission
+        submitResetButton.addEventListener('click', async function() {
+            const email = resetEmailInput.value.trim();
+            
+            if (!email) {
+                alert('Please enter your email address.');
+                resetEmailInput.focus();
+                return;
+            }
+
+            if (!email.includes('@')) {
+                alert('Please enter a valid email address.');
+                resetEmailInput.focus();
+                return;
+            }
+
+            // Show loading state
+            submitResetButton.disabled = true;
+            submitResetButton.innerHTML = '<span class="spinner"></span> Sending...';
+
+            try {
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/7ea32a92-562d-4f06-9dd1-0054f2de66d3', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        email: email,
+                        type: 'password_reset'
+                    })
+                });
+
+                if (response.ok) {
+                    // Show success view
+                    resetForm.style.display = 'none';
+                    resetSuccess.style.display = 'block';
+                } else {
+                    throw new Error('Failed to send reset email');
+                }
+            } catch (error) {
+                alert('An error occurred while sending the reset email. Please try again later.');
+                console.error('Password reset error:', error);
+            } finally {
+                // Reset button state
+                submitResetButton.disabled = false;
+                submitResetButton.innerHTML = 'Submit';
+            }
+        });
+
+        // Allow Enter key to submit reset form
+        resetEmailInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitResetButton.click();
+            }
+        });
+
+        // Original login form functionality
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
