@@ -2213,31 +2213,21 @@ async function exportToCSV() {
                 
                 loading.innerHTML = `
                    <div style="text-align: center;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
-
-                          <p style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray-800);">
-                              ${verifyBeforeExport ? 'Verifying your leads and preparing your export...' : 'Preparing your export...'}
-                              </p>
-                        
-                       <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
-                          <p style="font-size: 14px; color: var(--primary-dark); margin: 0; text-align: left;">
-                         <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                              Please keep this page open while we process your data
-                          </p>
-                      </div>
-        
-                     <p style="font-size: 14px; color: var(--gray-600); margin: 10px 0;">
-                         Your download will start automatically when ready. You will also receive your lead list in your Inbox.
-                       </p>
-                        <p style="font-size: 16px; margin-bottom: 15px;">
-                            This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete.
-                        </p>
-                        
-                        
-                        <div id="exportTimer" style="margin-top: 10px; font-size: 14px; color: var(--gray-700);">
-                          Processing...
-                            </div>
-                    </div>
+    <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
+    
+    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
+        ${verifyBeforeExport ? 'Verifying and preparing your export...' : 'Preparing your export...'}
+    </p>
+    
+    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
+        This may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong>. 
+        Keep this page open and check your inbox when complete.
+    </p>
+    
+    <div id="exportTimer" style="font-size: 14px; color: var(--gray-700);">
+        Processing...
+    </div>
+</div>
                 `;
                 
                 // Always fetch the latest count before exporting
