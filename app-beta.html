@@ -311,119 +311,6 @@
         display: flex;
         align-items: center;
     }
-
-    /* Petites améliorations pour le message de chargement */
-
-.loading {
-    /* Ajouter une bordure colorée en haut */
-    border-top: 4px solid var(--primary);
-    
-    /* Améliorer l'espacement */
-    padding: 35px 30px;
-    
-    /* Ajouter une animation subtile */
-    animation: subtle-fade-in 0.5s ease-out;
-}
-
-@keyframes subtle-fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Améliorer le titre */
-.loading p:first-of-type {
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    color: var(--gray-800) !important;
-    margin-bottom: 15px !important;
-}
-
-/* Améliorer l'icône de chargement */
-.loading i {
-    color: var(--primary) !important;
-    font-size: 40px !important;
-    margin-bottom: 20px !important;
-}
-
-/* Ajouter une petite boîte d'information */
-.loading .info-highlight {
-    background: var(--primary-light);
-    border: 1px solid var(--primary);
-    border-radius: 8px;
-    padding: 15px;
-    margin: 20px 0;
-    font-size: 14px;
-    color: var(--primary-dark);
-}
-
-/* Améliorer le timer */
-#exportTimer {
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    padding: 10px 15px;
-    margin-top: 15px;
-    font-weight: 500;
-}
-
-/* Améliorations pour le modal de confirmation */
-
-#exportConfirmationModal .modal-content {
-    border-left: 4px solid #10b981 !important;
-}
-
-#exportConfirmationModal .modal-title {
-    color: #10b981 !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-}
-
-#exportConfirmationModal .modal-title i {
-    font-size: 24px !important;
-}
-
-/* Améliorer le contenu du modal */
-#exportConfirmationModal .info-value {
-    line-height: 1.6 !important;
-}
-
-#exportConfirmationModal .info-value p:first-child {
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    color: var(--gray-800) !important;
-}
-
-/* Ajouter une petite icône pour les points importants */
-#exportConfirmationModal .info-value p:last-child {
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
-    border-radius: 6px;
-    padding: 12px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-#exportConfirmationModal .info-value p:last-child::before {
-    content: '\f0e0';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    color: #d97706;
-    font-size: 16px;
-}
-
-/* Améliorer le bouton */
-#exportConfirmationModal .search-button {
-    background: linear-gradient(135deg, #10b981, #059669) !important;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
-}
-
-#exportConfirmationModal .search-button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
-}
     
     .info-box:before {
         content: '\f05a';
@@ -766,237 +653,6 @@
         font-weight: 500;
         margin-top: 5px;
     }
-
-    /* Petits fixes pour améliorer le modal d'export */
-
-/* Améliorer le header du modal d'export */
-#exportModal .modal-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 24px 30px;
-    border-bottom: none;
-}
-
-#exportModal .modal-title {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 22px;
-    margin: 0;
-}
-
-#exportModal .modal-title i {
-    font-size: 24px;
-}
-
-/* Améliorer le texte d'information */
-#exportModal .info-value {
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-#exportModal .info-value p {
-    margin-bottom: 12px;
-    line-height: 1.6;
-}
-
-#exportModal .info-value p:last-child {
-    margin-bottom: 0;
-    font-weight: 600;
-    color: var(--primary);
-}
-
-/* Améliorer le label du nombre de leads */
-#exportModal .form-group label {
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 16px;
-}
-
-#exportModal .form-group label i {
-    color: var(--primary);
-    font-size: 18px;
-}
-
-/* Améliorer l'input */
-#exportModal input[type="number"] {
-    border: 2px solid var(--gray-200);
-    padding: 14px 18px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 8px;
-    background: var(--gray-50);
-}
-
-#exportModal input[type="number"]:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    background: white;
-}
-
-/* Améliorer la checkbox section */
-.checkbox-container {
-    background: var(--primary-light);
-    border: 1px solid rgba(37, 99, 235, 0.2);
-    border-radius: 8px;
-    padding: 12px 16px; /* Réduit de 16px à 12px */
-    display: flex;
-    align-items: center; /* Changed from flex-start to center */
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: auto; /* Assure une hauteur minimale */
-}
-
-.checkbox-container input[type="checkbox"] {
-    width: 18px; /* Légèrement plus petit */
-    height: 18px;
-    accent-color: var(--primary);
-    cursor: pointer;
-    margin: 0;
-    flex-shrink: 0; /* Empêche la checkbox de rétrécir */
-}
-
-
-.checkbox-container:hover {
-    background: rgba(37, 99, 235, 0.08);
-    transform: translateY(-1px);
-}
-
-.checkbox-label {
-    flex: 1;
-    font-weight: 500;
-    line-height: 1.4; /* Réduit de 1.5 à 1.4 */
-    margin: 0; /* Assure qu'il n'y a pas de margin */
-}
-
-.checkbox-label strong {
-    display: block;
-    margin-bottom: 4px; /* Réduit l'espace sous le titre */
-}
-
-.checkbox-label small {
-    color: var(--gray-600);
-    margin-top: 2px; /* Réduit de 6px à 2px */
-    display: block;
-    font-size: 13px; /* Légèrement plus petit */
-    line-height: 1.3; /* Plus compact */
-}
-
-.checkbox-label-compact {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.checkbox-title-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.verification-badge {
-    background: var(--success);
-    color: white;
-    padding: 2px 8px; /* Réduit le padding vertical */
-    border-radius: 10px; /* Légèrement plus petit */
-    font-size: 11px; /* Plus petit */
-    font-weight: 600;
-    margin-left: 6px; /* Réduit la marge */
-    display: inline-flex;
-    align-items: center;
-    gap: 3px; /* Réduit l'espace entre icône et texte */
-    vertical-align: middle;
-}
-
-/* Améliorer le message de chargement */
-.loading {
-    background: white;
-    border-radius: 12px;
-    padding: 35px 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid var(--gray-200);
-    border-top: 4px solid var(--primary);
-    max-width: 600px;
-    margin: 30px auto;
-    position: relative;
-}
-
-/* Header du loading avec icône */
-.loading-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.loading-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--gray-900);
-    margin: 0;
-}
-
-.loading-icon {
-    font-size: 32px;
-    color: var(--primary);
-    animation: spin 1.5s linear infinite;
-}
-
-/* Notice importante */
-.keep-open-notice {
-    background: linear-gradient(135deg, #fff7ed, #fef3c7);
-    border: 1px solid var(--warning);
-    border-radius: 8px;
-    padding: 16px;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.keep-open-notice i {
-    color: var(--warning);
-    font-size: 20px;
-}
-
-.notice-text {
-    color: #92400e;
-    font-weight: 500;
-    line-height: 1.5;
-}
-
-/* Section du timer */
-.timer-section {
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.timer-display {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 8px;
-}
-
-.timer-text {
-    font-size: 14px;
-    color: var(--gray-600);
-}
     
     /* Alert styles */
     .alert {
@@ -1112,6 +768,340 @@
         background-color: white;
         font-size: 14px;
     }
+
+    /* =========================
+   AMÉLIORATIONS CSS UNIQUEMENT
+   (Sans modification HTML)
+   ========================= */
+
+/* 1. AMÉLIORER LE MODAL D'EXPORT */
+
+/* Header avec gradient */
+#exportModal .modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    color: white !important;
+    padding: 24px 30px !important;
+    border-bottom: none !important;
+}
+
+#exportModal .modal-title {
+    color: white !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+#exportModal .modal-title::before {
+    content: '\f019 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+/* Supprimer ou réduire la section info */
+#exportModal .info-item {
+    display: none !important;
+    /* Ou si vous voulez la garder mais plus petite : */
+    /* padding: 8px 12px !important;
+    margin-bottom: 10px !important; */
+}
+
+/* Améliorer les labels */
+#exportModal .form-group label {
+    font-weight: 600 !important;
+    color: var(--gray-800) !important;
+    margin-bottom: 10px !important;
+    font-size: 16px !important;
+}
+
+#exportModal .form-group label::before {
+    content: '\f0c0 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--primary);
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Améliorer l'input number */
+#exportModal input[type="number"] {
+    border: 2px solid var(--gray-200) !important;
+    padding: 14px 18px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    background: var(--gray-50) !important;
+    transition: all 0.3s ease !important;
+}
+
+#exportModal input[type="number"]:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+    background: white !important;
+    outline: none !important;
+}
+
+/* Améliorer la checkbox container */
+#exportModal .checkbox-container,
+#exportModal .form-group:has(input[type="checkbox"]) > div {
+    background: var(--primary-light) !important;
+    border: 1px solid rgba(37, 99, 235, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+#exportModal .checkbox-container:hover,
+#exportModal .form-group:has(input[type="checkbox"]) > div:hover {
+    background: rgba(37, 99, 235, 0.08) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Améliorer la checkbox */
+#exportModal input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: var(--primary) !important;
+    cursor: pointer !important;
+    margin-right: 12px !important;
+}
+
+/* Améliorer le texte de la checkbox */
+#exportModal .checkbox-label,
+#exportModal label[for="verifyBeforeExport"] {
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+}
+
+/* Ajouter un badge "10 min" après le texte verify */
+#exportModal label[for="verifyBeforeExport"] strong::after {
+    content: ' 10 min';
+    background: var(--success);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Améliorer le bouton confirm */
+#exportModal .search-button,
+#exportModal #confirmExport {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 16px 24px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+#exportModal .search-button::before,
+#exportModal #confirmExport::before {
+    content: '\f058 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 2. AMÉLIORER LE MESSAGE DE CHARGEMENT */
+
+.loading {
+    background: white !important;
+    border-radius: 12px !important;
+    padding: 35px 30px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    border: 1px solid var(--gray-200) !important;
+    border-top: 4px solid var(--primary) !important;
+    max-width: 600px !important;
+    margin: 30px auto !important;
+    text-align: center !important;
+    animation: subtle-fade-in 0.5s ease-out !important;
+}
+
+@keyframes subtle-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Améliorer l'icône de loading */
+.loading i {
+    color: var(--primary) !important;
+    font-size: 40px !important;
+    margin-bottom: 20px !important;
+    animation: spin 1.5s linear infinite !important;
+}
+
+/* Améliorer le titre */
+.loading p:first-of-type {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: var(--gray-900) !important;
+    margin-bottom: 20px !important;
+}
+
+/* Améliorer le texte */
+.loading p:not(:first-of-type):not(:last-of-type) {
+    font-size: 15px !important;
+    color: var(--gray-700) !important;
+    line-height: 1.6 !important;
+    margin: 15px 0 !important;
+}
+
+/* Améliorer le timer */
+.loading #exportTimer,
+.loading div:last-child {
+    background: var(--gray-50) !important;
+    border: 1px solid var(--gray-200) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-top: 20px !important;
+    font-weight: 600 !important;
+    color: var(--primary) !important;
+}
+
+/* Ajouter une notice importante automatiquement */
+.loading::after {
+    content: '⚠️ Please keep this page open while we process your data';
+    display: block;
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    border: 1px solid var(--warning);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    color: #92400e;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* 3. AMÉLIORER LE MODAL DE CONFIRMATION */
+
+#exportConfirmationModal .modal-content {
+    border-left: 4px solid var(--success) !important;
+    overflow: hidden !important;
+}
+
+#exportConfirmationModal .modal-header {
+    background: linear-gradient(135deg, var(--success), #059669) !important;
+    color: white !important;
+    padding: 30px !important;
+    text-align: center !important;
+    border-bottom: none !important;
+}
+
+#exportConfirmationModal .modal-title {
+    color: white !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+#exportConfirmationModal .modal-title::before {
+    content: '\f058 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 48px;
+    display: block;
+    margin-bottom: 15px;
+    animation: checkmark-bounce 0.6s ease-out;
+}
+
+@keyframes checkmark-bounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Améliorer le contenu */
+#exportConfirmationModal .info-value p:first-child {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: var(--gray-800) !important;
+    margin-bottom: 15px !important;
+}
+
+#exportConfirmationModal .info-value p:not(:first-child) {
+    margin-bottom: 10px !important;
+    line-height: 1.6 !important;
+}
+
+#exportConfirmationModal .info-value p:last-child {
+    background: #fef3c7 !important;
+    border: 1px solid #f59e0b !important;
+    border-radius: 6px !important;
+    padding: 12px !important;
+    margin-top: 15px !important;
+    color: #92400e !important;
+    font-weight: 500 !important;
+}
+
+#exportConfirmationModal .info-value p:last-child::before {
+    content: '\f0e0 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #d97706;
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+/* Améliorer le bouton */
+#exportConfirmationModal .search-button,
+#exportConfirmationModal #closeConfirmationBtn {
+    background: linear-gradient(135deg, var(--success), #059669) !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+    font-weight: 700 !important;
+    padding: 16px 24px !important;
+}
+
+#exportConfirmationModal .search-button::before,
+#exportConfirmationModal #closeConfirmationBtn::before {
+    content: '\f164 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+#exportConfirmationModal .search-button:hover,
+#exportConfirmationModal #closeConfirmationBtn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* 4. RESPONSIVE MOBILE */
+@media (max-width: 640px) {
+    .loading {
+        padding: 20px 15px !important;
+        margin: 15px auto !important;
+    }
+    
+    .loading p:first-of-type {
+        font-size: 18px !important;
+    }
+    
+    #exportModal .modal-header {
+        padding: 20px !important;
+    }
+    
+    #exportModal .modal-title {
+        font-size: 20px !important;
+    }
+    
+    #exportConfirmationModal .modal-header {
+        padding: 20px !important;
+    }
+    
+    #exportConfirmationModal .modal-title {
+        font-size: 20px !important;
+    }
+}
 
     /* Mobile-friendly modal fixes */
     @media (max-width: 768px) {
@@ -1463,11 +1453,6 @@
                 <i class="fas fa-search"></i> Search Leads
             </a>
         </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" onclick="redirectToApolloFinder();" class="menu-link">
-                <i class="fas fa-rocket"></i> Email verifier
-            </a>
-        </li>
     </ul>
 </div>
 
@@ -1770,33 +1755,29 @@
             <h2 class="modal-title">Export Contacts</h2>
         </div>
         
-           <div class="form-group">
-        <label for="exportLimit">
-            <i class="fas fa-users"></i>
-            Number of leads to export:
-        </label>
-        <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000">
-    </div>
-    
-    <div class="form-group">
-        <div class="checkbox-container">
-            <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport">
-            <label for="verifyBeforeExport" class="checkbox-label">
-                <strong>Verify the list before exporting</strong>
-                <span class="verification-badge">
-                    <i class="fas fa-shield-check"></i>
-                    10 min
-                </span>
-                <small>Removes invalid emails and duplicates for higher quality leads</small>
-            </label>
-        </div>
-    </div>
-    
-    <button id="confirmExport" class="search-button">
-        <i class="fas fa-check-circle"></i>
-        Confirm Export
-    </button>
-</div>
+        <div class="modal-body">
+            <div class="info-item">
+                <div class="info-value">
+                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="exportLimit"><strong>Number of leads to export:</strong></label>
+                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
+            </div>
+            
+            <!-- Add the verification checkbox here -->
+            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
+                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
+                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong> (10 minutes)</label>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="confirmExport" class="search-button" style="max-width: 200px;">
+                    <i class="fas fa-check"></i> Confirm Export
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -1830,7 +1811,7 @@
     
     <script>
         // n8n webhook URL
-        const N8N_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook1';
+        const N8N_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/0b8401b5-8d6d-426d-a92e-1d94b2e3fab4';
         
         
         let allContacts = [];
@@ -1987,7 +1968,7 @@ function token_verif() {
     console.log("Fonction token_verif démarrée");
     
     // URL de l'API webhook
-    const WEBHOOK_URL_A = "https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2";
+    const WEBHOOK_URL_A = "https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3";
     
     // Récupérer les paramètres de l'URL actuelle
     const urlParams = new URLSearchParams(window.location.search);
@@ -2297,7 +2278,7 @@ async function handleSearch(e) {
 
 
 // Define the export-specific webhook URL
-const EXPORT_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/export';
+const EXPORT_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/3360bbb2-cbac-4989-89dc-55bfcc46946d';
 
 async function exportToCSV() {
     
@@ -2351,26 +2332,32 @@ async function exportToCSV() {
                 loading.style.margin = "30px auto";
                 
                 loading.innerHTML = `
-     <div class="loading-header">
-        <i class="fas fa-cog loading-icon"></i>
-        <div class="loading-title">Preparing your export...</div>
-    </div>
+                   <div style="text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
 
-    <div class="keep-open-notice">
-        <i class="fas fa-exclamation-triangle"></i>
-        <div class="notice-text">
-            <strong>Please keep this page open</strong> while we process your data
-        </div>
-    </div>
-
-    <p style="font-size: 15px; color: var(--gray-700); margin: 15px 0; line-height: 1.6;">
-        Your download will start automatically when ready. You will also receive your lead list in your Inbox.
-    </p>
-    
-    <div class="timer-section">
-        <div class="timer-display" id="exportTimer">Processing...</div>
-        <div class="timer-text">This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete</div>
-    </div>
+                          <p style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray-800);">
+                              ${verifyBeforeExport ? 'Verifying your leads and preparing your export...' : 'Preparing your export...'}
+                              </p>
+                        
+                       <div style="background-color: var(--primary-light); padding: 12px; border-radius: var(--radius-md); margin: 15px auto; max-width: 450px; border-left: 3px solid var(--primary);">
+                          <p style="font-size: 14px; color: var(--primary-dark); margin: 0; text-align: left;">
+                         <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                              Please keep this page open while we process your data
+                          </p>
+                      </div>
+        
+                     <p style="font-size: 14px; color: var(--gray-600); margin: 10px 0;">
+                         Your download will start automatically when ready. You will also receive your lead list in your Inbox.
+                       </p>
+                        <p style="font-size: 16px; margin-bottom: 15px;">
+                            This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete.
+                        </p>
+                        
+                        
+                        <div id="exportTimer" style="margin-top: 10px; font-size: 14px; color: var(--gray-700);">
+                          Processing...
+                            </div>
+                    </div>
                 `;
                 
                 // Always fetch the latest count before exporting
@@ -2566,11 +2553,11 @@ function showExportConfirmation(recordCount) {
     // Update the confirmation message
     const infoValue = confirmationModal.querySelector('.info-value');
     if (infoValue) {
-       infoValue.innerHTML = `
-    <p style="font-size: 18px; margin-bottom: 15px; font-weight: 600;"><strong>Your leads are being verified !</strong></p>
-    <p>You will receive your verified leads in your Inbox in 10-15 minutes</p>
-    <p style="margin-top: 10px;"><i class="fas fa-envelope" style="margin-right: 6px;"></i>Check your Inbox and your Spam folder to find your lead list</p>
-`;
+        infoValue.innerHTML = `
+            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are being verified !</strong></p>
+            <p>You will receive your verified leads in your Inbox in 10-15 minutes </p>
+            <p style="margin-top: 10px;">Check your Inbox and your Spam folder to find your lead list</p>
+        `;
     }
     
     confirmationModal.style.display = 'block';
