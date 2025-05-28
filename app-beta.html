@@ -766,6 +766,205 @@
         font-weight: 500;
         margin-top: 5px;
     }
+
+    /* Petits fixes pour améliorer le modal d'export */
+
+/* Améliorer le header du modal d'export */
+#exportModal .modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 24px 30px;
+    border-bottom: none;
+}
+
+#exportModal .modal-title {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    margin: 0;
+}
+
+#exportModal .modal-title i {
+    font-size: 24px;
+}
+
+/* Améliorer le texte d'information */
+#exportModal .info-value {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#exportModal .info-value p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+#exportModal .info-value p:last-child {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Améliorer le label du nombre de leads */
+#exportModal .form-group label {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+#exportModal .form-group label i {
+    color: var(--primary);
+    font-size: 18px;
+}
+
+/* Améliorer l'input */
+#exportModal input[type="number"] {
+    border: 2px solid var(--gray-200);
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: var(--gray-50);
+}
+
+#exportModal input[type="number"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    background: white;
+}
+
+/* Améliorer la checkbox section */
+.checkbox-container {
+    background: var(--primary-light);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checkbox-container:hover {
+    background: rgba(37, 99, 235, 0.08);
+    transform: translateY(-1px);
+}
+
+.checkbox-label {
+    flex: 1;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.checkbox-label small {
+    color: var(--gray-600);
+    margin-top: 6px;
+    display: block;
+}
+
+/* Badge pour la vérification */
+.verification-badge {
+    background: var(--success);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Améliorer le message de chargement */
+.loading {
+    background: white;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--primary);
+    max-width: 600px;
+    margin: 30px auto;
+    position: relative;
+}
+
+/* Header du loading avec icône */
+.loading-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.loading-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 0;
+}
+
+.loading-icon {
+    font-size: 32px;
+    color: var(--primary);
+    animation: spin 1.5s linear infinite;
+}
+
+/* Notice importante */
+.keep-open-notice {
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    border: 1px solid var(--warning);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.keep-open-notice i {
+    color: var(--warning);
+    font-size: 20px;
+}
+
+.notice-text {
+    color: #92400e;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Section du timer */
+.timer-section {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.timer-display {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.timer-text {
+    font-size: 14px;
+    color: var(--gray-600);
+}
     
     /* Alert styles */
     .alert {
@@ -1540,28 +1739,40 @@
         </div>
         
         <div class="modal-body">
-            <div class="info-item">
-                <div class="info-value">
-                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
-                </div>
-            </div>
+    <div class="info-item">
+        <div class="info-value">
+            <p>Are you sure you want to export this list of leads? This will use credits from your account.</p>
+            <p><i class="fas fa-envelope"></i> Your verified contact list will be sent to your <strong>email within 3 hours</strong>.</p>
+        </div>
+    </div>
             
-            <div class="form-group" style="margin-top: 20px;">
-                <label for="exportLimit"><strong>Number of leads to export:</strong></label>
-                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
-            </div>
-            
-            <!-- Add the verification checkbox here -->
-            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
-                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
-                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong> (10 minutes)</label>
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px;">
-                <button id="confirmExport" class="search-button" style="max-width: 200px;">
-                    <i class="fas fa-check"></i> Confirm Export
-                </button>
-            </div>
+           <div class="form-group">
+        <label for="exportLimit">
+            <i class="fas fa-users"></i>
+            Number of leads to export:
+        </label>
+        <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000">
+    </div>
+    
+    <div class="form-group">
+        <div class="checkbox-container">
+            <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport">
+            <label for="verifyBeforeExport" class="checkbox-label">
+                <strong>Verify the list before exporting</strong>
+                <span class="verification-badge">
+                    <i class="fas fa-shield-check"></i>
+                    10 min
+                </span>
+                <small>Removes invalid emails and duplicates for higher quality leads</small>
+            </label>
+        </div>
+    </div>
+    
+    <button id="confirmExport" class="search-button">
+        <i class="fas fa-check-circle"></i>
+        Confirm Export
+    </button>
+</div>
         </div>
     </div>
 </div>
@@ -2116,29 +2327,25 @@ async function exportToCSV() {
                 loading.style.margin = "30px auto";
                 
                 loading.innerHTML = `
-    <div style="text-align: center;">
-        <i class="fas fa-spinner fa-spin" style="font-size: 40px; color: var(--primary); margin-bottom: 20px;"></i>
+     <div class="loading-header">
+        <i class="fas fa-cog loading-icon"></i>
+        <div class="loading-title">Preparing your export...</div>
+    </div>
 
-        <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
-            ${verifyBeforeExport ? 'Verifying your leads and preparing your export...' : 'Preparing your export...'}
-        </p>
-        
-        <div class="info-highlight">
-            <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-            Please keep this page open while we process your data
+    <div class="keep-open-notice">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div class="notice-text">
+            <strong>Please keep this page open</strong> while we process your data
         </div>
+    </div>
 
-        <p style="font-size: 14px; color: var(--gray-600); margin: 15px 0;">
-            Your download will start automatically when ready. You will also receive your lead list in your Inbox.
-        </p>
-        
-        <p style="font-size: 16px; margin-bottom: 15px;">
-            This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete.
-        </p>
-        
-        <div id="exportTimer" style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; padding: 10px 15px; margin-top: 15px; font-weight: 500;">
-            Processing...
-        </div>
+    <p style="font-size: 15px; color: var(--gray-700); margin: 15px 0; line-height: 1.6;">
+        Your download will start automatically when ready. You will also receive your lead list in your Inbox.
+    </p>
+    
+    <div class="timer-section">
+        <div class="timer-display" id="exportTimer">Processing...</div>
+        <div class="timer-text">This export may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong> to complete</div>
     </div>
                 `;
                 
