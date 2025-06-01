@@ -1963,7 +1963,7 @@ document.addEventListener('DOMContentLoaded', function() {
 token_verif();
 
         
-       // Correction de la fonction displayInitialResults pour afficher correctement les données
+// Fonction corrigée pour afficher les résultats initiaux
 function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
@@ -1971,13 +1971,12 @@ function displayInitialResults() {
     // Clear existing results
     resultsBody.innerHTML = '';
     
-    // Show or hide no results message - don't calculate count here
+    // Show or hide no results message
     if (allContacts.length === 0) {
         noResults.style.display = 'block';
         resultsTable.style.display = 'none';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
-        // Don't update count displays here - let fetchTotalCount handle this
         return;
     } else {
         noResults.style.display = 'none';
@@ -1987,23 +1986,21 @@ function displayInitialResults() {
     // Display only the first 25 contacts
     const displayContacts = allContacts.slice(0, 25);
     
-    // Update pagination info for records shown, but NOT the count
+    // Update pagination info
     startRecord.textContent = '1';
     endRecord.textContent = displayContacts.length;
-    // Don't update totalDisplayRecords here - let fetchTotalCount do it
     
-    // Populate the table with contacts
+    // Populate the table with contacts - UTILISER LES BONS NOMS DE PROPRIÉTÉS
     displayContacts.forEach(contact => {
         const row = document.createElement('tr');
         
-        // D'après votre échantillon de données, les noms des colonnes sont "first name", "last name", "title", "company"
-        // (au lieu de "job title" et "company name")
+        // Utiliser les noms corrects basés sur votre JSON
         row.innerHTML = `
-            <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
-            <td>${contact['title'] || 'N/A'}</td>
-            <td>${contact['company'] || 'N/A'}</td>
-            <td>${contact['email'] || 'N/A'}</td>
-            <td>${contact['country'] || 'N/A'}</td>
+            <td>${contact.name || 'N/A'}</td>
+            <td>${contact.title || 'N/A'}</td>
+            <td>${contact.company || 'N/A'}</td>
+            <td>${contact.email || 'N/A'}</td>
+            <td>${contact.country || 'N/A'}</td>
             <td>
                 <div class="action-icons">
                     <i class="fas fa-eye" title="View Details"></i>
@@ -2021,24 +2018,31 @@ function displayInitialResults() {
     });
 }
 
-// Correction de la fonction showContactDetails pour afficher correctement les données
+// Fonction corrigée pour afficher les détails du contact
 function showContactDetails(contact) {
-    // Fill in modal details
-    document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-    document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-    document.getElementById('modalTitle').textContent = contact['title'] || 'N/A';
-    document.getElementById('modalManagementLevel').textContent = contact['managementlevel'] || 'N/A';
-    document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
-    document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
-    document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
-    document.getElementById('modalLocation').textContent = contact['city'] || contact['country'] || 'N/A';
+    console.log("Contact data received:", contact); // Pour débugger
     
-    document.getElementById('modalCompany').textContent = contact['company'] || 'N/A';
-    document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
-    document.getElementById('modalCompanySize').textContent = contact['companysize'] || 'N/A';
-    document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
-    document.getElementById('modalCompanyPhone').textContent = contact['cphone'] || 'N/A';
-    document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
+    // Contact Information
+    document.getElementById('modalName').textContent = contact.name || 'N/A';
+    document.getElementById('modalFullName').textContent = contact.name || 'N/A';
+    document.getElementById('modalTitle').textContent = contact.title || 'N/A';
+    document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
+    document.getElementById('modalEmail').textContent = contact.email || 'N/A';
+    document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
+    document.getElementById('modalLinkedIn').textContent = contact.linkedin || 'N/A';
+    
+    // Location - combinaison de city, state, country
+    const locationParts = [contact.city, contact.state, contact.country].filter(part => part && part.trim() !== '');
+    const location = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
+    document.getElementById('modalLocation').textContent = location;
+    
+    // Company Information
+    document.getElementById('modalCompany').textContent = contact.company || 'N/A';
+    document.getElementById('modalIndustry').textContent = contact.industry || 'N/A';
+    document.getElementById('modalCompanySize').textContent = contact.employees || 'N/A';
+    document.getElementById('modalWebsite').textContent = contact.website || 'N/A';
+    document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'N/A';
+    document.getElementById('modalDescription').textContent = contact.description || 'N/A';
     
     // Show the modal
     contactModal.style.display = 'block';
