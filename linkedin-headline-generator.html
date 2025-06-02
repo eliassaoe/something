@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">        
+<head>                  
+    <meta charset="utf-8"/>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>         
+    <title>LinkedIn Headline Generator | Free Professional Headlines | UnlimitedLeads</title>
+    <meta name="description" content="Create compelling LinkedIn headlines with our free LinkedIn headline generator. Boost profile visibility, attract prospects, and generate professional headlines that get results - 100% free"/>
+ 
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://unlimited-leads.online/linkedin-headline-generator" />
+    <meta property="og:title" content="LinkedIn Headline Generator | Free Professional Headlines | UnlimitedLeads" />
+    <meta property="og:description" content="Create compelling LinkedIn headlines with our free LinkedIn headline generator. Boost profile visibility, attract prospects, and generate professional headlines that get results" />
+    <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --linkedin: #0077b5;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: var(--gray-800); }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .linkedin-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--linkedin); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; }
+
+        /* Form Styles */
+        .generator-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background: var(--gray-50);
+        }
+        .form-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+        .form-control textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--gray-400);
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: white;
+            cursor: pointer;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79,70,229,0.3);
+        }
+        .btn-secondary {
+            background: var(--success);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+        .btn-linkedin {
+            background: var(--linkedin);
+            color: white;
+        }
+        .btn-linkedin:hover {
+            background: #005885;
+        }
+        .btn-large {
+            width: 100%;
+            font-size: 1rem;
+            padding: 1rem;
+        }
+
+        /* Results Area */
+        .results-area {
+            display: none;
+            margin-top: 2rem;
+        }
+        .result-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: var(--transition);
+        }
+        .result-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--box-shadow);
+        }
+        .result-type {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .result-headline {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .result-about {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .result-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Template Suggestions */
+        .templates-section {
+            margin-top: 3rem;
+        }
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .template-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .template-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+        .template-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        .template-example {
+            font-style: italic;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .template-description {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .tip-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary);
+        }
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 3rem 0 4rem;
+            background: var(--gray-50);
+        }
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background: white;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 500px;
+        }
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* Status Messages */
+        .status {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .status-error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .status-loading {
+            background-color: rgba(79, 70, 229, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(79,70,229,0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Footer */
+        .footer { 
+            background: var(--gray-800); 
+            color: white; 
+            padding: 3rem 0 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+        .footer-bottom p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-bottom a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .result-actions {
+                flex-direction: column;
+            }
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="https://unlimited-leads.online/en" class="logo-link">
+                    <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                    <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="linkedin-badge">
+                <i class="fab fa-linkedin"></i>
+                <span>FREE TOOL</span>
+            </div>
+            <h1>LinkedIn Headline Generator</h1>
+            <p>Create compelling LinkedIn headlines that attract prospects, boost profile views, and land more opportunities. Our AI-powered LinkedIn headline generator crafts professional headlines and about sections tailored to your industry and goals - completely free.</p>
+        </div>
+    </section>
+
+    <!-- LinkedIn Headline Generator Form -->
+    <section class="container">
+        <div class="generator-form">
+            <div id="statusMessage" class="status"></div>
+            
+            <form id="headlineForm">
+                <!-- Essential Information -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Tell Us About Yourself</h3>
+                    <div class="form-group">
+                        <label for="jobTitle">What's your current job title? *</label>
+                        <input type="text" id="jobTitle" class="form-control" placeholder="e.g., Sales Manager, Marketing Director, Software Developer" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="targetAudience">Who do you want to attract on LinkedIn? *</label>
+                        <input type="text" id="targetAudience" class="form-control" placeholder="e.g., B2B decision makers, potential clients, recruiters, investors" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valueProposition">What value do you provide? (What problems do you solve?) *</label>
+                        <textarea id="valueProposition" class="form-control" placeholder="e.g., Help companies increase sales by 40% through data-driven strategies and proven methodologies" required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="generateBtn" class="btn btn-primary btn-large">
+                    <i class="fas fa-magic"></i>
+                    <span>Generate LinkedIn Headlines</span>
+                </button>
+            </form>
+
+            <!-- Results Area -->
+            <div id="resultsArea" class="results-area">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">
+                    <i class="fas fa-lightbulb"></i> Your LinkedIn Headlines & About Sections
+                </h3>
+                <div id="generatedResults"></div>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button id="generateMoreBtn" class="btn btn-secondary">
+                        <i class="fas fa-refresh"></i>
+                        Generate More Variations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Template Suggestions -->
+    <section class="container templates-section">
+        <h2 style="text-align: center; margin-bottom: 1rem; font-size: 1.75rem; font-weight: 700;">
+            LinkedIn Headline Templates by Industry
+        </h2>
+        <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">
+            Click on any template to automatically fill your form and generate headlines
+        </p>
+        
+        <div class="templates-grid">
+            <div class="template-card" data-template="sales">
+                <div class="template-title">Sales Professional</div>
+                <div class="template-example">"B2B Sales Manager | Helping SaaS Companies Scale Revenue | $10M+ in Pipeline Generated"</div>
+                <div class="template-description">Perfect for sales professionals who want to highlight their track record and results.</div>
+            </div>
+            
+            <div class="template-card" data-template="marketing">
+                <div class="template-title">Marketing Expert</div>
+                <div class="template-example">"Digital Marketing Strategist | Driving 300% ROI for E-commerce Brands | Growth & Conversion Specialist"</div>
+                <div class="template-description">Ideal for marketers who want to showcase their impact on business growth.</div>
+            </div>
+            
+            <div class="template-card" data-template="tech">
+                <div class="template-title">Tech Professional</div>
+                <div class="template-example">"Full-Stack Developer | Building Scalable Solutions | React • Node.js • AWS"</div>
+                <div class="template-description">Great for developers and tech professionals highlighting their technical skills.</div>
+            </div>
+            
+            <div class="template-card" data-template="consultant">
+                <div class="template-title">Consultant</div>
+                <div class="template-example">"Strategic Business Consultant | Transforming Operations for Fortune 500 Companies | Process Optimization Expert"</div>
+                <div class="template-description">Perfect for consultants who want to emphasize their expertise and client caliber.</div>
+            </div>
+            
+            <div class="template-card" data-template="entrepreneur">
+                <div class="template-title">Entrepreneur</div>
+                <div class="template-example">"CEO & Founder | Building the Future of FinTech | Raised $5M+ | Connecting Investors & Innovators"</div>
+                <div class="template-description">Ideal for founders and entrepreneurs looking to attract investors and partners.</div>
+            </div>
+            
+            <div class="template-card" data-template="hr">
+                <div class="template-title">HR Professional</div>
+                <div class="template-example">"People & Culture Leader | Building High-Performance Teams | Talent Acquisition & Employee Experience Expert"</div>
+                <div class="template-description">Perfect for HR professionals who want to attract top talent and showcase their people skills.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2.5rem; font-size: 1.75rem; font-weight: 700;">
+                LinkedIn Headline Best Practices
+            </h2>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">🎯</div>
+                    <div class="tip-title">Be Specific</div>
+                    <p>Use specific numbers, industries, and results rather than vague terms like "experienced professional"</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🔑</div>
+                    <div class="tip-title">Include Keywords</div>
+                    <p>Add relevant industry keywords that your target audience would search for on LinkedIn</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">💡</div>
+                    <div class="tip-title">Show Value</div>
+                    <p>Focus on what you can do for others, not just your job title or what you want</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">📊</div>
+                    <div class="tip-title">Use Numbers</div>
+                    <p>Quantify your achievements with specific metrics and percentages when possible</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🎨</div>
+                    <div class="tip-title">Add Personality</div>
+                    <p>Let your unique voice shine through while maintaining professionalism</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🔄</div>
+                    <div class="tip-title">Test & Update</div>
+                    <p>Regularly update your headline and test different versions to see what works best</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Use Our LinkedIn Headline Generator?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Our advanced AI analyzes successful LinkedIn profiles to create headlines that get results and attract the right connections.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Industry-Specific</h3>
+                    <p>Get headlines tailored to your specific industry, role, and target audience for maximum relevance and impact.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Results-Driven</h3>
+                    <p>Our headlines are designed to increase profile views, connection requests, and opportunities from your ideal prospects.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-copy"></i>
+                    </div>
+                    <h3>Multiple Variations</h3>
+                    <p>Get 5 different headline styles and complete about sections to choose from, all optimized for your goals.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Results</h3>
+                    <p>Generate professional LinkedIn headlines in seconds, not hours. Copy and paste directly to your profile.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Completely Free</h3>
+                    <p>No hidden fees, no sign-ups required. Generate unlimited LinkedIn headlines and about sections for free.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions About LinkedIn Headlines</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    What makes a great LinkedIn headline?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>A great LinkedIn headline clearly communicates who you are, what you do, and the value you provide. It should include relevant keywords, specific results or achievements, and be tailored to your target audience. The best headlines are specific, benefit-focused, and use numbers when possible. For example, instead of "Sales Manager," try "B2B Sales Manager | Helping SaaS Companies Increase Revenue by 40% | $10M+ Pipeline Generated."</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    How long should my LinkedIn headline be?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>LinkedIn headlines can be up to 220 characters long, and you should use most of that space. However, keep in mind that only the first 40-50 characters will be visible in search results and connection requests, so put your most important information first. Our LinkedIn headline generator optimizes the length and structure for maximum impact.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Should I include keywords in my LinkedIn headline?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Including relevant keywords in your LinkedIn headline is crucial for being found in LinkedIn searches. Think about what terms your ideal clients, employers, or connections would search for. Include your job title, industry terms, skills, and location if relevant. Our generator automatically incorporates industry-specific keywords to improve your discoverability.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    How often should I update my LinkedIn headline?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You should update your LinkedIn headline whenever your role, goals, or target audience changes. Even if your job stays the same, consider refreshing your headline every 3-6 months to test different approaches and keep your profile active. Our generator makes it easy to create multiple variations to test and optimize your profile performance.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use the same headline for different industries?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>While some elements might be transferable, it's best to customize your headline for each industry or target audience. Different industries have different pain points, terminology, and values. Our LinkedIn headline generator creates industry-specific headlines that resonate with your particular market and use the right keywords for that sector.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    What's the difference between a headline and an about section?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Your LinkedIn headline is the short description (up to 220 characters) that appears under your name on your profile and in search results. Your about section is a longer summary (up to 2,600 characters) where you can tell your full professional story. Our generator creates both - catchy headlines for maximum visibility and compelling about sections that convert visitors into connections.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Will this LinkedIn headline generator help me get more profile views?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! A compelling, keyword-optimized headline can significantly increase your profile views. Our generator creates headlines that are designed to appear in more LinkedIn searches and encourage people to click on your profile. Many users see a 200-400% increase in profile views after optimizing their headline with our tool.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I customize the generated headlines?
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! Our generated headlines are starting points that you can and should customize to match your personal brand and voice. Feel free to mix and match elements from different variations, add your own achievements, or adjust the tone to better reflect your personality while maintaining professionalism.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.75rem; color: var(--gray-800);">How to Use LinkedIn Headlines to Attract More Opportunities</h2>
+            
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">Your LinkedIn headline is one of the most important elements of your profile. It's the first thing people see when you appear in search results, send connection requests, or comment on posts. A well-crafted LinkedIn headline can be the difference between being ignored and being contacted with exciting opportunities.</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem; color: var(--primary);">The Psychology Behind Effective LinkedIn Headlines</h3>
+            
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">The best LinkedIn headlines work because they quickly communicate value and relevance. When someone views your profile, they're asking themselves: "Can this person help me solve my problems?" Your headline should answer that question immediately. Our LinkedIn headline generator uses proven psychological triggers like social proof, specificity, and benefit-focused language to create headlines that compel people to learn more about you.</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem; color: var(--primary);">LinkedIn Headline Formulas That Work</h3>
+            
+            <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); margin: 1.5rem 0;">
+                <h4 style="margin-bottom: 1rem; color: var(--primary);">Formula 1: Role + Target + Value</h4>
+                <p style="margin-bottom: 0.5rem; font-style: italic;">"Marketing Manager | Helping SaaS Startups | Generate 10x More Qualified Leads"</p>
+                
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">Formula 2: Role + Achievement + Skills</h4>
+                <p style="margin-bottom: 0.5rem; font-style: italic;">"Sales Director | $50M+ Revenue Generated | CRM Expert & Team Builder"</p>
+                
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">Formula 3: Problem + Solution + Proof</h4>
+                <p style="margin-bottom: 0; font-style: italic;">"Struggling with Lead Generation? | I Help B2B Companies Triple Their Sales Pipeline | 200+ Success Stories"</p>
+            </div>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem; color: var(--primary);">Common LinkedIn Headline Mistakes to Avoid</h3>
+            
+            <ol style="margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--gray-600);">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Being too vague:</strong> "Experienced professional" tells people nothing about what you actually do.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Focusing on what you want:</strong> "Seeking new opportunities" is about you, not about the value you provide.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Using jargon or buzzwords:</strong> Terms like "synergy" and "thought leader" have lost their impact.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Forgetting keywords:</strong> Without relevant keywords, you won't appear in searches.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Making it too long:</strong> Cramming too much information makes your headline hard to read.
+                </li>
+            </ol>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem; color: var(--primary);">Optimizing Your LinkedIn Profile Beyond the Headline</h3>
+            
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">While a great headline is crucial, it's just the first step. Your LinkedIn about section should expand on your headline with storytelling, specific examples, and a clear call-to-action. Your profile photo should be professional and approachable. Your experience section should focus on achievements rather than job duties. Our LinkedIn headline generator creates headlines that work seamlessly with these other profile elements.</p>
+            
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 1.5rem; border-radius: var(--border-radius); color: white; margin: 2rem 0;">
+                <h4 style="margin-bottom: 0.75rem;">💡 Pro Tip for LinkedIn Success</h4>
+                <p style="margin-bottom: 0;">Use our LinkedIn headline generator to create 3-5 different headline variations, then test them over a few weeks to see which one generates more profile views and connection requests. LinkedIn's analytics can help you track your profile performance and optimize for better results.</p>
+            </div>
+            
+            <p style="margin-bottom: 1.5rem; color: var(--gray-600);">Remember, your LinkedIn headline is working for you 24/7, appearing in search results, connection requests, and comments. Invest the time to get it right using our free LinkedIn headline generator, and you'll see the impact on your professional opportunities and network growth.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Free Tools Section -->
+                <div class="footer-column">
+                    <h4>Free Tools</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                        <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
+                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                        <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                        <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
+                        <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
+                        <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                    </ul>
+                </div>
+
+                <!-- Compare Section -->
+                <div class="footer-column">
+                    <h4>Compare</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
+                        <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+                <p>
+                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form elements
+        const headlineForm = document.getElementById('headlineForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const generateMoreBtn = document.getElementById('generateMoreBtn');
+        const resultsArea = document.getElementById('resultsArea');
+        const generatedResults = document.getElementById('generatedResults');
+        const statusMessage = document.getElementById('statusMessage');
+
+        // Template data
+        const templates = {
+            sales: {
+                jobTitle: "Sales Manager",
+                targetAudience: "B2B decision makers and growing companies",
+                valueProposition: "Help companies increase revenue by 40% through proven sales strategies and pipeline optimization"
+            },
+            marketing: {
+                jobTitle: "Digital Marketing Manager",
+                targetAudience: "E-commerce and SaaS companies looking to scale",
+                valueProposition: "Drive 300% ROI for online businesses through data-driven marketing campaigns and conversion optimization"
+            },
+            tech: {
+                jobTitle: "Full-Stack Developer",
+                targetAudience: "Startups and tech companies needing scalable solutions",
+                valueProposition: "Build robust, scalable web applications that handle millions of users while maintaining peak performance"
+            },
+            consultant: {
+                jobTitle: "Business Consultant",
+                targetAudience: "Fortune 500 companies and growing businesses",
+                valueProposition: "Transform business operations and increase efficiency by 50% through strategic process optimization"
+            },
+            entrepreneur: {
+                jobTitle: "CEO & Founder",
+                targetAudience: "Investors, partners, and potential clients",
+                valueProposition: "Revolutionize financial services through innovative technology solutions that democratize access to capital"
+            },
+            hr: {
+                jobTitle: "HR Director",
+                targetAudience: "Growing companies and top talent",
+                valueProposition: "Build high-performance teams and company culture that reduces turnover by 60% and attracts top talent"
+            }
+        };
+
+        // Template click handlers
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const templateType = this.dataset.template;
+                const template = templates[templateType];
+                
+                if (template) {
+                    // Fill form with template data
+                    document.getElementById('jobTitle').value = template.jobTitle;
+                    document.getElementById('targetAudience').value = template.targetAudience;
+                    document.getElementById('valueProposition').value = template.valueProposition;
+                    
+                    // Scroll to form
+                    document.querySelector('.generator-form').scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Show success message
+                    showStatus('Template loaded! Customize the details and click "Generate LinkedIn Headlines" to get your personalized results.', 'success');
+                }
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form submission
+        headlineForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateHeadlines();
+        });
+
+        generateMoreBtn.addEventListener('click', function() {
+            generateHeadlines(true);
+        });
+
+        function generateHeadlines(isMore = false) {
+            // Get form data
+            const formData = {
+                jobTitle: document.getElementById('jobTitle').value.trim(),
+                targetAudience: document.getElementById('targetAudience').value.trim(),
+                valueProposition: document.getElementById('valueProposition').value.trim()
+            };
+
+            // Validate required fields
+            if (!formData.jobTitle || !formData.targetAudience || !formData.valueProposition) {
+                showStatus('Please fill in all required fields marked with *', 'error');
+                return;
+            }
+
+            // Show loading state
+            const btn = isMore ? generateMoreBtn : generateBtn;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loader"></span> Generating...';
+            
+            showStatus('<span class="loader"></span> Creating your LinkedIn headlines and about sections...', 'loading');
+
+            // Simulate API call with timeout
+            setTimeout(() => {
+                try {
+                    const headlines = generateHeadlineVariations(formData);
+                    displayResults(headlines, isMore);
+                    
+                    // Restore button
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    
+                    showStatus('LinkedIn headlines generated successfully! Copy and paste them to your profile.', 'success');
+                    
+                    // Scroll to results
+                    resultsArea.scrollIntoView({ behavior: 'smooth' });
+                } catch (error) {
+                    console.error('Error generating headlines:', error);
+                    showStatus('Failed to generate headlines. Please try again.', 'error');
+                    
+                    // Restore button
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            }, 2000);
+        }
+
+        function generateHeadlineVariations(data) {
+            const variations = [];
+            
+            // Variation 1: Professional & Direct
+            variations.push({
+                type: "Professional & Direct",
+                headline: `${data.jobTitle} | ${data.valueProposition.split(' ').slice(0, 8).join(' ')}`,
+                about: `I'm a ${data.jobTitle.toLowerCase()} with a passion for helping ${data.targetAudience.toLowerCase()}.\n\n${data.valueProposition}\n\nLet's connect and explore how we can work together to achieve your goals!`
+            });
+
+            // Variation 2: Results-Focused
+            variations.push({
+                type: "Results-Focused",
+                headline: `${data.jobTitle} | Proven Track Record | ${data.targetAudience.split(' ').slice(0, 3).join(' ')} Expert`,
+                about: `🎯 ${data.valueProposition}\n\n📈 I specialize in delivering measurable results for ${data.targetAudience.toLowerCase()}.\n\n💡 My approach combines proven strategies with innovative thinking to drive success.\n\nReady to achieve similar results? Let's talk!`
+            });
+
+            // Variation 3: Problem-Solver
+            variations.push({
+                type: "Problem-Solver",
+                headline: `Helping ${data.targetAudience} | ${data.valueProposition.split(' ').slice(0, 10).join(' ')} | ${data.jobTitle}`,
+                about: `Are you looking to transform your business?\n\n${data.valueProposition}\n\nAs a ${data.jobTitle.toLowerCase()}, I've helped countless ${data.targetAudience.toLowerCase()} overcome their biggest challenges.\n\nI believe every challenge is an opportunity in disguise.\n\nLet's solve your toughest problems together!`
+            });
+
+            // Variation 4: Thought Leader
+            variations.push({
+                type: "Thought Leader",
+                headline: `${data.jobTitle} | ${data.valueProposition.split(' ').slice(3, 12).join(' ')} | Industry Expert`,
+                about: `Welcome to my profile!\n\nI'm passionate about transforming businesses through strategic thinking and proven methodologies.\n\n🚀 My mission: ${data.valueProposition}\n\n🏆 What sets me apart:\n• Deep understanding of ${data.targetAudience.toLowerCase()} needs\n• Proven methodologies that deliver results\n• Years of hands-on experience\n\nI love sharing insights and connecting with fellow professionals. Let's grow together!`
+            });
+
+            // Variation 5: Conversational & Approachable
+            variations.push({
+                type: "Conversational & Approachable",
+                headline: `${data.jobTitle} who loves helping businesses grow | ${data.valueProposition.split(' ').slice(0, 8).join(' ')} ✨`,
+                about: `Hi there! 👋\n\nI'm a ${data.jobTitle.toLowerCase()} who's genuinely excited about helping ${data.targetAudience.toLowerCase()}.\n\nWhat I do: ${data.valueProposition}\n\nI believe in building authentic relationships and delivering real value.\n\nI'd love to connect and learn about your journey too! Send me a message – I always respond personally.`
+            });
+
+            return variations;
+        }
+
+        function displayResults(headlines, append = false) {
+            if (!append) {
+                generatedResults.innerHTML = '';
+            }
+
+            headlines.forEach((headline, index) => {
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                resultCard.innerHTML = `
+                    <div class="result-type">${headline.type}</div>
+                    <div class="result-headline">${headline.headline}</div>
+                    <div class="result-about">${headline.about.replace(/\n/g, '<br>')}</div>
+                    <div class="result-actions">
+                        <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${encodeURIComponent(headline.headline)}', this, 'headline')">
+                            <i class="fas fa-copy"></i>
+                            Copy Headline
+                        </button>
+                        <button class="btn btn-linkedin copy-btn" onclick="copyToClipboard('${encodeURIComponent(headline.about)}', this, 'about')">
+                            <i class="fab fa-linkedin"></i>
+                            Copy About Section
+                        </button>
+                    </div>
+                `;
+                generatedResults.appendChild(resultCard);
+            });
+
+            resultsArea.style.display = 'block';
+        }
+
+        // Global function for copying to clipboard
+        window.
