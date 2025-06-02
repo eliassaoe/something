@@ -185,53 +185,79 @@
         .results-area {
             display: none;
             margin-top: 2rem;
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--primary);
+        }
+        .results-area h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
         }
         .result-card {
             background: white;
             border: 1px solid var(--gray-200);
             border-radius: var(--border-radius);
             padding: 1.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             position: relative;
             transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .result-card:hover {
             border-color: var(--primary);
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 4px 12px rgba(79,70,229,0.15);
+            transform: translateY(-2px);
         }
         .result-type {
             display: inline-block;
-            background: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .result-headline {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--gray-800);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             line-height: 1.4;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
         }
         .result-about {
             color: var(--gray-600);
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            white-space: pre-line;
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
         }
         .result-actions {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
         .copy-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.25rem;
             font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
         }
 
         /* Template Suggestions */
@@ -1048,6 +1074,8 @@
                 valueProposition: document.getElementById('valueProposition').value.trim()
             };
 
+            console.log('Form data:', formData); // Debug log
+
             // Validate required fields
             if (!formData.jobTitle || !formData.targetAudience || !formData.valueProposition) {
                 showStatus('Please fill in all required fields marked with *', 'error');
@@ -1062,29 +1090,32 @@
             
             showStatus('<span class="loader"></span> Creating your LinkedIn headlines and about sections...', 'loading');
 
-            // Simulate API call with timeout
+            // Simulate processing time
             setTimeout(() => {
                 try {
                     const headlines = generateHeadlineVariations(formData);
+                    console.log('Generated headlines:', headlines); // Debug log
                     displayResults(headlines, isMore);
                     
                     // Restore button
                     btn.disabled = false;
                     btn.innerHTML = originalText;
                     
-                    showStatus('LinkedIn headlines generated successfully! Copy and paste them to your profile.', 'success');
+                    showStatus('✅ LinkedIn headlines generated successfully! Copy and paste them to your profile.', 'success');
                     
                     // Scroll to results
-                    resultsArea.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
                 } catch (error) {
                     console.error('Error generating headlines:', error);
-                    showStatus('Failed to generate headlines. Please try again.', 'error');
+                    showStatus('❌ Failed to generate headlines. Please try again.', 'error');
                     
                     // Restore button
                     btn.disabled = false;
                     btn.innerHTML = originalText;
                 }
-            }, 2000);
+            }, 1500); // Reduced time for better UX
         }
 
         function generateHeadlineVariations(data) {
@@ -1136,16 +1167,21 @@
             headlines.forEach((headline, index) => {
                 const resultCard = document.createElement('div');
                 resultCard.className = 'result-card';
+                
+                // Create unique IDs for this card
+                const headlineId = `headline_${Date.now()}_${index}`;
+                const aboutId = `about_${Date.now()}_${index}`;
+                
                 resultCard.innerHTML = `
                     <div class="result-type">${headline.type}</div>
-                    <div class="result-headline">${headline.headline}</div>
-                    <div class="result-about">${headline.about.replace(/\n/g, '<br>')}</div>
+                    <div class="result-headline" id="${headlineId}">${headline.headline}</div>
+                    <div class="result-about" id="${aboutId}">${headline.about.replace(/\n/g, '<br>')}</div>
                     <div class="result-actions">
-                        <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${encodeURIComponent(headline.headline)}', this, 'headline')">
+                        <button class="btn btn-secondary copy-btn" onclick="copyText('${headlineId}', this, 'headline')">
                             <i class="fas fa-copy"></i>
                             Copy Headline
                         </button>
-                        <button class="btn btn-linkedin copy-btn" onclick="copyToClipboard('${encodeURIComponent(headline.about)}', this, 'about')">
+                        <button class="btn btn-linkedin copy-btn" onclick="copyText('${aboutId}', this, 'about')">
                             <i class="fab fa-linkedin"></i>
                             Copy About Section
                         </button>
@@ -1157,5 +1193,96 @@
             resultsArea.style.display = 'block';
         }
 
+        // Global function for copying text from elements
+        window.copyText = function(elementId, button, type) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            // Get text content and clean it up
+            let text = element.textContent || element.innerText;
+            
+            // For about sections, preserve line breaks
+            if (type === 'about') {
+                text = element.innerHTML.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+            }
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.innerHTML;
+                if (type === 'headline') {
+                    button.innerHTML = '<i class="fas fa-check"></i> Headline Copied!';
+                    button.style.background = 'var(--success)';
+                } else {
+                    button.innerHTML = '<i class="fas fa-check"></i> About Section Copied!';
+                    button.style.background = 'var(--success)';
+                }
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = 'var(--success)';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        };
+
         // Global function for copying to clipboard
-        window.
+        window.copyToClipboard = function(text, button, type) {
+            const decodedText = decodeURIComponent(text);
+            navigator.clipboard.writeText(decodedText).then(function() {
+                const originalText = button.innerHTML;
+                if (type === 'headline') {
+                    button.innerHTML = '<i class="fas fa-check"></i> Headline Copied!';
+                } else {
+                    button.innerHTML = '<i class="fas fa-check"></i> About Section Copied!';
+                }
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = decodedText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        };
+
+        // Show status message helper
+        function showStatus(message, type) {
+            statusMessage.innerHTML = message;
+            statusMessage.className = `status status-${type}`;
+            statusMessage.style.display = 'block';
+            
+            // Hide status message after some time for non-loading messages
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+    });
