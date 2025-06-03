@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Free LinkedIn About Section Generator | Unlimited Leads</title>
-    <meta name="description" content="Generate compelling LinkedIn about sections in seconds with our AI-powered tool. Stand out to prospects and boost your profile visibility with Unlimited Leads' free LinkedIn about section generator."/>
+    <title>Free LinkedIn Headline Generator | Unlimited Leads</title>
+    <meta name="description" content="Generate compelling LinkedIn Headlines in seconds with our AI-powered tool. Stand out to prospects and boost your profile visibility with Unlimited Leads' free LinkedIn Headline generator."/>
     
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,8 +16,8 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://unlimited-leads.online/linkedin-headline-generator" />
-    <meta property="og:title" content="Free LinkedIn About Section Generator | Unlimited Leads" />
-    <meta property="og:description" content="Generate compelling LinkedIn about sections in seconds with our AI-powered tool. Stand out to prospects and boost your profile visibility." />
+    <meta property="og:title" content="Free LinkedIn Headline Generator | Unlimited Leads" />
+    <meta property="og:description" content="Generate compelling LinkedIn Headlines in seconds with our AI-powered tool. Stand out to prospects and boost your profile visibility." />
     <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
     
     <!-- Fonts & Icons -->
@@ -539,8 +539,8 @@
                 <i class="fas fa-magic"></i>
                 <span>AI-Powered LinkedIn Tool</span>
             </div>
-            <h1>LinkedIn About Section Generator</h1>
-            <p>Create compelling LinkedIn about sections that attract prospects and boost your profile visibility. Stand out in seconds with our intelligent about section generator.</p>
+            <h1>LinkedIn Headline Generator</h1>
+            <p>Create compelling LinkedIn Headlines that attract prospects and boost your profile visibility. Stand out in seconds with our intelligent Headline generator.</p>
         </div>
     </section>
 
@@ -549,8 +549,8 @@
         <div class="container">
             <div class="generator-container">
                 <div class="form-header">
-                    <h2>Generate Your Perfect LinkedIn About Section</h2>
-                    <p>Answer 3 simple questions and get a professional about section instantly</p>
+                    <h2>Generate Your Perfect LinkedIn Headline</h2>
+                    <p>Answer 3 simple questions and get a professional Headline instantly</p>
                 </div>
                 
                 <div class="form-content">
@@ -583,21 +583,21 @@
                         
                         <button type="submit" id="generateBtn" class="generate-btn">
                             <i class="fas fa-bolt"></i>
-                            <span>Generate My LinkedIn About Section</span>
+                            <span>Generate My LinkedIn Headline</span>
                         </button>
                     </form>
                     
                     <div id="resultsSection" class="results-section">
                         <div class="results-header">
-                            <h3 class="results-title">Your Optimized LinkedIn About Section</h3>
+                            <h3 class="results-title">Your Optimized LinkedIn Headline</h3>
                         </div>
                         
                         <div class="result-card">
-                            <div class="result-label">Your LinkedIn About Section</div>
+                            <div class="result-label">Your LinkedIn Headline</div>
                             <div id="aboutResult" class="result-text"></div>
                             <button class="copy-btn" onclick="copyToClipboard('aboutResult')">
                                 <i class="fas fa-copy"></i>
-                                Copy About Section
+                                Copy Headline
                             </button>
                         </div>
                     </div>
@@ -609,7 +609,7 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Why Choose Our LinkedIn About Section Generator?</h2>
+            <h2>Why Choose Our LinkedIn Headline Generator?</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
@@ -617,7 +617,7 @@
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h3>Instant Results</h3>
-                    <p>Get professional LinkedIn about sections in seconds, not hours. Our tool analyzes your input and creates compelling content immediately.</p>
+                    <p>Get professional LinkedIn Headlines in seconds, not hours. Our tool analyzes your input and creates compelling content immediately.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -625,7 +625,7 @@
                         <i class="fas fa-bullseye"></i>
                     </div>
                     <h3>Prospect-Focused</h3>
-                    <p>About sections designed to attract your ideal prospects and generate more profile views, connection requests, and business opportunities.</p>
+                    <p>Headlines designed to attract your ideal prospects and generate more profile views, connection requests, and business opportunities.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -633,7 +633,7 @@
                         <i class="fas fa-brain"></i>
                     </div>
                     <h3>AI-Optimized</h3>
-                    <p>Powered by advanced templates that understand LinkedIn's algorithm and what makes about sections perform in professional networks.</p>
+                    <p>Powered by advanced templates that understand LinkedIn's algorithm and what makes Headlines perform in professional networks.</p>
                 </div>
             </div>
         </div>
@@ -698,19 +698,19 @@
                 // Show loading state
                 generateBtn.disabled = true;
                 generateBtn.innerHTML = '<div class="loader"></div><span>Generating...</span>';
-                showStatus('<div class="loader"></div>Creating your optimized LinkedIn about section...', 'loading');
+                showStatus('<div class="loader"></div>Creating your optimized LinkedIn Headline...', 'loading');
                 
-                // Generate the about section directly without API call
+                // Generate the Headline directly without API call
                 setTimeout(() => {
                     const aboutText = `I help ${data.audience} ${data.value} through my expertise as a ${data.role}. Let's connect to explore how we can achieve your business goals together.`;
                     
                     aboutResult.textContent = aboutText;
                     resultsSection.style.display = 'block';
-                    showStatus('Your LinkedIn about section has been generated successfully!', 'success');
+                    showStatus('Your LinkedIn Headline has been generated successfully!', 'success');
                     
                     // Reset button
                     generateBtn.disabled = false;
-                    generateBtn.innerHTML = '<i class="fas fa-bolt"></i><span>Generate My LinkedIn About Section</span>';
+                    generateBtn.innerHTML = '<i class="fas fa-bolt"></i><span>Generate My LinkedIn Headline</span>';
                     
                     // Scroll to results
                     resultsSection.scrollIntoView({ behavior: 'smooth' });
