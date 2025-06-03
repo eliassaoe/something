@@ -675,8 +675,50 @@
             const generateBtn = document.getElementById('generateBtn');
             const statusMessage = document.getElementById('statusMessage');
             const resultsSection = document.getElementById('resultsSection');
-            const headlineResult = document.getElementById('headlineResult');
             const aboutResult = document.getElementById('aboutResult');
+            
+            // Helper function to capitalize first letter and handle proper formatting
+            function formatText(text) {
+                if (!text) return '';
+                // Trim and convert to lowercase first
+                text = text.trim().toLowerCase();
+                // Capitalize first letter
+                return text.charAt(0).toUpperCase() + text.slice(1);
+            }
+            
+            // Helper function to ensure proper article usage
+            function getArticle(text) {
+                if (!text) return '';
+                const firstChar = text.charAt(0).toLowerCase();
+                const vowels = ['a', 'e', 'i', 'o', 'u'];
+                return vowels.includes(firstChar) ? 'an' : 'a';
+            }
+            
+            // Multiple template variations for better generalization
+            function generateHeadline(role, audience, value) {
+                const templates = [
+                    // Template 1: Professional helping approach
+                    `${formatText(role)} helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 2: Expertise-focused
+                    `${formatText(role)} specializing in helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 3: Results-oriented
+                    `${formatText(role)} | Helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 4: Direct value proposition
+                    `I help ${formatText(audience)} ${formatText(value)} as ${getArticle(role)} ${formatText(role)}`,
+                    
+                    // Template 5: Achievement-focused
+                    `${formatText(role)} focused on helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 6: Mission-driven
+                    `${formatText(role)} dedicated to helping ${formatText(audience)} ${formatText(value)}`
+                ];
+                
+                // Randomly select a template for variety
+                return templates[Math.floor(Math.random() * templates.length)];
+            }
             
             // Form submission
             form.addEventListener('submit', async function(e) {
@@ -700,11 +742,11 @@
                 generateBtn.innerHTML = '<div class="loader"></div><span>Generating...</span>';
                 showStatus('<div class="loader"></div>Creating your optimized LinkedIn Headline...', 'loading');
                 
-                // Generate the Headline directly without API call
+                // Generate the Headline with improved template
                 setTimeout(() => {
-                    const aboutText = `I help ${data.audience} ${data.value} through my expertise as a ${data.role}.`;
+                    const headline = generateHeadline(data.role, data.audience, data.value);
                     
-                    aboutResult.textContent = aboutText;
+                    aboutResult.textContent = headline;
                     resultsSection.style.display = 'block';
                     showStatus('Your LinkedIn Headline has been generated successfully!', 'success');
                     
@@ -714,7 +756,7 @@
                     
                     // Scroll to results
                     resultsSection.scrollIntoView({ behavior: 'smooth' });
-                }, 1500); // Small delay to show loading state
+                }, 1500);
             });
             
             // Status message helper
