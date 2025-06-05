@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Free Cold Email Generator | AI-Powered Email Writer | UnlimitedLeads</title>
-    <meta name="description" content="Generate high-converting cold emails with our free AI-powered tool. Create personalized outreach emails that get responses. Better than Mailmeteor - try it free!"/>
-    <meta name="keywords" content="cold email generator, free cold email generator, AI email writer, cold email template, email outreach tool, sales email generator"/>
+    <title>Free Spam Words Checker | UnlimitedLeads</title>
+    <meta name="description" content="Free Spam words Checker - Improve email deliverability by identifying spam triggers in your cold emails"/>
 
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,32 +17,10 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://unlimited-leads.online/cold-email-generator" />
-    <meta property="og:title" content="Free Cold Email Generator | AI-Powered Email Writer | UnlimitedLeads" />
-    <meta property="og:description" content="Generate high-converting cold emails with our free AI-powered tool. Create personalized outreach emails that get responses." />
+    <meta property="og:url" content="https://unlimited-leads.online/spam-words-checker" />
+    <meta property="og:title" content="Spam Words Checker | UnlimitedLeads" />
+    <meta property="og:description" content="Free Spam Words Checker - Improve email deliverability by identifying spam triggers in your cold emails" />
     <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
-
-    <!-- Schema Markup -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Cold Email Generator",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "description": "Free AI-powered cold email generator that creates personalized outreach emails",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "1247"
-        }
-    }
-    </script>
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -60,7 +37,6 @@
             --gray-200: #e5e7eb;
             --gray-300: #d1d5db;
             --gray-400: #9ca3af;
-            --gray-600: #6b7280;
             --gray-800: #1f2937;
             --success: #10b981;
             --warning: #f59e0b;
@@ -69,523 +45,345 @@
             --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         a { text-decoration: none; }
 
         /* Header */
-        .header { 
-            background: white; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
-            padding: 1rem 0; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-        }
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
         .header-content { display: flex; justify-content: center; align-items: center; }
         .logo-link { display: flex; align-items: center; }
         .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
-        .gradient-text { 
-            background: linear-gradient(to right, var(--primary), var(--secondary)); 
-            -webkit-background-clip: text; 
-            color: transparent; 
-        }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
 
         /* Hero */
-        .hero { 
-            text-align: center; 
-            padding: 4rem 0 2rem; 
-            background: linear-gradient(135deg, rgba(79,70,229,0.1) 0%, rgba(14,165,233,0.1) 100%); 
-            position: relative; 
-            overflow: hidden;
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* Checker Form */
+        .checker-form { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); max-width: 900px; margin: 0 auto 3rem; }
+        textarea { 
+            width: 100%; 
+            padding: 1rem; 
+            border: 1px solid var(--gray-200); 
+            border-radius: var(--border-radius); 
+            resize: vertical; 
+            margin-bottom: 1.5rem; 
+            height: 250px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
         }
-        .hero::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            height: 4px; 
-            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--border-radius); 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
         }
-        .hero h1 { 
-            font-size: clamp(2rem, 5vw, 3rem); 
-            font-weight: 800; 
-            margin-bottom: 1rem; 
-            background: linear-gradient(135deg, var(--gray-800) 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .hero p { 
-            font-size: 1.25rem; 
-            color: var(--gray-600); 
-            margin-bottom: 2rem; 
-            max-width: 700px; 
-            margin-left: auto; 
-            margin-right: auto; 
-        }
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
+        .btn-primary { background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary { background: var(--success); color: white; }
+        .btn-secondary:hover { background: var(--primary); }
+        .btn-large { width: 100%; font-size: 1rem; padding: 1rem; }
+
+        /* Result Area */
+        .result-area { 
+            display: none; 
             margin-top: 2rem;
-            flex-wrap: wrap;
         }
-        .stat-item {
+        .result-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 1.5rem;
         }
-        .stat-number {
-            font-size: 2rem;
+        .result-header h3 {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        .result-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .stat-box {
+            flex: 1;
+            min-width: 200px;
+            background: var(--gray-50);
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             color: transparent;
         }
         .stat-label {
             font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-top: 0.25rem;
-        }
-
-        /* Generator Form */
-        .generator-container { 
-            background: white; 
-            padding: 2.5rem; 
-            border-radius: 1rem; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            max-width: 900px; 
-            margin: -2rem auto 4rem; 
-            position: relative;
-            border: 1px solid var(--gray-200);
-        }
-        .form-step {
-            display: none;
-        }
-        .form-step.active {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .step-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .step-counter {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        .step-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
             color: var(--gray-800);
+            font-weight: 500;
         }
-        .step-description {
-            color: var(--gray-600);
-            font-size: 1rem;
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-label {
-            display: block;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            font-size: 1rem;
-        }
-        .form-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-        }
-        textarea.form-input {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .form-select {
-            position: relative;
-        }
-        .form-select select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.875rem 2rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            font-family: inherit;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(79,70,229,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(79,70,229,0.4);
-        }
-        .btn-secondary {
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 1px solid var(--gray-300);
-        }
-        .btn-secondary:hover {
-            background: var(--gray-200);
-        }
-        .btn-success {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
-        }
-        .btn-large {
-            padding: 1.25rem 2.5rem;
-            font-size: 1.125rem;
-        }
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* Navigation */
-        .form-navigation {
-            display: flex;
-            justify-content: space-between;
+        .categories-container {
             margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--gray-200);
+        }
+        .category-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        .category-icon {
+            margin-right: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(79,70,229,0.1);
+            color: var(--primary);
+        }
+        .category-description {
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            margin-left: 2.75rem;
+        }
+        .matches-count {
+            margin-left: auto;
+            background: rgba(79,70,229,0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .word-list {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+            margin-left: 2.75rem;
+        }
+        .word-item {
+            display: flex;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            align-items: center;
+        }
+        .word-item:last-child {
+            border-bottom: none;
+        }
+        .word-text {
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+        .word-context {
+            margin-left: auto;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            font-style: italic;
         }
 
         /* Progress Bar */
         .progress-container {
-            margin-bottom: 2rem;
-        }
-        .progress-bar {
             width: 100%;
-            height: 0.5rem;
-            background: var(--gray-200);
+            background-color: var(--gray-200);
             border-radius: 1rem;
+            margin-bottom: 1.5rem;
             overflow: hidden;
         }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        .progress-bar {
+            height: 0.5rem;
+            background: linear-gradient(to right, var(--success), var(--warning), var(--danger));
             border-radius: 1rem;
-            transition: width 0.3s ease;
-        }
-        .progress-text {
-            text-align: center;
-            margin-top: 0.5rem;
-            color: var(--gray-600);
-            font-size: 0.875rem;
+            transition: width 0.5s ease;
         }
 
-        /* Results */
-        .results-container {
-            display: none;
-            background: white;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 900px;
-            margin: 2rem auto;
-            border: 1px solid var(--gray-200);
-        }
-        .results-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .results-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 0.5rem;
-        }
-        .email-output {
-            background: var(--gray-50);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            min-height: 300px;
-            margin-bottom: 1.5rem;
-        }
-        .email-actions {
+        /* Actions */
+        .actions { 
             display: flex;
             gap: 1rem;
-            flex-wrap: wrap;
+            margin-top: 1.5rem; 
         }
-        .email-actions .btn {
+        .actions .btn { 
             flex: 1;
-            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        /* Loading */
-        .loading-container {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-        }
-        .loader {
-            display: inline-block;
-            width: 3rem;
-            height: 3rem;
-            border: 4px solid var(--gray-200);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 0.5rem;
-        }
-        .loading-subtext {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        /* Features */
+        /* Features Section */
         .features {
-            padding: 4rem 0;
+            padding: 3rem 0;
             background: white;
         }
         .features h2 {
             text-align: center;
-            font-size: 2.25rem;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-        .features-subtitle {
-            text-align: center;
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
         .feature-card {
             background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
             border: 1px solid var(--gray-200);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transform: translateX(-100%);
-            transition: var(--transition);
         }
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
             border-color: var(--primary);
-        }
-        .feature-card:hover::before {
-            transform: translateX(0);
         }
         .feature-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 4rem;
-            height: 4rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
             color: white;
-            border-radius: 1rem;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
         }
         .feature-card h3 {
-            font-size: 1.375rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-        .feature-card p {
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-
-        /* Comparison */
-        .comparison {
-            padding: 4rem 0;
-            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
-        }
-        .comparison h2 {
-            text-align: center;
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--gray-800);
-        }
-        .comparison-table {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid var(--gray-200);
-        }
-        .comparison-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        .comparison-row:last-child {
-            border-bottom: none;
-        }
-        .comparison-cell {
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .comparison-header {
-            background: var(--gray-50);
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-        .comparison-feature {
-            justify-content: flex-start;
-            text-align: left;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
-            color: var(--gray-700);
-        }
-        .check-icon {
-            color: var(--success);
-            font-size: 1.25rem;
-        }
-        .x-icon {
-            color: var(--danger);
-            font-size: 1.25rem;
-        }
-        .unlimited-column {
-            background: linear-gradient(135deg, rgba(79,70,229,0.05) 0%, rgba(14,165,233,0.05) 100%);
         }
 
-        /* FAQ */
+        /* FAQ Section */
         .faq {
-            padding: 4rem 0;
-            background: white;
+            padding: 3rem 0 4rem;
+            background: var(--gray-50);
         }
         .faq h2 {
             text-align: center;
-            font-size: 2.25rem;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-        .faq-subtitle {
-            text-align: center;
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 3rem;
         }
         .faq-item {
-            background: var(--gray-50);
+            margin-bottom: 1rem;
             border: 1px solid var(--gray-200);
             border-radius: var(--border-radius);
-            margin-bottom: 1rem;
+            background: white;
             overflow: hidden;
-            transition: var(--transition);
         }
         .faq-question {
-            padding: 1.5rem;
+            padding: 1.25rem;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            color: var(--gray-800);
-            background: white;
         }
-        .faq-question:hover {
-            background: var(--gray-50);
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 500px;
         }
         .faq-toggle {
             transition: transform 0.3s ease;
-            color: var(--primary);
         }
         .faq-item.active .faq-toggle {
             transform: rotate(180deg);
         }
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            background: var(--gray-50);
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .faq-item.active .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            max-height: 500px;
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Status Messages */
+        .status {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
         }
-        .faq-answer p {
-            color: var(--gray-600);
-            line-height: 1.6;
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .status-error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .status-loading {
+            background-color: rgba(79, 70, 229, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-loading .loader {
+            border: 2px solid rgba(79, 70, 229, 0.3);
+            border-top-color: var(--primary);
+        }
+        
+        .result-analysis {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .result-analysis h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+        .analysis-item {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .analysis-item:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
         }
 
         /* Footer */
@@ -668,42 +466,24 @@
         }
 
         /* Responsive */
+        @media (max-width: 991px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
         @media (max-width: 768px) {
-            .hero-stats {
-                gap: 1rem;
-            }
-            .stat-number {
-                font-size: 1.5rem;
-            }
-            .generator-container,
-            .results-container {
-                padding: 1.5rem;
-                margin-left: 1rem;
-                margin-right: 1rem;
-            }
-            .form-navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .email-actions {
-                flex-direction: column;
-            }
-            .email-actions .btn {
-                min-width: auto;
-            }
-            .comparison-row {
+            .hero h1 { font-size: 2rem; }
+            .features-grid {
                 grid-template-columns: 1fr;
             }
-            .comparison-cell {
-                border-bottom: 1px solid var(--gray-200);
-            }
-            .comparison-header:not(:first-child) {
-                display: none;
+            .actions {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -719,460 +499,642 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Free Cold Email Generator</h1>
-            <p>Create high-converting cold emails that get responses with our AI-powered generator. Get better results than Mailmeteor with personalized, data-driven email templates.</p>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">47%</div>
-                    <div class="stat-label">Higher Open Rates</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">89%</div>
-                    <div class="stat-label">User Satisfaction</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">2.3x</div>
-                    <div class="stat-label">More Responses</div>
-                </div>
-            </div>
+            <h1>Spam Words Checker</h1>
+            <p>Improve email deliverability by identifying spam triggers in your cold emails. Check your copy against our database of known spam words to ensure your messages reach the inbox.</p>
         </div>
     </section>
 
-    <!-- Generator -->
+    <!-- Checker Form -->
     <section class="container">
-        <div class="generator-container">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 25%"></div>
-                </div>
-                <div class="progress-text" id="progressText">Step 1 of 4</div>
-            </div>
-
-            <form id="emailGeneratorForm">
-                <!-- Step 1: Company & Prospect Info -->
-                <div class="form-step active" id="step1">
-                    <div class="step-header">
-                        <div class="step-counter">1</div>
-                        <h2 class="step-title">Tell us about your prospect</h2>
-                        <p class="step-description">Help us understand who you're reaching out to for better personalization</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="prospectCompany">Prospect's Company Name</label>
-                        <input type="text" id="prospectCompany" class="form-input" placeholder="e.g., Tesla, Apple, Microsoft" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="prospectRole">Prospect's Job Title/Role</label>
-                        <input type="text" id="prospectRole" class="form-input" placeholder="e.g., Marketing Director, CEO, Sales Manager" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="industry">Industry</label>
-                        <div class="form-select">
-                            <select id="industry" class="form-input" required>
-                                <option value="">Select an industry</option>
-                                <option value="technology">Technology</option>
-                                <option value="finance">Finance & Banking</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="retail">Retail & E-commerce</option>
-                                <option value="manufacturing">Manufacturing</option>
-                                <option value="real-estate">Real Estate</option>
-                                <option value="education">Education</option>
-                                <option value="consulting">Consulting</option>
-                                <option value="marketing">Marketing & Advertising</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Your Business -->
-                <div class="form-step" id="step2">
-                    <div class="step-header">
-                        <div class="step-counter">2</div>
-                        <h2 class="step-title">About your business</h2>
-                        <p class="step-description">Tell us about your company so we can craft the perfect introduction</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="yourCompany">Your Company Name</label>
-                        <input type="text" id="yourCompany" class="form-input" placeholder="Your company name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="yourRole">Your Job Title</label>
-                        <input type="text" id="yourRole" class="form-input" placeholder="e.g., Sales Director, Founder, Account Executive" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="businessDescription">What does your company do? (Brief description)</label>
-                        <textarea id="businessDescription" class="form-input" placeholder="e.g., We help SaaS companies increase their conversion rates through AI-powered analytics" required></textarea>
-                    </div>
-                </div>
-
-                <!-- Step 3: Email Purpose -->
-                <div class="form-step" id="step3">
-                    <div class="step-header">
-                        <div class="step-counter">3</div>
-                        <h2 class="step-title">Email objective</h2>
-                        <p class="step-description">What's the main goal of this cold email?</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="emailPurpose">Email Purpose</label>
-                        <div class="form-select">
-                            <select id="emailPurpose" class="form-input" required>
-                                <option value="">Select your goal</option>
-                                <option value="book-meeting">Book a discovery call/meeting</option>
-                                <option value="demo">Schedule a product demo</option>
-                                <option value="partnership">Explore partnership opportunities</option>
-                                <option value="sale">Direct sales pitch</option>
-                                <option value="networking">Networking and relationship building</option>
-                                <option value="feedback">Get feedback or testimonial</option>
-                                <option value="collaboration">Propose collaboration</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="valueProposition">Key Value Proposition</label>
-                        <textarea id="valueProposition" class="form-input" placeholder="e.g., We can help you reduce customer acquisition costs by 40% while increasing lead quality" required></textarea>
-                    </div>
-                </div>
-
-                <!-- Step 4: Email Style -->
-                <div class="form-step" id="step4">
-                    <div class="step-header">
-                        <div class="step-counter">4</div>
-                        <h2 class="step-title">Email style & tone</h2>
-                        <p class="step-description">Choose the tone that best fits your brand and target audience</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="emailTone">Email Tone</label>
-                        <div class="form-select">
-                            <select id="emailTone" class="form-input" required>
-                                <option value="">Select tone</option>
-                                <option value="professional">Professional & Formal</option>
-                                <option value="friendly">Friendly & Conversational</option>
-                                <option value="direct">Direct & Straightforward</option>
-                                <option value="consultative">Consultative & Advisory</option>
-                                <option value="casual">Casual & Relaxed</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="emailLength">Preferred Email Length</label>
-                        <div class="form-select">
-                            <select id="emailLength" class="form-input" required>
-                                <option value="">Select length</option>
-                                <option value="short">Short (50-100 words)</option>
-                                <option value="medium">Medium (100-150 words)</option>
-                                <option value="long">Long (150-200 words)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Navigation -->
-                <div class="form-navigation">
-                    <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
-                        <i class="fas fa-arrow-left"></i>
-                        Previous
-                    </button>
-                    <button type="button" id="nextBtn" class="btn btn-primary">
-                        Next
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <button type="submit" id="generateBtn" class="btn btn-primary btn-large" style="display: none;">
-                        <i class="fas fa-magic"></i>
-                        Generate My Cold Email
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Loading -->
-        <div class="loading-container" id="loadingContainer">
-            <div class="loader"></div>
-            <div class="loading-text">Generating your personalized cold email...</div>
-            <div class="loading-subtext">Our AI is analyzing your inputs and crafting the perfect message</div>
-        </div>
-
-        <!-- Results -->
-        <div class="results-container" id="resultsContainer">
-            <div class="results-header">
-                <h2 class="results-title">Your Cold Email is Ready!</h2>
-                <p>Here's your AI-generated cold email optimized for maximum response rates:</p>
-            </div>
+        <div class="checker-form">
+            <div id="statusMessage" class="status"></div>
             
-            <div class="email-output" id="emailOutput">
-                <!-- Generated email will appear here -->
-            </div>
+            <textarea id="emailInput" placeholder="Paste your cold email here... Our AI will analyze it for spam triggers that might harm your deliverability."></textarea>
             
-            <div class="email-actions">
-                <button type="button" id="copyEmailBtn" class="btn btn-success">
-                    <i class="fas fa-copy"></i>
-                    Copy Email
-                </button>
-                <button type="button" id="regenerateBtn" class="btn btn-primary">
-                    <i class="fas fa-redo"></i>
-                    Generate Another Version
-                </button>
-                <button type="button" id="newEmailBtn" class="btn btn-secondary">
-                    <i class="fas fa-plus"></i>
-                    Create New Email
-                </button>
+            <button id="checkBtn" class="btn btn-primary btn-large">
+                <span>Check for Spam words</span>
+            </button>
+            
+            <div id="resultArea" class="result-area">
+                <div class="result-header">
+                    <h3>Spam Analysis Results</h3>
+                    <div id="spamScore" style="font-size: 1.25rem; font-weight: bold;"></div>
+                </div>
+                
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="result-stats">
+                    <div class="stat-box">
+                        <div id="totalwords" class="stat-value">0</div>
+                        <div class="stat-label">Spam words</div>
+                    </div>
+                </div>
+
+                <div id="categoriesContainer" class="categories-container">
+                    <!-- Categories will be dynamically added here -->
+                </div>
+                
+                <div class="result-analysis">
+                    <h4>Analysis & Recommendations</h4>
+                    <div id="analysisContainer">
+                        <!-- Analysis items will be dynamically added here -->
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button id="copyBtn" class="btn btn-secondary">
+                        <i class="fas fa-copy"></i>
+                        <span>Copy Results</span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Features -->
+    <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Why Choose Our Cold Email Generator?</h2>
-            <p class="features-subtitle">Get better results than Mailmeteor with our advanced AI-powered features</p>
+            <h2>Why Check Your Emails for Spam words?</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+                        <i class="fas fa-inbox"></i>
                     </div>
-                    <h3>Advanced AI Intelligence</h3>
-                    <p>Our AI analyzes industry-specific language patterns and successful email campaigns to generate highly personalized content that resonates with your prospects.</p>
+                    <h3>Boost Inbox Placement</h3>
+                    <p>Identify and remove spam triggers that could send your emails straight to the junk folder, dramatically improving deliverability rates.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-target"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Higher Response Rates</h3>
-                    <p>Users report 47% higher open rates and 2.3x more responses compared to generic email generators. Our smart personalization makes all the difference.</p>
+                    <h3>Increase Open Rates</h3>
+                    <p>Emails that reach the inbox get opened more often. Clean, spam-free copy can boost your open rates by up to 30%.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Spam-Free Guaranteed</h3>
-                    <p>Built-in spam detection ensures your emails reach the inbox. We automatically avoid trigger words and phrases that could harm deliverability.</p>
+                    <h3>Protect Sender Reputation</h3>
+                    <p>Avoid being flagged as a spammer and maintain a positive domain reputation with email service providers.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-industry"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Industry-Specific Templates</h3>
-                    <p>Our AI understands different industries and adapts language, tone, and approach based on your target sector for maximum relevance.</p>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Our algorithm doesn't just find exact matches – it identifies patterns and phrases that might trigger modern spam filters.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-magic"></i>
+                        <i class="fas fa-bullseye"></i>
                     </div>
-                    <h3>Multiple Variations</h3>
-                    <p>Generate unlimited variations of your email to test different approaches and find what works best for your specific audience.</p>
+                    <h3>Category-Based Detection</h3>
+                    <p>See exactly which types of spam triggers your email contains – from urgency tactics to suspicious offers and promotional language.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                        <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h3>Mobile Optimized</h3>
-                    <p>Every email is automatically optimized for mobile reading, ensuring your message looks perfect on any device your prospects use.</p>
+                    <h3>Smart Recommendations</h3>
+                    <p>Get actionable suggestions to improve your copy, not just warnings. We help you fix issues while maintaining your message.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Comparison -->
-    <section class="comparison">
-        <div class="container">
-            <h2>UnlimitedLeads vs. Mailmeteor</h2>
+    <!-- Scripts -->
+    <script>
+        // Spam word Checker
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('emailInput');
+            const checkBtn = document.getElementById('checkBtn');
+            const resultArea = document.getElementById('resultArea');
+            const copyBtn = document.getElementById('copyBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const totalwords = document.getElementById('totalwords');
+            const spamScore = document.getElementById('spamScore');
+            const progressBar = document.getElementById('progressBar');
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            const analysisContainer = document.getElementById('analysisContainer');
             
-            <div class="comparison-table">
-                <div class="comparison-row comparison-header">
-                    <div class="comparison-cell">Feature</div>
-                    <div class="comparison-cell unlimited-column">UnlimitedLeads</div>
-                    <div class="comparison-cell">Mailmeteor</div>
-                </div>
+            // Category icons mapping
+            const categoryIcons = {
+                'Urgent': 'fas fa-exclamation-circle',
+                'Suspicious': 'fas fa-question-circle',
+                'Financial': 'fas fa-dollar-sign',
+                'Unnatural': 'fas fa-robot',
+                'Promotional': 'fas fa-tag',
+                'Clickbait': 'fas fa-mouse-pointer',
+                'Overselling': 'fas fa-chart-line'
+            };
+            
+            // Category descriptions
+            const categoryDescriptions = {
+                'Urgent': 'Creating a sense of immediate action or fear of missing out.',
+                'Suspicious': 'Too-good-to-be-true offers or obscure terms that can make recipients suspicious.',
+                'Financial': 'Focusing on quick wealth, guaranteed returns, or financial urgency.',
+                'Unnatural': 'Awkward, forced, or repetitive language that feels robotic or off-putting.',
+                'Promotional': 'Overly sales-focused language that triggers promotional content filters.',
+                'Clickbait': 'Sensational or misleading language designed to force engagement.',
+                'Overselling': 'Exaggerated claims or promises that seem unrealistic to readers.'
+            };
+            
+            // Analysis recommendations based on score
+            const analysisRecommendations = {
+                'low': [
+                    'Your email looks good! It has few spam triggers and should have good deliverability.',
+                    'Consider personalizing your email further to improve engagement rates.',
+                    'Testing with a small segment before sending to your full list is always recommended.'
+                ],
+                'medium': [
+                    'Your email contains some spam triggers that might affect deliverability.',
+                    'Try rephrasing sentences with spam words to convey the same message differently.',
+                    'Add more personalization to balance out any necessary promotional language.',
+                    'Consider reducing urgency-based language and focus on value proposition instead.'
+                ],
+                'high': [
+                    'Your email contains multiple spam triggers that will likely affect deliverability.',
+                    'Urgent action is needed to rewrite sections containing spam words.',
+                    'Remove or rephrase all suspicious or financial promises in your copy.',
+                    'Break up any sections with concentrated spam words into more natural language.',
+                    'Consider a complete rewrite focusing on personalization and valuable content rather than promotional language.'
+                ]
+            };
+            
+            // Check Email
+            checkBtn.addEventListener('click', function() {
+                console.log("Check button clicked"); // Debug
+                const emailText = emailInput.value.trim();
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">AI-Powered Personalization</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-times x-icon"></i></div>
-                </div>
+                if (!emailText) {
+                    showStatus('Please enter your email text first.', 'error');
+                    return;
+                }
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">Industry-Specific Templates</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-times x-icon"></i></div>
-                </div>
+                showStatus('<span class="loader"></span> Analyzing your email for spam words...', 'loading');
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">Built-in Spam Detection</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-times x-icon"></i></div>
-                </div>
+                // For debugging - add a simple test without API
+                // Comment this out when your API is working
+                /*
+                setTimeout(() => {
+                    console.log("Using test data");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Analysis complete!', 'success');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+                return; // Remove this when your API is working
+                */
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">Multiple Email Variations</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-times x-icon"></i></div>
-                </div>
+                console.log("Sending fetch request to API...");
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">Advanced Analytics Integration</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-times x-icon"></i></div>
-                </div>
+                // Fetch with more explicit error handling
+                fetch('https://eliasse-n8n.onrender.com/webhook/d1464188-f42f-4994-ad9d-1e6005d23622', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify({ text: emailText })
+                })
+                .then(response => {
+                    console.log("Received response:", response);
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.text(); // First get as text
+                })
+                .then(text => {
+                    console.log("Response text:", text);
+                    
+                    // Try to parse as JSON
+                    try {
+                        const data = JSON.parse(text);
+                        console.log("Parsed JSON data:", data);
+                        
+                        if (Array.isArray(data)) {
+                            // Simple array of spam words
+                            displaySimpleResults(data);
+                        } else if (typeof data === 'object') {
+                            // JSON object with more details
+                            displayDetailedResults(data);
+                        }
+                        
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    } catch (jsonError) {
+                        console.log("Not JSON, using as text");
+                        // If not valid JSON, treat as comma-separated list
+                        const wordList = text.split(',').map(word => word.trim()).filter(word => word);
+                        console.log("Word list:", wordList);
+                        displaySimpleResults(wordList);
+                        resultArea.style.display = 'block';
+                        showStatus('Analysis complete!', 'success');
+                        resultArea.scrollIntoView({ behavior: 'smooth' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    showStatus(`Failed to analyze email: ${error.message}`, 'error');
+                    
+                    // Fallback to display something for testing
+                    console.log("Using fallback test data due to error");
+                    const testSpamWords = ["free", "guarantee", "limited time", "offer", "act now"];
+                    displaySimpleResults(testSpamWords);
+                    resultArea.style.display = 'block';
+                    showStatus('Using test data due to API error', 'error');
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Display Simple Results (for array of spam words)
+            function displaySimpleResults(spamWords) {
+                console.log("Displaying simple results with words:", spamWords);
                 
-                <div class="comparison-row">
-                    <div class="comparison-cell comparison-feature">Free to Use</div>
-                    <div class="comparison-cell unlimited-column"><i class="fas fa-check check-icon"></i></div>
-                    <div class="comparison-cell"><i class="fas fa-check check-icon"></i></div>
-                </div>
+                // Set basic stats
+                totalwords.textContent = spamWords.length || 0;
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                
+                if (spamWords.length === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamWords.length / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Create a single category with all spam words
+                if (spamWords.length > 0) {
+                    const categoryEl = document.createElement('div');
+                    categoryEl.classList.add('category-section');
+                    
+                    categoryEl.innerHTML = `
+                        <div class="category-title">
+                            <div class="category-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            Spam words
+                            <span class="matches-count">${spamWords.length} matches</span>
+                        </div>
+                        <div class="category-description">
+                            These words or phrases might trigger spam filters and affect your email deliverability.
+                        </div>
+                        <div class="word-list">
+                            ${spamWords.map(word => `
+                                <div class="word-item">
+                                    <span class="word-text">${word}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    categoriesContainer.appendChild(categoryEl);
+                } else {
+                    categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                }
+                
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
+                
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
+            }
+            
+            // Display Detailed Results (for JSON response with categories)
+            function displayDetailedResults(data) {
+                console.log("Displaying detailed results:", data);
+                
+                // Set basic stats
+                totalwords.textContent = data.totalSpamwords || 0;
+                
+                // Set spam score
+                let scoreText = '';
+                let scorePercent = 0;
+                const spamwordsCount = data.totalSpamwords || 0;
+                
+                if (spamwordsCount === 0) {
+                    scoreText = 'Perfect! No spam words found.';
+                    scorePercent = 0;
+                } else {
+                    // Calculate score as percentage (assumed max of 20 words is 100% spammy)
+                    scorePercent = Math.min(Math.round((spamwordsCount / 20) * 100), 100);
+                    
+                    if (scorePercent < 30) {
+                        scoreText = 'Low Spam Risk';
+                    } else if (scorePercent < 70) {
+                        scoreText = 'Medium Spam Risk';
+                    } else {
+                        scoreText = 'High Spam Risk';
+                    }
+                }
+                
+                spamScore.textContent = scoreText;
+                progressBar.style.width = `${scorePercent}%`;
+                
+                // Clear previous categories
+                categoriesContainer.innerHTML = '';
+                
+                // Add categories if available
+                if (data.categories && data.categories.length > 0) {
+                    data.categories.forEach(category => {
+                        if (category.words && category.words.length > 0) {
+                            const categoryEl = document.createElement('div');
+                            categoryEl.classList.add('category-section');
+                            
+                            const categoryName = category.name || 'Unknown';
+                            const icon = categoryIcons[categoryName] || 'fas fa-exclamation-triangle';
+                            const description = categoryDescriptions[categoryName] || 'Words that may trigger spam filters.';
+                            
+                            categoryEl.innerHTML = `
+                                <div class="category-title">
+                                    <div class="category-icon">
+                                        <i class="${icon}"></i>
+                                    </div>
+                                    ${categoryName}
+                                    <span class="matches-count">${category.words.length} matches</span>
+                                </div>
+                                <div class="category-description">
+                                    ${description}
+                                </div>
+                                <div class="word-list">
+                                    ${category.words.map(word => `
+                                        <div class="word-item">
+                                            <span class="word-text">${word}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                            
+                            categoriesContainer.appendChild(categoryEl);
+                        }
+                    });
+                } else {
+                    const fallbackWords = data.spamWords || [];
+                    if (fallbackWords.length > 0) {
+                        const categoryEl = document.createElement('div');
+                        categoryEl.classList.add('category-section');
+                        
+                        categoryEl.innerHTML = `
+                            <div class="category-title">
+                                <div class="category-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                Spam words
+                                <span class="matches-count">${fallbackWords.length} matches</span>
+                            </div>
+                            <div class="category-description">
+                                These words or phrases might trigger spam filters and affect your email deliverability.
+                            </div>
+                            <div class="word-list">
+                                ${fallbackWords.map(word => `
+                                    <div class="word-item">
+                                        <span class="word-text">${word}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        
+                        categoriesContainer.appendChild(categoryEl);
+                    } else {
+                        categoriesContainer.innerHTML = '<p>No spam words detected.</p>';
+                    }
+                }
+                
+                // Set analysis recommendations
+                analysisContainer.innerHTML = '';
+                
+                let recommendationType = 'low';
+                if (scorePercent >= 70) {
+                    recommendationType = 'high';
+                } else if (scorePercent >= 30) {
+                    recommendationType = 'medium';
+                }
+                
+                const recommendations = analysisRecommendations[recommendationType];
+                recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.classList.add('analysis-item');
+                    item.textContent = rec;
+                    analysisContainer.appendChild(item);
+                });
+            }
+            
+            // Copy Results
+            copyBtn.addEventListener('click', function() {
+                // Create a text representation of the results
+                const totalwordsVal = totalwords.textContent;
+                const spamScoreVal = spamScore.textContent;
+                
+                let resultText = `Spam word Analysis by UnlimitedLeads\n\n`;
+                resultText += `Email contains ${totalwordsVal} spam words.\n`;
+                resultText += `Overall rating: ${spamScoreVal}\n\n`;
+                
+                // Add categories
+                const categories = categoriesContainer.querySelectorAll('.category-section');
+                categories.forEach(category => {
+                    const titleEl = category.querySelector('.category-title');
+                    const title = titleEl.textContent.trim().split('\n')[0].trim();
+                    const matchesCount = titleEl.querySelector('.matches-count').textContent;
+                    
+                    resultText += `${title}: ${matchesCount}\n`;
+                    
+                    const words = category.querySelectorAll('.word-item');
+                    words.forEach(word => {
+                        const wordText = word.querySelector('.word-text');
+                        if (wordText) {
+                            resultText += `- ${wordText.textContent}\n`;
+                        }
+                    });
+                    
+                    resultText += '\n';
+                });
+                
+                // Add recommendations
+                resultText += `Recommendations:\n`;
+                const recommendations = analysisContainer.querySelectorAll('.analysis-item');
+                recommendations.forEach(rec => {
+                    resultText += `- ${rec.textContent}\n`;
+                });
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(resultText).then(() => {
+                    const originalText = this.querySelector('span').textContent;
+                    this.querySelector('span').textContent = 'Copied!';
+                    
+                    setTimeout(() => {
+                        this.querySelector('span').textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+            
+            // Remove the unused fixEmailBtn event listener
+            
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            // Add debugging console log to help identify if script is loaded properly
+            console.log("Spam Word Checker initialized");
+            
+            // Demo example
+            emailInput.placeholder = "Example:\n\nSubject: Limited Time Offer - Act Now!\n\nDear Valued Customer,\n\nAre you struggling to generate leads? Our guaranteed solution has helped thousands make quick money and boost sales by 500%!\n\nThis exclusive deal won't last forever. Click here to unlock your FREE access to our revolutionary system.\n\nDon't miss out on this once-in-a-lifetime opportunity!\n\nBest regards,\nThe Marketing Team";
+        });
+    </script>
+
+    <!-- SEO Content -->
+    <section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.75rem;">How Spam words Impact Your Cold Email Deliverability</h2>
+            
+            <p style="margin-bottom: 1rem;">In the competitive world of cold email outreach, getting your message to actually land in the inbox is half the battle. Even the most compelling offer is useless if your email gets caught in spam filters before it's ever seen.</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">The Hidden Dangers of Spam Triggers</h3>
+            
+            <p style="margin-bottom: 1rem;">Modern spam filters are sophisticated and constantly evolving. They don't just look for obvious spam words like "Viagra" or "make money fast" – they analyze multiple factors including:</p>
+            
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Language patterns</strong> that indicate promotional content</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Urgency tactics</strong> that pressure recipients into quick action</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Excessive promises</strong> that seem too good to be true</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Unnatural phrasing</strong> that feels robotic or templated</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Over-enthusiastic punctuation</strong> like multiple exclamation points</li>
+            </ul>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">The Real Cost of Poor Deliverability</h3>
+            
+            <p style="margin-bottom: 1rem;">When your emails end up in spam folders, the consequences go beyond just that campaign:</p>
+            
+            <ol style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Wasted resources:</strong> You're paying for email tools and spending time on campaigns that aren't even being seen.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Damaged sender reputation:</strong> Email providers track which domains send emails that users mark as spam. Once damaged, a sender reputation can take months to rebuild.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Reduced campaign effectiveness:</strong> Your metrics are skewed when factoring in emails that were never delivered properly.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Potential blacklisting:</strong> In extreme cases, your domain could end up on email blacklists that are shared across providers.
+                </li>
+            </ol>
+            
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">Writing Effective Cold Emails That Reach the Inbox</h3>
+            
+            <p style="margin-bottom: 1rem;">The best cold emails balance persuasiveness with deliverability. Here's how to write emails that get through filters:</p>
+            
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Focus on value, not hype</strong> - Explain genuine benefits rather than making excessive claims</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Personalize genuinely</strong> - Reference specific details about the recipient's business or role</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Use natural language</strong> - Write as you would in a professional conversation</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Avoid ALL CAPS and excessive punctuation!!!</strong> - These are classic spam signals</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Limit links and attachments</strong> - Multiple links or attachments in cold emails often trigger filters</li>
+            </ul>
+            
+            <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);">
+                <h4 style="margin-bottom: 0.75rem; color: var(--primary);">Ready to improve your cold email deliverability?</h4>
+                <p style="margin-bottom: 0;">Try our free spam word checker today to identify potential deliverability issues before sending. For advanced users, check out our premium plans that include AI-powered email optimization and deliverability monitoring.</p>
             </div>
         </div>
     </section>
+</body>
 
-    <!-- FAQ -->
-    <section class="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <p class="faq-subtitle">Everything you need to know about our cold email generator</p>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">What makes this cold email generator better than Mailmeteor?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Our generator uses advanced AI to create personalized emails based on industry, role, and company specifics. Unlike Mailmeteor's basic templates, we provide intelligent personalization, built-in spam detection, and industry-specific language patterns that result in 47% higher open rates.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">Is the cold email generator really free?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Yes! Our cold email generator is completely free to use. You can generate unlimited emails without any hidden costs or premium upgrades required.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">How does the AI personalization work?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Our AI analyzes your inputs including prospect company, industry, role, and your value proposition to create contextually relevant emails. It adapts language patterns, tone, and messaging strategy based on proven successful email campaigns in similar scenarios.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">Can I generate multiple versions of the same email?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Absolutely! You can generate unlimited variations of your email to test different approaches, subject lines, and messaging strategies to find what works best for your audience.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">Does the generator help avoid spam filters?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Yes! Our AI is trained to avoid spam trigger words and phrases. It automatically ensures your emails are written in a way that maximizes deliverability and inbox placement rates.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">What information do I need to provide?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">You'll need basic information about your prospect (company, role, industry), your company details, your value proposition, and preferred email style. The process takes less than 2 minutes to complete.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">How long does it take to generate an email?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">Email generation typically takes 10-30 seconds. Our AI processes your information and creates a personalized email optimized for your specific use case and target audience.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <div class="faq-question">
-                    <span itemprop="name">Can I use the generated emails for mass outreach?</span>
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <p itemprop="text">The emails are designed for personalized outreach. While you can use them as templates, we recommend customizing each email for individual prospects to maintain high response rates and compliance with email regulations.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+     <!-- Footer -->
+<footer id="contact" class="footer">
+    <div class="container">
+        <div class="footer-content">
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <!-- Free Tools Section -->
-                <div class="footer-column">
-                    <h4>Free Tools</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
-                        <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
-                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
-                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
-                        <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
-                        <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
-                        <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
-                        <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scraper</a></li>
-                        <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
-                    </ul>
-                </div>
+            <!-- Free Tools Section -->
+            <div class="footer-column">
+                <h4>Free Tools</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                    <li><a href="https://unlimited-leads.online/spam-words-checker">Spam eord checker</a></li>
+                    <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                    <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                    <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
+                    <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                </ul>
+            </div>
 
-                <!-- Compare Section -->
-                <div class="footer-column">
-                    <h4>Compare</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Contact Section -->
-                <div class="footer-column">
-                    <h4>Contact Us</h4>
-                    <ul class="footer-links">
-                        <li><a href="mailto:contact@unlimitedleads.com">contact@unlimitedleads.com</a></li>
-                        <li><a href="mailto:contact@unlimitedleads.com">Request Custom Plan</a></li>
-                    </ul>
-                </div>
+            <!-- Compare Section -->
+            <div class="footer-column">
+                <h4>Compare</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
+                </ul>
             </div>
             
+            <!-- Contact Section -->
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:contact@unlimitedleads.com">contact@unlimitedleads.com</a></li>
+                    <li><a href="mailto:contact@unlimitedleads.com">Request Custom Plan</a></li>
+                </ul>
+            </div>
+        
             <div class="footer-social">
                 <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
             </div>
+            
             
             <div class="footer-bottom">
                 <p>© 2025 UnlimitedLeads. All rights reserved.</p>
@@ -1182,244 +1144,6 @@
                 </p>
             </div>
         </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Form elements
-            const form = document.getElementById('emailGeneratorForm');
-            const steps = document.querySelectorAll('.form-step');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const generateBtn = document.getElementById('generateBtn');
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            
-            // Results elements
-            const generatorContainer = document.querySelector('.generator-container');
-            const loadingContainer = document.getElementById('loadingContainer');
-            const resultsContainer = document.getElementById('resultsContainer');
-            const emailOutput = document.getElementById('emailOutput');
-            const copyEmailBtn = document.getElementById('copyEmailBtn');
-            const regenerateBtn = document.getElementById('regenerateBtn');
-            const newEmailBtn = document.getElementById('newEmailBtn');
-            
-            let currentStep = 0;
-            const totalSteps = steps.length;
-            
-            // Step navigation
-            function showStep(stepIndex) {
-                steps.forEach((step, index) => {
-                    step.classList.toggle('active', index === stepIndex);
-                });
-                
-                currentStep = stepIndex;
-                
-                // Update progress
-                const progressPercent = ((stepIndex + 1) / totalSteps) * 100;
-                progressFill.style.width = `${progressPercent}%`;
-                progressText.textContent = `Step ${stepIndex + 1} of ${totalSteps}`;
-                
-                // Update buttons
-                prevBtn.style.display = stepIndex === 0 ? 'none' : 'inline-flex';
-                
-                if (stepIndex === totalSteps - 1) {
-                    nextBtn.style.display = 'none';
-                    generateBtn.style.display = 'inline-flex';
-                } else {
-                    nextBtn.style.display = 'inline-flex';
-                    generateBtn.style.display = 'none';
-                }
-            }
-            
-            function validateStep(stepIndex) {
-                const currentStepElement = steps[stepIndex];
-                const requiredFields = currentStepElement.querySelectorAll('[required]');
-                
-                for (let field of requiredFields) {
-                    if (!field.value.trim()) {
-                        field.focus();
-                        return false;
-                    }
-                }
-                return true;
-            }
-            
-            // Navigation event listeners
-            nextBtn.addEventListener('click', function() {
-                if (validateStep(currentStep)) {
-                    if (currentStep < totalSteps - 1) {
-                        showStep(currentStep + 1);
-                    }
-                }
-            });
-            
-            prevBtn.addEventListener('click', function() {
-                if (currentStep > 0) {
-                    showStep(currentStep - 1);
-                }
-            });
-            
-            // Form submission
-            generateBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (!validateStep(currentStep)) {
-                    return;
-                }
-                
-                generateEmail();
-            });
-            
-            // Email generation
-            function generateEmail() {
-                // Collect form data
-                const formData = {
-                    prospectCompany: document.getElementById('prospectCompany').value,
-                    prospectRole: document.getElementById('prospectRole').value,
-                    industry: document.getElementById('industry').value,
-                    yourCompany: document.getElementById('yourCompany').value,
-                    yourRole: document.getElementById('yourRole').value,
-                    businessDescription: document.getElementById('businessDescription').value,
-                    emailPurpose: document.getElementById('emailPurpose').value,
-                    valueProposition: document.getElementById('valueProposition').value,
-                    emailTone: document.getElementById('emailTone').value,
-                    emailLength: document.getElementById('emailLength').value
-                };
-                
-                // Show loading
-                generatorContainer.style.display = 'none';
-                loadingContainer.style.display = 'block';
-                
-                // API call to generate email
-                fetch('https://eliasse-n8n.onrender.com/webhook/c1abdf8e-afd8-4673-bf31-91009fda71a3', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to generate email');
-                    }
-                    return response.text();
-                })
-                .then(emailContent => {
-                    // Display results
-                    emailOutput.textContent = emailContent;
-                    loadingContainer.style.display = 'none';
-                    resultsContainer.style.display = 'block';
-                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Fallback with sample email
-                    const fallbackEmail = generateFallbackEmail(formData);
-                    emailOutput.textContent = fallbackEmail;
-                    loadingContainer.style.display = 'none';
-                    resultsContainer.style.display = 'block';
-                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
-            
-            // Fallback email generator
-            function generateFallbackEmail(data) {
-                const subjectLines = {
-                    'book-meeting': `Quick question about ${data.prospectCompany}'s ${data.industry} strategy`,
-                    'demo': `${data.prospectCompany} + ${data.yourCompany}: Potential partnership opportunity`,
-                    'partnership': `Partnership opportunity for ${data.prospectCompany}`,
-                    'sale': `How ${data.yourCompany} can help ${data.prospectCompany}`,
-                    'networking': `Connecting with fellow ${data.industry} professionals`,
-                    'feedback': `Quick feedback request from ${data.yourCompany}`,
-                    'collaboration': `Collaboration opportunity between our companies`,
-                    'other': `Reaching out from ${data.yourCompany}`
-                };
-                
-                const subject = subjectLines[data.emailPurpose] || subjectLines['other'];
-                
-                let email = `Subject: ${subject}\n\n`;
-                email += `Hi [First Name],\n\n`;
-                email += `I hope this email finds you well. I'm ${data.yourRole} at ${data.yourCompany}, and I've been following ${data.prospectCompany}'s work in the ${data.industry} space.\n\n`;
-                email += `${data.businessDescription}\n\n`;
-                email += `${data.valueProposition}\n\n`;
-                
-                const closings = {
-                    'book-meeting': "Would you be open to a brief 15-minute call next week to discuss how we might be able to help?",
-                    'demo': "I'd love to show you a quick demo of how this could work for your team. Are you available for a brief call?",
-                    'partnership': "I believe there could be some interesting synergies between our companies. Would you be interested in exploring this further?",
-                    'sale': "I'd be happy to provide more details about how we can help achieve similar results for your team.",
-                    'networking': "I'd love to connect and learn more about your work at ${data.prospectCompany}.",
-                    'feedback': "Would you be willing to share your thoughts? It would be incredibly valuable for our team.",
-                    'collaboration': "I think there's potential for us to work together. Would you be open to discussing this?",
-                    'other': "I'd love to explore how we might be able to work together."
-                };
-                
-                email += closings[data.emailPurpose] || closings['other'];
-                email += `\n\nBest regards,\n[Your Name]\n${data.yourRole}\n${data.yourCompany}`;
-                
-                return email;
-            }
-            
-            // Copy email functionality
-            copyEmailBtn.addEventListener('click', function() {
-                const emailText = emailOutput.textContent;
-                navigator.clipboard.writeText(emailText).then(() => {
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    this.style.background = 'var(--success)';
-                    
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                        this.style.background = '';
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
-            });
-            
-            // Regenerate email
-            regenerateBtn.addEventListener('click', function() {
-                generateEmail();
-            });
-            
-            // Create new email
-            newEmailBtn.addEventListener('click', function() {
-                // Reset form
-                form.reset();
-                showStep(0);
-                
-                // Hide results and show form
-                resultsContainer.style.display = 'none';
-                generatorContainer.style.display = 'block';
-                
-                // Scroll to top
-                generatorContainer.scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // FAQ functionality
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close all FAQ items
-                    faqItems.forEach(faqItem => {
-                        faqItem.classList.remove('active');
-                    });
-                    
-                    // Open clicked item if it wasn't active
-                    if (!isActive) {
-                        item.classList.add('active');
-                    }
-                });
-            });
-            
-            // Initialize
-            showStep(0);
-        });
-    </script>
-</body>
+    </div>
+</footer>
 </html>
