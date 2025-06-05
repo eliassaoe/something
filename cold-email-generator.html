@@ -952,19 +952,32 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                console.log('Form submitted'); // Debug log
+                
                 const formData = new FormData(this);
                 const data = Object.fromEntries(formData.entries());
+                
+                console.log('Form data:', data); // Debug log
+                
+                // Validate required fields
+                if (!data.recipientName || !data.recipientCompany || !data.yourName || !data.yourCompany || !data.emailGoal) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
                 
                 // Show loading state
                 const originalContent = generateBtn.innerHTML;
                 generateBtn.disabled = true;
                 generateBtn.innerHTML = '<div class="loader"></div> <span>Generating...</span>';
                 
+                console.log('Sending to webhook...'); // Debug log
+                
                 // Send data to webhook
                 fetch('https://eliasse-n8n.onrender.com/webhook/c1abdf8e-afd8-4673-bf31-91009fda71a3', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     },
                     body: JSON.stringify({
                         recipientName: data.recipientName,
@@ -975,28 +988,37 @@
                     })
                 })
                 .then(response => {
+                    console.log('Webhook response status:', response.status);
+                    console.log('Webhook response headers:', response.headers);
+                    
                     if (!response.ok) {
-                        throw new Error(`Server responded with status: ${response.status}`);
+                        throw new Error(`Server responded with status: ${response.status} - ${response.statusText}`);
                     }
                     return response.text();
                 })
                 .then(text => {
+                    console.log('Webhook response text:', text);
+                    
                     try {
                         // Try to parse as JSON first
                         const jsonData = JSON.parse(text);
+                        console.log('Parsed JSON:', jsonData);
                         handleWebhookResponse(jsonData, data);
                     } catch (jsonError) {
+                        console.log('Not JSON, treating as plain text');
                         // If not JSON, treat as plain text email
                         handlePlainTextResponse(text, data);
                     }
                 })
                 .catch(error => {
                     console.error('Webhook error:', error);
+                    alert('Failed to generate email with AI. Using fallback generation.');
                     // Fallback to local generation
                     const emailData = generateEmail(data);
                     displayResult(emailData, data);
                 })
                 .finally(() => {
+                    console.log('Request completed');
                     // Reset button
                     generateBtn.disabled = false;
                     generateBtn.innerHTML = originalContent;
