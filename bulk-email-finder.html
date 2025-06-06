@@ -1469,16 +1469,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, false);
     
-    // Email validation function
     function validateEmail(email) {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
     
-    /**
-     * Process a file with header standardization before sending to API
-     * @param {File} file - The uploaded CSV file
-     */
     async function handleStandardizedFile(file) {
         if (!file) return;
         
@@ -1487,12 +1482,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        if (file.size > 5 * 1024 * 1024) { // 5MB limit
-            showStatus('File size exceeds the 5MB limit.', 'error');
-            return;
-        }
-        
-        // Get and validate email address
+        if (file.size > 100 * 1024) { // 100KB limit
+    showStatus('File size exceeds the 100KB limit (maximum 100 contacts).', 'error');
+    return;
+}
+
         const userEmail = document.getElementById('userEmail').value.trim();
         if (!userEmail) {
             showStatus('Please enter your email address to receive the results.', 'error');
