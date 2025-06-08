@@ -2159,7 +2159,7 @@ async function exportToCSV() {
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
 
-        document.getElementById('exportLimit').value = globalTrueCount;
+        document.getElementById('exportLimit').value = Math.min(globalTrueCount, 1000);
         
         // Add event listener for the close button
         const closeExportModal = document.querySelector('.close-export-modal');
