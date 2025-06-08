@@ -338,6 +338,82 @@
             font-weight: 600;
         }
 
+        /* Hunter.io Alternative Section */
+.hunter-alternative {
+    padding: 3rem 0;
+    background: linear-gradient(to right, rgba(79,70,229,0.05), rgba(14,165,233,0.05));
+    border-left: 4px solid var(--primary);
+}
+.hunter-alternative h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-800);
+}
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+.comparison-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+}
+.comparison-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.comparison-card .icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+.hunter-card .icon {
+    background: #ff6b35;
+    color: white;
+}
+.unlimited-card .icon {
+    background: var(--primary);
+    color: white;
+}
+.feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.feature-list li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.feature-list .check {
+    color: var(--success);
+    font-weight: bold;
+}
+.feature-list .cross {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+/* Responsive pour la section */
+@media (max-width: 991px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
         /* FAQ Section */
         .faq {
             padding: 3rem 0 4rem;
@@ -697,7 +773,7 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Why Use Our hunter io free alternative ?</h2>
+            <h2>Why Use Our free bulk email finder ?</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
@@ -758,8 +834,8 @@
             <div class="comparison-grid">
                 <div class="comparison-card hunter-card">
                     <h3>
-                        <span class="icon">H</span>
-                        Hunter.io
+                        <span class="icon">Hunter io</span>
+                        
                     </h3>
                     <ul class="feature-list">
                         <li><span class="cross">✗</span> Limited free searches (25/month)</li>
@@ -771,8 +847,8 @@
                 </div>
                 <div class="comparison-card unlimited-card">
                     <h3>
-                        <span class="icon">U</span>
-                        UnlimitedLeads
+                        <span class="icon">Unlimited leads</span>
+                        
                     </h3>
                     <ul class="feature-list">
                         <li><span class="check">✓</span> 1000 free searches daily</li>
