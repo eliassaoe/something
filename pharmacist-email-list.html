@@ -577,6 +577,233 @@
         .pulse {
             animation: pulse 2s infinite;
         }
+
+        /* Mobile optimizations for chiropractor page */
+@media (max-width: 768px) {
+    .container { 
+        padding: 0 1rem; 
+    }
+    
+    /* Header mobile - hide login button and make responsive */
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .cta-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .btn-secondary {
+        display: none; /* Hide login button on mobile */
+    }
+
+    .btn-primary {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero h1 { 
+        font-size: 2.5rem; 
+    }
+    
+    .hero-subtitle { 
+        font-size: 1.1rem; 
+    }
+    
+    .btn-huge { 
+        font-size: 1rem; 
+        padding: 1.25rem 2rem; 
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .cta-content h2 { 
+        font-size: 2rem; 
+    }
+    
+    .section-title { 
+        font-size: 2rem; 
+    }
+    
+    .stats-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 1rem; 
+    }
+    
+    .features-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .types-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .benefits-grid { 
+        grid-template-columns: 1fr; 
+    }
+
+    /* Results table mobile - convert to cards */
+    .results-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .export-button {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+    }
+
+    .results-table {
+        font-size: 12px;
+    }
+
+    .results-table thead {
+        display: none;
+    }
+
+    .results-table,
+    .results-table tbody,
+    .results-table tr,
+    .results-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .results-table tr {
+        border: 1px solid var(--gray-200);
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .results-table td {
+        border: none;
+        border-bottom: 1px solid var(--gray-100);
+        position: relative;
+        padding: 10px 0 10px 40%;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .results-table td:before {
+        content: attr(data-label) ": ";
+        position: absolute;
+        left: 0;
+        width: 35%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        color: var(--gray-600);
+        font-size: 12px;
+    }
+
+    .results-table td:last-child {
+        border-bottom: none;
+        text-align: center;
+        padding: 15px 0 0 0;
+    }
+
+    .results-table td:last-child:before {
+        display: none;
+    }
+
+    .results-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    /* Modal responsive */
+    .contact-modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+        margin: 10px auto;
+        padding: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
+
+    .modal-body {
+        flex-direction: column;
+    }
+
+    .contact-info, .company-info {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .hero h1 { 
+        font-size: 2rem; 
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .stats-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .stat-card { 
+        padding: 1.5rem; 
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .cta-content h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Fix horizontal scroll issues */
+.search-form,
+.results-table,
+.modal-content,
+.alert,
+.loading {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure no element causes horizontal scroll */
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+        
     </style>
 </head>
 <body>
