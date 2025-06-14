@@ -2409,12 +2409,11 @@ function showExportConfirmation(recordCount) {
     const infoValue = confirmationModal.querySelector('.info-value');
     if (infoValue) {
         infoValue.innerHTML = `
-            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are being verified !</strong></p>
-            <p>You will receive your verified leads in your Inbox in 10-15 minutes </p>
-            <p style="margin-top: 10px;">Check your Inbox and your Spam folder to find your lead list</p>
+            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
+            <p>Your leads have been exported successfully.</p>
+            <p style="margin-top: 10px;">Check your downloads folder or your email for the lead list.</p>
         `;
-
-         infoValue.style.textAlign = 'center';
+        infoValue.style.textAlign = 'center';
     }
     
     confirmationModal.style.display = 'block';
