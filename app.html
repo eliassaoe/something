@@ -1635,12 +1635,6 @@ header {
                 <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
             
-            <!-- Add the verification checkbox here -->
-            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
-                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
-                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong></label>
-            </div>
-            
             <div style="text-align: center; margin-top: 20px;">
     <button id="confirmExport" class="search-button" style="max-width: 200px;">
         Confirm Export
@@ -2153,7 +2147,6 @@ async function handleSearch(e) {
 const EXPORT_WEBHOOK_URL = 'https://export.hamoureliasse.workers.dev/export';
 
 async function exportToCSV() {
-    
     try {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
@@ -2177,15 +2170,13 @@ async function exportToCSV() {
         // Add event listener to the new button
         newConfirmExportBtn.addEventListener('click', async () => {
             try {
-                
                 // Hide the export modal
                 exportModal.style.display = 'none';
                 
                 // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
                 
-                // NEW: Get the verification checkbox status
-                const verifyBeforeExport = document.getElementById('verifyBeforeExport').checked;
+                // REMOVED: verification checkbox logic
                 
                 // Calculate estimated wait time based on number of records
                 const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
@@ -2208,11 +2199,11 @@ async function exportToCSV() {
     <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
     
     <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
-        ${verifyBeforeExport ? 'Verifying and preparing your export...' : 'Preparing your export...'}
+        Preparing your export...
     </p>
     
     <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
-        This may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong>. 
+        This may take up to <strong>5 minutes</strong>. 
         Keep this page open and check your inbox when complete.
     </p>
     
@@ -2231,8 +2222,8 @@ async function exportToCSV() {
                     limit: exportLimit,
                     token: userToken,
                     totalCount: currentCount,
-                    // NEW: Add verification type to the request
-                    type: verifyBeforeExport ? 'verify' : 'unverified',
+                    // REMOVED: verification type - always use 'unverified'
+                    type: 'unverified',
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
@@ -2271,70 +2262,68 @@ async function exportToCSV() {
                         throw new Error(`API error: ${response.status} ${response.statusText}`);
                     }
 
-                         // Check for CSV content type
-                   const contentType = response.headers.get('content-type');
+                    // Check for CSV content type
+                    const contentType = response.headers.get('content-type');
 
-                       if (contentType && contentType.includes('text/csv')) {
-    // It's a CSV file - handle direct download
-                          const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-        a.style.display = 'none';
-    a.href = url;
-    
-    // Get filename from Content-Disposition header if available
-    const contentDisposition = response.headers.get('content-disposition');
-    let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
-    if (contentDisposition) {
-        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
-        if (filenameMatch) filename = filenameMatch[1];
-    }
-    
-    a.download = filename;
-    document.body.appendChild(a);
-    
-    // MODIFIED: Add console logging
-    console.log("Starting CSV download with blob size:", blob.size);
-    console.log("Download URL:", url);
-    console.log("Download filename:", filename);
-    
-    // MODIFIED: Force a small delay before clicking
-    setTimeout(() => {
-        a.click();
-        console.log("Download click triggered");
-        
-        // MODIFIED: Add a longer delay before cleanup
-        setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 1000); // Wait 1 second before cleanup
-    }, 100); // Wait 100ms before triggering click
-    
-    // Show success message
-    showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
-    
-    // Show the confirmation modal
-    showExportConfirmation("your contacts");
-    
-    return; // Exit early - we've handled the CSV response
-}
- 
+                    if (contentType && contentType.includes('text/csv')) {
+                        // It's a CSV file - handle direct download
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        
+                        // Get filename from Content-Disposition header if available
+                        const contentDisposition = response.headers.get('content-disposition');
+                        let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+                        if (contentDisposition) {
+                            const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                            if (filenameMatch) filename = filenameMatch[1];
+                        }
+                        
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        
+                        console.log("Starting CSV download with blob size:", blob.size);
+                        console.log("Download URL:", url);
+                        console.log("Download filename:", filename);
+                        
+                        setTimeout(() => {
+                            a.click();
+                            console.log("Download click triggered");
+                            
+                            setTimeout(() => {
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                                console.log("Download link cleaned up");
+                            }, 1000);
+                        }, 100);
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation("your contacts");
+                        
+                        return; // Exit early - we've handled the CSV response
+                    }
+                    
                     console.log("Received response from export webhook, parsing JSON...");
                     
                     // Parse the response as JSON
                     const responseData = await response.json();
 
-                     console.log("Parsed JSON response:", responseData);
+                    console.log("Parsed JSON response:", responseData);
                     
-if (responseData && responseData.code === 403) {
+                    if (responseData && responseData.code === 403) {
                         // Handle insufficient credits error
                         console.log("*** INSUFFICIENT CREDITS DETECTED ***");
                         showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
                         showCreditUpgradeModal();
                         return;
                     }
-if (Array.isArray(responseData) && responseData.length > 0) {
+                    
+                    if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
                         
@@ -2351,13 +2340,13 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                         // Show the confirmation modal
                         showExportConfirmation(responseData.length);
                     } else {
-    // Handle unexpected response format - show success message
-    console.warn("Unexpected response format:", responseData);
-    showAlert("Export completed! Check your inbox and spam folder - your leads will arrive very soon.", 'success');
-    
-    // Also show the confirmation modal
-    showExportConfirmation("your leads");
-}
+                        // Handle unexpected response format - show success message
+                        console.warn("Unexpected response format:", responseData);
+                        showAlert("Export completed! Check your inbox and spam folder - your leads will arrive very soon.", 'success');
+                        
+                        // Also show the confirmation modal
+                        showExportConfirmation("your leads");
+                    }
                 } catch (error) {
                     console.error("Export fetch error:", error);
                     
@@ -2373,7 +2362,9 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                 showAlert(`Error processing export: ${generalError.message}`, 'error');
             } finally {
                 // Stop any running timers
-                clearInterval(timerInterval);
+                if (typeof timerInterval !== 'undefined') {
+                    clearInterval(timerInterval);
+                }
                 if (typeof secondsInterval !== 'undefined') {
                     clearInterval(secondsInterval);
                 }
@@ -2389,7 +2380,9 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                 loading.style.display = 'none';
                 
                 // Reset the export flag and button state
-                isExporting = false;
+                if (typeof isExporting !== 'undefined') {
+                    isExporting = false;
+                }
                 newConfirmExportBtn.disabled = false;
                 newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
             }
