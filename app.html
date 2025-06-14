@@ -1634,7 +1634,12 @@ header {
                 <label for="exportLimit"><strong>Number of leads to export:</strong></label>
                 <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
-        
+            
+            <!-- Add the verification checkbox here -->
+            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
+                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
+                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong></label>
+            </div>
             
             <div style="text-align: center; margin-top: 20px;">
     <button id="confirmExport" class="search-button" style="max-width: 200px;">
