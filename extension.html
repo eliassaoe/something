@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unlimited Leads - Extension Dashboard</title>
+    <title>DataScraper Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -377,28 +377,107 @@
             transform: translateY(-2px);
         }
 
-        /* Loading States */
-        .btn.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-            position: relative;
+        /* Credits Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .btn.loading::after {
-            content: '';
+        .modal-content {
             position: absolute;
-            width: 16px;
-            height: 16px;
-            margin: auto;
-            border: 2px solid transparent;
-            border-top-color: currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease-out;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--gray-600);
+        }
+
+        .credit-packages {
+            display: grid;
+            gap: 20px;
+        }
+
+        .credit-package {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .credit-package:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .package-credits {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .package-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 10px 0;
+        }
+
+        .package-description {
+            color: var(--gray-600);
+            font-size: 14px;
         }
 
         /* Responsive */
@@ -438,6 +517,10 @@
             .scraper-actions {
                 flex-direction: column;
             }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -467,7 +550,7 @@
         <header class="header">
             <div class="logo">
                 <i class="fas fa-robot"></i>
-                <h1>Unlimited Leads</h1>
+                <h1>DataScraper Pro</h1>
             </div>
             
             <nav class="nav-menu">
@@ -482,7 +565,7 @@
                     <i class="fas fa-coins"></i>
                     <span id="creditsCount">0</span> / credits
                 </div>
-                <a href="#" class="btn btn-primary">
+                <a href="#" class="btn btn-primary" onclick="openCreditsModal()">
                     <i class="fas fa-credit-card"></i>
                     Buy Credits
                 </a>
@@ -538,8 +621,8 @@
                             <li><i class="fas fa-check"></i> Social media profiles</li>
                         </ul>
                         <div class="scraper-actions">
-                            <button class="btn btn-primary" onclick="launchScraper('apollo-people')">
-                                <i class="fas fa-external-link-alt"></i>
+                            <button class="btn btn-primary" onclick="launchScraper('apollo-contacts')">
+                                <i class="fas fa-play"></i>
                                 Launch Export
                             </button>
                             <button class="btn btn-secondary" onclick="showTutorial('apollo-contacts')">
@@ -567,7 +650,7 @@
                         </ul>
                         <div class="scraper-actions">
                             <button class="btn btn-primary" onclick="launchScraper('apollo-companies')">
-                                <i class="fas fa-external-link-alt"></i>
+                                <i class="fas fa-play"></i>
                                 Launch Export
                             </button>
                             <button class="btn btn-secondary" onclick="showTutorial('apollo-companies')">
@@ -600,8 +683,8 @@
                             <li><i class="fas fa-check"></i> Mutual connections</li>
                         </ul>
                         <div class="scraper-actions">
-                            <button class="btn btn-primary" onclick="launchScraper('linkedin-people')">
-                                <i class="fas fa-external-link-alt"></i>
+                            <button class="btn btn-primary" onclick="launchScraper('linkedin-profiles')">
+                                <i class="fas fa-play"></i>
                                 Launch Export
                             </button>
                             <button class="btn btn-secondary" onclick="showTutorial('linkedin-profiles')">
@@ -629,7 +712,7 @@
                         </ul>
                         <div class="scraper-actions">
                             <button class="btn btn-primary" onclick="launchScraper('linkedin-companies')">
-                                <i class="fas fa-external-link-alt"></i>
+                                <i class="fas fa-play"></i>
                                 Launch Export
                             </button>
                             <button class="btn btn-secondary" onclick="showTutorial('linkedin-companies')">
@@ -641,6 +724,34 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Credits Modal -->
+    <div id="creditsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCreditsModal()">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Buy Credits</h2>
+                <p style="color: var(--gray-600);">Choose a credit package to start scraping</p>
+            </div>
+            <div class="credit-packages">
+                <div class="credit-package" onclick="buyCredits(100, 29)">
+                    <div class="package-credits">100 Credits</div>
+                    <div class="package-price">$29</div>
+                    <div class="package-description">Perfect for small projects</div>
+                </div>
+                <div class="credit-package" onclick="buyCredits(500, 99)">
+                    <div class="package-credits">500 Credits</div>
+                    <div class="package-price">$99</div>
+                    <div class="package-description">Great for medium campaigns</div>
+                </div>
+                <div class="credit-package" onclick="buyCredits(1000, 179)">
+                    <div class="package-credits">1,000 Credits</div>
+                    <div class="package-price">$179</div>
+                    <div class="package-description">Best value for large projects</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -670,86 +781,54 @@
         }
 
         function launchScraper(scraperType) {
-            const button = event.target;
-            
-            // Add loading state
-            button.classList.add('loading');
-            button.disabled = true;
-            
-            // Define redirect URLs
-            const redirectUrls = {
-                'apollo-people': 'https://app.apollo.io/#/people',
-                'apollo-companies': 'https://app.apollo.io/#/companies',
-                'linkedin-people': 'https://www.linkedin.com/sales/search/people',
-                'linkedin-companies': 'https://www.linkedin.com/sales/search/company'
-            };
-            
-            const redirectUrl = redirectUrls[scraperType];
-            
-            if (redirectUrl) {
-                // Store scraper type for later use
-                localStorage.setItem('selectedScraper', scraperType);
-                localStorage.setItem('scrapingTimestamp', Date.now());
-                
-                // Redirect to the platform
-                setTimeout(() => {
-                    window.open(redirectUrl, '_blank');
-                    
-                    // Remove loading state
-                    button.classList.remove('loading');
-                    button.disabled = false;
-                }, 1000);
-                
-                // Show success message
-                showNotification(`Redirecting to ${scraperType.replace('-', ' ')}...`, 'success');
-            } else {
-                // Remove loading state
-                button.classList.remove('loading');
-                button.disabled = false;
-                showNotification('Invalid scraper type', 'error');
+            if (currentCredits <= 0) {
+                alert('You need credits to launch a scraper. Please buy credits first.');
+                openCreditsModal();
+                return;
             }
+            
+            // Simulate scraper launch
+            alert(`Launching ${scraperType} scraper... This would normally start the scraping process.`);
+            currentCredits -= 10; // Deduct credits for demo
+            updateCreditsDisplay();
         }
 
         function showTutorial(scraperType) {
-            const tutorials = {
-                'apollo-contacts': 'https://docs.unlimited-leads.com/apollo-contacts',
-                'apollo-companies': 'https://docs.unlimited-leads.com/apollo-companies',
-                'linkedin-profiles': 'https://docs.unlimited-leads.com/linkedin-profiles',
-                'linkedin-companies': 'https://docs.unlimited-leads.com/linkedin-companies'
-            };
-            
-            const tutorialUrl = tutorials[scraperType];
-            if (tutorialUrl) {
-                window.open(tutorialUrl, '_blank');
-            } else {
-                alert(`Tutorial for ${scraperType} will be available soon!`);
+            alert(`Opening tutorial for ${scraperType}... This would show step-by-step instructions.`);
+        }
+
+        function openCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'block';
+        }
+
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'none';
+        }
+
+        function buyCredits(amount, price) {
+            if (confirm(`Purchase ${amount} credits for $${price}?`)) {
+                currentCredits += amount;
+                updateCreditsDisplay();
+                closeCreditsModal();
+                alert(`Successfully purchased ${amount} credits!`);
             }
         }
 
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#2563eb'};
-                color: white;
-                padding: 16px 24px;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 10000;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease-out;
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-in forwards';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+        function updateCreditsDisplay() {
+            document.getElementById('creditsCount').textContent = currentCredits;
         }
 
-        function updateCreditsDisplay() {
-            document.getElementById('creditsCount').textContent =
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('creditsModal');
+            if (event.target === modal) {
+                closeCreditsModal();
+            }
+        }
+
+        // Initialize with some demo credits
+        currentCredits = 50;
+        updateCreditsDisplay();
+    </script>
+</body>
+</html>
