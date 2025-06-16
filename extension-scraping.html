@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited Leads - Scraping Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="/js/auth-check.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -596,6 +599,11 @@
         let scrapingUrl = null;
         let progressInterval = null;
 
+        // PAR celle-ci :
+     function getCurrentUserId() {
+    return window.UnlimitedLeadsAuth.getUserId();
+}
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             // Get scraping URL from query params
@@ -976,6 +984,22 @@
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
+
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+    const authData = {
+        token: localStorage.getItem('unlimited_leads_token'),
+        expires: localStorage.getItem('unlimited_leads_expires'),
+        user: localStorage.getItem('unlimited_leads_user'),
+        refresh_token: localStorage.getItem('unlimited_leads_refresh_token')
+    };
+    
+    chrome.runtime.sendMessage({
+        action: 'syncAuthFromWebsite',
+        authData: authData
+    }).catch(() => {
+        // Extension not available, ignore
+    });
+}
 
         // Add CSS animations
         const style = document.createElement('style');
