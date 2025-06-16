@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited Leads - Scraping Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -431,16 +430,6 @@
             transform: translateY(-1px);
         }
 
-        /* Loading States */
-        .loading-row {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -519,7 +508,7 @@
             <div class="user-info">
                 <div class="credits">
                     <i class="fas fa-coins"></i>
-                    <span id="creditsCount">0</span> / credits
+                    <span id="creditsCount">150</span> / credits
                 </div>
                 <a href="#" class="btn btn-primary">
                     <i class="fas fa-credit-card"></i>
@@ -596,10 +585,11 @@
     </div>
 
     <script>
-        // Supabase Configuration
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // localStorage keys
+        const STORAGE_KEYS = {
+            JOBS: 'unlimited_leads_jobs',
+            CURRENT_JOB: 'unlimited_leads_current_job'
+        };
 
         // Global variables
         let currentScrapingJob = null;
@@ -612,7 +602,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             scrapingUrl = urlParams.get('page');
             
-            // Always load existing data first
+            // Load existing data
             loadExportHistory();
             updateStats();
             
@@ -623,31 +613,118 @@
             }
         });
 
+        // Generate unique ID
+        function generateId() {
+            return 'job_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Get all jobs from localStorage
+        function getAllJobs() {
+            const jobs = localStorage.getItem(STORAGE_KEYS.JOBS);
+            return jobs ? JSON.parse(jobs) : [];
+        }
+
+        // Save jobs to localStorage
+        function saveJobs(jobs) {
+            localStorage.setItem(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
+        }
+
+        // Save single job
+        function saveJob(job) {
+            const jobs = getAllJobs();
+            const existingIndex = jobs.findIndex(j => j.id === job.id);
+            
+            if (existingIndex >= 0) {
+                jobs[existingIndex] = job;
+            } else {
+                jobs.unshift(job); // Add to beginning
+            }
+            
+            saveJobs(jobs);
+        }
+
         // Start new scraping job
         async function startNewScraping(url) {
             try {
-                // Create new scraping job in Supabase
-                const { data, error } = await supabase
-                    .from('scraping_jobs')
-                    .insert([{
-                        url: url,
-                        status: 'processing',
-                        progress: 0,
-                        started_at: new Date().toISOString(),
-                        platform: detectPlatform(url)
-                    }])
-                    .select()
-                    .single();
-
-                if (error) throw error;
-
-                currentScrapingJob = data;
-                showCurrentScraping(url);
-                simulateProgress(data.id);
+                const decodedUrl = decodeURIComponent(url);
+                const platform = detectPlatform(decodedUrl);
+                
+                console.log('Starting scraping for:', decodedUrl);
+                console.log('Platform detected:', platform);
+                
+                // Create new job
+                const job = {
+                    id: generateId(),
+                    url: decodedUrl,
+                    platform: platform,
+                    status: 'processing',
+                    progress: 0,
+                    records_found: null,
+                    download_url: null,
+                    started_at: new Date().toISOString(),
+                    completed_at: null,
+                    created_at: new Date().toISOString()
+                };
+                
+                // Save job
+                saveJob(job);
+                currentScrapingJob = job;
+                
+                // Show scraping UI
+                showCurrentScraping(decodedUrl);
+                
+                // Make API call to webhook
+                try {
+                    const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
+                    const requestBody = {
+                        type: platform,
+                        url: decodedUrl,
+                        job_id: job.id  // Send job ID so server can track it
+                    };
+                    
+                    console.log('Sending API request:', requestBody);
+                    
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                    
+                    if (response.ok) {
+                        console.log('API call successful');
+                        
+                        // Try to get response data
+                        try {
+                            const responseData = await response.json();
+                            console.log('Server response:', responseData);
+                            
+                            // If server returns immediate download URL
+                            if (responseData.download_url) {
+                                job.download_url = responseData.download_url;
+                                job.records_found = responseData.records_found || null;
+                                saveJob(job);
+                            }
+                        } catch (jsonError) {
+                            console.log('Response not JSON, continuing with simulation');
+                        }
+                        
+                        showNotification('Scraping started successfully!', 'success');
+                    } else {
+                        throw new Error(`API call failed: ${response.status}`);
+                    }
+                } catch (apiError) {
+                    console.log('API call failed, continuing with simulation:', apiError);
+                    showNotification('Scraping started (demo mode)', 'warning');
+                }
+                
+                // Start progress simulation
+                simulateProgress();
                 
             } catch (error) {
                 console.error('Error starting scraping:', error);
-                alert('Failed to start scraping job');
+                showNotification('Failed to start scraping job: ' + error.message, 'error');
             }
         }
 
@@ -656,26 +733,20 @@
             const currentScrapingDiv = document.getElementById('currentScraping');
             const currentUrlDiv = document.getElementById('currentUrl');
             
-            // Decode the URL for display
-            const decodedUrl = decodeURIComponent(url);
-            
-            // Show the current scraping section
             currentScrapingDiv.classList.add('show');
-            currentUrlDiv.textContent = decodedUrl;
-            currentUrlDiv.onclick = () => window.open(decodedUrl, '_blank');
+            currentUrlDiv.textContent = url;
+            currentUrlDiv.onclick = () => window.open(url, '_blank');
             
             // Reset progress
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('progressText').textContent = '0%';
             document.getElementById('timeRemaining').textContent = 'Calculating...';
-            
-            console.log('Current scraping started for:', decodedUrl);
         }
 
-        // Simulate scraping progress
-        function simulateProgress(jobId) {
+        // Simulate progress
+        function simulateProgress() {
             let progress = 0;
-            progressInterval = setInterval(async () => {
+            progressInterval = setInterval(() => {
                 progress += Math.random() * 5;
                 if (progress > 100) progress = 100;
 
@@ -683,75 +754,74 @@
                 document.getElementById('progressFill').style.width = progress + '%';
                 document.getElementById('progressText').textContent = Math.round(progress) + '%';
                 
-                // Calculate estimated time
                 const timeRemaining = Math.max(0, Math.round((100 - progress) * 2));
                 document.getElementById('timeRemaining').textContent = timeRemaining + ' seconds';
 
-                // Update database
-                await supabase
-                    .from('scraping_jobs')
-                    .update({ progress: Math.round(progress) })
-                    .eq('id', jobId);
+                // Update job in storage
+                if (currentScrapingJob) {
+                    currentScrapingJob.progress = Math.round(progress);
+                    saveJob(currentScrapingJob);
+                }
 
                 // Complete job
                 if (progress >= 100) {
                     clearInterval(progressInterval);
-                    await completeScraping(jobId);
+                    completeScraping();
                 }
             }, 1000);
         }
 
         // Complete scraping job
-        async function completeScraping(jobId) {
-            try {
-                const recordsFound = Math.floor(Math.random() * 1000) + 50;
-                
-                // Update job status
-                const { error } = await supabase
-                    .from('scraping_jobs')
-                    .update({
-                        status: 'completed',
-                        progress: 100,
-                        records_found: recordsFound,
-                        completed_at: new Date().toISOString(),
-                        download_url: generateDownloadUrl(jobId)
-                    })
-                    .eq('id', jobId);
-
-                if (error) throw error;
-
-                // Hide current scraping
-                setTimeout(() => {
-                    document.getElementById('currentScraping').classList.remove('show');
-                    currentScrapingJob = null;
-                    loadExportHistory();
-                    updateStats();
-                }, 2000);
-
-                // Show success notification
-                showNotification('Scraping completed successfully!', 'success');
-
-            } catch (error) {
-                console.error('Error completing scraping:', error);
+        function completeScraping() {
+            if (!currentScrapingJob) return;
+            
+            // Update job status
+            currentScrapingJob.status = 'completed';
+            currentScrapingJob.progress = 100;
+            currentScrapingJob.completed_at = new Date().toISOString();
+            
+            // If no download URL from server, generate a placeholder
+            if (!currentScrapingJob.download_url) {
+                currentScrapingJob.records_found = Math.floor(Math.random() * 1000) + 50;
+                currentScrapingJob.download_url = generateDownloadUrl(currentScrapingJob.id);
             }
+            
+            // Save updated job
+            saveJob(currentScrapingJob);
+            
+            // Hide current scraping after delay
+            setTimeout(() => {
+                document.getElementById('currentScraping').classList.remove('show');
+                currentScrapingJob = null;
+                loadExportHistory();
+                updateStats();
+            }, 2000);
+
+            showNotification('Scraping completed successfully!', 'success');
         }
 
         // Load export history
-        async function loadExportHistory() {
-            try {
-                const { data, error } = await supabase
-                    .from('scraping_jobs')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+        function loadExportHistory() {
+            const jobs = getAllJobs();
+            renderExportsTable(jobs);
+        }
 
-                if (error) throw error;
+        // Update stats
+        function updateStats() {
+            const jobs = getAllJobs();
+            
+            const stats = jobs.reduce((acc, job) => {
+                acc.total++;
+                if (job.status === 'completed') acc.completed++;
+                if (job.status === 'processing') acc.processing++;
+                acc.totalRecords += job.records_found || 0;
+                return acc;
+            }, { total: 0, completed: 0, processing: 0, totalRecords: 0 });
 
-                renderExportsTable(data || []);
-
-            } catch (error) {
-                console.error('Error loading history:', error);
-                renderExportsTable([]);
-            }
+            document.getElementById('totalExports').textContent = stats.total;
+            document.getElementById('completedExports').textContent = stats.completed;
+            document.getElementById('processingExports').textContent = stats.processing;
+            document.getElementById('totalRecords').textContent = stats.totalRecords.toLocaleString();
         }
 
         // Render exports table
@@ -783,7 +853,7 @@
                     </thead>
                     <tbody>
                         ${exports.map(job => `
-                            <tr class="${job.status === 'processing' ? 'loading-row' : ''}">
+                            <tr>
                                 <td>${formatDate(job.created_at)}</td>
                                 <td>
                                     <i class="fab fa-${job.platform === 'apollo' ? 'affiliatetheme' : 'linkedin'}"></i>
@@ -802,12 +872,12 @@
                                 <td>
                                     <div class="action-buttons">
                                         ${job.status === 'completed' && job.download_url ? 
-                                            `<a href="${job.download_url}" class="btn btn-success btn-small" download>
+                                            `<a href="${job.download_url}" class="btn btn-success btn-small" target="_blank">
                                                 <i class="fas fa-download"></i> Download
                                             </a>` : ''
                                         }
-                                        <button class="btn btn-secondary btn-small" onclick="viewDetails('${job.id}')">
-                                            <i class="fas fa-eye"></i> View
+                                        <button class="btn btn-secondary btn-small" onclick="deleteJob('${job.id}')">
+                                            <i class="fas fa-trash"></i> Delete
                                         </button>
                                     </div>
                                 </td>
@@ -820,67 +890,11 @@
             container.innerHTML = table;
         }
 
-        // Update stats
-        async function updateStats() {
-            try {
-                const { data, error } = await supabase
-                    .from('scraping_jobs')
-                    .select('status, records_found');
-
-                if (error) throw error;
-
-                const stats = data.reduce((acc, job) => {
-                    acc.total++;
-                    if (job.status === 'completed') acc.completed++;
-                    if (job.status === 'processing') acc.processing++;
-                    acc.totalRecords += job.records_found || 0;
-                    return acc;
-                }, { total: 0, completed: 0, processing: 0, totalRecords: 0 });
-
-                document.getElementById('totalExports').textContent = stats.total;
-                document.getElementById('completedExports').textContent = stats.completed;
-                document.getElementById('processingExports').textContent = stats.processing;
-                document.getElementById('totalRecords').textContent = stats.totalRecords.toLocaleString();
-
-            } catch (error) {
-                console.error('Error updating stats:', error);
-            }
-        }
-
         // Helper functions
         function detectPlatform(url) {
             if (url.includes('apollo.io')) return 'apollo';
             if (url.includes('linkedin.com')) return 'linkedin';
             return 'unknown';
-        }
-        
-        // Demo progress simulation (fallback when database is not connected)
-        function simulateDemoProgress() {
-            let progress = 0;
-            progressInterval = setInterval(() => {
-                progress += Math.random() * 5;
-                if (progress > 100) progress = 100;
-
-                // Update UI
-                document.getElementById('progressFill').style.width = progress + '%';
-                document.getElementById('progressText').textContent = Math.round(progress) + '%';
-                
-                // Calculate estimated time
-                const timeRemaining = Math.max(0, Math.round((100 - progress) * 2));
-                document.getElementById('timeRemaining').textContent = timeRemaining + ' seconds';
-
-                // Complete demo job
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    setTimeout(() => {
-                        document.getElementById('currentScraping').classList.remove('show');
-                        showNotification('Scraping completed successfully!', 'success');
-                        // Refresh the page data
-                        loadExportHistory();
-                        updateStats();
-                    }, 2000);
-                }
-            }, 1000);
         }
 
         function formatDate(dateString) {
@@ -902,20 +916,40 @@
         }
 
         function generateDownloadUrl(jobId) {
-            // This would typically be a Supabase Storage URL
-            return `https://your-supabase-project.supabase.co/storage/v1/object/public/exports/job_${jobId}.csv`;
+            // Fallback URL for demo - in production your server provides this
+            return `https://your-server.com/download/${jobId}.csv`;
+        }
+
+        // Optional: Function to check job status from server
+        async function checkJobStatus(jobId) {
+            try {
+                const response = await fetch(`https://eliasse-n8n.onrender.com/webhook/job-status/${jobId}`);
+                if (response.ok) {
+                    const status = await response.json();
+                    return status; // { status: 'completed', download_url: '...', records_found: 123 }
+                }
+            } catch (error) {
+                console.log('Could not check job status:', error);
+            }
+            return null;
         }
 
         function openScrapingUrl() {
             if (scrapingUrl) {
-                // Decode the URL before opening
                 const decodedUrl = decodeURIComponent(scrapingUrl);
                 window.open(decodedUrl, '_blank');
             }
         }
 
-        function viewDetails(jobId) {
-            alert(`View details for job ${jobId}\n\nThis would open a detailed view of the scraping job.`);
+        function deleteJob(jobId) {
+            if (confirm('Are you sure you want to delete this job?')) {
+                const jobs = getAllJobs();
+                const filteredJobs = jobs.filter(job => job.id !== jobId);
+                saveJobs(filteredJobs);
+                loadExportHistory();
+                updateStats();
+                showNotification('Job deleted successfully', 'success');
+            }
         }
 
         function showNotification(message, type = 'info') {
@@ -924,7 +958,7 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: ${type === 'success' ? '#10b981' : '#2563eb'};
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#2563eb'};
                 color: white;
                 padding: 16px 24px;
                 border-radius: 8px;
@@ -943,8 +977,20 @@
             }, 3000);
         }
 
-        // Demo: Load with demo credits
-        document.getElementById('creditsCount').textContent = '150';
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
