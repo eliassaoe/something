@@ -1,1 +1,834 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Scrupp - Lead Export Tools</title>\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">\n   <style>\n   /* Font imports */\n@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');\n\n/* Custom scrollbar for premium feel */\n::-webkit-scrollbar {\n    width: 10px;\n}\n::-webkit-scrollbar-track {\n    background: #f1f1f1;\n}\n::-webkit-scrollbar-thumb {\n    background: #eff6ff;\n    border-radius: 10px;\n}\n::-webkit-scrollbar-thumb:hover {\n    background: #2563eb;\n}\n\n:root {\n    /* Color scheme */\n    --primary: #2563eb;\n    --primary-dark: #1d4ed8;\n    --primary-light: #eff6ff;\n    --secondary: #0ea5e9;\n    --secondary-dark: #0284c7;\n    --accent: #0d9488;\n    --gray-50: #f9fafb;\n    --gray-100: #f3f4f6;\n    --gray-200: #e5e7eb;\n    --gray-300: #d1d5db;\n    --gray-600: #4b5563;\n    --gray-700: #374151;\n    --gray-800: #1f2937;\n    --gray-900: #111827;\n    --success: #10b981;\n    --danger: #ef4444;\n    --warning: #f59e0b;\n    \n    /* Design tokens */\n    --radius-sm: 0.5rem;\n    --radius-md: 0.5rem;\n    --radius-lg: 1rem;\n    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);\n    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);\n    --transition-standard: all 0.3s ease;\n    \n    /* Font families */\n    --font-primary: 'Inter', sans-serif;\n    --font-heading: 'Montserrat', sans-serif;\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: var(--font-primary);\n}\n\nbody {\n    background-color: #ffffff;\n    color: var(--gray-800);\n    line-height: 1.7;\n    font-size: 15px;\n    letter-spacing: 0.01em;\n    overflow-x: hidden;\n}\n\nbody:before {\n    content: '';\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");\n    opacity: 0.5;\n    z-index: -1;\n}\n\n.container {\n    max-width: 1280px;\n    margin: 0 auto;\n    padding: 0 2rem;\n    width: 100%;\n}\n\nh1, h2, h3, h4, h5 {\n    font-family: var(--font-heading);\n    line-height: 1.3;\n    font-weight: 700;\n    margin-bottom: 0.8em;\n}\n\n/* HEADER */\nheader {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 1.25rem 0;\n    border-bottom: 1px solid rgba(25, 43, 71, 0.08);\n    margin-bottom: 30px;\n    background-color: white;\n    box-shadow: 0 1px 0 rgba(0,0,0,0.08);\n    position: sticky;\n    top: 0;\n    z-index: 100;\n    width: 100%;\n}\n\n.logo {\n    font-size: 1.5rem;\n    font-weight: 800;\n    font-family: var(--font-heading);\n    display: flex;\n    align-items: center;\n}\n\n.logo i {\n    margin-right: 8px;\n    color: var(--primary);\n    font-size: 1.5rem;\n}\n\n.gradient-text {\n    background: linear-gradient(to right, var(--primary), var(--secondary));\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    background-clip: text;\n    color: transparent;\n}\n\n.user-credits-container {\n    display: flex;\n    align-items: center;\n    gap: 16px;\n}\n\n.user-credits {\n    background-color: var(--primary-light);\n    color: var(--primary);\n    padding: 8px 16px;\n    border-radius: 100px;\n    font-weight: 600;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    font-size: 14px;\n}\n\n.logout-button, .upgrade-button {\n    border-radius: 0.5rem;\n    padding: 0.85rem 1.75rem;\n    font-weight: 600;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    transition: var(--transition-standard);\n    font-size: 14px;\n}\n\n.logout-button {\n    background: white;\n    color: var(--primary);\n    border: 1px solid var(--gray-200);\n}\n\n.upgrade-button {\n    background: linear-gradient(135deg, var(--primary), var(--primary-dark));\n    color: white;\n    border: none;\n    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);\n    font-weight: 700;\n}\n\n.logout-button:hover {\n    background-color: var(--primary-light);\n    border-color: var(--primary-light);\n    transform: translateY(-2px);\n}\n\n.upgrade-button:hover {\n    transform: translateY(-3px);\n    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);\n    background: linear-gradient(135deg, var(--primary), #1e40af);\n}\n\n.logout-button i, .upgrade-button i {\n    font-size: 16px;\n}\n\n/* MENU */\n.main-menu {\n    background-color: white;\n    margin-bottom: 20px;\n    border-radius: var(--radius-lg);\n    box-shadow: var(--box-shadow);\n    border: 1px solid var(--gray-100);\n}\n\n.menu-list {\n    display: flex;\n    list-style: none;\n    padding: 0;\n}\n\n.menu-item {\n    padding: 0;\n}\n\n.menu-link {\n    display: inline-block;\n    padding: 18px 28px;\n    color: var(--gray-700);\n    text-decoration: none;\n    font-weight: 600;\n    transition: var(--transition-standard);\n    font-size: 14px;\n    position: relative;\n}\n\n.menu-link:hover {\n    color: var(--primary);\n}\n\n.menu-item.active .menu-link {\n    color: var(--primary);\n    border-bottom: 3px solid var(--primary);\n}\n\n.menu-link i {\n    margin-right: 10px;\n}\n\n/* SCRAPER SELECTION SECTION */\n.scraper-section {\n    background-color: white;\n    border-radius: var(--radius-lg);\n    padding: 30px;\n    margin-bottom: 30px;\n    box-shadow: var(--box-shadow);\n    border: 1px solid var(--gray-100);\n}\n\n.scraper-title {\n    font-size: 1.75rem;\n    font-weight: 700;\n    color: var(--gray-900);\n    font-family: var(--font-heading);\n    margin-bottom: 1.5rem;\n}\n\n.scraper-title:after {\n    content: "";\n    display: block;\n    width: 60px;\n    height: 3px;\n    background: linear-gradient(to right, var(--primary), var(--secondary));\n    margin-top: 0.75rem;\n    border-radius: 4px;\n}\n\n.scrapers-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\n    gap: 30px;\n    margin-top: 30px;\n}\n\n.scraper-card {\n    background-color: white;\n    border: 2px solid var(--gray-100);\n    border-radius: var(--radius-lg);\n    padding: 30px;\n    transition: var(--transition-standard);\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n\n.scraper-card:hover {\n    border-color: var(--primary);\n    transform: translateY(-5px);\n    box-shadow: var(--box-shadow-lg);\n}\n\n.scraper-card:before {\n    content: '';\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    height: 4px;\n    background: linear-gradient(to right, var(--primary), var(--secondary));\n    transform: translateX(-100%);\n    transition: transform 0.3s ease;\n}\n\n.scraper-card:hover:before {\n    transform: translateX(0);\n}\n\n.scraper-header {\n    display: flex;\n    align-items: center;\n    margin-bottom: 20px;\n}\n\n.scraper-icon {\n    width: 60px;\n    height: 60px;\n    border-radius: var(--radius-md);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 24px;\n    margin-right: 15px;\n    color: white;\n}\n\n.apollo-icon {\n    background: linear-gradient(135deg, #4F46E5, #7C3AED);\n}\n\n.linkedin-icon {\n    background: linear-gradient(135deg, #0077B5, #005885);\n}\n\n.scraper-info {\n    flex: 1;\n}\n\n.scraper-name {\n    font-size: 1.25rem;\n    font-weight: 700;\n    color: var(--gray-900);\n    margin-bottom: 5px;\n    font-family: var(--font-heading);\n}\n\n.scraper-type {\n    font-size: 14px;\n    font-weight: 500;\n    color: var(--gray-600);\n    text-transform: uppercase;\n    letter-spacing: 0.5px;\n}\n\n.scraper-description {\n    color: var(--gray-700);\n    line-height: 1.6;\n    margin-bottom: 25px;\n}\n\n.scraper-features {\n    margin-bottom: 25px;\n}\n\n.feature-list {\n    list-style: none;\n    padding: 0;\n}\n\n.feature-item {\n    display: flex;\n    align-items: center;\n    margin-bottom: 10px;\n    color: var(--gray-700);\n}\n\n.feature-item i {\n    color: var(--success);\n    margin-right: 10px;\n    font-size: 14px;\n}\n\n.launch-button {\n    background: linear-gradient(135deg, var(--primary), var(--primary-dark));\n    color: white;\n    border: none;\n    border-radius: var(--radius-md);\n    padding: 12px 24px;\n    font-size: 14px;\n    font-weight: 700;\n    cursor: pointer;\n    transition: var(--transition-standard);\n    width: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 8px;\n    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);\n}\n\n.launch-button:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);\n    background: linear-gradient(135deg, var(--primary), #1e40af);\n}\n\n.tutorial-link {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: var(--secondary);\n    text-decoration: none;\n    font-size: 14px;\n    font-weight: 500;\n    margin-top: 15px;\n    transition: var(--transition-standard);\n}\n\n.tutorial-link:hover {\n    color: var(--secondary-dark);\n}\n\n/* RESPONSIVE */\n@media (max-width: 768px) {\n    .container {\n        padding: 0 1rem;\n    }\n    \n    header {\n        flex-direction: column;\n        gap: 15px;\n        align-items: stretch;\n    }\n    \n    .user-credits-container {\n        justify-content: center;\n        flex-wrap: wrap;\n        gap: 10px;\n    }\n    \n    .scrapers-grid {\n        grid-template-columns: 1fr;\n        gap: 20px;\n    }\n    \n    .scraper-card {\n        padding: 20px;\n    }\n    \n    .scraper-header {\n        flex-direction: column;\n        text-align: center;\n    }\n    \n    .scraper-icon {\n        margin-right: 0;\n        margin-bottom: 15px;\n    }\n    \n    .logout-button, .upgrade-button {\n        padding: 0.5rem 1rem;\n        font-size: 12px;\n    }\n}\n\n@media (max-width: 480px) {\n    .scraper-section {\n        padding: 20px;\n    }\n    \n    .scraper-title {\n        font-size: 1.5rem;\n    }\n    \n    .user-credits {\n        padding: 6px 12px;\n        font-size: 12px;\n    }\n}\n   </style>\n</head>\n<body>\n    \n    <div class="container">\n        <header>\n            <div class="logo">\n                <i class="fas fa-search"></i>\n                <span class="gradient-text">Scrupp</span>\n            </div>\n            <div class="user-credits-container">\n                <div id="userCredits" class="user-credits">\n                    <i class="fas fa-coins"></i> 0 / credits\n                </div>\n                <button id="upgradeButton" class="upgrade-button">\n                    <i class="fas fa-crown"></i> Buy credits\n                </button>\n            </div>\n        </header>\n\n        <div class="main-menu">\n            <ul class="menu-list">\n                <li class="menu-item">\n                    <a href="#" class="menu-link">\n                        <i class="fas fa-download"></i> New Export\n                    </a>\n                </li>\n                <li class="menu-item active">\n                    <a href="#" class="menu-link">\n                        <i class="fas fa-list"></i> All Exports\n                    </a>\n                </li>\n                <li class="menu-item">\n                    <a href="#" class="menu-link">\n                        <i class="fas fa-user"></i> Accounts\n                    </a>\n                </li>\n                <li class="menu-item">\n                    <a href="#" class="menu-link">\n                        <i class="fas fa-credit-card"></i> Billing\n                    </a>\n                </li>\n            </ul>\n        </div>\n\n        <section class="scraper-section">\n            <h2 class="scraper-title">Sales Navigator Export</h2>\n            \n            <div class="scrapers-grid">\n                <div class="scraper-card">\n                    <div class="scraper-header">\n                        <div class="scraper-icon linkedin-icon">\n                            <i class="fab fa-linkedin-in"></i>\n                        </div>\n                        <div class="scraper-info">\n                            <h3 class="scraper-name">Navigator Profile Scraper</h3>\n                            <span class="scraper-type">LinkedIn Sales Navigator</span>\n                        </div>\n                    </div>\n                    \n                    <p class="scraper-description">\n                        Scrape all the available data from Sales Navigator profiles, including emails\n                    </p>\n                    \n                    <div class="scraper-features">\n                        <ul class="feature-list">\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Extract profile data\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Find email addresses\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Contact information\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Professional details\n                            </li>\n                        </ul>\n                    </div>\n                    \n                    <button class="launch-button">\n                        <i class="fas fa-rocket"></i>\n                        Launch Export\n                    </button>\n                    \n                    <a href="#" class="tutorial-link">\n                        <i class="fas fa-play"></i>\n                        Tutorial\n                    </a>\n                </div>\n\n                <div class="scraper-card">\n                    <div class="scraper-header">\n                        <div class="scraper-icon linkedin-icon">\n                            <i class="fab fa-linkedin-in"></i>\n                        </div>\n                        <div class="scraper-info">\n                            <h3 class="scraper-name">Navigator Companies Scraper</h3>\n                            <span class="scraper-type">LinkedIn Sales Navigator</span>\n                        </div>\n                    </div>\n                    \n                    <p class="scraper-description">\n                        Scrape all the available data from Sales Navigator accounts\n                    </p>\n                    \n                    <div class="scraper-features">\n                        <ul class="feature-list">\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Company information\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Industry details\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Employee count\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Location data\n                            </li>\n                        </ul>\n                    </div>\n                    \n                    <button class="launch-button">\n                        <i class="fas fa-rocket"></i>\n                        Launch Export\n                    </button>\n                    \n                    <a href="#" class="tutorial-link">\n                        <i class="fas fa-play"></i>\n                        Tutorial\n                    </a>\n                </div>\n\n                <div class="scraper-card">\n                    <div class="scraper-header">\n                        <div class="scraper-icon apollo-icon">\n                            <i class="fas fa-rocket"></i>\n                        </div>\n                        <div class="scraper-info">\n                            <h3 class="scraper-name">Apollo Profile Scraper</h3>\n                            <span class="scraper-type">Apollo.io</span>\n                        </div>\n                    </div>\n                    \n                    <p class="scraper-description">\n                        Extract comprehensive contact data from Apollo profiles and search results\n                    </p>\n                    \n                    <div class="scraper-features">\n                        <ul class="feature-list">\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Verified email addresses\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Phone numbers\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Social media links\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Company insights\n                            </li>\n                        </ul>\n                    </div>\n                    \n                    <button class="launch-button">\n                        <i class="fas fa-rocket"></i>\n                        Launch Export\n                    </button>\n                    \n                    <a href="#" class="tutorial-link">\n                        <i class="fas fa-play"></i>\n                        Tutorial\n                    </a>\n                </div>\n\n                <div class="scraper-card">\n                    <div class="scraper-header">\n                        <div class="scraper-icon apollo-icon">\n                            <i class="fas fa-building"></i>\n                        </div>\n                        <div class="scraper-info">\n                            <h3 class="scraper-name">Apollo Company Scraper</h3>\n                            <span class="scraper-type">Apollo.io</span>\n                        </div>\n                    </div>\n                    \n                    <p class="scraper-description">\n                        Gather detailed company information and employee data from Apollo\n                    </p>\n                    \n                    <div class="scraper-features">\n                        <ul class="feature-list">\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Company profiles\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Revenue data\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Technology stack\n                            </li>\n                            <li class="feature-item">\n                                <i class="fas fa-check"></i>\n                                Key employees\n                            </li>\n                        </ul>\n                    </div>\n                    \n                    <button class="launch-button">\n                        <i class="fas fa-rocket"></i>\n                        Launch Export\n                    </button>\n                    \n                    <a href="#" class="tutorial-link">\n                        <i class="fas fa-play"></i>\n                        Tutorial\n                    </a>\n                </div>\n            </div>\n        </section>\n    </div>\n    \n</body>\n</html>\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataScraper Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .credits {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+        }
+
+        .page-subtitle {
+            color: var(--gray-600);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Platform Selection */
+        .platform-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .platform-card {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .platform-card:hover::before {
+            left: 100%;
+        }
+
+        .platform-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .platform-card.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .apollo-icon {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .linkedin-icon {
+            background: linear-gradient(135deg, #0077b5, #0a66c2);
+        }
+
+        .platform-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+        }
+
+        .platform-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Scraper Options */
+        .scraper-options {
+            display: none;
+            margin-top: 30px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .scraper-options.show {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scraper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .scraper-card {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 25px;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            position: relative;
+        }
+
+        .scraper-card:hover {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .scraper-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .scraper-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .scraper-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .scraper-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .scraper-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .scraper-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            font-size: 14px;
+        }
+
+        .scraper-features li i {
+            color: var(--success);
+            font-size: 16px;
+        }
+
+        .scraper-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Credits Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--gray-600);
+        }
+
+        .credit-packages {
+            display: grid;
+            gap: 20px;
+        }
+
+        .credit-package {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .credit-package:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .package-credits {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .package-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 10px 0;
+        }
+
+        .package-description {
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .main-content {
+                padding: 25px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .platform-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .scraper-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scraper-actions {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .platform-card,
+            .scraper-card {
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>DataScraper Pro</h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">New Export</a>
+                <a href="#" class="nav-item">All Exports</a>
+                <a href="#" class="nav-item">Accounts</a>
+                <a href="#" class="nav-item">Billing</a>
+            </nav>
+            
+            <div class="user-info">
+                <div class="credits">
+                    <i class="fas fa-coins"></i>
+                    <span id="creditsCount">0</span> / credits
+                </div>
+                <a href="#" class="btn btn-primary" onclick="openCreditsModal()">
+                    <i class="fas fa-credit-card"></i>
+                    Buy Credits
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Choose Your Scraping Platform</h1>
+            <p class="page-subtitle">Select the platform you want to scrape data from</p>
+
+            <!-- Platform Selection -->
+            <div class="platform-selection">
+                <div class="platform-card" onclick="selectPlatform('apollo')">
+                    <div class="platform-icon apollo-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="platform-name">Apollo</h3>
+                    <p class="platform-description">
+                        Scrape comprehensive contact and company data from Apollo's extensive database with advanced filtering options.
+                    </p>
+                </div>
+
+                <div class="platform-card" onclick="selectPlatform('linkedin')">
+                    <div class="platform-icon linkedin-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3 class="platform-name">LinkedIn Sales Navigator</h3>
+                    <p class="platform-description">
+                        Extract detailed profile and company information from LinkedIn Sales Navigator with premium data access.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Apollo Scraper Options -->
+            <div id="apollo-options" class="scraper-options">
+                <h2 style="font-size: 28px; margin-bottom: 30px; color: var(--gray-900);">Apollo Scrapers</h2>
+                <div class="scraper-grid">
+                    <div class="scraper-card">
+                        <div class="scraper-header">
+                            <div class="scraper-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h3 class="scraper-title">Apollo Contact Scraper</h3>
+                        </div>
+                        <p class="scraper-description">
+                            Extract detailed contact information including emails, phone numbers, job titles, and company details from Apollo's database.
+                        </p>
+                        <ul class="scraper-features">
+                            <li><i class="fas fa-check"></i> Email addresses and phone numbers</li>
+                            <li><i class="fas fa-check"></i> Job titles and departments</li>
+                            <li><i class="fas fa-check"></i> Company information</li>
+                            <li><i class="fas fa-check"></i> Social media profiles</li>
+                        </ul>
+                        <div class="scraper-actions">
+                            <button class="btn btn-primary" onclick="launchScraper('apollo-contacts')">
+                                <i class="fas fa-play"></i>
+                                Launch Export
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTutorial('apollo-contacts')">
+                                <i class="fas fa-graduation-cap"></i>
+                                Tutorial
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="scraper-card">
+                        <div class="scraper-header">
+                            <div class="scraper-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h3 class="scraper-title">Apollo Company Scraper</h3>
+                        </div>
+                        <p class="scraper-description">
+                            Scrape comprehensive company data including industry insights, revenue information, employee counts, and key contacts.
+                        </p>
+                        <ul class="scraper-features">
+                            <li><i class="fas fa-check"></i> Company details and metrics</li>
+                            <li><i class="fas fa-check"></i> Industry and revenue data</li>
+                            <li><i class="fas fa-check"></i> Employee count and growth</li>
+                            <li><i class="fas fa-check"></i> Key decision makers</li>
+                        </ul>
+                        <div class="scraper-actions">
+                            <button class="btn btn-primary" onclick="launchScraper('apollo-companies')">
+                                <i class="fas fa-play"></i>
+                                Launch Export
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTutorial('apollo-companies')">
+                                <i class="fas fa-graduation-cap"></i>
+                                Tutorial
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LinkedIn Scraper Options -->
+            <div id="linkedin-options" class="scraper-options">
+                <h2 style="font-size: 28px; margin-bottom: 30px; color: var(--gray-900);">LinkedIn Sales Navigator Scrapers</h2>
+                <div class="scraper-grid">
+                    <div class="scraper-card">
+                        <div class="scraper-header">
+                            <div class="scraper-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3 class="scraper-title">Navigator Profile Scraper</h3>
+                        </div>
+                        <p class="scraper-description">
+                            Scrape all available data from Sales Navigator profiles, including contact information, experience, and engagement data.
+                        </p>
+                        <ul class="scraper-features">
+                            <li><i class="fas fa-check"></i> Complete profile information</li>
+                            <li><i class="fas fa-check"></i> Contact details and emails</li>
+                            <li><i class="fas fa-check"></i> Work experience and education</li>
+                            <li><i class="fas fa-check"></i> Mutual connections</li>
+                        </ul>
+                        <div class="scraper-actions">
+                            <button class="btn btn-primary" onclick="launchScraper('linkedin-profiles')">
+                                <i class="fas fa-play"></i>
+                                Launch Export
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTutorial('linkedin-profiles')">
+                                <i class="fas fa-graduation-cap"></i>
+                                Tutorial
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="scraper-card">
+                        <div class="scraper-header">
+                            <div class="scraper-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <h3 class="scraper-title">Navigator Companies Scraper</h3>
+                        </div>
+                        <p class="scraper-description">
+                            Extract comprehensive company data from Sales Navigator including employee insights, recent updates, and growth metrics.
+                        </p>
+                        <ul class="scraper-features">
+                            <li><i class="fas fa-check"></i> Company overview and details</li>
+                            <li><i class="fas fa-check"></i> Employee insights and headcount</li>
+                            <li><i class="fas fa-check"></i> Recent company updates</li>
+                            <li><i class="fas fa-check"></i> Growth and hiring trends</li>
+                        </ul>
+                        <div class="scraper-actions">
+                            <button class="btn btn-primary" onclick="launchScraper('linkedin-companies')">
+                                <i class="fas fa-play"></i>
+                                Launch Export
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTutorial('linkedin-companies')">
+                                <i class="fas fa-graduation-cap"></i>
+                                Tutorial
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Credits Modal -->
+    <div id="creditsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCreditsModal()">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Buy Credits</h2>
+                <p style="color: var(--gray-600);">Choose a credit package to start scraping</p>
+            </div>
+            <div class="credit-packages">
+                <div class="credit-package" onclick="buyCredits(100, 29)">
+                    <div class="package-credits">100 Credits</div>
+                    <div class="package-price">$29</div>
+                    <div class="package-description">Perfect for small projects</div>
+                </div>
+                <div class="credit-package" onclick="buyCredits(500, 99)">
+                    <div class="package-credits">500 Credits</div>
+                    <div class="package-price">$99</div>
+                    <div class="package-description">Great for medium campaigns</div>
+                </div>
+                <div class="credit-package" onclick="buyCredits(1000, 179)">
+                    <div class="package-credits">1,000 Credits</div>
+                    <div class="package-price">$179</div>
+                    <div class="package-description">Best value for large projects</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCredits = 0;
+        let selectedPlatform = null;
+
+        function selectPlatform(platform) {
+            selectedPlatform = platform;
+            
+            // Remove previous selections
+            document.querySelectorAll('.platform-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Hide all options
+            document.querySelectorAll('.scraper-options').forEach(option => {
+                option.classList.remove('show');
+            });
+            
+            // Select current platform
+            event.currentTarget.classList.add('selected');
+            
+            // Show relevant options
+            setTimeout(() => {
+                document.getElementById(platform + '-options').classList.add('show');
+            }, 200);
+        }
+
+        function launchScraper(scraperType) {
+            if (currentCredits <= 0) {
+                alert('You need credits to launch a scraper. Please buy credits first.');
+                openCreditsModal();
+                return;
+            }
+            
+            // Simulate scraper launch
+            alert(`Launching ${scraperType} scraper... This would normally start the scraping process.`);
+            currentCredits -= 10; // Deduct credits for demo
+            updateCreditsDisplay();
+        }
+
+        function showTutorial(scraperType) {
+            alert(`Opening tutorial for ${scraperType}... This would show step-by-step instructions.`);
+        }
+
+        function openCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'block';
+        }
+
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'none';
+        }
+
+        function buyCredits(amount, price) {
+            if (confirm(`Purchase ${amount} credits for $${price}?`)) {
+                currentCredits += amount;
+                updateCreditsDisplay();
+                closeCreditsModal();
+                alert(`Successfully purchased ${amount} credits!`);
+            }
+        }
+
+        function updateCreditsDisplay() {
+            document.getElementById('creditsCount').textContent = currentCredits;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('creditsModal');
+            if (event.target === modal) {
+                closeCreditsModal();
+            }
+        }
+
+        // Initialize with some demo credits
+        currentCredits = 50;
+        updateCreditsDisplay();
+    </script>
+</body>
+</html>
