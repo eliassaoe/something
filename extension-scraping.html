@@ -612,12 +612,15 @@
             const urlParams = new URLSearchParams(window.location.search);
             scrapingUrl = urlParams.get('page');
             
-            if (scrapingUrl) {
-                startNewScraping(scrapingUrl);
-            }
-            
+            // Always load existing data first
             loadExportHistory();
             updateStats();
+            
+            // If there's a page parameter, start new scraping
+            if (scrapingUrl) {
+                console.log('Starting scraping for URL:', scrapingUrl);
+                startNewScraping(decodeURIComponent(scrapingUrl));
+            }
         });
 
         // Start new scraping job
@@ -650,8 +653,23 @@
 
         // Show current scraping section
         function showCurrentScraping(url) {
-            document.getElementById('currentScraping').classList.add('show');
-            document.getElementById('currentUrl').textContent = url;
+            const currentScrapingDiv = document.getElementById('currentScraping');
+            const currentUrlDiv = document.getElementById('currentUrl');
+            
+            // Decode the URL for display
+            const decodedUrl = decodeURIComponent(url);
+            
+            // Show the current scraping section
+            currentScrapingDiv.classList.add('show');
+            currentUrlDiv.textContent = decodedUrl;
+            currentUrlDiv.onclick = () => window.open(decodedUrl, '_blank');
+            
+            // Reset progress
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressText').textContent = '0%';
+            document.getElementById('timeRemaining').textContent = 'Calculating...';
+            
+            console.log('Current scraping started for:', decodedUrl);
         }
 
         // Simulate scraping progress
@@ -835,6 +853,35 @@
             if (url.includes('linkedin.com')) return 'linkedin';
             return 'unknown';
         }
+        
+        // Demo progress simulation (fallback when database is not connected)
+        function simulateDemoProgress() {
+            let progress = 0;
+            progressInterval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress > 100) progress = 100;
+
+                // Update UI
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('progressText').textContent = Math.round(progress) + '%';
+                
+                // Calculate estimated time
+                const timeRemaining = Math.max(0, Math.round((100 - progress) * 2));
+                document.getElementById('timeRemaining').textContent = timeRemaining + ' seconds';
+
+                // Complete demo job
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                        document.getElementById('currentScraping').classList.remove('show');
+                        showNotification('Scraping completed successfully!', 'success');
+                        // Refresh the page data
+                        loadExportHistory();
+                        updateStats();
+                    }, 2000);
+                }
+            }, 1000);
+        }
 
         function formatDate(dateString) {
             return new Date(dateString).toLocaleDateString('en-US', {
@@ -861,7 +908,9 @@
 
         function openScrapingUrl() {
             if (scrapingUrl) {
-                window.open(scrapingUrl, '_blank');
+                // Decode the URL before opening
+                const decodedUrl = decodeURIComponent(scrapingUrl);
+                window.open(decodedUrl, '_blank');
             }
         }
 
