@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataScraper Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="/js/auth-check.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -694,6 +697,10 @@
         let currentCredits = 0;
         let selectedPlatform = null;
 
+        function getCurrentUserId() {
+    return window.UnlimitedLeadsAuth.getUserId();
+}
+
         function selectPlatform(platform) {
             selectedPlatform = platform;
             
@@ -765,6 +772,23 @@
         // Initialize with some demo credits
         currentCredits = 50;
         updateCreditsDisplay();
+        // Sync auth data with extension
+if (typeof chrome !== 'undefined' && chrome.runtime) {
+    const authData = {
+        token: localStorage.getItem('unlimited_leads_token'),
+        expires: localStorage.getItem('unlimited_leads_expires'),
+        user: localStorage.getItem('unlimited_leads_user'),
+        refresh_token: localStorage.getItem('unlimited_leads_refresh_token')
+    };
+    
+    chrome.runtime.sendMessage({
+        action: 'syncAuthFromWebsite',
+        authData: authData
+    }).catch(() => {
+        // Extension not available, ignore
+    });
+}
+        
     </script>
 </body>
 </html>
