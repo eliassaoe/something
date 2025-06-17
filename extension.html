@@ -5,41 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited leads scrapers extension app</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <script src="/js/auth-check.js"></script>
-
- <script>
-        function checkAuthentication() {
-    const token = localStorage.getItem('unlimited_leads_token');
-    const user = localStorage.getItem('unlimited_leads_user');
-    const expires = localStorage.getItem('unlimited_leads_expires');
-    
-    // Vérifier si les données d'auth existent
-    if (!token || !user) {
-        console.log('No auth data found, redirecting to login');
-        window.location.href = '/extension-login';
-        return false;
-    }
-    
-    // Vérifier si le token a expiré
-    if (expires && new Date().getTime() > parseInt(expires)) {
-        console.log('Token expired, redirecting to login');
-        // Clear expired data
-        localStorage.removeItem('unlimited_leads_user');
-        localStorage.removeItem('unlimited_leads_token');
-        localStorage.removeItem('unlimited_leads_expires');
-        localStorage.removeItem('unlimited_leads_refresh_token');
-        
-        window.location.href = '/extension-login';
-        return false;
-    }
-    
-    console.log('User authenticated:', JSON.parse(user));
-    return true;
-}
-
-     checkAuthentication();
-    </script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -105,14 +70,6 @@
             gap: 12px;
         }
 
-        .logo i {
-            font-size: 26px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .logo h1 {
             font-size: 22px;
             font-weight: 800;
@@ -143,17 +100,6 @@
         .nav-item.active {
             color: var(--primary);
             font-weight: 600;
-        }
-
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary);
-            border-radius: 2px;
         }
 
         .user-info {
@@ -198,6 +144,26 @@
             box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
         }
 
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
         /* Main Content */
         .main-content {
             background: white;
@@ -235,23 +201,6 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .platform-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .platform-card:hover::before {
-            left: 100%;
         }
 
         .platform-card:hover {
@@ -278,6 +227,13 @@
             font-size: 40px;
             color: white;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .platform-icon img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .apollo-icon {
@@ -335,7 +291,6 @@
             padding: 25px;
             transition: all 0.3s ease;
             background: var(--gray-50);
-            position: relative;
         }
 
         .scraper-card:hover {
@@ -401,381 +356,97 @@
             flex-wrap: wrap;
         }
 
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Credits Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: var(--radius);
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: var(--shadow-lg);
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -60%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 10px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--gray-400);
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: var(--gray-600);
-        }
-
-        .credit-packages {
-            display: grid;
-            gap: 20px;
-        }
-
-        .credit-package {
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius);
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .credit-package:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .package-credits {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .package-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin: 10px 0;
-        }
-
-        .package-description {
-            color: var(--gray-600);
-            font-size: 14px;
-        }
-
         .scraper-actions .btn {
-    padding: 18px 30px !important; /* Plus gros */
-    font-size: 18px !important; /* Plus grande police */
-    font-weight: 700 !important;
-    border-radius: 12px !important;
-    width: 100% !important; /* Prend toute la largeur */
-    justify-content: center !important;
-}
-        .platform-icon img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    border-radius: 8px;
-}
+            padding: 18px 30px !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            border-radius: 12px !important;
+            width: 100% !important;
+            justify-content: center !important;
+        }
 
-.scraper-actions .btn i {
-    font-size: 20px !important; /* Icône plus grande */
-}
-        @media (min-width: 769px) {
-    .btn {
-        padding: 14px 24px;
-        font-size: 16px;
-    }
-    
-    .scraper-actions .btn {
-        padding: 20px 35px !important;
-        font-size: 20px !important;
-        font-weight: 800 !important;
-        border-radius: 14px !important;
-    }
-    
-    .scraper-actions .btn i {
-        font-size: 22px !important;
-    }
-}
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+            }
 
-   @media (max-width: 768px) {
-    .container {
-        padding: 8px;
-    }
+            .header {
+                padding: 10px 15px;
+                gap: 10px;
+            }
 
-    .header {
-        padding: 10px 15px;
-        gap: 10px;
-    }
+            .logo h1 {
+                font-size: 16px;
+            }
 
-    .logo {
-        gap: 6px;
-    }
+            .nav-menu {
+                gap: 15px;
+            }
 
-    .logo i {
-        font-size: 16px;
-    }
+            .nav-item {
+                font-size: 12px;
+            }
 
-    .logo h1 {
-        font-size: 14px;
-    }
+            .user-info {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
 
-    .nav-menu {
-        gap: 8px;
-        flex-wrap: wrap;
-    }
+            .credits {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
 
-    .nav-item {
-        font-size: 10px;
-        padding: 3px 6px;
-    }
+            .logout-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
 
-    .user-info {
-        gap: 8px;
-        flex-wrap: wrap;
-    }
+            .main-content {
+                padding: 20px;
+            }
 
-    .credits {
-        font-size: 10px;
-        padding: 4px 8px;
-    }
+            .page-title {
+                font-size: 24px;
+            }
 
-     .logout-btn {
-        padding: 3px 8px !important;
-        font-size: 9px !important;
-        gap: 4px;
-    }
-    
-    .btn {
-        padding: 5px 9px !important;
-        font-size: 10px !important;
-    }
-    
-    .main-content {
-        padding: 15px;
-    }
+            .page-subtitle {
+                font-size: 16px;
+            }
 
-    .page-title {
-        font-size: 20px;
-        margin-bottom: 8px;
-    }
-    .platform-icon img {
-        width: 30px;
-        height: 30px;
-    }
+            .platform-selection {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
 
-    .page-subtitle {
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
+            .platform-card {
+                padding: 20px 15px;
+            }
 
-    /* IMPORTANT : Platform cards côte à côte sur mobile */
-    .platform-selection {
-        grid-template-columns: 1fr 1fr; /* 2 colonnes au lieu de 1 */
-        gap: 15px; /* Espacement réduit */
-    }
+            .platform-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
 
-    .platform-card {
-        padding: 15px 10px; /* Padding réduit */
-    }
+            .platform-icon img {
+                width: 40px;
+                height: 40px;
+            }
 
-    .platform-icon {
-        width: 50px; /* Plus petit */
-        height: 50px;
-        font-size: 20px; /* Icône plus petite */
-        margin-bottom: 10px;
-    }
+            .platform-name {
+                font-size: 18px;
+            }
 
-    .platform-name {
-        font-size: 16px; /* Plus petit */
-        margin-bottom: 8px;
-    }
+            .platform-description {
+                font-size: 13px;
+            }
 
-    .platform-description {
-        font-size: 12px; /* Plus petit */
-        line-height: 1.4;
-    }
-
-    /* Scraper cards une colonne sur mobile */
-    .scraper-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .scraper-card {
-        padding: 15px;
-    }
-
-    .scraper-title {
-        font-size: 16px;
-    }
-
-     .scraper-actions .btn {
-        padding: 15px 25px !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        width: 100% !important;
-        justify-content: center !important;
-        border-radius: 10px !important;
-    }
-    
-    .scraper-actions .btn i {
-        font-size: 18px !important;
-    }
-
-    .scraper-features {
-        font-size: 11px;
-    }
-}
-
-/* Très petit mobile */
-@media (max-width: 480px) {
-    .container {
-        padding: 5px;
-    }
-
-    .header {
-        padding: 8px 10px;
-    }
-
-    .logo i {
-        font-size: 14px;
-    }
-
-    .logo h1 {
-        font-size: 12px;
-    }
-
-    .platform-selection {
-        grid-template-columns: 1fr 1fr; /* Garde 2 colonnes même sur très petit */
-        gap: 10px;
-    }
-
-    .platform-card {
-        padding: 12px 8px;
-    }
-
-    .platform-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-
-    .platform-name {
-        font-size: 14px;
-    }
-
-    .platform-description {
-        font-size: 11px;
-    }
-
-    .page-title {
-        font-size: 18px;
-    }
-
-       .logout-btn {
-        padding: 2px 6px !important;
-        font-size: 8px !important;
-        gap: 2px;
-    }
-
-    .platform-icon img {
-        width: 25px;
-        height: 25px;
-    }
-    
-    /* Buy credits encore plus petit */
-    .btn {
-        padding: 4px 7px !important;
-        font-size: 9px !important;
-    }
-    .scraper-actions .btn {
-        padding: 18px 30px !important;
-        font-size: 18px !important;
-        font-weight: 800 !important;
-        border-radius: 12px !important;
-    }
-    
-    .scraper-actions .btn i {
-        font-size: 20px !important;
-    }
-}
-
-        /* Bouton Logout */
-.logout-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.logout-btn:hover {
-    background: #dc2626;
-    transform: translateY(-1px);
-}
-        
+            .scraper-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -794,18 +465,17 @@
             <div class="user-info">
                 <div class="credits">
                     <i class="fas fa-coins"></i>
-                    <span id="creditsCount">0</span> / credits
+                    <span id="creditsCount">0</span> credits
                 </div>
-                <a href="#" class="btn btn-primary" onclick="openCreditsModal()">
+                <a href="#" class="btn btn-primary" onclick="alert('Buy credits feature coming soon!')">
                     <i class="fas fa-credit-card"></i>
                     Buy Credits
                 </a>
-<button class="logout-btn" onclick="logout()">
-    <i class="fas fa-sign-out-alt"></i>
-    Logout
-</button>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
             </div>
-
         </header>
 
         <!-- Main Content -->
@@ -817,7 +487,7 @@
             <div class="platform-selection">
                 <div class="platform-card" onclick="selectPlatform('apollo')">
                    <div class="platform-icon apollo-icon">
-                   <img src="https://foxeet.fr/images/logo/88b9ffef-cf69-4409-929b-ddde902a68f5/plateforme-prospection-b2b-apollo-io.webp" alt="Apollo IO" style="width: 60px; height: 60px; object-fit: contain;">
+                   <img src="https://foxeet.fr/images/logo/88b9ffef-cf69-4409-929b-ddde902a68f5/plateforme-prospection-b2b-apollo-io.webp" alt="Apollo IO">
                    </div>
                     <h3 class="platform-name">Apollo io</h3>
                     <p class="platform-description">
@@ -858,7 +528,6 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -890,53 +559,83 @@
         </main>
     </div>
 
-    <!-- Credits Modal -->
-    <div id="creditsModal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeCreditsModal()">&times;</button>
-            <div class="modal-header">
-                <h2 class="modal-title">Buy Credits</h2>
-                <p style="color: var(--gray-600);">Choose a credit package to start scraping</p>
-            </div>
-            <div class="credit-packages">
-                <div class="credit-package" onclick="buyCredits(100, 29)">
-                    <div class="package-credits">100 Credits</div>
-                    <div class="package-price">$29</div>
-                    <div class="package-description">Perfect for small projects</div>
-                </div>
-                <div class="credit-package" onclick="buyCredits(500, 99)">
-                    <div class="package-credits">500 Credits</div>
-                    <div class="package-price">$99</div>
-                    <div class="package-description">Great for medium campaigns</div>
-                </div>
-                <div class="credit-package" onclick="buyCredits(1000, 179)">
-                    <div class="package-credits">1,000 Credits</div>
-                    <div class="package-price">$179</div>
-                    <div class="package-description">Best value for large projects</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentCredits = 0;
         let selectedPlatform = null;
 
-       function getCurrentUserId() {
-    const userData = localStorage.getItem('unlimited_leads_user');
-    if (userData) {
-        try {
-            const user = JSON.parse(userData);
-            console.log('User data from localStorage:', user);
-            return user.id || user.user_id || user._id || user.userId;
-        } catch (e) {
-            console.error('Error parsing user data:', e);
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuthentication()) {
+                return; // Will redirect to login
+            }
+            
+            loadUserData();
+            fetchUserCredits();
+        });
+
+        function checkAuthentication() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            const token = localStorage.getItem('unlimited_leads_token');
+            const expires = localStorage.getItem('unlimited_leads_expires');
+            
+            // Check if data exists
+            if (!userData || !userData.id || !token) {
+                console.log('No auth data found, redirecting to login');
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            // Check if expired
+            if (expires && new Date().getTime() > parseInt(expires)) {
+                console.log('Token expired, redirecting to login');
+                clearAuthData();
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            console.log('User authenticated:', userData);
+            return true;
         }
-    }
-    
-    console.log('No user data in localStorage');
-    return null;
-}
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            if (userData && userData.id) {
+                console.log('Loaded user:', userData.id);
+                // You can display user info here if needed
+            }
+        }
+
+        async function fetchUserCredits() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+                if (!userData || !userData.id) {
+                    console.log('No user data for credits fetch');
+                    return;
+                }
+                
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('unlimited_leads_token')}`
+                    },
+                    body: JSON.stringify({
+                        user_id: userData.id,
+                        type: 'credits'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    currentCredits = data.credits || 0;
+                    updateCreditsDisplay();
+                } else {
+                    console.log('Failed to fetch credits:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching credits:', error);
+            }
+        }
 
         function selectPlatform(platform) {
             selectedPlatform = platform;
@@ -959,131 +658,24 @@
                 document.getElementById(platform + '-options').classList.add('show');
             }, 200);
         }
-async function fetchUserCredits() {
-    console.log('fetchUserCredits called');
-    try {
-        console.log('window.UnlimitedLeadsAuth:', window.UnlimitedLeadsAuth);
-        const userId = getCurrentUserId();
-        console.log('User ID:', userId);
-        if (!userId) {
-            console.log('No user ID found - stopping');
-            return;
-        }
-        
-        console.log('Making API call...');
-        const response = await fetch('https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('unlimited_leads_token')}`
-            },
-            body: JSON.stringify({
-                user_id: userId,
-                type: 'credits'
-            })
-        });
-        
-        console.log('Response status:', response.status);
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Credits data received:', data);
-            currentCredits = data.credits || 0;
-            updateCreditsDisplay();
-        } else {
-            console.log('Response not ok:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error fetching credits:', error);
-    }
-}
-        function launchScraper(scraperType) {
-            if (currentCredits <= 0) {
-                alert('You need credits to launch a scraper. Please buy credits first.');
-                openCreditsModal();
-                return;
-            }
-            
-            // Simulate scraper launch
-            alert(`Launching ${scraperType} scraper... This would normally start the scraping process.`);
-            currentCredits -= 10; // Deduct credits for demo
-            updateCreditsDisplay();
-        }
-
-        function showTutorial(scraperType) {
-            alert(`Opening tutorial for ${scraperType}... This would show step-by-step instructions.`);
-        }
-
-        function openCreditsModal() {
-            document.getElementById('creditsModal').style.display = 'block';
-        }
-
-        function closeCreditsModal() {
-            document.getElementById('creditsModal').style.display = 'none';
-        }
-
-        function buyCredits(amount, price) {
-            if (confirm(`Purchase ${amount} credits for $${price}?`)) {
-                currentCredits += amount;
-                updateCreditsDisplay();
-                closeCreditsModal();
-                alert(`Successfully purchased ${amount} credits!`);
-            }
-        }
 
         function updateCreditsDisplay() {
             document.getElementById('creditsCount').textContent = currentCredits;
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('creditsModal');
-            if (event.target === modal) {
-                closeCreditsModal();
+        function clearAuthData() {
+            localStorage.removeItem('unlimited_leads_user');
+            localStorage.removeItem('unlimited_leads_token');
+            localStorage.removeItem('unlimited_leads_expires');
+            localStorage.removeItem('unlimited_leads_refresh_token');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                clearAuthData();
+                window.location.href = '/extension-login';
             }
         }
-        // Sync auth data with extension
-if (typeof chrome !== 'undefined' && chrome.runtime) {
-    const authData = {
-        token: localStorage.getItem('unlimited_leads_token'),
-        expires: localStorage.getItem('unlimited_leads_expires'),
-        user: localStorage.getItem('unlimited_leads_user'),
-        refresh_token: localStorage.getItem('unlimited_leads_refresh_token')
-    };
-    
-    chrome.runtime.sendMessage({
-        action: 'syncAuthFromWebsite',
-        authData: authData
-    }).catch(() => {
-        // Extension not available, ignore
-    });
-}
-
-        // Initialize page
-document.addEventListener('DOMContentLoaded', function() {
-    // Vérifier l'auth d'abord
-    if (!checkAuthentication()) {
-        return; // Stop si pas authentifié
-    }
-    
-    // Récupérer les crédits
-    fetchUserCredits();
-});
-
-        
-        // Fonction logout
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        // Clear auth data
-        localStorage.removeItem('unlimited_leads_user');
-        localStorage.removeItem('unlimited_leads_token');
-        localStorage.removeItem('unlimited_leads_expires');
-        localStorage.removeItem('unlimited_leads_refresh_token');
-        
-        // Redirect to login
-        window.location.href = '/extension-login';
-    }
-}
-        
     </script>
 </body>
 </html>
