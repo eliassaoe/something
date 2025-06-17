@@ -843,103 +843,105 @@
             saveJobs(jobs);
         }
 
-        // Start new scraping job
-        async function startNewScraping(url) {
-            try {
-                const decodedUrl = decodeURIComponent(url);
-                const platform = detectPlatform(decodedUrl);
-                
-                console.log('Starting scraping for:', decodedUrl);
-                console.log('Platform detected:', platform);
 
-                // Vérifier si cette URL a déjà été scrapée
-const existingJobs = getAllJobs();
-const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+async function startNewScraping(url) {
+    try {
+        const decodedUrl = decodeURIComponent(url);
+        const platform = detectPlatform(decodedUrl);
+        
+        console.log('Starting scraping for:', decodedUrl);
+        console.log('Platform detected:', platform);
 
-if (existingJob) {
-    console.log('URL already scraped, downloading existing file...');
-    showNotification('URL already scraped! Downloading existing file...', 'info');
-    downloadFile(existingJob.id);
-    return; // Arrêter ici, pas de nouveau scraping
-}
+        // Vérifier si cette URL a déjà été scrapée
+        const existingJobs = getAllJobs();
+        const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+
+        if (existingJob) {
+            console.log('URL already scraped, downloading existing file...');
+            showNotification('URL already scraped! Downloading existing file...', 'info');
+            downloadFile(existingJob.id);
+            return;
+        }
+        
+        // Create new job
+        const job = {
+            id: generateId(),
+            url: decodedUrl,
+            platform: platform,
+            status: 'processing',
+            progress: 0,
+            records_found: null,
+            download_url: null,
+            started_at: new Date().toISOString(),
+            completed_at: null,
+            created_at: new Date().toISOString()
+        };
+        
+        // Save job
+        saveJob(job);
+        currentScrapingJob = job;
+        
+        // Show scraping UI
+        showCurrentScraping(decodedUrl);
+        
+        // S'ASSURER QUE LES CRÉDITS SONT CHARGÉS AVANT DE SIMULER LE PROGRÈS
+        await fetchUserCredits(); // Attendre que les crédits soient récupérés
+        
+        // Make API call to webhook
+        try {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            
+            const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
+            const requestBody = {
+                type: platform,
+                url: decodedUrl,
+                job_id: job.id,
+                user_id: userData.id 
+            };
+            
+            console.log('Sending API request:', requestBody);
+            
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
+            });
+            
+            if (response.ok) {
+                console.log('API call successful');
                 
-                // Create new job
-                const job = {
-                    id: generateId(),
-                    url: decodedUrl,
-                    platform: platform,
-                    status: 'processing',
-                    progress: 0,
-                    records_found: null,
-                    download_url: null,
-                    started_at: new Date().toISOString(),
-                    completed_at: null,
-                    created_at: new Date().toISOString()
-                };
-                
-                // Save job
-                saveJob(job);
-                currentScrapingJob = job;
-                
-                // Show scraping UI
-                showCurrentScraping(decodedUrl);
-                
-                // Make API call to webhook
                 try {
-
-                    const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+                    const responseData = await response.json();
+                    console.log('Server response:', responseData);
                     
-                    const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
-                    const requestBody = {
-                        type: platform,
-                        url: decodedUrl,
-                        job_id: job.id,
-                        user_id: userData.id 
-                    };
-                    
-                    console.log('Sending API request:', requestBody);
-                    
-                    const response = await fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(requestBody)
-                    });
-                    
-                    if (response.ok) {
-                        console.log('API call successful');
-                        
-                        try {
-                            const responseData = await response.json();
-                            console.log('Server response:', responseData);
-                            
-                            // Update job with response data
-                            if (responseData.success) {
-                                job.records_found = responseData.records_found || null;
-                                saveJob(job);
-                            }
-                        } catch (jsonError) {
-                            console.log('Response not JSON, continuing with simulation');
-                        }
-                        
-                        showNotification('Scraping started successfully!', 'success');
-                    } else {
-                        throw new Error(`API call failed: ${response.status}`);
+                    // Update job with response data
+                    if (responseData.success) {
+                        job.records_found = responseData.records_found || null;
+                        saveJob(job);
                     }
-                } catch (apiError) {
-                    console.log('API call failed, continuing with simulation:', apiError);
-                    showNotification('Scraping started (demo mode)', 'warning');
+                } catch (jsonError) {
+                    console.log('Response not JSON, continuing with simulation');
                 }
                 
-                // Start progress simulation
-                simulateProgress();
-                
-            } catch (error) {
-                console.error('Error starting scraping:', error);
-                showNotification('Failed to start scraping job: ' + error.message, 'error');
+                showNotification('Scraping started successfully!', 'success');
+            } else {
+                throw new Error(`API call failed: ${response.status}`);
             }
+        } catch (apiError) {
+            console.log('API call failed, continuing with simulation:', apiError);
+            showNotification('Scraping started (demo mode)', 'warning');
         }
+        
+        // Start progress simulation APRÈS avoir récupéré les crédits
+        simulateProgress();
+        
+    } catch (error) {
+        console.error('Error starting scraping:', error);
+        showNotification('Failed to start scraping job: ' + error.message, 'error');
+    }
+}
 
         // Show current scraping section
         function showCurrentScraping(url) {
