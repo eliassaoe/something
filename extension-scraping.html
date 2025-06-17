@@ -1106,7 +1106,7 @@
         // Fonction pour télécharger le fichier via API call
         async function downloadFile(jobId) {
             try {
-                showNotification('Téléchargement en cours...', 'info');
+                showNotification('Downloading...', 'info');
                 
                 const downloadUrl = `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
                 console.log('Downloading from:', downloadUrl);
@@ -1132,11 +1132,11 @@
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
                 
-                showNotification('Téléchargement réussi !', 'success');
+                showNotification('download successful !', 'success');
                 
             } catch (error) {
                 console.error('Download error:', error);
-                showNotification('Erreur lors du téléchargement: ' + error.message, 'error');
+                showNotification('Failed to download file: ' + error.message, 'error');
             }
         }
 
