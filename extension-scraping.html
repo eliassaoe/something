@@ -851,6 +851,17 @@
                 
                 console.log('Starting scraping for:', decodedUrl);
                 console.log('Platform detected:', platform);
+
+                // Vérifier si cette URL a déjà été scrapée
+const existingJobs = getAllJobs();
+const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+
+if (existingJob) {
+    console.log('URL already scraped, downloading existing file...');
+    showNotification('URL already scraped! Downloading existing file...', 'info');
+    downloadFile(existingJob.id);
+    return; // Arrêter ici, pas de nouveau scraping
+}
                 
                 // Create new job
                 const job = {
