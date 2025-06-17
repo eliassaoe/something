@@ -211,11 +211,11 @@
             <p>Sign in to your account</p>
         </div>
 
-        <!-- Error/Success Messages -->
+        <!-- Messages -->
         <div id="errorMessage" class="error-message"></div>
         <div id="successMessage" class="success-message"></div>
 
-        <!-- Loading State -->
+        <!-- Loading -->
         <div id="loadingState" class="loading">
             <i class="fas fa-spinner"></i>
             <p>Authenticating...</p>
@@ -268,33 +268,21 @@
     </div>
 
     <script>
-        // Auth storage keys
-        const AUTH_KEYS = {
-            USER: 'unlimited_leads_user',
-            TOKEN: 'unlimited_leads_token',
-            REFRESH_TOKEN: 'unlimited_leads_refresh_token',
-            EXPIRES: 'unlimited_leads_expires'
-        };
-
-        // API endpoint
         const AUTH_API = 'https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f';
 
-        // Initialize
+        // Check if already logged in when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if already logged in
-            if (isLoggedIn()) {
-                redirectToExtension();
+            // Simple check - if user data exists and is valid, redirect
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            const token = localStorage.getItem('unlimited_leads_token');
+            
+            if (userData && userData.id && token) {
+                console.log('User already logged in, redirecting...');
+                window.location.href = 'https://unlimited-leads.online/extension';
                 return;
             }
             
             setupEventListeners();
-            
-            // Check for redirect parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectFrom = urlParams.get('from');
-            if (redirectFrom) {
-                showSuccess('Please log in to continue');
-            }
         });
 
         function setupEventListeners() {
@@ -302,22 +290,6 @@
             document.getElementById('registerForm').addEventListener('submit', handleRegister);
         }
 
-     function isLoggedIn() {
-    const user = localStorage.getItem(AUTH_KEYS.USER);
-    const token = localStorage.getItem(AUTH_KEYS.TOKEN);
-    const expires = localStorage.getItem(AUTH_KEYS.EXPIRES);
-    
-    if (!user || !token || !expires) return false;
-    
-    // Check if expired
-    if (new Date() > new Date(expires)) {
-        clearAuth();
-        return false;
-    }
-    
-    return true;
-}
-        // Switch between login and register tabs
         function switchTab(tabName) {
             // Update tabs
             document.querySelectorAll('.auth-tab').forEach(tab => {
@@ -339,11 +311,10 @@
             clearMessages();
         }
 
-        // Handle login
         async function handleLogin(e) {
             e.preventDefault();
             
-            const email = document.getElementById('loginEmail').value;
+            const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             
             if (!email || !password) {
@@ -354,6 +325,7 @@
             showLoading();
             
             try {
+                console.log('Sending login request...');
                 const response = await fetch(AUTH_API, {
                     method: 'POST',
                     headers: {
@@ -367,28 +339,29 @@
                 });
                 
                 const data = await response.json();
+                console.log('Login response:', data);
 
-console.log('Raw API response:', JSON.stringify(data, null, 2));
-console.log('Is array?', Array.isArray(data));
-console.log('Data length:', data.length);
-
-if (response.ok && data.success && data.user) {
-    const user = data.user;
-    
-    console.log('Login successful, user:', user);
-    
-    localStorage.setItem(AUTH_KEYS.USER, JSON.stringify(user));
-    localStorage.setItem(AUTH_KEYS.TOKEN, 'logged_in_' + user.id);
-    
-    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000));
-    localStorage.setItem(AUTH_KEYS.EXPIRES, expiresAt.toISOString());
-    
-    console.log('Data stored, redirecting...');
-    window.location.href = 'https://unlimited-leads.online/extension';
-} else {
-    console.log('Login failed - no user found');
-    throw new Error('You do not have an account, create one first.');
-}
+                if (response.ok && data.success && data.user && data.user.id) {
+                    console.log('Login successful for user:', data.user.id);
+                    
+                    // Store auth data
+                    localStorage.setItem('unlimited_leads_user', JSON.stringify(data.user));
+                    localStorage.setItem('unlimited_leads_token', 'token_' + data.user.id);
+                    
+                    // Set expiration to 24 hours from now
+                    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000));
+                    localStorage.setItem('unlimited_leads_expires', expiresAt.getTime().toString());
+                    
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = 'https://unlimited-leads.online/extension';
+                    }, 1000);
+                    
+                } else {
+                    throw new Error(data.message || 'Login failed. Please check your credentials.');
+                }
                 
             } catch (error) {
                 console.error('Login error:', error);
@@ -398,12 +371,11 @@ if (response.ok && data.success && data.user) {
             }
         }
 
-        // Handle registration
         async function handleRegister(e) {
             e.preventDefault();
             
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
             const password = document.getElementById('registerPassword').value;
             
             if (!name || !email || !password) {
@@ -419,6 +391,7 @@ if (response.ok && data.success && data.user) {
             showLoading();
             
             try {
+                console.log('Sending registration request...');
                 const response = await fetch(AUTH_API, {
                     method: 'POST',
                     headers: {
@@ -433,13 +406,26 @@ if (response.ok && data.success && data.user) {
                 });
                 
                 const data = await response.json();
+                console.log('Registration response:', data);
                 
-                if (response.ok && data.success) {
+                if (response.ok && data.success && data.user && data.user.id) {
+                    console.log('Registration successful for user:', data.user.id);
+                    
                     // Store auth data
-                    storeAuthData(data);
+                    localStorage.setItem('unlimited_leads_user', JSON.stringify(data.user));
+                    localStorage.setItem('unlimited_leads_token', 'token_' + data.user.id);
+                    
+                    // Set expiration to 24 hours from now
+                    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000));
+                    localStorage.setItem('unlimited_leads_expires', expiresAt.getTime().toString());
                     
                     showSuccess('Account created successfully! Redirecting...');
-                    setTimeout(redirectToExtension, 1500);
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = 'https://unlimited-leads.online/extension';
+                    }, 1500);
+                    
                 } else {
                     throw new Error(data.message || 'Registration failed');
                 }
@@ -451,41 +437,6 @@ if (response.ok && data.success && data.user) {
                 hideLoading();
             }
         }
-
-        // Store authentication data
-        function storeAuthData(data) {
-            // Store user info
-            if (data.user) {
-                localStorage.setItem(AUTH_KEYS.USER, JSON.stringify(data.user));
-            }
-            
-            // Store token
-            if (data.token) {
-                localStorage.setItem(AUTH_KEYS.TOKEN, data.token);
-            }
-            
-            // Store refresh token
-            if (data.refresh_token) {
-                localStorage.setItem(AUTH_KEYS.REFRESH_TOKEN, data.refresh_token);
-            }
-            
-            // Set expiration (default 24 hours if not provided)
-            const expiresIn = data.expires_in || 86400; // 24 hours in seconds
-            const expiresAt = new Date(Date.now() + (expiresIn * 1000));
-            localStorage.setItem(AUTH_KEYS.EXPIRES, expiresAt.toISOString());
-        }
-
-        // Clear authentication data
-        function clearAuth() {
-            Object.values(AUTH_KEYS).forEach(key => {
-                localStorage.removeItem(key);
-            });
-        }
-
-       // Par celle-ci :
-function redirectToExtension() {
-    console.log('Redirecting to extension...');
-}
 
         // UI functions
         function showLoading() {
