@@ -956,24 +956,37 @@ if (existingJob) {
             document.getElementById('timeRemaining').textContent = 'Calculating...';
         }
 
-       // Simulate progress
+// Simulate progress
 function simulateProgress() {
     // Calculer le temps estimé basé sur les crédits
     const userCredits = document.getElementById('creditsCount').textContent || 1000;
-    const estimatedMinutes = (userCredits * 6.5) / 1000;
+    const estimatedMinutes = (userCredits * 6.5) / 1000; // 1000 credits = 6.5 minutes
     const totalSeconds = Math.round(estimatedMinutes * 60);
+    
+    // Afficher le temps estimé dès le début
+    if (totalSeconds > 60) {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
+    } else {
+        document.getElementById('timeRemaining').textContent = `${totalSeconds}s`;
+    }
     
     console.log(`Estimated time for ${userCredits} credits: ${estimatedMinutes.toFixed(1)} minutes`);
     
     let progress = 0;
+    const incrementPerSecond = 100 / totalSeconds; // Progression par seconde pour finir en totalSeconds
+    
     progressInterval = setInterval(() => {
-        progress += Math.random() * 3 + 1;
+        progress += incrementPerSecond;
         if (progress > 100) progress = 100;
 
+        // Update UI
         document.getElementById('progressFill').style.width = progress + '%';
         document.getElementById('progressText').textContent = Math.round(progress) + '%';
         
-        const timeRemaining = Math.round((100 - progress) * totalSeconds / 100);
+        // Calcul du temps restant précis
+        const timeRemaining = Math.round(totalSeconds - (progress * totalSeconds / 100));
         
         if (timeRemaining > 60) {
             const mins = Math.floor(timeRemaining / 60);
