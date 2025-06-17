@@ -366,23 +366,27 @@
                     })
                 });
                 
-                const data = await response.json();
-                
-              if (response.ok && data.success) {
-    console.log('Login successful, data:', data);
+                cconst data = await response.json();
+
+console.log('Raw API response:', data);
+
+if (response.ok && Array.isArray(data) && data.length > 0) {
+    const user = data[0];
     
-    // Store auth data (une seule fois)
-    localStorage.setItem(AUTH_KEYS.USER, JSON.stringify(data.user));
-    localStorage.setItem(AUTH_KEYS.TOKEN, 'logged_in_' + data.user.id);
+    console.log('Login successful, user:', user);
     
-    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000)); // 24h
+    localStorage.setItem(AUTH_KEYS.USER, JSON.stringify(user));
+    localStorage.setItem(AUTH_KEYS.TOKEN, 'logged_in_' + user.id);
+    
+    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000));
     localStorage.setItem(AUTH_KEYS.EXPIRES, expiresAt.toISOString());
     
     console.log('Data stored, redirecting...');
     showSuccess('Login successful! Redirecting...');
     setTimeout(redirectToExtension, 1500);
 } else {
-    throw new Error(data.message || 'You do not have an account, create one first.');
+    console.log('Login failed - no user found');
+    throw new Error('You do not have an account, create one first.');
 }
                 
             } catch (error) {
