@@ -474,13 +474,11 @@
             });
         }
 
-        // Redirect to extension dashboard
-        function redirectToExtension() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectTo = urlParams.get('redirect') || '/extension';
-            
-            window.location.href = redirectTo;
-        }
+       // Par celle-ci :
+function redirectToExtension() {
+    console.log('Redirecting to extension...');
+    window.location.href = 'https://unlimited-leads.online/extension';
+}
 
         // UI functions
         function showLoading() {
