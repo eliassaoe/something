@@ -874,7 +874,7 @@ async function fetchUserCredits() {
         const userId = getCurrentUserId();
         if (!userId) return;
         
-        const response = await fetch('/api/user-data', {
+        const response = await fetch('https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
