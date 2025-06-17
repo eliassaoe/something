@@ -302,22 +302,21 @@
             document.getElementById('registerForm').addEventListener('submit', handleRegister);
         }
 
-        // Check if user is logged in
-        function isLoggedIn() {
-            const token = localStorage.getItem(AUTH_KEYS.TOKEN);
-            const expires = localStorage.getItem(AUTH_KEYS.EXPIRES);
-            
-            if (!token || !expires) return false;
-            
-            // Check if token is expired
-            if (new Date() > new Date(expires)) {
-                clearAuth();
-                return false;
-            }
-            
-            return true;
-        }
-
+     function isLoggedIn() {
+    const user = localStorage.getItem(AUTH_KEYS.USER);
+    const token = localStorage.getItem(AUTH_KEYS.TOKEN);
+    const expires = localStorage.getItem(AUTH_KEYS.EXPIRES);
+    
+    if (!user || !token || !expires) return false;
+    
+    // Check if expired
+    if (new Date() > new Date(expires)) {
+        clearAuth();
+        return false;
+    }
+    
+    return true;
+}
         // Switch between login and register tabs
         function switchTab(tabName) {
             // Update tabs
@@ -369,15 +368,19 @@
                 
                 const data = await response.json();
                 
-                if (response.ok && data.success) {
-                    // Store auth data
-                    storeAuthData(data);
-                    
-                    showSuccess('Login successful! Redirecting...');
-                    setTimeout(redirectToExtension, 1500);
-                } else {
-                    throw new Error(data.message || 'Login failed');
-                }
+              if (response.ok && data.success) {
+    // Store auth data sans token
+    localStorage.setItem(AUTH_KEYS.USER, JSON.stringify(data.user));
+    localStorage.setItem(AUTH_KEYS.TOKEN, 'logged_in_' + data.user.id); // Token fictif
+    
+    const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000)); // 24h
+    localStorage.setItem(AUTH_KEYS.EXPIRES, expiresAt.toISOString());
+    
+    showSuccess('Login successful! Redirecting...');
+    setTimeout(redirectToExtension, 1500);
+} else {
+    throw new Error(data.message || 'You do not have an account, create one first.');
+}
                 
             } catch (error) {
                 console.error('Login error:', error);
