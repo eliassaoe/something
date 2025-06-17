@@ -893,7 +893,6 @@
                             // Update job with response data
                             if (responseData.success) {
                                 job.records_found = responseData.records_found || null;
-                                job.download_url = responseData.download_url || generateDownloadUrl(job.id);
                                 saveJob(job);
                             }
                         } catch (jsonError) {
@@ -970,10 +969,9 @@
             currentScrapingJob.progress = 100;
             currentScrapingJob.completed_at = new Date().toISOString();
             
-            // If no download URL from server, generate one
-            if (!currentScrapingJob.download_url) {
+            // Set records found if not already set
+            if (!currentScrapingJob.records_found) {
                 currentScrapingJob.records_found = Math.floor(Math.random() * 1000) + 50;
-                currentScrapingJob.download_url = generateDownloadUrl(currentScrapingJob.id);
             }
             
             // Save updated job
@@ -1061,10 +1059,10 @@
                                 <td>${job.records_found || '—'}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        ${job.status === 'completed' && job.download_url ? 
-                                            `<a href="${job.download_url}" class="btn btn-success btn-small" target="_blank">
+                                        ${job.status === 'completed' ? 
+                                            `<button class="btn btn-success btn-small" onclick="downloadFile('${job.id}')">
                                                 <i class="fas fa-download"></i> Download
-                                            </a>` : ''
+                                            </button>` : ''
                                         }
                                         <button class="btn btn-secondary btn-small" onclick="deleteJob('${job.id}')">
                                             <i class="fas fa-trash"></i> Delete
@@ -1105,9 +1103,41 @@
             }
         }
 
-        // Generate download URL using your n8n webhook
-        function generateDownloadUrl(jobId) {
-            return `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
+        // Fonction pour télécharger le fichier via API call
+        async function downloadFile(jobId) {
+            try {
+                showNotification('Téléchargement en cours...', 'info');
+                
+                const downloadUrl = `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
+                console.log('Downloading from:', downloadUrl);
+                
+                const response = await fetch(downloadUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to download: ${response.status}`);
+                }
+                
+                // Récupérer le blob (fichier)
+                const blob = await response.blob();
+                
+                // Créer un lien de téléchargement temporaire
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `export_${jobId}.csv`; // Nom du fichier
+                document.body.appendChild(a);
+                a.click();
+                
+                // Nettoyer
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                showNotification('Téléchargement réussi !', 'success');
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('Erreur lors du téléchargement: ' + error.message, 'error');
+            }
         }
 
         function openScrapingUrl() {
