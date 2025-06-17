@@ -483,68 +483,82 @@
             font-size: 14px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
+       @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
 
-            .header {
-                padding: 20px;
-                flex-direction: column;
-                text-align: center;
-            }
+    .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
 
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
+    .logo h1 {
+        font-size: 18px; /* Encore plus petit sur mobile */
+    }
 
-            .main-content {
-                padding: 25px;
-            }
+    .logo i {
+        font-size: 20px;
+    }
 
-            .page-title {
-                font-size: 28px;
-            }
+    .nav-menu {
+        order: 2;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
 
-            .platform-selection {
-                grid-template-columns: 1fr;
-            }
+    .user-info {
+        order: 1;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
 
-            .scraper-grid {
-                grid-template-columns: 1fr;
-            }
+    .credits {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
 
-            .scraper-actions {
-                flex-direction: column;
-            }
+    .btn, .logout-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
 
-            .modal-content {
-                padding: 30px 20px;
-            }
-        }
+    .main-content {
+        padding: 20px;
+    }
 
-        @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 24px;
-            }
+    .page-title {
+        font-size: 24px;
+    }
 
-            .page-title {
-                font-size: 24px;
-            }
+    .platform-card, .scraper-card {
+        padding: 20px 15px;
+    }
+}
 
-            .platform-card,
-            .scraper-card {
-                padding: 20px;
-            }
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 16px;
+    }
 
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
+    .logo i {
+        font-size: 18px;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn, .logout-btn {
+        width: auto;
+        min-width: 120px;
+    }
+}
 
         /* Bouton Logout */
 .logout-btn {
