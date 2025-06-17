@@ -277,7 +277,7 @@
         };
 
         // API endpoint
-        const AUTH_API = 'https://eliasse-n8n.onrender.com/webhook/auth';
+        const AUTH_API = 'https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f';
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -361,7 +361,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        action: 'login',
+                        type: 'login',
                         email: email,
                         password: password
                     })
@@ -414,7 +414,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        action: 'register',
+                        type: 'signup',
                         name: name,
                         email: email,
                         password: password
