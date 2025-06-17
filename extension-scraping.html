@@ -727,6 +727,12 @@
             loadUserData();
             fetchUserCredits();
             
+            // Nettoyer les jobs expirés
+            const cleanedCount = cleanupExpiredJobs();
+            if (cleanedCount > 0) {
+                console.log(`Cleaned up ${cleanedCount} expired jobs`);
+            }
+            
             // Get scraping URL from query params
             const urlParams = new URLSearchParams(window.location.search);
             scrapingUrl = urlParams.get('page');
@@ -1103,10 +1109,30 @@
             }
         }
 
+        // Nettoyer les jobs expirés (30 jours)
+        function cleanupExpiredJobs() {
+            const jobs = getAllJobs();
+            const thirtyDaysAgo = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000));
+            
+            const validJobs = jobs.filter(job => {
+                const jobDate = new Date(job.created_at);
+                return jobDate > thirtyDaysAgo;
+            });
+            
+            if (validJobs.length !== jobs.length) {
+                const deletedCount = jobs.length - validJobs.length;
+                saveJobs(validJobs);
+                console.log(`Cleaned up ${deletedCount} expired jobs`);
+                return deletedCount;
+            }
+            
+            return 0;
+        }
+
         // Fonction pour télécharger le fichier via API call
         async function downloadFile(jobId) {
             try {
-                showNotification('Downloading...', 'info');
+                showNotification('Téléchargement en cours...', 'info');
                 
                 const downloadUrl = `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
                 console.log('Downloading from:', downloadUrl);
@@ -1132,11 +1158,11 @@
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
                 
-                showNotification('download successful !', 'success');
+                showNotification('Téléchargement réussi !', 'success');
                 
             } catch (error) {
                 console.error('Download error:', error);
-                showNotification('Failed to download file: ' + error.message, 'error');
+                showNotification('Erreur lors du téléchargement: ' + error.message, 'error');
             }
         }
 
