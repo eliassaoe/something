@@ -704,6 +704,9 @@
     </div>
 
     <script>
+        // Configuration
+        const DOWNLOAD_WEBHOOK = 'https://eliasse-n8n.onrender.com/webhook/afc3706e-31f6-479f-88d9-94b410f30593';
+        
         // localStorage keys
         const STORAGE_KEYS = {
             JOBS: 'unlimited_leads_jobs',
@@ -887,9 +890,10 @@
                             const responseData = await response.json();
                             console.log('Server response:', responseData);
                             
-                            if (responseData.download_url) {
-                                job.download_url = responseData.download_url;
+                            // Update job with response data
+                            if (responseData.success) {
                                 job.records_found = responseData.records_found || null;
+                                job.download_url = responseData.download_url || generateDownloadUrl(job.id);
                                 saveJob(job);
                             }
                         } catch (jsonError) {
@@ -966,7 +970,7 @@
             currentScrapingJob.progress = 100;
             currentScrapingJob.completed_at = new Date().toISOString();
             
-            // If no download URL from server, generate a placeholder
+            // If no download URL from server, generate one
             if (!currentScrapingJob.download_url) {
                 currentScrapingJob.records_found = Math.floor(Math.random() * 1000) + 50;
                 currentScrapingJob.download_url = generateDownloadUrl(currentScrapingJob.id);
@@ -1101,9 +1105,9 @@
             }
         }
 
+        // Generate download URL using your n8n webhook
         function generateDownloadUrl(jobId) {
-            // Fallback URL for demo - in production your server provides this
-            return `https://your-server.com/download/${jobId}.csv`;
+            return `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
         }
 
         function openScrapingUrl() {
