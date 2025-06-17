@@ -382,8 +382,7 @@ if (response.ok && Array.isArray(data) && data.length > 0) {
     localStorage.setItem(AUTH_KEYS.EXPIRES, expiresAt.toISOString());
     
     console.log('Data stored, redirecting...');
-    showSuccess('Login successful! Redirecting...');
-    setTimeout(redirectToExtension, 1500);
+    window.location.href = 'https://unlimited-leads.online/extension';
 } else {
     console.log('Login failed - no user found');
     throw new Error('You do not have an account, create one first.');
@@ -484,7 +483,6 @@ if (response.ok && Array.isArray(data) && data.length > 0) {
        // Par celle-ci :
 function redirectToExtension() {
     console.log('Redirecting to extension...');
-    window.location.href = 'https://unlimited-leads.online/extension';
 }
 
         // UI functions
