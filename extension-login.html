@@ -368,10 +368,12 @@
                 
                 const data = await response.json();
 
-console.log('Raw API response:', data);
+console.log('Raw API response:', JSON.stringify(data, null, 2));
+console.log('Is array?', Array.isArray(data));
+console.log('Data length:', data.length);
 
-if (response.ok && Array.isArray(data) && data.length > 0) {
-    const user = data[0];
+if (response.ok && data && (Array.isArray(data) ? data.length > 0 : data.id)) {
+    const user = Array.isArray(data) ? data[0] : data;
     
     console.log('Login successful, user:', user);
     
