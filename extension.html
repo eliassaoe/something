@@ -491,6 +491,12 @@
     width: 100% !important; /* Prend toute la largeur */
     justify-content: center !important;
 }
+        .platform-icon img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+}
 
 .scraper-actions .btn i {
     font-size: 20px !important; /* Icône plus grande */
@@ -573,6 +579,10 @@
     .page-title {
         font-size: 20px;
         margin-bottom: 8px;
+    }
+    .platform-icon img {
+        width: 30px;
+        height: 30px;
     }
 
     .page-subtitle {
@@ -689,6 +699,11 @@
         font-size: 8px !important;
         gap: 2px;
     }
+
+    .platform-icon img {
+        width: 25px;
+        height: 25px;
+    }
     
     /* Buy credits encore plus petit */
     .btn {
@@ -768,10 +783,10 @@
             <!-- Platform Selection -->
             <div class="platform-selection">
                 <div class="platform-card" onclick="selectPlatform('apollo')">
-                    <div class="platform-icon apollo-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3 class="platform-name">Apollo</h3>
+                   <div class="platform-icon apollo-icon">
+                   <img src="https://foxeet.fr/images/logo/88b9ffef-cf69-4409-929b-ddde902a68f5/plateforme-prospection-b2b-apollo-io.webp" alt="Apollo IO" style="width: 60px; height: 60px; object-fit: contain;">
+                   </div>
+                    <h3 class="platform-name">Apollo io</h3>
                     <p class="platform-description">
                         Scrape comprehensive contact and company data from Apollo's extensive database with advanced filtering options.
                     </p>
