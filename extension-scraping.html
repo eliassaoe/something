@@ -1186,6 +1186,25 @@ function logout() {
         window.location.href = '/extension-login';
     }
 }
+        // Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer les crédits au chargement
+    fetchUserCredits();
+    
+    // Get scraping URL from query params
+    const urlParams = new URLSearchParams(window.location.search);
+    scrapingUrl = urlParams.get('page');
+    
+    // Load existing data
+    loadExportHistory();
+    updateStats();
+    
+    // If there's a page parameter, start new scraping
+    if (scrapingUrl) {
+        console.log('Starting scraping for URL:', scrapingUrl);
+        startNewScraping(decodeURIComponent(scrapingUrl));
+    }
+});
 
         // Add CSS animations
         const style = document.createElement('style');
