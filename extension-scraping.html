@@ -875,11 +875,15 @@
                 
                 // Make API call to webhook
                 try {
+
+                    const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+                    
                     const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
                     const requestBody = {
                         type: platform,
                         url: decodedUrl,
                         job_id: job.id
+                        user_id: userData.id 
                     };
                     
                     console.log('Sending API request:', requestBody);
