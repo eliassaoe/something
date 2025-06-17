@@ -956,10 +956,9 @@ if (existingJob) {
             document.getElementById('timeRemaining').textContent = 'Calculating...';
         }
 
-// Simulate progress
 function simulateProgress() {
-    // Calculer le temps estimé basé sur les crédits
-    const userCredits = document.getElementById('creditsCount').textContent || 1000;
+    // Calculer le temps estimé basé sur les crédits (CONVERSION EN NOMBRE)
+    const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 1000;
     const estimatedMinutes = (userCredits * 6.5) / 1000; // 1000 credits = 6.5 minutes
     const totalSeconds = Math.round(estimatedMinutes * 60);
     
@@ -975,7 +974,7 @@ function simulateProgress() {
     console.log(`Estimated time for ${userCredits} credits: ${estimatedMinutes.toFixed(1)} minutes`);
     
     let progress = 0;
-    const incrementPerSecond = 100 / totalSeconds; // Progression par seconde pour finir en totalSeconds
+    const incrementPerSecond = 100 / totalSeconds;
     
     progressInterval = setInterval(() => {
         progress += incrementPerSecond;
@@ -1007,7 +1006,6 @@ function simulateProgress() {
         }
     }, 1000);
 }
-
         // Complete scraping job
         function completeScraping() {
             if (!currentScrapingJob) return;
