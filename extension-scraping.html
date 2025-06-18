@@ -1096,23 +1096,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-    function checkCreditsBeforeScraping() {
-    const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 0;
-    
-    if (userCredits <= 0) {
-        showCreditsModal();
-        return false;
-    }
-    
-    return true;
-}
-
 async function startNewScraping(url) {
-    // Check credits first
-    if (!checkCreditsBeforeScraping()) {
-        return; // Stop execution if no credits
-    }
-    
     try {
         const decodedUrl = decodeURIComponent(url);
         const platform = detectPlatform(decodedUrl);
@@ -1196,12 +1180,16 @@ async function startNewScraping(url) {
                 showNotification('Scraping started successfully!', 'success');
             } else {
                 // Handle API error response
-                const errorData = await response.json().catch(() => ({}));
-                
-                // Check if it's a credits error
-                if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
-                    showCreditsModal();
-                    return;
+                try {
+                    const errorData = await response.json();
+                    
+                    // Check if it's a credits error
+                    if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
+                        showCreditsModal();
+                        return;
+                    }
+                } catch (parseError) {
+                    console.log('Could not parse error response');
                 }
                 
                 throw new Error(`API call failed: ${response.status}`);
@@ -1233,7 +1221,6 @@ async function startNewScraping(url) {
         showNotification('Failed to start scraping job: ' + error.message, 'error');
     }
 }
-
         // Show current scraping section
         function showCurrentScraping(url) {
             const currentScrapingDiv = document.getElementById('currentScraping');
