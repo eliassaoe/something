@@ -1235,9 +1235,25 @@ async function startNewScraping(url) {
         }
 
 function simulateProgress() {
-    // Calculer le temps estimé basé sur les crédits (CONVERSION EN NOMBRE)
+    // Détecter la plateforme du job actuel
+    const platform = currentScrapingJob ? currentScrapingJob.platform : 'apollo';
+    
+    // Calculer le temps estimé basé sur les crédits ET la plateforme
     const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 1000;
-    const estimatedMinutes = (userCredits * 6.5) / 1000; // 1000 credits = 6.5 minutes
+    
+    let estimatedMinutes;
+    let minimumMinutes;
+    
+    if (platform === 'linkedin') {
+        // LinkedIn: 1 heure pour 1000 leads, minimum 1 heure
+        estimatedMinutes = Math.max(60, (userCredits * 60) / 1000); // 1000 credits = 60 minutes, minimum 60
+        minimumMinutes = 60;
+    } else {
+        // Apollo: 6.5 minutes pour 1000 leads (comme avant)
+        estimatedMinutes = (userCredits * 6.5) / 1000; // 1000 credits = 6.5 minutes
+        minimumMinutes = 0;
+    }
+    
     const totalSeconds = Math.round(estimatedMinutes * 60);
     
     // Afficher le temps estimé dès le début
@@ -1249,7 +1265,7 @@ function simulateProgress() {
         document.getElementById('timeRemaining').textContent = `${totalSeconds}s`;
     }
     
-    console.log(`Estimated time for ${userCredits} credits: ${estimatedMinutes.toFixed(1)} minutes`);
+    console.log(`Estimated time for ${userCredits} credits on ${platform}: ${estimatedMinutes.toFixed(1)} minutes`);
     
     let progress = 0;
     const incrementPerSecond = 100 / totalSeconds;
