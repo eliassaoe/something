@@ -481,7 +481,113 @@
             transform: translateY(-1px);
         }
 
-        /* Empty State */
+        .credits-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    backdrop-filter: blur(8px);
+}
+
+.credits-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.credits-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+.credits-modal-icon {
+    font-size: 64px;
+    color: var(--warning);
+    margin-bottom: 20px;
+}
+
+.credits-modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 10px;
+}
+
+.credits-modal-message {
+    color: var(--gray-600);
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.credits-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-upgrade {
+    background: linear-gradient(135deg, var(--warning), #d97706);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.btn-upgrade:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-cancel {
+    background: var(--gray-200);
+    color: var(--gray-700);
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: var(--gray-300);
+    transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -654,6 +760,19 @@
                 padding: 10px;
             }
 
+             .credits-modal-content {
+        padding: 30px 20px;
+    }
+    
+    .credits-modal-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-upgrade, .btn-cancel {
+        width: 100%;
+        padding: 14px 20px;
+    }
+
             .nav-menu {
                 gap: 8px;
             }
@@ -780,6 +899,28 @@
                     <!-- Table will be populated by JavaScript -->
                 </div>
             </div>
+
+            <div id="creditsModal" class="credits-modal">
+    <div class="credits-modal-content">
+        <div class="credits-modal-icon">
+            <i class="fas fa-coins"></i>
+        </div>
+        <h3 class="credits-modal-title">No Credits Remaining</h3>
+        <p class="credits-modal-message">
+            You need credits to start a new scraping job. Purchase credits to continue extracting valuable leads from your target pages.
+        </p>
+        <div class="credits-modal-buttons">
+            <a href="https://unlimited-leads.online/extension-upgrade" class="btn-upgrade">
+                <i class="fas fa-credit-card"></i>
+                Buy Credits Now
+            </a>
+            <button class="btn-cancel" onclick="hideCreditsModal()">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
         </main>
     </div>
 
@@ -925,8 +1066,53 @@
             saveJobs(jobs);
         }
 
+        function showCreditsModal() {
+    const modal = document.getElementById('creditsModal');
+    modal.classList.add('show');
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function hideCreditsModal() {
+    const modal = document.getElementById('creditsModal');
+    modal.classList.remove('show');
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside
+document.getElementById('creditsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideCreditsModal();
+    }
+});
+
+// Escape key to close modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideCreditsModal();
+    }
+});
+
+    function checkCreditsBeforeScraping() {
+    const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 0;
+    
+    if (userCredits <= 0) {
+        showCreditsModal();
+        return false;
+    }
+    
+    return true;
+}
 
 async function startNewScraping(url) {
+    // Check credits first
+    if (!checkCreditsBeforeScraping()) {
+        return; // Stop execution if no credits
+    }
+    
     try {
         const decodedUrl = decodeURIComponent(url);
         const platform = detectPlatform(decodedUrl);
@@ -1009,10 +1195,26 @@ async function startNewScraping(url) {
                 
                 showNotification('Scraping started successfully!', 'success');
             } else {
+                // Handle API error response
+                const errorData = await response.json().catch(() => ({}));
+                
+                // Check if it's a credits error
+                if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
+                    showCreditsModal();
+                    return;
+                }
+                
                 throw new Error(`API call failed: ${response.status}`);
             }
         } catch (apiError) {
             console.log('API call failed, continuing with simulation:', apiError);
+            
+            // Check if error message mentions credits
+            if (apiError.message && apiError.message.toLowerCase().includes('credit')) {
+                showCreditsModal();
+                return;
+            }
+            
             showNotification('Scraping started (demo mode)', 'warning');
         }
         
@@ -1021,6 +1223,13 @@ async function startNewScraping(url) {
         
     } catch (error) {
         console.error('Error starting scraping:', error);
+        
+        // Check if error message mentions credits
+        if (error.message && error.message.toLowerCase().includes('credit')) {
+            showCreditsModal();
+            return;
+        }
+        
         showNotification('Failed to start scraping job: ' + error.message, 'error');
     }
 }
