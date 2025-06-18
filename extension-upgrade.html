@@ -495,10 +495,15 @@
 
                     <ul class="features-list">
                         <li><i class="fas fa-check"></i> 2,500 lead extractions per month</li>
+                        <li><i class="fas fa-check"></i> Apollo.io integration</li>
+                        <li><i class="fas fa-check"></i> LinkedIn integration</li>
+                        <li><i class="fas fa-check"></i> CSV export</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                        <li><i class="fas fa-check"></i> Chrome extension</li>
                     </ul>
 
                     <button class="cta-button cta-secondary" onclick="selectPlan('starter')">
-                        Choose Plan
+                        Get Started
                     </button>
                 </div>
 
@@ -521,10 +526,17 @@
 
                     <ul class="features-list">
                         <li><i class="fas fa-check"></i> 5,000 lead extractions per month</li>
+                        <li><i class="fas fa-check"></i> Apollo.io integration</li>
+                        <li><i class="fas fa-check"></i> LinkedIn integration</li>
+                        <li><i class="fas fa-check"></i> CSV export</li>
+                        <li><i class="fas fa-check"></i> Priority email support</li>
+                        <li><i class="fas fa-check"></i> Chrome extension</li>
+                        <li><i class="fas fa-check"></i> Advanced filters</li>
+                        <li><i class="fas fa-check"></i> Bulk export</li>
                     </ul>
 
                     <button class="cta-button cta-primary" onclick="selectPlan('basic')">
-                        Choose Plan
+                        Start Free Trial
                     </button>
                 </div>
 
@@ -545,13 +557,44 @@
 
                     <ul class="features-list">
                         <li><i class="fas fa-check"></i> 12,000 lead extractions per month</li>
+                        <li><i class="fas fa-check"></i> Apollo.io integration</li>
+                        <li><i class="fas fa-check"></i> LinkedIn integration</li>
+                        <li><i class="fas fa-check"></i> CSV export</li>
+                        <li><i class="fas fa-check"></i> Priority phone & email support</li>
+                        <li><i class="fas fa-check"></i> Chrome extension</li>
+                        <li><i class="fas fa-check"></i> Advanced filters</li>
+                        <li><i class="fas fa-check"></i> Bulk export</li>
+                        <li><i class="fas fa-check"></i> API access</li>
+                        <li><i class="fas fa-check"></i> Team collaboration</li>
+                        <li><i class="fas fa-check"></i> Custom integrations</li>
                     </ul>
 
                     <button class="cta-button cta-primary" onclick="selectPlan('business')">
-                        Choose Plan
+                        Contact Sales
                     </button>
                 </div>
             </div>
+
+            <!-- Trust Section -->
+            <div class="trust-section">
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        SSL Secured
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-credit-card"></i>
+                        Secure Payment
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-undo-alt"></i>
+                        30-Day Refund
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-headset"></i>
+                        24/7 Support
+                    </div>
+                </div>
 
                 <div class="guarantee">
                     <div class="guarantee-text">
@@ -614,16 +657,49 @@
             
             console.log('Selected plan:', planData);
             
-            // Here you would integrate with your payment processor
-            // For example, redirect to Stripe checkout
-            if (planType === 'business') {
-                // For business plan, show contact form or redirect to sales
-                alert('Business plan selected! Redirecting to our sales team...');
-                // window.location.href = '/contact-sales';
+            // Get user ID from localStorage
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            const userId = userData && userData.id ? userData.id : 'unknown';
+            
+            // Stripe URLs for monthly plans
+            const stripeUrls = {
+                monthly: {
+                    starter: `https://buy.stripe.com/28EcN53XLapfgqo7wL8IU0C?client_reference_id=${userId}`,
+                    basic: `https://buy.stripe.com/4gM4gz65TeFvfmk6sH8IU0E?client_reference_id=${userId}`,
+                    business: `https://buy.stripe.com/fZu4gz65T7d3a206sH8IU0F?client_reference_id=${userId}`
+                },
+                yearly: {
+                    // URLs for yearly plans (to be added later)
+                    starter: '#',
+                    basic: '#',
+                    business: '#'
+                }
+            };
+            
+            // Check if user is authenticated
+            if (!userData || !userData.id) {
+                showNotification('Please log in to purchase a plan', 'error');
+                setTimeout(() => {
+                    window.location.href = '/extension-login';
+                }, 2000);
+                return;
+            }
+            
+            // Get the appropriate Stripe URL
+            const stripeUrl = stripeUrls[currentBilling][planType];
+            
+            if (currentBilling === 'monthly' && stripeUrl !== '#') {
+                // Redirect to Stripe checkout for monthly plans
+                showNotification(`Redirecting to secure checkout for ${planType} plan...`, 'info');
+                setTimeout(() => {
+                    window.location.href = stripeUrl;
+                }, 1500);
+            } else if (currentBilling === 'yearly') {
+                // Yearly plans not yet implemented
+                showNotification('Yearly plans coming soon! Please select a monthly plan.', 'warning');
             } else {
-                // For other plans, redirect to payment
-                alert(`${planType.charAt(0).toUpperCase() + planType.slice(1)} plan selected! Redirecting to secure checkout...`);
-                // window.location.href = `/checkout?plan=${planType}&billing=${currentBilling}`;
+                // Fallback
+                showNotification('Plan configuration error. Please try again.', 'error');
             }
         }
 
