@@ -864,29 +864,33 @@
                 </div>
             </div>
 
-            <!-- Current Scraping -->
-            <div id="currentScraping" class="current-scraping">
-                <div class="current-title">
-                    <i class="fas fa-cog fa-spin"></i>
-                    Currently Scraping
-                </div>
-                <div id="currentUrl" class="current-url" onclick="openScrapingUrl()">
-                    Loading...
-                </div>
-                <div class="progress-container">
-                    <div class="progress-label">
-                        <span>Progress</span>
-                        <span id="progressText">0%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div style="color: var(--gray-600); font-size: 14px;">
-                    <i class="fas fa-info-circle"></i>
-                    Estimated time remaining: <span id="timeRemaining">Calculating...</span>
-                </div>
-            </div>
+           <!-- Current Scraping -->
+<div id="currentScraping" class="current-scraping">
+    <div class="current-title">
+        <i class="fas fa-cog fa-spin"></i>
+        Currently Scraping
+    </div>
+    <div id="currentUrl" class="current-url" onclick="openScrapingUrl()">
+        Loading...
+    </div>
+    <div class="progress-container">
+        <div class="progress-label">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+        </div>
+    </div>
+    <div style="color: var(--gray-600); font-size: 14px; margin-bottom: 10px;">
+        <i class="fas fa-info-circle"></i>
+        Estimated time remaining: <span id="timeRemaining">Calculating...</span>
+    </div>
+    <div style="color: var(--success); font-size: 14px; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border-left: 4px solid var(--success);">
+        <i class="fas fa-shield-alt"></i>
+        You can leave this page - scraping runs on our secure servers
+    </div>
+</div>
 
             <!-- Scraping History -->
             <div class="history-section">
