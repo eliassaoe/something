@@ -1328,14 +1328,12 @@ function simulateProgress() {
                 acc.total++;
                 if (job.status === 'completed') acc.completed++;
                 if (job.status === 'processing') acc.processing++;
-                acc.totalRecords += job.records_found || 0;
                 return acc;
-            }, { total: 0, completed: 0, processing: 0, totalRecords: 0 });
+            }, { total: 0, completed: 0, processing: 0 });
 
             document.getElementById('totalExports').textContent = stats.total;
             document.getElementById('completedExports').textContent = stats.completed;
             document.getElementById('processingExports').textContent = stats.processing;
-            document.getElementById('totalRecords').textContent = stats.totalRecords.toLocaleString();
         }
 
         // Render exports table
