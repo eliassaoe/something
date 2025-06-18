@@ -786,6 +786,8 @@
     <script>
         // Configuration
         const DOWNLOAD_WEBHOOK = 'https://eliasse-n8n.onrender.com/webhook/afc3706e-31f6-479f-88d9-94b410f30593';
+        const CHECK_WEBHOOK = 'https://eliasse-n8n.onrender.com/webhook/27c087d5-0160-403d-9cb9-cd2c8defa647';
+
         
         // localStorage keys
         const STORAGE_KEYS = {
@@ -1231,44 +1233,46 @@ function simulateProgress() {
             }
         }
 
-        // Vérifier les jobs en attente au chargement de la page
-        async function checkPendingJobs() {
-            const jobs = getAllJobs();
-            const processingJobs = jobs.filter(job => job.status === 'processing');
+       async function checkPendingJobs() {
+    const jobs = getAllJobs();
+    const processingJobs = jobs.filter(job => job.status === 'processing');
+    
+    if (processingJobs.length === 0) return;
+    
+    console.log(`Checking ${processingJobs.length} pending jobs...`);
+    
+    let anyJobUpdated = false;
+    
+    for (const job of processingJobs) {
+        try {
+            // Use the new check endpoint instead of download endpoint
+            const checkUrl = `${CHECK_WEBHOOK}?job_id=${job.id}`;
+            const response = await fetch(checkUrl, { method: 'HEAD' });
             
-            if (processingJobs.length === 0) return;
-            
-            console.log(`Checking ${processingJobs.length} pending jobs...`);
-            
-            for (const job of processingJobs) {
-                try {
-                    // Essayer de télécharger le fichier pour voir s'il existe
-                    const downloadUrl = `${DOWNLOAD_WEBHOOK}?job_id=${job.id}`;
-                    const response = await fetch(downloadUrl, { method: 'HEAD' }); // HEAD = juste vérifier sans télécharger
-                    
-                    if (response.ok) {
-                        // Le fichier existe = job terminé !
-                        job.status = 'completed';
-                        job.progress = 100;
-                        job.completed_at = new Date().toISOString();
-                        
-                        if (!job.records_found) {
-                            job.records_found = Math.floor(Math.random() * 1000) + 50;
-                        }
-                        
-                        saveJob(job);
-                        console.log(`✅ Job ${job.id} completed while user was away`);
-                    }
-                } catch (error) {
-                    // Fichier pas encore prêt, garde le status "processing"
-                    console.log(`⏳ Job ${job.id} still processing`);
+            if (response.ok) {
+                job.status = 'completed';
+                job.progress = 100;
+                job.completed_at = new Date().toISOString();
+                
+                if (!job.records_found) {
+                    job.records_found = Math.floor(Math.random() * 1000) + 50;
                 }
+                
+                saveJob(job);
+                anyJobUpdated = true;
+                console.log(`✅ Job ${job.id} completed while user was away`);
             }
-            
-            // Rafraîchir l'affichage
-            loadExportHistory();
-            updateStats();
+        } catch (error) {
+            console.log(`⏳ Job ${job.id} still processing`);
         }
+    }
+    
+    if (anyJobUpdated) {
+        loadExportHistory();
+        updateStats();
+    }
+}
+
 
         // Nettoyer les jobs expirés (30 jours)
         function cleanupExpiredJobs() {
