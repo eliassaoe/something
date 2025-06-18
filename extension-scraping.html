@@ -1254,8 +1254,8 @@ function simulateProgress() {
         minimumMinutes = 60;
     } else {
         // Apollo: 6.5 minutes pour 1000 leads (comme avant)
-        estimatedMinutes = (userCredits * 6.5) / 1000; // 1000 credits = 6.5 minutes
-        minimumMinutes = 0;
+        estimatedMinutes = (userCredits * 6.5) / 1000 + 3; // 1000 credits = 6.5 minutes
+        minimumMinutes = 3;
     }
     
     const totalSeconds = Math.round(estimatedMinutes * 60);
