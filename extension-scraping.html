@@ -85,33 +85,71 @@
             align-items: center;
         }
 
-        .nav-item {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+       .nav-item {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 10px 16px;
+    border-radius: 8px;
+}
 
-        .nav-item:hover {
-            color: var(--primary);
-        }
+.nav-item:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
 
-        .nav-item.active {
-            color: var(--primary);
-            font-weight: 600;
-        }
+.nav-item.active {
+    color: var(--primary);
+    font-weight: 600;
+    background: var(--primary-light);
+}
 
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
+/* Special styling for the New Export button */
+.nav-item[href*="extension"] {
+    background: linear-gradient(135deg, var(--success), #059669) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    padding: 12px 20px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item[href*="extension"]:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+}
+
+.nav-item[href*="extension"]:before {
+    content: "🚀 ";
+    margin-right: 5px;
+}
+
+/* Add pulsing animation to make it even more noticeable */
+.nav-item[href*="extension"]:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+        @keyframes pulse {
+    0% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1); }
+}
 
         .user-info {
             display: flex;
@@ -495,6 +533,45 @@
                 background: var(--primary-light);
             }
 
+            .nav-item[href*="extension"] {
+        padding: 10px 16px !important;
+        font-size: 12px !important; /* Changed from 14px to 12px for consistency */
+        font-weight: 600 !important;
+        /* Keep all the other styles from the main definition */
+        background: linear-gradient(135deg, var(--success), #059669) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .nav-item[href*="extension"]:hover {
+        background: linear-gradient(135deg, #059669, #047857) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+    }
+    
+    .nav-item[href*="extension"]:before {
+        content: "🚀 ";
+        margin-right: 5px;
+    }
+    
+    .nav-item[href*="extension"]:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        animation: pulse 2s infinite;
+        pointer-events: none;
+    }
+
             .user-info {
                 gap: 10px;
                 flex-wrap: wrap;
@@ -581,10 +658,17 @@
                 gap: 8px;
             }
 
-            .nav-item {
-                font-size: 10px;
-                padding: 6px 8px;
-            }
+           {
+    .nav-item[href*="extension"] {
+        padding: 8px 12px !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+    
+    .nav-item[href*="extension"]:before {
+        content: "🚀 ";
+        margin-right: 3px;
+    }
 
             .main-content {
                 padding: 20px;
