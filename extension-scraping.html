@@ -1136,8 +1136,9 @@ async function startNewScraping(url) {
         // Show scraping UI
         showCurrentScraping(decodedUrl);
         
-        // S'ASSURER QUE LES CRÉDITS SONT CHARGÉS AVANT DE SIMULER LE PROGRÈS
-        await fetchUserCredits(); // Attendre que les crédits soient récupérés
+        await fetchUserCredits(); 
+
+        simulateProgress();
         
         // Make API call to webhook
         try {
@@ -1203,12 +1204,9 @@ async function startNewScraping(url) {
                 return;
             }
             
-            showNotification('Scraping started (demo mode)', 'warning');
+            showNotification('Scraping started', 'warning');
         }
-        
-        // Start progress simulation APRÈS avoir récupéré les crédits
-        simulateProgress();
-        
+
     } catch (error) {
         console.error('Error starting scraping:', error);
         
