@@ -635,7 +635,7 @@
             
             if (currentBilling === 'monthly' && stripeUrl !== '#') {
                 // Redirect to Stripe checkout for monthly plans
-                showNotification(`Redirecting to secure checkout for ${planType} plan...`, 'info');
+                showNotification(`Redirecting...`, 'info');
                 setTimeout(() => {
                     window.location.href = stripeUrl;
                 }, 1500);
