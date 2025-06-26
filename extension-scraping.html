@@ -1104,6 +1104,18 @@ async function startNewScraping(url) {
     try {
         const decodedUrl = decodeURIComponent(url);
         const platform = detectPlatform(decodedUrl);
+        const urlParams = new URLSearchParams(window.location.search);
+        const cookiesParam = urlParams.get('cookies');
+        let cookies = null;
+
+if (cookiesParam) {
+    try {
+        cookies = JSON.parse(decodeURIComponent(cookiesParam));
+        console.log('Extracted cookies from URL:', cookies);
+    } catch (error) {
+        console.error('Failed to parse cookies from URL:', error);
+    }
+}
         
         console.log('Starting scraping for:', decodedUrl);
         console.log('Platform detected:', platform);
@@ -1150,11 +1162,12 @@ async function startNewScraping(url) {
             
             const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
             const requestBody = {
-                type: platform,
-                url: decodedUrl,
-                job_id: job.id,
-                user_id: userData.id 
-            };
+    type: platform,
+    url: decodedUrl,
+    job_id: job.id,
+    user_id: userData.id,
+    cookies: cookies // Add this line
+};
             
             console.log('Sending API request:', requestBody);
             
