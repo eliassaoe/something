@@ -1263,8 +1263,9 @@ function simulateProgress() {
     
     if (platform === 'linkedin') {
         // LinkedIn: 1 heure pour 1000 leads, minimum 1 heure
-        estimatedMinutes = Math.max(60, (userCredits * 60) / 1000); // 1000 credits = 60 minutes, minimum 60
-        minimumMinutes = 60;
+        const estimatedSeconds = userCredits * 1; // 1 seconde par crédit
+        estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
+        minimumMinutes = 1; // Minimum 1 minute
     } else {
         // Apollo: 6.5 minutes pour 1000 leads (comme avant)
         estimatedMinutes = (userCredits * 6.5) / 1000 + 3; // 1000 credits = 6.5 minutes
