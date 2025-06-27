@@ -930,8 +930,9 @@
 
     <script>
         // Configuration
-        const DOWNLOAD_WEBHOOK = 'https://eliasse-n8n.onrender.com/webhook/afc3706e-31f6-479f-88d9-94b410f30593';
-        const CHECK_WEBHOOK = 'https://eliasse-n8n.onrender.com/webhook/27c087d5-0160-403d-9cb9-cd2c8defa647';
+     const WORKER_BASE_URL = 'https://scraping-extension.hamoureliasse.workers.dev';
+     const DOWNLOAD_ENDPOINT = `${WORKER_BASE_URL}/api/download`;
+    const CHECK_ENDPOINT = `${WORKER_BASE_URL}/api/check`;
 
         
         // localStorage keys
@@ -1263,7 +1264,7 @@ function simulateProgress() {
     
     if (platform === 'linkedin') {
         // LinkedIn: 1 heure pour 1000 leads, minimum 1 heure
-        const estimatedSeconds = userCredits * 1; // 1 seconde par crédit
+        const estimatedSeconds = userCredits * 2; // 2 seconde par crédit
         estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
         minimumMinutes = 1; // Minimum 1 minute
     } else {
@@ -1472,7 +1473,7 @@ function simulateProgress() {
     for (const job of processingJobs) {
         try {
             // Use the new check endpoint instead of download endpoint
-            const checkUrl = `${CHECK_WEBHOOK}?job_id=${job.id}`;
+            const checkUrl = `${CHECK_ENDPOINT}?job_id=${job.id}`;
             const response = await fetch(checkUrl, { method: 'HEAD' });
             
             if (response.ok) {
@@ -1525,7 +1526,7 @@ function simulateProgress() {
             try {
                 showNotification('Téléchargement en cours...', 'info');
                 
-                const downloadUrl = `${DOWNLOAD_WEBHOOK}?job_id=${jobId}`;
+                const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
                 console.log('Downloading from:', downloadUrl);
                 
                 const response = await fetch(downloadUrl);
