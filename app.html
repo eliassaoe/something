@@ -1969,8 +1969,12 @@ function displayInitialResults() {
     if (allContacts.length === 0) {
         noResults.style.display = 'block';
         resultsTable.style.display = 'none';
+        exportButton.style.display = 'none';
+        resultsNumber.textContent = '0';
+        totalDisplayRecords.textContent = '0';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
+        globalTrueCount = 0;
         return;
     } else {
         noResults.style.display = 'none';
