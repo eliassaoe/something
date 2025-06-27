@@ -1342,7 +1342,7 @@ header {
     <div id="searchAlert" class="alert"></div>
 
     <div class="info-box">
-         <p><strong>How it works:</strong> Search for contacts using our filters. Your leads will delivered to you by <strong>EMAIL. Check your INBOX and spam folder !</strong></p>
+         <p><strong>How it works:</strong> Search for contacts using our filters. Then export them with the Export to CSV button</p>
     </div>
     
     <form id="searchForm" class="search-form">
@@ -1626,7 +1626,7 @@ header {
         <div class="modal-body">
             <div class="info-item">
                 <div class="info-value">
-                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
+                   <p>Are you sure you want to export this list of leads? This will use credits from your account. </p>
                 </div>
             </div>
             
@@ -1657,8 +1657,7 @@ header {
             <div class="info-item" style="text-align: center;">
                 <div class="info-value">
                     <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully!</strong></p>
-                    <p>The contact list will be delivered to your Inbox in the coming minutes.</p>
-                    <p style="color: #2a6; margin-top: 15px;"><i class="fas fa-envelope"></i> Please check your inbox and spam folder.</p>
+                    <p>The contact list will be downloaded in the coming minutes.</p>
                 </div>
             </div>
             
@@ -2207,7 +2206,7 @@ async function exportToCSV() {
     
     <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
         This may take up to <strong>5 minutes</strong>. 
-        Keep this page open and check your inbox when complete.
+        Keep this page open.
     </p>
     
     <div id="exportTimer" style="font-size: 14px; color: var(--gray-700);">
@@ -2345,7 +2344,7 @@ async function exportToCSV() {
                     } else {
                         // Handle unexpected response format - show success message
                         console.warn("Unexpected response format:", responseData);
-                        showAlert("Export completed! Check your inbox and spam folder - your leads will arrive very soon.", 'success');
+                        showAlert("Export completed!", 'success');
                         
                         // Also show the confirmation modal
                         showExportConfirmation("your leads");
@@ -2414,7 +2413,6 @@ function showExportConfirmation(recordCount) {
         infoValue.innerHTML = `
             <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
             <p>Your leads have been exported successfully.</p>
-            <p style="margin-top: 10px;">Check your downloads folder or your email for the lead list.</p>
         `;
         infoValue.style.textAlign = 'center';
     }
@@ -2519,7 +2517,7 @@ function downloadCSV(data) {
             } catch (mobileError) {
                 console.error('Mobile download failed:', mobileError);
                 // Show user-friendly message for mobile
-                showAlert('Download prepared! If file didn\'t download automatically, you\'ll receive it via email.', 'warning');
+                showAlert('Download prepared!', 'warning');
             }
             
         } else {
