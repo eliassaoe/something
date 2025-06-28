@@ -1263,8 +1263,8 @@ function simulateProgress() {
     let minimumMinutes;
     
     if (platform === 'linkedin') {
-        // LinkedIn: 1 heure pour 1000 leads, minimum 1 heure
-        const estimatedSeconds = userCredits * 2; // 2 seconde par crédit
+
+        const estimatedSeconds = userCredits * 5; // 5 seconde par crédit
         estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
         minimumMinutes = 1; // Minimum 1 minute
     } else {
