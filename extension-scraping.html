@@ -1263,7 +1263,6 @@ function simulateProgress() {
     let minimumMinutes;
     
     if (platform === 'linkedin') {
-
         const estimatedSeconds = userCredits * 5; // 5 seconde par crédit
         estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
         minimumMinutes = 1; // Minimum 1 minute
@@ -1274,6 +1273,13 @@ function simulateProgress() {
     }
     
     const totalSeconds = Math.round(estimatedMinutes * 60);
+    
+    // Stocker l'heure de début et la durée totale dans le job
+    if (currentScrapingJob) {
+        currentScrapingJob.simulation_start = currentScrapingJob.simulation_start || Date.now();
+        currentScrapingJob.total_duration_seconds = totalSeconds;
+        saveJob(currentScrapingJob);
+    }
     
     // Afficher le temps estimé dès le début
     if (totalSeconds > 60) {
@@ -1286,19 +1292,17 @@ function simulateProgress() {
     
     console.log(`Estimated time for ${userCredits} credits on ${platform}: ${estimatedMinutes.toFixed(1)} minutes`);
     
-    let progress = 0;
-    const incrementPerSecond = 100 / totalSeconds;
-    
     progressInterval = setInterval(() => {
-        progress += incrementPerSecond;
-        if (progress > 100) progress = 100;
+        // Calculer le progrès basé sur le temps écoulé au lieu d'incrémenter
+        const elapsedSeconds = (Date.now() - currentScrapingJob.simulation_start) / 1000;
+        const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
 
         // Update UI
         document.getElementById('progressFill').style.width = progress + '%';
         document.getElementById('progressText').textContent = Math.round(progress) + '%';
         
         // Calcul du temps restant précis
-        const timeRemaining = Math.round(totalSeconds - (progress * totalSeconds / 100));
+        const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
         
         if (timeRemaining > 60) {
             const mins = Math.floor(timeRemaining / 60);
@@ -1318,8 +1322,7 @@ function simulateProgress() {
             completeScraping();
         }
     }, 1000);
-}
-        // Complete scraping job
+}// Complete scraping job
         function completeScraping() {
             if (!currentScrapingJob) return;
             
