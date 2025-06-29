@@ -1253,172 +1253,71 @@ if (cookiesParam) {
         }
 
 function simulateProgress() {
-    // Detect platform
+    // Détecter la plateforme du job actuel
     const platform = currentScrapingJob ? currentScrapingJob.platform : 'apollo';
     
-    // Calculate estimated time based on credits AND platform
+    // Calculer le temps estimé basé sur les crédits ET la plateforme
     const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 1000;
     
     let estimatedMinutes;
     let minimumMinutes;
     
     if (platform === 'linkedin') {
-        const estimatedSeconds = userCredits * 5; // 5 seconds per credit
-        estimatedMinutes = estimatedSeconds / 60; // Convert to minutes
+
+        const estimatedSeconds = userCredits * 5; // 5 seconde par crédit
+        estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
         minimumMinutes = 1; // Minimum 1 minute
     } else {
-        // Apollo: 6.5 minutes for 1000 leads
+        // Apollo: 6.5 minutes pour 1000 leads (comme avant)
         estimatedMinutes = (userCredits * 6) / 1000 + 3; // 1000 credits = 6.5 minutes
         minimumMinutes = 1;
     }
     
     const totalSeconds = Math.round(estimatedMinutes * 60);
     
-    // Store the start time and total duration in the job
-    if (currentScrapingJob) {
-        currentScrapingJob.simulation_start = currentScrapingJob.simulation_start || Date.now();
-        currentScrapingJob.total_duration_seconds = totalSeconds;
-        saveJob(currentScrapingJob);
+    // Afficher le temps estimé dès le début
+    if (totalSeconds > 60) {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
+    } else {
+        document.getElementById('timeRemaining').textContent = `${totalSeconds}s`;
     }
     
     console.log(`Estimated time for ${userCredits} credits on ${platform}: ${estimatedMinutes.toFixed(1)} minutes`);
     
-    // Update progress immediately and then start interval
-    updateProgressDisplay();
+    let progress = 0;
+    const incrementPerSecond = 100 / totalSeconds;
     
-    // Clear any existing interval
-    if (progressInterval) {
-        clearInterval(progressInterval);
-    }
-    
-    // Update every second
-    progressInterval = setInterval(updateProgressDisplay, 1000);
-}
+    progressInterval = setInterval(() => {
+        progress += incrementPerSecond;
+        if (progress > 100) progress = 100;
 
-        function updateProgressDisplay() {
-    if (!currentScrapingJob || !currentScrapingJob.simulation_start) return;
-    
-    const startTime = currentScrapingJob.simulation_start;
-    const totalDuration = currentScrapingJob.total_duration_seconds || 300; // fallback 5 minutes
-    const currentTime = Date.now();
-    const elapsedSeconds = (currentTime - startTime) / 1000;
-    
-    // Calculate progress based on elapsed time
-    const progress = Math.min((elapsedSeconds / totalDuration) * 100, 100);
-    
-    // Update UI
-    document.getElementById('progressFill').style.width = progress + '%';
-    document.getElementById('progressText').textContent = Math.round(progress) + '%';
-    
-    // Calculate remaining time
-    const timeRemaining = Math.max(0, Math.round(totalDuration - elapsedSeconds));
-    
-    if (timeRemaining > 60) {
-        const mins = Math.floor(timeRemaining / 60);
-        const secs = timeRemaining % 60;
-        document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
-    } else {
-        document.getElementById('timeRemaining').textContent = `${timeRemaining}s`;
-    }
-    
-    // Update job progress
-    if (currentScrapingJob) {
-        currentScrapingJob.progress = Math.round(progress);
-        saveJob(currentScrapingJob);
-    }
-    
-    // Complete when progress reaches 100%
-    if (progress >= 100) {
-        clearInterval(progressInterval);
-        completeScraping();
-    }
-}
-        here the count (from the simulate function) it kind of stop when i leave te page too long how to have it continue ?
-Modifier
+        // Update UI
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        
+        // Calcul du temps restant précis
+        const timeRemaining = Math.round(totalSeconds - (progress * totalSeconds / 100));
+        
+        if (timeRemaining > 60) {
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
+        } else {
+            document.getElementById('timeRemaining').textContent = `${timeRemaining}s`;
+        }
 
-Looking at your code, the issue is that the simulateProgress() function uses setInterval which stops running when the browser tab is inactive or when the user navigates away from the page. When they return, the progress simulation has stopped.
+        if (currentScrapingJob) {
+            currentScrapingJob.progress = Math.round(progress);
+            saveJob(currentScrapingJob);
+        }
 
-Here's how to fix this by making the progress calculation time-based rather than interval-based:
-
-The key changes I made:
-
-    Time-based progress calculation: Instead of incrementing progress by a fixed amount each second, the progress is now calculated based on the actual elapsed time since the job started.
-    Persistent simulation data: The job now stores:
-        simulation_start: The timestamp when simulation began
-        total_duration_seconds: The total expected duration
-    Resume capability: When the page loads, checkPendingJobs() now checks if any processing jobs have simulation data and resumes the progress display if the job should still be running.
-    Separated display logic: The updateProgressDisplay() function calculates progress based on elapsed time rather than relying on intervals.
-
-This way, even if the user leaves the page for hours and comes back, the progress will correctly show where it should be based on the elapsed time. If the simulation time has passed, it will complete the job automatically.
-
-The progress will now continue accurately regardless of:
-
-    Tab being inactive
-    Browser being minimized
-    User navigating away and returning
-    Computer going to sleep and waking up
-
-Replace your existing simulateProgress() function and checkPendingJobs() function with these improved versions, and the progress will persist correctly across page visits.
-
-do you see the update progress display function '' ?
-Modifier
-
-I can see that you have the simulateProgress() function in your code, but I don't see the updateProgressDisplay() function that I provided in my previous response.
-
-Looking at your current code, you're still using the old interval-based approach in simulateProgress(). You need to add the updateProgressDisplay() function and update your existing code.
-
-Here's what you need to add to your JavaScript:
-
-You need to:
-
-    Add the updateProgressDisplay() function - This is completely missing from your current code
-    Replace your existing simulateProgress() function with the time-based version
-    Update your checkPendingJobs() function to include the resume logic
-
-The key difference is that your current simulateProgress() function still uses the old approach where it increments progress by a fixed amount each second. The new approach calculates progress based on actual elapsed time, which means it will continue correctly even if the user leaves and returns to the page.
-
-Without the updateProgressDisplay() function, the progress will still stop when the user leaves the page because the interval-based calculation doesn't account for time that passed while the page was inactive.
-
-
-// Add this function to your JavaScript code:
-
-function updateProgressDisplay() {
-    if (!currentScrapingJob || !currentScrapingJob.simulation_start) return;
-    
-    const startTime = currentScrapingJob.simulation_start;
-    const totalDuration = currentScrapingJob.total_duration_seconds || 300; // fallback 5 minutes
-    const currentTime = Date.now();
-    const elapsedSeconds = (currentTime - startTime) / 1000;
-    
-    // Calculate progress based on elapsed time
-    const progress = Math.min((elapsedSeconds / totalDuration) * 100, 100);
-    
-    // Update UI
-    document.getElementById('progressFill').style.width = progress + '%';
-    document.getElementById('progressText').textContent = Math.round(progress) + '%';
-    
-    // Calculate remaining time
-    const timeRemaining = Math.max(0, Math.round(totalDuration - elapsedSeconds));
-    
-    if (timeRemaining > 60) {
-        const mins = Math.floor(timeRemaining / 60);
-        const secs = timeRemaining % 60;
-        document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
-    } else {
-        document.getElementById('timeRemaining').textContent = `${timeRemaining}s`;
-    }
-    
-    // Update job progress
-    if (currentScrapingJob) {
-        currentScrapingJob.progress = Math.round(progress);
-        saveJob(currentScrapingJob);
-    }
-    
-    // Complete when progress reaches 100%
-    if (progress >= 100) {
-        clearInterval(progressInterval);
-        completeScraping();
-    }
+        if (progress >= 100) {
+            clearInterval(progressInterval);
+            completeScraping();
+        }
+    }, 1000);
 }
         // Complete scraping job
         function completeScraping() {
@@ -1560,7 +1459,8 @@ function updateProgressDisplay() {
                 default: return 'question-circle';
             }
         }
-async function checkPendingJobs() {
+
+       async function checkPendingJobs() {
     const jobs = getAllJobs();
     const processingJobs = jobs.filter(job => job.status === 'processing');
     
@@ -1588,35 +1488,9 @@ async function checkPendingJobs() {
                 saveJob(job);
                 anyJobUpdated = true;
                 console.log(`✅ Job ${job.id} completed while user was away`);
-            } else {
-                // If job is still processing and has simulation data, resume the simulation
-                if (job.simulation_start && job.total_duration_seconds) {
-                    const elapsedSeconds = (Date.now() - job.simulation_start) / 1000;
-                    if (elapsedSeconds < job.total_duration_seconds) {
-                        // Resume simulation for this job
-                        currentScrapingJob = job;
-                        showCurrentScraping(job.url);
-                        simulateProgress();
-                        console.log(`🔄 Resumed simulation for job ${job.id}`);
-                        break; // Only resume one job at a time
-                    }
-                }
             }
         } catch (error) {
             console.log(`⏳ Job ${job.id} still processing`);
-            
-            // Check if we should resume simulation for this job
-            if (job.simulation_start && job.total_duration_seconds) {
-                const elapsedSeconds = (Date.now() - job.simulation_start) / 1000;
-                if (elapsedSeconds < job.total_duration_seconds) {
-                    // Resume simulation for this job
-                    currentScrapingJob = job;
-                    showCurrentScraping(job.url);
-                    simulateProgress();
-                    console.log(`🔄 Resumed simulation for job ${job.id}`);
-                    break; // Only resume one job at a time
-                }
-            }
         }
     }
     
