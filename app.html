@@ -2634,7 +2634,7 @@ async function fetchTotalCount() {
     if (!response.ok) throw new Error(`API error: ${response.status}`);
     const data = await response.json();
     // data is [count], so grab first element
-    const trueCount = Array.isArray(data) ? parseInt(data[0]) || 0 : 0;
+    const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
     resultsNumber.textContent       = trueCount;
     totalDisplayRecords.textContent = trueCount;
     return trueCount;
