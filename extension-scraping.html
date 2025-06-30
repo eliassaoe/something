@@ -947,38 +947,191 @@
         let progressInterval = null;
 
         // Check authentication on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!checkAuthentication()) {
-                return; // Will redirect to login
+document.addEventListener('DOMContentLoaded', function() {
+    if (!checkAuthentication()) {
+        return; // Will redirect to login
+    }
+    
+    loadUserData();
+    fetchUserCredits();
+    
+    // Nettoyer les jobs expirés
+    const cleanedCount = cleanupExpiredJobs();
+    if (cleanedCount > 0) {
+        console.log(`Cleaned up ${cleanedCount} expired jobs`);
+    }
+    
+    // Vérifier les jobs en attente
+    checkPendingJobs();
+    
+    // 🔥 NOUVELLE LOGIQUE : localStorage au lieu des paramètres URL
+    const pendingData = localStorage.getItem('unlimited_leads_pending_scraping');
+    
+    if (pendingData) {
+        try {
+            const scrapingData = JSON.parse(pendingData);
+            
+            // Vérifier que les données ne sont pas trop anciennes (5 minutes max)
+            const maxAge = 5 * 60 * 1000; // 5 minutes
+            if (Date.now() - scrapingData.timestamp > maxAge) {
+                console.log('❌ Scraping data too old, ignoring');
+                localStorage.removeItem('unlimited_leads_pending_scraping');
+            } else {
+                console.log('✅ Found pending scraping data from extension');
+                
+                // Supprimer les données pour éviter les doublons
+                localStorage.removeItem('unlimited_leads_pending_scraping');
+                
+                // 🔥 DÉMARRER LE SCRAPING avec les données de l'extension
+                scrapingUrl = scrapingData.url;
+                startNewScrapingWithData(scrapingData);
             }
-            
-            loadUserData();
-            fetchUserCredits();
-            
-            // Nettoyer les jobs expirés
-            const cleanedCount = cleanupExpiredJobs();
-            if (cleanedCount > 0) {
-                console.log(`Cleaned up ${cleanedCount} expired jobs`);
-            }
-            
-            // Vérifier les jobs en attente
-            checkPendingJobs();
-            
-            // Get scraping URL from query params
-            const urlParams = new URLSearchParams(window.location.search);
-            scrapingUrl = urlParams.get('page');
-            
-            // Load existing data
-            loadExportHistory();
-            updateStats();
-            
-            // If there's a page parameter, start new scraping
-            if (scrapingUrl) {
-                console.log('Starting scraping for URL:', scrapingUrl);
-                startNewScraping(decodeURIComponent(scrapingUrl));
-            }
-        });
+        } catch (error) {
+            console.error('❌ Error parsing pending scraping data:', error);
+            localStorage.removeItem('unlimited_leads_pending_scraping');
+        }
+    } else {
+        // 🔥 FALLBACK : Si pas de localStorage, vérifier les paramètres URL (pour compatibilité)
+        const urlParams = new URLSearchParams(window.location.search);
+        scrapingUrl = urlParams.get('page');
+        
+        if (scrapingUrl) {
+            console.log('📎 Found URL params (fallback), starting scraping for:', scrapingUrl);
+            startNewScraping(decodeURIComponent(scrapingUrl));
+        }
+    }
+    
+    // Load existing data
+    loadExportHistory();
+    updateStats();
+});
 
+    // 🔥 NOUVELLE FONCTION : Démarrer le scraping avec les données de l'extension
+async function startNewScrapingWithData(scrapingData) {
+    try {
+        const decodedUrl = scrapingData.url;
+        const platform = detectPlatform(decodedUrl);
+        const cookies = scrapingData.cookies; // 🔥 Cookies frais de l'extension !
+        
+        console.log('🚀 Starting scraping with extension data:', decodedUrl);
+        console.log('🔑 Platform detected:', platform);
+        console.log('🍪 Cookies received:', cookies.length);
+
+        // Vérifier si cette URL a déjà été scrapée (ton code existant)
+        const existingJobs = getAllJobs();
+        const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+
+        if (existingJob) {
+            console.log('URL already scraped, downloading existing file...');
+            showNotification('URL already scraped! Downloading existing file...', 'info');
+            downloadFile(existingJob.id);
+            return;
+        }
+        
+        // Create new job (ton code existant avec l'ID de l'extension)
+        const job = {
+            id: scrapingData.jobId, // 🔥 Utiliser l'ID de l'extension
+            url: decodedUrl,
+            platform: platform,
+            status: 'processing',
+            progress: 0,
+            records_found: null,
+            download_url: null,
+            started_at: new Date().toISOString(),
+            completed_at: null,
+            created_at: new Date().toISOString()
+        };
+        
+        // Save job (ton code existant)
+        saveJob(job);
+        currentScrapingJob = job;
+        
+        // Show scraping UI (ton code existant)
+        showCurrentScraping(decodedUrl);
+        
+        await fetchUserCredits(); 
+        simulateProgress();
+        
+        // 🔥 API call avec les cookies de l'extension
+        try {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            
+            const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
+            const requestBody = {
+                type: platform,
+                url: decodedUrl,
+                job_id: job.id,
+                user_id: userData.id,
+                cookies: cookies // 🔥 Cookies frais et complets de l'extension !
+            };
+            
+            console.log('📡 Sending API request with extension cookies:', requestBody);
+            
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
+            });
+            
+            if (response.ok) {
+                console.log('✅ API call successful');
+                
+                try {
+                    const responseData = await response.json();
+                    console.log('📊 Server response:', responseData);
+                    
+                    // Update job with response data
+                    if (responseData.success) {
+                        job.records_found = responseData.records_found || null;
+                        saveJob(job);
+                    }
+                } catch (jsonError) {
+                    console.log('Response not JSON, continuing with simulation');
+                }
+                
+                showNotification('Scraping started successfully!', 'success');
+            } else {
+                // Handle API error response (ton code existant)
+                try {
+                    const errorData = await response.json();
+                    
+                    // Check if it's a credits error
+                    if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
+                        showCreditsModal();
+                        return;
+                    }
+                } catch (parseError) {
+                    console.log('Could not parse error response');
+                }
+                
+                throw new Error(`API call failed: ${response.status}`);
+            }
+        } catch (apiError) {
+            console.log('API call failed, continuing with simulation:', apiError);
+            
+            // Check if error message mentions credits
+            if (apiError.message && apiError.message.toLowerCase().includes('credit')) {
+                showCreditsModal();
+                return;
+            }
+            
+            showNotification('Scraping started', 'warning');
+        }
+
+    } catch (error) {
+        console.error('❌ Error starting scraping with extension data:', error);
+        
+        // Check if error message mentions credits
+        if (error.message && error.message.toLowerCase().includes('credit')) {
+            showCreditsModal();
+            return;
+        }
+        
+        showNotification('Failed to start scraping job: ' + error.message, 'error');
+    }
+}
         function checkAuthentication() {
             const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
             const token = localStorage.getItem('unlimited_leads_token');
