@@ -961,37 +961,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`Cleaned up ${cleanedCount} expired jobs`);
     }
     
-    // Vérifier les jobs en attente
-    checkPendingJobs();
+   // 🔥 REMPLACE la section localStorage dans ta fonction DOMContentLoaded par :
+
+// Vérifier les jobs en attente
+checkPendingJobs();
+
+// 🔥 NOUVELLE LOGIQUE : Écouter les données de l'extension
+window.addEventListener('extensionScrapingData', (event) => {
+    const scrapingData = event.detail;
+    console.log('✅ Received scraping data from extension:', scrapingData);
     
-    // 🔥 NOUVELLE LOGIQUE : localStorage au lieu des paramètres URL
-    const pendingData = localStorage.getItem('unlimited_leads_pending_scraping');
-    
-    if (pendingData) {
-        try {
-            const scrapingData = JSON.parse(pendingData);
-            
-            // Vérifier que les données ne sont pas trop anciennes (5 minutes max)
-            const maxAge = 5 * 60 * 1000; // 5 minutes
-            if (Date.now() - scrapingData.timestamp > maxAge) {
-                console.log('❌ Scraping data too old, ignoring');
-                localStorage.removeItem('unlimited_leads_pending_scraping');
-            } else {
-                console.log('✅ Found pending scraping data from extension');
-                
-                // Supprimer les données pour éviter les doublons
-                localStorage.removeItem('unlimited_leads_pending_scraping');
-                
-                // 🔥 DÉMARRER LE SCRAPING avec les données de l'extension
-                scrapingUrl = scrapingData.url;
-                startNewScrapingWithData(scrapingData);
-            }
-        } catch (error) {
-            console.error('❌ Error parsing pending scraping data:', error);
-            localStorage.removeItem('unlimited_leads_pending_scraping');
-        }
+    // 🔥 DÉMARRER LE SCRAPING avec les données de l'extension
+    scrapingUrl = scrapingData.url;
+    startNewScrapingWithData(scrapingData);
+});
+
+// Alternative : Vérifier directement si l'extension est disponible
+setTimeout(() => {
+    if (window.getScrapingDataFromExtension) {
+        console.log('🔍 Extension detected, checking for data...');
+        window.getScrapingDataFromExtension();
     } else {
-        // 🔥 FALLBACK : Si pas de localStorage, vérifier les paramètres URL (pour compatibilité)
+        // 🔥 FALLBACK : Si pas d'extension, vérifier les paramètres URL
+        console.log('📎 No extension, checking URL params (fallback)');
         const urlParams = new URLSearchParams(window.location.search);
         scrapingUrl = urlParams.get('page');
         
@@ -1000,6 +992,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startNewScraping(decodeURIComponent(scrapingUrl));
         }
     }
+}, 100);
     
     // Load existing data
     loadExportHistory();
