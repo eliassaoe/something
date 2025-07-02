@@ -966,29 +966,32 @@ document.addEventListener('DOMContentLoaded', function() {
 // Vérifier les jobs en attente
 checkPendingJobs();
 
+let scrapingStarted = false;
+
 // 🔥 NOUVELLE LOGIQUE : Écouter les données de l'extension
 window.addEventListener('extensionScrapingData', (event) => {
+    if (scrapingStarted) return;
+    scrapingStarted = true;
+    
     const scrapingData = event.detail;
     console.log('✅ Received scraping data from extension:', scrapingData);
-    
-    // 🔥 DÉMARRER LE SCRAPING avec les données de l'extension
     scrapingUrl = scrapingData.url;
     startNewScrapingWithData(scrapingData);
 });
 
 // Alternative : Vérifier directement si l'extension est disponible
 setTimeout(() => {
+    if (scrapingStarted) return;
+    
     if (window.getScrapingDataFromExtension) {
         console.log('🔍 Extension detected, checking for data...');
         window.getScrapingDataFromExtension();
     } else {
-        // 🔥 FALLBACK : Si pas d'extension, vérifier les paramètres URL
-        console.log('📎 No extension, checking URL params (fallback)');
         const urlParams = new URLSearchParams(window.location.search);
         scrapingUrl = urlParams.get('page');
         
         if (scrapingUrl) {
-            console.log('📎 Found URL params (fallback), starting scraping for:', scrapingUrl);
+            scrapingStarted = true;
             startNewScraping(decodeURIComponent(scrapingUrl));
         }
     }
