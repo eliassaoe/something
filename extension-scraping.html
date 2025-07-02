@@ -987,13 +987,8 @@ setTimeout(() => {
         console.log('🔍 Extension detected, checking for data...');
         window.getScrapingDataFromExtension();
     } else {
-        const urlParams = new URLSearchParams(window.location.search);
-        scrapingUrl = urlParams.get('page');
-        
-        if (scrapingUrl) {
-            scrapingStarted = true;
-            startNewScraping(decodeURIComponent(scrapingUrl));
-        }
+        console.log('❌ Extension required for cookies');
+        // ✅ Ligne supprimée = plus de call API sans cookies
     }
 }, 100);
     
