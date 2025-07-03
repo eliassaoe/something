@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9fafb;
+        }
+        .container {
+            max-width: 480px;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #10B981;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            color: #111827;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #status {
+            color: #4b5563;
+            font-size: 16px;
+        }
+        .success-icon {
+            color: #10B981;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <h1>Payment Successful!</h1>
+        <div class="spinner" id="spinner"></div>
+        <div id="status">Processing...</div>
+    </div>
+    <script>
+        // Execute immediately 
+        (function() {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('id');
+            
+            if (!sessionId) {
+                document.getElementById('status').textContent = "Error: Missing session ID";
+                return;
+            }
+            
+            // Send to webhook
+            fetch('https://eliasse-n8n.onrender.com/webhook/upgraded', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    checkout_session_id: sessionId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').textContent = "Redirecting to your account...";
+                document.getElementById('spinner').style.display = 'none';
+                
+                // Redirect after short delay
+                setTimeout(function() {
+                    window.location.href = 'https://unlimited-leads.online/app';
+                }, 1500);
+            })
+            .catch(error => {
+                document.getElementById('status').textContent = "Error: " + error.message;
+                document.getElementById('spinner').style.display = 'none';
+            });
+        })();
+    </script>
+</body>
+</html>
