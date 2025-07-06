@@ -1022,7 +1022,61 @@
         .animate-pulse {
             animation: pulse 2s infinite ease-in-out;
         }
-    </style>
+        
+.leads-showcase {
+    max-width: 1200px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.leads-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.leads-image-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%; /* Ajusté pour le ratio de votre image */
+    overflow: hidden;
+}
+
+.leads-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.leads-description {
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid #f3f4f6;
+}
+
+.leads-description p {
+    margin: 0;
+    color: #4b5563;
+}
+
+@media (max-width: 768px) {
+    .leads-showcase {
+        margin: 1.5rem auto;
+    }
+    
+    .leads-description {
+        padding: 1rem;
+    }
+}
+</style>
 </head>
 <body>
     <!-- Limited-time offer banner -->
@@ -1081,63 +1135,6 @@
         </div>
     </section>
 
-      <!-- Styles pour l'image responsive (à placer dans votre feuille de style existante ou dans une balise style) -->
-<style>
-.leads-showcase {
-    max-width: 1200px;
-    width: 100%;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-.leads-card {
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-.leads-image-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 60%; /* Ajusté pour le ratio de votre image */
-    overflow: hidden;
-}
-
-.leads-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
-
-.leads-description {
-    padding: 1.5rem;
-    text-align: center;
-    border-top: 1px solid #f3f4f6;
-}
-
-.leads-description p {
-    margin: 0;
-    color: #4b5563;
-}
-
-@media (max-width: 768px) {
-    .leads-showcase {
-        margin: 1.5rem auto;
-    }
-    
-    .leads-description {
-        padding: 1rem;
-    }
-}
-</style>
-
     <div class="container">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold mb-4">A preview of your future leads</h2>
@@ -1195,8 +1192,8 @@
         <div class="pricing-card">
             <div class="savings-badge">Great Value</div>
             <h3>Starter Plan</h3>
-            <span class="pricing-amount">$25<small>/month</small></span>
-            <p class="pricing-description">Billed annually ($299/year)</p>
+            <span class="pricing-amount">$39<small>/month</small></span>
+            <p class="pricing-description">Billed quarterly ($99 every 3 months)</p>
             <p class="pricing-description">Perfect for growing businesses that need reliable, verified B2B contacts to scale their outreach efforts.</p>
             <ul class="pricing-features">
                 <li><span class="leads-count">60,000 leads annually</span> (5,000/month)</li>
@@ -1214,8 +1211,8 @@
             <div class="featured-badge">BEST VALUE</div>
             <div class="savings-badge">Most Popular</div>
             <h3>Premium Plan</h3>
-            <span class="pricing-amount">$38<small>/month</small></span>
-            <p class="pricing-description">Billed annually ($458/year)</p>
+            <span class="pricing-amount">$59<small>/month</small></span>
+            <p class="pricing-description">Billed quarterly ($159 every 3 months)</p>
             <p class="pricing-description">Ideal for sales teams and agencies that need maximum lead volume with premium features and priority support.</p>
             <ul class="pricing-features">
                 <li><span class="leads-count">120,000 leads annually</span> (10,000/month)</li>
