@@ -751,6 +751,60 @@
             margin-bottom: 1rem;
         }
         
+        /* Billing Toggle Styles */
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: var(--gray-100);
+            padding: 0.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            margin-bottom: 2rem;
+        }
+        .billing-option {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .billing-option.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        .billing-option:not(.active) {
+            color: var(--gray-600);
+        }
+        .billing-option:not(.active):hover {
+            color: var(--primary);
+        }
+        .savings-indicator {
+            background: var(--success);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 100px;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+        .billing-option.active .savings-indicator {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Price Animation */
+        .pricing-amount {
+            transition: all 0.3s ease;
+        }
+        .competitor-comparison {
+            transition: all 0.3s ease;
+        }
+
         /* Responsive styles */
         @media (max-width: 992px) {
             .header-content { 
@@ -816,6 +870,11 @@
     </style>
 </head>
 <body>
+    <!-- Limited offer banner -->
+    <div class="limited-offer">
+        Professional B2B lead generation - Get 1,000 free leads to start
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container header-content">
@@ -836,13 +895,24 @@
 
     <!-- Pricing Section -->
     <section id="pricing" class="container">
+        <!-- Billing Toggle -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <div class="billing-toggle">
+                <span class="billing-option" id="quarterly-toggle">Quarterly</span>
+                <div class="toggle-switch" id="billing-switch">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span class="billing-option" id="annual-toggle">Annual <span class="savings-indicator">Save 25%</span></span>
+            </div>
+        </div>
+
         <div class="pricing-grid">
             <div class="pricing-card">
                 <div class="savings-badge">Great Value</div>
                 <h3>Starter Plan</h3>
-                <span class="pricing-amount">$25<small>/month</small></span>
-                <div class="competitor-comparison">
-                    Billed annually ($299/year)
+                <span class="pricing-amount" id="starter-price">$39<small>/month</small></span>
+                <div class="competitor-comparison" id="starter-billing">
+                    Billed quarterly ($99 every 3 months)
                 </div>
                 <p class="pricing-description">Perfect for growing businesses that need reliable, verified B2B contacts to scale their outreach efforts.</p>
                 <ul class="pricing-features">
@@ -861,9 +931,9 @@
                 <div class="featured-badge">BEST VALUE</div>
                 <div class="savings-badge">Most Popular</div>
                 <h3>Premium Plan</h3>
-                <span class="pricing-amount">$38<small>/month</small></span>
-                <div class="competitor-comparison">
-                    Billed annually ($458/year)
+                <span class="pricing-amount" id="premium-price">$59<small>/month</small></span>
+                <div class="competitor-comparison" id="premium-billing">
+                    Billed quarterly ($159 every 3 months)
                 </div>
                 <p class="pricing-description">Ideal for sales teams and agencies that need maximum lead volume with premium features and priority support.</p>
                 <ul class="pricing-features">
@@ -885,7 +955,7 @@
         <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--gray-50); border-radius: var(--border-radius-lg);">
             <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need More Than 120K Leads?</h3>
             <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Custom enterprise plans available for high-volume users</p>
-            <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Request a Custom Plan</a>
+            <a href="mailto:contact@unlimitedleads.com" class="btn btn-secondary">Book a Call</a>
         </div>
     </section>
 
@@ -900,10 +970,10 @@
                     <thead>
                         <tr>
                             <th>Feature</th>
-                            <th class="plan-column">Starter Plan<br>$25/month</th>
+                            <th class="plan-column">Starter Plan<br><span id="table-starter-price">$39/month</span></th>
                             <th class="plan-column highlight-cell">
                                 <span class="recommended-badge">BEST VALUE</span>
-                                Premium Plan<br>$38/month
+                                Premium Plan<br><span id="table-premium-price">$59/month</span>
                             </th>
                         </tr>
                     </thead>
@@ -950,8 +1020,8 @@
                         </tr>
                         <tr>
                             <td>Billing</td>
-                            <td class="text-center">Annual ($299/year)</td>
-                            <td class="text-center">Annual ($458/year)</td>
+                            <td class="text-center"><span id="table-starter-billing">Quarterly ($99)</span></td>
+                            <td class="text-center"><span id="table-premium-billing">Quarterly ($159)</span></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -1058,9 +1128,16 @@
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question">Do you offer monthly billing?</div>
+                    <div class="faq-question">What's the difference between quarterly and annual billing?</div>
                     <div class="faq-answer">
-                        <p>We only offer annual billing, which allows us to provide better value and lower prices. This also ensures you have consistent access to leads throughout the year for planning purposes.</p>
+                        <p>Quarterly billing charges you every 3 months ($99 for Starter, $159 for Premium), while annual billing offers a 25% discount with one upfront payment ($299 for Starter, $458 for Premium). Choose quarterly for lower upfront costs or annual for maximum savings.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I switch between quarterly and annual billing?</div>
+                    <div class="faq-answer">
+                        <p>Yes! You can upgrade to annual billing at any time to take advantage of the discount. Contact our support team and we'll help you make the transition and apply the appropriate credit.</p>
                     </div>
                 </div>
                 
@@ -1202,6 +1279,74 @@
             
             // Make token available globally
             window.token = token;
+
+            // Pricing Toggle Functionality
+            const quarterlyToggle = document.getElementById('quarterly-toggle');
+            const annualToggle = document.getElementById('annual-toggle');
+            const starterPrice = document.getElementById('starter-price');
+            const premiumPrice = document.getElementById('premium-price');
+            const starterBilling = document.getElementById('starter-billing');
+            const premiumBilling = document.getElementById('premium-billing');
+
+            // Pricing data
+            const pricingData = {
+                quarterly: {
+                    starter: { price: '$39', billing: 'Billed quarterly ($99 every 3 months)' },
+                    premium: { price: '$59', billing: 'Billed quarterly ($159 every 3 months)' }
+                },
+                annual: {
+                    starter: { price: '$25', billing: 'Billed annually ($299/year)' },
+                    premium: { price: '$38', billing: 'Billed annually ($458/year)' }
+                }
+            };
+
+            // Set initial state (quarterly)
+            quarterlyToggle.classList.add('active');
+            
+            // Toggle event listeners
+            quarterlyToggle.addEventListener('click', function() {
+                if (!this.classList.contains('active')) {
+                    switchToQuarterly();
+                }
+            });
+
+            annualToggle.addEventListener('click', function() {
+                if (!this.classList.contains('active')) {
+                    switchToAnnual();
+                }
+            });
+
+            function switchToQuarterly() {
+                quarterlyToggle.classList.add('active');
+                annualToggle.classList.remove('active');
+                
+                starterPrice.innerHTML = pricingData.quarterly.starter.price + '<small>/month</small>';
+                premiumPrice.innerHTML = pricingData.quarterly.premium.price + '<small>/month</small>';
+                starterBilling.textContent = pricingData.quarterly.starter.billing;
+                premiumBilling.textContent = pricingData.quarterly.premium.billing;
+                
+                // Update comparison table
+                document.getElementById('table-starter-price').textContent = '$39/month';
+                document.getElementById('table-premium-price').textContent = '$59/month';
+                document.getElementById('table-starter-billing').textContent = 'Quarterly ($99)';
+                document.getElementById('table-premium-billing').textContent = 'Quarterly ($159)';
+            }
+
+            function switchToAnnual() {
+                annualToggle.classList.add('active');
+                quarterlyToggle.classList.remove('active');
+                
+                starterPrice.innerHTML = pricingData.annual.starter.price + '<small>/month</small>';
+                premiumPrice.innerHTML = pricingData.annual.premium.price + '<small>/month</small>';
+                starterBilling.textContent = pricingData.annual.starter.billing;
+                premiumBilling.textContent = pricingData.annual.premium.billing;
+                
+                // Update comparison table
+                document.getElementById('table-starter-price').textContent = '$25/month';
+                document.getElementById('table-premium-price').textContent = '$38/month';
+                document.getElementById('table-starter-billing').textContent = 'Annual ($299)';
+                document.getElementById('table-premium-billing').textContent = 'Annual ($458)';
+            }
             
             // FAQ Toggle
             const faqQuestions = document.querySelectorAll('.faq-question');
