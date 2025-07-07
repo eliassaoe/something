@@ -2310,7 +2310,7 @@ async function exportToCSV() {
                         showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
                         
                         // Show the confirmation modal
-                        showExportConfirmation("your contacts");
+                        showExportConfirmation("your contacts", url);
                         
                         return; // Exit early - we've handled the CSV response
                     }
@@ -2409,24 +2409,32 @@ async function exportToCSV() {
 }
 
 // Function to show export confirmation modal
-function showExportConfirmation(recordCount) {
+function showExportConfirmation(recordCount, blobUrl = null) {
     const confirmationModal = document.getElementById('exportConfirmationModal');
+    
+    // Create download button only if we have a blob URL
+    let downloadButton = '';
+    if (blobUrl) {
+        downloadButton = `
+        <div style="margin-top: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 6px;">
+            <p style="margin-bottom: 8px; color: #6c757d; font-size: 13px;">
+                <i class="fas fa-info-circle"></i> If download didn't start:
+            </p>
+            <a href="${blobUrl}" download="contacts_export_${new Date().toISOString().slice(0,10)}.csv" 
+               class="search-button" style="font-size: 13px; padding: 8px 16px; text-decoration: none; display: inline-block;">
+                <i class="fas fa-download"></i> Click to Download
+            </a>
+        </div>`;
+    }
     
     // Update the confirmation message
     const infoValue = confirmationModal.querySelector('.info-value');
     if (infoValue) {
         infoValue.innerHTML = `
-    <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
-    <p>Your leads have been exported successfully.</p>
-    <div style="margin-top: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 6px;">
-        <p style="margin-bottom: 8px; color: #6c757d; font-size: 13px;">
-            <i class="fas fa-info-circle"></i> If download didn't start:
-        </p>
-        <button onclick="downloadCSV(lastExportData)" class="search-button" style="font-size: 13px; padding: 8px 16px;">
-            <i class="fas fa-download"></i> Click to Download
-        </button>
-    </div>
-`;
+            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
+            <p>Your leads have been exported successfully.</p>
+            ${downloadButton}
+        `;
         infoValue.style.textAlign = 'center';
     }
     
@@ -2438,6 +2446,10 @@ function showExportConfirmation(recordCount) {
     closeConfirmBtn.parentNode.replaceChild(newCloseConfirmBtn, closeConfirmBtn);
     newCloseConfirmBtn.addEventListener('click', () => {
         confirmationModal.style.display = 'none';
+        // Clean up blob URL if it exists
+        if (blobUrl && blobUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(blobUrl);
+        }
     });
     
     // Set up "Got it" button
@@ -2446,9 +2458,12 @@ function showExportConfirmation(recordCount) {
     closeConfirmationBtn.parentNode.replaceChild(newCloseConfirmationBtn, closeConfirmationBtn);
     newCloseConfirmationBtn.addEventListener('click', () => {
         confirmationModal.style.display = 'none';
+        // Clean up blob URL if it exists
+        if (blobUrl && blobUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(blobUrl);
+        }
     });
 }
-
 function downloadCSV(data) {
     if (!Array.isArray(data) || data.length === 0) {
         console.warn("No data to export");
