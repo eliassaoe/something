@@ -219,8 +219,6 @@
 
     .menu-item {
         padding: 0;
-        /* FIXED: Make menu items equal width like in lead finder */
-        flex: 1;
     }
 
     .menu-link {
@@ -232,9 +230,6 @@
         transition: var(--transition-standard);
         font-size: 14px;
         position: relative;
-        /* FIXED: Center the text in menu items */
-        text-align: center;
-        width: 100%;
     }
 
     .menu-link:hover {
@@ -325,14 +320,12 @@
         display: block;
     }
 
-    /* File Upload Styles - FIXED: Reduced width */
+    /* File Upload Styles */
     .file-upload {
         position: relative;
         display: inline-block;
         width: 100%;
         margin-bottom: 15px;
-        /* FIXED: Max width to match lead finder form elements */
-        max-width: 600px;
     }
 
     .file-upload-label {
@@ -341,8 +334,7 @@
         justify-content: center;
         border: 2px dashed var(--gray-300);
         border-radius: var(--radius-lg);
-        /* FIXED: Reduced padding to match lead finder */
-        padding: 40px 20px;
+        padding: 50px 20px;
         text-align: center;
         cursor: pointer;
         transition: var(--transition-standard);
@@ -356,8 +348,7 @@
     }
 
     .file-upload-label i {
-        /* FIXED: Reduced icon size */
-        font-size: 36px;
+        font-size: 48px;
         margin-bottom: 15px;
         color: var(--primary);
     }
@@ -366,8 +357,7 @@
         display: block;
         font-weight: 600;
         margin-bottom: 8px;
-        /* FIXED: Reduced font size */
-        font-size: 15px;
+        font-size: 16px;
         color: var(--gray-800);
     }
 
@@ -414,9 +404,8 @@
         cursor: pointer;
         transition: var(--transition-standard);
         margin-top: 10px;
-        /* FIXED: Reduced max width and center aligned like lead finder */
         width: 100%;
-        max-width: 200px;
+        max-width: 300px;
         align-self: center;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         display: flex;
