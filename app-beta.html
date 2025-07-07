@@ -1332,6 +1332,11 @@ header {
                 <i class="fas fa-search"></i> Search Leads
             </a>
         </li>
+        <li class="menu-item">
+            <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
+                <i class="fas fa-rocket"></i> Scrapper Linkedin sales navigator
+            </a>
+        </li>
     </ul>
 </div>
 
@@ -1342,50 +1347,39 @@ header {
     <div id="searchAlert" class="alert"></div>
 
     <div class="info-box">
-         <p><strong>How it works:</strong> Search for contacts using our filters. Your leads will delivered to you by <strong>EMAIL. Check your INBOX and spam folder !</strong></p>
+         <p><strong>How it works:</strong> Search for contacts using our filters. Then export them with the Export to CSV button</p>
     </div>
     
     <form id="searchForm" class="search-form">
         <div class="form-group">
-            <label for="country">Country</label>
+            <label for="country">Country (required)</label>
             <select id="country" name="country">
-                <option value="">All Countries</option>
-                <option value="Switzerland">Switzerland</option>
-                <option value="Belgium">Belgium</option>
+                <option value="United States">Select a country</option>
                 <option value="Canada">Canada</option>
                 <option value="France">France</option>
                 <option value="India">India</option>
                 <option value="United Kingdom">United Kingdom</option>
                 <option value="United States">United States</option>
                 <option value="Germany">Germany</option>
-                <option value="South Africa">South Africa</option>
                 <option value="Australia">Australia</option>
                 <option value="Netherlands">Netherlands</option>
                 <option value="Italy">Italy</option>
                 <option value="Spain">Spain</option>
-                <option value="United Arab Emirates">United Arab Emirates</option>
-                <option value="United Arab Emirates">Saudi Arabia</option>
                 <!-- Add more countries as needed -->
             </select>
         </div>
 
-        <div class="form-group">
-                <label for="companySize">Company Size:</label>
-                <select id="companySize" name="companySize">
-                    <option value="">Select company size</option>
-                    <option value="Solo Entrepreneur">Solo Entrepreneur</option>
-                    <option value="Small Team">Small Team</option>
-                    <option value="Emerging Business">Emerging Business</option>
-                    <option value="Small Enterprise">Small Enterprise</option>
-                    <option value="Medium Enterprise">Medium Enterprise</option>
-                    <option value="Established Company">Established Company</option>
-                    <option value="Large Company">Large Company</option>
-                    <option value="Major Enterprise">Major Enterprise</option>
-                    <option value="Leading Organization">Leading Organization</option>
-                    <option value="Corporate Giant">Corporate Giant</option>
-                    <option value="Global Corporation">Global Corporation</option>
-                </select>
-            </div>
+       <div class="form-group">
+    <label for="companySize">Company Size:</label>
+    <select id="companySize" name="companySize">
+        <option value="">Select company size</option>
+        <option value="1-25">1-25</option>
+        <option value="26-50">26-50</option>
+        <option value="51-250">51-250</option>
+        <option value="251-1000">251-1000</option>
+        <option value="1000+">1000+</option>
+    </select>
+</div>
                 
         <div class="form-group">
     <label for="industry">Industry</label>
@@ -1474,7 +1468,7 @@ header {
 
          <div class="form-group">
                 <label for="jobTitle">Job Title:</label>
-                <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g Ceo">
+                <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g ceo,cto,founder">
             </div>
                 
         <div class="form-group">
@@ -1483,8 +1477,8 @@ header {
         </div>
                 
         <div class="form-group">
-            <label for="keywords">One Keyword</label>
-            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS">
+            <label for="keywords">Keywords</label>
+            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech">
         </div>
                 
         <div class="form-group">
@@ -1637,19 +1631,13 @@ header {
         <div class="modal-body">
             <div class="info-item">
                 <div class="info-value">
-                   <p>Are you sure you want to export this list of leads? This will use credits from your account. Your verified contact list will be sent to your <strong>email</strong> within 3 hours.</p>
+                   <p>Are you sure you want to export this list of leads? This will use credits from your account. </p>
                 </div>
             </div>
             
             <div class="form-group" style="margin-top: 20px;">
                 <label for="exportLimit"><strong>Number of leads to export:</strong></label>
                 <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
-            </div>
-            
-            <!-- Add the verification checkbox here -->
-            <div class="form-group" style="margin-top: 15px; display: flex; align-items: center;">
-                <input type="checkbox" id="verifyBeforeExport" name="verifyBeforeExport" style="margin-right: 10px; width: 18px; height: 18px;">
-                <label for="verifyBeforeExport"><strong>Verify the list before exporting</strong></label>
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
@@ -1674,8 +1662,7 @@ header {
             <div class="info-item" style="text-align: center;">
                 <div class="info-value">
                     <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully!</strong></p>
-                    <p>The contact list will be delivered to your Inbox in the coming minutes.</p>
-                    <p style="color: #2a6; margin-top: 15px;"><i class="fas fa-envelope"></i> Please check your inbox and spam folder.</p>
+                    <p>The contact list will be downloaded in the coming minutes.</p>
                 </div>
             </div>
             
@@ -1974,7 +1961,7 @@ document.addEventListener('DOMContentLoaded', function() {
 token_verif();
 
         
-       // Correction de la fonction displayInitialResults pour afficher correctement les données
+// Fonction corrigée pour afficher les résultats initiaux
 function displayInitialResults() {
     // Show results section
     resultsSection.style.display = 'block';
@@ -1982,13 +1969,15 @@ function displayInitialResults() {
     // Clear existing results
     resultsBody.innerHTML = '';
     
-    // Show or hide no results message - don't calculate count here
+    // Show or hide no results message
     if (allContacts.length === 0) {
         noResults.style.display = 'block';
         resultsTable.style.display = 'none';
+        resultsNumber.textContent = '0';
+        totalDisplayRecords.textContent = '0';
         startRecord.textContent = '0';
         endRecord.textContent = '0';
-        // Don't update count displays here - let fetchTotalCount handle this
+        globalTrueCount = 0;
         return;
     } else {
         noResults.style.display = 'none';
@@ -1998,23 +1987,21 @@ function displayInitialResults() {
     // Display only the first 25 contacts
     const displayContacts = allContacts.slice(0, 25);
     
-    // Update pagination info for records shown, but NOT the count
+    // Update pagination info
     startRecord.textContent = '1';
     endRecord.textContent = displayContacts.length;
-    // Don't update totalDisplayRecords here - let fetchTotalCount do it
     
-    // Populate the table with contacts
+    // Populate the table with contacts - UTILISER LES BONS NOMS DE PROPRIÉTÉS
     displayContacts.forEach(contact => {
         const row = document.createElement('tr');
         
-        // D'après votre échantillon de données, les noms des colonnes sont "first name", "last name", "title", "company"
-        // (au lieu de "job title" et "company name")
+        // Utiliser les noms corrects basés sur votre JSON
         row.innerHTML = `
-            <td>${contact['first name'] || ''} ${contact['last name'] || ''}</td>
-            <td>${contact['title'] || 'N/A'}</td>
-            <td>${contact['company'] || 'N/A'}</td>
-            <td>${contact['email'] || 'N/A'}</td>
-            <td>${contact['country'] || 'N/A'}</td>
+            <td>${contact.name || 'N/A'}</td>
+            <td>${contact.title || 'N/A'}</td>
+            <td>${contact.company || 'N/A'}</td>
+            <td>${contact.email || 'N/A'}</td>
+            <td>${contact.country || 'N/A'}</td>
             <td>
                 <div class="action-icons">
                     <i class="fas fa-eye" title="View Details"></i>
@@ -2032,24 +2019,31 @@ function displayInitialResults() {
     });
 }
 
-// Correction de la fonction showContactDetails pour afficher correctement les données
+// Fonction corrigée pour afficher les détails du contact
 function showContactDetails(contact) {
-    // Fill in modal details
-    document.getElementById('modalName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-    document.getElementById('modalFullName').textContent = `${contact['first name'] || ''} ${contact['last name'] || ''}`;
-    document.getElementById('modalTitle').textContent = contact['title'] || 'N/A';
-    document.getElementById('modalManagementLevel').textContent = contact['managementlevel'] || 'N/A';
-    document.getElementById('modalEmail').textContent = contact['email'] || 'N/A';
-    document.getElementById('modalPhone').textContent = contact['phone'] || 'N/A';
-    document.getElementById('modalLinkedIn').textContent = contact['linkedin'] || 'N/A';
-    document.getElementById('modalLocation').textContent = contact['city'] || contact['country'] || 'N/A';
+    console.log("Contact data received:", contact); // Pour débugger
     
-    document.getElementById('modalCompany').textContent = contact['company'] || 'N/A';
-    document.getElementById('modalIndustry').textContent = contact['industry'] || 'N/A';
-    document.getElementById('modalCompanySize').textContent = contact['companysize'] || 'N/A';
-    document.getElementById('modalWebsite').textContent = contact['website'] || 'N/A';
-    document.getElementById('modalCompanyPhone').textContent = contact['cphone'] || 'N/A';
-    document.getElementById('modalDescription').textContent = contact['description'] || 'N/A';
+    // Contact Information
+    document.getElementById('modalName').textContent = contact.name || 'N/A';
+    document.getElementById('modalFullName').textContent = contact.name || 'N/A';
+    document.getElementById('modalTitle').textContent = contact.title || 'N/A';
+    document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
+    document.getElementById('modalEmail').textContent = contact.email || 'N/A';
+    document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
+    document.getElementById('modalLinkedIn').textContent = contact.linkedin || 'N/A';
+    
+    // Location - combinaison de city, state, country
+    const locationParts = [contact.city, contact.state, contact.country].filter(part => part && part.trim() !== '');
+    const location = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
+    document.getElementById('modalLocation').textContent = location;
+    
+    // Company Information
+    document.getElementById('modalCompany').textContent = contact.company || 'N/A';
+    document.getElementById('modalIndustry').textContent = contact.industry || 'N/A';
+    document.getElementById('modalCompanySize').textContent = contact.employees || 'N/A';
+    document.getElementById('modalWebsite').textContent = contact.website || 'N/A';
+    document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'N/A';
+    document.getElementById('modalDescription').textContent = contact.description || 'N/A';
     
     // Show the modal
     contactModal.style.display = 'block';
@@ -2160,13 +2154,12 @@ async function handleSearch(e) {
 const EXPORT_WEBHOOK_URL = 'https://export.hamoureliasse.workers.dev/export';
 
 async function exportToCSV() {
-    
     try {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
 
-        document.getElementById('exportLimit').value = globalTrueCount;
+        document.getElementById('exportLimit').value = Math.min(globalTrueCount, 1000);
         
         // Add event listener for the close button
         const closeExportModal = document.querySelector('.close-export-modal');
@@ -2184,15 +2177,13 @@ async function exportToCSV() {
         // Add event listener to the new button
         newConfirmExportBtn.addEventListener('click', async () => {
             try {
-                
                 // Hide the export modal
                 exportModal.style.display = 'none';
                 
                 // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
                 
-                // NEW: Get the verification checkbox status
-                const verifyBeforeExport = document.getElementById('verifyBeforeExport').checked;
+                // REMOVED: verification checkbox logic
                 
                 // Calculate estimated wait time based on number of records
                 const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
@@ -2215,12 +2206,12 @@ async function exportToCSV() {
     <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
     
     <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
-        ${verifyBeforeExport ? 'Verifying and preparing your export...' : 'Preparing your export...'}
+        Preparing your export...
     </p>
     
     <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
-        This may take up to <strong>${verifyBeforeExport ? '10' : '5'} minutes</strong>. 
-        Keep this page open and check your inbox when complete.
+        This may take up to <strong>5 minutes</strong>. 
+        Keep this page open.
     </p>
     
     <div id="exportTimer" style="font-size: 14px; color: var(--gray-700);">
@@ -2238,8 +2229,8 @@ async function exportToCSV() {
                     limit: exportLimit,
                     token: userToken,
                     totalCount: currentCount,
-                    // NEW: Add verification type to the request
-                    type: verifyBeforeExport ? 'verify' : 'unverified',
+                    // REMOVED: verification type - always use 'unverified'
+                    type: 'unverified',
                     searchParams: {
                         country: countrySelect.value,
                         industry: industrySelect.value,
@@ -2278,70 +2269,68 @@ async function exportToCSV() {
                         throw new Error(`API error: ${response.status} ${response.statusText}`);
                     }
 
-                         // Check for CSV content type
-                   const contentType = response.headers.get('content-type');
+                    // Check for CSV content type
+                    const contentType = response.headers.get('content-type');
 
-                       if (contentType && contentType.includes('text/csv')) {
-    // It's a CSV file - handle direct download
-                          const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-        a.style.display = 'none';
-    a.href = url;
-    
-    // Get filename from Content-Disposition header if available
-    const contentDisposition = response.headers.get('content-disposition');
-    let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
-    if (contentDisposition) {
-        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
-        if (filenameMatch) filename = filenameMatch[1];
-    }
-    
-    a.download = filename;
-    document.body.appendChild(a);
-    
-    // MODIFIED: Add console logging
-    console.log("Starting CSV download with blob size:", blob.size);
-    console.log("Download URL:", url);
-    console.log("Download filename:", filename);
-    
-    // MODIFIED: Force a small delay before clicking
-    setTimeout(() => {
-        a.click();
-        console.log("Download click triggered");
-        
-        // MODIFIED: Add a longer delay before cleanup
-        setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            console.log("Download link cleaned up");
-        }, 1000); // Wait 1 second before cleanup
-    }, 100); // Wait 100ms before triggering click
-    
-    // Show success message
-    showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
-    
-    // Show the confirmation modal
-    showExportConfirmation("your contacts");
-    
-    return; // Exit early - we've handled the CSV response
-}
- 
+                    if (contentType && contentType.includes('text/csv')) {
+                        // It's a CSV file - handle direct download
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        
+                        // Get filename from Content-Disposition header if available
+                        const contentDisposition = response.headers.get('content-disposition');
+                        let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+                        if (contentDisposition) {
+                            const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                            if (filenameMatch) filename = filenameMatch[1];
+                        }
+                        
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        
+                        console.log("Starting CSV download with blob size:", blob.size);
+                        console.log("Download URL:", url);
+                        console.log("Download filename:", filename);
+                        
+                        setTimeout(() => {
+                            a.click();
+                            console.log("Download click triggered");
+                            
+                            setTimeout(() => {
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                                console.log("Download link cleaned up");
+                            }, 1000);
+                        }, 100);
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation("your contacts");
+                        
+                        return; // Exit early - we've handled the CSV response
+                    }
+                    
                     console.log("Received response from export webhook, parsing JSON...");
                     
                     // Parse the response as JSON
                     const responseData = await response.json();
 
-                     console.log("Parsed JSON response:", responseData);
+                    console.log("Parsed JSON response:", responseData);
                     
-if (responseData && responseData.code === 403) {
+                    if (responseData && responseData.code === 403) {
                         // Handle insufficient credits error
                         console.log("*** INSUFFICIENT CREDITS DETECTED ***");
                         showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
                         showCreditUpgradeModal();
                         return;
                     }
-if (Array.isArray(responseData) && responseData.length > 0) {
+                    
+                    if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
                         downloadCSV(responseData);
                         
@@ -2358,13 +2347,13 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                         // Show the confirmation modal
                         showExportConfirmation(responseData.length);
                     } else {
-    // Handle unexpected response format - show success message
-    console.warn("Unexpected response format:", responseData);
-    showAlert("Export completed! Check your inbox and spam folder - your leads will arrive very soon.", 'success');
-    
-    // Also show the confirmation modal
-    showExportConfirmation("your leads");
-}
+                        // Handle unexpected response format - show success message
+                        console.warn("Unexpected response format:", responseData);
+                        showAlert("Export completed!", 'success');
+                        
+                        // Also show the confirmation modal
+                        showExportConfirmation("your leads");
+                    }
                 } catch (error) {
                     console.error("Export fetch error:", error);
                     
@@ -2380,7 +2369,9 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                 showAlert(`Error processing export: ${generalError.message}`, 'error');
             } finally {
                 // Stop any running timers
-                clearInterval(timerInterval);
+                if (typeof timerInterval !== 'undefined') {
+                    clearInterval(timerInterval);
+                }
                 if (typeof secondsInterval !== 'undefined') {
                     clearInterval(secondsInterval);
                 }
@@ -2396,7 +2387,9 @@ if (Array.isArray(responseData) && responseData.length > 0) {
                 loading.style.display = 'none';
                 
                 // Reset the export flag and button state
-                isExporting = false;
+                if (typeof isExporting !== 'undefined') {
+                    isExporting = false;
+                }
                 newConfirmExportBtn.disabled = false;
                 newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
             }
@@ -2423,12 +2416,18 @@ function showExportConfirmation(recordCount) {
     const infoValue = confirmationModal.querySelector('.info-value');
     if (infoValue) {
         infoValue.innerHTML = `
-            <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are being verified !</strong></p>
-            <p>You will receive your verified leads in your Inbox in 10-15 minutes </p>
-            <p style="margin-top: 10px;">Check your Inbox and your Spam folder to find your lead list</p>
-        `;
-
-         infoValue.style.textAlign = 'center';
+    <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
+    <p>Your leads have been exported successfully.</p>
+    <div style="margin-top: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 6px;">
+        <p style="margin-bottom: 8px; color: #6c757d; font-size: 13px;">
+            <i class="fas fa-info-circle"></i> If download didn't start:
+        </p>
+        <button onclick="downloadCSV(lastExportData)" class="search-button" style="font-size: 13px; padding: 8px 16px;">
+            <i class="fas fa-download"></i> Click to Download
+        </button>
+    </div>
+`;
+        infoValue.style.textAlign = 'center';
     }
     
     confirmationModal.style.display = 'block';
@@ -2531,7 +2530,7 @@ function downloadCSV(data) {
             } catch (mobileError) {
                 console.error('Mobile download failed:', mobileError);
                 // Show user-friendly message for mobile
-                showAlert('Download prepared! If file didn\'t download automatically, you\'ll receive it via email.', 'warning');
+                showAlert('Download prepared!', 'warning');
             }
             
         } else {
@@ -2643,7 +2642,7 @@ async function fetchTotalCount() {
     if (!response.ok) throw new Error(`API error: ${response.status}`);
     const data = await response.json();
     // data is [count], so grab first element
-    const trueCount = Array.isArray(data) && typeof data[0] === 'number' ? data[0] : 0;
+    const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
     resultsNumber.textContent       = trueCount;
     totalDisplayRecords.textContent = trueCount;
     return trueCount;
