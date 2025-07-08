@@ -1,976 +1,1028 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Accédez à notre base de données de prospects B2B en illimité | unlimitedleads</title>
-     <meta name="description" content="Accès illimité à notre base de données de prospects B2B : exportez vos leads B2B sans restriction. Définissez vos critères et recevez instantanément vos prospects qualifiés">
-    
-    <!-- Preconnect pour les domaines externes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnlimitedLeads | Unlimited B2B contacts & Email Verification</title>
+    <meta name="description" content="UnlimitedLeads - Access 100M+ verified B2B contacts. Join now for 1,000 free leads!" />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" />
 
-
-     <!-- Open Graph Tags -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://unlimited-leads.online/" />
-<meta property="og:title" content="Accédez à notre base de données de leads linkedin en illimité | unlimitedleads" />
-<meta property="og:description" content="Accès illimité à notre base LinkedIn : exportez vos leads B2B sans restriction. Définissez vos critères et recevez instantanément vos prospects qualifiés" />
-<meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
-
-<!-- Twitter Card Tags -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content="https://unlimited-leads.online/" />
-<meta name="twitter:title" content="Accédez à notre base de données de leads linkedin en illimité | unlimitedleads" />
-<meta name="twitter:description" content="Accès illimité à notre base LinkedIn : exportez vos leads B2B sans restriction. Définissez vos critères et recevez instantanément vos prospects qualifiés" />
-<meta name="twitter:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
-
-    <!-- CSS critique inline pour le rendu initial -->
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-600: #4b5563;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-        }
-        * {margin: 0; padding: 0; box-sizing: border-box;}
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.5;
-        }
-        .container {width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;}
-        .hero {
-            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01));
-            padding: 4rem 0 2rem;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), #0ea5e9);
-        }
-        .text-center {text-align: center;}
-        .mb-4 {margin-bottom: 1rem;}
-        .mb-8 {margin-bottom: 2rem;}
-        h1 {
-            color: var(--gray-900);
-            font-weight: 700;
-            line-height: 1.2;
-            font-size: 2.25rem;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary), #0ea5e9);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-        .badge {
-            display: inline-block;
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 600;
-            line-height: 1;
-            color: white;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.375rem;
-            background-color: var(--primary);
-        }
-        .section {padding: 3rem 0;}
-        p {color: var(--gray-600);}
-    </style>
-    
-    <!-- Chargement asynchrone des polices avec font-display: swap -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    
-    <!-- CSS non critique chargé de façon asynchrone -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    
-    <!-- Fallback en cas de JavaScript désactivé -->
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    </noscript>
-    
-    <!-- CSS complet optimisé avec réduction des calculs complexes -->
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-light: #818cf8;
-            --primary-dark: #4338ca;
-            --primary-50: #eef2ff;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
             --secondary: #0ea5e9;
+            --secondary-dark: #0284c7;
+            --accent: #0d9488;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
             --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
             --gray-600: #4b5563;
             --gray-700: #374151;
             --gray-800: #1f2937;
             --gray-900: #111827;
             --success: #10b981;
-            --warning: #f59e0b;
             --danger: #ef4444;
+            --warning: #f59e0b;
+            --border-radius: 0.5rem;
+            --border-radius-lg: 1rem;
+            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --transition: all 0.3s ease;
         }
-
-        body {font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
-
-        /* Layout simplifié */
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0 -1rem;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
         }
-        .col {
-            flex: 1;
-            padding: 0 1rem;
-            width: 100%;
-            min-width: 0;
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.3;
+            font-weight: 800;
         }
-        @media (max-width: 991px) {
-            .row {flex-direction: column;}
-            .col {margin-bottom: 2rem;}
-            .col:last-child {margin-bottom: 0;}
+        .container { 
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
         }
-
-        /* Typography */
-        h2, h3, h4, h5, h6 {
-            color: var(--gray-900);
+        a { text-decoration: none; color: inherit; }
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.85rem 1.75rem; 
+            border-radius: 0.5rem; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
             font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+        }
+        .btn-secondary { 
+            background: white; 
+            color: var(--primary);
+            border: 1px solid var(--gray-200);
+        }
+        .btn-secondary:hover { 
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .btn-large { 
+            font-size: 1.1rem; 
+            padding: 1rem 2.25rem; 
+        }
+        .section { 
+            padding: 5rem 0; 
+        }
+        .section-title {
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            text-align: center; 
+            position: relative;
+        }
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 1rem auto 0;
+            border-radius: 4px;
+        }
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        /* Header */
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
+            padding: 1.25rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            font-weight: 500; 
+        }
+        .nav-link {
+            color: var(--gray-700);
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        .nav-link:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        .cta-group { 
+            display: flex; 
+            gap: 1rem; 
+            align-items: center;
+        }
+        .logo-text { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .gradient-text { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+
+        /* Hero */
+        .hero { 
+            text-align: center; 
+            padding: 8rem 0 6rem; 
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 1;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
             line-height: 1.2;
         }
-        .text-sm {font-size: 0.875rem;}
-        .text-base {font-size: 1rem;}
-        .text-lg {font-size: 1.125rem;}
-        .text-xl {font-size: 1.25rem;}
-        .text-2xl {font-size: 1.5rem;}
-        .text-3xl {font-size: 1.875rem;}
-        .text-4xl {font-size: 2.25rem;}
-        @media (max-width: 768px) {
-            .text-4xl {font-size: 1.875rem;}
-            .text-3xl {font-size: 1.5rem;}
-            .text-2xl {font-size: 1.25rem;}
+        .hero p { 
+            font-size: 1.35rem; 
+            margin-bottom: 2.5rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .font-medium {font-weight: 500;}
-        .font-semibold {font-weight: 600;}
-        .font-bold {font-weight: 700;}
-        .text-gray-500 {color: var(--gray-500);}
-        .text-gray-600 {color: var(--gray-600);}
-        .text-gray-700 {color: var(--gray-700);}
-        .text-primary {color: var(--primary);}
-        .leading-tight {line-height: 1.25;}
-        .mb-1 {margin-bottom: 0.25rem;}
-        .mb-2 {margin-bottom: 0.5rem;}
-        .mb-3 {margin-bottom: 0.75rem;}
-        .mb-6 {margin-bottom: 1.5rem;}
-        .mb-12 {margin-bottom: 3rem;}
-        .mt-1 {margin-top: 0.25rem;}
-        .mt-2 {margin-top: 0.5rem;}
-        .mt-4 {margin-top: 1rem;}
-        .mt-6 {margin-top: 1.5rem;}
-        .mt-8 {margin-top: 2rem;}
-        .mx-auto {margin-left: auto; margin-right: auto;}
-
-        /* Card avec rendu optimisé */
-        .card {
-            background-color: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            transform: translateZ(0); /* Force GPU acceleration */
-            will-change: transform; /* Hint for browser optimization */
-        }
-        .card-body {padding: 1.5rem;}
-        @media (min-width: 768px) {
-            .card-body {padding: 2rem;}
-        }
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        /* Form styles */
-        .form-group {margin-bottom: 1.5rem;}
-        .form-label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-            color: var(--gray-700);
-        }
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--gray-900);
-            background-color: white;
-            background-clip: padding-box;
-            border: 1px solid var(--gray-300);
-            border-radius: 0.5rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        .form-control:focus {
-            border-color: var(--primary-light);
-            outline: 0;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-        .form-select {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--gray-900);
-            background-color: white;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234B5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 16px 12px;
-            border: 1px solid var(--gray-300);
-            border-radius: 0.5rem;
-            appearance: none;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        .form-select:focus {
-            border-color: var(--primary-light);
-            outline: 0;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-        .form-text {
-            margin-top: 0.25rem;
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            font-weight: 500;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            user-select: none;
-            border: 1px solid transparent;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            border-radius: 0.5rem;
-            transition: all 0.15s ease-in-out;
-            cursor: pointer;
-        }
-        .btn-primary {
-            color: white;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background: linear-gradient(to right, var(--primary-dark), var(--primary-dark));
-            border-color: var(--primary-dark);
-        }
-        .btn-success {
-            color: white;
-            background: linear-gradient(to right, var(--success), #059669);
-            border-color: var(--success);
-        }
-        .btn-success:hover {
-            background: linear-gradient(to right, #059669, #047857);
-            border-color: #059669;
-        }
-        .btn-lg {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-        }
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-        .btn:disabled {
-            opacity: 0.65;
-            pointer-events: none;
-        }
-
-        /* Features */
-        .features {
-            background-color: white;
-            padding: 4rem 0;
-        }
-        .feature {
+        .hero-cta {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
         }
-        .feature-icon {
-            flex-shrink: 0;
+        
+        /* Limited offer banner */
+        .limited-offer {
+            background: linear-gradient(135deg, #4338ca, #3b82f6);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .limited-offer:before {
+            content: "LIMITED TIME";
+            position: absolute;
+            background: var(--warning);
+            color: var(--gray-900);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 2rem;
+            top: 0.5rem;
+            left: -1.5rem;
+            transform: rotate(-45deg);
+        }
+
+        /* Stats */
+        .stats { 
+            display: flex; 
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .stat { 
+            flex: 1; 
+            min-width: 200px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .stat:not(:last-child):after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: var(--gray-200);
+        }
+        .stat h3 { 
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .stat p { 
+            font-weight: 600; 
+            color: var(--gray-700);
+            margin-bottom: 0;
+        }
+
+        /* Steps */
+        .steps {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem;
+        }
+        .step {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        .step-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .step-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 0.75rem;
-            background-color: var(--primary-50);
-            color: var(--primary);
-            margin-right: 1rem;
-            font-size: 1.25rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
         }
-        .feature-content {
-            flex: 1;
-            min-width: 0;
+        .step-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        .step h4 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        .step p {
+            color: var(--gray-600);
+            margin-bottom: 0;
         }
 
-        /* Testimonials */
-        .testimonial {
-            background-color: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+        /* Features */
+        #features {
+            background: var(--gray-50);
+        }
+        .features { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem; 
+        }
+        .feature-card { 
+            background: white; 
+            padding: 2.5rem 2rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--box-shadow); 
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+            border: 1px solid var(--gray-100);
+        }
+        .feature-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--box-shadow-lg);
+        }
+        .feature-icon { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        .feature-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        .feature-card h3 { 
+            font-size: 1.35rem; 
+            margin-bottom: 1rem; 
+            color: var(--gray-900); 
+        }
+        .feature-card p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+
+        /* Pricing Cards */
+        #pricing {
+            position: relative;
+            overflow: hidden;
+        }
+        #pricing:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58,79,231,0.05), rgba(14,165,233,0.05));
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+        }
+        #pricing:after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14,165,233,0.05), rgba(58,79,231,0.05));
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+        }
+        .pricing-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 3rem; 
+            margin-top: 2rem; 
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pricing-card { 
+            background: white; 
+            padding: 3rem 2.5rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow); 
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.03);
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 0.35rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        .pricing-card h3 { 
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+        }
+        .pricing-amount small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-600);
+            position: absolute;
+            top: 12px;
+        }
+        .pricing-description {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .pricing-features {
+            list-style: none;
             margin-bottom: 2rem;
         }
-        .testimonial-content {
-            font-size: 1rem;
-            color: var(--gray-600);
+        .pricing-features li {
             margin-bottom: 1rem;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--gray-700);
+        }
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .leads-count {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .pricing-cta {
+            width: 100%;
+        }
+
+        /* Waitlist */
+        .waitlist-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .waitlist-section:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            top: -150px;
+            left: -150px;
+        }
+        .waitlist-section:after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            bottom: -150px;
+            right: -150px;
+        }
+        .waitlist-section .section-title {
+            color: white;
+        }
+        .waitlist-section .section-title:after {
+            background: white;
+        }
+        .waitlist-section .section-subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+        .waitlist-form { 
+            background: white; 
+            padding: 3rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow-lg); 
+            max-width: 600px; 
+            margin: 0 auto; 
+            position: relative;
+            z-index: 1;
+        }
+        .waitlist-form h3 {
+            text-align: center;
+            font-size: 1.75rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        .waitlist-form p {
+            text-align: center;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+        .waitlist-form input[type="email"] { 
+            width: 100%; 
+            padding: 1rem 1.25rem; 
+            border: 1px solid var(--gray-200); 
+            border-radius: var(--border-radius); 
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .waitlist-form input[type="email"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .free-leads-badge {
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+  .header .cta-group .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+  .header .cta-group .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+  .header .cta-group .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Reduce gap between buttons */
+  .header .cta-group {
+    gap: 0.5rem;
+  }
+}
+
+        /* Testimonials */
+        .testimonials-heading {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .testimonials { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem; 
+        }
+        .testimonial { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--box-shadow);
+            position: relative;
+            border: 1px solid var(--gray-100);
+        }
+        .testimonial:after {
+            content: """;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 5rem;
+            line-height: 1;
+            font-family: serif;
+            color: var(--gray-200);
+            z-index: 0;
+        }
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-text { 
+            font-style: italic; 
+            margin-bottom: 1.5rem;
+            color: var(--gray-700);
+            position: relative;
+            z-index: 1;
         }
         .testimonial-author {
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
         .testimonial-avatar {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 9999px;
-            object-fit: cover;
-            margin-right: 1rem;
-        }
-        .testimonial-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-        .testimonial-title {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        /* Pricing */
-        .pricing-card {
-            background-color: white;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            transform: translateZ(0); /* Force GPU acceleration */
-        }
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .pricing-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-100);
-            text-align: center;
-        }
-        .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .pricing-description {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-        .pricing-features {
-            padding: 1.5rem;
-            flex: 1;
-        }
-        .pricing-feature {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-light);
             display: flex;
             align-items: center;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.25rem;
         }
-        .pricing-feature-icon {
-            color: var(--success);
-            margin-right: 0.5rem;
-            flex-shrink: 0;
+        .testimonial-info h4 { 
+            font-weight: 600; 
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
         }
-        .pricing-cta {
-            padding: 1.5rem;
-            background-color: var(--gray-50);
-            border-top: 1px solid var(--gray-100);
+        .testimonial-info p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Trust badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .trust-badge i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .trust-badge h4 {
+            font-size: 1.15rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        .trust-badge p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
         }
 
         /* Footer */
-        .footer {
-            background-color: white;
-            padding: 4rem 0;
-            margin-top: 2rem;
-            border-top: 1px solid var(--gray-200);
+        .footer { 
+            background: var(--gray-900); 
+            color: white; 
+            padding: 4rem 0 2rem;
         }
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
-        .footer-logo-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-right: 0.5rem;
-        }
-        .footer-logo-text {
+        .footer-column h4 {
+            color: white;
             font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            position: relative;
         }
-        .footer-description {
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            max-width: 24rem;
-        }
-        .footer-heading {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
+        .footer-column h4:after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            margin-top: 0.75rem;
         }
         .footer-links {
             list-style: none;
         }
-        .footer-link {
+        .footer-links li {
             margin-bottom: 0.75rem;
         }
-        .footer-link a {
-            color: var(--gray-600);
-            text-decoration: none;
-            transition: color 0.15s;
+        .footer-links a {
+            color: var(--gray-300);
+            transition: color 0.2s ease;
         }
-        .footer-link a:hover {
-            color: var(--primary);
+        .footer-links a:hover {
+            color: white;
         }
         .footer-bottom {
-            border-top: 1px solid var(--gray-100);
             padding-top: 2rem;
-            margin-top: 2rem;
-            color: var(--gray-500);
-            font-size: 0.875rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-300);
+        }
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Floating Element */
+        .floating-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+            border: 1px solid var(--gray-200);
+        }
+        .floating-badge-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+        }
+        .floating-badge-text {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .floating-badge-cta {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
         }
 
-        /* Utilities */
-        .d-flex {display: flex;}
-        .align-items-center {align-items: center;}
-        .justify-content-center {justify-content: center;}
-        .flex-column {flex-direction: column;}
-        .w-100 {width: 100%;}
-        .text-decoration-none {text-decoration: none;}
+        /* Logo responsiveness for mobile */
+@media (max-width: 768px) {
+    /* Make logo smaller on mobile */
+    .logo-text {
+        font-size: 1.1rem;
+    }
+    
+    /* Make the bolt icon smaller too */
+    .logo-link i.fas.fa-bolt {
+        font-size: 1.1rem;
+    }
+}
 
-        /* Custom Styles avec optimisations */
-        .gradient-bg {background: linear-gradient(to right, var(--primary), var(--secondary));}
-        .card-shadow {box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);}
-        .form-card {
-            margin-top: -4rem;
-            position: relative;
-            z-index: 10;
+/* Even smaller on very small screens */
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 0.9rem;
+    }
+    
+    .logo-link i.fas.fa-bolt {
+        font-size: 0.9rem;
+    }
+}
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .section { padding: 4rem 0; }
+            .section-title { font-size: 2.25rem; }
+            .hero h1 { font-size: 2.75rem; }
+            .hero p { font-size: 1.2rem; }
+            .stat h3 { font-size: 2.25rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: scale(1); }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
         }
-        @media (max-width: 991px) {
-            .form-card {margin-top: 2rem;}
-        }
-        .success-badge {background-color: var(--success);}
-        .error-message {
-            background-color: #FEE2E2;
-            border: 1px solid #EF4444;
-            color: #B91C1C;
-            padding: 10px;
-            border-radius: 0.5rem;
-            margin-top: 10px;
-        }
-        .success-message {
-            background-color: #D1FAE5;
-            border: 1px solid #10B981;
-            color: #047857;
-            padding: 10px;
-            border-radius: 0.5rem;
-            margin-top: 10px;
-        }
-
-        /* Section lead avec optimisations */
-        .sample-leads-image {
-            max-width: 100%;
-            overflow: hidden;
-        }
+        
         @media (max-width: 768px) {
-            .sample-leads-image img {max-width: 100%;}
+            .header-content { 
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .logo-link {
+                margin-right: auto;
+            }
+            .nav-links { 
+                display: none;
+            }
+            .cta-group {
+                margin-left: auto;
+            }
+            .hero { padding: 6rem 0 4rem; }
+            .hero h1 { font-size: 2.25rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-cta { 
+                flex-direction: column; 
+                align-items: center;
+                gap: 1rem;
+            }
+            .hero-cta .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .stats { 
+                flex-direction: column; 
+                padding: 1.5rem;
+            }
+            .stat {
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 1px solid var(--gray-200);
+                margin-bottom: 0.5rem;
+            }
+            .stat:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+            .stat:not(:last-child):after { display: none; }
+            .waitlist-form { padding: 2rem 1.5rem; }
+            
+            /* More mobile optimizations */
+            .section { padding: 3rem 0; }
+            .section-title { font-size: 1.75rem; }
+            .section-subtitle { font-size: 1rem; }
+            .steps, .features, .testimonials {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+            .pricing-amount {
+                font-size: 2.5rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .floating-badge {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                width: auto;
+                justify-content: center;
+            }
         }
-
-        /* Section vidéo avec optimisations */
-        .video-section {
-            padding: 40px 0;
-            width: 100%;
-        }
-        .video-wrapper {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        @media (max-width: 768px) {
-            .video-section {padding: 30px 0;}
-        }
+        
+        /* Small mobile devices */
         @media (max-width: 480px) {
-            .video-section {padding: 20px 0;}
-        }
-    </style>
-</head>
- 
-<body>
-    <!-- Chat Widget (Optimized) -->
-<script>
-  // Defer chat widget loading until after page is fully loaded
-  window.addEventListener('load', function() {
-    // Add the chat widget with a small delay to not compete with critical resources
-    setTimeout(function() {
-      initChatWidget();
-    }, 1000);
-  });
-
-  function initChatWidget() {
-    // Create and append the style element
-    const style = document.createElement('style');
-    style.textContent = `
-      #chat-widget-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 350px;
-        height: 500px;
-        background: white;
-        border-radius: 0.75rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        display: none;
-        flex-direction: column;
-        z-index: 1000;
-        overflow: hidden;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      }
-      #chat-widget-header {
-        background: linear-gradient(to right, #4f46e5, #0ea5e9);
-        color: white;
-        padding: 20px;
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 18px;
-      }
-      #chat-widget-body {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-      }
-      #chat-widget-body p {
-        margin-bottom: 15px;
-        padding: 12px;
-        border-radius: 0.5rem;
-        font-size: 14px;
-        word-wrap: break-word;
-      }
-      #chat-widget-footer {
-        padding: 12px;
-        border-top: 1px solid #e5e7eb;
-        display: flex;
-        gap: 10px;
-      }
-      #chat-widget-input {
-        flex: 1;
-        padding: 0.75rem 1rem;
-        font-size: 0.875rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.5rem;
-        outline: none;
-        font-family: 'Inter', sans-serif;
-      }
-      #chat-widget-input:focus {
-        border-color: #818cf8;
-        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-      }
-      #chat-widget-send {
-        background: linear-gradient(to right, #4f46e5, #4338ca);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        font-weight: 500;
-        font-size: 0.875rem;
-        transition: all 0.15s ease-in-out;
-        font-family: 'Inter', sans-serif;
-      }
-      #chat-widget-send:hover {
-        background: linear-gradient(to right, #4338ca, #4338ca);
-      }
-      #chat-widget-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: linear-gradient(to right, #4f46e5, #0ea5e9);
-        color: white;
-        border: none;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 24px;
-        z-index: 1001;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease;
-      }
-      #chat-widget-button:hover {
-        transform: scale(1.05);
-      }
-      .user-message {
-        background-color: #f3f4f6;
-        color: #1f2937;
-        align-self: flex-end;
-      }
-      .bot-message {
-        background: linear-gradient(to right, #4f46e5, #0ea5e9);
-        background-clip: padding-box;
-        color: white;
-        align-self: flex-start;
-      }
-      #chat-widget-close {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Create button with SVG icon (instead of Font Awesome)
-    const button = document.createElement('button');
-    button.id = 'chat-widget-button';
-    button.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-      </svg>
-    `;
-    document.body.appendChild(button);
-    
-    // Create chat container
-    const container = document.createElement('div');
-    container.id = 'chat-widget-container';
-    container.innerHTML = `
-      <div id="chat-widget-header">
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 5px;">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-          </svg>
-          Besoin d'aide ?
-        </span>
-        <button id="chat-widget-close">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <div id="chat-widget-body">
-        <p class="bot-message" style="margin-bottom: 20px;"><strong>Bonjour 👋</strong><br>Comment puis-je vous aider ?</p>
-      </div>
-      <div id="chat-widget-footer">
-        <input type="text" id="chat-widget-input" placeholder="Tapez votre message ici...">
-        <button id="chat-widget-send">Envoyer</button>
-      </div>
-    `;
-    document.body.appendChild(container);
-    
-    // Configuration
-    window.ChatWidgetConfig = {
-      webhook: {
-        url: 'https://eliasse-n8n.onrender.com/webhook/86d854e0-fe5d-4bd0-9b66-2d6491d62f18/chat',
-        route: 'general'
-      },
-      style: {
-        primaryColor: '#4f46e5',
-        secondaryColor: '#0ea5e9'
-      }
-    };
-    
-    // Function to generate or retrieve a unique chat ID
-    function getChatId() {
-      let chatId = sessionStorage.getItem("chatId");
-      if (!chatId) {
-        chatId = "chat_" + Math.random().toString(36).substr(2, 9);
-        sessionStorage.setItem("chatId", chatId);
-      }
-      return chatId;
-    }
-    
-    // Show chat widget and hide bubble
-    document.getElementById("chat-widget-button").addEventListener("click", function() {
-      document.getElementById("chat-widget-container").style.display = "flex";
-      document.getElementById("chat-widget-button").style.display = "none";
-    });
-    
-    // Close chat widget and show bubble
-    document.getElementById("chat-widget-close").addEventListener("click", function() {
-      document.getElementById("chat-widget-container").style.display = "none";
-      document.getElementById("chat-widget-button").style.display = "flex";
-    });
-    
-    // Send message to webhook
-    document.getElementById("chat-widget-send").addEventListener("click", sendMessage);
-    
-    // Also send on Enter key press
-    document.getElementById("chat-widget-input").addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        sendMessage();
-      }
-    });
-    
-    function sendMessage() {
-      let message = document.getElementById("chat-widget-input").value;
-      if (message.trim() === "") return;
-      
-      let chatBody = document.getElementById("chat-widget-body");
-      
-      // Add user message
-      let newMessage = document.createElement("p");
-      newMessage.textContent = message;
-      newMessage.className = "user-message";
-      chatBody.appendChild(newMessage);
-      
-      // Auto-scroll to the bottom
-      chatBody.scrollTop = chatBody.scrollHeight;
-      
-      let chatId = getChatId();
-      
-      // Show typing indicator
-      let typingIndicator = document.createElement("p");
-      typingIndicator.className = "bot-message";
-      typingIndicator.innerHTML = "<em>En train d'écrire...</em>";
-      typingIndicator.id = "typing-indicator";
-      chatBody.appendChild(typingIndicator);
-      chatBody.scrollTop = chatBody.scrollHeight;
-      
-      fetch(window.ChatWidgetConfig.webhook.url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chatId: chatId,
-          message: message,
-          route: window.ChatWidgetConfig.webhook.route
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Remove typing indicator
-        let indicator = document.getElementById("typing-indicator");
-        if (indicator) {
-          chatBody.removeChild(indicator);
+            .container { padding: 0 1rem; }
+            .hero h1 { font-size: 1.75rem; }
+            .cta-group .btn {
+                padding: 0.65rem 1rem;
+                font-size: 0.9rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
         }
         
-        // Add bot response
-        let botMessage = document.createElement("p");
-        botMessage.innerHTML = data.output || "Désolé, je n'ai pas compris votre demande.";
-        botMessage.className = "bot-message";
-        chatBody.appendChild(botMessage);
-        
-        // Auto-scroll to the bottom
-        chatBody.scrollTop = chatBody.scrollHeight;
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        
-        // Remove typing indicator
-        let indicator = document.getElementById("typing-indicator");
-        if (indicator) {
-          chatBody.removeChild(indicator);
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-pulse {
+            animation: pulse 2s infinite ease-in-out;
         }
         
-        // Show error message
-        let errorMessage = document.createElement("p");
-        errorMessage.innerHTML = "Désolé, une erreur s'est produite. Veuillez réessayer.";
-        errorMessage.className = "bot-message";
-        chatBody.appendChild(errorMessage);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      });
-      
-      document.getElementById("chat-widget-input").value = "";
-    }
-  }
-</script>
-    <!-- Hero Section -->
-    <section class="hero" id="top">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold mb-4">
-                    <span class="gradient-text">unlimitedleads</span>
-                </h1>
-                <p class="text-xl text-gray-600 mb-4">Exportez vos leads Apollo en illimités et sans effort</p>
-                <div class="mt-4">
-                    <span class="badge">5€ pour 500 leads</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Form Section -->
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card card-shadow form-card" id="form-card">
-                        <div class="card-header">
-                            <h2 class="text-2xl font-bold mb-2">Commandez vos leads maintenant</h2>
-                            <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés</p>
-                        </div>
-                        <div class="card-body">
-                            <form id="leads-form">
-                                <div class="form-group">
-                                    <label for="name" class="form-label">Nom *</label>
-                                    <input type="text" id="name" name="name" class="form-control" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Email *</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
-                                    <small class="form-text">Nous vous enverrons vos leads à cette adresse</small>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="apollo-link" class="form-label">Lien Apollo * <a href="#video-section" style="font-size: 0.8rem; color: var(--primary); text-decoration: none;">(c'est quoi ?)</a></label>
-                                    <input type="url" id="apollo-link" name="apollo-link" class="form-control" placeholder="https://app.apollo.io/..." required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="leads-count" class="form-label">Nombre de Leads *</label>
-                                    <select id="leads-count" name="leads-count" class="form-select" required>
-                                        <option value="">Choisissez</option>
-                                        <option value="500">500 leads - 5€</option>
-                                        <option value="1000">1000 leads - 10€</option>
-                                        <option value="2000">2000 leads - 20€</option>
-                                        <option value="3000">3000 leads - 30€</option>
-                                        <option value="4000">4000 leads - 40€</option>
-                                        <option value="5000">5000 leads - 50€</option>
-                                        <option value="6000">6000 leads - 60€</option>
-                                        <option value="7000">7000 leads - 70€</option>
-                                        <option value="8000">8000 leads - 80€</option>
-                                        <option value="9000">9000 leads - 90€</option>
-                                        <option value="10000">10000 leads - 100€</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="file-name" class="form-label">Nom du Fichier *</label>
-                                    <input type="text" id="file-name" name="file-name" class="form-control" placeholder="Ex: leads_tech_france" required>
-                                </div>
-                                
-                                <!-- Ajout du champ code promo -->
-                                <div class="form-group">
-                                    <label for="promo-code" class="form-label">Code de réduction (optionnel)</label>
-                                    <input type="text" id="promo-code" name="promo-code" class="form-control" placeholder="Entrez votre code promo">
-                                    <button type="button" id="check-promo" class="btn btn-primary" style="margin-top: 10px;">Vérifier le code</button>
-                                    <div id="promo-message" style="margin-top: 10px;"></div>
-                                </div>
-                                
-                                <button type="submit" id="submit-button" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col">
-                    <div class="mb-8">
-                        <h2 class="text-3xl font-bold mb-4">Comment extraire vos leads Apollo en illimité ?</h2>
-                        <p class="text-gray-600 mb-4">Un processus simple pour obtenir vos prospects ciblés d'Apollo.io en quelques clics.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3 class="text-lg font-semibold mb-2">URL de recherche Apollo</h3>
-                            <p class="text-gray-600">Connectez-vous à Apollo, appliquez vos filtres et copiez l'URL de votre recherche Apollo</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3 class="text-lg font-semibold mb-2">Commande simple</h3>
-                            <p class="text-gray-600">Collez l'URL Apollo dans le formulaire et complétez vos informations pour commander.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3 class="text-lg font-semibold mb-2">Livraison rapide</h3>
-                            <p class="text-gray-600">Recevez vos leads dans les 24 heures suivant votre commande, prêts à être utilisés.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3 class="text-lg font-semibold mb-2">Emails vérifiés (Bounce < 4% garantie !)</h3>
-                            <p class="text-gray-600">Toutes nos données sont vérifiés pour assurer à vos campagnes un taux de bounce inférieur à 4%</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Exemple de Leads -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-4">Un aperçu de vos futurs leads</h2>
-                <p class="text-gray-600">Voici à quoi ressemblent les leads que vous recevrez</p>
-           
-   <!-- Styles pour l'image responsive (à placer dans votre feuille de style existante ou dans une balise style) -->
-<style>
 .leads-showcase {
     max-width: 1200px;
     width: 100%;
@@ -1025,725 +1077,323 @@
     }
 }
 </style>
+</head>
+<body>
+    <!-- Limited-time offer banner -->
+    <div class="limited-offer">
+        🔥  Sign up now and get 1,000 free leads to start
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="#" class="logo-link">
+                <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                <span class="logo-text"><span class="gradient-text">UnlimitedLeads</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#testimonials" class="nav-link">Success Stories</a>
+                <a href="#contact" class="nav-link">Contact Sales</a>
+            </nav>
+<div class="cta-group" style="display: flex; align-items: center; gap: 1rem;">
+    <a href="https://unlimited-leads.online/login" class="btn btn-secondary">Log in</a>
+    <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Sign Up Now</a>
+</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Access 100M+ Verified B2B Contacts<br><span class="gradient-text">for Your Business</span></h1>
+            <p>The ultimate lead generation platform for B2B professionals. Find your ideal customers, enrich with verified contact data, and access premium leads—with a one-time payment.</p>
+            <div class="hero-cta">
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary btn-large animate-pulse">Get 1,000 Free Leads</a>
+           </div>
+            <div class="stats">
+                <div class="stat">
+                    <h3>100M+</h3>
+                    <p>Verified Contacts</p>
+                </div>
+                <div class="stat">
+                    <h3>63M+</h3>
+                    <p>B2B Companies</p>
+                </div>
+                <div class="stat">
+                    <h3>99%</h3>
+                    <p>Accuracy Rate</p>
+                </div>
+                <div class="stat">
+                    <h3>∞</h3>
+                    <p>Lifetime Access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">A preview of your future leads</h2>
+            </div>
 
 <!-- HTML pour l'image (à insérer où vous voulez afficher l'image) -->
 <div class="leads-showcase">
     <div class="leads-card">
         <div class="leads-image-container">
-            <img src="https://i.imgur.com/aH13sck.png" alt="Fichier BtoB avec informations de contacts" class="leads-image">
+            <img src="https://i.imgur.com/aH13sck.png" alt="BtoB leads with contact information" class="leads-image">
         </div>
         <div class="leads-description">
-            <p><strong>Nos leads comprennent :</strong> adresses email vérifiées, numéros de téléphone, informations détaillées sur les contacts et leurs entreprises.</p>
+            <p><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
         </div>
     </div>
 </div>
 
+    <!-- How It Works -->
+    <section id="how-it-works" class="section container">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to unlock your unlimited lead generation potential</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>Define Your Target</h4>
+                <p>Precisely filter your ideal customer profile by industry, company size, revenue, tech stack, funding, and growth signals to find perfect-fit prospects.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h4>Verify & Enrich</h4>
+                <p>Automatically validate and enhance your prospect list with direct contact information, including verified emails, direct dials, and detailed professional profiles.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h4>Export & Use</h4>
+                <p>Download unlimited leads with a single lifetime purchase—scale your outreach without limits and never worry about running out of fresh prospects again.</p>
+            </div>
+        </div>
+    </section>
         
+<!-- Pricing -->
+<section id="pricing" class="section container">
+    <h2 class="section-title">Professional B2B Lead Generation</h2>
+    <p class="section-subtitle">Access 450M+ verified contacts with advanced filtering and premium features. Start with 1,000 free leads!</p>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="savings-badge">Great Value</div>
+            <h3>Starter Plan</h3>
+            <span class="pricing-amount">$39<small>/month</small></span>
+            <p class="pricing-description">Billed quarterly ($99 every 3 months)</p>
+            <p class="pricing-description">Perfect for growing businesses that need reliable, verified B2B contacts to scale their outreach efforts.</p>
+            <ul class="pricing-features">
+                <li><span class="leads-count">60,000 leads annually</span> (5,000/month)</li>
+                <li><span class="leads-count">450M+</span> contact database</li>
+                <li><strong>Email verification included</strong></li>
+                <li>Advanced search filters</li>
+                <li>CSV exports</li>
+                <li>CRM integrations</li>
+                <li>1,000 free leads to start</li>
+                <li>Email support</li>
+            </ul>
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Get Started</a>
         </div>
-    </section>
+        <div class="pricing-card featured">
+            <div class="featured-badge">BEST VALUE</div>
+            <div class="savings-badge">Most Popular</div>
+            <h3>Premium Plan</h3>
+            <span class="pricing-amount">$59<small>/month</small></span>
+            <p class="pricing-description">Billed quarterly ($159 every 3 months)</p>
+            <p class="pricing-description">Ideal for sales teams and agencies that need maximum lead volume with premium features and priority support.</p>
+            <ul class="pricing-features">
+                <li><span class="leads-count">120,000 leads annually</span> (10,000/month)</li>
+                <li><span class="leads-count">450M+</span> contact database</li>
+                <li><strong>Email verification included</strong></li>
+                <li>Advanced search filters</li>
+                <li>Unlimited CSV exports</li>
+                <li>Priority CRM integrations</li>
+                <li>1,000 free leads to start</li>
+                <li>Priority email support</li>
+                <li>Dedicated account manager</li>
+            </ul>
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Get Started</a>
+        </div>
+    </div>
     
-    <!-- Process Section -->
-    <section class="section">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-4">Comment ça marche</h2>
-                <p class="text-gray-600">Un processus simple en trois étapes</p>
+    <!-- Enterprise option -->
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--gray-50); border-radius: var(--border-radius-lg);">
+        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need More Than 120K Leads?</h3>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Custom enterprise plans available for high-volume users</p>
+        <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Book a Call</a>
+    </div>
+</section>
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-lock"></i>
+                <h4>Secure Payment</h4>
+                <p>256-bit SSL encryption</p>
             </div>
-            
-            <div class="row">
-                <div class="col">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <i class="fas fa-list-alt text-4xl text-primary"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">1. Commandez</h3>
-                            <p class="text-gray-600">Remplissez notre formulaire avec vos critères spécifiques et la quantité de leads souhaitée.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <i class="fas fa-credit-card text-4xl text-primary"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">2. Payez</h3>
-                            <p class="text-gray-600">Effectuez votre paiement via notre plateforme sécurisée pour valider votre commande.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <i class="fas fa-envelope-open-text text-4xl text-primary"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">3. Recevez</h3>
-                            <p class="text-gray-600">Recevez vos leads vérifiés par email au format CSV et Excel, prêts à être utilisés.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Data Privacy</h4>
+                <p>GDPR & CCPA compliant</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-undo"></i>
+                <h4>30-Day Guarantee</h4>
+                <p>Risk-free satisfaction</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-headset"></i>
+                <h4>24/7 Support</h4>
+                <p>Always here to help</p>
             </div>
         </div>
     </section>
 
-    <!-- Section Vidéo -->
-    <section id="video-section" class="section video-section">
-        <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-4">Comment utiliser Unlimited leads</h2>
-                <p class="text-gray-600">Regardez notre tutoriel vidéo pour comprendre le processus</p>
-            </div>
-            
-            <div class="video-wrapper">
-                <div style="position: relative; padding-bottom: 62.5%; height: 0;">
-                    <!-- Iframe chargé avec attribut loading lazy -->
-                    <iframe width="640" height="400" loading="lazy" data-src="https://www.loom.com/embed/a0228b323152438992ce4b9b0628b4f7?sid=7b669ee1-38ca-4b82-ba9d-99f9e3f3b75a" 
-                        frameborder="0" 
-                        webkitallowfullscreen 
-                        mozallowfullscreen 
-                        allowfullscreen 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
-                    </iframe>
+          <!-- Features -->
+    <section id="features" class="section container">
+        <h2 class="section-title">Enterprise-Grade Features</h2>
+        <p class="section-subtitle">Everything you need to supercharge your B2B lead generation and sales outreach</p>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
                 </div>
+                <h3>Lifetime Access</h3>
+                <p>One-time payment grants you permanent access to verified leads—no monthly caps, no unexpected charges, just lifetime value.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-filter"></i>
+                </div>
+                <h3>Advanced Filtering</h3>
+                <p>Precisely target your ideal customers with 30+ advanced filters including revenue bands, headcount growth, tech stack, funding rounds, and hiring trends.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Comprehensive Database</h3>
+                <p>Access 100M+ verified contacts and 63M+ B2B companies worldwide—refreshed weekly to ensure you're always working with the most current information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>99% Data Accuracy</h3>
+                <p>Enjoy industry-leading verification rates through our proprietary 12-point validation system that ensures the highest quality contact information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Real-Time Enrichment</h3>
+                <p>Instantly enhance your existing prospect lists with current titles, direct dials, verified emails, and social profiles for seamless outreach.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Growth Intelligence</h3>
+                <p>Identify companies showing growth signals like new funding, executive hires, or expansion—the perfect timing indicators for your sales outreach.</p>
             </div>
         </div>
     </section>
 
-    <div class="text-center mt-6 mb-6">
-        <a href="https://www.apollo.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Lien utile Apollo.io</a>
-    </div>
 
- <!-- FAQ Section -->
-<section class="section" id="faq">
-    <div class="container">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold mb-4">Questions fréquentes</h2>
-            <p class="text-gray-600">Tout ce que vous devez savoir sur l'achat ou location de fichiers de prospection B2B</p>
-        </div>
-        <div class="card card-shadow">
-        <div class="card-body">
-            <!-- Accordion FAQ -->
-            <div class="faq-accordion">
-                <!-- Question 1 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Qu'est-ce qu'une base de données de prospection BtoB et quels sont ses avantages ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Une base de données de prospection BtoB est un fichier commercial structuré contenant des informations sur des entreprises et leurs décideurs. Ces fichiers qualifiés vous permettent d'accélérer votre démarche commerciale en ciblant directement les bons destinataires.</p>
-                        <p>L'achat base de données BtoB vous donne accès à des millions de contacts qualifiés pour vos actions marketing avec plusieurs avantages :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Gain de temps considérable sur la qualification des données</li>
-                            <li>Accès à des fichiers d'entreprises vérifiés et à jour</li>
-                            <li>Ciblage précis selon vos critères de sélection</li>
-                            <li>Enrichissement de votre propre fichier client existant</li>
-                            <li>Optimisation de vos campagnes de marketing direct et emailing</li>
-                            <li>Acquisition de nouveaux clients grâce à des contacts pertinents</li>
-                            <li>Réduction significative du coût d'acquisition client</li>
-                        </ul>
-                        <p>Notre fichier commercial BtoB vous permet d'identifier et contacter les décideurs clés dans les entreprises françaises, avec des informations précises sur leur fonction, leur secteur d'activité et leurs coordonnées professionnelles.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 2 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quels sont les différents modes d'acquisition : achat ou location de fichiers ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Pour constituer une base de données prospects, vous avez deux options principales : l'achat de fichiers ou la location de fichiers. Chaque solution présente des avantages selon vos besoins :</p>
-                        <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
-                            <tr style="background-color: var(--gray-100);">
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Critère</th>
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Achat de fichier</th>
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Location de fichier</th>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Propriété</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Vous devenez propriétaire des données</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Utilisation temporaire des données</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Durée d'utilisation</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Illimitée (avec mises à jour recommandées)</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Limitée à la campagne convenue</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Prix</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Investissement initial plus élevé</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Coût plus faible par utilisation</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Idéal pour</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Programmes de fidélisation et relation client continue</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Campagnes ponctuelles, tests de nouveaux marchés</td>
-                            </tr>
-                        </table>
-                        <p>Pour la location d'adresses, le routage est généralement pris en charge par le courtier ou le routeur. Dans ce cas, vous n'avez jamais directement accès aux fichiers d'adresses, ce qui garantit la protection des données. Le comptage des envois et le suivi des clics sont assurés par le prestataire.</p>
-                        <p>Certains courtiers spécialisés proposent également des services d'enrichissement pour qualifier vos fichiers existants en y ajoutant des informations complémentaires (téléphone fixe, adresse postale, secteur d'activité, etc.).</p>
-                    </div>
-                </div>
-                
-                <!-- Question 3 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quels sont les avantages d'acheter une base plutôt que de la constituer soi-même ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Constituer votre propre fichier client prend énormément de temps et nécessite des outils coûteux. L'achat de base de données qualifiée vous fait économiser des centaines d'heures de travail. De plus, nos fichiers commerciaux sont vérifiés pour garantir une excellente délivrabilité. Contrairement à d'autres courtiers en données proposant des fichiers volumineux mais peu qualifiés, nous maintenons une qualité premium pour vos campagnes emailing et actions commerciales.</p>
-                        <p>Voici une comparaison détaillée :</p>
-                        <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
-                            <tr style="background-color: var(--gray-100);">
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Critère</th>
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Création manuelle</th>
-                                <th style="border: 1px solid var(--gray-300); padding: 0.5rem; text-align: left;">Achat fichier qualifié</th>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Temps requis</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">100-200 heures pour collecter et qualifier</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Immédiat</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Coût des outils</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Abonnements aux annuaires, logiciels de collecte</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Inclus dans le prix</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Qualification</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Difficile à réaliser sans connaissance client</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Données qualifiées par des experts</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Mise à jour</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Chronophage, souvent négligée</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Fichiers mis à jour régulièrement</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Conformité CNIL/RGPD</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Risques juridiques importants</td>
-                                <td style="border: 1px solid var(--gray-300); padding: 0.5rem;">Garantie par le fournisseur</td>
-                            </tr>
-                        </table>
-                        <p>Pour constituer des fichiers pertinents et performants, il faut généralement accéder aux bases Sirène, récolter des informations via des formulaires, exporter des données depuis divers annuaires, et effectuer un travail constant de mise à jour. En achetant une base de données clients, vous évitez toutes ces étapes laborieuses.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 4 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Comment optimiser vos campagnes de marketing direct multicanal ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Le marketing direct multicanal combine différents canaux de communication pour toucher vos cibles professionnelles. Voici comment optimiser vos campagnes :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">1. L'emailing et l'e-mailing BtoB</h4>
-                        <p>Un bon mail de prospection commerciale doit être personnalisé et concis. Pour maximiser les clics et les taux d'ouverture :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Personnalisez l'objet du mail avec le nom de l'entreprise</li>
-                            <li>Incluez toujours une option de désabonnement claire</li>
-                            <li>Testez différentes phrases d'accroche</li>
-                            <li>Intégrez des éléments de marketing automation pour les relances</li>
-                        </ul>
-                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                            <p style="font-style: italic;">Objet : Solution adaptée pour [Nom de l'entreprise]</p>
-                            <p style="font-style: italic;">Bonjour [Prénom],</p>
-                            <p style="font-style: italic;">En tant que [fonction] chez [entreprise], vous recherchez probablement des moyens d'améliorer [bénéfice principal].</p>
-                            <p style="font-style: italic;">Nos clients du secteur [secteur d'activité] ont constaté [résultat chiffré] grâce à notre solution.</p>
-                            <p style="font-style: italic;">Pouvons-nous fixer un rendez-vous cette semaine pour explorer comment nous pourrions vous accompagner ?</p>
-                            <p style="font-style: italic;">Cordialement,</p>
-                        </div>
-                        
-                        <h4 class="text-lg font-medium mt-4">2. Le mailing postal</h4>
-                        <p>Le publipostage et les courriers personnalisés restent efficaces, particulièrement pour atteindre certaines cibles comme les TPE ou les directeurs. Pour optimiser vos mailings postaux :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Soignez les adresses postales pour éviter les retours</li>
-                            <li>Utilisez un routeur spécialisé pour gérer les envois volumineux</li>
-                            <li>Combinez avec une relance par téléphone ou email</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">3. La prospection téléphonique</h4>
-                        <p>Le télémarketing et la téléprospection permettent d'établir un contact direct. Pour optimiser ce canal :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Vérifiez que vos contacts ne sont pas inscrits sur Bloctel (liste d'opposition)</li>
-                            <li>Formez vos équipes aux techniques de closing commercial</li>
-                            <li>Utilisez un centre d'appels en France pour les campagnes importantes</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">4. Les campagnes SMS</h4>
-                        <p>Pour des actions marketing ciblées, les campagnes SMS offrent d'excellents taux d'ouverture :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Message court et incitatif avec une call-to-action claire</li>
-                            <li>Respectez les règles strictes de consentement préalable</li>
-                            <li>Intégrez le coût d'une campagne SMS dans votre budgétisation</li>
-                        </ul>
-                        
-                        <p class="mt-4">L'approche multicanal, combinant ces différents moyens de communication, permet d'optimiser l'impact de vos fichiers de prospection et d'augmenter significativement votre taux de conversion pour acquérir de nouveaux clients professionnels.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 5 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Comment sont qualifiées et vérifiées les données dans nos fichiers ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>La qualification des données est essentielle pour garantir l'efficacité de vos opérations marketing. Notre processus de qualification de fichiers comprend plusieurs étapes :</p>
-                        <ol style="list-style-type: decimal; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Vérification des adresses mails :</strong> Chaque email dans nos bases d'adresses est vérifié par un triple processus :
-                                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                                    <li>Vérification syntaxique (format correct de l'email)</li>
-                                    <li>Vérification SMTP (le serveur de messagerie existe)</li>
-                                    <li>Test de délivrabilité (l'email n'est pas un piège à spam)</li>
-                                </ul>
-                            </li>
-                            <li><strong>Vérification des adresses postales :</strong> Les adresses sont normalisées selon les standards postaux pour garantir la bonne distribution des courriers.</li>
-                            <li><strong>Enrichissement des données :</strong> Nous complétons les fiches clients avec des informations professionnelles pour améliorer la segmentation.</li>
-                            <li><strong>Déduplication :</strong> Nos bases sont nettoyées pour éliminer les doublons.</li>
-                            <li><strong>Mise à jour régulière :</strong> Nos fichiers clients sont mis à jour régulièrement pour maintenir un taux de validité optimal.</li>
-                        </ol>
-                        <p>Pour les fichiers d'entreprises, nous vérifions également :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>L'existence légale de l'entreprise</li>
-                            <li>Le code NAF pour confirmer le secteur d'activité</li>
-                            <li>La fonction exacte du contact (pour cibler les directeurs, responsables ou grands comptes)</li>
-                            <li>Les données financières pour qualifier les prospects selon leur potentiel</li>
-                        </ul>
-                        <p>Cette qualification rigoureuse est particulièrement importante pour les secteurs spécialisés comme les professions libérales, les bureaux d'études, ou les entreprises de fabrication de machines, où la précision des contacts est cruciale pour le succès de vos campagnes.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 6 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quels formats de fichiers proposons-nous et comment les utiliser ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nous livrons nos bases de données sous différents formats adaptés à vos besoins :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Format Excel :</strong> Fichier Excel standard, facile à manipuler et à intégrer dans la plupart des outils</li>
-                            <li><strong>CSV :</strong> Format universel compatible avec tous les CRM et logiciels marketing</li>
-                            <li><strong>Formats d'import spécifiques</strong> pour les principales plateformes d'emailing et de CRM</li>
-                        </ul>
-                        <p>Un fichier client type contient les colonnes suivantes :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Raison sociale</li>
-                            <li>SIRET/SIREN</li>
-                            <li>Code NAF</li>
-                            <li>Secteur d'activité (commerce de gros, détail, manufacture...)</li>
-                            <li>Taille (TPE, PME, grands comptes)</li>
-                            <li>Nom et prénom du contact</li>
-                            <li>Fonction/poste (directeurs, responsables...)</li>
-                            <li>Email professionnel</li>
-                            <li>Téléphone fixe professionnel</li>
-                            <li>Adresse postale complète</li>
-                        </ul>
-                        <p>Pour exploiter efficacement ces fichiers :</p>
-                        <ol style="list-style-type: decimal; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Segmentez vos contacts</strong> selon des critères pertinents (zone géographique, secteur, taille...)</li>
-                            <li><strong>Importez dans votre CRM</strong> ou votre outil de gestion de la relation client</li>
-                            <li><strong>Créez des campagnes personnalisées</strong> adaptées à chaque segment</li>
-                            <li><strong>Programmez des séquences d'emails</strong> avec votre outil de marketing automation</li>
-                            <li><strong>Suivez les performances</strong> (taux d'ouverture, clics, conversions) pour optimiser vos actions futures</li>
-                        </ol>
-                        <p>Nos fichiers volumineux sont également fournis avec une documentation détaillée pour faciliter leur intégration dans votre stratégie d'intelligence commerciale.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 7 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quels secteurs d'activité et types de cibles couvrent nos bases de données ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nos bases de données couvrent l'ensemble du tissu économique avec plusieurs millions d'entreprises françaises et des millions de contacts professionnels qualifiés pour vos campagnes marketing :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">Secteurs BtoB principaux :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Commerce de gros et détail :</strong> Grossistes, distributeurs, détaillants</li>
-                            <li><strong>Fabrication :</strong> Fabrication de machines, textiles, charpentes, articles spécialisés</li>
-                            <li><strong>Services professionnels :</strong> Bureaux d'études, ingénierie, professions libérales</li>
-                            <li><strong>Immobilier :</strong> Agences, promoteurs, gestionnaires de biens immobiliers</li>
-                            <li><strong>Secteur agricole :</strong> Exploitations agricoles par commune, liste des agriculteurs par département</li>
-                            <li><strong>BTP :</strong> Entreprises de construction, dépannage, entreprises travaux public</li>
-                            <li><strong>Santé :</strong> Cliniques, chirurgiens, laboratoires, fournitures médicales</li>
-                            <li><strong>Éducation :</strong> Écoles, lycées, centres de formation</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">Cibles BtoB disponibles :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Directeurs (généraux, marketing, informatique, achats...)</li>
-                            <li>Décideurs et responsables par fonction</li>
-                            <li>TPE et indépendants</li>
-                            <li>PME classées par taille et chiffre d'affaires</li>
-                            <li>Grands comptes et groupes internationaux</li>
-                            <li>Professions libérales par spécialité</li>
-                            <li>Email des mairies et collectivités</li>
-                            <li>Entreprises par zone géographique précise</li>
-                        </ul>
-                        
-                        <p class="mt-4">Nos fichiers d'entreprises sont particulièrement pertinents pour les campagnes ciblant des secteurs spécifiques comme le commerce de détail, la fabrication d'articles spécialisés ou les bureaux d'études. La segmentation fine permet d'adapter votre message à chaque cible pour maximiser l'impact de vos opérations de marketing direct.</p>
-                        
-                        <p>Pour les secteurs très spécifiques comme les exploitations agricoles, nous proposons des listings complets avec une liste exploitation agricole par commune et des données précises sur leurs activités, ce qui est particulièrement utile pour les fournisseurs de ce secteur.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 8 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quelle est notre conformité avec la réglementation CNIL et RGPD ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>La conformité des données est une priorité absolue. En tant que responsable du traitement, vous devez vous assurer que l'utilisation des données respecte le cadre légal :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">Conformité RGPD et loi Informatique et Libertés :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Nos fichiers sont collectés dans le respect du règlement général sur la protection des données</li>
-                            <li>Les données sont conservées uniquement pour la durée nécessaire aux opérations marketing</li>
-                            <li>Les données relatives aux personnes sont traitées avec la plus grande vigilance</li>
-                            <li>Nous prenons en compte les listes d'opposition comme Bloctel pour le démarchage téléphonique</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">Pour vos campagnes de prospection BtoB :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Informez clairement les destinataires de l'origine des données</li>
-                            <li>Proposez un moyen simple de désabonnement dans chaque communication</li>
-                            <li>Respectez le droit d'opposition des personnes visées</li>
-                            <li>Dans le cadre du BtoB, vous pouvez contacter professionnellement sans consentement préalable si le message concerne l'activité professionnelle du contact</li>
-                        </ul>
-                        
-                        <p class="mt-4">Chaque fiche client ou contact dans nos bases est traitée conformément aux directives de la CNIL. Les données nominatives et les adresses email sont collectées légalement, avec traçabilité de leur source.</p>
-                        
-                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                            <p><strong>Important :</strong> Nous vous recommandons de consulter un spécialiste pour vous assurer que votre utilisation des données est pleinement conforme. Les règles peuvent varier selon le type de campagne (emailing BtoB, mailing postal, télémarketing) et le contexte d'utilisation.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Question 9 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Comment mettre en place une stratégie multicanal efficace avec nos bases de données ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Une stratégie multicanal efficace combine plusieurs canaux de communication pour maximiser l'impact de vos actions commerciales. Voici comment l'organiser :</p>
-                        
-                        <ol style="list-style-type: decimal; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>
-                                <strong>Segmentez vos fichiers clients :</strong>
-                                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                                    <li>Par secteur d'activité (commerce de gros, fabrication, services...)</li>
-                                    <li>Par taille d'entreprise (TPE, PME, grands comptes)</li>
-                                    <li>Par zone géographique pour adapter les actions locales</li>
-                                    <li>Par profil de décideur (directeurs, responsables achats...)</li>
-                                </ul>
-                            </li>
-                            
-                            <li class="mt-2">
-                                <strong>Planifiez votre séquence multicanal :</strong>
-                                <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                                    <p><strong>Exemple de campagne multicanal pour prospection BtoB :</strong></p>
-                                    <ol style="list-style-type: decimal; margin-left: 1.5rem;">
-                                        <li>Jour 1 : Email de prospection personnalisé</li>
-                                        <li>Jour 3 : Envoi d'un courrier postal avec documentation</li>
-                                        <li>Jour 7 : Relance par email avec contenus à valeur ajoutée</li>
-                                        <li>Jour 10 : Appel téléphonique par votre équipe ou centre d'appels</li>
-                                        <li>Jour 15 : Invitation à un webinaire via email + SMS de rappel</li>
-                                        <li>Jour 30 : Mailing postal premium pour les prospects qualifiés</li>
-                                    </ol>
-                                </div>
-                            </li>
-                            
-                            <li class="mt-2">
-                                <strong>Adaptez votre message à chaque canal :</strong>
-                                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                                    <li>Email : message concis avec call-to-action claire</li>
-                                    <li>Courrier : présentation détaillée avec éléments visuels</li>
-                                    <li>Téléphone : script adapté avec réponses aux objections</li>
-                                    <li>SMS : message ultra-court et urgent (rappel rendez-vous...)</li>
-                                    <li>Newsletter : contenus informatifs et actualités sectorielles</li>
-                                </ul>
-                            </li>
-                            
-                            <li class="mt-2">
-                                <strong>Utilisez des outils de marketing automation :</strong>
-                                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                                    <li>Programmez des séquences d'emails automatisées</li>
-                                    <li>Déclenchez des actions basées sur le comportement (clics, visites...)</li>
-                                    <li>Générez des alertes pour vos commerciaux sur les prospects chauds</li>
-                                    <li>Automatisez les relances et les envois de courriers via routage</li>
-                                </ul>
-                            </li>
-                            
-                            <li class="mt-2">
-                                <strong>Mesurez et optimisez votre ROI :</strong>
-                                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                                    <li>Suivez le taux d'ouverture et les clics des emails</li>
-                                    <li>Calculez le coût d'acquisition par prospect et par client</li>
-                                    <li>Analysez les performances par segment et par canal</li>
-                                    <li>Affinez continuellement votre base de prospection</li>
-                                </ul>
-                            </li>
-                        </ol>
-                        
-                        <p class="mt-4">Cette approche intégrée vous permet de tirer le maximum de valeur de vos fichiers de prospection tout en renforçant votre relation client. Le multicanal améliore considérablement les taux de conversion car il multiplie les points de contact avec vos futurs clients professionnels.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 10 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Comment enrichir et maintenir à jour votre propre base de données professionnelles ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Pour maintenir l'efficacité de vos campagnes et préserver votre relation client, l'enrichissement et la mise à jour de votre database sont essentiels :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">1. Techniques d'enrichissement de vos fichiers :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Enrichissement externe :</strong> Nous pouvons compléter votre fichier avec des données supplémentaires (téléphones, adresses postales, informations sectorielles)</li>
-                            <li><strong>Enrichissement comportemental :</strong> Ajoutez des données sur les interactions avec vos communications (clics, ouvertures, achats)</li>
-                            <li><strong>Qualification progressive :</strong> Améliorez vos fiches clients à chaque interaction commerciale</li>
-                            <li><strong>Données professionnelles :</strong> Complétez avec des informations sur l'entreprise (taille, chiffre d'affaires, etc.)</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">2. Méthodes pour maintenir votre base à jour :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Programmez un nettoyage de base trimestriel pour éliminer les données obsolètes</li>
-                            <li>Traitez immédiatement les retours postaux et les emails non délivrés</li>
-                            <li>Utilisez des formulaires en ligne pour collecter des données actualisées</li>
-                            <li>Mettez en place un processus de validation des données lors des interactions clients</li>
-                            <li>Vérifiez les changements d'adresse et mises à jour NPAI (n'habite plus à l'adresse indiquée)</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">3. Créer un carnet d'adresses unifié :</h4>
-                        <p>Pour constituer une bonne base, centralisez toutes vos sources de données :</p>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Intégrez les données de vos formulaires web</li>
-                            <li>Importez les contacts de votre CRM et outils marketing</li>
-                            <li>Consolidez les fiches prospects issues de différentes campagnes</li>
-                            <li>Fusionnez les données des salons, événements et rencontres professionnelles</li>
-                            <li>Synchronisez avec vos outils de vente et téléphonie</li>
-                        </ul>
-                        
-                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                            <p><strong>Notre service d'enrichissement :</strong> Nous proposons un service de qualification de fichiers qui permet d'enrichir la base de données que vous avez déjà constituée. En analysant vos fiches clients existantes, nous pouvons ajouter des informations manquantes et corriger les données obsolètes pour optimiser vos actions commerciales et campagnes emailing.</p>
-                        </div>
-                        
-                        <p class="mt-4">L'enrichissement constant de votre base client est un investissement stratégique qui améliore votre connaissance client et optimise le retour sur investissement de toutes vos opérations marketing.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 11 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Comment rédiger un email de prospection efficace pour convertir vos fichiers en clients ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>La rédaction d'un email de prospection commerciale efficace est essentielle pour transformer vos contacts en clients qualifiés. Voici nos conseils pour optimiser vos campagnes :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">1. Structurer votre email de prospection :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Objet percutant :</strong> Exemple objet mail prospection efficace : "3 solutions pour optimiser la performance de [Entreprise]"</li>
-                            <li><strong>Phrase d'accroche personnalisée :</strong> Commencez par une phrase d'approche qui montre votre connaissance de leur secteur</li>
-                            <li><strong>Proposition de valeur claire :</strong> Expliquez rapidement le bénéfice principal de votre offre</li>
-                            <li><strong>Preuve sociale :</strong> Mentionnez un résultat obtenu pour une entreprise similaire</li>
-                            <li><strong>Call-to-action précise :</strong> Proposez de fixer un rendez-vous à une date/heure spécifique</li>
-                            <li><strong>Signature professionnelle :</strong> Incluez vos coordonnées complètes et liens professionnels</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">2. Exemples de phrases d'accroche par secteur :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Pour les entreprises de fabrication :</strong> "Après avoir analysé les tendances du secteur de la fabrication de machines, j'ai identifié trois défis majeurs que [Entreprise] pourrait rencontrer cette année..."</li>
-                            <li><strong>Pour les bureaux d'études :</strong> "Votre dernier projet publié sur LinkedIn démontre votre expertise en ingénierie. Nous avons développé un outil qui pourrait réduire de 30% le temps consacré à..."</li>
-                            <li><strong>Pour le commerce de gros :</strong> "Dans un contexte où les marges des grossistes sont sous pression, notre solution a permis à 3 acteurs de votre secteur d'augmenter leur rentabilité de 15%..."</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">3. Exemple mail prospection commerciale complet :</h4>
-                        <div style="background-color: var(--gray-100); padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                            <p style="font-style: italic;"><strong>Objet :</strong> Réduction des coûts opérationnels pour [Entreprise] - Proposition</p>
-                            <p style="font-style: italic;"><strong>Bonjour [Prénom],</strong></p>
-                            <p style="font-style: italic;">En tant que [Fonction] chez [Entreprise], vous cherchez probablement des moyens d'optimiser les coûts opérationnels tout en maintenant la qualité de service.</p>
-                            <p style="font-style: italic;">Nous avons récemment collaboré avec [Entreprise similaire] dans le secteur [Secteur] et avons réussi à réduire leurs coûts de [X%] en seulement 3 mois grâce à notre solution [Nom de la solution].</p>
-                            <p style="font-style: italic;">Concrètement, notre approche permet de :</p>
-                            <ul style="font-style: italic; list-style-type: disc; margin-left: 1.5rem;">
-                                <li>Automatiser les processus chronophages (gain de [X] heures/semaine)</li>
-                                <li>Optimiser la gestion des ressources (économie de [X]€/mois)</li>
-                                <li>Améliorer la productivité des équipes (augmentation de [X]%)</li>
-                            </ul>
-                            <p style="font-style: italic;">Seriez-vous disponible pour un échange de 15 minutes ce jeudi à 10h ou vendredi à 14h pour explorer comment ces bénéfices pourraient s'appliquer à [Entreprise] ?</p>
-                            <p style="font-style: italic;">Dans l'attente de votre retour,</p>
-                            <p style="font-style: italic;">Cordialement,</p>
-                        </div>
-                        
-                        <h4 class="text-lg font-medium mt-4">4. Conseils pour optimiser vos taux de conversion :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Testez différentes phrases d'accroche et objets sur des segments de votre base</li>
-                            <li>Programmez l'envoi à des moments stratégiques (mardi et jeudi matin sont souvent efficaces)</li>
-                            <li>Prévoyez des emails de relance devis pour les prospects qui ont montré un intérêt</li>
-                            <li>Personnalisez au maximum en utilisant les données de votre fichier (secteur, taille, etc.)</li>
-                            <li>Concentrez-vous sur les bénéfices plutôt que sur les caractéristiques techniques</li>
-                        </ul>
-                        
-                        <p class="mt-4">En appliquant ces principes à vos campagnes d'email marketing et en utilisant les techniques de closing commercial adaptées lors des suivis, vous maximiserez la conversion de vos fichiers prospects en clients fidèles.</p>
-                    </div>
-                </div>
-                
-                <!-- Question 12 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3 class="text-xl font-semibold">Quelles sont les spécificités de nos fichiers pour les secteurs de niche ?</h3>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nos bases de données spécialisées couvrent plusieurs secteurs de niche avec un niveau de détail et de qualification supérieur à la moyenne du marché :</p>
-                        
-                        <h4 class="text-lg font-medium mt-4">1. Secteur agricole et agroalimentaire :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Liste des agriculteurs par département :</strong> Base complète avec spécialisation (céréaliers, éleveurs, viticulteurs...)</li>
-                            <li><strong>Liste exploitation agricole par commune :</strong> Données précises incluant taille d'exploitation, productions et équipements</li>
-                            <li><strong>Coopératives agricoles :</strong> Contacts des décideurs et responsables achats</li>
-                            <li><strong>Informations spécifiques :</strong> Surface exploitée, types de cultures, certifications (bio, labels...)</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">2. Secteur de la construction et des travaux publics :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Entreprises travaux public :</strong> Classées par spécialité (terrassement, VRD, génie civil...)</li>
-                            <li><strong>Fabrication de charpentes et structures :</strong> Contacts des responsables techniques et achats</li>
-                            <li><strong>Bureaux d'études :</strong> Spécialisations et projets typiques</li>
-                            <li><strong>Entreprises de dépannage :</strong> Par zone d'intervention et services proposés</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">3. Secteur médical et santé :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Chirurgiens par spécialité :</strong> Base segmentée par type d'intervention et établissement</li>
-                            <li><strong>Fournisseurs de matériel médical :</strong> Décideurs et responsables d'approvisionnement</li>
-                            <li><strong>Cliniques privées :</strong> Contacts des directeurs et responsables achats</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">4. Secteur de l'éducation :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Lycées professionnels :</strong> Contacts des responsables de filières et directeurs</li>
-                            <li><strong>Centres de formation :</strong> Spécialisations et responsables pédagogiques</li>
-                            <li><strong>Écoles supérieures :</strong> Décideurs et responsables des achats</li>
-                        </ul>
-                        
-                        <h4 class="text-lg font-medium mt-4">5. Secteur public et collectivités :</h4>
-                        <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>Email des mairies :</strong> Base complète des contacts municipaux par taille de commune</li>
-                            <li><strong>Administrations publiques :</strong> Contacts des responsables de services et décideurs</li>
-                            <li><strong>Établissements publics :</strong> Segmentés par type et taille</li>
-                        </ul>
-                        
-                        <p class="mt-4">Nos fichiers spécialisés sont particulièrement utiles pour les entreprises ciblant des marchés de niche. Par exemple, si vous vendez des équipements agricoles, notre liste des agriculteurs par département vous permet d'identifier précisément les exploitations correspondant à votre cible idéale.</p>
-                        
-                        <p>Ces bases de données font l'objet d'une mise à jour constante pour garantir leur pertinence. Contrairement aux annuaires génériques, nos fichiers contiennent des informations spécifiques au secteur, permettant une segmentation avancée et des campagnes plus ciblées.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Waitlist -->
+    <section id="signup" class="waitlist-section">
+        <div class="container">
+            <h2 class="section-title">Limited-Time Opportunity</h2>
+            <p class="section-subtitle">Sign up now and get 1,000 verified B2B leads completely free</p>
+           <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
+    <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Sign Up Now</a>
 </div>
+        </div>
     </section>
 
+    <!-- Testimonials -->
+    <section id="testimonials" class="section container">
+        <div class="testimonials-heading">
+            <h2 class="section-title">Trusted by B2B Professionals</h2>
+            <p class="section-subtitle">See how UnlimitedLeads is transforming lead generation for companies worldwide</p>
+        </div>
+        <div class="testimonials">
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"This database has completely transformed our outreach strategy. Within the first week, we booked 6 meetings with perfect-fit prospects. The unlimited access model is brilliant."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AR</div>
+                        <div class="testimonial-info">
+                            <h4>Antonio Romero</h4>
+                            <p>CEO, TechScale Solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The quality of the data is exceptional. 95% of emails are deliverable, and the direct phone numbers actually connect to the right people. Best lead generation investment we've ever made."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JP</div>
+                        <div class="testimonial-info">
+                            <h4>Julien Perrière</h4>
+                            <p>Growth Lead, Metrix Analytics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The one-time payment model is refreshing—no more monthly fees eating into our margins. The lifetime access has been a game-changer."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KK</div>
+                        <div class="testimonial-info">
+                            <h4>Kate Kurnevych</h4>
+                            <p>Sales Director, NovaSphere</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The advanced filtering options are game-changing. We've identified companies using competitors' products that are showing growth signals—perfect timing for our solution. Already closed 3 major deals."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JB</div>
+                        <div class="testimonial-info">
+                            <h4>Joseph Barnard</h4>
+                            <p>VP Business Development, Quantic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Ajout du style CSS pour la FAQ -->
-<style>
-    .faq-accordion {
-        width: 100%;
-    }
-    
-    .faq-item {
-        border-bottom: 1px solid var(--gray-200);
-    }
-    
-    .faq-item:last-child {
-        border-bottom: none;
-    }
-    
-    .faq-question {
-        padding: 1.25rem;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .faq-answer {
-        padding: 0 1.25rem 1.25rem;
-        display: none;
-        color: var(--gray-600);
-    }
-    
-    .faq-item.active .faq-answer {
-        display: block;
-    }
-    
-    .faq-item.active .faq-icon i {
-        transform: rotate(180deg);
-    }
-    
-    .faq-icon i {
-        transition: transform 0.3s ease;
-        color: var(--primary);
-    }
-</style>
-
-<!-- Script JavaScript pour la FAQ -->
-<script>
-    // Fonction pour initialiser l'accordéon FAQ
-    function initFaqAccordion() {
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                // Si l'élément est déjà actif, on le ferme
-                if (item.classList.contains('active')) {
-                    item.classList.remove('active');
-                } else {
-                    // Ferme tous les autres éléments
-                    faqItems.forEach(otherItem => {
-                        otherItem.classList.remove('active');
-                    });
-                    
-                    // Ouvre l'élément cliqué
-                    item.classList.add('active');
-                }
-            });
-        });
-        
-        // Ouvre la première question par défaut
-        if (faqItems.length > 0) {
-            faqItems[0].classList.add('active');
-        }
-    }
-    
-    // Initialise l'accordéon FAQ au chargement
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFaqAccordion);
-    } else {
-        initFaqAccordion();
-    }
-</script>
-
-    
-    
-   <!-- Footer -->
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Don't Miss This Limited-Time Opportunity</h2>
+                <p>Sign up today to claim your 1,000 free verified leads and get immediate access to UnlimitedLeads—the only B2B database with one-time payment and lifetime access.</p>
+                <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
+    <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Get 1000 leads for FREE</a>
+</div>
+            </div>
+        </div>
+    </section>
+<!-- Footer -->
 <footer id="contact" class="footer">
     <div class="container">
         <div class="footer-content">
@@ -1862,475 +1512,14 @@
     </div>
 </footer>
     
-    <!-- Script optimisé avec chargement différé et réduction des opérations DOM -->
-    <script>
-
-        function generateUniqueId() {
-    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
-}
-
-    // Configuration globale définie une seule fois
-    const STRIPE_LINKS = {
-        "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
-        "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
-        "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
-        "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
-        "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
-        "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
-        "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
-        "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
-        "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
-        "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
-        "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
-    };
-    
-    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
-    const PROMO_CODE_WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
-    
-    // Précharge des données de prix pour le tableau
-    const PRICING_DATA = [
-        { count: "500", price: "5€" },
-        { count: "1000", price: "10€" },
-        { count: "2000", price: "20€" },
-        { count: "3000", price: "30€" },
-        { count: "4000", price: "40€" },
-        { count: "5000", price: "50€" },
-        { count: "6000", price: "60€" },
-        { count: "7000", price: "70€" },
-        { count: "8000", price: "80€" },
-        { count: "9000", price: "90€" },
-        { count: "10000", price: "100€" }
-    ];
-    
-    // Fonction d'initialisation optimisée
-    function initApp() {
-        // Utilisation d'une seule fonction d'initialisation pour éviter les répétitions
-        initFormHandlers();
-        initLazyLoading();
-        initPricingTable();
-    }
-    
-    // Gestionnaires d'événements pour le formulaire
-    function initFormHandlers() {
-        const form = document.getElementById('leads-form');
-        const promoCodeInput = document.getElementById('promo-code');
-        const checkPromoButton = document.getElementById('check-promo');
-        const promoMessage = document.getElementById('promo-message');
-        const formCard = document.getElementById('form-card');
-        
-        // Délégation d'événements pour le formulaire
-        if (form) {
-            form.addEventListener('submit', handleFormSubmit);
-        }
-        
-        // Gestionnaire de validation du code promo
-        if (checkPromoButton && promoCodeInput && promoMessage) {
-            checkPromoButton.addEventListener('click', () => {
-                checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
-            });
-        }
-    }
-    
-    // Gestion du chargement différé des images et iframes
-    function initLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const lazyLoadObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const element = entry.target;
-                        if (element.dataset.src) {
-                            element.src = element.dataset.src;
-                            element.removeAttribute('data-src');
-                        }
-                        lazyLoadObserver.unobserve(element);
-                    }
-                });
-            });
-            
-            // Observer les éléments avec data-src
-            document.querySelectorAll('[data-src]').forEach(element => {
-                lazyLoadObserver.observe(element);
-            });
-        } else {
-            // Fallback pour les navigateurs sans IntersectionObserver
-            document.querySelectorAll('[data-src]').forEach(element => {
-                element.src = element.dataset.src;
-            });
-        }
-    }
-    
-    // Initialisation du tableau de prix
-    function initPricingTable() {
-        const pricingTable = document.getElementById('pricing-table');
-        if (!pricingTable) return;
-        
-        // Création du contenu du tableau en une seule opération DOM
-        let tableHTML = '';
-        
-        PRICING_DATA.forEach(plan => {
-            tableHTML += `
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                    <td style="padding: 1rem; text-align: left;"><strong>${plan.count} leads</strong></td>
-                    <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">${plan.price}</td>
-                    <td style="padding: 1rem; text-align: right;">
-                        <button type="button" class="btn btn-primary plan-btn" data-plan="${plan.count}" style="padding: 0.5rem 1rem;">Commander</button>
-                    </td>
-                </tr>
-            `;
-        });
-        
-        pricingTable.innerHTML = tableHTML;
-        
-        // Délégation d'événements pour les boutons de plan
-        pricingTable.addEventListener('click', (e) => {
-            const button = e.target.closest('.plan-btn');
-            if (button) {
-                selectPlan(button.dataset.plan);
-            }
-        });
-    }
-    
-    // FONCTION CORRIGÉE pour la soumission du formulaire principal
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        
-        // Cache les références DOM pour éviter les requêtes DOM répétitives
-        const submitButton = document.getElementById('submit-button');
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const apolloLink = document.getElementById('apollo-link').value;
-        const leadsCount = document.getElementById('leads-count').value;
-        const fileName = document.getElementById('file-name').value;
-        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
-        
-        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
-            alert('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        
-        // Afficher l'état de chargement
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-        
-        const uniqueId = generateUniqueId(); // ✅ create the ID
-
-const formData = {
-    id: uniqueId, // ✅ include in webhook payload
-    name,
-    email,
-    apolloLink,
-    leadsCount,
-    fileName,
-    promoCode,
-    timestamp: new Date().toISOString()
-};
-
-        // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-        
-        try {
-            // Attendre que l'appel API soit terminé
-            const response = await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData),
-                signal: controller.signal
-            });
-            
-            // Nettoyage du timeout
-            clearTimeout(timeoutId);
-            
-            // Vérifier si la réponse est OK (statut 200-299)
-            if (!response.ok) {
-                throw new Error(`Erreur serveur: ${response.status}`);
-            }
-            
-            // Tenter de lire le corps de la réponse comme JSON
-            try {
-                const responseData = await response.json();
-                console.log('Réponse du serveur:', responseData);
-            } catch (jsonError) {
-                // Si le corps n'est pas du JSON, ce n'est pas grave
-                console.log('Réponse reçue mais pas au format JSON');
-            }
-            
-            // Redirection vers Stripe une fois l'appel API réussi
-            if (STRIPE_LINKS[leadsCount]) {
-    const baseUrl = STRIPE_LINKS[leadsCount];
-    const redirectUrl = `${baseUrl}?client_reference_id=${uniqueId}`;
-    window.location.href = redirectUrl;
-}
-
-
-             else {
-                alert('Veuillez sélectionner un nombre de leads valide');
-                // Réinitialiser le bouton en cas d'erreur
-                submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
-            }
-        } catch (error) {
-            // Nettoyage du timeout si ce n'est pas déjà fait
-            clearTimeout(timeoutId);
-            
-            // Gérer l'erreur
-            console.error('Erreur:', error);
-            
-            // Message d'erreur spécifique pour les timeouts
-            if (error.name === 'AbortError') {
-                alert('Le serveur met trop de temps à répondre. Veuillez réessayer.');
-            } else {
-                alert('Une erreur est survenue lors de l\'envoi des données. Veuillez réessayer.');
-            }
-            
-            // Réinitialiser le bouton en cas d'erreur
-            submitButton.disabled = false;
-            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes leads vérifiés';
-        }
-    }
-
-    // FONCTION CORRIGÉE pour la soumission du formulaire gratuit
-    async function handleFreeFormSubmit(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('free-name').value;
-        const email = document.getElementById('free-email').value;
-        const apolloLink = document.getElementById('free-apollo-link').value;
-        const fileName = document.getElementById('free-file-name').value;
-        const promoCode = document.getElementById('free-promo-code').value;
-        
-        if (!name || !email || !apolloLink || !fileName) {
-            alert('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        
-        const submitButton = document.getElementById('free-submit-button');
-        const messageContainer = document.getElementById('free-form-message');
-        
-        // Désactiver le bouton pendant le traitement
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
-        
-        const uniqueId = generateUniqueId(); // Create unique ID
-
-        // Préparation des données pour le webhook
-        const formData = {
-
-            id: uniqueId, // <-- add this line
-            name,
-            email,
-            apolloLink,
-            leadsCount: '100',
-            fileName,
-            promoCode,
-            isFreeOrder: true,
-            timestamp: new Date().toISOString()
-        };
-        
-        // Mise en place du contrôleur d'abandon avec un timeout de 10 secondes
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-        
-        try {
-            // Attendre que l'appel API soit terminé
-            const response = await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData),
-                signal: controller.signal
-            });
-            
-            // Nettoyage du timeout
-            clearTimeout(timeoutId);
-            
-            // Vérifier si la réponse est OK (statut 200-299)
-            if (!response.ok) {
-                throw new Error(`Erreur serveur: ${response.status}`);
-            }
-            
-            // Tenter de lire le corps de la réponse
-            try {
-                const responseData = await response.json();
-                console.log('Réponse du serveur:', responseData);
-            } catch (jsonError) {
-                // Si le corps n'est pas du JSON, ce n'est pas grave
-                console.log('Réponse reçue mais pas au format JSON');
-            }
-            
-            // Redirection vers la page de confirmation uniquement après un appel API réussi
-            window.location.href = "https://unlimited-leads.online/confirmation";
-        } catch (error) {
-            // Nettoyage du timeout si ce n'est pas déjà fait
-            clearTimeout(timeoutId);
-            
-            // Gérer l'erreur de manière détaillée
-            console.error('Erreur:', error);
-            
-            // Message d'erreur plus informatif
-            messageContainer.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i> <strong>Erreur:</strong> ${
-                        error.name === 'AbortError' 
-                        ? 'Le serveur met trop de temps à répondre. Veuillez réessayer.' 
-                        : error.message || 'Une erreur est survenue lors du traitement de votre demande.'
-                    }
-                </div>
-            `;
-            
-            // Réinitialiser le bouton
-            submitButton.disabled = false;
-            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Obtenir mes 1000 leads gratuits';
-        }
-    }
-    
-    // Fonction optimisée pour vérifier les codes promo
-    async function checkPromoCode(code, messageElement, formCardElement) {
-        if (!code) {
-            messageElement.textContent = 'Veuillez entrer un code promo';
-            messageElement.style.color = 'var(--danger)';
-            return;
-        }
-        
-        messageElement.textContent = 'Vérification du code...';
-        messageElement.style.color = 'var(--gray-600)';
-        
-        // Utiliser async/await pour une gestion d'erreurs plus claire
-        try {
-            const response = await fetch(PROMO_CODE_WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({code: code, action: 'check'})
-            });
-            
-            // Vérifier si la réponse est OK
-            if (!response.ok) {
-                throw new Error('Erreur serveur: ' + response.status);
-            }
-            
-            const data = await response.json();
-            
-            if (data.valid) {
-                showFreeLeadsForm(code, formCardElement);
-            } else {
-                showInvalidCodeMessage(data.error || 'Code non valide', messageElement);
-            }
-        } catch (error) {
-            console.error('Erreur lors de la vérification du code:', error);
-            messageElement.textContent = '❌ Erreur lors de la vérification du code';
-            messageElement.style.color = 'var(--danger)';
-        }
-    }
-    
-    // Fonction pour afficher le formulaire de leads gratuits
-    function showFreeLeadsForm(promoCode, formCard) {
-        // Sauvegarde des valeurs du formulaire actuel
-        const formValues = {
-            name: document.getElementById('name')?.value || '',
-            email: document.getElementById('email')?.value || '',
-            apolloLink: document.getElementById('apollo-link')?.value || '',
-            fileName: document.getElementById('file-name')?.value || ''
-        };
-        
-        // Création du HTML pour le formulaire de leads gratuits
-        formCard.innerHTML = `
-            <div class="card-header">
-                <h2 class="text-2xl font-bold mb-2">Obtenez vos 1000 leads gratuits</h2>
-                <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir vos leads vérifiés gratuitement</p>
-                <div class="mt-4">
-                    <span class="badge success-badge">Code Promo Valide: ${promoCode}</span>
-                </div>
-            </div>
-            <div class="card-body">
-                <form id="free-leads-form">
-                    <div class="form-group">
-                        <label for="free-name" class="form-label">Nom *</label>
-                        <input type="text" id="free-name" name="free-name" class="form-control" value="${formValues.name}" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="free-email" class="form-label">Email *</label>
-                        <input type="email" id="free-email" name="free-email" class="form-control" value="${formValues.email}" required>
-                        <small class="form-text">Nous vous enverrons vos leads à cette adresse</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="free-apollo-link" class="form-label">Lien Apollo *</label>
-                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${formValues.apolloLink}" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="free-file-name" class="form-label">Nom du Fichier *</label>
-                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${formValues.fileName}" required>
-                    </div>
-                    
-                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}">
-                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100">
-                    
-                    <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
-                        <i class="fas fa-paper-plane"></i> Obtenir mes 1000 leads gratuits
-                    </button>
-                </form>
-                <div id="free-form-message" class="mt-4"></div>
-            </div>
-        `;
-        
-        // Ajouter le gestionnaire d'événement pour le nouveau formulaire
-        const freeLeadsForm = document.getElementById('free-leads-form');
-        if (freeLeadsForm) {
-            freeLeadsForm.addEventListener('submit', handleFreeFormSubmit);
-        }
-    }
-    
-    // Fonction pour afficher un message d'erreur
-    function showInvalidCodeMessage(errorMessage, promoMessage) {
-        promoMessage.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-times-circle"></i> <strong>Code promo invalide:</strong> ${errorMessage}
-            </div>
-        `;
-    }
-    
-    // Fonction optimisée pour sélectionner un plan
-    function selectPlan(planValue) {
-        const formCard = document.getElementById('form-card');
-        const leadsCountSelect = document.getElementById('leads-count');
-        
-        // Scroll fluide jusqu'au formulaire
-        if (formCard) {
-            formCard.scrollIntoView({behavior: 'smooth', block: 'center'});
-            
-            // Sélectionner l'option dans le dropdown
-            if (leadsCountSelect) {
-                leadsCountSelect.value = planValue;
-                
-                // Focus sur le premier champ vide après le scroll
-                setTimeout(() => {
-                    const nameInput = document.getElementById('name');
-                    if (nameInput && !nameInput.value) {
-                        nameInput.focus();
-                    }
-                }, 800);
-            }
-        }
-    }
-    
-    // Initialisation de l'application au chargement du DOM
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-        initApp();
-    }
-    
-    // Analytics différé
-    window.addEventListener('load', function() {
-        // Chargement différé de Google Analytics
-        setTimeout(() => {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-V6NTYLJ115', { 'send_page_view': true });
-        }, 2000);
-    });
-    </script>
+    <!-- Floating Badge -->
+<div class="floating-badge">
+    <div class="floating-badge-icon">
+        <i class="fas fa-gift"></i>
+    </div>
+    <div class="floating-badge-content">
+        <a href="https://unlimited-leads.online/sign-up" class="btn btn-white">Sign Up Now and Get 1000 FREE Leads</a>
+    </div>
+</div>
 </body>
 </html>
