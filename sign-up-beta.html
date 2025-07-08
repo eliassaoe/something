@@ -298,7 +298,7 @@
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
-                        redirectTo: `${window.location.origin}/app` // Redirect to /app page
+                        redirectTo: `${window.location.origin}/auth/callback` // Page intermédiaire
                     }
                 })
                 
