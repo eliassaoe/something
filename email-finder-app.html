@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Finder - Unlimited Leads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+   <style>
+   /* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #eff6ff;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+:root {
+    /* Color scheme */
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --secondary: #0ea5e9;
+    --secondary-dark: #0284c7;
+    --accent: #0d9488;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Design tokens */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --transition-standard: all 0.3s ease;
+    
+    /* Font families */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--gray-800);
+    line-height: 1.7;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+}
+
+body:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0.8em;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 8px;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.user-credits-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-credits {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.logout-button, .upgrade-button {
+    border-radius: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-standard);
+    font-size: 14px;
+}
+
+.logout-button {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--gray-200);
+}
+
+.upgrade-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    font-weight: 700;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+/* MENU */
+.main-menu {
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 0;
+}
+
+.menu-link {
+    display: inline-block;
+    padding: 18px 28px;
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-standard);
+    font-size: 14px;
+    position: relative;
+}
+
+.menu-link:hover {
+    color: var(--primary);
+}
+
+.menu-item.active .menu-link {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.menu-link i {
+    margin-right: 10px;
+}
+
+/* UPLOAD SECTION */
+.upload-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.upload-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: var(--font-heading);
+    margin-bottom: 1.5rem;
+}
+
+.upload-title:after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    margin-top: 0.75rem;
+    border-radius: 4px;
+}
+
+.info-box {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 18px 20px;
+    margin-bottom: 25px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-box:before {
+    content: '\f05a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 12px;
+    color: var(--primary);
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.info-box-content {
+    flex: 1;
+}
+
+.info-box p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-700);
+}
+
+.info-box ul {
+    margin: 8px 0 0 20px;
+    padding: 0;
+}
+
+.info-box li {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--gray-700);
+}
+
+/* FILE UPLOAD */
+.file-upload-area {
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: 40px 20px;
+    text-align: center;
+    transition: var(--transition-standard);
+    background-color: var(--gray-50);
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.file-upload-area.dragover {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+    transform: scale(1.02);
+}
+
+.file-upload-icon {
+    font-size: 48px;
+    color: var(--gray-400);
+    margin-bottom: 16px;
+}
+
+.file-upload-text {
+    font-size: 16px;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.file-upload-subtext {
+    font-size: 14px;
+    color: var(--gray-500);
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* FILE PREVIEW */
+.file-preview {
+    display: none;
+    background-color: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.file-icon {
+    font-size: 24px;
+    color: var(--success);
+}
+
+.file-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.file-details p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--gray-600);
+}
+
+.column-mapping {
+    margin-bottom: 20px;
+}
+
+.column-mapping h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--gray-800);
+}
+
+.column-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background-color: var(--gray-50);
+    border-radius: var(--radius-sm);
+}
+
+.column-label {
+    font-weight: 500;
+    min-width: 100px;
+    color: var(--gray-700);
+}
+
+.column-select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background-color: white;
+}
+
+.column-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.process-button {
+    background: linear-gradient(135deg, var(--success), #059669);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.process-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.process-button:disabled {
+    background: var(--gray-300);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* LOADING STATES */
+.loading {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--primary);
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    animation: subtle-fade-in 0.5s ease-out;
+}
+
+@keyframes subtle-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.loading i {
+    color: var(--primary);
+    font-size: 40px;
+    margin-bottom: 20px;
+    animation: spin 1.5s linear infinite;
+}
+
+.loading p {
+    color: var(--gray-700);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.loading p:first-of-type {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ALERTS */
+.alert {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin: 15px 0;
+    display: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+.alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    color: var(--warning);
+}
+
+/* DATA PREVIEW TABLE */
+.data-preview {
+    margin-top: 20px;
+    display: none;
+}
+
+.data-preview h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--gray-800);
+}
+
+.preview-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    font-size: 14px;
+}
+
+.preview-table th {
+    background-color: var(--primary-light);
+    color: var(--gray-700);
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.preview-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-800);
+}
+
+.preview-table tr:last-child td {
+    border-bottom: none;
+}
+
+.preview-table tr:hover {
+    background-color: var(--gray-50);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .upload-section {
+        padding: 20px;
+    }
+    
+    .file-upload-area {
+        padding: 30px 15px;
+    }
+    
+    .column-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .column-label {
+        min-width: auto;
+    }
+    
+    /* Header mobile */
+    header {
+        padding: 1rem 0;
+    }
+    
+    .user-credits-container {
+        gap: 8px;
+    }
+    
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+    }
+    
+    /* Menu mobile */
+    .menu-list {
+        justify-content: space-between;
+    }
+    
+    .menu-item {
+        flex: 1;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .upload-title {
+        font-size: 1.5rem;
+    }
+    
+    .file-upload-icon {
+        font-size: 36px;
+    }
+    
+    .file-upload-text {
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <span class="gradient-text">Unlimited Leads</span>
+            </div>
+            <div class="user-credits-container">
+                <div id="userCredits" class="user-credits">
+                    <i class="fas fa-coins"></i> 0 credits
+                </div>
+                <button id="upgradeButton" class="upgrade-button">
+                    <i class="fas fa-crown"></i> Upgrade
+                </button>
+                <button id="logoutButton" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="main-menu">
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="search-leads.html" class="menu-link">
+                        <i class="fas fa-search"></i> Search Leads
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-envelope-open"></i> Email Finder
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
+                        <i class="fas fa-rocket"></i> LinkedIn Scraper
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <section class="upload-section">
+            <h2 class="upload-title">Find Email Addresses</h2>
+            
+            <div id="uploadAlert" class="alert"></div>
+
+            <div class="info-box">
+                <div class="info-box-content">
+                    <p><strong>How it works:</strong> Upload a CSV file with contact information to find their email addresses.</p>
+                    <p><strong>Required columns (in any order):</strong></p>
+                    <ul>
+                        <li><strong>First Name</strong> (or variants: firstname, first_name, fname, given_name)</li>
+                        <li><strong>Last Name</strong> (or variants: lastname, last_name, lname, surname, family_name)</li>
+                        <li><strong>Domain</strong> (or variants: company_domain, website, company_website)</li>
+                    </ul>
+                    <p><strong>Optional columns:</strong> Company Name, Job Title, LinkedIn Profile</p>
+                </div>
+            </div>
+
+            <div class="file-upload-area" id="fileUploadArea">
+                <div class="file-upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="file-upload-text">Drag and drop your CSV file here</div>
+                <div class="file-upload-subtext">or click to browse and select a file</div>
+                <button type="button" class="upload-button" id="uploadButton">
+                    <i class="fas fa-folder-open"></i> Choose File
+                </button>
+            </div>
+
+            <input type="file" id="fileInput" class="file-input" accept=".csv" />
+
+            <div id="filePreview" class="file-preview">
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas fa-file-csv"></i>
+                    </div>
+                    <div class="file-details">
+                        <h4 id="fileName">No file selected</h4>
+                        <p id="fileStats">0 rows, 0 columns</p>
+                    </div>
+                </div>
+
+                <div class="column-mapping">
+                    <h4>Column Mapping</h4>
+                    <div class="column-row">
+                        <span class="column-label">First Name*:</span>
+                        <select id="firstNameColumn" class="column-select">
+                            <option value="">Select column...</option>
+                        </select>
+                    </div>
+                    <div class="column-row">
+                        <span class="column-label">Last Name*:</span>
+                        <select id="lastNameColumn" class="column-select">
+                            <option value="">Select column...</option>
+                        </select>
+                    </div>
+                    <div class="column-row">
+                        <span class="column-label">Domain*:</span>
+                        <select id="domainColumn" class="column-select">
+                            <option value="">Select column...</option>
+                        </select>
+                    </div>
+                    <div class="column-row">
+                        <span class="column-label">Company:</span>
+                        <select id="companyColumn" class="column-select">
+                            <option value="">Select column (optional)...</option>
+                        </select>
+                    </div>
+                    <div class="column-row">
+                        <span class="column-label">Job Title:</span>
+                        <select id="jobTitleColumn" class="column-select">
+                            <option value="">Select column (optional)...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="data-preview" id="dataPreview">
+                    <h4>Data Preview (first 5 rows)</h4>
+                    <table class="preview-table" id="previewTable">
+                        <thead id="previewTableHead"></thead>
+                        <tbody id="previewTableBody"></tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="process-button" id="processButton" disabled>
+                    <i class="fas fa-search"></i> Find Email Addresses
+                </button>
+            </div>
+        </section>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Processing your file and finding email addresses...</p>
+            <p>This may take several minutes depending on the file size. Please keep this page open.</p>
+        </div>
+
+        <section id="resultsSection" class="upload-section" style="display: none;">
+            <h2 class="upload-title">Email Finding Results</h2>
+            
+            <div class="file-info">
+                <div class="file-icon">
+                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                </div>
+                <div class="file-details">
+                    <h4 id="resultsTitle">Email addresses found successfully!</h4>
+                    <p id="resultsStats">Your results will be downloaded automatically.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-content">
+                    <p><strong>Processing Complete!</strong> Your CSV file with found email addresses has been processed.</p>
+                    <p>The results file will download automatically, or you can click the download button below if it doesn't start.</p>
+                </div>
+            </div>
+
+            <button type="button" class="process-button" id="downloadButton" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                <i class="fas fa-download"></i> Download Results
+            </button>
+        </section>
+    </div>
+
+    <script>
+        // Webhook URL for email finding
+        const EMAIL_FINDER_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/email-finder';
+        const CREDIT_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
+        
+        let userToken = null;
+        let uploadedFile = null;
+        let csvData = null;
+        let csvHeaders = [];
+        
+        // DOM Elements
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const filePreview = document.getElementById('filePreview');
+        const fileName = document.getElementById('fileName');
+        const fileStats = document.getElementById('fileStats');
+        const uploadAlert = document.getElementById('uploadAlert');
+        const processButton = document.getElementById('processButton');
+        const loading = document.getElementById('loading');
+        const resultsSection = document.getElementById('resultsSection');
+        
+        // Column mapping selects
+        const firstNameColumn = document.getElementById('firstNameColumn');
+        const lastNameColumn = document.getElementById('lastNameColumn');
+        const domainColumn = document.getElementById('domainColumn');
+        const companyColumn = document.getElementById('companyColumn');
+        const jobTitleColumn = document.getElementById('jobTitleColumn');
+        
+        // Data preview elements
+        const dataPreview = document.getElementById('dataPreview');
+        const previewTable = document.getElementById('previewTable');
+        const previewTableHead = document.getElementById('previewTableHead');
+        const previewTableBody = document.getElementById('previewTableBody');
+        
+        // Token verification function
+        function token_verif() {
+            console.log("Token verification started");
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            let token = urlParams.get('token');
+            
+            if (!token) {
+                token = localStorage.getItem('sessionToken');
+                if (token) {
+                    const currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set('token', token);
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
+            } else {
+                localStorage.setItem('sessionToken', token);
+            }
+            
+            if (!token) {
+                window.location.href = 'https://unlimited-leads.online/en';
+                return;
+            }
+
+            userToken = token;
+            
+            const requestData = {
+                token: token,
+                type: "token"
+            };
+            
+            fetch(CREDIT_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Token verification success:', data);
+                if (data && typeof data.credit === 'number') {
+                    displayUserCredits(data.credit);
+                }
+            })
+            .catch(error => {
+                console.error('Token verification error:', error);
+            });
+        }
+
+        // Display user credits
+        function displayUserCredits(credits) {
+            const creditsElement = document.getElementById('userCredits');
+            if (creditsElement) {
+                creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+            }
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            token_verif();
+            initializeEventListeners();
+        });
+
+        // Initialize all event listeners
+        function initializeEventListeners() {
+            // File upload events
+            fileUploadArea.addEventListener('click', () => fileInput.click());
+            fileUploadArea.addEventListener('dragover', handleDragOver);
+            fileUploadArea.addEventListener('dragleave', handleDragLeave);
+            fileUploadArea.addEventListener('drop', handleFileDrop);
+            uploadButton.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Process button
+            processButton.addEventListener('click', processFile);
+            
+            // Column mapping change events
+            [firstNameColumn, lastNameColumn, domainColumn].forEach(select => {
+                select.addEventListener('change', validateRequiredColumns);
+            });
+            
+            // Navigation buttons
+            setupNavigationButtons();
+        }
+
+        // Setup navigation buttons
+        function setupNavigationButtons() {
+            const upgradeButton = document.getElementById('upgradeButton');
+            if (upgradeButton) {
+                upgradeButton.addEventListener('click', function() {
+                    const token = localStorage.getItem('sessionToken');
+                    if (token) {
+                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                    } else {
+                        window.location.href = 'https://unlimited-leads.online/pricing';
+                    }
+                });
+            }
+            
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    localStorage.removeItem('sessionToken');
+                    window.location.href = 'https://unlimited-leads.online/en';
+                });
+            }
+        }
+
+        // File drag and drop handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+        }
+
+        function handleFileDrop(e) {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0]);
+            }
+        }
+
+        // File selection handler
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFileUpload(file);
+            }
+        }
+
+        // Main file upload handler
+        function handleFileUpload(file) {
+            // Validate file type
+            if (!file.name.toLowerCase().endsWith('.csv')) {
+                showAlert('Please upload a CSV file only.', 'error');
+                return;
+            }
+
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert('File size must be less than 10MB.', 'error');
+                return;
+            }
+
+            uploadedFile = file;
+            fileName.textContent = file.name;
+            
+            // Read and parse CSV
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    parseCSV(e.target.result);
+                } catch (error) {
+                    showAlert('Error reading CSV file: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Parse CSV content
+        function parseCSV(csvContent) {
+            try {
+                const lines = csvContent.split('\n').filter(line => line.trim());
+                
+                if (lines.length < 2) {
+                    showAlert('CSV file must contain at least a header row and one data row.', 'error');
+                    return;
+                }
+
+                // Parse headers
+                csvHeaders = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
+                
+                // Parse data rows
+                csvData = [];
+                for (let i = 1; i < lines.length && i < 100; i++) { // Limit to first 100 rows for preview
+                    const row = parseCSVRow(lines[i]);
+                    if (row.length === csvHeaders.length) {
+                        csvData.push(row);
+                    }
+                }
+
+                if (csvData.length === 0) {
+                    showAlert('No valid data rows found in CSV file.', 'error');
+                    return;
+                }
+
+                // Update file stats
+                fileStats.textContent = `${lines.length - 1} rows, ${csvHeaders.length} columns`;
+                
+                // Setup column mapping
+                setupColumnMapping();
+                
+                // Show preview
+                showDataPreview();
+                
+                // Show file preview section
+                filePreview.style.display = 'block';
+                
+                showAlert('CSV file loaded successfully! Please map the required columns below.', 'success');
+                
+            } catch (error) {
+                showAlert('Error parsing CSV: ' + error.message, 'error');
+            }
+        }
+
+        // Parse a single CSV row handling quotes and commas
+        function parseCSVRow(row) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < row.length; i++) {
+                const char = row[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            result.push(current.trim());
+            return result;
+        }
+
+        // Setup column mapping dropdowns
+        function setupColumnMapping() {
+            const selects = [firstNameColumn, lastNameColumn, domainColumn, companyColumn, jobTitleColumn];
+            
+            // Clear existing options
+            selects.forEach(select => {
+                select.innerHTML = '<option value="">Select column...</option>';
+            });
+
+            // Add header options
+            csvHeaders.forEach((header, index) => {
+                selects.forEach(select => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = header;
+                    select.appendChild(option);
+                });
+            });
+
+            // Auto-detect common column names
+            autoDetectColumns();
+        }
+
+        // Auto-detect common column names
+        function autoDetectColumns() {
+            csvHeaders.forEach((header, index) => {
+                const lowerHeader = header.toLowerCase();
+                
+                // First name detection
+                if (lowerHeader.includes('first') && lowerHeader.includes('name') || 
+                    lowerHeader === 'firstname' || lowerHeader === 'fname' || 
+                    lowerHeader === 'given_name') {
+                    firstNameColumn.value = index;
+                }
+                
+                // Last name detection
+                if (lowerHeader.includes('last') && lowerHeader.includes('name') || 
+                    lowerHeader === 'lastname' || lowerHeader === 'lname' || 
+                    lowerHeader === 'surname' || lowerHeader === 'family_name') {
+                    lastNameColumn.value = index;
+                }
+                
+                // Domain detection
+                if (lowerHeader.includes('domain') || lowerHeader.includes('website') ||
+                    lowerHeader === 'company_domain' || lowerHeader === 'company_website') {
+                    domainColumn.value = index;
+                }
+                
+                // Company detection
+                if (lowerHeader.includes('company') && !lowerHeader.includes('domain') && !lowerHeader.includes('website')) {
+                    companyColumn.value = index;
+                }
+                
+                // Job title detection
+                if (lowerHeader.includes('title') || lowerHeader.includes('position') || lowerHeader.includes('role')) {
+                    jobTitleColumn.value = index;
+                }
+            });
+            
+            // Validate after auto-detection
+            validateRequiredColumns();
+        }
+
+        // Show data preview table
+        function showDataPreview() {
+            // Clear existing content
+            previewTableHead.innerHTML = '';
+            previewTableBody.innerHTML = '';
+
+            // Create header row
+            const headerRow = document.createElement('tr');
+            csvHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            previewTableHead.appendChild(headerRow);
+
+            // Create data rows (first 5)
+            const previewRows = csvData.slice(0, 5);
+            previewRows.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell || 'N/A';
+                    tr.appendChild(td);
+                });
+                previewTableBody.appendChild(tr);
+            });
+
+            dataPreview.style.display = 'block';
+        }
+
+        // Validate required columns are selected
+        function validateRequiredColumns() {
+            const firstName = firstNameColumn.value;
+            const lastName = lastNameColumn.value;
+            const domain = domainColumn.value;
+
+            const isValid = firstName !== '' && lastName !== '' && domain !== '';
+            processButton.disabled = !isValid;
+
+            if (isValid) {
+                processButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
+                showAlert('All required columns mapped! Ready to process.', 'success');
+            } else {
+                processButton.style.background = 'var(--gray-300)';
+            }
+        }
+
+        // Process the file and send to webhook
+        async function processFile() {
+            if (!uploadedFile || !csvData) {
+                showAlert('Please upload a valid CSV file first.', 'error');
+                return;
+            }
+
+            // Validate required columns
+            const firstName = firstNameColumn.value;
+            const lastName = lastNameColumn.value;
+            const domain = domainColumn.value;
+
+            if (firstName === '' || lastName === '' || domain === '') {
+                showAlert('Please map all required columns (First Name, Last Name, Domain).', 'error');
+                return;
+            }
+
+            try {
+                // Show loading
+                loading.style.display = 'block';
+                filePreview.style.display = 'none';
+
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('file', uploadedFile);
+                formData.append('token', userToken);
+                formData.append('firstNameColumn', firstName);
+                formData.append('lastNameColumn', lastName);
+                formData.append('domainColumn', domain);
+                
+                // Add optional columns if selected
+                if (companyColumn.value !== '') {
+                    formData.append('companyColumn', companyColumn.value);
+                }
+                if (jobTitleColumn.value !== '') {
+                    formData.append('jobTitleColumn', jobTitleColumn.value);
+                }
+
+                console.log('Sending file to email finder webhook...');
+
+                // Send to webhook
+                const response = await fetch(EMAIL_FINDER_WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                // Check if response is a file download
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('text/csv')) {
+                    // Handle CSV download
+                    const blob = await response.blob();
+                    downloadFile(blob, `email_results_${uploadedFile.name}`);
+                    showResults();
+                } else {
+                    // Handle JSON response
+                    const result = await response.json();
+                    if (result.success) {
+                        showAlert('Email finding completed successfully!', 'success');
+                        showResults();
+                    } else {
+                        throw new Error(result.message || 'Processing failed');
+                    }
+                }
+
+            } catch (error) {
+                console.error('Processing error:', error);
+                showAlert(`Error processing file: ${error.message}`, 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Download file function
+        function downloadFile(blob, filename) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // Show results section
+        function showResults() {
+            resultsSection.style.display = 'block';
+            
+            // Setup download button if needed
+            const downloadButton = document.getElementById('downloadButton');
+            if (downloadButton) {
+                downloadButton.addEventListener('click', () => {
+                    showAlert('If your download did not start automatically, please contact support.', 'warning');
+                });
+            }
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show alert messages
+        function showAlert(message, type) {
+            uploadAlert.textContent = message;
+            uploadAlert.className = `alert alert-${type}`;
+            uploadAlert.style.display = 'block';
+            
+            // Hide after 5 seconds for success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    uploadAlert.style.display = 'none';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
