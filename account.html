@@ -5,394 +5,617 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account - Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        /* Font imports */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+   <style>
+   /* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
-        /* Custom scrollbar for premium feel */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #eff6ff;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2563eb;
-        }
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #eff6ff;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
 
-        :root {
-            /* Color scheme */
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #eff6ff;
-            --secondary: #0ea5e9;
-            --secondary-dark: #0284c7;
-            --accent: #0d9488;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            
-            /* Design tokens */
-            --radius-sm: 0.5rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 1rem;
-            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
-            --transition-standard: all 0.3s ease;
-            
-            /* Font families */
-            --font-primary: 'Inter', sans-serif;
-            --font-heading: 'Montserrat', sans-serif;
-        }
+:root {
+    /* Color scheme */
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --secondary: #0ea5e9;
+    --secondary-dark: #0284c7;
+    --accent: #0d9488;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Design tokens */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --transition-standard: all 0.3s ease;
+    
+    /* Font families */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-primary);
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
 
-        body {
-            background-color: #ffffff;
-            color: var(--gray-800);
-            line-height: 1.7;
-            font-size: 15px;
-            letter-spacing: 0.01em;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+body {
+    background-color: #ffffff;
+    color: var(--gray-800);
+    line-height: 1.7;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+}
 
-        body:before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-            z-index: -1;
-        }
+body:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
 
-        h1, h2, h3, h4, h5 {
-            font-family: var(--font-heading);
-            line-height: 1.3;
-            font-weight: 700;
-            margin-bottom: 0.8em;
-        }
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0.8em;
+}
 
-        /* HEADER */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid rgba(25, 43, 71, 0.08);
-            margin-bottom: 30px;
-            background-color: white;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            width: 100%;
-        }
+/* HEADER */
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            font-family: var(--font-heading);
-            display: flex;
-            align-items: center;
-        }
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+}
 
-        .logo i {
-            margin-right: 8px;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
+.logo i {
+    margin-right: 8px;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
 
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
+.gradient-text {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
 
-        .back-to-app {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            padding: 10px 18px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-standard);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
+.user-credits-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
 
-        .back-to-app:hover {
-            background-color: var(--primary-light);
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
+.user-credits {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
 
-        /* LOADING */
-        .loading {
-            display: none;
-            background: white;
-            border-radius: 12px;
-            padding: 35px 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid var(--gray-200);
-            border-top: 4px solid var(--primary);
-            max-width: 400px;
-            margin: 30px auto;
-            text-align: center;
-            animation: subtle-fade-in 0.5s ease-out;
-        }
+.logout-button, .upgrade-button {
+    border-radius: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-standard);
+    font-size: 14px;
+    text-decoration: none;
+}
 
-        @keyframes subtle-fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.logout-button {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--gray-200);
+}
 
-        .loading i {
-            color: var(--primary);
-            font-size: 30px;
-            margin-bottom: 15px;
-            animation: spin 1.5s linear infinite;
-        }
+.upgrade-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    font-weight: 700;
+}
 
-        .loading p {
-            color: var(--gray-700);
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0;
-        }
+.logout-button:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
 
-        /* ACCOUNT SECTION */
-        .account-section {
-            background-color: white;
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--gray-100);
-        }
+.logout-button i, .upgrade-button i {
+    font-size: 16px;
+}
 
-        .account-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            font-family: var(--font-heading);
-            margin-bottom: 0.5rem;
-        }
+/* MENU */
+.main-menu {
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
 
-        .account-subtitle {
-            color: var(--gray-600);
-            font-size: 16px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
 
-        .plan-card {
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            margin-bottom: 20px;
-            transition: var(--transition-standard);
-        }
+.menu-item {
+    padding: 0;
+}
 
-        .plan-card.free {
-            border-color: var(--gray-300);
-            background: var(--gray-50);
-        }
+.menu-link {
+    display: inline-block;
+    padding: 18px 28px;
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-standard);
+    font-size: 14px;
+    position: relative;
+}
 
-        .plan-card.paid {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
+.menu-link:hover {
+    color: var(--primary);
+}
 
-        .plan-card.inactive {
-            border-color: var(--danger);
-            background: rgba(239, 68, 68, 0.05);
-        }
+.menu-item.active .menu-link {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
 
-        .plan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
+.menu-link i {
+    margin-right: 10px;
+}
 
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            font-family: var(--font-heading);
-        }
+/* LOADING */
+.loading {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--primary);
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    animation: subtle-fade-in 0.5s ease-out;
+    position: relative;
+}
 
-        .plan-status {
-            padding: 6px 12px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+@keyframes subtle-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        .plan-status.active {
-            background: var(--success);
-            color: white;
-        }
+.loading i {
+    color: var(--primary);
+    font-size: 40px;
+    margin-bottom: 20px;
+    animation: spin 1.5s linear infinite;
+}
 
-        .plan-status.inactive {
-            background: var(--danger);
-            color: white;
-        }
+.loading p {
+    color: var(--gray-700);
+    font-size: 16px;
+    font-weight: 500;
+}
 
-        .plan-status.free {
-            background: var(--gray-300);
-            color: var(--gray-700);
-        }
+.loading p:first-of-type {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+}
 
-        .plan-details {
-            margin-bottom: 25px;
-        }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-        .plan-detail {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
+/* ACCOUNT SECTION */
+.account-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
 
-        .plan-detail i {
-            margin-right: 10px;
-            color: var(--primary);
-            width: 20px;
-        }
+.account-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: var(--font-heading);
+    margin-bottom: 1.5rem;
+}
 
-        .plan-detail.inactive i {
-            color: var(--danger);
-        }
+.account-title:after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    margin-top: 0.75rem;
+    border-radius: 4px;
+}
 
-        .upgrade-button {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 14px 28px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-standard);
-            width: 100%;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-        }
+.account-subtitle {
+    color: var(--gray-600);
+    font-size: 15px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
 
-        .upgrade-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, var(--primary), #1e40af);
-        }
+.plan-card {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 20px;
+    transition: var(--transition-standard);
+}
 
-        .upgrade-button.manage {
-            background: linear-gradient(135deg, var(--accent), #047857);
-        }
+.plan-card.free {
+    border-color: var(--gray-300);
+    background: var(--gray-50);
+}
 
-        .upgrade-button.manage:hover {
-            background: linear-gradient(135deg, #047857, #065f46);
-            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.4);
-        }
+.plan-card.paid {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .account-section {
-                padding: 25px;
-            }
-            
-            .account-title {
-                font-size: 1.75rem;
-            }
-            
-            .plan-header {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-            }
-            
-            .plan-name {
-                font-size: 1.25rem;
-            }
-        }
+.plan-card.inactive {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.05);
+}
 
-        /* Error state */
-        .error-message {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            margin: 15px 0;
-            font-size: 14px;
-            font-weight: 500;
-            text-align: center;
-        }
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.plan-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: var(--font-heading);
+}
+
+.plan-status {
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.plan-status.active {
+    background: var(--success);
+    color: white;
+}
+
+.plan-status.inactive {
+    background: var(--danger);
+    color: white;
+}
+
+.plan-status.free {
+    background: var(--gray-300);
+    color: var(--gray-700);
+}
+
+.plan-details {
+    margin-bottom: 25px;
+}
+
+.plan-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.plan-detail i {
+    margin-right: 10px;
+    color: var(--primary);
+    width: 20px;
+}
+
+.plan-detail.inactive i {
+    color: var(--danger);
+}
+
+.plan-upgrade-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.plan-upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+.plan-upgrade-button.manage {
+    background: linear-gradient(135deg, var(--accent), #047857);
+}
+
+.plan-upgrade-button.manage:hover {
+    background: linear-gradient(135deg, #047857, #065f46);
+    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.4);
+}
+
+/* Error state */
+.error-message {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin: 15px 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .loading {
+        margin: 15px auto;
+        padding: 25px 20px;
+        max-width: calc(100vw - 30px);
+    }
+    
+    .loading p:first-of-type {
+        font-size: 18px;
+    }
+    
+    /* Header mobile */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+    }
+    
+    .user-credits-container {
+        gap: 8px;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+        min-height: 44px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Menu mobile */
+    .menu-list {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        width: 33.33%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Account section mobile */
+    .account-section {
+        padding: 20px;
+    }
+    
+    .account-title {
+        font-size: 1.5rem;
+    }
+    
+    .plan-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .plan-name {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    .account-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container { 
+        padding: 0 1.5rem; 
+    }
+    
+    .account-title { 
+        font-size: 1.5rem; 
+    }
+}
+        
     </style>
 </head>
 <body>
+    
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-users"></i>
-                <span class="gradient-text">Unlimited Leads</span>
+            <div class="user-credits-container">
+                <div id="userCredits" class="user-credits">
+                    <i class="fas fa-coins"></i> 0 credits
+                </div>
+                <a href="https://unlimited-leads.online/pricing" id="upgradeButton" class="upgrade-button">
+                    <i class="fas fa-crown"></i> Upgrade
+                </a>
+                <button id="logoutButton" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
-            <a href="https://unlimited-leads.online/app" class="back-to-app">
-                <i class="fas fa-arrow-left"></i> Back to App
-            </a>
         </header>
+
+        <div class="main-menu">
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="https://unlimited-leads.online/app" class="menu-link">
+                        <i class="fas fa-search"></i> Search Leads
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
+                        <i class="fas fa-rocket"></i> Scrapper Linkedin
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-user"></i> Account
+                    </a>
+                </li>
+            </ul>
+        </div>
 
         <div id="loading" class="loading">
             <i class="fas fa-spinner"></i>
             <p>Loading your account information...</p>
+            <p>Please wait...</p>
         </div>
 
         <div id="errorMessage" class="error-message" style="display: none;">
@@ -400,14 +623,14 @@
         </div>
 
         <section id="accountSection" class="account-section" style="display: none;">
-            <h1 class="account-title">Your Account</h1>
+            <h2 class="account-title">Your Plan</h2>
             <p class="account-subtitle">
                 We use Stripe to process payments. Your credit card information is never stored on our servers.
             </p>
 
             <div id="planCard" class="plan-card free">
                 <div class="plan-header">
-                    <h2 id="planName" class="plan-name">Free Plan</h2>
+                    <h3 id="planName" class="plan-name">Free Plan</h3>
                     <span id="planStatus" class="plan-status free">Free</span>
                 </div>
                 
@@ -426,7 +649,7 @@
                     </div>
                 </div>
 
-                <a href="https://unlimited-leads.online/pricing" id="upgradeButton" class="upgrade-button">
+                <a href="https://unlimited-leads.online/pricing" id="planUpgradeButton" class="plan-upgrade-button">
                     <i class="fas fa-crown"></i>
                     Upgrade Plan
                 </a>
@@ -441,7 +664,36 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log("Account page loaded, checking token...");
             checkTokenAndLoadPlan();
+            setupEventListeners();
         });
+
+        /**
+         * Setup event listeners for buttons
+         */
+        function setupEventListeners() {
+            // Add event listener for the upgrade button in header
+            const upgradeButton = document.getElementById('upgradeButton');
+            if (upgradeButton) {
+                upgradeButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const token = localStorage.getItem('sessionToken');
+                    if (token) {
+                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                    } else {
+                        window.location.href = 'https://unlimited-leads.online/pricing';
+                    }
+                });
+            }
+            
+            // Add event listener for the logout button
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    localStorage.removeItem('sessionToken');
+                    window.location.href = 'https://unlimited-leads.online/en';
+                });
+            }
+        }
 
         /**
          * Check for token and load plan information
@@ -478,8 +730,46 @@
 
             userToken = token;
             
-            // Load plan information
+            // Load user credits and plan information
+            loadUserCredits();
             loadPlanInformation();
+        }
+
+        /**
+         * Load user credits for header display
+         */
+        async function loadUserCredits() {
+            try {
+                const response = await fetch('https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: userToken,
+                        type: "token"
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && typeof data.credit === 'number') {
+                        displayUserCredits(data.credit);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user credits:', error);
+            }
+        }
+
+        /**
+         * Display user credits in header
+         */
+        function displayUserCredits(credits) {
+            const creditsElement = document.getElementById('userCredits');
+            if (creditsElement) {
+                creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+            }
         }
 
         /**
@@ -546,11 +836,11 @@
             const planStatus = document.getElementById('planStatus');
             const creditsInfo = document.getElementById('creditsInfo');
             const renewalInfo = document.getElementById('renewalInfo');
-            const upgradeButton = document.getElementById('upgradeButton');
+            const planUpgradeButton = document.getElementById('planUpgradeButton');
             
             // Set plan name
             const displayPlanName = planData.plan_name || 'Free';
-            planName.textContent = `${displayPlanName} Plan`;
+            planName.textContent = `Current plan: ${displayPlanName}`;
             
             // Set credits info
             const credits = planData.credits_per_month || 0;
@@ -571,9 +861,9 @@
                 renewalInfo.textContent = 'No automatic renewal';
                 
                 // Update upgrade button
-                upgradeButton.innerHTML = '<i class="fas fa-crown"></i> Upgrade Plan';
-                upgradeButton.href = 'https://unlimited-leads.online/pricing';
-                upgradeButton.className = 'upgrade-button';
+                planUpgradeButton.innerHTML = '<i class="fas fa-crown"></i> Upgrade Plan';
+                planUpgradeButton.href = 'https://unlimited-leads.online/pricing';
+                planUpgradeButton.className = 'plan-upgrade-button';
                 
             } else if (status === 'active') {
                 // Active paid plan
@@ -583,9 +873,9 @@
                 renewalInfo.textContent = 'Auto-renews monthly';
                 
                 // Update button to manage subscription
-                upgradeButton.innerHTML = '<i class="fas fa-cog"></i> Manage Subscription';
-                upgradeButton.href = 'https://unlimited-leads.online/pricing';
-                upgradeButton.className = 'upgrade-button manage';
+                planUpgradeButton.innerHTML = '<i class="fas fa-cog"></i> Manage Subscription';
+                planUpgradeButton.href = 'https://unlimited-leads.online/pricing';
+                planUpgradeButton.className = 'plan-upgrade-button manage';
                 
             } else if (status === 'inactive') {
                 // Inactive paid plan
@@ -595,15 +885,15 @@
                 renewalInfo.textContent = 'Subscription expired';
                 
                 // Update button to reactivate
-                upgradeButton.innerHTML = '<i class="fas fa-refresh"></i> Reactivate Plan';
-                upgradeButton.href = 'https://unlimited-leads.online/pricing';
-                upgradeButton.className = 'upgrade-button';
+                planUpgradeButton.innerHTML = '<i class="fas fa-refresh"></i> Reactivate Plan';
+                planUpgradeButton.href = 'https://unlimited-leads.online/pricing';
+                planUpgradeButton.className = 'plan-upgrade-button';
             }
             
             // Add token to upgrade button URL if it doesn't already have it
-            if (userToken && !upgradeButton.href.includes('token=')) {
-                const separator = upgradeButton.href.includes('?') ? '&' : '?';
-                upgradeButton.href += `${separator}token=${userToken}`;
+            if (userToken && !planUpgradeButton.href.includes('token=')) {
+                const separator = planUpgradeButton.href.includes('?') ? '&' : '?';
+                planUpgradeButton.href += `${separator}token=${userToken}`;
             }
         }
     </script>
