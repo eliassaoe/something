@@ -1487,28 +1487,20 @@
                 formData.append('token', userToken);
                 formData.append('job_id', job.id);
                 
-                // Add column indexes (existing)
-                formData.append('firstNameColumn', firstName);
-                formData.append('lastNameColumn', lastName);
-                formData.append('domainColumn', domain);
+                // 🔥 Send actual column names instead of indexes
+                formData.append('firstNameColumn', csvHeaders[firstName]);
+                formData.append('lastNameColumn', csvHeaders[lastName]);
+                formData.append('domainColumn', csvHeaders[domain]);
                 
-                // 🔥 NEW: Add actual column names from CSV headers
-                formData.append('firstNameColumnName', csvHeaders[firstName]);
-                formData.append('lastNameColumnName', csvHeaders[lastName]);
-                formData.append('domainColumnName', csvHeaders[domain]);
-                
-                // Add optional columns if selected (with their names)
+                // Add optional columns if selected (send column names)
                 if (companyColumn.value !== '') {
-                    formData.append('companyColumn', companyColumn.value);
-                    formData.append('companyColumnName', csvHeaders[companyColumn.value]);
+                    formData.append('companyColumn', csvHeaders[companyColumn.value]);
                 }
                 if (jobTitleColumn.value !== '') {
-                    formData.append('jobTitleColumn', jobTitleColumn.value);
-                    formData.append('jobTitleColumnName', csvHeaders[jobTitleColumn.value]);
+                    formData.append('jobTitleColumn', csvHeaders[jobTitleColumn.value]);
                 }
 
-                // Also send all headers for server reference
-                formData.append('csvHeaders', JSON.stringify(csvHeaders));
+                // Send metadata
                 formData.append('totalRows', job.total_rows);
 
                 console.log('Sending file to email finder webhook...');
