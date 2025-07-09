@@ -1480,6 +1480,13 @@ header {
             <label for="keywords">Keywords</label>
             <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech">
         </div>
+
+        <div class="form-group">
+    <label for="hasEmail">
+        <input type="checkbox" id="hasEmail" name="hasEmail" style="margin-right: 8px;">
+        Has email only
+    </label>
+</div>
                 
         <div class="form-group">
             <button type="submit" class="search-button">
@@ -2080,6 +2087,7 @@ async function handleSearch(e) {
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
+        const hasEmail = document.getElementById('hasEmail').checked ? 'yes' : 'no';
         
         // If search criteria are provided, filter the data
         if (country || industry || companyName || keywords) {
@@ -2094,7 +2102,8 @@ async function handleSearch(e) {
                         keywords,
                         jobtitle: jobTitle,  
                         companysize: companySize,
-                        city: city
+                        city: city,
+                        hasemail: hasEmail
                     },
                     limit: 1000
                 };
@@ -2238,7 +2247,8 @@ async function exportToCSV() {
                         keywords: document.getElementById('keywords').value,
                         city: document.getElementById('city').value,
                         jobtitle: document.getElementById('jobTitle').value,
-                        companysize: document.getElementById('companySize').value
+                        companysize: document.getElementById('companySize').value,
+                        hasemail: document.getElementById('hasEmail').checked ? 'yes' : 'no'
                     }
                 };
                 
