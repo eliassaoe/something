@@ -1614,11 +1614,8 @@
             currentJob.progress = 100;
             currentJob.completed_at = new Date().toISOString();
             
-            // Set emails found if not already set (realistic success rate: 60-85%)
-            if (!currentJob.emails_found) {
-                const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
-                currentJob.emails_found = Math.floor(currentJob.total_rows * successRate);
-            }
+            // Don't set emails_found - will be known when downloaded
+            currentJob.emails_found = null;
             
             // Save updated job
             saveJob(currentJob);
@@ -1632,7 +1629,7 @@
             }, 2000);
 
             showAlert('Email finding completed successfully!', 'success');
-            showNotification(`Found ${currentJob.emails_found} email addresses! Click download to get your results.`, 'success');
+            showNotification('Email finding completed! Click download to get your results.', 'success');
         }
 
         // ========================================
@@ -1686,11 +1683,8 @@
                         job.progress = 100;
                         job.completed_at = new Date().toISOString();
                         
-                        // Set realistic email success rate if not already set
-                        if (!job.emails_found) {
-                            const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
-                            job.emails_found = Math.floor(job.total_rows * successRate);
-                        }
+                        // Don't set emails_found - will be known when downloaded
+                        job.emails_found = null;
                         
                         saveJob(job);
                         anyJobUpdated = true;
@@ -1826,7 +1820,7 @@
                                     </span>
                                 </td>
                                 <td>${job.total_rows || '—'}</td>
-                                <td>${job.emails_found || '—'}</td>
+                                <td>${job.emails_found !== null ? job.emails_found : (job.status === 'completed' ? 'Download to see' : '—')}</td>
                                 <td>
                                     <div class="action-buttons">
                                         ${job.status === 'completed' ? 
