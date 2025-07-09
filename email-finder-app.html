@@ -1378,17 +1378,18 @@
             csvHeaders.forEach((header, index) => {
                 const lowerHeader = header.toLowerCase();
                 
-                // First name detection
+                // First name detection (now works with cleaned headers)
                 if (lowerHeader.includes('first') && lowerHeader.includes('name') || 
-                    lowerHeader === 'firstname' || lowerHeader === 'fname' || 
-                    lowerHeader === 'given_name') {
+                    lowerHeader === 'firstname' || lowerHeader === 'first_name' || 
+                    lowerHeader === 'fname' || lowerHeader === 'given_name') {
                     firstNameColumn.value = index;
                 }
                 
                 // Last name detection
                 if (lowerHeader.includes('last') && lowerHeader.includes('name') || 
-                    lowerHeader === 'lastname' || lowerHeader === 'lname' || 
-                    lowerHeader === 'surname' || lowerHeader === 'family_name') {
+                    lowerHeader === 'lastname' || lowerHeader === 'last_name' ||
+                    lowerHeader === 'lname' || lowerHeader === 'surname' || 
+                    lowerHeader === 'family_name') {
                     lastNameColumn.value = index;
                 }
                 
