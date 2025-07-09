@@ -1067,6 +1067,7 @@
     <script>
         // Configuration
         const EMAIL_FINDER_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/email-finder';
+        const GET_FOUND_EMAIL_URL = 'https://eliasse-n8n.onrender.com/webhook/get-found-email';
         const CREDIT_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
         const CHECK_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/check';
         const DOWNLOAD_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/download';
@@ -1724,19 +1725,40 @@
         
         async function downloadFile(jobId) {
             try {
-                showAlert('Download starting...', 'info');
+                showAlert('Preparing download...', 'info');
+                
+                // Step 1: Get job details from the new API endpoint
+                console.log('Getting job details for job ID:', jobId);
+                const getJobUrl = `${GET_FOUND_EMAIL_URL}?job_id=${jobId}`;
+                
+                const jobResponse = await fetch(getJobUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!jobResponse.ok) {
+                    throw new Error(`Failed to get job details: ${jobResponse.status}`);
+                }
+                
+                const jobData = await jobResponse.json();
+                console.log('Job details retrieved:', jobData);
+                
+                // Step 2: Proceed with download using the existing endpoint
+                showAlert('Starting download...', 'info');
                 
                 const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
                 console.log('Downloading from:', downloadUrl);
                 
-                const response = await fetch(downloadUrl);
+                const downloadResponse = await fetch(downloadUrl);
                 
-                if (!response.ok) {
-                    throw new Error(`Failed to download: ${response.status}`);
+                if (!downloadResponse.ok) {
+                    throw new Error(`Failed to download: ${downloadResponse.status}`);
                 }
                 
                 // Get the blob (file)
-                const blob = await response.blob();
+                const blob = await downloadResponse.blob();
                 
                 // Create temporary download link
                 const url = window.URL.createObjectURL(blob);
@@ -1750,7 +1772,18 @@
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
                 
-                showAlert('Download successful!', 'success');
+                showAlert('Download completed successfully!', 'success');
+                
+                // Update local job data if we have more accurate info from the API
+                if (jobData && jobData.emails_found !== undefined) {
+                    const jobs = getAllJobs();
+                    const jobIndex = jobs.findIndex(job => job.id === jobId);
+                    if (jobIndex >= 0) {
+                        jobs[jobIndex].emails_found = jobData.emails_found;
+                        saveJobs(jobs);
+                        loadJobHistory(); // Refresh the table with updated data
+                    }
+                }
                 
             } catch (error) {
                 console.error('Download error:', error);
