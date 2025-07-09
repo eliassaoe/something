@@ -1725,40 +1725,22 @@
         
         async function downloadFile(jobId) {
             try {
-                showAlert('Preparing download...', 'info');
-                
-                // Step 1: Get job details from the new API endpoint
-                console.log('Getting job details for job ID:', jobId);
-                const getJobUrl = `${GET_FOUND_EMAIL_URL}?job_id=${jobId}`;
-                
-                const jobResponse = await fetch(getJobUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!jobResponse.ok) {
-                    throw new Error(`Failed to get job details: ${jobResponse.status}`);
-                }
-                
-                const jobData = await jobResponse.json();
-                console.log('Job details retrieved:', jobData);
-                
-                // Step 2: Proceed with download using the existing endpoint
                 showAlert('Starting download...', 'info');
                 
-                const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
-                console.log('Downloading from:', downloadUrl);
+                // Call the new API endpoint that returns the CSV file directly
+                console.log('Downloading CSV file for job ID:', jobId);
+                const downloadUrl = `${GET_FOUND_EMAIL_URL}?job_id=${jobId}`;
                 
-                const downloadResponse = await fetch(downloadUrl);
+                const response = await fetch(downloadUrl, {
+                    method: 'GET'
+                });
                 
-                if (!downloadResponse.ok) {
-                    throw new Error(`Failed to download: ${downloadResponse.status}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to download: ${response.status}`);
                 }
                 
-                // Get the blob (file)
-                const blob = await downloadResponse.blob();
+                // Get the blob (CSV file)
+                const blob = await response.blob();
                 
                 // Create temporary download link
                 const url = window.URL.createObjectURL(blob);
@@ -1773,17 +1755,6 @@
                 document.body.removeChild(a);
                 
                 showAlert('Download completed successfully!', 'success');
-                
-                // Update local job data if we have more accurate info from the API
-                if (jobData && jobData.emails_found !== undefined) {
-                    const jobs = getAllJobs();
-                    const jobIndex = jobs.findIndex(job => job.id === jobId);
-                    if (jobIndex >= 0) {
-                        jobs[jobIndex].emails_found = jobData.emails_found;
-                        saveJobs(jobs);
-                        loadJobHistory(); // Refresh the table with updated data
-                    }
-                }
                 
             } catch (error) {
                 console.error('Download error:', error);
