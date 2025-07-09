@@ -1482,10 +1482,11 @@ header {
         </div>
 
         <div class="form-group">
-    <label for="hasEmail">
-        <input type="checkbox" id="hasEmail" name="hasEmail" style="margin-right: 8px;">
-        Has email only
-    </label>
+    <label for="hasEmail">Has Email:</label>
+    <select id="hasEmail" name="hasEmail">
+        <option value="">All contacts</option>
+        <option value="yes">Has email only</option>
+    </select>
 </div>
                 
         <div class="form-group">
@@ -2087,7 +2088,7 @@ async function handleSearch(e) {
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
-        const hasEmail = document.getElementById('hasEmail').checked ? 'yes' : 'no';
+        const hasEmail = document.getElementById('hasEmail').value;
         
         // If search criteria are provided, filter the data
         if (country || industry || companyName || keywords) {
@@ -2248,7 +2249,7 @@ async function exportToCSV() {
                         city: document.getElementById('city').value,
                         jobtitle: document.getElementById('jobTitle').value,
                         companysize: document.getElementById('companySize').value,
-                        hasemail: document.getElementById('hasEmail').checked ? 'yes' : 'no'
+                        hasemail: document.getElementById('hasEmail').value 
                     }
                 };
                 
@@ -2658,7 +2659,8 @@ async function fetchTotalCount() {
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
         companysize: document.getElementById('companySize').value,
-          city: document.getElementById('city').value
+        city: document.getElementById('city').value,
+        hasemail: document.getElementById('hasEmail').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
