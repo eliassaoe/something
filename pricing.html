@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UnlimitedLeads | Premium B2B Database & Contact Platform</title>
-    <meta name="description" content="UnlimitedLeads - Access 450M+ verified B2B contacts with 60K-120K annual leads." />
+    <meta name="description" content="UnlimitedLeads - Access 450M+ verified B2B contacts with unlimited exports." />
 
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -150,37 +150,6 @@
             justify-content: space-between; 
             align-items: center; 
         }
-        .nav-links { 
-            display: flex; 
-            gap: 2rem; 
-            font-weight: 500; 
-        }
-        .nav-link {
-            color: var(--gray-700);
-            transition: color 0.2s ease;
-            position: relative;
-        }
-        .nav-link:hover {
-            color: var(--primary);
-        }
-        .nav-link:after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover:after {
-            width: 100%;
-        }
-        .cta-group { 
-            display: flex; 
-            gap: 1rem; 
-            align-items: center;
-        }
         .logo-text { 
             font-size: 1.5rem; 
             font-weight: 800;
@@ -200,68 +169,28 @@
             position: relative;
             overflow: hidden;
         }
-        .page-header:before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 1;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
         .page-header h1 {
             font-size: 3rem;
             color: var(--gray-900);
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
         }
         .page-header p {
             font-size: 1.25rem;
             color: var(--gray-600);
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         /* Pricing Cards */
         #pricing {
-            position: relative;
-            overflow: hidden;
-            padding-top: 4rem;
-            padding-bottom: 6rem;
-        }
-        #pricing:before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(58,79,231,0.05), rgba(14,165,233,0.05));
-            top: -100px;
-            left: -100px;
-            z-index: -1;
-        }
-        #pricing:after {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(14,165,233,0.05), rgba(58,79,231,0.05));
-            bottom: -100px;
-            right: -100px;
-            z-index: -1;
+            padding: 4rem 0 6rem;
         }
         .pricing-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
             gap: 3rem; 
             margin-top: 2rem; 
-            max-width: 1000px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -308,14 +237,11 @@
             color: var(--gray-900);
             margin-bottom: 1.5rem;
             display: block;
-            position: relative;
         }
         .pricing-amount small {
             font-size: 1rem;
             font-weight: 400;
             color: var(--gray-600);
-            position: absolute;
-            top: 12px;
         }
         .pricing-description {
             margin-bottom: 2rem;
@@ -339,14 +265,10 @@
             color: var(--accent);
             font-weight: 700;
         }
-        .leads-count {
-            font-weight: 700;
-            color: var(--gray-900);
-        }
         .pricing-cta {
             width: 100%;
         }
-        .savings-badge {
+        .trial-badge {
             background: var(--success);
             color: white;
             font-size: 0.8rem;
@@ -355,14 +277,6 @@
             border-radius: 100px;
             display: inline-block;
             margin-bottom: 1rem;
-        }
-        .competitor-comparison {
-            background: var(--gray-50);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--gray-600);
         }
 
         /* Features */
@@ -381,8 +295,6 @@
             padding: 2rem; 
             border-radius: var(--border-radius); 
             box-shadow: var(--box-shadow); 
-            position: relative;
-            overflow: hidden;
             transition: transform 0.4s ease;
             border: 1px solid var(--gray-100);
         }
@@ -408,10 +320,6 @@
             font-size: 1.35rem; 
             margin-bottom: 1rem; 
             color: var(--gray-900); 
-        }
-        .feature-card p {
-            color: var(--gray-600);
-            margin-bottom: 0;
         }
 
         /* FAQ Section */
@@ -457,97 +365,12 @@
             max-height: 500px;
         }
 
-        /* Testimonials */
-        .testimonials-section {
-            background: var(--gray-50);
-            padding: 5rem 0;
-        }
-        .testimonials { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 3rem; 
-        }
-        .testimonial { 
-            background: white; 
-            padding: 2rem; 
-            border-radius: var(--border-radius); 
-            box-shadow: var(--box-shadow);
-            position: relative;
-            border: 1px solid var(--gray-100);
-        }
-        .testimonial:after {
-            content: """;
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 5rem;
-            line-height: 1;
-            font-family: serif;
-            color: var(--gray-200);
-            z-index: 0;
-        }
-        .testimonial-content {
-            position: relative;
-            z-index: 1;
-        }
-        .testimonial-text { 
-            font-style: italic; 
-            margin-bottom: 1.5rem;
-            color: var(--gray-700);
-        }
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        .testimonial-info h4 { 
-            font-weight: 600; 
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-        .testimonial-info p {
-            color: var(--gray-600);
-            margin-bottom: 0;
-            font-size: 0.9rem;
-        }
-
         /* CTA Section */
         .cta-section {
             background: linear-gradient(to right, var(--primary-dark), var(--primary));
             color: white;
             text-align: center;
             padding: 5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 1.343-3 3 1.343 3 3 3z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .cta-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
         }
         .cta-content h2 {
             font-size: 2.5rem;
@@ -558,11 +381,6 @@
             margin-bottom: 2rem;
             opacity: 0.9;
         }
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
         .btn-white {
             background: white;
             color: var(--primary);
@@ -570,84 +388,6 @@
         .btn-white:hover {
             background: var(--gray-100);
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Comparison Table */
-        .comparison-section {
-            padding: 5rem 0;
-        }
-        .comparison-table-container {
-            overflow-x: auto;
-            margin-top: 3rem;
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
-        .comparison-table th, 
-        .comparison-table td {
-            padding: 1.25rem 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        .comparison-table thead th {
-            background: var(--gray-900);
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .comparison-table thead th:first-child {
-            border-top-left-radius: var(--border-radius);
-        }
-        .comparison-table thead th:last-child {
-            border-top-right-radius: var(--border-radius);
-        }
-        .comparison-table tbody tr:nth-child(even) {
-            background: var(--gray-50);
-        }
-        .comparison-table tbody tr:hover {
-            background: var(--primary-light);
-        }
-        .comparison-table td:first-child {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-        .check-icon {
-            color: var(--success);
-            font-size: 1.25rem;
-        }
-        .cross-icon {
-            color: var(--danger);
-            font-size: 1.25rem;
-        }
-        .highlight-cell {
-            background-color: rgba(37, 99, 235, 0.1);
-            position: relative;
-            font-weight: 600;
-        }
-        .plan-column {
-            min-width: 180px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        .recommended-badge {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            font-weight: 600;
         }
 
         /* Footer */
@@ -666,15 +406,6 @@
             color: white;
             font-size: 1.25rem;
             margin-bottom: 1.5rem;
-            position: relative;
-        }
-        .footer-column h4:after {
-            content: "";
-            display: block;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-            margin-top: 0.75rem;
         }
         .footer-links {
             list-style: none;
@@ -695,177 +426,23 @@
             text-align: center;
             color: var(--gray-300);
         }
-        .footer-social {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        .footer-social a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        /* Limited offer banner */
-        .limited-offer {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-        .limited-offer:before {
-            content: "PREMIUM VALUE";
-            position: absolute;
-            background: var(--warning);
-            color: var(--gray-900);
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.2rem 2rem;
-            top: 0.5rem;
-            left: -1.5rem;
-            transform: rotate(-45deg);
-        }
-
-        /* Urgency badges */
-        .urgency-badge {
-            background: var(--primary);
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        
-        /* Billing Toggle Styles */
-        .billing-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            background: var(--gray-100);
-            padding: 0.5rem;
-            border-radius: 50px;
-            display: inline-flex;
-            margin-bottom: 2rem;
-        }
-        .billing-option {
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .billing-option.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-        .billing-option:not(.active) {
-            color: var(--gray-600);
-        }
-        .billing-option:not(.active):hover {
-            color: var(--primary);
-        }
-        .savings-indicator {
-            background: var(--success);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 100px;
-            margin-left: 0.5rem;
-            font-weight: 700;
-        }
-        .billing-option.active .savings-indicator {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        /* Price Animation */
-        .pricing-amount {
-            transition: all 0.3s ease;
-        }
-        .competitor-comparison {
-            transition: all 0.3s ease;
-        }
 
         /* Responsive styles */
         @media (max-width: 992px) {
-            .header-content { 
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-            }
-            .logo-link {
-                margin-right: auto;
-            }
-            .nav-links { 
-                display: none;
-            }
-            .cta-group {
-                margin-left: auto;
-            }
             .page-header { padding: 3rem 0; }
             .page-header h1 { font-size: 2rem; }
-            .page-header p { font-size: 1.1rem; }
-            
             .pricing-card {
                 padding: 2rem 1.5rem;
             }
-            .pricing-amount {
-                font-size: 2.5rem;
-            }
-            .cta-buttons { 
-                flex-direction: column; 
-                align-items: center;
-                gap: 1rem;
-            }
-            .cta-buttons .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            .features, .testimonials {
+            .features {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
         }
         
-        /* Small mobile devices */
         @media (max-width: 480px) {
             .container { padding: 0 1rem; }
             .page-header h1 { font-size: 1.75rem; }
-            .cta-group .btn {
-                padding: 0.65rem 1rem;
-                font-size: 0.9rem;
-            }
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            .limited-offer {
-                font-size: 0.9rem;
-                padding: 0.75rem;
-            }
         }
     </style>
 </head>
@@ -880,105 +457,52 @@
         </div>
     </header>
 
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Choose Your Plan</h1>
+            <p>Simple, transparent pricing. Start with 250 free leads, no credit card required.</p>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section id="pricing" class="container">
-        <!-- Billing Toggle -->
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <div class="billing-toggle">
-                <span class="billing-option" id="monthly-toggle">monthly</span>
-                <div class="toggle-switch" id="billing-switch">
-                    <div class="toggle-slider"></div>
-                </div>
-                <span class="billing-option" id="annual-toggle">Annual <span class="savings-indicator">Save 25%</span></span>
-            </div>
-        </div>
-
         <div class="pricing-grid">
             <div class="pricing-card">
-                <div class="savings-badge">Great Value</div>
-                <h3>Starter Plan</h3>
-                <span class="pricing-amount" id="starter-price">$39<small>/month</small></span>
-                <p class="pricing-description">Perfect for growing businesses that need reliable, verified B2B contacts to scale their outreach efforts.</p>
+                <div class="trial-badge">Start Free</div>
+                <h3>Starter</h3>
+                <span class="pricing-amount">$99<small>/month</small></span>
+                <p class="pricing-description">Database access with generous daily limits. Perfect for growing teams.</p>
                 <ul class="pricing-features">
-                    <li><span class="leads-count">60,000 leads annually</span> (5,000/month)</li>
-                    <li><span class="leads-count">450M+</span> contact database</li>
+                    <li><strong>2,500 exports daily</strong> (75K monthly)</li>
+                    <li>450M+ contact database</li>
                     <li>Advanced search filters</li>
                     <li>CSV exports</li>
                 </ul>
-                <a href="https://buy.stripe.com/7sY8wP0Lz54V0rqg3h8IU0T" class="btn btn-primary pricing-cta" id="starter-monthly-btn">Upgrade to Starter Plan</a>
-                <a href="https://buy.stripe.com/00w7sL1PD68Zb64dV98IU0R" class="btn btn-primary pricing-cta" id="starter-annual-btn" style="display: none;">Upgrade to Starter Annual</a>
+                <a href="#" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
             </div>
+            
             <div class="pricing-card featured">
-                <div class="featured-badge">BEST VALUE</div>
-                <div class="savings-badge">Most Popular</div>
-                <h3>Pro Plan</h3>
-                <span class="pricing-amount" id="premium-price">$59<small>/month</small></span>
-                <p class="pricing-description">Ideal for sales teams and agencies that need maximum lead volume with premium features and priority support.</p>
+                <div class="featured-badge">MOST POPULAR</div>
+                <h3>Pro</h3>
+                <span class="pricing-amount">$149<small>/month</small></span>
+                <p class="pricing-description">Everything in Starter plus unlimited lead finder tools.</p>
                 <ul class="pricing-features">
-                    <li><span class="leads-count">120,000 leads annually</span> (10,000/month)</li>
-                    <li><span class="leads-count">450M+</span> contact database</li>
-                    <li>CSV exports</li>
+                    <li><strong>2,500 exports daily</strong> (75K monthly)</li>
+                    <li>450M+ contact database</li>
+                    <li><strong>Unlimited Lead Finder</strong></li>
+                    <li>Chrome extension</li>
+                    <li>Priority support</li>
                 </ul>
-                <a href="https://buy.stripe.com/bJeeVd65TgND2zy04j8IU0U" class="btn btn-primary pricing-cta" id="premium-monthly-btn">Get Premium Plan</a>
-                <a href="https://buy.stripe.com/3cI7sLdyleFv8XWg3h8IU0S" class="btn btn-primary pricing-cta" id="premium-annual-btn" style="display: none;">Get Premium Annual</a>
+                <a href="#" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
             </div>
         </div>
         
         <!-- Enterprise option -->
         <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--gray-50); border-radius: var(--border-radius-lg);">
-            <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need More Than 120K Leads?</h3>
-            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Custom enterprise plans available for high-volume users</p>
-            <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Request a Custom Plan</a>
-        </div>
-    </section>
-
-    <!-- Plan Comparison -->
-    <section class="comparison-section">
-        <div class="container">
-            <h2 class="section-title">Plan Comparison</h2>
-            <p class="section-subtitle">Choose the perfect plan for your business needs</p>
-            
-            <div class="comparison-table-container">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th class="plan-column">Starter Plan<br><span id="table-starter-price">$39/month</span></th>
-                            <th class="plan-column highlight-cell">
-                                <span class="recommended-badge">BEST VALUE</span>
-                                Premium Plan<br><span id="table-premium-price">$59/month</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Annual Leads</td>
-                            <td class="text-center">60,000</td>
-                            <td class="text-center">120,000</td>
-                        </tr>
-                        <tr>
-                            <td>Monthly Leads</td>
-                            <td class="text-center">5,000</td>
-                            <td class="text-center">10,000</td>
-                        </tr>
-                        <tr>
-                            <td>Email Verification</td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Billing</td>
-                            <td class="text-center"><span id="table-starter-billing">monthly ($99)</span></td>
-                            <td class="text-center"><span id="table-premium-billing">monthly ($159)</span></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td class="text-center"><a href="#" class="btn btn-secondary" id="table-starter-link">Choose Starter</a></td>
-                            <td class="text-center"><a href="#" class="btn btn-primary" id="table-premium-link">Choose Premium</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need Custom Limits?</h3>
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Enterprise plans available for high-volume teams</p>
+            <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Contact Sales</a>
         </div>
     </section>
 
@@ -986,47 +510,39 @@
     <section class="features-section">
         <div class="container">
             <h2 class="section-title">Everything You Need</h2>
-            <p class="section-subtitle">Professional-grade features at a fraction of the cost</p>
+            <p class="section-subtitle">Professional B2B data without the enterprise tax</p>
             
             <div class="features">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-database"></i>
                     </div>
-                    <h3>Massive Database</h3>
-                    <p>Access to 450M+ verified B2B contacts worldwide with real-time updates and comprehensive coverage.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Email Verification</h3>
-                    <p>Built-in email verification ensures high deliverability rates and protects your sender reputation.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-filter"></i>
-                    </div>
-                    <h3>Advanced Filtering</h3>
-                    <p>Precise targeting with 50+ search filters including industry, company size, location, and job title.</p>
+                    <h3>450M+ Verified Contacts</h3>
+                    <p>Access our massive B2B database with real-time updates and comprehensive coverage.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-download"></i>
                     </div>
-                    <h3>Easy Exports</h3>
-                    <p>One-click CSV exports ready for your email marketing platform or CRM system.</p>
+                    <h3>Generous Export Limits</h3>
+                    <p>2,500 exports daily means you can build lists without artificial restrictions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Unlimited Lead Finder</h3>
+                    <p>Pro plan includes unlimited lead finder searches. Apollo charges extra for this.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
-                    <h3>Expert Support</h3>
-                    <p>Dedicated customer success team to help you maximize your lead generation results.</p>
+                    <h3>Real Support</h3>
+                    <p>Talk to actual humans who help you succeed. No chatbots.</p>
                 </div>
             </div>
         </div>
@@ -1036,97 +552,40 @@
     <section id="faq" class="faq-section">
         <div class="container">
             <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-subtitle">Everything you need to know about our pricing and plans</p>
             
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question">Why are you so much cheaper than Apollo.io?</div>
+                    <div class="faq-question">How does the free trial work?</div>
                     <div class="faq-answer">
-                        <p>We focus on delivering exceptional value by streamlining our operations and offering annual-only billing. This allows us to provide the same professional features and data quality at 35% less cost than competitors.</p>
+                        <p>Get 250 verified leads to test our platform. No credit card required. Use these leads to evaluate our data quality before upgrading.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">How does the 25 free leads trial work?</div>
+                    <div class="faq-question">What's the difference between Starter and Pro?</div>
                     <div class="faq-answer">
-                        <p>Every new account gets 250 free verified leads to test our platform and data quality. No credit card required. Use these leads to evaluate our service before upgrading to a paid plan.</p>
+                        <p>Starter gives you database access with 2,500 daily exports. Pro adds unlimited lead finder, Chrome extension, and priority support. Both plans have the same export limits.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question">Can I upgrade or downgrade my plan?</div>
+                    <div class="faq-question">How do daily export limits work?</div>
                     <div class="faq-answer">
-                        <p>Yes, you can upgrade from Starter to Premium at any time. Since we use annual billing, any plan changes will be prorated and take effect immediately.</p>
+                        <p>You can export up to 2,500 leads per day (75,000 monthly). This resets every 24 hours. Most teams never hit this limit in practice.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question">How accurate is your data compared to Apollo?</div>
+                    <div class="faq-question">How does this compare to Apollo?</div>
                     <div class="faq-answer">
-                        <p>Our data accuracy matches industry standards with 95%+ email deliverability. We use the same verification methods as major competitors and update our database continuously.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Can I switch between monthly and annual billing?</div>
-                    <div class="faq-answer">
-                        <p>Yes! You can upgrade to annual billing at any time to take advantage of the discount. Contact our support team and we'll help you make the transition and apply the appropriate credit.</p>
+                        <p>Apollo limits exports to 1,000-5,000 monthly and charges $99+ per user. We give you 75,000 monthly exports for $99 total. Plus Apollo charges extra for lead finder - we include it.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question">What happens if I need more than 120K leads per year?</div>
+                    <div class="faq-question">Can I cancel anytime?</div>
                     <div class="faq-answer">
-                        <p>Contact our sales team for custom enterprise pricing. We can create tailored plans for high-volume users with additional features and dedicated support.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title">What Our Customers Say</h2>
-            <p class="section-subtitle">Real results from businesses accelerating their growth with UnlimitedLeads</p>
-            
-            <div class="testimonials">
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"The data quality is exceptional and the pricing is very reasonable. We've seen a significant improvement in our outreach campaigns since switching."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">MB</div>
-                            <div class="testimonial-info">
-                                <h4>Michael Chen</h4>
-                                <p>Sales Director, TechFlow Solutions</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"The 1,000 free leads trial convinced us immediately. The platform is easy to use and the lead quality is exactly what we needed for our startup."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">JT</div>
-                            <div class="testimonial-info">
-                                <h4>Jessica Rivera</h4>
-                                <p>Founder, Growth Labs</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"Premium plan gives us 120K leads annually which has allowed us to scale our outreach significantly. The ROI has been fantastic."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">DP</div>
-                            <div class="testimonial-info">
-                                <h4>David Park</h4>
-                                <p>VP Sales, CloudScale Inc</p>
-                            </div>
-                        </div>
+                        <p>Yes, cancel anytime. No contracts, no hidden fees. If you cancel, you keep access until your current billing period ends.</p>
                     </div>
                 </div>
             </div>
@@ -1137,162 +596,33 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Transform Your Lead Generation?</h2>
-                <p>Join hundreds of companies getting professional B2B data at unbeatable prices.</p>
-                <div class="cta-buttons">
-                    <a href="#pricing" class="btn btn-large btn-white">Select Plan</a>
-                </div>
+                <h2>Ready to Get Started?</h2>
+                <p>Try 250 leads free. No credit card required.</p>
+                <a href="#pricing" class="btn btn-large btn-white">Start Free Trial</a>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <!-- Free Tools Section -->
                 <div class="footer-column">
-                    <h4>Free Tools</h4>
+                    <h4>Contact</h4>
                     <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
-                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
-                        <li><a href="https://unlimited-leads.online/email-extractor">Email Extractor</a></li>
-                        <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
-                        <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                        <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
                     </ul>
                 </div>
-
-                <!-- Compare Section -->
-                <div class="footer-column">
-                    <h4>Compare</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Contact Section -->
-                <div class="footer-column">
-                    <h4>Contact Us</h4>
-                    <ul class="footer-links">
-                        <li><a href="mailto:contact@unlimitedleads.com">support@unlimited-leads.online</a></li>
-                        <li><a href="mailto:contact@unlimitedleads.com">Request Custom Plan</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
             </div>
             
             <div class="footer-bottom">
                 <p>© 2025 UnlimitedLeads. All rights reserved.</p>
-                <p>
-                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
-                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
-                </p>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script>
-        // Extract token from URL and store as global variable
-        let token;
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // Extract token from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            token = urlParams.get('token');
-            
-            // Log token for verification (can be removed in production)
-            console.log('Token extracted from URL:', token);
-            
-            // Make token available globally
-            window.token = token;
-
-            // Pricing Toggle Functionality
-            const monthlyToggle = document.getElementById('monthly-toggle');
-            const annualToggle = document.getElementById('annual-toggle');
-            const starterPrice = document.getElementById('starter-price');
-            const premiumPrice = document.getElementById('premium-price');
-            const starterBilling = document.getElementById('starter-billing');
-            const premiumBilling = document.getElementById('premium-billing');
-
-            // Pricing data
-            const pricingData = {
-                monthly: {
-                    starter: { price: '$39', billing: 'Billed monthly ' },
-                    premium: { price: '$59', billing: 'Billed monthly ' }
-                },
-                annual: {
-                    starter: { price: '$25', billing: 'Billed annually ($299/year)' },
-                    premium: { price: '$38', billing: 'Billed annually ($458/year)' }
-                }
-            };
-
-            // Set initial state (monthly)
-            monthlyToggle.classList.add('active');
-            
-            // Toggle event listeners
-            monthlyToggle.addEventListener('click', function() {
-                if (!this.classList.contains('active')) {
-                    switchTomonthly();
-                }
-            });
-
-            annualToggle.addEventListener('click', function() {
-                if (!this.classList.contains('active')) {
-                    switchToAnnual();
-                }
-            });
-
-            function switchTomonthly() {
-                monthlyToggle.classList.add('active');
-                annualToggle.classList.remove('active');
-                
-                starterPrice.innerHTML = pricingData.monthly.starter.price + '<small>/month</small>';
-                premiumPrice.innerHTML = pricingData.monthly.premium.price + '<small>/month</small>';
-                starterBilling.textContent = pricingData.monthly.starter.billing;
-                premiumBilling.textContent = pricingData.monthly.premium.billing;
-                
-                // Update comparison table
-                document.getElementById('table-starter-price').textContent = '$39/month';
-                document.getElementById('table-premium-price').textContent = '$59/month';
-                document.getElementById('table-starter-billing').textContent = 'monthly ($99)';
-                document.getElementById('table-premium-billing').textContent = 'monthly ($159)';
-                
-                // Update button IDs for monthly
-                document.getElementById('starter-monthly-btn').style.display = 'block';
-                document.getElementById('premium-monthly-btn').style.display = 'block';
-                document.getElementById('starter-annual-btn').style.display = 'none';
-                document.getElementById('premium-annual-btn').style.display = 'none';
-            }
-
-            function switchToAnnual() {
-                annualToggle.classList.add('active');
-                monthlyToggle.classList.remove('active');
-                
-                starterPrice.innerHTML = pricingData.annual.starter.price + '<small>/month</small>';
-                premiumPrice.innerHTML = pricingData.annual.premium.price + '<small>/month</small>';
-                starterBilling.textContent = pricingData.annual.starter.billing;
-                premiumBilling.textContent = pricingData.annual.premium.billing;
-                
-                // Update comparison table
-                document.getElementById('table-starter-price').textContent = '$25/month';
-                document.getElementById('table-premium-price').textContent = '$38/month';
-                document.getElementById('table-starter-billing').textContent = 'Annual ($299)';
-                document.getElementById('table-premium-billing').textContent = 'Annual ($458)';
-                
-                // Update button IDs for annual
-                document.getElementById('starter-monthly-btn').style.display = 'none';
-                document.getElementById('premium-monthly-btn').style.display = 'none';
-                document.getElementById('starter-annual-btn').style.display = 'block';
-                document.getElementById('premium-annual-btn').style.display = 'block';
-            }
-            
             // FAQ Toggle
             const faqQuestions = document.querySelectorAll('.faq-question');
             
