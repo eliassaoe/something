@@ -819,7 +819,7 @@
             font-size: 14px;
             font-weight: 500;
             animation: slideDown 0.3s ease-out;
-            white-space: pre-line; /* Allow line breaks in alert messages */
+            white-space: pre-line;
             max-width: 100%;
             word-wrap: break-word;
         }
@@ -846,21 +846,6 @@
             background-color: rgba(37, 99, 235, 0.1);
             border: 1px solid var(--primary);
             color: var(--primary);
-        }
-
-        /* RATE LIMIT SPECIFIC STYLING */
-        .alert-error.rate-limit-error {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
-            border: 2px solid var(--danger);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .alert-error.rate-limit-error::before {
-            content: "⚠️ ";
-            font-size: 18px;
-            margin-right: 8px;
         }
 
         /* RESPONSIVE */
@@ -1392,11 +1377,6 @@
             }
             
             static formatError(error) {
-                // Handle rate limit errors with clear messaging
-                if (error.message.includes('RATE_LIMIT') || error.message.includes('429')) {
-                    return 'RATE LIMIT EXCEEDED - Please wait before submitting another list';
-                }
-                
                 if (error.name === 'TypeError' && error.message.includes('fetch')) {
                     return 'Connection error - Check your internet connection';
                 }
@@ -1436,26 +1416,18 @@
                 const alert = Elements.uploadAlert;
                 alert.textContent = message;
                 alert.className = `alert alert-${type}`;
-                
-                // Add special styling for rate limit errors
-                if (message.includes('RATE LIMIT') || message.includes('Rate limit')) {
-                    alert.classList.add('rate-limit-error');
-                }
-                
                 alert.style.display = 'block';
                 
-                // Auto-hide success and info messages
+                // Auto-hide based on type
                 if (type === 'success' || type === 'info') {
                     setTimeout(() => {
                         alert.style.display = 'none';
-                        alert.classList.remove('rate-limit-error');
                     }, duration);
                 } else if (type === 'error' || type === 'warning') {
                     // For errors and warnings, auto-hide after longer duration
                     setTimeout(() => {
                         alert.style.display = 'none';
-                        alert.classList.remove('rate-limit-error');
-                    }, Math.max(duration, 10000)); // At least 10 seconds for errors
+                    }, Math.max(duration, 8000)); // At least 8 seconds for errors
                 }
                 
                 // Log the alert
@@ -1725,67 +1697,8 @@
                     });
                     
                     if (!response.ok) {
-                        let errorText;
-                        const contentType = response.headers.get('content-type');
-                        
-                        // Handle both 429 and disguised 404 rate limit errors
-                        if (response.status === 429 || response.status === 404) {
-                            try {
-                                const errorData = await response.json();
-                                
-                                // Check if 404 is actually a disguised rate limit error
-                                const isRateLimit = response.status === 429 || 
-                                                  errorData.code === 'RATE_LIMIT_EXCEEDED' ||
-                                                  errorData.error === 'RATE_LIMIT_EXCEEDED';
-                                
-                                if (isRateLimit) {
-                                    Logger.log('Rate limit error received:', 'error', errorData);
-                                    
-                                    // Format remaining time
-                                    let timeMessage = '';
-                                    if (errorData.details?.remainingTime) {
-                                        const remaining = errorData.details.remainingTime;
-                                        const minutes = Math.floor(remaining / 60);
-                                        const seconds = remaining % 60;
-                                        timeMessage = minutes > 0 ? ` (Wait ${minutes}m ${seconds}s)` : ` (Wait ${seconds}s)`;
-                                    }
-                                    
-                                    // Show detailed rate limit message
-                                    NotificationSystem.show(
-                                        (errorData.message || 'Rate limit exceeded') + timeMessage, 
-                                        'error', 
-                                        12000
-                                    );
-                                    
-                                    // Also show in alert
-                                    NotificationSystem.showAlert(
-                                        `⚠️ RATE LIMIT: ${errorData.message || 'Upload limit exceeded'}${timeMessage}\n\n` +
-                                        `Limits: ${errorData.details?.limits?.perRequest || '10 minutes'} between requests, ` +
-                                        `${errorData.details?.limits?.perHour || '5 max'} per hour, ` +
-                                        `${errorData.details?.limits?.perDay || '20 max'} per day.`,
-                                        'error',
-                                        15000
-                                    );
-                                    
-                                    throw new Error(`RATE_LIMIT: ${errorData.message || 'Upload limit exceeded'}`);
-                                }
-                                
-                                // Regular 404 error
-                                if (response.status === 404 && !isRateLimit) {
-                                    throw new Error(`Service not found (404): ${errorData.message || 'Endpoint not available'}`);
-                                }
-                                
-                            } catch (parseError) {
-                                if (parseError.message.includes('RATE_LIMIT')) {
-                                    throw parseError; // Re-throw rate limit errors
-                                }
-                                errorText = await response.text();
-                                throw new Error(`HTTP ${response.status}: ${errorText}`);
-                            }
-                        } else {
-                            errorText = await response.text();
-                            throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
-                        }
+                        const errorText = await response.text();
+                        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
                     }
                     
                     const result = await response.text();
@@ -1891,19 +1804,14 @@
                 this.saveJobs(jobs);
                 this.updateStats();
             }
-            
-            static removeJob(jobId) {
-                const jobs = this.getAllJobs();
-                const filteredJobs = jobs.filter(job => job.id !== jobId);
-                this.saveJobs(filteredJobs);
-                this.updateStats();
-                Logger.log(`Removed job: ${jobId}`, 'info');
-            }
 
             static deleteJob(jobId) {
                 if (confirm('Are you sure you want to delete this job?')) {
-                    this.removeJob(jobId);
+                    const jobs = this.getAllJobs();
+                    const filteredJobs = jobs.filter(job => job.id !== jobId);
+                    this.saveJobs(filteredJobs);
                     this.loadJobHistory();
+                    this.updateStats();
                     NotificationSystem.showAlert('Job deleted successfully', 'success');
                     Logger.log(`Deleted job: ${jobId}`, 'info');
                 }
@@ -1924,18 +1832,6 @@
                 
                 for (const job of processingJobs) {
                     try {
-                        // ✅ Clean up orphaned jobs (created but never started due to rate limit)
-                        const jobAge = Date.now() - new Date(job.created_at).getTime();
-                        const hasSimulationStart = job.simulation_start !== undefined;
-                        
-                        // If job is older than 5 minutes and never had simulation_start, it's likely orphaned
-                        if (jobAge > 300000 && !hasSimulationStart) { // 5 minutes
-                            Logger.log(`Removing orphaned job: ${job.id} (created ${Math.round(jobAge/60000)}m ago, never started)`, 'warn');
-                            this.removeJob(job.id);
-                            anyJobUpdated = true;
-                            continue;
-                        }
-                        
                         const isCompleted = await APIClient.checkJobStatus(job.id);
                         
                         if (isCompleted) {
@@ -1956,7 +1852,7 @@
                     } catch (error) {
                         Logger.log(`Failed to check job ${job.id}: ${error.message}`, 'warn');
                         
-                        // If job is older than 10 minutes and still processing, assume it's completed
+                        // If job is older than expected completion time, assume it's completed
                         const jobAge = Date.now() - new Date(job.created_at).getTime();
                         const maxExpectedTime = Math.max(30000, job.total_rows * 1000); // 1s per row, min 30s
                         
@@ -2534,9 +2430,9 @@
             static async processFile() {
                 Logger.log('🚀 Starting file processing...', 'info');
                 
-                // ✅ Prevent multiple simultaneous uploads only
+                // ✅ Only prevent multiple simultaneous uploads
                 if (AppState.isProcessing) {
-                    NotificationSystem.showAlert('⚠️ Another email search is already in progress. Please wait for it to complete.', 'warning');
+                    NotificationSystem.showAlert('⚠️ You have a list currently being processed. Please wait for it to complete before submitting another list.', 'warning', 8000);
                     Logger.log('Upload blocked: Another process is already running', 'warn');
                     return;
                 }
@@ -2553,38 +2449,32 @@
                         return;
                     }
 
-                    // ✅ FIRST: Try the API call BEFORE creating any job
-                    // This way if rate limit blocks, we don't pollute storage
-                    const tempJob = EmailFinderApp.createJob();
-                    const formData = EmailFinderApp.prepareFormData(tempJob);
-                    
-                    Logger.log('Testing API call before creating job...', 'info');
-                    
-                    // Send to API with retry logic (this will fail if rate limited)
-                    await ErrorHandler.retryOperation(async () => {
-                        return await APIClient.sendFileToAPI(formData);
-                    });
-                    
-                    // ✅ ONLY if API call succeeds, then save the job and start processing
-                    Logger.log('✅ API call successful, now creating job in storage', 'info');
-                    
-                    JobManager.saveJob(tempJob);
-                    AppState.currentJob = tempJob;
-                    
-                    Logger.log(`Job created and saved: ${tempJob.id}`, 'info', tempJob);
+                    // ✅ Create job and save immediately (no pre-check needed)
+                    const job = EmailFinderApp.createJob();
+                    JobManager.saveJob(job);
+                    AppState.currentJob = job;
+
+                    Logger.log(`Job created and saved: ${job.id}`, 'info', job);
 
                     // Show progress UI
                     ProgressManager.showProgress(AppState.uploadedFile.name);
                     Elements.filePreview.style.display = 'none';
+
+                    // Prepare and send API request
+                    const formData = EmailFinderApp.prepareFormData(job);
                     
                     // Start progress simulation
                     ProgressManager.simulateProgress();
+
+                    // Send to API with retry logic
+                    await ErrorHandler.retryOperation(async () => {
+                        return await APIClient.sendFileToAPI(formData);
+                    });
 
                     NotificationSystem.showAlert('Processing started successfully!', 'success');
                     Logger.log('✅ File processing started successfully', 'success');
 
                 } catch (error) {
-                    Logger.log('❌ API call failed, job will NOT be saved to storage', 'warn');
                     EmailFinderApp.handleProcessingError(error);
                 } finally {
                     // Always reset processing flag
@@ -2683,13 +2573,11 @@
             static handleProcessingError(error) {
                 Logger.log(`❌ Processing failed: ${error.message}`, 'error', error);
                 
-                // Update job status if exists (only if job was actually saved)
+                // Update job status if exists
                 if (AppState.currentJob) {
                     Logger.log(`Updating failed job status: ${AppState.currentJob.id}`, 'info');
                     AppState.currentJob.status = 'failed';
                     JobManager.saveJob(AppState.currentJob);
-                } else {
-                    Logger.log('No job to update (API call failed before job creation)', 'info');
                 }
                 
                 // Stop progress simulation
