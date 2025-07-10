@@ -272,6 +272,13 @@ header {
     overflow: hidden;
 }
 
+.plan-loading {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    margin-bottom: 30px;
+}
+
 .plan-card::before {
     content: '';
     position: absolute;
@@ -364,7 +371,6 @@ header {
     width: 100%;
     max-width: 250px;
     text-decoration: none;
-    position: relative;
 }
 
 .manage-plan-button:hover {
@@ -373,38 +379,11 @@ header {
     background: linear-gradient(135deg, var(--primary), #1e40af);
 }
 
-.manage-plan-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
+.manage-plan-button i {
+    font-size: 18px;
 }
 
-.manage-plan-button.loading {
-    pointer-events: none;
-}
 
-.manage-plan-button .loading-spinner {
-    display: none;
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-    border-top: 2px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-.manage-plan-button.loading .loading-spinner {
-    display: block;
-}
-
-.manage-plan-button.loading i {
-    display: none;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -469,6 +448,10 @@ header {
     
     .plan-card {
         padding: 20px;
+    }
+    
+    .plan-loading {
+        margin: 20px 0;
     }
     
     .plan-header {
@@ -574,7 +557,7 @@ header {
 
             <div id="accountAlert" class="alert"></div>
 
-            <div class="plan-card">
+            <div class="plan-card" id="planCard" style="display: none;">
                 <div class="plan-header">
                     <div>
                         <h2 class="plan-title">Your Plan</h2>
@@ -587,11 +570,17 @@ header {
                     You're currently on the <strong>Free Plan</strong>. Upgrade to get more credits and unlock premium features for unlimited lead generation.
                 </p>
                 
-                <button id="managePlanButton" class="manage-plan-button">
-                    <div class="loading-spinner"></div>
+                <a href="#" id="managePlanButton" class="manage-plan-button">
                     <i class="fas fa-cogs"></i>
-                    <span id="managePlanText">Manage Plan</span>
-                </button>
+                    Manage Plan
+                </a>
+            </div>
+
+            <div class="plan-loading" id="planLoading">
+                <div style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 15px;"></i>
+                    <p style="color: var(--gray-600); margin: 0;">Loading your plan details...</p>
+                </div>
             </div>
 
             <div class="security-note">
@@ -611,55 +600,6 @@ header {
             console.log("Account page loaded, executing token verification");
             token_verif();
             setupEventListeners();
-        }
-
-        // Function to create Stripe billing portal session
-        async function createBillingPortalSession() {
-            if (!userToken) {
-                showAlert('Authentication error. Please log in again.', 'error');
-                return;
-            }
-
-            const managePlanButton = document.getElementById('managePlanButton');
-            const managePlanText = document.getElementById('managePlanText');
-            
-            // Show loading state
-            managePlanButton.classList.add('loading');
-            managePlanButton.disabled = true;
-            managePlanText.textContent = 'Loading...';
-
-            try {
-                // Replace with your actual billing portal webhook URL
-                const BILLING_PORTAL_URL = 'https://eliasse-n8n.onrender.com/webhook/create-billing-portal';
-                
-                const response = await fetch(BILLING_PORTAL_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        token: userToken,
-                        return_url: window.location.origin + '/account.html?token=' + userToken
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.url) {
-                    // Redirect to Stripe billing portal
-                    window.location.href = data.url;
-                } else {
-                    throw new Error(data.error || 'Failed to create billing portal session');
-                }
-            } catch (error) {
-                console.error('Error creating billing portal session:', error);
-                showAlert('Unable to access billing portal. Please try again.', 'error');
-                
-                // Reset button state
-                managePlanButton.classList.remove('loading');
-                managePlanButton.disabled = false;
-                managePlanText.textContent = 'Manage Plan';
-            }
         });
 
         /**
@@ -774,7 +714,17 @@ header {
             })
             .catch(error => {
                 console.error('Error fetching plan:', error);
-                // Keep default Free Plan display on error
+                // Hide loading and show Free Plan on error
+                const planLoading = document.getElementById('planLoading');
+                const planCard = document.getElementById('planCard');
+                
+                if (planLoading) {
+                    planLoading.style.display = 'none';
+                }
+                if (planCard) {
+                    planCard.style.display = 'block';
+                }
+                
                 displayPlanInfo({ plan: 'Free' });
             });
         }
@@ -792,8 +742,16 @@ header {
         function displayPlanInfo(data) {
             const currentPlanElement = document.getElementById('currentPlan');
             const planDescriptionElement = document.getElementById('planDescription');
-            const managePlanButton = document.getElementById('managePlanButton');
-            const managePlanText = document.getElementById('managePlanText');
+            const planCard = document.getElementById('planCard');
+            const planLoading = document.getElementById('planLoading');
+            
+            // Hide loading and show plan card
+            if (planLoading) {
+                planLoading.style.display = 'none';
+            }
+            if (planCard) {
+                planCard.style.display = 'block';
+            }
             
             // Get plan type from response
             const planType = data.plan || 'Free';
@@ -802,28 +760,23 @@ header {
             const planConfigs = {
                 'Free': {
                     title: 'Free Plan',
-                    description: 'You\'re currently on the <strong>Free Plan</strong>. Upgrade to get more credits and unlock premium features for unlimited lead generation.',
-                    buttonText: 'Upgrade Plan'
+                    description: 'You\'re currently on the <strong>Free Plan</strong>. Upgrade to get more credits and unlock premium features for unlimited lead generation.'
                 },
                 'Starter': {
                     title: 'Starter Plan',
-                    description: 'You\'re on the <strong>Starter Plan</strong> ($25/month). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.',
-                    buttonText: 'Manage Plan'
+                    description: 'You\'re on the <strong>Starter Plan</strong> ($25/month). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.'
                 },
                 'Premium': {
                     title: 'Premium Plan', 
-                    description: 'You\'re on the <strong>Premium Plan</strong> ($38/month). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.',
-                    buttonText: 'Manage Plan'
+                    description: 'You\'re on the <strong>Premium Plan</strong> ($38/month). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.'
                 },
                 'Annual Starter': {
                     title: 'Annual Starter Plan',
-                    description: 'You\'re on the <strong>Annual Starter Plan</strong> (Save 25%). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.',
-                    buttonText: 'Manage Plan'
+                    description: 'You\'re on the <strong>Annual Starter Plan</strong> (Save 25%). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.'
                 },
                 'Annual Premium': {
                     title: 'Annual Premium Plan',
-                    description: 'You\'re on the <strong>Annual Premium Plan</strong> (Save 25%). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.',
-                    buttonText: 'Manage Plan'
+                    description: 'You\'re on the <strong>Annual Premium Plan</strong> (Save 25%). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.'
                 }
             };
             
@@ -838,61 +791,8 @@ header {
             if (planDescriptionElement) {
                 planDescriptionElement.innerHTML = config.description;
             }
-
-            if (managePlanText) {
-                managePlanText.textContent = config.buttonText;
-            }
             
             console.log(`Plan updated to: ${config.title}`);
-        }
-
-        // Function to create Stripe billing portal session
-        async function createBillingPortalSession() {
-            if (!userToken) {
-                showAlert('Authentication error. Please log in again.', 'error');
-                return;
-            }
-
-            const managePlanButton = document.getElementById('managePlanButton');
-            const managePlanText = document.getElementById('managePlanText');
-            
-            // Show loading state
-            managePlanButton.classList.add('loading');
-            managePlanButton.disabled = true;
-            managePlanText.textContent = 'Loading...';
-
-            try {
-                // Replace with your actual billing portal webhook URL
-                const BILLING_PORTAL_URL = 'https://eliasse-n8n.onrender.com/webhook/create-billing-portal';
-                
-                const response = await fetch(BILLING_PORTAL_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        token: userToken,
-                        return_url: window.location.origin + '/account.html?token=' + userToken
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.url) {
-                    // Redirect to Stripe billing portal
-                    window.location.href = data.url;
-                } else {
-                    throw new Error(data.error || 'Failed to create billing portal session');
-                }
-            } catch (error) {
-                console.error('Error creating billing portal session:', error);
-                showAlert('Unable to access billing portal. Please try again.', 'error');
-                
-                // Reset button state
-                managePlanButton.classList.remove('loading');
-                managePlanButton.disabled = false;
-                managePlanText.textContent = 'Manage Plan';
-            }
         }
 
         // Function to set up event listeners
@@ -919,12 +819,17 @@ header {
                 });
             }
 
-            // Manage plan button - NEW STRIPE INTEGRATION
+            // Manage plan button
             const managePlanButton = document.getElementById('managePlanButton');
             if (managePlanButton) {
                 managePlanButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    createBillingPortalSession();
+                    const token = localStorage.getItem('sessionToken');
+                    if (token) {
+                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                    } else {
+                        window.location.href = 'https://unlimited-leads.online/pricing';
+                    }
                 });
             }
         }
