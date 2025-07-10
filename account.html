@@ -272,6 +272,13 @@ header {
     overflow: hidden;
 }
 
+.plan-loading {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    margin-bottom: 30px;
+}
+
 .plan-card::before {
     content: '';
     position: absolute;
@@ -443,6 +450,10 @@ header {
         padding: 20px;
     }
     
+    .plan-loading {
+        margin: 20px 0;
+    }
+    
     .plan-header {
         flex-direction: column;
         gap: 10px;
@@ -546,7 +557,7 @@ header {
 
             <div id="accountAlert" class="alert"></div>
 
-            <div class="plan-card">
+            <div class="plan-card" id="planCard" style="display: none;">
                 <div class="plan-header">
                     <div>
                         <h2 class="plan-title">Your Plan</h2>
@@ -563,6 +574,13 @@ header {
                     <i class="fas fa-cogs"></i>
                     Manage Plan
                 </a>
+            </div>
+
+            <div class="plan-loading" id="planLoading">
+                <div style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 15px;"></i>
+                    <p style="color: var(--gray-600); margin: 0;">Loading your plan details...</p>
+                </div>
             </div>
 
             <div class="security-note">
@@ -696,7 +714,17 @@ header {
             })
             .catch(error => {
                 console.error('Error fetching plan:', error);
-                // Keep default Free Plan display on error
+                // Hide loading and show Free Plan on error
+                const planLoading = document.getElementById('planLoading');
+                const planCard = document.getElementById('planCard');
+                
+                if (planLoading) {
+                    planLoading.style.display = 'none';
+                }
+                if (planCard) {
+                    planCard.style.display = 'block';
+                }
+                
                 displayPlanInfo({ plan: 'Free' });
             });
         }
@@ -714,6 +742,16 @@ header {
         function displayPlanInfo(data) {
             const currentPlanElement = document.getElementById('currentPlan');
             const planDescriptionElement = document.getElementById('planDescription');
+            const planCard = document.getElementById('planCard');
+            const planLoading = document.getElementById('planLoading');
+            
+            // Hide loading and show plan card
+            if (planLoading) {
+                planLoading.style.display = 'none';
+            }
+            if (planCard) {
+                planCard.style.display = 'block';
+            }
             
             // Get plan type from response
             const planType = data.plan || 'Free';
