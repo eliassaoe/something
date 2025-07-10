@@ -842,6 +842,9 @@
             font-size: 14px;
             font-weight: 500;
             animation: slideDown 0.3s ease-out;
+            white-space: pre-line; /* Allow line breaks in alert messages */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .alert-success {
@@ -866,6 +869,21 @@
             background-color: rgba(37, 99, 235, 0.1);
             border: 1px solid var(--primary);
             color: var(--primary);
+        }
+
+        /* RATE LIMIT SPECIFIC STYLING */
+        .alert-error.rate-limit-error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+            border: 2px solid var(--danger);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .alert-error.rate-limit-error::before {
+            content: "⚠️ ";
+            font-size: 18px;
+            margin-right: 8px;
         }
 
         /* RESPONSIVE */
@@ -1273,7 +1291,9 @@
             progressInterval: null,
             debugMode: false,
             isOnline: true,
-            retryCount: 0
+            retryCount: 0,
+            isProcessing: false, // Prevent multiple simultaneous uploads
+            lastUploadTime: 0    // Track last upload time for client-side rate limiting
         };
 
         // ========================================
@@ -1426,16 +1446,17 @@
             }
             
             static formatError(error) {
+                // Handle rate limit errors with clear messaging
+                if (error.message.includes('RATE_LIMIT') || error.message.includes('429')) {
+                    return 'RATE LIMIT EXCEEDED - Please wait before submitting another list';
+                }
+                
                 if (error.name === 'TypeError' && error.message.includes('fetch')) {
                     return 'Connection error - Check your internet connection';
                 }
                 
                 if (error.message.includes('CORS')) {
                     return 'CORS error - Server refusing connection';
-                }
-                
-                if (error.message.includes('429') || error.message.includes('RATE_LIMIT_EXCEEDED')) {
-                    return 'Rate limit exceeded - Please wait before submitting another list';
                 }
                 
                 if (error.message.includes('413')) {
@@ -1469,13 +1490,30 @@
                 const alert = Elements.uploadAlert;
                 alert.textContent = message;
                 alert.className = `alert alert-${type}`;
+                
+                // Add special styling for rate limit errors
+                if (message.includes('RATE LIMIT') || message.includes('Rate limit')) {
+                    alert.classList.add('rate-limit-error');
+                }
+                
                 alert.style.display = 'block';
                 
+                // Auto-hide success and info messages
                 if (type === 'success' || type === 'info') {
                     setTimeout(() => {
                         alert.style.display = 'none';
+                        alert.classList.remove('rate-limit-error');
                     }, duration);
+                } else if (type === 'error' || type === 'warning') {
+                    // For errors and warnings, auto-hide after longer duration
+                    setTimeout(() => {
+                        alert.style.display = 'none';
+                        alert.classList.remove('rate-limit-error');
+                    }, Math.max(duration, 10000)); // At least 10 seconds for errors
                 }
+                
+                // Log the alert
+                Logger.log(`Alert: ${message}`, type);
             }
         }
 
@@ -1741,8 +1779,37 @@
                     });
                     
                     if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
+                        let errorText;
+                        const contentType = response.headers.get('content-type');
+                        
+                        // Handle rate limit errors specifically
+                        if (response.status === 429) {
+                            try {
+                                const errorData = await response.json();
+                                Logger.log('Rate limit error received:', 'error', errorData);
+                                
+                                // Show detailed rate limit message
+                                NotificationSystem.show(errorData.message || 'Rate limit exceeded', 'error', 10000);
+                                
+                                // Also show in alert
+                                NotificationSystem.showAlert(
+                                    `⚠️ RATE LIMIT: ${errorData.message}\n\n` +
+                                    `Limits: ${errorData.details?.limits?.perRequest || '10 minutes'} between requests, ` +
+                                    `${errorData.details?.limits?.perHour || '5 max'} per hour, ` +
+                                    `${errorData.details?.limits?.perDay || '20 max'} per day.`,
+                                    'error',
+                                    15000
+                                );
+                                
+                                throw new Error(`RATE_LIMIT: ${errorData.message}`);
+                            } catch (parseError) {
+                                errorText = await response.text();
+                                throw new Error(`Rate limit exceeded (429): ${errorText}`);
+                            }
+                        } else {
+                            errorText = await response.text();
+                            throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
+                        }
                     }
                     
                     const result = await response.text();
@@ -2180,6 +2247,7 @@
                 setTimeout(() => {
                     Elements.progressSection.classList.remove('show');
                     AppState.currentJob = null;
+                    AppState.isProcessing = false; // Reset processing flag
                     JobManager.loadJobHistory();
                     JobManager.updateStats();
                 }, 2000);
@@ -2477,7 +2545,47 @@
             static async processFile() {
                 Logger.log('🚀 Starting file processing...', 'info');
                 
+                // ✅ Prevent multiple simultaneous uploads
+                if (AppState.isProcessing) {
+                    NotificationSystem.showAlert('⚠️ Another email search is already in progress. Please wait for it to complete.', 'warning');
+                    Logger.log('Upload blocked: Another process is already running', 'warn');
+                    return;
+                }
+                
+                // ✅ Client-side rate limiting check (10 minutes = 600 seconds)
+                const now = Date.now();
+                const timeSinceLastUpload = (now - AppState.lastUploadTime) / 1000;
+                const MIN_INTERVAL = 600; // 10 minutes
+                
+                if (AppState.lastUploadTime > 0 && timeSinceLastUpload < MIN_INTERVAL) {
+                    const remainingTime = Math.ceil(MIN_INTERVAL - timeSinceLastUpload);
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+                    
+                    const timeFormat = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+                    
+                    NotificationSystem.showAlert(
+                        `⏰ RATE LIMIT: You can only process one email list every 10 minutes.\n\n` +
+                        `Please wait ${timeFormat} before submitting another list.`, 
+                        'error', 
+                        8000
+                    );
+                    
+                    NotificationSystem.show(
+                        `Rate limit: Wait ${timeFormat} before next upload`, 
+                        'error', 
+                        5000
+                    );
+                    
+                    Logger.log(`Upload blocked: Rate limit - ${remainingTime}s remaining`, 'warn');
+                    return;
+                }
+                
                 try {
+                    // Mark as processing
+                    AppState.isProcessing = true;
+                    AppState.lastUploadTime = now;
+                    
                     // Comprehensive validation
                     const validationResult = await EmailFinderApp.validateProcessingConditions();
                     if (!validationResult.isValid) {
@@ -2512,7 +2620,12 @@
                     Logger.log('✅ File processing started successfully', 'success');
 
                 } catch (error) {
+                    // Reset last upload time on error so user can retry immediately
+                    AppState.lastUploadTime = 0;
                     EmailFinderApp.handleProcessingError(error);
+                } finally {
+                    // Always reset processing flag
+                    AppState.isProcessing = false;
                 }
             }
 
@@ -2623,8 +2736,9 @@
                 // Hide progress section
                 Elements.progressSection.classList.remove('show');
                 
-                // Reset current job
+                // Reset flags
                 AppState.currentJob = null;
+                AppState.isProcessing = false;
             }
         }
 
