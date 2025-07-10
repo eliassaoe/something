@@ -795,20 +795,25 @@ header {
             console.log(`Plan updated to: ${config.title}`);
         }
 
-        // Function to set up event listeners
-        function setupEventListeners() {
-            // Upgrade button
-            const upgradeButton = document.getElementById('upgradeButton');
-            if (upgradeButton) {
-                upgradeButton.addEventListener('click', function() {
-                    const token = localStorage.getItem('sessionToken');
-                    if (token) {
-                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-                    } else {
-                        window.location.href = 'https://unlimited-leads.online/pricing';
-                    }
-                });
-            }
+       // Manage plan button
+const managePlanButton = document.getElementById('managePlanButton');
+if (managePlanButton) {
+    managePlanButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const currentPlan = document.getElementById('currentPlan');
+        const planText = currentPlan ? currentPlan.textContent : '';
+        
+        if (planText.includes('Free')) {
+            // Go to pricing for free users
+            const token = localStorage.getItem('sessionToken');
+            window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+        } else {
+            // Open Stripe portal for paid users
+            openStripePortal();
+        }
+    });
+}
             
             // Logout button
             const logoutButton = document.getElementById('logoutButton');
@@ -859,6 +864,26 @@ header {
                 }, 5000);
             }
         }
+
+        async function openStripePortal() {
+    try {
+        const response = await fetch('https://eliasse-n8n.onrender.com/webhook/create-billing-portal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                token: userToken,
+                return_url: window.location.href 
+            })
+        });
+        
+        const data = await response.json();
+        if (data.url) {
+            window.location.href = data.url;
+        }
+    } catch (error) {
+        alert('Error opening billing portal. Please try again.');
+    }
+}
 
         // Execute token verification immediately as well
         token_verif();
