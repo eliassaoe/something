@@ -1067,7 +1067,6 @@
     <script>
         // Configuration
         const EMAIL_FINDER_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/email-finder';
-        const GET_FOUND_EMAIL_URL = 'https://eliasse-n8n.onrender.com/webhook/get-found-email';
         const CREDIT_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
         const CHECK_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/check';
         const DOWNLOAD_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/download';
@@ -1379,18 +1378,17 @@
             csvHeaders.forEach((header, index) => {
                 const lowerHeader = header.toLowerCase();
                 
-                // First name detection (now works with cleaned headers)
+                // First name detection
                 if (lowerHeader.includes('first') && lowerHeader.includes('name') || 
-                    lowerHeader === 'firstname' || lowerHeader === 'first_name' || 
-                    lowerHeader === 'fname' || lowerHeader === 'given_name') {
+                    lowerHeader === 'firstname' || lowerHeader === 'fname' || 
+                    lowerHeader === 'given_name') {
                     firstNameColumn.value = index;
                 }
                 
                 // Last name detection
                 if (lowerHeader.includes('last') && lowerHeader.includes('name') || 
-                    lowerHeader === 'lastname' || lowerHeader === 'last_name' ||
-                    lowerHeader === 'lname' || lowerHeader === 'surname' || 
-                    lowerHeader === 'family_name') {
+                    lowerHeader === 'lastname' || lowerHeader === 'lname' || 
+                    lowerHeader === 'surname' || lowerHeader === 'family_name') {
                     lastNameColumn.value = index;
                 }
                 
@@ -1489,20 +1487,28 @@
                 formData.append('token', userToken);
                 formData.append('job_id', job.id);
                 
-                // 🔥 Send actual column names instead of indexes
-                formData.append('firstNameColumn', csvHeaders[firstName]);
-                formData.append('lastNameColumn', csvHeaders[lastName]);
-                formData.append('domainColumn', csvHeaders[domain]);
+                // Add column indexes (existing)
+                formData.append('firstNameColumn', firstName);
+                formData.append('lastNameColumn', lastName);
+                formData.append('domainColumn', domain);
                 
-                // Add optional columns if selected (send column names)
+                // 🔥 NEW: Add actual column names from CSV headers
+                formData.append('firstNameColumnName', csvHeaders[firstName]);
+                formData.append('lastNameColumnName', csvHeaders[lastName]);
+                formData.append('domainColumnName', csvHeaders[domain]);
+                
+                // Add optional columns if selected (with their names)
                 if (companyColumn.value !== '') {
-                    formData.append('companyColumn', csvHeaders[companyColumn.value]);
+                    formData.append('companyColumn', companyColumn.value);
+                    formData.append('companyColumnName', csvHeaders[companyColumn.value]);
                 }
                 if (jobTitleColumn.value !== '') {
-                    formData.append('jobTitleColumn', csvHeaders[jobTitleColumn.value]);
+                    formData.append('jobTitleColumn', jobTitleColumn.value);
+                    formData.append('jobTitleColumnName', csvHeaders[jobTitleColumn.value]);
                 }
 
-                // Send metadata
+                // Also send all headers for server reference
+                formData.append('csvHeaders', JSON.stringify(csvHeaders));
                 formData.append('totalRows', job.total_rows);
 
                 console.log('Sending file to email finder webhook...');
@@ -1725,21 +1731,18 @@
         
         async function downloadFile(jobId) {
             try {
-                showAlert('Starting download...', 'info');
+                showAlert('Download starting...', 'info');
                 
-                // Call the new API endpoint that returns the CSV file directly
-                console.log('Downloading CSV file for job ID:', jobId);
-                const downloadUrl = `${GET_FOUND_EMAIL_URL}?job_id=${jobId}`;
+                const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
+                console.log('Downloading from:', downloadUrl);
                 
-                const response = await fetch(downloadUrl, {
-                    method: 'GET'
-                });
+                const response = await fetch(downloadUrl);
                 
                 if (!response.ok) {
                     throw new Error(`Failed to download: ${response.status}`);
                 }
                 
-                // Get the blob (CSV file)
+                // Get the blob (file)
                 const blob = await response.blob();
                 
                 // Create temporary download link
@@ -1754,7 +1757,7 @@
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
                 
-                showAlert('Download completed successfully!', 'success');
+                showAlert('Download successful!', 'success');
                 
             } catch (error) {
                 console.error('Download error:', error);
