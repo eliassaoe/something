@@ -885,7 +885,7 @@
         <!-- Billing Toggle -->
         <div style="text-align: center; margin-bottom: 3rem;">
             <div class="billing-toggle">
-                <span class="billing-option" id="quarterly-toggle">Quarterly</span>
+                <span class="billing-option" id="monthly-toggle">monthly</span>
                 <div class="toggle-switch" id="billing-switch">
                     <div class="toggle-slider"></div>
                 </div>
@@ -905,7 +905,7 @@
                     <li>Advanced search filters</li>
                     <li>CSV exports</li>
                 </ul>
-                <a href="https://buy.stripe.com/7sY8wP0Lz54V0rqg3h8IU0T" class="btn btn-primary pricing-cta" id="starter-quarterly-btn">Upgrade to Starter Plan</a>
+                <a href="https://buy.stripe.com/7sY8wP0Lz54V0rqg3h8IU0T" class="btn btn-primary pricing-cta" id="starter-monthly-btn">Upgrade to Starter Plan</a>
                 <a href="https://buy.stripe.com/00w7sL1PD68Zb64dV98IU0R" class="btn btn-primary pricing-cta" id="starter-annual-btn" style="display: none;">Upgrade to Starter Annual</a>
             </div>
             <div class="pricing-card featured">
@@ -919,7 +919,7 @@
                     <li><span class="leads-count">450M+</span> contact database</li>
                     <li>CSV exports</li>
                 </ul>
-                <a href="https://buy.stripe.com/bJeeVd65TgND2zy04j8IU0U" class="btn btn-primary pricing-cta" id="premium-quarterly-btn">Get Premium Plan</a>
+                <a href="https://buy.stripe.com/bJeeVd65TgND2zy04j8IU0U" class="btn btn-primary pricing-cta" id="premium-monthly-btn">Get Premium Plan</a>
                 <a href="https://buy.stripe.com/3cI7sLdyleFv8XWg3h8IU0S" class="btn btn-primary pricing-cta" id="premium-annual-btn" style="display: none;">Get Premium Annual</a>
             </div>
         </div>
@@ -962,39 +962,14 @@
                             <td class="text-center">10,000</td>
                         </tr>
                         <tr>
-                            <td>Free Trial Leads</td>
-                            <td class="text-center">1,000</td>
-                            <td class="text-center">1,000</td>
-                        </tr>
-                        <tr>
                             <td>Email Verification</td>
                             <td class="text-center"><i class="fas fa-check check-icon"></i></td>
                             <td class="text-center"><i class="fas fa-check check-icon"></i></td>
                         </tr>
                         <tr>
-                            <td>CRM Integrations</td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Advanced Filters</td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Priority Support</td>
-                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Dedicated Account Manager</td>
-                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
-                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
-                        </tr>
-                        <tr>
                             <td>Billing</td>
-                            <td class="text-center"><span id="table-starter-billing">Quarterly ($99)</span></td>
-                            <td class="text-center"><span id="table-premium-billing">Quarterly ($159)</span></td>
+                            <td class="text-center"><span id="table-starter-billing">monthly ($99)</span></td>
+                            <td class="text-center"><span id="table-premium-billing">monthly ($159)</span></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -1040,14 +1015,6 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <h3>CRM Integration</h3>
-                    <p>Seamless integration with Salesforce, HubSpot, Pipedrive, and 15+ other popular CRM platforms.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
                         <i class="fas fa-download"></i>
                     </div>
                     <h3>Easy Exports</h3>
@@ -1080,9 +1047,9 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">How does the 1,000 free leads trial work?</div>
+                    <div class="faq-question">How does the 25 free leads trial work?</div>
                     <div class="faq-answer">
-                        <p>Every new account gets 1,000 free verified leads to test our platform and data quality. No credit card required. Use these leads to evaluate our service before upgrading to a paid plan.</p>
+                        <p>Every new account gets 250 free verified leads to test our platform and data quality. No credit card required. Use these leads to evaluate our service before upgrading to a paid plan.</p>
                     </div>
                 </div>
                 
@@ -1099,16 +1066,9 @@
                         <p>Our data accuracy matches industry standards with 95%+ email deliverability. We use the same verification methods as major competitors and update our database continuously.</p>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">What's the difference between quarterly and annual billing?</div>
-                    <div class="faq-answer">
-                        <p>Quarterly billing charges you every 3 months ($99 for Starter, $159 for Premium), while annual billing offers a 25% discount with one upfront payment ($299 for Starter, $458 for Premium). Choose quarterly for lower upfront costs or annual for maximum savings.</p>
-                    </div>
-                </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">Can I switch between quarterly and annual billing?</div>
+                    <div class="faq-question">Can I switch between monthly and annual billing?</div>
                     <div class="faq-answer">
                         <p>Yes! You can upgrade to annual billing at any time to take advantage of the discount. Contact our support team and we'll help you make the transition and apply the appropriate credit.</p>
                     </div>
@@ -1254,7 +1214,7 @@
             window.token = token;
 
             // Pricing Toggle Functionality
-            const quarterlyToggle = document.getElementById('quarterly-toggle');
+            const monthlyToggle = document.getElementById('monthly-toggle');
             const annualToggle = document.getElementById('annual-toggle');
             const starterPrice = document.getElementById('starter-price');
             const premiumPrice = document.getElementById('premium-price');
@@ -1263,9 +1223,9 @@
 
             // Pricing data
             const pricingData = {
-                quarterly: {
-                    starter: { price: '$39', billing: 'Billed quarterly ($99 every 3 months)' },
-                    premium: { price: '$59', billing: 'Billed quarterly ($159 every 3 months)' }
+                monthly: {
+                    starter: { price: '$39', billing: 'Billed monthly ' },
+                    premium: { price: '$59', billing: 'Billed monthly ' }
                 },
                 annual: {
                     starter: { price: '$25', billing: 'Billed annually ($299/year)' },
@@ -1273,13 +1233,13 @@
                 }
             };
 
-            // Set initial state (quarterly)
-            quarterlyToggle.classList.add('active');
+            // Set initial state (monthly)
+            monthlyToggle.classList.add('active');
             
             // Toggle event listeners
-            quarterlyToggle.addEventListener('click', function() {
+            monthlyToggle.addEventListener('click', function() {
                 if (!this.classList.contains('active')) {
-                    switchToQuarterly();
+                    switchTomonthly();
                 }
             });
 
@@ -1289,31 +1249,31 @@
                 }
             });
 
-            function switchToQuarterly() {
-                quarterlyToggle.classList.add('active');
+            function switchTomonthly() {
+                monthlyToggle.classList.add('active');
                 annualToggle.classList.remove('active');
                 
-                starterPrice.innerHTML = pricingData.quarterly.starter.price + '<small>/month</small>';
-                premiumPrice.innerHTML = pricingData.quarterly.premium.price + '<small>/month</small>';
-                starterBilling.textContent = pricingData.quarterly.starter.billing;
-                premiumBilling.textContent = pricingData.quarterly.premium.billing;
+                starterPrice.innerHTML = pricingData.monthly.starter.price + '<small>/month</small>';
+                premiumPrice.innerHTML = pricingData.monthly.premium.price + '<small>/month</small>';
+                starterBilling.textContent = pricingData.monthly.starter.billing;
+                premiumBilling.textContent = pricingData.monthly.premium.billing;
                 
                 // Update comparison table
                 document.getElementById('table-starter-price').textContent = '$39/month';
                 document.getElementById('table-premium-price').textContent = '$59/month';
-                document.getElementById('table-starter-billing').textContent = 'Quarterly ($99)';
-                document.getElementById('table-premium-billing').textContent = 'Quarterly ($159)';
+                document.getElementById('table-starter-billing').textContent = 'monthly ($99)';
+                document.getElementById('table-premium-billing').textContent = 'monthly ($159)';
                 
-                // Update button IDs for quarterly
-                document.getElementById('starter-quarterly-btn').style.display = 'block';
-                document.getElementById('premium-quarterly-btn').style.display = 'block';
+                // Update button IDs for monthly
+                document.getElementById('starter-monthly-btn').style.display = 'block';
+                document.getElementById('premium-monthly-btn').style.display = 'block';
                 document.getElementById('starter-annual-btn').style.display = 'none';
                 document.getElementById('premium-annual-btn').style.display = 'none';
             }
 
             function switchToAnnual() {
                 annualToggle.classList.add('active');
-                quarterlyToggle.classList.remove('active');
+                monthlyToggle.classList.remove('active');
                 
                 starterPrice.innerHTML = pricingData.annual.starter.price + '<small>/month</small>';
                 premiumPrice.innerHTML = pricingData.annual.premium.price + '<small>/month</small>';
@@ -1327,8 +1287,8 @@
                 document.getElementById('table-premium-billing').textContent = 'Annual ($458)';
                 
                 // Update button IDs for annual
-                document.getElementById('starter-quarterly-btn').style.display = 'none';
-                document.getElementById('premium-quarterly-btn').style.display = 'none';
+                document.getElementById('starter-monthly-btn').style.display = 'none';
+                document.getElementById('premium-monthly-btn').style.display = 'none';
                 document.getElementById('starter-annual-btn').style.display = 'block';
                 document.getElementById('premium-annual-btn').style.display = 'block';
             }
