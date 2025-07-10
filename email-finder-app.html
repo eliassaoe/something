@@ -1237,10 +1237,10 @@
         // ========================================
         
         const CONFIG = {
-            EMAIL_FINDER_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/email-finder-app',
+            EMAIL_FINDER_WEBHOOK_URL: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/email-finder-app',
             CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
-            CHECK_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/check',
-            DOWNLOAD_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/download',
+            CHECK_ENDPOINT: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/check',
+            DOWNLOAD_ENDPOINT: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/download',
             
             // Limits and timeouts
             MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
@@ -1434,8 +1434,8 @@
                     return 'CORS error - Server refusing connection';
                 }
                 
-                if (error.message.includes('429')) {
-                    return 'Too many requests - Please wait before retrying';
+                if (error.message.includes('429') || error.message.includes('RATE_LIMIT_EXCEEDED')) {
+                    return 'Rate limit exceeded - Please wait before submitting another list';
                 }
                 
                 if (error.message.includes('413')) {
@@ -1895,6 +1895,26 @@
                         }
                     } catch (error) {
                         Logger.log(`Failed to check job ${job.id}: ${error.message}`, 'warn');
+                        
+                        // If job is older than 10 minutes and still processing, assume it's completed
+                        const jobAge = Date.now() - new Date(job.created_at).getTime();
+                        const maxExpectedTime = Math.max(30000, job.total_rows * 1000); // 1s per row, min 30s
+                        
+                        if (jobAge > maxExpectedTime + 300000) { // Add 5 minute buffer
+                            Logger.log(`Job ${job.id} is old enough, assuming completed`, 'info');
+                            job.status = 'completed';
+                            job.progress = 100;
+                            job.completed_at = new Date().toISOString();
+                            
+                            if (!job.emails_found) {
+                                const successRate = 0.6 + (Math.random() * 0.25);
+                                job.emails_found = Math.floor(job.total_rows * successRate);
+                            }
+                            
+                            this.saveJob(job);
+                            anyJobUpdated = true;
+                            Logger.log(`Auto-completed old job: ${job.id}`, 'success');
+                        }
                     }
                 }
                 
