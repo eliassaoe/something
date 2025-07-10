@@ -467,7 +467,7 @@
             gap: 8px;
         }
 
-        .process-button:hover {
+        .process-button:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
         }
@@ -477,6 +477,43 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+
+        /* STATUS INDICATOR */
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 15px;
+            box-shadow: var(--box-shadow-lg);
+            z-index: 1000;
+            display: none;
+            min-width: 300px;
+        }
+
+        .status-indicator.show {
+            display: block;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .status-indicator.success {
+            border-color: var(--success);
+        }
+
+        .status-indicator.error {
+            border-color: var(--danger);
+        }
+
+        .status-indicator.warning {
+            border-color: var(--warning);
         }
 
         /* PROGRESS SECTION */
@@ -562,6 +599,69 @@
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
+        }
+
+        /* CONNECTION STATUS */
+        .connection-status {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .connection-status.online {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .connection-status.offline {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .connection-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        .connection-status.offline .connection-dot {
+            background: var(--danger);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* DEBUG PANEL */
+        .debug-panel {
+            background: #1a1a1a;
+            color: #00ff00;
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .debug-panel.show {
+            display: block;
+        }
+
+        .debug-panel pre {
+            margin: 0;
+            white-space: pre-wrap;
         }
 
         /* STATS CARDS */
@@ -695,6 +795,11 @@
             color: white;
         }
 
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
         .btn-success:hover {
             background: #059669;
             transform: translateY(-1px);
@@ -702,6 +807,11 @@
 
         .btn-secondary:hover {
             background: var(--gray-700);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
             transform: translateY(-1px);
         }
 
@@ -731,6 +841,7 @@
             display: none;
             font-size: 14px;
             font-weight: 500;
+            animation: slideDown 0.3s ease-out;
         }
 
         .alert-success {
@@ -847,6 +958,12 @@
             .progress-section {
                 padding: 20px;
             }
+
+            .status-indicator {
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
         }
 
         @media (max-width: 480px) {
@@ -875,10 +992,41 @@
                 font-size: 24px;
             }
         }
+
+        /* DEBUG MODE STYLES */
+        .debug-mode .debug-panel {
+            display: block !important;
+        }
+
+        .debug-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 1000;
+            transition: var(--transition-standard);
+        }
+
+        .debug-toggle:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Connection Status (Hidden by default, only shown on critical issues) -->
+        <div id="connectionStatus" class="connection-status online" style="display: none;">
+            <div class="connection-dot"></div>
+            <span>Connection status</span>
+        </div>
+
         <!-- Header -->
         <header>
             <div class="logo">
@@ -967,9 +1115,6 @@
                 <div class="column-mapping">
                     <h4>Column Mapping</h4>
                     <div class="column-row">
-                        <div class="column-mapping">
-                    <h4>Column Mapping</h4>
-                    <div class="column-row">
                         <span class="column-label">First Name*:</span>
                         <select id="firstNameColumn" class="column-select">
                             <option value="">Select column...</option>
@@ -1035,6 +1180,11 @@
             </div>
         </div>
 
+        <!-- Debug Panel -->
+        <div id="debugPanel" class="debug-panel">
+            <pre id="debugLog">🔧 Debug mode activated - Logs will appear here...</pre>
+        </div>
+
         <!-- Stats Cards -->
         <div class="stats-cards">
             <div class="stat-card">
@@ -1048,6 +1198,10 @@
             <div class="stat-card">
                 <div class="stat-value" id="processingJobs">0</div>
                 <div class="stat-label">Processing</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalEmailsFound">0</div>
+                <div class="stat-label">Emails Found</div>
             </div>
         </div>
 
@@ -1064,484 +1218,846 @@
         </div>
     </div>
 
+    <!-- Status Indicator -->
+    <div id="statusIndicator" class="status-indicator">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-info-circle"></i>
+            <span id="statusMessage">Message</span>
+        </div>
+    </div>
+
+    <!-- Debug Toggle -->
+    <button id="debugToggle" class="debug-toggle" title="Toggle Debug Mode">
+        <i class="fas fa-bug"></i>
+    </button>
+
     <script>
-        // Configuration
-        const EMAIL_FINDER_WEBHOOK_URL = 'https://eliasse-n8n.onrender.com/webhook/email-finder';
-        const CREDIT_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
-        const CHECK_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/check';
-        const DOWNLOAD_ENDPOINT = 'https://email-finder-download.hamoureliasse.workers.dev/api/download';
+        // ========================================
+        // CONFIGURATION & CONSTANTS
+        // ========================================
         
-        // Storage keys
-        const STORAGE_KEYS = {
-            JOBS: 'email_finder_jobs',
-            CURRENT_JOB: 'email_finder_current_job'
+        const CONFIG = {
+            EMAIL_FINDER_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/email-finder',
+            CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
+            CHECK_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/check',
+            DOWNLOAD_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/download',
+            
+            // Limits and timeouts
+            MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
+            MAX_ROWS: 500,
+            MIN_PROCESSING_TIME: 30, // seconds
+            PROCESSING_TIME_PER_ROW: 1, // second
+            
+            // Retry configuration
+            MAX_RETRIES: 3,
+            RETRY_DELAY: 2000, // milliseconds
+            
+            // Storage keys
+            STORAGE_KEYS: {
+                JOBS: 'email_finder_jobs',
+                CURRENT_JOB: 'email_finder_current_job',
+                DEBUG_MODE: 'email_finder_debug_mode'
+            }
         };
-        
-        // Global variables
-        let userToken = null;
-        let uploadedFile = null;
-        let csvData = null;
-        let csvHeaders = [];
-        let currentJob = null;
-        let progressInterval = null;
-        
-        // DOM Elements
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const uploadButton = document.getElementById('uploadButton');
-        const filePreview = document.getElementById('filePreview');
-        const fileName = document.getElementById('fileName');
-        const fileStats = document.getElementById('fileStats');
-        const uploadAlert = document.getElementById('uploadAlert');
-        const processButton = document.getElementById('processButton');
-        const progressSection = document.getElementById('progressSection');
-        
-        // Column mapping selects
-        const firstNameColumn = document.getElementById('firstNameColumn');
-        const lastNameColumn = document.getElementById('lastNameColumn');
-        const domainColumn = document.getElementById('domainColumn');
-        const companyColumn = document.getElementById('companyColumn');
-        const jobTitleColumn = document.getElementById('jobTitleColumn');
 
         // ========================================
-        // INITIALIZATION
+        // GLOBAL STATE
         // ========================================
         
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeAuth();
-            initializeEventListeners();
-            checkPendingJobs();
-            loadJobHistory();
-            updateStats();
-        });
-
-        function initializeAuth() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let token = urlParams.get('token');
-            
-            if (!token) {
-                token = localStorage.getItem('sessionToken');
-                if (token) {
-                    const currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('token', token);
-                    window.history.replaceState({}, '', currentUrl.toString());
-                }
-            } else {
-                localStorage.setItem('sessionToken', token);
-            }
-            
-            if (!token) {
-                window.location.href = 'https://unlimited-leads.online/en';
-                return;
-            }
-
-            userToken = token;
-            fetchUserCredits();
-        }
-
-        function initializeEventListeners() {
-            // File upload events
-            fileUploadArea.addEventListener('click', () => fileInput.click());
-            fileUploadArea.addEventListener('dragover', handleDragOver);
-            fileUploadArea.addEventListener('dragleave', handleDragLeave);
-            fileUploadArea.addEventListener('drop', handleFileDrop);
-            uploadButton.addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', handleFileSelect);
-            
-            // Process button
-            processButton.addEventListener('click', processFile);
-            
-            // Column mapping change events
-            [firstNameColumn, lastNameColumn, domainColumn].forEach(select => {
-                select.addEventListener('change', validateRequiredColumns);
-            });
-            
-            // Navigation buttons
-            setupNavigationButtons();
-        }
-
-        function setupNavigationButtons() {
-            const upgradeButton = document.getElementById('upgradeButton');
-            if (upgradeButton) {
-                upgradeButton.addEventListener('click', function() {
-                    const token = localStorage.getItem('sessionToken');
-                    if (token) {
-                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-                    } else {
-                        window.location.href = 'https://unlimited-leads.online/pricing';
-                    }
-                });
-            }
-            
-            const logoutButton = document.getElementById('logoutButton');
-            if (logoutButton) {
-                logoutButton.addEventListener('click', function() {
-                    localStorage.removeItem('sessionToken');
-                    window.location.href = 'https://unlimited-leads.online/en';
-                });
-            }
-        }
+        const AppState = {
+            userToken: null,
+            uploadedFile: null,
+            csvData: null,
+            csvHeaders: [],
+            currentJob: null,
+            progressInterval: null,
+            debugMode: false,
+            isOnline: true,
+            retryCount: 0
+        };
 
         // ========================================
-        // CREDITS MANAGEMENT
+        // DOM ELEMENTS
         // ========================================
         
-        async function fetchUserCredits() {
-            try {
-                const requestData = {
-                    token: userToken,
-                    type: "token"
-                };
+        const Elements = {
+            fileUploadArea: document.getElementById('fileUploadArea'),
+            fileInput: document.getElementById('fileInput'),
+            uploadButton: document.getElementById('uploadButton'),
+            filePreview: document.getElementById('filePreview'),
+            fileName: document.getElementById('fileName'),
+            fileStats: document.getElementById('fileStats'),
+            uploadAlert: document.getElementById('uploadAlert'),
+            processButton: document.getElementById('processButton'),
+            progressSection: document.getElementById('progressSection'),
+            debugPanel: document.getElementById('debugPanel'),
+            debugLog: document.getElementById('debugLog'),
+            debugToggle: document.getElementById('debugToggle'),
+            connectionStatus: document.getElementById('connectionStatus'),
+            statusIndicator: document.getElementById('statusIndicator'),
+            statusMessage: document.getElementById('statusMessage'),
+            
+            // Column mapping selects
+            firstNameColumn: document.getElementById('firstNameColumn'),
+            lastNameColumn: document.getElementById('lastNameColumn'),
+            domainColumn: document.getElementById('domainColumn'),
+            companyColumn: document.getElementById('companyColumn'),
+            jobTitleColumn: document.getElementById('jobTitleColumn')
+        };
+
+        // ========================================
+        // LOGGING & DEBUG SYSTEM
+        // ========================================
+        
+        class Logger {
+            static log(message, type = 'info', data = null) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
                 
-                const response = await fetch(CREDIT_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data && typeof data.credit === 'number') {
-                        displayUserCredits(data.credit);
-                    }
+                // Console logging
+                switch (type) {
+                    case 'error':
+                        console.error(logEntry, data);
+                        break;
+                    case 'warn':
+                        console.warn(logEntry, data);
+                        break;
+                    case 'success':
+                        console.log(`✅ ${logEntry}`, data);
+                        break;
+                    default:
+                        console.log(`ℹ️ ${logEntry}`, data);
                 }
-            } catch (error) {
-                console.error('Token verification error:', error);
+                
+                // Debug panel logging
+                if (AppState.debugMode && Elements.debugLog) {
+                    const icon = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : type === 'success' ? '✅' : 'ℹ️';
+                    Elements.debugLog.textContent += `\n${icon} ${logEntry}`;
+                    if (data) {
+                        Elements.debugLog.textContent += `\n   Data: ${JSON.stringify(data, null, 2)}`;
+                    }
+                    Elements.debugLog.scrollTop = Elements.debugLog.scrollHeight;
+                }
             }
-        }
-
-        function displayUserCredits(credits) {
-            const creditsElement = document.getElementById('userCredits');
-            if (creditsElement) {
-                creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+            
+            static clear() {
+                if (Elements.debugLog) {
+                    Elements.debugLog.textContent = '🔧 Mode Debug activé - Les logs s\'afficheront ici...';
+                }
             }
         }
 
         // ========================================
-        // FILE UPLOAD HANDLING
+        // NETWORK & CONNECTION MONITORING
         // ========================================
         
-        function handleDragOver(e) {
-            e.preventDefault();
-            fileUploadArea.classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            fileUploadArea.classList.remove('dragover');
-        }
-
-        function handleFileDrop(e) {
-            e.preventDefault();
-            fileUploadArea.classList.remove('dragover');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileUpload(files[0]);
-            }
-        }
-
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFileUpload(file);
-            }
-        }
-
-        function handleFileUpload(file) {
-            // Validate file type
-            if (!file.name.toLowerCase().endsWith('.csv')) {
-                showAlert('Please upload a CSV file only.', 'error');
-                return;
-            }
-
-            // Validate file size (max 10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                showAlert('File size must be less than 10MB.', 'error');
-                return;
-            }
-
-            uploadedFile = file;
-            fileName.textContent = file.name;
-            
-            // Read and parse CSV
-            const reader = new FileReader();
-            reader.onload = function(e) {
+        class NetworkMonitor {
+            static async checkConnection() {
                 try {
-                    parseCSV(e.target.result);
+                    const response = await fetch(CONFIG.EMAIL_FINDER_WEBHOOK_URL, { 
+                        method: 'HEAD',
+                        mode: 'no-cors'
+                    });
+                    return true;
                 } catch (error) {
-                    showAlert('Error reading CSV file: ' + error.message, 'error');
+                    return false;
                 }
-            };
-            reader.readAsText(file);
-        }
-
-        function parseCSV(csvContent) {
-            try {
-                const lines = csvContent.split('\n').filter(line => line.trim());
-                
-                if (lines.length < 2) {
-                    showAlert('CSV file must contain at least a header row and one data row.', 'error');
-                    return;
-                }
-
-                // Check row limit (500 data rows + 1 header = 501 total)
-                if (lines.length > 501) {
-                    showAlert('CSV file cannot exceed 500 rows. Please reduce your file size and try again.', 'error');
-                    return;
-                }
-
-                // Parse headers
-                csvHeaders = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
-                
-                // Parse data rows for validation
-                csvData = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const row = parseCSVRow(lines[i]);
-                    if (row.length === csvHeaders.length) {
-                        csvData.push(row);
-                    }
-                }
-
-                if (csvData.length === 0) {
-                    showAlert('No valid data rows found in CSV file.', 'error');
-                    return;
-                }
-
-                // Update file stats
-                fileStats.textContent = `${lines.length - 1} rows, ${csvHeaders.length} columns`;
-                
-                // Setup column mapping
-                setupColumnMapping();
-                
-                // Show file preview section
-                filePreview.style.display = 'block';
-                
-                showAlert('CSV file loaded successfully! Please map the required columns below.', 'success');
-                
-            } catch (error) {
-                showAlert('Error parsing CSV: ' + error.message, 'error');
             }
-        }
-
-        function parseCSVRow(row) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
             
-            for (let i = 0; i < row.length; i++) {
-                const char = row[i];
+            static updateStatus(isOnline) {
+                AppState.isOnline = isOnline;
                 
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
+                // Only show critical connection issues, keep status hidden for normal operation
+                const statusEl = Elements.connectionStatus;
+                
+                if (!isOnline) {
+                    // Only show when offline - critical issue
+                    statusEl.className = 'connection-status offline';
+                    statusEl.innerHTML = '<div class="connection-dot"></div><span>Connection lost</span>';
+                    statusEl.style.display = 'flex';
+                    
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => {
+                        statusEl.style.display = 'none';
+                    }, 5000);
                 } else {
-                    current += char;
+                    // Hide when online - normal operation
+                    statusEl.style.display = 'none';
                 }
+                
+                Logger.log(`Connection status: ${isOnline ? 'Online' : 'Offline'}`, isOnline ? 'success' : 'error');
             }
             
-            result.push(current.trim());
-            return result;
-        }
-
-        // ========================================
-        // COLUMN MAPPING
-        // ========================================
-        
-        function setupColumnMapping() {
-            const selects = [firstNameColumn, lastNameColumn, domainColumn, companyColumn, jobTitleColumn];
-            
-            // Clear existing options
-            selects.forEach(select => {
-                select.innerHTML = '<option value="">Select column...</option>';
-            });
-
-            // Add header options
-            csvHeaders.forEach((header, index) => {
-                selects.forEach(select => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = header;
-                    select.appendChild(option);
-                });
-            });
-
-            // Auto-detect common column names
-            autoDetectColumns();
-        }
-
-        function autoDetectColumns() {
-            csvHeaders.forEach((header, index) => {
-                const lowerHeader = header.toLowerCase();
-                
-                // First name detection
-                if (lowerHeader.includes('first') && lowerHeader.includes('name') || 
-                    lowerHeader === 'firstname' || lowerHeader === 'fname' || 
-                    lowerHeader === 'given_name') {
-                    firstNameColumn.value = index;
-                }
-                
-                // Last name detection
-                if (lowerHeader.includes('last') && lowerHeader.includes('name') || 
-                    lowerHeader === 'lastname' || lowerHeader === 'lname' || 
-                    lowerHeader === 'surname' || lowerHeader === 'family_name') {
-                    lastNameColumn.value = index;
-                }
-                
-                // Domain detection
-                if (lowerHeader.includes('domain') || lowerHeader.includes('website') ||
-                    lowerHeader === 'company_domain' || lowerHeader === 'company_website') {
-                    domainColumn.value = index;
-                }
-                
-                // Company detection
-                if (lowerHeader.includes('company') && !lowerHeader.includes('domain') && !lowerHeader.includes('website')) {
-                    companyColumn.value = index;
-                }
-                
-                // Job title detection
-                if (lowerHeader.includes('title') || lowerHeader.includes('position') || lowerHeader.includes('role')) {
-                    jobTitleColumn.value = index;
-                }
-            });
-            
-            // Validate after auto-detection
-            validateRequiredColumns();
-        }
-
-        function validateRequiredColumns() {
-            const firstName = firstNameColumn.value;
-            const lastName = lastNameColumn.value;
-            const domain = domainColumn.value;
-
-            const isValid = firstName !== '' && lastName !== '' && domain !== '';
-            processButton.disabled = !isValid;
-
-            if (isValid) {
-                processButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-                showAlert('All required columns mapped! Ready to process.', 'success');
-            } else {
-                processButton.style.background = 'var(--gray-300)';
-            }
-        }
-
-        // ========================================
-        // FILE PROCESSING
-        // ========================================
-        
-        async function processFile() {
-            if (!uploadedFile || !csvData) {
-                showAlert('Please upload a valid CSV file first.', 'error');
-                return;
-            }
-
-            // Validate required columns
-            const firstName = firstNameColumn.value;
-            const lastName = lastNameColumn.value;
-            const domain = domainColumn.value;
-
-            if (firstName === '' || lastName === '' || domain === '') {
-                showAlert('Please map all required columns (First Name, Last Name, Domain).', 'error');
-                return;
-            }
-
-            try {
-                // Create new job
-                const job = {
-                    id: generateId(),
-                    filename: uploadedFile.name,
-                    status: 'processing',
-                    progress: 0,
-                    total_rows: csvData.length,
-                    emails_found: null,
-                    started_at: new Date().toISOString(),
-                    completed_at: null,
-                    created_at: new Date().toISOString()
+            static async startMonitoring() {
+                const checkAndUpdate = async () => {
+                    const isOnline = await this.checkConnection();
+                    this.updateStatus(isOnline);
                 };
-
-                // Save job
-                saveJob(job);
-                currentJob = job;
-
-                // Calculate and log estimated time
-                const estimatedSeconds = Math.max(30, job.total_rows * 1);
-                const estimatedMinutes = estimatedSeconds / 60;
-                console.log(`Starting email finding job for ${job.total_rows} rows, estimated time: ${estimatedMinutes.toFixed(1)} minutes (1s per row, min 30s)`);
-
-                // Show progress section
-                showProgress(uploadedFile.name);
-
-                // Hide file preview
-                filePreview.style.display = 'none';
-
-                // Start progress simulation FIRST
-                simulateProgress();
-
-                // Prepare form data
-                const formData = new FormData();
-                formData.append('file', uploadedFile);
-                formData.append('token', userToken);
-                formData.append('job_id', job.id);
                 
-                // Add column indexes (existing)
-                formData.append('firstNameColumn', firstName);
-                formData.append('lastNameColumn', lastName);
-                formData.append('domainColumn', domain);
-                
-                // 🔥 NEW: Add actual column names from CSV headers
-                formData.append('firstNameColumnName', csvHeaders[firstName]);
-                formData.append('lastNameColumnName', csvHeaders[lastName]);
-                formData.append('domainColumnName', csvHeaders[domain]);
-                
-                // Add optional columns if selected (with their names)
-                if (companyColumn.value !== '') {
-                    formData.append('companyColumn', companyColumn.value);
-                    formData.append('companyColumnName', csvHeaders[companyColumn.value]);
-                }
-                if (jobTitleColumn.value !== '') {
-                    formData.append('jobTitleColumn', jobTitleColumn.value);
-                    formData.append('jobTitleColumnName', csvHeaders[jobTitleColumn.value]);
-                }
+                await checkAndUpdate();
+                setInterval(checkAndUpdate, 30000); // Check every 30 seconds
+            }
+        }
 
-                // Also send all headers for server reference
-                formData.append('csvHeaders', JSON.stringify(csvHeaders));
-                formData.append('totalRows', job.total_rows);
-
-                console.log('Sending file to email finder webhook...');
-
-                // 🔥 FIRE AND FORGET - Don't wait for response, just start the processing
-                fetch(EMAIL_FINDER_WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    console.log('✅ Email finder API call sent successfully, status:', response.status);
-                    if (response.ok) {
-                        console.log('📧 Email finding process started on server');
+        // ========================================
+        // ERROR HANDLING & RETRY SYSTEM
+        // ========================================
+        
+        class ErrorHandler {
+            static async retryOperation(operation, maxRetries = CONFIG.MAX_RETRIES) {
+                for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                    try {
+                        Logger.log(`Attempt ${attempt}/${maxRetries}`, 'info');
+                        return await operation();
+                    } catch (error) {
+                        Logger.log(`Attempt ${attempt} failed: ${error.message}`, 'warn');
+                        
+                        if (attempt === maxRetries) {
+                            throw error;
+                        }
+                        
+                        await this.delay(CONFIG.RETRY_DELAY * attempt);
                     }
-                }).catch(error => {
-                    console.log('⚠️ API call failed (simulation continues regardless):', error.message);
+                }
+            }
+            
+            static delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+            
+            static formatError(error) {
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    return 'Connection error - Check your internet connection';
+                }
+                
+                if (error.message.includes('CORS')) {
+                    return 'CORS error - Server refusing connection';
+                }
+                
+                if (error.message.includes('429')) {
+                    return 'Too many requests - Please wait before retrying';
+                }
+                
+                if (error.message.includes('413')) {
+                    return 'File too large - Please reduce file size';
+                }
+                
+                return error.message || 'An unknown error occurred';
+            }
+        }
+
+        // ========================================
+        // NOTIFICATION SYSTEM
+        // ========================================
+        
+        class NotificationSystem {
+            static show(message, type = 'info', duration = 5000) {
+                const statusIndicator = Elements.statusIndicator;
+                const statusMessage = Elements.statusMessage;
+                
+                statusMessage.textContent = message;
+                statusIndicator.className = `status-indicator ${type} show`;
+                
+                Logger.log(`Notification: ${message}`, type);
+                
+                setTimeout(() => {
+                    statusIndicator.classList.remove('show');
+                }, duration);
+            }
+            
+            static showAlert(message, type = 'info', duration = 5000) {
+                const alert = Elements.uploadAlert;
+                alert.textContent = message;
+                alert.className = `alert alert-${type}`;
+                alert.style.display = 'block';
+                
+                if (type === 'success' || type === 'info') {
+                    setTimeout(() => {
+                        alert.style.display = 'none';
+                    }, duration);
+                }
+            }
+        }
+
+        // ========================================
+        // FILE VALIDATION & PROCESSING
+        // ========================================
+        
+        class FileValidator {
+            static validate(file) {
+                const errors = [];
+                
+                if (!file) {
+                    errors.push('No file selected');
+                    return errors;
+                }
+                
+                if (!file.name.toLowerCase().endsWith('.csv')) {
+                    errors.push('Only CSV files are accepted');
+                }
+                
+                if (file.size === 0) {
+                    errors.push('File is empty');
+                }
+                
+                if (file.size > CONFIG.MAX_FILE_SIZE) {
+                    errors.push(`File must be less than ${CONFIG.MAX_FILE_SIZE / (1024 * 1024)}MB`);
+                }
+                
+                return errors;
+            }
+            
+            static validateCSVData(csvData, csvHeaders) {
+                const errors = [];
+                
+                if (!csvHeaders || csvHeaders.length === 0) {
+                    errors.push('No headers found in CSV file');
+                }
+                
+                if (!csvData || csvData.length === 0) {
+                    errors.push('No data found in CSV file');
+                }
+                
+                if (csvData && csvData.length > CONFIG.MAX_ROWS) {
+                    errors.push(`File cannot contain more than ${CONFIG.MAX_ROWS} rows`);
+                }
+                
+                return errors;
+            }
+        }
+
+        class CSVParser {
+            static parse(csvContent) {
+                try {
+                    const lines = csvContent.split('\n').filter(line => line.trim());
+                    
+                    if (lines.length < 2) {
+                        throw new Error('Le fichier CSV doit contenir au moins un en-tête et une ligne de données');
+                    }
+                    
+                    // Parse headers
+                    const headers = this.parseCSVRow(lines[0]);
+                    Logger.log(`Headers found: ${headers.join(', ')}`, 'info');
+                    
+                    // Parse data rows
+                    const data = [];
+                    for (let i = 1; i < lines.length; i++) {
+                        const row = this.parseCSVRow(lines[i]);
+                        if (row.length === headers.length) {
+                            data.push(row);
+                        } else {
+                            Logger.log(`Row ${i} skipped: column count mismatch`, 'warn');
+                        }
+                    }
+                    
+                    Logger.log(`Parsed ${data.length} valid rows`, 'success');
+                    
+                    return { headers, data };
+                } catch (error) {
+                    Logger.log(`CSV parsing failed: ${error.message}`, 'error');
+                    throw error;
+                }
+            }
+            
+            static parseCSVRow(row) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < row.length; i++) {
+                    const char = row[i];
+                    
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current.trim().replace(/"/g, ''));
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                
+                result.push(current.trim().replace(/"/g, ''));
+                return result;
+            }
+        }
+
+        // ========================================
+        // COLUMN MAPPING SYSTEM
+        // ========================================
+        
+        class ColumnMapper {
+            static autoDetect(headers) {
+                const mappings = {};
+                
+                headers.forEach((header, index) => {
+                    const lowerHeader = header.toLowerCase();
+                    
+                    // First name detection
+                    if (this.matchesPattern(lowerHeader, ['first', 'firstname', 'fname', 'given_name', 'prenom'])) {
+                        mappings.firstName = index;
+                    }
+                    
+                    // Last name detection
+                    if (this.matchesPattern(lowerHeader, ['last', 'lastname', 'lname', 'surname', 'family_name', 'nom'])) {
+                        mappings.lastName = index;
+                    }
+                    
+                    // Domain detection
+                    if (this.matchesPattern(lowerHeader, ['domain', 'website', 'company_domain', 'company_website', 'domaine'])) {
+                        mappings.domain = index;
+                    }
+                    
+                    // Company detection
+                    if (this.matchesPattern(lowerHeader, ['company', 'entreprise', 'societe']) && 
+                        !lowerHeader.includes('domain') && !lowerHeader.includes('website')) {
+                        mappings.company = index;
+                    }
+                    
+                    // Job title detection
+                    if (this.matchesPattern(lowerHeader, ['title', 'position', 'role', 'titre', 'poste'])) {
+                        mappings.jobTitle = index;
+                    }
+                });
+                
+                Logger.log('Auto-detected column mappings', 'info', mappings);
+                return mappings;
+            }
+            
+            static matchesPattern(header, patterns) {
+                return patterns.some(pattern => header.includes(pattern));
+            }
+            
+            static setupColumnSelects(headers) {
+                const selects = [
+                    Elements.firstNameColumn,
+                    Elements.lastNameColumn,
+                    Elements.domainColumn,
+                    Elements.companyColumn,
+                    Elements.jobTitleColumn
+                ];
+                
+                // Clear existing options
+                selects.forEach(select => {
+                    const defaultOption = select.querySelector('option[value=""]');
+                    select.innerHTML = '';
+                    select.appendChild(defaultOption.cloneNode(true));
                 });
 
-                // Show success immediately - simulation will handle the rest
-                showAlert('Email finding started successfully!', 'success');
+                // Add header options
+                headers.forEach((header, index) => {
+                    selects.forEach(select => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.textContent = header;
+                        select.appendChild(option);
+                    });
+                });
 
-            } catch (error) {
-                console.error('Processing error:', error);
+                // Auto-detect and apply mappings
+                const mappings = this.autoDetect(headers);
                 
-                // Update job status to failed
-                if (currentJob) {
-                    currentJob.status = 'failed';
-                    saveJob(currentJob);
+                if (mappings.firstName !== undefined) Elements.firstNameColumn.value = mappings.firstName;
+                if (mappings.lastName !== undefined) Elements.lastNameColumn.value = mappings.lastName;
+                if (mappings.domain !== undefined) Elements.domainColumn.value = mappings.domain;
+                if (mappings.company !== undefined) Elements.companyColumn.value = mappings.company;
+                if (mappings.jobTitle !== undefined) Elements.jobTitleColumn.value = mappings.jobTitle;
+                
+                // Validate after auto-detection
+                this.validateRequiredColumns();
+            }
+            
+            static validateRequiredColumns() {
+                const firstName = Elements.firstNameColumn.value;
+                const lastName = Elements.lastNameColumn.value;
+                const domain = Elements.domainColumn.value;
+
+                const isValid = firstName !== '' && lastName !== '' && domain !== '';
+                Elements.processButton.disabled = !isValid;
+
+                if (isValid) {
+                    Elements.processButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
+                    NotificationSystem.showAlert('All required columns mapped! Ready to process.', 'success');
+                    Logger.log('All required columns mapped successfully', 'success');
+                } else {
+                    Elements.processButton.style.background = 'var(--gray-300)';
+                    Logger.log('Required columns not fully mapped', 'warn');
+                }
+            }
+        }
+
+        // ========================================
+        // API COMMUNICATION
+        // ========================================
+        
+        class APIClient {
+            static async makeRequest(url, options = {}) {
+                const defaultOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                };
+                
+                const finalOptions = { ...defaultOptions, ...options };
+                
+                Logger.log(`Making ${finalOptions.method} request to: ${url}`, 'info');
+                
+                if (finalOptions.body && finalOptions.body instanceof FormData) {
+                    Logger.log('Request contains FormData', 'info');
+                    // Don't set Content-Type for FormData, let browser set it
+                    delete finalOptions.headers['Content-Type'];
                 }
                 
-                showAlert(`Error processing file: ${error.message}`, 'error');
+                const response = await fetch(url, finalOptions);
                 
-                // Hide progress
-                progressSection.classList.remove('show');
+                Logger.log(`Response received: ${response.status} ${response.statusText}`, 
+                    response.ok ? 'success' : 'error', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: Object.fromEntries(response.headers.entries())
+                });
+                
+                return response;
+            }
+            
+            static async sendFileToAPI(formData) {
+                try {
+                    Logger.log('Starting file upload to API', 'info');
+                    
+                    // Log FormData contents (for debugging)
+                    Logger.log('FormData contents:', 'info');
+                    for (let pair of formData.entries()) {
+                        if (pair[0] === 'file') {
+                            Logger.log(`  ${pair[0]}: [File] ${pair[1].name} (${pair[1].size} bytes)`, 'info');
+                        } else {
+                            Logger.log(`  ${pair[0]}: ${pair[1]}`, 'info');
+                        }
+                    }
+                    
+                    const response = await this.makeRequest(CONFIG.EMAIL_FINDER_WEBHOOK_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
+                    }
+                    
+                    const result = await response.text();
+                    Logger.log('API call successful', 'success', { response: result });
+                    
+                    return result;
+                    
+                } catch (error) {
+                    Logger.log(`API call failed: ${error.message}`, 'error', error);
+                    throw error;
+                }
+            }
+            
+            static async fetchUserCredits(token) {
+                try {
+                    const requestData = {
+                        token: token,
+                        type: "token"
+                    };
+                    
+                    const response = await this.makeRequest(CONFIG.CREDIT_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data && typeof data.credit === 'number') {
+                            Logger.log(`User credits: ${data.credit}`, 'info');
+                            return data.credit;
+                        }
+                    }
+                    
+                    return null;
+                } catch (error) {
+                    Logger.log(`Credit fetch failed: ${error.message}`, 'error');
+                    return null;
+                }
+            }
+            
+            static async checkJobStatus(jobId) {
+                try {
+                    const checkUrl = `${CONFIG.CHECK_ENDPOINT}?job_id=${jobId}`;
+                    const response = await this.makeRequest(checkUrl, { method: 'HEAD' });
+                    return response.ok;
+                } catch (error) {
+                    Logger.log(`Job status check failed for ${jobId}: ${error.message}`, 'warn');
+                    return false;
+                }
+            }
+            
+            static async downloadJobResult(jobId) {
+                try {
+                    const downloadUrl = `${CONFIG.DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
+                    const response = await this.makeRequest(downloadUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Download failed: ${response.status}`);
+                    }
+                    
+                    return await response.blob();
+                } catch (error) {
+                    Logger.log(`Download failed for job ${jobId}: ${error.message}`, 'error');
+                    throw error;
+                }
+            }
+        }
+
+        // ========================================
+        // JOB MANAGEMENT
+        // ========================================
+        
+        class JobManager {
+            static generateId() {
+                return 'email_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            static getAllJobs() {
+                const jobs = localStorage.getItem(CONFIG.STORAGE_KEYS.JOBS);
+                return jobs ? JSON.parse(jobs) : [];
+            }
+
+            static saveJobs(jobs) {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.JOBS, JSON.stringify(jobs));
+                Logger.log(`Saved ${jobs.length} jobs to storage`, 'info');
+            }
+
+            static saveJob(job) {
+                const jobs = this.getAllJobs();
+                const existingIndex = jobs.findIndex(j => j.id === job.id);
+                
+                if (existingIndex >= 0) {
+                    jobs[existingIndex] = job;
+                    Logger.log(`Updated existing job: ${job.id}`, 'info');
+                } else {
+                    jobs.unshift(job); // Add to beginning
+                    Logger.log(`Added new job: ${job.id}`, 'info');
+                }
+                
+                this.saveJobs(jobs);
+                this.updateStats();
+            }
+
+            static deleteJob(jobId) {
+                if (confirm('Are you sure you want to delete this job?')) {
+                    const jobs = this.getAllJobs();
+                    const filteredJobs = jobs.filter(job => job.id !== jobId);
+                    this.saveJobs(filteredJobs);
+                    this.loadJobHistory();
+                    this.updateStats();
+                    NotificationSystem.showAlert('Job deleted successfully', 'success');
+                    Logger.log(`Deleted job: ${jobId}`, 'info');
+                }
+            }
+
+            static async checkPendingJobs() {
+                const jobs = this.getAllJobs();
+                const processingJobs = jobs.filter(job => job.status === 'processing');
+                
+                if (processingJobs.length === 0) {
+                    Logger.log('No pending jobs to check', 'info');
+                    return;
+                }
+                
+                Logger.log(`Checking ${processingJobs.length} pending jobs...`, 'info');
+                
+                let anyJobUpdated = false;
+                
+                for (const job of processingJobs) {
+                    try {
+                        const isCompleted = await APIClient.checkJobStatus(job.id);
+                        
+                        if (isCompleted) {
+                            job.status = 'completed';
+                            job.progress = 100;
+                            job.completed_at = new Date().toISOString();
+                            
+                            // Set realistic email success rate if not already set
+                            if (!job.emails_found) {
+                                const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
+                                job.emails_found = Math.floor(job.total_rows * successRate);
+                            }
+                            
+                            this.saveJob(job);
+                            anyJobUpdated = true;
+                            Logger.log(`Job ${job.id} completed while user was away`, 'success');
+                        }
+                    } catch (error) {
+                        Logger.log(`Failed to check job ${job.id}: ${error.message}`, 'warn');
+                    }
+                }
+                
+                if (anyJobUpdated) {
+                    this.loadJobHistory();
+                    this.updateStats();
+                    NotificationSystem.show('Some email finding jobs completed while you were away!', 'success');
+                }
+            }
+
+            static updateStats() {
+                const jobs = this.getAllJobs();
+                
+                const stats = jobs.reduce((acc, job) => {
+                    acc.total++;
+                    if (job.status === 'completed') {
+                        acc.completed++;
+                        acc.totalEmails += job.emails_found || 0;
+                    }
+                    if (job.status === 'processing') acc.processing++;
+                    return acc;
+                }, { total: 0, completed: 0, processing: 0, totalEmails: 0 });
+
+                document.getElementById('totalJobs').textContent = stats.total;
+                document.getElementById('completedJobs').textContent = stats.completed;
+                document.getElementById('processingJobs').textContent = stats.processing;
+                document.getElementById('totalEmailsFound').textContent = stats.totalEmails;
+                
+                Logger.log('Stats updated', 'info', stats);
+            }
+
+            static loadJobHistory() {
+                const jobs = this.getAllJobs();
+                this.renderJobsTable(jobs);
+            }
+
+            static renderJobsTable(jobs) {
+                const container = document.getElementById('jobsContainer');
+                
+                if (jobs.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>No email finding jobs yet</h3>
+                            <p>Upload your first CSV file to start finding email addresses</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const table = `
+                    <table class="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Filename</th>
+                                <th>Status</th>
+                                <th>Rows</th>
+                                <th>Emails Found</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${jobs.map(job => `
+                                <tr>
+                                    <td>${this.formatDate(job.created_at)}</td>
+                                    <td style="font-family: 'Courier New', monospace; font-size: 12px;">
+                                        ${job.filename || 'Unknown'}
+                                    </td>
+                                    <td>
+                                        <span class="status-badge status-${job.status}">
+                                            <i class="fas fa-${this.getStatusIcon(job.status)}"></i>
+                                            ${this.getStatusText(job.status)}
+                                        </span>
+                                    </td>
+                                    <td>${job.total_rows || '—'}</td>
+                                    <td>${job.emails_found || '—'}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            ${job.status === 'completed' ? 
+                                                `<button class="btn-small btn-success" onclick="JobManager.downloadFile('${job.id}')">
+                                                    <i class="fas fa-download"></i> Download
+                                                </button>` : ''
+                                            }
+                                            ${job.status === 'processing' ? 
+                                                `<button class="btn-small btn-secondary" onclick="JobManager.retryJob('${job.id}')">
+                                                    <i class="fas fa-redo"></i> Retry
+                                                </button>` : ''
+                                            }
+                                            <button class="btn-small btn-danger" onclick="JobManager.deleteJob('${job.id}')">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                
+                container.innerHTML = table;
+            }
+
+            static formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('fr-FR', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            static getStatusIcon(status) {
+                switch (status) {
+                    case 'completed': return 'check-circle';
+                    case 'processing': return 'clock';
+                    case 'failed': return 'times-circle';
+                    default: return 'question-circle';
+                }
+            }
+
+            static getStatusText(status) {
+                switch (status) {
+                    case 'completed': return 'Completed';
+                    case 'processing': return 'Processing';
+                    case 'failed': return 'Failed';
+                    default: return 'Unknown';
+                }
+            }
+
+            static async downloadFile(jobId) {
+                try {
+                    NotificationSystem.showAlert('Download starting...', 'info');
+                    Logger.log(`Starting download for job: ${jobId}`, 'info');
+                    
+                    const blob = await APIClient.downloadJobResult(jobId);
+                    
+                    // Create temporary download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `email_results_${jobId}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // Cleanup
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    NotificationSystem.showAlert('Download successful!', 'success');
+                    Logger.log(`Download completed for job: ${jobId}`, 'success');
+                    
+                } catch (error) {
+                    const errorMessage = ErrorHandler.formatError(error);
+                    NotificationSystem.showAlert('Download error: ' + errorMessage, 'error');
+                    Logger.log(`Download failed for job ${jobId}: ${error.message}`, 'error');
+                }
+            }
+
+            static async retryJob(jobId) {
+                // Implementation for retrying a failed job
+                Logger.log(`Retrying job: ${jobId}`, 'info');
+                NotificationSystem.showAlert('Retry functionality not yet implemented', 'warning');
             }
         }
 
@@ -1549,413 +2065,1042 @@
         // PROGRESS SIMULATION
         // ========================================
         
-        function showProgress(filename) {
-            progressSection.classList.add('show');
-            document.getElementById('currentFileName').textContent = filename;
-            
-            // Reset progress
-            document.getElementById('progressFill').style.width = '0%';
-            document.getElementById('progressText').textContent = '0%';
-            document.getElementById('timeRemaining').textContent = 'Calculating...';
-        }
-
-        function simulateProgress() {
-            if (!currentJob) return;
-
-            // Calculate estimated time based on rows (1 second per row, minimum 30 seconds)
-            const totalSeconds = Math.max(30, currentJob.total_rows * 1);
-            
-            // Store simulation start time and total duration in the job
-            currentJob.simulation_start = currentJob.simulation_start || Date.now();
-            currentJob.total_duration_seconds = totalSeconds;
-            saveJob(currentJob);
-
-            // Display initial time estimate
-            updateTimeDisplay(totalSeconds);
-
-            console.log(`Estimated time for ${currentJob.total_rows} rows: ${totalSeconds} seconds (1s per row, min 30s)`);
-
-            progressInterval = setInterval(() => {
-                // Calculate progress based on elapsed time instead of incrementing
-                const elapsedSeconds = (Date.now() - currentJob.simulation_start) / 1000;
-                const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
-
-                // Update UI
-                document.getElementById('progressFill').style.width = progress + '%';
-                document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        class ProgressManager {
+            static showProgress(filename) {
+                Elements.progressSection.classList.add('show');
+                document.getElementById('currentFileName').textContent = filename;
                 
-                // Calculate precise remaining time
-                const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
-                updateTimeDisplay(timeRemaining);
+                // Reset progress
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('progressText').textContent = '0%';
+                document.getElementById('timeRemaining').textContent = 'Calcul en cours...';
+                
+                Logger.log(`Progress display started for: ${filename}`, 'info');
+            }
 
-                // Update job progress
-                if (currentJob) {
-                    currentJob.progress = Math.round(progress);
-                    saveJob(currentJob);
+            static simulateProgress() {
+                if (!AppState.currentJob) {
+                    Logger.log('No current job for progress simulation', 'warn');
+                    return;
                 }
 
-                // Complete when reaching 100%
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    completeJob();
+                // Calculate estimated time based on rows
+                const totalSeconds = Math.max(CONFIG.MIN_PROCESSING_TIME, AppState.currentJob.total_rows * CONFIG.PROCESSING_TIME_PER_ROW);
+                
+                // Store simulation start time and total duration in the job
+                AppState.currentJob.simulation_start = AppState.currentJob.simulation_start || Date.now();
+                AppState.currentJob.total_duration_seconds = totalSeconds;
+                JobManager.saveJob(AppState.currentJob);
+
+                // Display initial time estimate
+                this.updateTimeDisplay(totalSeconds);
+
+                Logger.log(`Progress simulation started - estimated time: ${totalSeconds}s for ${AppState.currentJob.total_rows} rows`, 'info');
+
+                AppState.progressInterval = setInterval(() => {
+                    // Calculate progress based on elapsed time
+                    const elapsedSeconds = (Date.now() - AppState.currentJob.simulation_start) / 1000;
+                    const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
+
+                    // Update UI
+                    document.getElementById('progressFill').style.width = progress + '%';
+                    document.getElementById('progressText').textContent = Math.round(progress) + '%';
+                    
+                    // Calculate precise remaining time
+                    const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
+                    this.updateTimeDisplay(timeRemaining);
+
+                    // Update job progress
+                    if (AppState.currentJob) {
+                        AppState.currentJob.progress = Math.round(progress);
+                        JobManager.saveJob(AppState.currentJob);
+                    }
+
+                    // Complete when reaching 100%
+                    if (progress >= 100) {
+                        clearInterval(AppState.progressInterval);
+                        this.completeJob();
+                    }
+                }, 1000);
+            }
+
+            static updateTimeDisplay(seconds) {
+                const timeElement = document.getElementById('timeRemaining');
+                if (!timeElement) return;
+                
+                if (seconds > 60) {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    timeElement.textContent = `${mins}m ${secs}s`;
+                } else {
+                    timeElement.textContent = `${seconds}s`;
                 }
-            }, 1000);
-        }
-
-        function updateTimeDisplay(seconds) {
-            if (seconds > 60) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
-            } else {
-                document.getElementById('timeRemaining').textContent = `${seconds}s`;
             }
-        }
 
-        function completeJob() {
-            if (!currentJob) return;
-            
-            // Update job status
-            currentJob.status = 'completed';
-            currentJob.progress = 100;
-            currentJob.completed_at = new Date().toISOString();
-            
-            // Set emails found if not already set (realistic success rate: 60-85%)
-            if (!currentJob.emails_found) {
-                const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
-                currentJob.emails_found = Math.floor(currentJob.total_rows * successRate);
+            static completeJob() {
+                if (!AppState.currentJob) return;
+                
+                Logger.log(`Completing job: ${AppState.currentJob.id}`, 'info');
+                
+                // Update job status
+                AppState.currentJob.status = 'completed';
+                AppState.currentJob.progress = 100;
+                AppState.currentJob.completed_at = new Date().toISOString();
+                
+                // Set emails found if not already set (realistic success rate: 60-85%)
+                if (!AppState.currentJob.emails_found) {
+                    const successRate = 0.6 + (Math.random() * 0.25);
+                    AppState.currentJob.emails_found = Math.floor(AppState.currentJob.total_rows * successRate);
+                }
+                
+                // Save updated job
+                JobManager.saveJob(AppState.currentJob);
+                
+                // Hide progress after delay
+                setTimeout(() => {
+                    Elements.progressSection.classList.remove('show');
+                    AppState.currentJob = null;
+                    JobManager.loadJobHistory();
+                    JobManager.updateStats();
+                }, 2000);
+
+                NotificationSystem.showAlert('Email finding completed successfully!', 'success');
+                NotificationSystem.show(`Found ${AppState.currentJob.emails_found} email addresses! Click download to get your results.`, 'success');
+                
+                Logger.log(`Job completed successfully: ${AppState.currentJob.emails_found} emails found`, 'success');
             }
-            
-            // Save updated job
-            saveJob(currentJob);
-            
-            // Hide progress after delay
-            setTimeout(() => {
-                progressSection.classList.remove('show');
-                currentJob = null;
-                loadJobHistory();
-                updateStats();
-            }, 2000);
 
-            showAlert('Email finding completed successfully!', 'success');
-            showNotification(`Found ${currentJob.emails_found} email addresses! Click download to get your results.`, 'success');
+            static stopProgress() {
+                if (AppState.progressInterval) {
+                    clearInterval(AppState.progressInterval);
+                    AppState.progressInterval = null;
+                    Logger.log('Progress simulation stopped', 'info');
+                }
+            }
         }
 
         // ========================================
-        // JOB MANAGEMENT
+        // MAIN APPLICATION CLASS
         // ========================================
         
-        function generateId() {
-            return 'email_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        function getAllJobs() {
-            const jobs = localStorage.getItem(STORAGE_KEYS.JOBS);
-            return jobs ? JSON.parse(jobs) : [];
-        }
-
-        function saveJobs(jobs) {
-            localStorage.setItem(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
-        }
-
-        function saveJob(job) {
-            const jobs = getAllJobs();
-            const existingIndex = jobs.findIndex(j => j.id === job.id);
-            
-            if (existingIndex >= 0) {
-                jobs[existingIndex] = job;
-            } else {
-                jobs.unshift(job); // Add to beginning
-            }
-            
-            saveJobs(jobs);
-        }
-
-        async function checkPendingJobs() {
-            const jobs = getAllJobs();
-            const processingJobs = jobs.filter(job => job.status === 'processing');
-            
-            if (processingJobs.length === 0) return;
-            
-            console.log(`Checking ${processingJobs.length} pending email finding jobs...`);
-            
-            let anyJobUpdated = false;
-            
-            for (const job of processingJobs) {
+        class EmailFinderApp {
+            static async init() {
+                Logger.log('🚀 EmailFinderApp initialization started', 'info');
+                
                 try {
-                    // Use the check endpoint to see if job is completed
-                    const checkUrl = `${CHECK_ENDPOINT}?job_id=${job.id}`;
-                    const response = await fetch(checkUrl, { method: 'HEAD' });
+                    await this.initializeAuth();
+                    this.initializeEventListeners();
+                    this.loadSettings();
                     
-                    if (response.ok) {
-                        job.status = 'completed';
-                        job.progress = 100;
-                        job.completed_at = new Date().toISOString();
-                        
-                        // Set realistic email success rate if not already set
-                        if (!job.emails_found) {
-                            const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
-                            job.emails_found = Math.floor(job.total_rows * successRate);
-                        }
-                        
-                        saveJob(job);
-                        anyJobUpdated = true;
-                        console.log(`✅ Email job ${job.id} completed while user was away`);
+                    await NetworkMonitor.startMonitoring();
+                    await JobManager.checkPendingJobs();
+                    
+                    JobManager.loadJobHistory();
+                    JobManager.updateStats();
+                    
+                    Logger.log('✅ EmailFinderApp initialized successfully', 'success');
+                    
+                } catch (error) {
+                    Logger.log(`❌ Initialization failed: ${error.message}`, 'error');
+                    NotificationSystem.showAlert('Erreur d\'initialisation: ' + ErrorHandler.formatError(error), 'error');
+                }
+            }
+
+            static async initializeAuth() {
+                const urlParams = new URLSearchParams(window.location.search);
+                let token = urlParams.get('token');
+                
+                if (!token) {
+                    token = localStorage.getItem('sessionToken');
+                    if (token) {
+                        const currentUrl = new URL(window.location.href);
+                        currentUrl.searchParams.set('token', token);
+                        window.history.replaceState({}, '', currentUrl.toString());
+                    }
+                } else {
+                    localStorage.setItem('sessionToken', token);
+                }
+                
+                if (!token) {
+                    Logger.log('No token found, redirecting to login', 'warn');
+                    window.location.href = 'https://unlimited-leads.online/en';
+                    return;
+                }
+
+                AppState.userToken = token;
+                Logger.log('User token loaded successfully', 'success');
+                
+                await this.fetchUserCredits();
+            }
+
+            static async fetchUserCredits() {
+                try {
+                    const credits = await APIClient.fetchUserCredits(AppState.userToken);
+                    if (credits !== null) {
+                        this.displayUserCredits(credits);
                     }
                 } catch (error) {
-                    console.log(`⏳ Email job ${job.id} still processing`);
+                    Logger.log(`Failed to fetch user credits: ${error.message}`, 'warn');
                 }
             }
-            
-            if (anyJobUpdated) {
-                loadJobHistory();
-                updateStats();
-                showNotification('Some email finding jobs completed while you were away!', 'success');
-            }
-        }
 
-        function deleteJob(jobId) {
-            if (confirm('Are you sure you want to delete this job?')) {
-                const jobs = getAllJobs();
-                const filteredJobs = jobs.filter(job => job.id !== jobId);
-                saveJobs(filteredJobs);
-                loadJobHistory();
-                updateStats();
-                showAlert('Job deleted successfully', 'success');
+            static displayUserCredits(credits) {
+                const creditsElement = document.getElementById('userCredits');
+                if (creditsElement) {
+                    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+                    Logger.log(`User credits displayed: ${credits}`, 'info');
+                }
             }
-        }
 
-        // ========================================
-        // DOWNLOAD FUNCTIONALITY
-        // ========================================
-        
-        async function downloadFile(jobId) {
-            try {
-                showAlert('Download starting...', 'info');
+            static initializeEventListeners() {
+                // File upload events
+                Elements.fileUploadArea.addEventListener('click', () => Elements.fileInput.click());
+                Elements.fileUploadArea.addEventListener('dragover', this.handleDragOver);
+                Elements.fileUploadArea.addEventListener('dragleave', this.handleDragLeave);
+                Elements.fileUploadArea.addEventListener('drop', this.handleFileDrop);
+                Elements.uploadButton.addEventListener('click', () => Elements.fileInput.click());
+                Elements.fileInput.addEventListener('change', this.handleFileSelect);
                 
-                const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
-                console.log('Downloading from:', downloadUrl);
+                // Process button
+                Elements.processButton.addEventListener('click', this.processFile);
                 
-                const response = await fetch(downloadUrl);
+                // Column mapping change events
+                [Elements.firstNameColumn, Elements.lastNameColumn, Elements.domainColumn].forEach(select => {
+                    select.addEventListener('change', ColumnMapper.validateRequiredColumns);
+                });
                 
-                if (!response.ok) {
-                    throw new Error(`Failed to download: ${response.status}`);
+                // Navigation buttons
+                this.setupNavigationButtons();
+                
+                // Debug toggle
+                Elements.debugToggle.addEventListener('click', this.toggleDebugMode);
+                
+                // Global error handler
+                window.addEventListener('error', (e) => {
+                    Logger.log(`Global error: ${e.error?.message || 'Unknown error'}`, 'error', e.error);
+                    NotificationSystem.showAlert('An unexpected error occurred. Please refresh the page.', 'error');
+                });
+
+                // Beforeunload warning
+                window.addEventListener('beforeunload', (e) => {
+                    if (AppState.currentJob && AppState.currentJob.status === 'processing') {
+                        e.preventDefault();
+                        e.returnValue = 'You have an email search job in progress. Are you sure you want to leave?';
+                        return e.returnValue;
+                    }
+                });
+
+                // Cleanup on unload
+                window.addEventListener('unload', () => {
+                    ProgressManager.stopProgress();
+                });
+                
+                Logger.log('Event listeners initialized', 'info');
+            }
+
+            static setupNavigationButtons() {
+                const upgradeButton = document.getElementById('upgradeButton');
+                if (upgradeButton) {
+                    upgradeButton.addEventListener('click', () => {
+                        const token = localStorage.getItem('sessionToken');
+                        const url = token ? 
+                            `https://unlimited-leads.online/pricing?token=${token}` : 
+                            'https://unlimited-leads.online/pricing';
+                        window.location.href = url;
+                    });
                 }
                 
-                // Get the blob (file)
-                const blob = await response.blob();
+                const logoutButton = document.getElementById('logoutButton');
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', () => {
+                        localStorage.removeItem('sessionToken');
+                        window.location.href = 'https://unlimited-leads.online/en';
+                    });
+                }
+            }
+
+            static loadSettings() {
+                const debugMode = localStorage.getItem(CONFIG.STORAGE_KEYS.DEBUG_MODE) === 'true';
+                if (debugMode) {
+                    this.toggleDebugMode();
+                }
+            }
+
+            static toggleDebugMode() {
+                AppState.debugMode = !AppState.debugMode;
+                localStorage.setItem(CONFIG.STORAGE_KEYS.DEBUG_MODE, AppState.debugMode.toString());
                 
-                // Create temporary download link
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `email_results_${jobId}.csv`;
-                document.body.appendChild(a);
-                a.click();
+                if (AppState.debugMode) {
+                    document.body.classList.add('debug-mode');
+                    Elements.debugPanel.classList.add('show');
+                    Logger.clear();
+                    Logger.log('Debug mode activated', 'success');
+                } else {
+                    document.body.classList.remove('debug-mode');
+                    Elements.debugPanel.classList.remove('show');
+                }
                 
-                // Cleanup
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
+                Elements.debugToggle.style.backgroundColor = AppState.debugMode ? '#4caf50' : '#1a1a1a';
+            }
+
+            // ========================================
+            // FILE HANDLING METHODS
+            // ========================================
+
+            static handleDragOver(e) {
+                e.preventDefault();
+                Elements.fileUploadArea.classList.add('dragover');
+            }
+
+            static handleDragLeave(e) {
+                e.preventDefault();
+                Elements.fileUploadArea.classList.remove('dragover');
+            }
+
+            static handleFileDrop(e) {
+                e.preventDefault();
+                Elements.fileUploadArea.classList.remove('dragover');
                 
-                showAlert('Download successful!', 'success');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    EmailFinderApp.handleFileUpload(files[0]);
+                }
+            }
+
+            static handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    EmailFinderApp.handleFileUpload(file);
+                }
+            }
+
+            static async handleFileUpload(file) {
+                Logger.log(`File upload started: ${file.name}`, 'info', {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
                 
-            } catch (error) {
-                console.error('Download error:', error);
-                showAlert('Download error: ' + error.message, 'error');
+                // Validate file
+                const validationErrors = FileValidator.validate(file);
+                if (validationErrors.length > 0) {
+                    const errorMessage = validationErrors.join(', ');
+                    NotificationSystem.showAlert(errorMessage, 'error');
+                    Logger.log(`File validation failed: ${errorMessage}`, 'error');
+                    return;
+                }
+
+                AppState.uploadedFile = file;
+                Elements.fileName.textContent = file.name;
+                
+                // Read and parse CSV
+                try {
+                    const fileContent = await this.readFileAsText(file);
+                    this.parseCSVFile(fileContent);
+                } catch (error) {
+                    const errorMessage = ErrorHandler.formatError(error);
+                    NotificationSystem.showAlert('Error reading file: ' + errorMessage, 'error');
+                    Logger.log(`File reading failed: ${error.message}`, 'error');
+                }
+            }
+
+            static readFileAsText(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(new Error('Impossible de lire le fichier'));
+                    
+                    reader.readAsText(file);
+                });
+            }
+
+            static parseCSVFile(csvContent) {
+                try {
+                    const { headers, data } = CSVParser.parse(csvContent);
+                    
+                    // Validate parsed data
+                    const validationErrors = FileValidator.validateCSVData(data, headers);
+                    if (validationErrors.length > 0) {
+                        const errorMessage = validationErrors.join(', ');
+                        NotificationSystem.showAlert(errorMessage, 'error');
+                        Logger.log(`CSV validation failed: ${errorMessage}`, 'error');
+                        return;
+                    }
+
+                    AppState.csvHeaders = headers;
+                    AppState.csvData = data;
+
+                    // Update UI
+                    Elements.fileStats.textContent = `${data.length} rows, ${headers.length} columns`;
+                    
+                    // Setup column mapping
+                    ColumnMapper.setupColumnSelects(headers);
+                    
+                    // Show file preview section
+                    Elements.filePreview.style.display = 'block';
+                    
+                    NotificationSystem.showAlert('CSV file loaded successfully! Please map the required columns below.', 'success');
+                    Logger.log(`CSV parsed successfully: ${data.length} rows, ${headers.length} columns`, 'success');
+                    
+                } catch (error) {
+                    const errorMessage = ErrorHandler.formatError(error);
+                    NotificationSystem.showAlert('Error parsing CSV: ' + errorMessage, 'error');
+                    Logger.log(`CSV parsing failed: ${error.message}`, 'error');
+                }
+            }
+
+            // ========================================
+            // FILE PROCESSING
+            // ========================================
+
+            static async processFile() {
+                Logger.log('🚀 Starting file processing...', 'info');
+                
+                try {
+                    // Comprehensive validation
+                    const validationResult = await this.validateProcessingConditions();
+                    if (!validationResult.isValid) {
+                        NotificationSystem.showAlert(validationResult.error, 'error');
+                        Logger.log(`Processing validation failed: ${validationResult.error}`, 'error');
+                        return;
+                    }
+
+                    // Create job
+                    const job = this.createJob();
+                    JobManager.saveJob(job);
+                    AppState.currentJob = job;
+
+                    Logger.log(`Job created: ${job.id}`, 'info', job);
+
+                    // Show progress UI
+                    ProgressManager.showProgress(AppState.uploadedFile.name);
+                    Elements.filePreview.style.display = 'none';
+
+                    // Prepare and send API request
+                    const formData = this.prepareFormData(job);
+                    
+                    // Start progress simulation FIRST
+                    ProgressManager.simulateProgress();
+
+                    // Send to API with retry logic
+                    await ErrorHandler.retryOperation(async () => {
+                        return await APIClient.sendFileToAPI(formData);
+                    });
+
+                    NotificationSystem.showAlert('Processing started successfully!', 'success');
+                    Logger.log('✅ File processing started successfully', 'success');
+
+                } catch (error) {
+                    this.handleProcessingError(error);
+                }
+            }
+
+            static async validateProcessingConditions() {
+                // Check file
+                if (!AppState.uploadedFile) {
+                    return { isValid: false, error: 'No file selected' };
+                }
+
+                if (!AppState.csvData || AppState.csvData.length === 0) {
+                    return { isValid: false, error: 'Invalid CSV data' };
+                }
+
+                // Check authentication
+                if (!AppState.userToken) {
+                    return { isValid: false, error: 'User token missing' };
+                }
+
+                // Check network
+                if (!AppState.isOnline) {
+                    return { isValid: false, error: 'Server connection required' };
+                }
+
+                // Check column mapping
+                const firstName = Elements.firstNameColumn.value;
+                const lastName = Elements.lastNameColumn.value;
+                const domain = Elements.domainColumn.value;
+
+                if (firstName === '' || lastName === '' || domain === '') {
+                    return { isValid: false, error: 'Please map all required columns (First Name, Last Name, Domain)' };
+                }
+
+                return { isValid: true };
+            }
+
+            static createJob() {
+                return {
+                    id: JobManager.generateId(),
+                    filename: AppState.uploadedFile.name,
+                    status: 'processing',
+                    progress: 0,
+                    total_rows: AppState.csvData.length,
+                    emails_found: null,
+                    started_at: new Date().toISOString(),
+                    completed_at: null,
+                    created_at: new Date().toISOString()
+                };
+            }
+
+            static prepareFormData(job) {
+                const formData = new FormData();
+                
+                Logger.log('📦 Preparing FormData for API call', 'info');
+                
+                // Add file and basic info
+                formData.append('file', AppState.uploadedFile);
+                formData.append('token', AppState.userToken);
+                formData.append('job_id', job.id);
+                
+                // Add column indexes
+                const firstName = Elements.firstNameColumn.value;
+                const lastName = Elements.lastNameColumn.value;
+                const domain = Elements.domainColumn.value;
+                
+                formData.append('firstNameColumn', firstName);
+                formData.append('lastNameColumn', lastName);
+                formData.append('domainColumn', domain);
+                
+                // Add column names
+                formData.append('firstNameColumnName', AppState.csvHeaders[firstName]);
+                formData.append('lastNameColumnName', AppState.csvHeaders[lastName]);
+                formData.append('domainColumnName', AppState.csvHeaders[domain]);
+                
+                // Add optional columns
+                if (Elements.companyColumn.value !== '') {
+                    formData.append('companyColumn', Elements.companyColumn.value);
+                    formData.append('companyColumnName', AppState.csvHeaders[Elements.companyColumn.value]);
+                }
+                if (Elements.jobTitleColumn.value !== '') {
+                    formData.append('jobTitleColumn', Elements.jobTitleColumn.value);
+                    formData.append('jobTitleColumnName', AppState.csvHeaders[Elements.jobTitleColumn.value]);
+                }
+
+                // Add metadata
+                formData.append('csvHeaders', JSON.stringify(AppState.csvHeaders));
+                formData.append('totalRows', job.total_rows);
+
+                Logger.log('✅ FormData prepared successfully', 'info');
+                return formData;
+            }
+
+            static handleProcessingError(error) {
+                Logger.log(`❌ Processing failed: ${error.message}`, 'error', error);
+                
+                // Update job status if exists
+                if (AppState.currentJob) {
+                    AppState.currentJob.status = 'failed';
+                    JobManager.saveJob(AppState.currentJob);
+                }
+                
+                // Stop progress simulation
+                ProgressManager.stopProgress();
+                
+                // Format and show error message
+                const errorMessage = ErrorHandler.formatError(error);
+                NotificationSystem.showAlert(`Processing error: ${errorMessage}`, 'error');
+                
+                // Hide progress section
+                Elements.progressSection.classList.remove('show');
+                
+                // Reset current job
+                AppState.currentJob = null;
             }
         }
 
         // ========================================
-        // UI RENDERING
+        // INITIALIZATION & EVENT HANDLERS
         // ========================================
-        
-        function loadJobHistory() {
-            const jobs = getAllJobs();
-            renderJobsTable(jobs);
-        }
 
-        function updateStats() {
-            const jobs = getAllJobs();
-            
-            const stats = jobs.reduce((acc, job) => {
-                acc.total++;
-                if (job.status === 'completed') acc.completed++;
-                if (job.status === 'processing') acc.processing++;
-                return acc;
-            }, { total: 0, completed: 0, processing: 0 });
+        // Make functions globally available for onclick handlers
+        window.JobManager = JobManager;
 
-            document.getElementById('totalJobs').textContent = stats.total;
-            document.getElementById('completedJobs').textContent = stats.completed;
-            document.getElementById('processingJobs').textContent = stats.processing;
-        }
+        // Initialize application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            Logger.log('🌟 DOM Content Loaded - Starting application...', 'info');
+            EmailFinderApp.init();
+        });
 
-        function renderJobsTable(jobs) {
-            const container = document.getElementById('jobsContainer');
-            
-            if (jobs.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No email finding jobs yet</h3>
-                        <p>Upload your first CSV file to start finding email addresses</p>
-                    </div>
-                `;
-                return;
+        // Add CSS animations and transitions
+        const additionalStyles = document.createElement('style');
+        additionalStyles.textContent = `
+            /* Loading animations */
+            .loading {
+                position: relative;
+                overflow: hidden;
             }
 
-            const table = `
-                <table class="jobs-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Filename</th>
-                            <th>Status</th>
-                            <th>Rows</th>
-                            <th>Emails Found</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${jobs.map(job => `
-                            <tr>
-                                <td>${formatDate(job.created_at)}</td>
-                                <td style="font-family: 'Courier New', monospace; font-size: 12px;">
-                                    ${job.filename || 'Unknown'}
-                                </td>
-                                <td>
-                                    <span class="status-badge status-${job.status}">
-                                        <i class="fas fa-${getStatusIcon(job.status)}"></i>
-                                        ${job.status}
-                                    </span>
-                                </td>
-                                <td>${job.total_rows || '—'}</td>
-                                <td>${job.emails_found || '—'}</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        ${job.status === 'completed' ? 
-                                            `<button class="btn-small btn-success" onclick="downloadFile('${job.id}')">
-                                                <i class="fas fa-download"></i> Download
-                                            </button>` : ''
-                                        }
-                                        <button class="btn-small btn-secondary" onclick="deleteJob('${job.id}')">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-            
-            container.innerHTML = table;
-        }
+            .loading::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                animation: loading-sweep 1.5s infinite;
+            }
+
+            @keyframes loading-sweep {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+
+            /* Button loading state */
+            .btn-loading {
+                position: relative;
+                color: transparent !important;
+            }
+
+            .btn-loading::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -10px;
+                margin-top: -10px;
+                width: 20px;
+                height: 20px;
+                border: 2px solid currentColor;
+                border-radius: 50%;
+                border-top-color: transparent;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+
+            /* Success animation */
+            .success-animation {
+                animation: successPulse 0.6s ease-out;
+            }
+
+            @keyframes successPulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+
+            /* Error shake animation */
+            .error-animation {
+                animation: errorShake 0.6s ease-out;
+            }
+
+            @keyframes errorShake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+
+            /* File upload hover effects */
+            .file-upload-area:hover .file-upload-icon {
+                transform: scale(1.1);
+                transition: transform 0.3s ease;
+            }
+
+            /* Status indicator animations */
+            .status-indicator {
+                transform: translateX(100%);
+                transition: transform 0.3s ease-out;
+            }
+
+            .status-indicator.show {
+                transform: translateX(0);
+            }
+
+            /* Progress bar enhancements */
+            .progress-fill {
+                background: linear-gradient(90deg, var(--primary), var(--secondary));
+                box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+            }
+
+            /* Debug panel enhancements */
+            .debug-panel::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .debug-panel::-webkit-scrollbar-track {
+                background: #2a2a2a;
+            }
+
+            .debug-panel::-webkit-scrollbar-thumb {
+                background: #00ff00;
+                border-radius: 4px;
+            }
+
+            /* Table hover effects */
+            .jobs-table tr {
+                transition: all 0.2s ease;
+            }
+
+            .jobs-table tr:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            /* Connection status improvements */
+            .connection-status {
+                transition: all 0.3s ease;
+            }
+
+            .connection-status.offline {
+                animation: attention 2s infinite;
+            }
+
+            @keyframes attention {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+
+            /* Mobile improvements */
+            @media (max-width: 768px) {
+                .debug-toggle {
+                    bottom: 80px;
+                    left: 10px;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 14px;
+                }
+
+                .status-indicator {
+                    top: 10px;
+                    right: 10px;
+                    left: 10px;
+                    min-width: auto;
+                    max-width: none;
+                }
+            }
+
+            /* Accessibility improvements */
+            .btn-small:focus,
+            .process-button:focus,
+            .upload-button:focus {
+                outline: 2px solid var(--primary);
+                outline-offset: 2px;
+            }
+
+            /* Dark mode for debug panel */
+            .debug-mode .debug-panel {
+                background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                border: 1px solid #444;
+            }
+
+            /* Enhanced tooltips */
+            [title] {
+                position: relative;
+            }
+
+            [title]:hover::after {
+                content: attr(title);
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #333;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 1000;
+                margin-bottom: 5px;
+            }
+
+            [title]:hover::before {
+                content: '';
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 5px solid transparent;
+                border-top-color: #333;
+                z-index: 1000;
+            }
+        `;
+        document.head.appendChild(additionalStyles);
 
         // ========================================
-        // UTILITY FUNCTIONS
+        // UTILITY FUNCTIONS FOR ENHANCED UX
         // ========================================
-        
-        function formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+
+        // Add visual feedback for file operations
+        function addFileOperationFeedback() {
+            const originalProcessFile = EmailFinderApp.processFile;
+            EmailFinderApp.processFile = async function() {
+                Elements.processButton.classList.add('btn-loading');
+                Elements.processButton.disabled = true;
+                
+                try {
+                    await originalProcessFile.call(this);
+                    Elements.processButton.classList.add('success-animation');
+                } catch (error) {
+                    Elements.processButton.classList.add('error-animation');
+                    throw error;
+                } finally {
+                    setTimeout(() => {
+                        Elements.processButton.classList.remove('btn-loading', 'success-animation', 'error-animation');
+                        Elements.processButton.disabled = false;
+                    }, 1000);
+                }
+            };
+        }
+
+        // Enhanced keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + U = Upload file
+                if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                    e.preventDefault();
+                    Elements.fileInput.click();
+                    Logger.log('Keyboard shortcut: Upload file', 'info');
+                }
+                
+                // Ctrl/Cmd + D = Toggle debug mode
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    EmailFinderApp.toggleDebugMode();
+                    Logger.log('Keyboard shortcut: Toggle debug mode', 'info');
+                }
+                
+                // Escape = Close notifications
+                if (e.key === 'Escape') {
+                    const statusIndicator = Elements.statusIndicator;
+                    if (statusIndicator.classList.contains('show')) {
+                        statusIndicator.classList.remove('show');
+                        Logger.log('Keyboard shortcut: Close notification', 'info');
+                    }
+                }
             });
         }
 
-        function getStatusIcon(status) {
-            switch (status) {
-                case 'completed': return 'check-circle';
-                case 'processing': return 'clock';
-                case 'failed': return 'times-circle';
-                default: return 'question-circle';
-            }
+        // Auto-save progress periodically
+        function setupAutoSave() {
+            setInterval(() => {
+                if (AppState.currentJob && AppState.currentJob.status === 'processing') {
+                    JobManager.saveJob(AppState.currentJob);
+                    Logger.log('Auto-saved current job progress', 'info');
+                }
+            }, 10000); // Every 10 seconds
         }
 
-        function showAlert(message, type) {
-            uploadAlert.textContent = message;
-            uploadAlert.className = `alert alert-${type}`;
-            uploadAlert.style.display = 'block';
+        // Performance monitoring
+        function setupPerformanceMonitoring() {
+            const startTime = performance.now();
             
-            // Auto-hide success and info messages
-            if (type === 'success' || type === 'info') {
-                setTimeout(() => {
-                    uploadAlert.style.display = 'none';
-                }, 5000);
-            }
+            window.addEventListener('load', () => {
+                const loadTime = performance.now() - startTime;
+                Logger.log(`Page loaded in ${loadTime.toFixed(2)}ms`, 'info');
+                
+                // Monitor memory usage (if available)
+                if (performance.memory) {
+                    Logger.log('Memory usage', 'info', {
+                        used: `${(performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
+                        total: `${(performance.memory.totalJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
+                        limit: `${(performance.memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)}MB`
+                    });
+                }
+            });
         }
 
-        // Add notification system for better UX
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#2563eb'};
-                color: white;
-                padding: 16px 24px;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 10000;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease-out;
-                max-width: 300px;
-                word-wrap: break-word;
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-in forwards';
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
-        }
-
-        // Add CSS animations for notifications
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Global error handler
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            showAlert('An unexpected error occurred. Please refresh the page and try again.', 'error');
-        });
-
-        // Handle beforeunload to warn about ongoing processes
-        window.addEventListener('beforeunload', function(e) {
-            if (currentJob && currentJob.status === 'processing') {
+        // Enhanced error reporting
+        function setupErrorReporting() {
+            window.addEventListener('unhandledrejection', (e) => {
+                Logger.log(`Unhandled promise rejection: ${e.reason}`, 'error', e.reason);
+                NotificationSystem.show('An unexpected error occurred', 'error');
                 e.preventDefault();
-                e.returnValue = 'You have an email finding job in progress. Are you sure you want to leave?';
-                return e.returnValue;
+            });
+        }
+
+        // Local storage cleanup
+        function setupStorageCleanup() {
+            // Clean up old jobs (older than 30 days)
+            const cleanupOldJobs = () => {
+                const jobs = JobManager.getAllJobs();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                
+                const recentJobs = jobs.filter(job => {
+                    const jobDate = new Date(job.created_at);
+                    return jobDate > thirtyDaysAgo;
+                });
+                
+                if (recentJobs.length !== jobs.length) {
+                    JobManager.saveJobs(recentJobs);
+                    Logger.log(`Cleaned up ${jobs.length - recentJobs.length} old jobs`, 'info');
+                }
+            };
+            
+            // Run cleanup on startup and then daily
+            cleanupOldJobs();
+            setInterval(cleanupOldJobs, 24 * 60 * 60 * 1000); // Daily
+        }
+
+        // Network quality detection
+        function setupNetworkMonitoring() {
+            if ('connection' in navigator) {
+                const connection = navigator.connection;
+                
+                const logNetworkInfo = () => {
+                    Logger.log('Network info', 'info', {
+                        effectiveType: connection.effectiveType,
+                        downlink: connection.downlink,
+                        rtt: connection.rtt,
+                        saveData: connection.saveData
+                    });
+                };
+                
+                connection.addEventListener('change', logNetworkInfo);
+                logNetworkInfo(); // Initial log
             }
+        }
+
+        // Enhanced file validation with preview
+        function setupEnhancedFileValidation() {
+            const originalHandleFileUpload = EmailFinderApp.handleFileUpload;
+            EmailFinderApp.handleFileUpload = async function(file) {
+                // Add visual feedback
+                Elements.fileUploadArea.classList.add('loading');
+                
+                try {
+                    // Enhanced validation with detailed feedback
+                    const validationResult = await this.validateFileDetailed(file);
+                    
+                    if (!validationResult.isValid) {
+                        Elements.fileUploadArea.classList.add('error-animation');
+                        setTimeout(() => {
+                            Elements.fileUploadArea.classList.remove('error-animation');
+                        }, 600);
+                        
+                        NotificationSystem.showAlert(validationResult.error, 'error');
+                        return;
+                    }
+                    
+                    // Show success feedback
+                    Elements.fileUploadArea.classList.add('success-animation');
+                    setTimeout(() => {
+                        Elements.fileUploadArea.classList.remove('success-animation');
+                    }, 600);
+                    
+                    await originalHandleFileUpload.call(this, file);
+                    
+                } finally {
+                    Elements.fileUploadArea.classList.remove('loading');
+                }
+            };
+
+            EmailFinderApp.validateFileDetailed = async function(file) {
+                const errors = FileValidator.validate(file);
+                
+                if (errors.length > 0) {
+                    return { isValid: false, error: errors.join(', ') };
+                }
+                
+                // Additional validation for CSV content preview
+                try {
+                    const preview = await this.getFilePreview(file, 1000); // First 1KB
+                    
+                    if (!preview.includes(',')) {
+                        return { isValid: false, error: 'File does not appear to be a valid CSV (no commas detected)' };
+                    }
+                    
+                    const lines = preview.split('\n');
+                    if (lines.length < 2) {
+                        return { isValid: false, error: 'File must contain at least 2 lines (header + data)' };
+                    }
+                    
+                } catch (error) {
+                    return { isValid: false, error: 'Unable to read file content' };
+                }
+                
+                return { isValid: true };
+            };
+
+            EmailFinderApp.getFilePreview = function(file, bytes = 1000) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsText(file.slice(0, bytes));
+                });
+            };
+        }
+
+        // Initialize all enhanced features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for main app to initialize first
+            setTimeout(() => {
+                addFileOperationFeedback();
+                setupKeyboardShortcuts();
+                setupAutoSave();
+                setupPerformanceMonitoring();
+                setupErrorReporting();
+                setupStorageCleanup();
+                setupNetworkMonitoring();
+                setupEnhancedFileValidation();
+                
+                Logger.log('🎉 All enhanced features initialized', 'success');
+                
+                // Show welcome message in debug mode
+                if (AppState.debugMode) {
+                    NotificationSystem.show('Debug mode activated - All advanced features are available', 'info');
+                }
+                
+                // Add helpful keyboard shortcuts info
+                const shortcutsInfo = document.createElement('div');
+                shortcutsInfo.style.cssText = `
+                    position: fixed;
+                    bottom: 80px;
+                    right: 20px;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    z-index: 1000;
+                    display: none;
+                `;
+                shortcutsInfo.innerHTML = `
+                    <div><strong>Keyboard Shortcuts:</strong></div>
+                    <div>Ctrl/Cmd + U : Upload file</div>
+                    <div>Ctrl/Cmd + D : Debug mode</div>
+                    <div>Esc : Close notifications</div>
+                `;
+                document.body.appendChild(shortcutsInfo);
+                
+                // Show shortcuts on help
+                let shortcutsVisible = false;
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'F1' || (e.shiftKey && e.key === '?')) {
+                        e.preventDefault();
+                        shortcutsVisible = !shortcutsVisible;
+                        shortcutsInfo.style.display = shortcutsVisible ? 'block' : 'none';
+                    }
+                });
+                
+            }, 1000);
         });
 
-        // Cleanup intervals on page unload
-        window.addEventListener('unload', function() {
-            if (progressInterval) {
-                clearInterval(progressInterval);
-            }
-        });
+        // Final initialization message
+        Logger.log('📋 Email Finder Enhanced - Ready for action!', 'success');
+        console.log(`
+        🚀 Email Finder Enhanced Edition
+        ================================
+        
+        ✅ Advanced file validation
+        ✅ Robust error handling
+        ✅ Automatic retry system
+        ✅ Real-time network monitoring
+        ✅ Complete debug mode
+        ✅ Keyboard shortcuts
+        ✅ Auto-save
+        ✅ Automatic cleanup
+        ✅ Animations and UX feedback
+        ✅ Offline/online handling
+        
+        Press F1 to see keyboard shortcuts!
+        `);
 
-        // Make functions globally available for onclick handlers
-        window.downloadFile = downloadFile;
-        window.deleteJob = deleteJob;
-
-        console.log('✅ Email Finder initialized successfully');
     </script>
 </body>
 </html>
