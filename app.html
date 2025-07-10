@@ -383,25 +383,33 @@ header {
     font-family: var(--font-heading);
 }
 
+/* Enhanced Export Button - More Visible */
 .export-button {
-    background: white;
-    color: var(--primary);
-    border: 1px solid var(--gray-200);
+    background: linear-gradient(135deg, #10b981, #059669) !important; /* Green gradient */
+    color: white !important;
+    border: none !important;
     border-radius: var(--radius-md);
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 14px 24px !important; /* Increased padding */
+    font-size: 16px !important; /* Larger font */
+    font-weight: 700 !important; /* Bolder text */
     cursor: pointer;
     transition: var(--transition-standard);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important; /* Green shadow */
+    text-transform: uppercase; /* Make text uppercase */
+    letter-spacing: 0.5px; /* Add letter spacing */
 }
 
 .export-button:hover {
-    background-color: var(--primary-light);
-    border-color: var(--primary-light);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #059669, #047857) !important; /* Darker green on hover */
+    transform: translateY(-3px) !important; /* More pronounced hover effect */
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important; /* Stronger shadow on hover */
+}
+
+.export-button i {
+    font-size: 18px !important; /* Larger icon */
 }
 
 .results-table {
