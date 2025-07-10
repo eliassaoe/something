@@ -104,31 +104,26 @@
             }
         }
 
-        // Function to send to webhook (optional)
-        async function sendToWebhook(userInfo, token) {
+        // Function to send to webhook (wait for response)
+        async function sendToWebhook(accessToken) {
             try {
-                const payload = {
-                    email: userInfo.email,
-                    name: userInfo.name,
-                    userId: userInfo.userId,
-                    provider: "google",
-                    type: "signup",
-                    token: token
-                }
-                
-                await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        type: "google sign up",
+                        token: accessToken
+                    })
                 })
                 
-                console.log('✅ Google user sent to webhook')
+                console.log('✅ API call completed:', response.status)
+                return response
             } catch (error) {
-                console.error('❌ Webhook error:', error)
-                // Continue even if webhook fails
+                console.error('❌ API call failed:', error)
+                throw error
             }
         }
 
@@ -161,10 +156,11 @@
                 localStorage.setItem('userName', userInfo.name)
                 localStorage.setItem('userAvatar', userInfo.avatar)
 
-                // 4. Send to webhook (optional - remove this line if not needed)
-                await sendToWebhook(userInfo, accessToken)
+                // 4. Wait for API call to complete before redirecting
+                console.log('📡 Sending to webhook...')
+                await sendToWebhook(accessToken)
 
-                // 5. Clean redirect to /app with token
+                // 5. Redirect to /app with token after API call completes
                 console.log('🚀 Redirecting to /app...')
                 window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`
 
