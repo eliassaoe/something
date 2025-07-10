@@ -1292,8 +1292,7 @@
             debugMode: false,
             isOnline: true,
             retryCount: 0,
-            isProcessing: false, // Prevent multiple simultaneous uploads
-            lastUploadTime: 0    // Track last upload time for client-side rate limiting
+            isProcessing: false // Prevent multiple simultaneous uploads only
         };
 
         // ========================================
@@ -2545,46 +2544,16 @@
             static async processFile() {
                 Logger.log('🚀 Starting file processing...', 'info');
                 
-                // ✅ Prevent multiple simultaneous uploads
+                // ✅ Prevent multiple simultaneous uploads only
                 if (AppState.isProcessing) {
                     NotificationSystem.showAlert('⚠️ Another email search is already in progress. Please wait for it to complete.', 'warning');
                     Logger.log('Upload blocked: Another process is already running', 'warn');
                     return;
                 }
                 
-                // ✅ Client-side rate limiting check (10 minutes = 600 seconds)
-                const now = Date.now();
-                const timeSinceLastUpload = (now - AppState.lastUploadTime) / 1000;
-                const MIN_INTERVAL = 600; // 10 minutes
-                
-                if (AppState.lastUploadTime > 0 && timeSinceLastUpload < MIN_INTERVAL) {
-                    const remainingTime = Math.ceil(MIN_INTERVAL - timeSinceLastUpload);
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    
-                    const timeFormat = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-                    
-                    NotificationSystem.showAlert(
-                        `⏰ RATE LIMIT: You can only process one email list every 10 minutes.\n\n` +
-                        `Please wait ${timeFormat} before submitting another list.`, 
-                        'error', 
-                        8000
-                    );
-                    
-                    NotificationSystem.show(
-                        `Rate limit: Wait ${timeFormat} before next upload`, 
-                        'error', 
-                        5000
-                    );
-                    
-                    Logger.log(`Upload blocked: Rate limit - ${remainingTime}s remaining`, 'warn');
-                    return;
-                }
-                
                 try {
                     // Mark as processing
                     AppState.isProcessing = true;
-                    AppState.lastUploadTime = now;
                     
                     // Comprehensive validation
                     const validationResult = await EmailFinderApp.validateProcessingConditions();
@@ -2620,8 +2589,6 @@
                     Logger.log('✅ File processing started successfully', 'success');
 
                 } catch (error) {
-                    // Reset last upload time on error so user can retry immediately
-                    AppState.lastUploadTime = 0;
                     EmailFinderApp.handleProcessingError(error);
                 } finally {
                     // Always reset processing flag
