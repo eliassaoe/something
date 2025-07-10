@@ -794,26 +794,21 @@ header {
             
             console.log(`Plan updated to: ${config.title}`);
         }
-
-       // Manage plan button
-const managePlanButton = document.getElementById('managePlanButton');
-if (managePlanButton) {
-    managePlanButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const currentPlan = document.getElementById('currentPlan');
-        const planText = currentPlan ? currentPlan.textContent : '';
-        
-        if (planText.includes('Free')) {
-            // Go to pricing for free users
-            const token = localStorage.getItem('sessionToken');
-            window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-        } else {
-            // Open Stripe portal for paid users
-            openStripePortal();
-        }
-    });
-}
+            
+            // Function to set up event listeners
+        function setupEventListeners() {
+            // Upgrade button
+            const upgradeButton = document.getElementById('upgradeButton');
+            if (upgradeButton) {
+                upgradeButton.addEventListener('click', function() {
+                    const token = localStorage.getItem('sessionToken');
+                    if (token) {
+                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                    } else {
+                        window.location.href = 'https://unlimited-leads.online/pricing';
+                    }
+                });
+            }
             
             // Logout button
             const logoutButton = document.getElementById('logoutButton');
@@ -829,11 +824,17 @@ if (managePlanButton) {
             if (managePlanButton) {
                 managePlanButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const token = localStorage.getItem('sessionToken');
-                    if (token) {
+                    
+                    const currentPlan = document.getElementById('currentPlan');
+                    const planText = currentPlan ? currentPlan.textContent : '';
+                    
+                    if (planText.includes('Free')) {
+                        // Go to pricing for free users
+                        const token = localStorage.getItem('sessionToken');
                         window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
                     } else {
-                        window.location.href = 'https://unlimited-leads.online/pricing';
+                        // Open Stripe portal for paid users
+                        openStripePortal();
                     }
                 });
             }
