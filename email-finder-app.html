@@ -2188,9 +2188,9 @@
                 Logger.log('🚀 EmailFinderApp initialization started', 'info');
                 
                 try {
-                    await this.initializeAuth();
-                    this.initializeEventListeners();
-                    this.loadSettings();
+                    await EmailFinderApp.initializeAuth();
+                    EmailFinderApp.initializeEventListeners();
+                    EmailFinderApp.loadSettings();
                     
                     await NetworkMonitor.startMonitoring();
                     await JobManager.checkPendingJobs();
@@ -2230,14 +2230,14 @@
                 AppState.userToken = token;
                 Logger.log('User token loaded successfully', 'success');
                 
-                await this.fetchUserCredits();
+                await EmailFinderApp.fetchUserCredits();
             }
 
             static async fetchUserCredits() {
                 try {
                     const credits = await APIClient.fetchUserCredits(AppState.userToken);
                     if (credits !== null) {
-                        this.displayUserCredits(credits);
+                        EmailFinderApp.displayUserCredits(credits);
                     }
                 } catch (error) {
                     Logger.log(`Failed to fetch user credits: ${error.message}`, 'warn');
@@ -2255,14 +2255,14 @@
             static initializeEventListeners() {
                 // File upload events
                 Elements.fileUploadArea.addEventListener('click', () => Elements.fileInput.click());
-                Elements.fileUploadArea.addEventListener('dragover', this.handleDragOver);
-                Elements.fileUploadArea.addEventListener('dragleave', this.handleDragLeave);
-                Elements.fileUploadArea.addEventListener('drop', this.handleFileDrop);
+                Elements.fileUploadArea.addEventListener('dragover', EmailFinderApp.handleDragOver);
+                Elements.fileUploadArea.addEventListener('dragleave', EmailFinderApp.handleDragLeave);
+                Elements.fileUploadArea.addEventListener('drop', EmailFinderApp.handleFileDrop);
                 Elements.uploadButton.addEventListener('click', () => Elements.fileInput.click());
-                Elements.fileInput.addEventListener('change', this.handleFileSelect);
+                Elements.fileInput.addEventListener('change', EmailFinderApp.handleFileSelect);
                 
                 // Process button
-                Elements.processButton.addEventListener('click', this.processFile);
+                Elements.processButton.addEventListener('click', EmailFinderApp.processFile);
                 
                 // Column mapping change events
                 [Elements.firstNameColumn, Elements.lastNameColumn, Elements.domainColumn].forEach(select => {
@@ -2270,10 +2270,10 @@
                 });
                 
                 // Navigation buttons
-                this.setupNavigationButtons();
+                EmailFinderApp.setupNavigationButtons();
                 
                 // Debug toggle
-                Elements.debugToggle.addEventListener('click', this.toggleDebugMode);
+                Elements.debugToggle.addEventListener('click', EmailFinderApp.toggleDebugMode);
                 
                 // Global error handler
                 window.addEventListener('error', (e) => {
@@ -2322,7 +2322,7 @@
             static loadSettings() {
                 const debugMode = localStorage.getItem(CONFIG.STORAGE_KEYS.DEBUG_MODE) === 'true';
                 if (debugMode) {
-                    this.toggleDebugMode();
+                    EmailFinderApp.toggleDebugMode();
                 }
             }
 
@@ -2395,8 +2395,8 @@
                 
                 // Read and parse CSV
                 try {
-                    const fileContent = await this.readFileAsText(file);
-                    this.parseCSVFile(fileContent);
+                    const fileContent = await EmailFinderApp.readFileAsText(file);
+                    EmailFinderApp.parseCSVFile(fileContent);
                 } catch (error) {
                     const errorMessage = ErrorHandler.formatError(error);
                     NotificationSystem.showAlert('Error reading file: ' + errorMessage, 'error');
@@ -2459,7 +2459,7 @@
                 
                 try {
                     // Comprehensive validation
-                    const validationResult = await this.validateProcessingConditions();
+                    const validationResult = await EmailFinderApp.validateProcessingConditions();
                     if (!validationResult.isValid) {
                         NotificationSystem.showAlert(validationResult.error, 'error');
                         Logger.log(`Processing validation failed: ${validationResult.error}`, 'error');
@@ -2467,7 +2467,7 @@
                     }
 
                     // Create job
-                    const job = this.createJob();
+                    const job = EmailFinderApp.createJob();
                     JobManager.saveJob(job);
                     AppState.currentJob = job;
 
@@ -2478,7 +2478,7 @@
                     Elements.filePreview.style.display = 'none';
 
                     // Prepare and send API request
-                    const formData = this.prepareFormData(job);
+                    const formData = EmailFinderApp.prepareFormData(job);
                     
                     // Start progress simulation FIRST
                     ProgressManager.simulateProgress();
@@ -2492,7 +2492,7 @@
                     Logger.log('✅ File processing started successfully', 'success');
 
                 } catch (error) {
-                    this.handleProcessingError(error);
+                    EmailFinderApp.handleProcessingError(error);
                 }
             }
 
@@ -2832,7 +2832,7 @@
                 Elements.processButton.disabled = true;
                 
                 try {
-                    await originalProcessFile.call(this);
+                    await originalProcessFile.call(EmailFinderApp);
                     Elements.processButton.classList.add('success-animation');
                 } catch (error) {
                     Elements.processButton.classList.add('error-animation');
@@ -2964,7 +2964,7 @@
                 
                 try {
                     // Enhanced validation with detailed feedback
-                    const validationResult = await this.validateFileDetailed(file);
+                    const validationResult = await EmailFinderApp.validateFileDetailed(file);
                     
                     if (!validationResult.isValid) {
                         Elements.fileUploadArea.classList.add('error-animation');
@@ -2982,7 +2982,7 @@
                         Elements.fileUploadArea.classList.remove('success-animation');
                     }, 600);
                     
-                    await originalHandleFileUpload.call(this, file);
+                    await originalHandleFileUpload.call(EmailFinderApp, file);
                     
                 } finally {
                     Elements.fileUploadArea.classList.remove('loading');
@@ -2998,7 +2998,7 @@
                 
                 // Additional validation for CSV content preview
                 try {
-                    const preview = await this.getFilePreview(file, 1000); // First 1KB
+                    const preview = await EmailFinderApp.getFilePreview(file, 1000); // First 1KB
                     
                     if (!preview.includes(',')) {
                         return { isValid: false, error: 'File does not appear to be a valid CSV (no commas detected)' };
