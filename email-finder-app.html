@@ -265,46 +265,82 @@
         }
 
         .info-box {
-            background-color: var(--primary-light);
-            border-left: 4px solid var(--primary);
-            padding: 18px 20px;
+            background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 25px;
             margin-bottom: 25px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: flex-start;
+            position: relative;
         }
 
-        .info-box:before {
+        .info-box::before {
             content: '\f05a';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
-            display: inline-block;
-            margin-right: 12px;
+            position: absolute;
+            top: 20px;
+            left: 25px;
             color: var(--primary);
-            font-size: 18px;
-            margin-top: 2px;
+            font-size: 20px;
         }
 
         .info-box-content {
-            flex: 1;
+            margin-left: 35px;
+        }
+
+        .info-box h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .info-box p {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            line-height: 1.5;
+            margin: 0 0 15px 0;
+            font-size: 15px;
+            line-height: 1.6;
             color: var(--gray-700);
         }
 
-        .info-box ul {
-            margin: 8px 0 0 20px;
-            padding: 0;
+        .required-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .info-box li {
-            margin-bottom: 4px;
-            font-size: 14px;
-            color: var(--gray-700);
+        .field-requirement {
+            background: white;
+            border: 2px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            text-align: center;
+            transition: var(--transition-standard);
+        }
+
+        .field-requirement:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .field-requirement i {
+            font-size: 24px;
+            color: var(--success);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .field-requirement .field-name {
+            font-weight: 700;
+            color: var(--gray-800);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .field-requirement .field-example {
+            font-size: 12px;
+            color: var(--gray-600);
+            font-style: italic;
         }
 
         /* FILE UPLOAD */
@@ -377,9 +413,9 @@
         .file-preview {
             display: none;
             background-color: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            padding: 20px;
+            border: 2px solid var(--success);
+            border-radius: var(--radius-lg);
+            padding: 25px;
             margin-top: 20px;
         }
 
@@ -387,20 +423,21 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--gray-100);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray-100);
         }
 
         .file-icon {
-            font-size: 24px;
+            font-size: 32px;
             color: var(--success);
         }
 
         .file-details h4 {
             margin: 0 0 4px 0;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-800);
         }
 
         .file-details p {
@@ -410,53 +447,83 @@
         }
 
         .column-mapping {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .column-mapping h4 {
-            font-size: 16px;
-            margin-bottom: 12px;
+            font-size: 18px;
+            margin-bottom: 20px;
             color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .column-mapping h4 i {
+            color: var(--primary);
         }
 
         .column-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding: 12px;
-            background-color: var(--gray-50);
-            border-radius: var(--radius-sm);
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--gray-50), #f8fafc);
+            border-radius: var(--radius-md);
+            border: 2px solid var(--gray-200);
+            transition: var(--transition-standard);
+        }
+
+        .column-row:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .column-label {
-            font-weight: 500;
-            min-width: 100px;
-            color: var(--gray-700);
+            font-weight: 700;
+            min-width: 120px;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .column-label i {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .required-star {
+            color: var(--danger);
+            font-weight: 900;
         }
 
         .column-select {
             flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
             font-size: 14px;
             background-color: white;
+            font-weight: 500;
+            transition: var(--transition-standard);
         }
 
         .column-select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .process-button {
             background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             border: none;
-            border-radius: var(--radius-md);
-            padding: 14px 28px;
-            font-size: 15px;
+            border-radius: var(--radius-lg);
+            padding: 18px 32px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition-standard);
@@ -464,12 +531,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .process-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
 
         .process-button:disabled {
@@ -639,29 +707,6 @@
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
-        }
-
-        /* DEBUG PANEL */
-        .debug-panel {
-            background: #1a1a1a;
-            color: #00ff00;
-            border-radius: var(--radius-md);
-            padding: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .debug-panel.show {
-            display: block;
-        }
-
-        .debug-panel pre {
-            margin: 0;
-            white-space: pre-wrap;
         }
 
         /* STATS CARDS */
@@ -964,6 +1009,11 @@
                 left: 10px;
                 min-width: auto;
             }
+
+            .required-fields {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -993,29 +1043,48 @@
             }
         }
 
-        /* DEBUG MODE STYLES */
-        .debug-mode .debug-panel {
-            display: block !important;
+        /* Loading animations */
+        .loading {
+            position: relative;
+            overflow: hidden;
         }
 
-        .debug-toggle {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #1a1a1a;
-            color: #00ff00;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            font-size: 18px;
-            z-index: 1000;
-            transition: var(--transition-standard);
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: loading-sweep 1.5s infinite;
         }
 
-        .debug-toggle:hover {
-            transform: scale(1.1);
+        @keyframes loading-sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Success animation */
+        .success-animation {
+            animation: successPulse 0.6s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Error shake animation */
+        .error-animation {
+            animation: errorShake 0.6s ease-out;
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -1075,15 +1144,28 @@
 
             <div class="info-box">
                 <div class="info-box-content">
-                    <p><strong>How it works:</strong> Upload a CSV file with contact information to find their email addresses.</p>
-                    <p><strong>Required columns (in any order):</strong></p>
-                    <ul>
-                        <li><strong>First Name</strong> (or variants: firstname, first_name, fname, given_name)</li>
-                        <li><strong>Last Name</strong> (or variants: lastname, last_name, lname, surname, family_name)</li>
-                        <li><strong>Domain</strong> (or variants: company_domain, website, company_website)</li>
-                    </ul>
-                    <p><strong>Processing time:</strong> Approximately 1 second per row (minimum 30 seconds)</p>
-                    <p><strong>Limit:</strong> Maximum 500 rows per file</p>
+                    <h3>How it works</h3>
+                    <p>Upload a CSV file with contact information to find their email addresses. Your CSV file must contain exactly these 3 columns:</p>
+                    
+                    <div class="required-fields">
+                        <div class="field-requirement">
+                            <i class="fas fa-user"></i>
+                            <div class="field-name">First Name</div>
+                            <div class="field-example">John, Sarah, David...</div>
+                        </div>
+                        <div class="field-requirement">
+                            <i class="fas fa-user-tag"></i>
+                            <div class="field-name">Last Name</div>
+                            <div class="field-example">Smith, Johnson, Wilson...</div>
+                        </div>
+                        <div class="field-requirement">
+                            <i class="fas fa-globe"></i>
+                            <div class="field-name">Website</div>
+                            <div class="field-example">company.com, example.org...</div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Processing:</strong> ~1 second per row (minimum 30 seconds) • <strong>Limit:</strong> 500 rows maximum</p>
                 </div>
             </div>
 
@@ -1113,35 +1195,32 @@
                 </div>
 
                 <div class="column-mapping">
-                    <h4>Column Mapping</h4>
+                    <h4><i class="fas fa-map-marked-alt"></i> Map Your CSV Columns</h4>
                     <div class="column-row">
-                        <span class="column-label">First Name*:</span>
+                        <span class="column-label">
+                            <i class="fas fa-user"></i>
+                            First Name<span class="required-star">*</span>:
+                        </span>
                         <select id="firstNameColumn" class="column-select">
                             <option value="">Select column...</option>
                         </select>
                     </div>
                     <div class="column-row">
-                        <span class="column-label">Last Name*:</span>
+                        <span class="column-label">
+                            <i class="fas fa-user-tag"></i>
+                            Last Name<span class="required-star">*</span>:
+                        </span>
                         <select id="lastNameColumn" class="column-select">
                             <option value="">Select column...</option>
                         </select>
                     </div>
                     <div class="column-row">
-                        <span class="column-label">Domain*:</span>
-                        <select id="domainColumn" class="column-select">
+                        <span class="column-label">
+                            <i class="fas fa-globe"></i>
+                            Website<span class="required-star">*</span>:
+                        </span>
+                        <select id="websiteColumn" class="column-select">
                             <option value="">Select column...</option>
-                        </select>
-                    </div>
-                    <div class="column-row">
-                        <span class="column-label">Company:</span>
-                        <select id="companyColumn" class="column-select">
-                            <option value="">Select column (optional)...</option>
-                        </select>
-                    </div>
-                    <div class="column-row">
-                        <span class="column-label">Job Title:</span>
-                        <select id="jobTitleColumn" class="column-select">
-                            <option value="">Select column (optional)...</option>
                         </select>
                     </div>
                 </div>
@@ -1178,11 +1257,6 @@
                 <i class="fas fa-check-circle"></i>
                 You can leave this page - processing runs on our secure servers
             </div>
-        </div>
-
-        <!-- Debug Panel -->
-        <div id="debugPanel" class="debug-panel">
-            <pre id="debugLog">🔧 Debug mode activated - Logs will appear here...</pre>
         </div>
 
         <!-- Stats Cards -->
@@ -1226,11 +1300,6 @@
         </div>
     </div>
 
-    <!-- Debug Toggle -->
-    <button id="debugToggle" class="debug-toggle" title="Toggle Debug Mode">
-        <i class="fas fa-bug"></i>
-    </button>
-
     <script>
         // ========================================
         // CONFIGURATION & CONSTANTS
@@ -1255,8 +1324,7 @@
             // Storage keys
             STORAGE_KEYS: {
                 JOBS: 'email_finder_jobs',
-                CURRENT_JOB: 'email_finder_current_job',
-                DEBUG_MODE: 'email_finder_debug_mode'
+                CURRENT_JOB: 'email_finder_current_job'
             }
         };
 
@@ -1271,7 +1339,6 @@
             csvHeaders: [],
             currentJob: null,
             progressInterval: null,
-            debugMode: false,
             isOnline: true,
             retryCount: 0
         };
@@ -1290,23 +1357,18 @@
             uploadAlert: document.getElementById('uploadAlert'),
             processButton: document.getElementById('processButton'),
             progressSection: document.getElementById('progressSection'),
-            debugPanel: document.getElementById('debugPanel'),
-            debugLog: document.getElementById('debugLog'),
-            debugToggle: document.getElementById('debugToggle'),
             connectionStatus: document.getElementById('connectionStatus'),
             statusIndicator: document.getElementById('statusIndicator'),
             statusMessage: document.getElementById('statusMessage'),
             
-            // Column mapping selects
+            // Column mapping selects (simplified to 3 fields)
             firstNameColumn: document.getElementById('firstNameColumn'),
             lastNameColumn: document.getElementById('lastNameColumn'),
-            domainColumn: document.getElementById('domainColumn'),
-            companyColumn: document.getElementById('companyColumn'),
-            jobTitleColumn: document.getElementById('jobTitleColumn')
+            websiteColumn: document.getElementById('websiteColumn')
         };
 
         // ========================================
-        // LOGGING & DEBUG SYSTEM
+        // LOGGING SYSTEM (Simplified)
         // ========================================
         
         class Logger {
@@ -1314,7 +1376,6 @@
                 const timestamp = new Date().toLocaleTimeString();
                 const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
                 
-                // Console logging
                 switch (type) {
                     case 'error':
                         console.error(logEntry, data);
@@ -1327,22 +1388,6 @@
                         break;
                     default:
                         console.log(`ℹ️ ${logEntry}`, data);
-                }
-                
-                // Debug panel logging
-                if (AppState.debugMode && Elements.debugLog) {
-                    const icon = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : type === 'success' ? '✅' : 'ℹ️';
-                    Elements.debugLog.textContent += `\n${icon} ${logEntry}`;
-                    if (data) {
-                        Elements.debugLog.textContent += `\n   Data: ${JSON.stringify(data, null, 2)}`;
-                    }
-                    Elements.debugLog.scrollTop = Elements.debugLog.scrollHeight;
-                }
-            }
-            
-            static clear() {
-                if (Elements.debugLog) {
-                    Elements.debugLog.textContent = '🔧 Mode Debug activé - Les logs s\'afficheront ici...';
                 }
             }
         }
@@ -1367,21 +1412,17 @@
             static updateStatus(isOnline) {
                 AppState.isOnline = isOnline;
                 
-                // Only show critical connection issues, keep status hidden for normal operation
                 const statusEl = Elements.connectionStatus;
                 
                 if (!isOnline) {
-                    // Only show when offline - critical issue
                     statusEl.className = 'connection-status offline';
                     statusEl.innerHTML = '<div class="connection-dot"></div><span>Connection lost</span>';
                     statusEl.style.display = 'flex';
                     
-                    // Auto-hide after 5 seconds
                     setTimeout(() => {
                         statusEl.style.display = 'none';
                     }, 5000);
                 } else {
-                    // Hide when online - normal operation
                     statusEl.style.display = 'none';
                 }
                 
@@ -1395,7 +1436,7 @@
                 };
                 
                 await checkAndUpdate();
-                setInterval(checkAndUpdate, 30000); // Check every 30 seconds
+                setInterval(checkAndUpdate, 30000);
             }
         }
 
@@ -1532,14 +1573,12 @@
                     const lines = csvContent.split('\n').filter(line => line.trim());
                     
                     if (lines.length < 2) {
-                        throw new Error('Le fichier CSV doit contenir au moins un en-tête et une ligne de données');
+                        throw new Error('CSV file must contain at least a header and one data row');
                     }
                     
-                    // Parse headers
                     const headers = this.parseCSVRow(lines[0]);
                     Logger.log(`Headers found: ${headers.join(', ')}`, 'info');
                     
-                    // Parse data rows
                     const data = [];
                     for (let i = 1; i < lines.length; i++) {
                         const row = this.parseCSVRow(lines[i]);
@@ -1583,7 +1622,7 @@
         }
 
         // ========================================
-        // COLUMN MAPPING SYSTEM
+        // COLUMN MAPPING SYSTEM (Simplified to 3 fields)
         // ========================================
         
         class ColumnMapper {
@@ -1603,20 +1642,9 @@
                         mappings.lastName = index;
                     }
                     
-                    // Domain detection
-                    if (this.matchesPattern(lowerHeader, ['domain', 'website', 'company_domain', 'company_website', 'domaine'])) {
-                        mappings.domain = index;
-                    }
-                    
-                    // Company detection
-                    if (this.matchesPattern(lowerHeader, ['company', 'entreprise', 'societe']) && 
-                        !lowerHeader.includes('domain') && !lowerHeader.includes('website')) {
-                        mappings.company = index;
-                    }
-                    
-                    // Job title detection
-                    if (this.matchesPattern(lowerHeader, ['title', 'position', 'role', 'titre', 'poste'])) {
-                        mappings.jobTitle = index;
+                    // Website detection (updated from domain)
+                    if (this.matchesPattern(lowerHeader, ['website', 'domain', 'site', 'web', 'company_domain', 'company_website', 'url'])) {
+                        mappings.website = index;
                     }
                 });
                 
@@ -1632,9 +1660,7 @@
                 const selects = [
                     Elements.firstNameColumn,
                     Elements.lastNameColumn,
-                    Elements.domainColumn,
-                    Elements.companyColumn,
-                    Elements.jobTitleColumn
+                    Elements.websiteColumn
                 ];
                 
                 // Clear existing options
@@ -1659,9 +1685,7 @@
                 
                 if (mappings.firstName !== undefined) Elements.firstNameColumn.value = mappings.firstName;
                 if (mappings.lastName !== undefined) Elements.lastNameColumn.value = mappings.lastName;
-                if (mappings.domain !== undefined) Elements.domainColumn.value = mappings.domain;
-                if (mappings.company !== undefined) Elements.companyColumn.value = mappings.company;
-                if (mappings.jobTitle !== undefined) Elements.jobTitleColumn.value = mappings.jobTitle;
+                if (mappings.website !== undefined) Elements.websiteColumn.value = mappings.website;
                 
                 // Validate after auto-detection
                 this.validateRequiredColumns();
@@ -1670,14 +1694,14 @@
             static validateRequiredColumns() {
                 const firstName = Elements.firstNameColumn.value;
                 const lastName = Elements.lastNameColumn.value;
-                const domain = Elements.domainColumn.value;
+                const website = Elements.websiteColumn.value;
 
-                const isValid = firstName !== '' && lastName !== '' && domain !== '';
+                const isValid = firstName !== '' && lastName !== '' && website !== '';
                 Elements.processButton.disabled = !isValid;
 
                 if (isValid) {
                     Elements.processButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-                    NotificationSystem.showAlert('All required columns mapped! Ready to process.', 'success');
+                    NotificationSystem.showAlert('✅ All 3 required columns mapped! Ready to find emails.', 'success');
                     Logger.log('All required columns mapped successfully', 'success');
                 } else {
                     Elements.processButton.style.background = 'var(--gray-300)';
@@ -1705,18 +1729,13 @@
                 
                 if (finalOptions.body && finalOptions.body instanceof FormData) {
                     Logger.log('Request contains FormData', 'info');
-                    // Don't set Content-Type for FormData, let browser set it
                     delete finalOptions.headers['Content-Type'];
                 }
                 
                 const response = await fetch(url, finalOptions);
                 
                 Logger.log(`Response received: ${response.status} ${response.statusText}`, 
-                    response.ok ? 'success' : 'error', {
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: Object.fromEntries(response.headers.entries())
-                });
+                    response.ok ? 'success' : 'error');
                 
                 return response;
             }
@@ -1724,16 +1743,6 @@
             static async sendFileToAPI(formData) {
                 try {
                     Logger.log('Starting file upload to API', 'info');
-                    
-                    // Log FormData contents (for debugging)
-                    Logger.log('FormData contents:', 'info');
-                    for (let pair of formData.entries()) {
-                        if (pair[0] === 'file') {
-                            Logger.log(`  ${pair[0]}: [File] ${pair[1].name} (${pair[1].size} bytes)`, 'info');
-                        } else {
-                            Logger.log(`  ${pair[0]}: ${pair[1]}`, 'info');
-                        }
-                    }
                     
                     const response = await this.makeRequest(CONFIG.EMAIL_FINDER_WEBHOOK_URL, {
                         method: 'POST',
@@ -1841,7 +1850,7 @@
                     jobs[existingIndex] = job;
                     Logger.log(`Updated existing job: ${job.id}`, 'info');
                 } else {
-                    jobs.unshift(job); // Add to beginning
+                    jobs.unshift(job);
                     Logger.log(`Added new job: ${job.id}`, 'info');
                 }
                 
@@ -1883,9 +1892,8 @@
                             job.progress = 100;
                             job.completed_at = new Date().toISOString();
                             
-                            // Set realistic email success rate if not already set
                             if (!job.emails_found) {
-                                const successRate = 0.6 + (Math.random() * 0.25); // Between 60% and 85%
+                                const successRate = 0.6 + (Math.random() * 0.25);
                                 job.emails_found = Math.floor(job.total_rows * successRate);
                             }
                             
@@ -1979,11 +1987,6 @@
                                                     <i class="fas fa-download"></i> Download
                                                 </button>` : ''
                                             }
-                                            ${job.status === 'processing' ? 
-                                                `<button class="btn-small btn-secondary" onclick="JobManager.retryJob('${job.id}')">
-                                                    <i class="fas fa-redo"></i> Retry
-                                                </button>` : ''
-                                            }
                                             <button class="btn-small btn-danger" onclick="JobManager.deleteJob('${job.id}')">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
@@ -1999,7 +2002,7 @@
             }
 
             static formatDate(dateString) {
-                return new Date(dateString).toLocaleDateString('fr-FR', {
+                return new Date(dateString).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     hour: '2-digit',
@@ -2032,7 +2035,6 @@
                     
                     const blob = await APIClient.downloadJobResult(jobId);
                     
-                    // Create temporary download link
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
@@ -2040,7 +2042,6 @@
                     document.body.appendChild(a);
                     a.click();
                     
-                    // Cleanup
                     window.URL.revokeObjectURL(url);
                     document.body.removeChild(a);
                     
@@ -2053,12 +2054,6 @@
                     Logger.log(`Download failed for job ${jobId}: ${error.message}`, 'error');
                 }
             }
-
-            static async retryJob(jobId) {
-                // Implementation for retrying a failed job
-                Logger.log(`Retrying job: ${jobId}`, 'info');
-                NotificationSystem.showAlert('Retry functionality not yet implemented', 'warning');
-            }
         }
 
         // ========================================
@@ -2070,10 +2065,9 @@
                 Elements.progressSection.classList.add('show');
                 document.getElementById('currentFileName').textContent = filename;
                 
-                // Reset progress
                 document.getElementById('progressFill').style.width = '0%';
                 document.getElementById('progressText').textContent = '0%';
-                document.getElementById('timeRemaining').textContent = 'Calcul en cours...';
+                document.getElementById('timeRemaining').textContent = 'Calculating...';
                 
                 Logger.log(`Progress display started for: ${filename}`, 'info');
             }
@@ -2084,39 +2078,31 @@
                     return;
                 }
 
-                // Calculate estimated time based on rows
                 const totalSeconds = Math.max(CONFIG.MIN_PROCESSING_TIME, AppState.currentJob.total_rows * CONFIG.PROCESSING_TIME_PER_ROW);
                 
-                // Store simulation start time and total duration in the job
                 AppState.currentJob.simulation_start = AppState.currentJob.simulation_start || Date.now();
                 AppState.currentJob.total_duration_seconds = totalSeconds;
                 JobManager.saveJob(AppState.currentJob);
 
-                // Display initial time estimate
                 this.updateTimeDisplay(totalSeconds);
 
                 Logger.log(`Progress simulation started - estimated time: ${totalSeconds}s for ${AppState.currentJob.total_rows} rows`, 'info');
 
                 AppState.progressInterval = setInterval(() => {
-                    // Calculate progress based on elapsed time
                     const elapsedSeconds = (Date.now() - AppState.currentJob.simulation_start) / 1000;
                     const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
 
-                    // Update UI
                     document.getElementById('progressFill').style.width = progress + '%';
                     document.getElementById('progressText').textContent = Math.round(progress) + '%';
                     
-                    // Calculate precise remaining time
                     const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
                     this.updateTimeDisplay(timeRemaining);
 
-                    // Update job progress
                     if (AppState.currentJob) {
                         AppState.currentJob.progress = Math.round(progress);
                         JobManager.saveJob(AppState.currentJob);
                     }
 
-                    // Complete when reaching 100%
                     if (progress >= 100) {
                         clearInterval(AppState.progressInterval);
                         this.completeJob();
@@ -2142,21 +2128,17 @@
                 
                 Logger.log(`Completing job: ${AppState.currentJob.id}`, 'info');
                 
-                // Update job status
                 AppState.currentJob.status = 'completed';
                 AppState.currentJob.progress = 100;
                 AppState.currentJob.completed_at = new Date().toISOString();
                 
-                // Set emails found if not already set (realistic success rate: 60-85%)
                 if (!AppState.currentJob.emails_found) {
                     const successRate = 0.6 + (Math.random() * 0.25);
                     AppState.currentJob.emails_found = Math.floor(AppState.currentJob.total_rows * successRate);
                 }
                 
-                // Save updated job
                 JobManager.saveJob(AppState.currentJob);
                 
-                // Hide progress after delay
                 setTimeout(() => {
                     Elements.progressSection.classList.remove('show');
                     AppState.currentJob = null;
@@ -2190,7 +2172,6 @@
                 try {
                     await EmailFinderApp.initializeAuth();
                     EmailFinderApp.initializeEventListeners();
-                    EmailFinderApp.loadSettings();
                     
                     await NetworkMonitor.startMonitoring();
                     await JobManager.checkPendingJobs();
@@ -2202,7 +2183,7 @@
                     
                 } catch (error) {
                     Logger.log(`❌ Initialization failed: ${error.message}`, 'error');
-                    NotificationSystem.showAlert('Erreur d\'initialisation: ' + ErrorHandler.formatError(error), 'error');
+                    NotificationSystem.showAlert('Initialization error: ' + ErrorHandler.formatError(error), 'error');
                 }
             }
 
@@ -2264,16 +2245,13 @@
                 // Process button
                 Elements.processButton.addEventListener('click', EmailFinderApp.processFile);
                 
-                // Column mapping change events
-                [Elements.firstNameColumn, Elements.lastNameColumn, Elements.domainColumn].forEach(select => {
+                // Column mapping change events (simplified to 3 fields)
+                [Elements.firstNameColumn, Elements.lastNameColumn, Elements.websiteColumn].forEach(select => {
                     select.addEventListener('change', ColumnMapper.validateRequiredColumns);
                 });
                 
                 // Navigation buttons
                 EmailFinderApp.setupNavigationButtons();
-                
-                // Debug toggle
-                Elements.debugToggle.addEventListener('click', EmailFinderApp.toggleDebugMode);
                 
                 // Global error handler
                 window.addEventListener('error', (e) => {
@@ -2319,30 +2297,6 @@
                 }
             }
 
-            static loadSettings() {
-                const debugMode = localStorage.getItem(CONFIG.STORAGE_KEYS.DEBUG_MODE) === 'true';
-                if (debugMode) {
-                    EmailFinderApp.toggleDebugMode();
-                }
-            }
-
-            static toggleDebugMode() {
-                AppState.debugMode = !AppState.debugMode;
-                localStorage.setItem(CONFIG.STORAGE_KEYS.DEBUG_MODE, AppState.debugMode.toString());
-                
-                if (AppState.debugMode) {
-                    document.body.classList.add('debug-mode');
-                    Elements.debugPanel.classList.add('show');
-                    Logger.clear();
-                    Logger.log('Debug mode activated', 'success');
-                } else {
-                    document.body.classList.remove('debug-mode');
-                    Elements.debugPanel.classList.remove('show');
-                }
-                
-                Elements.debugToggle.style.backgroundColor = AppState.debugMode ? '#4caf50' : '#1a1a1a';
-            }
-
             // ========================================
             // FILE HANDLING METHODS
             // ========================================
@@ -2375,32 +2329,42 @@
             }
 
             static async handleFileUpload(file) {
-                Logger.log(`File upload started: ${file.name}`, 'info', {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                Logger.log(`File upload started: ${file.name}`, 'info');
                 
-                // Validate file
-                const validationErrors = FileValidator.validate(file);
-                if (validationErrors.length > 0) {
-                    const errorMessage = validationErrors.join(', ');
-                    NotificationSystem.showAlert(errorMessage, 'error');
-                    Logger.log(`File validation failed: ${errorMessage}`, 'error');
-                    return;
-                }
-
-                AppState.uploadedFile = file;
-                Elements.fileName.textContent = file.name;
+                // Add loading animation
+                Elements.fileUploadArea.classList.add('loading');
                 
-                // Read and parse CSV
                 try {
+                    // Validate file
+                    const validationErrors = FileValidator.validate(file);
+                    if (validationErrors.length > 0) {
+                        const errorMessage = validationErrors.join(', ');
+                        NotificationSystem.showAlert(errorMessage, 'error');
+                        Logger.log(`File validation failed: ${errorMessage}`, 'error');
+                        Elements.fileUploadArea.classList.add('error-animation');
+                        setTimeout(() => Elements.fileUploadArea.classList.remove('error-animation'), 600);
+                        return;
+                    }
+
+                    AppState.uploadedFile = file;
+                    Elements.fileName.textContent = file.name;
+                    
+                    // Read and parse CSV
                     const fileContent = await EmailFinderApp.readFileAsText(file);
                     EmailFinderApp.parseCSVFile(fileContent);
+                    
+                    // Add success animation
+                    Elements.fileUploadArea.classList.add('success-animation');
+                    setTimeout(() => Elements.fileUploadArea.classList.remove('success-animation'), 600);
+                    
                 } catch (error) {
                     const errorMessage = ErrorHandler.formatError(error);
                     NotificationSystem.showAlert('Error reading file: ' + errorMessage, 'error');
                     Logger.log(`File reading failed: ${error.message}`, 'error');
+                    Elements.fileUploadArea.classList.add('error-animation');
+                    setTimeout(() => Elements.fileUploadArea.classList.remove('error-animation'), 600);
+                } finally {
+                    Elements.fileUploadArea.classList.remove('loading');
                 }
             }
 
@@ -2409,7 +2373,7 @@
                     const reader = new FileReader();
                     
                     reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(new Error('Impossible de lire le fichier'));
+                    reader.onerror = (e) => reject(new Error('Unable to read file'));
                     
                     reader.readAsText(file);
                 });
@@ -2440,7 +2404,7 @@
                     // Show file preview section
                     Elements.filePreview.style.display = 'block';
                     
-                    NotificationSystem.showAlert('CSV file loaded successfully! Please map the required columns below.', 'success');
+                    NotificationSystem.showAlert('CSV file loaded successfully! Please map the 3 required columns below.', 'success');
                     Logger.log(`CSV parsed successfully: ${data.length} rows, ${headers.length} columns`, 'success');
                     
                 } catch (error) {
@@ -2516,13 +2480,13 @@
                     return { isValid: false, error: 'Server connection required' };
                 }
 
-                // Check column mapping
+                // Check column mapping (simplified to 3 fields)
                 const firstName = Elements.firstNameColumn.value;
                 const lastName = Elements.lastNameColumn.value;
-                const domain = Elements.domainColumn.value;
+                const website = Elements.websiteColumn.value;
 
-                if (firstName === '' || lastName === '' || domain === '') {
-                    return { isValid: false, error: 'Please map all required columns (First Name, Last Name, Domain)' };
+                if (firstName === '' || lastName === '' || website === '') {
+                    return { isValid: false, error: 'Please map all 3 required columns: First Name, Last Name, and Website' };
                 }
 
                 return { isValid: true };
@@ -2552,29 +2516,19 @@
                 formData.append('token', AppState.userToken);
                 formData.append('job_id', job.id);
                 
-                // Add column indexes
+                // Add column indexes (simplified to 3 fields)
                 const firstName = Elements.firstNameColumn.value;
                 const lastName = Elements.lastNameColumn.value;
-                const domain = Elements.domainColumn.value;
+                const website = Elements.websiteColumn.value;
                 
                 formData.append('firstNameColumn', firstName);
                 formData.append('lastNameColumn', lastName);
-                formData.append('domainColumn', domain);
+                formData.append('websiteColumn', website); // Updated from domainColumn
                 
                 // Add column names
                 formData.append('firstNameColumnName', AppState.csvHeaders[firstName]);
                 formData.append('lastNameColumnName', AppState.csvHeaders[lastName]);
-                formData.append('domainColumnName', AppState.csvHeaders[domain]);
-                
-                // Add optional columns
-                if (Elements.companyColumn.value !== '') {
-                    formData.append('companyColumn', Elements.companyColumn.value);
-                    formData.append('companyColumnName', AppState.csvHeaders[Elements.companyColumn.value]);
-                }
-                if (Elements.jobTitleColumn.value !== '') {
-                    formData.append('jobTitleColumn', Elements.jobTitleColumn.value);
-                    formData.append('jobTitleColumnName', AppState.csvHeaders[Elements.jobTitleColumn.value]);
-                }
+                formData.append('websiteColumnName', AppState.csvHeaders[website]); // Updated from domainColumnName
 
                 // Add metadata
                 formData.append('csvHeaders', JSON.stringify(AppState.csvHeaders));
@@ -2621,484 +2575,21 @@
             EmailFinderApp.init();
         });
 
-        // Add CSS animations and transitions
-        const additionalStyles = document.createElement('style');
-        additionalStyles.textContent = `
-            /* Loading animations */
-            .loading {
-                position: relative;
-                overflow: hidden;
-            }
-
-            .loading::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                animation: loading-sweep 1.5s infinite;
-            }
-
-            @keyframes loading-sweep {
-                0% { left: -100%; }
-                100% { left: 100%; }
-            }
-
-            /* Button loading state */
-            .btn-loading {
-                position: relative;
-                color: transparent !important;
-            }
-
-            .btn-loading::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                margin-left: -10px;
-                margin-top: -10px;
-                width: 20px;
-                height: 20px;
-                border: 2px solid currentColor;
-                border-radius: 50%;
-                border-top-color: transparent;
-                animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-                to { transform: rotate(360deg); }
-            }
-
-            /* Success animation */
-            .success-animation {
-                animation: successPulse 0.6s ease-out;
-            }
-
-            @keyframes successPulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-
-            /* Error shake animation */
-            .error-animation {
-                animation: errorShake 0.6s ease-out;
-            }
-
-            @keyframes errorShake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-5px); }
-                75% { transform: translateX(5px); }
-            }
-
-            /* File upload hover effects */
-            .file-upload-area:hover .file-upload-icon {
-                transform: scale(1.1);
-                transition: transform 0.3s ease;
-            }
-
-            /* Status indicator animations */
-            .status-indicator {
-                transform: translateX(100%);
-                transition: transform 0.3s ease-out;
-            }
-
-            .status-indicator.show {
-                transform: translateX(0);
-            }
-
-            /* Progress bar enhancements */
-            .progress-fill {
-                background: linear-gradient(90deg, var(--primary), var(--secondary));
-                box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-            }
-
-            /* Debug panel enhancements */
-            .debug-panel::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .debug-panel::-webkit-scrollbar-track {
-                background: #2a2a2a;
-            }
-
-            .debug-panel::-webkit-scrollbar-thumb {
-                background: #00ff00;
-                border-radius: 4px;
-            }
-
-            /* Table hover effects */
-            .jobs-table tr {
-                transition: all 0.2s ease;
-            }
-
-            .jobs-table tr:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-
-            /* Connection status improvements */
-            .connection-status {
-                transition: all 0.3s ease;
-            }
-
-            .connection-status.offline {
-                animation: attention 2s infinite;
-            }
-
-            @keyframes attention {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.02); }
-            }
-
-            /* Mobile improvements */
-            @media (max-width: 768px) {
-                .debug-toggle {
-                    bottom: 80px;
-                    left: 10px;
-                    width: 40px;
-                    height: 40px;
-                    font-size: 14px;
-                }
-
-                .status-indicator {
-                    top: 10px;
-                    right: 10px;
-                    left: 10px;
-                    min-width: auto;
-                    max-width: none;
-                }
-            }
-
-            /* Accessibility improvements */
-            .btn-small:focus,
-            .process-button:focus,
-            .upload-button:focus {
-                outline: 2px solid var(--primary);
-                outline-offset: 2px;
-            }
-
-            /* Dark mode for debug panel */
-            .debug-mode .debug-panel {
-                background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-                border: 1px solid #444;
-            }
-
-            /* Enhanced tooltips */
-            [title] {
-                position: relative;
-            }
-
-            [title]:hover::after {
-                content: attr(title);
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #333;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 4px;
-                font-size: 12px;
-                white-space: nowrap;
-                z-index: 1000;
-                margin-bottom: 5px;
-            }
-
-            [title]:hover::before {
-                content: '';
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                border: 5px solid transparent;
-                border-top-color: #333;
-                z-index: 1000;
-            }
-        `;
-        document.head.appendChild(additionalStyles);
-
-        // ========================================
-        // UTILITY FUNCTIONS FOR ENHANCED UX
-        // ========================================
-
-        // Add visual feedback for file operations
-        function addFileOperationFeedback() {
-            const originalProcessFile = EmailFinderApp.processFile;
-            EmailFinderApp.processFile = async function() {
-                Elements.processButton.classList.add('btn-loading');
-                Elements.processButton.disabled = true;
-                
-                try {
-                    await originalProcessFile.call(EmailFinderApp);
-                    Elements.processButton.classList.add('success-animation');
-                } catch (error) {
-                    Elements.processButton.classList.add('error-animation');
-                    throw error;
-                } finally {
-                    setTimeout(() => {
-                        Elements.processButton.classList.remove('btn-loading', 'success-animation', 'error-animation');
-                        Elements.processButton.disabled = false;
-                    }, 1000);
-                }
-            };
-        }
-
-        // Enhanced keyboard shortcuts
-        function setupKeyboardShortcuts() {
-            document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + U = Upload file
-                if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
-                    e.preventDefault();
-                    Elements.fileInput.click();
-                    Logger.log('Keyboard shortcut: Upload file', 'info');
-                }
-                
-                // Ctrl/Cmd + D = Toggle debug mode
-                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-                    e.preventDefault();
-                    EmailFinderApp.toggleDebugMode();
-                    Logger.log('Keyboard shortcut: Toggle debug mode', 'info');
-                }
-                
-                // Escape = Close notifications
-                if (e.key === 'Escape') {
-                    const statusIndicator = Elements.statusIndicator;
-                    if (statusIndicator.classList.contains('show')) {
-                        statusIndicator.classList.remove('show');
-                        Logger.log('Keyboard shortcut: Close notification', 'info');
-                    }
-                }
-            });
-        }
-
-        // Auto-save progress periodically
-        function setupAutoSave() {
-            setInterval(() => {
-                if (AppState.currentJob && AppState.currentJob.status === 'processing') {
-                    JobManager.saveJob(AppState.currentJob);
-                    Logger.log('Auto-saved current job progress', 'info');
-                }
-            }, 10000); // Every 10 seconds
-        }
-
-        // Performance monitoring
-        function setupPerformanceMonitoring() {
-            const startTime = performance.now();
-            
-            window.addEventListener('load', () => {
-                const loadTime = performance.now() - startTime;
-                Logger.log(`Page loaded in ${loadTime.toFixed(2)}ms`, 'info');
-                
-                // Monitor memory usage (if available)
-                if (performance.memory) {
-                    Logger.log('Memory usage', 'info', {
-                        used: `${(performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
-                        total: `${(performance.memory.totalJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
-                        limit: `${(performance.memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)}MB`
-                    });
-                }
-            });
-        }
-
-        // Enhanced error reporting
-        function setupErrorReporting() {
-            window.addEventListener('unhandledrejection', (e) => {
-                Logger.log(`Unhandled promise rejection: ${e.reason}`, 'error', e.reason);
-                NotificationSystem.show('An unexpected error occurred', 'error');
-                e.preventDefault();
-            });
-        }
-
-        // Local storage cleanup
-        function setupStorageCleanup() {
-            // Clean up old jobs (older than 30 days)
-            const cleanupOldJobs = () => {
-                const jobs = JobManager.getAllJobs();
-                const thirtyDaysAgo = new Date();
-                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-                
-                const recentJobs = jobs.filter(job => {
-                    const jobDate = new Date(job.created_at);
-                    return jobDate > thirtyDaysAgo;
-                });
-                
-                if (recentJobs.length !== jobs.length) {
-                    JobManager.saveJobs(recentJobs);
-                    Logger.log(`Cleaned up ${jobs.length - recentJobs.length} old jobs`, 'info');
-                }
-            };
-            
-            // Run cleanup on startup and then daily
-            cleanupOldJobs();
-            setInterval(cleanupOldJobs, 24 * 60 * 60 * 1000); // Daily
-        }
-
-        // Network quality detection
-        function setupNetworkMonitoring() {
-            if ('connection' in navigator) {
-                const connection = navigator.connection;
-                
-                const logNetworkInfo = () => {
-                    Logger.log('Network info', 'info', {
-                        effectiveType: connection.effectiveType,
-                        downlink: connection.downlink,
-                        rtt: connection.rtt,
-                        saveData: connection.saveData
-                    });
-                };
-                
-                connection.addEventListener('change', logNetworkInfo);
-                logNetworkInfo(); // Initial log
-            }
-        }
-
-        // Enhanced file validation with preview
-        function setupEnhancedFileValidation() {
-            const originalHandleFileUpload = EmailFinderApp.handleFileUpload;
-            EmailFinderApp.handleFileUpload = async function(file) {
-                // Add visual feedback
-                Elements.fileUploadArea.classList.add('loading');
-                
-                try {
-                    // Enhanced validation with detailed feedback
-                    const validationResult = await EmailFinderApp.validateFileDetailed(file);
-                    
-                    if (!validationResult.isValid) {
-                        Elements.fileUploadArea.classList.add('error-animation');
-                        setTimeout(() => {
-                            Elements.fileUploadArea.classList.remove('error-animation');
-                        }, 600);
-                        
-                        NotificationSystem.showAlert(validationResult.error, 'error');
-                        return;
-                    }
-                    
-                    // Show success feedback
-                    Elements.fileUploadArea.classList.add('success-animation');
-                    setTimeout(() => {
-                        Elements.fileUploadArea.classList.remove('success-animation');
-                    }, 600);
-                    
-                    await originalHandleFileUpload.call(EmailFinderApp, file);
-                    
-                } finally {
-                    Elements.fileUploadArea.classList.remove('loading');
-                }
-            };
-
-            EmailFinderApp.validateFileDetailed = async function(file) {
-                const errors = FileValidator.validate(file);
-                
-                if (errors.length > 0) {
-                    return { isValid: false, error: errors.join(', ') };
-                }
-                
-                // Additional validation for CSV content preview
-                try {
-                    const preview = await EmailFinderApp.getFilePreview(file, 1000); // First 1KB
-                    
-                    if (!preview.includes(',')) {
-                        return { isValid: false, error: 'File does not appear to be a valid CSV (no commas detected)' };
-                    }
-                    
-                    const lines = preview.split('\n');
-                    if (lines.length < 2) {
-                        return { isValid: false, error: 'File must contain at least 2 lines (header + data)' };
-                    }
-                    
-                } catch (error) {
-                    return { isValid: false, error: 'Unable to read file content' };
-                }
-                
-                return { isValid: true };
-            };
-
-            EmailFinderApp.getFilePreview = function(file, bytes = 1000) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = reject;
-                    reader.readAsText(file.slice(0, bytes));
-                });
-            };
-        }
-
-        // Initialize all enhanced features
-        document.addEventListener('DOMContentLoaded', function() {
-            // Wait for main app to initialize first
-            setTimeout(() => {
-                addFileOperationFeedback();
-                setupKeyboardShortcuts();
-                setupAutoSave();
-                setupPerformanceMonitoring();
-                setupErrorReporting();
-                setupStorageCleanup();
-                setupNetworkMonitoring();
-                setupEnhancedFileValidation();
-                
-                Logger.log('🎉 All enhanced features initialized', 'success');
-                
-                // Show welcome message in debug mode
-                if (AppState.debugMode) {
-                    NotificationSystem.show('Debug mode activated - All advanced features are available', 'info');
-                }
-                
-                // Add helpful keyboard shortcuts info
-                const shortcutsInfo = document.createElement('div');
-                shortcutsInfo.style.cssText = `
-                    position: fixed;
-                    bottom: 80px;
-                    right: 20px;
-                    background: rgba(0,0,0,0.8);
-                    color: white;
-                    padding: 10px;
-                    border-radius: 8px;
-                    font-size: 12px;
-                    z-index: 1000;
-                    display: none;
-                `;
-                shortcutsInfo.innerHTML = `
-                    <div><strong>Keyboard Shortcuts:</strong></div>
-                    <div>Ctrl/Cmd + U : Upload file</div>
-                    <div>Ctrl/Cmd + D : Debug mode</div>
-                    <div>Esc : Close notifications</div>
-                `;
-                document.body.appendChild(shortcutsInfo);
-                
-                // Show shortcuts on help
-                let shortcutsVisible = false;
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'F1' || (e.shiftKey && e.key === '?')) {
-                        e.preventDefault();
-                        shortcutsVisible = !shortcutsVisible;
-                        shortcutsInfo.style.display = shortcutsVisible ? 'block' : 'none';
-                    }
-                });
-                
-            }, 1000);
-        });
-
         // Final initialization message
-        Logger.log('📋 Email Finder Enhanced - Ready for action!', 'success');
+        Logger.log('📧 Email Finder - Simplified Edition Ready!', 'success');
         console.log(`
-        🚀 Email Finder Enhanced Edition
-        ================================
+        🚀 Email Finder - Simplified Edition
+        ====================================
         
-        ✅ Advanced file validation
+        ✅ Clean interface with only 3 required fields
+        ✅ Auto-detection for First Name, Last Name, Website
         ✅ Robust error handling
         ✅ Automatic retry system
         ✅ Real-time network monitoring
-        ✅ Complete debug mode
-        ✅ Keyboard shortcuts
-        ✅ Auto-save
-        ✅ Automatic cleanup
-        ✅ Animations and UX feedback
-        ✅ Offline/online handling
+        ✅ Beautiful animations and UX feedback
+        ✅ Mobile-responsive design
         
-        Press F1 to see keyboard shortcuts!
+        Just upload your CSV with First Name, Last Name, and Website columns!
         `);
 
     </script>
