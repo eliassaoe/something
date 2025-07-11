@@ -641,6 +641,29 @@
             100% { opacity: 1; }
         }
 
+        /* DEBUG PANEL */
+        .debug-panel {
+            background: #1a1a1a;
+            color: #00ff00;
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .debug-panel.show {
+            display: block;
+        }
+
+        .debug-panel pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
         /* STATS CARDS */
         .stats-cards {
             display: grid;
@@ -819,9 +842,6 @@
             font-size: 14px;
             font-weight: 500;
             animation: slideDown 0.3s ease-out;
-            white-space: pre-line;
-            max-width: 100%;
-            word-wrap: break-word;
         }
 
         .alert-success {
@@ -1160,6 +1180,11 @@
             </div>
         </div>
 
+        <!-- Debug Panel -->
+        <div id="debugPanel" class="debug-panel">
+            <pre id="debugLog">🔧 Debug mode activated - Logs will appear here...</pre>
+        </div>
+
         <!-- Stats Cards -->
         <div class="stats-cards">
             <div class="stat-card">
@@ -1201,16 +1226,21 @@
         </div>
     </div>
 
+    <!-- Debug Toggle -->
+    <button id="debugToggle" class="debug-toggle" title="Toggle Debug Mode">
+        <i class="fas fa-bug"></i>
+    </button>
+
     <script>
         // ========================================
         // CONFIGURATION & CONSTANTS
         // ========================================
         
         const CONFIG = {
-            EMAIL_FINDER_WEBHOOK_URL: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/email-finder-app',
+            EMAIL_FINDER_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/email-finder-app',
             CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
-            CHECK_ENDPOINT: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/check',
-            DOWNLOAD_ENDPOINT: 'https://email-finder-app-unlimited.hamoureliasse.workers.dev/api/download',
+            CHECK_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/check',
+            DOWNLOAD_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/download',
             
             // Limits and timeouts
             MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
@@ -1241,9 +1271,9 @@
             csvHeaders: [],
             currentJob: null,
             progressInterval: null,
+            debugMode: false,
             isOnline: true,
-            retryCount: 0,
-            isProcessing: false // Prevent multiple simultaneous uploads only
+            retryCount: 0
         };
 
         // ========================================
@@ -1260,6 +1290,9 @@
             uploadAlert: document.getElementById('uploadAlert'),
             processButton: document.getElementById('processButton'),
             progressSection: document.getElementById('progressSection'),
+            debugPanel: document.getElementById('debugPanel'),
+            debugLog: document.getElementById('debugLog'),
+            debugToggle: document.getElementById('debugToggle'),
             connectionStatus: document.getElementById('connectionStatus'),
             statusIndicator: document.getElementById('statusIndicator'),
             statusMessage: document.getElementById('statusMessage'),
@@ -1273,7 +1306,7 @@
         };
 
         // ========================================
-        // LOGGING SYSTEM (CONSOLE ONLY)
+        // LOGGING & DEBUG SYSTEM
         // ========================================
         
         class Logger {
@@ -1281,7 +1314,7 @@
                 const timestamp = new Date().toLocaleTimeString();
                 const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
                 
-                // Console logging only
+                // Console logging
                 switch (type) {
                     case 'error':
                         console.error(logEntry, data);
@@ -1294,6 +1327,22 @@
                         break;
                     default:
                         console.log(`ℹ️ ${logEntry}`, data);
+                }
+                
+                // Debug panel logging
+                if (AppState.debugMode && Elements.debugLog) {
+                    const icon = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : type === 'success' ? '✅' : 'ℹ️';
+                    Elements.debugLog.textContent += `\n${icon} ${logEntry}`;
+                    if (data) {
+                        Elements.debugLog.textContent += `\n   Data: ${JSON.stringify(data, null, 2)}`;
+                    }
+                    Elements.debugLog.scrollTop = Elements.debugLog.scrollHeight;
+                }
+            }
+            
+            static clear() {
+                if (Elements.debugLog) {
+                    Elements.debugLog.textContent = '🔧 Mode Debug activé - Les logs s\'afficheront ici...';
                 }
             }
         }
@@ -1385,6 +1434,10 @@
                     return 'CORS error - Server refusing connection';
                 }
                 
+                if (error.message.includes('429')) {
+                    return 'Too many requests - Please wait before retrying';
+                }
+                
                 if (error.message.includes('413')) {
                     return 'File too large - Please reduce file size';
                 }
@@ -1418,20 +1471,11 @@
                 alert.className = `alert alert-${type}`;
                 alert.style.display = 'block';
                 
-                // Auto-hide based on type
                 if (type === 'success' || type === 'info') {
                     setTimeout(() => {
                         alert.style.display = 'none';
                     }, duration);
-                } else if (type === 'error' || type === 'warning') {
-                    // For errors and warnings, auto-hide after longer duration
-                    setTimeout(() => {
-                        alert.style.display = 'none';
-                    }, Math.max(duration, 8000)); // At least 8 seconds for errors
                 }
-                
-                // Log the alert
-                Logger.log(`Alert: ${message}`, type);
             }
         }
 
@@ -1851,26 +1895,6 @@
                         }
                     } catch (error) {
                         Logger.log(`Failed to check job ${job.id}: ${error.message}`, 'warn');
-                        
-                        // If job is older than expected completion time, assume it's completed
-                        const jobAge = Date.now() - new Date(job.created_at).getTime();
-                        const maxExpectedTime = Math.max(30000, job.total_rows * 1000); // 1s per row, min 30s
-                        
-                        if (jobAge > maxExpectedTime + 300000) { // Add 5 minute buffer
-                            Logger.log(`Job ${job.id} is old enough, assuming completed`, 'info');
-                            job.status = 'completed';
-                            job.progress = 100;
-                            job.completed_at = new Date().toISOString();
-                            
-                            if (!job.emails_found) {
-                                const successRate = 0.6 + (Math.random() * 0.25);
-                                job.emails_found = Math.floor(job.total_rows * successRate);
-                            }
-                            
-                            this.saveJob(job);
-                            anyJobUpdated = true;
-                            Logger.log(`Auto-completed old job: ${job.id}`, 'success');
-                        }
                     }
                 }
                 
@@ -2136,7 +2160,6 @@
                 setTimeout(() => {
                     Elements.progressSection.classList.remove('show');
                     AppState.currentJob = null;
-                    AppState.isProcessing = false; // Reset processing flag
                     JobManager.loadJobHistory();
                     JobManager.updateStats();
                 }, 2000);
@@ -2167,6 +2190,7 @@
                 try {
                     await EmailFinderApp.initializeAuth();
                     EmailFinderApp.initializeEventListeners();
+                    EmailFinderApp.loadSettings();
                     
                     await NetworkMonitor.startMonitoring();
                     await JobManager.checkPendingJobs();
@@ -2247,6 +2271,9 @@
                 
                 // Navigation buttons
                 EmailFinderApp.setupNavigationButtons();
+                
+                // Debug toggle
+                Elements.debugToggle.addEventListener('click', EmailFinderApp.toggleDebugMode);
                 
                 // Global error handler
                 window.addEventListener('error', (e) => {
@@ -2430,17 +2457,7 @@
             static async processFile() {
                 Logger.log('🚀 Starting file processing...', 'info');
                 
-                // ✅ Only prevent multiple simultaneous uploads
-                if (AppState.isProcessing) {
-                    NotificationSystem.showAlert('⚠️ You have a list currently being processed. Please wait for it to complete before submitting another list.', 'warning', 8000);
-                    Logger.log('Upload blocked: Another process is already running', 'warn');
-                    return;
-                }
-                
                 try {
-                    // Mark as processing
-                    AppState.isProcessing = true;
-                    
                     // Comprehensive validation
                     const validationResult = await EmailFinderApp.validateProcessingConditions();
                     if (!validationResult.isValid) {
@@ -2449,12 +2466,12 @@
                         return;
                     }
 
-                    // ✅ Create job and save immediately (no pre-check needed)
+                    // Create job
                     const job = EmailFinderApp.createJob();
                     JobManager.saveJob(job);
                     AppState.currentJob = job;
 
-                    Logger.log(`Job created and saved: ${job.id}`, 'info', job);
+                    Logger.log(`Job created: ${job.id}`, 'info', job);
 
                     // Show progress UI
                     ProgressManager.showProgress(AppState.uploadedFile.name);
@@ -2463,7 +2480,7 @@
                     // Prepare and send API request
                     const formData = EmailFinderApp.prepareFormData(job);
                     
-                    // Start progress simulation
+                    // Start progress simulation FIRST
                     ProgressManager.simulateProgress();
 
                     // Send to API with retry logic
@@ -2476,9 +2493,6 @@
 
                 } catch (error) {
                     EmailFinderApp.handleProcessingError(error);
-                } finally {
-                    // Always reset processing flag
-                    AppState.isProcessing = false;
                 }
             }
 
@@ -2575,7 +2589,6 @@
                 
                 // Update job status if exists
                 if (AppState.currentJob) {
-                    Logger.log(`Updating failed job status: ${AppState.currentJob.id}`, 'info');
                     AppState.currentJob.status = 'failed';
                     JobManager.saveJob(AppState.currentJob);
                 }
@@ -2590,9 +2603,8 @@
                 // Hide progress section
                 Elements.progressSection.classList.remove('show');
                 
-                // Reset flags
+                // Reset current job
                 AppState.currentJob = null;
-                AppState.isProcessing = false;
             }
         }
 
@@ -2703,8 +2715,54 @@
                 box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
             }
 
+            /* Debug panel enhancements */
+            .debug-panel::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .debug-panel::-webkit-scrollbar-track {
+                background: #2a2a2a;
+            }
+
+            .debug-panel::-webkit-scrollbar-thumb {
+                background: #00ff00;
+                border-radius: 4px;
+            }
+
+            /* Table hover effects */
+            .jobs-table tr {
+                transition: all 0.2s ease;
+            }
+
+            .jobs-table tr:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            /* Connection status improvements */
+            .connection-status {
+                transition: all 0.3s ease;
+            }
+
+            .connection-status.offline {
+                animation: attention 2s infinite;
+            }
+
+            @keyframes attention {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+
             /* Mobile improvements */
             @media (max-width: 768px) {
+                .debug-toggle {
+                    bottom: 80px;
+                    left: 10px;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 14px;
+                }
+
                 .status-indicator {
                     top: 10px;
                     right: 10px;
@@ -2766,6 +2824,85 @@
         // UTILITY FUNCTIONS FOR ENHANCED UX
         // ========================================
 
+        // Add visual feedback for file operations
+        function addFileOperationFeedback() {
+            const originalProcessFile = EmailFinderApp.processFile;
+            EmailFinderApp.processFile = async function() {
+                Elements.processButton.classList.add('btn-loading');
+                Elements.processButton.disabled = true;
+                
+                try {
+                    await originalProcessFile.call(EmailFinderApp);
+                    Elements.processButton.classList.add('success-animation');
+                } catch (error) {
+                    Elements.processButton.classList.add('error-animation');
+                    throw error;
+                } finally {
+                    setTimeout(() => {
+                        Elements.processButton.classList.remove('btn-loading', 'success-animation', 'error-animation');
+                        Elements.processButton.disabled = false;
+                    }, 1000);
+                }
+            };
+        }
+
+        // Enhanced keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + U = Upload file
+                if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                    e.preventDefault();
+                    Elements.fileInput.click();
+                    Logger.log('Keyboard shortcut: Upload file', 'info');
+                }
+                
+                // Ctrl/Cmd + D = Toggle debug mode
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    EmailFinderApp.toggleDebugMode();
+                    Logger.log('Keyboard shortcut: Toggle debug mode', 'info');
+                }
+                
+                // Escape = Close notifications
+                if (e.key === 'Escape') {
+                    const statusIndicator = Elements.statusIndicator;
+                    if (statusIndicator.classList.contains('show')) {
+                        statusIndicator.classList.remove('show');
+                        Logger.log('Keyboard shortcut: Close notification', 'info');
+                    }
+                }
+            });
+        }
+
+        // Auto-save progress periodically
+        function setupAutoSave() {
+            setInterval(() => {
+                if (AppState.currentJob && AppState.currentJob.status === 'processing') {
+                    JobManager.saveJob(AppState.currentJob);
+                    Logger.log('Auto-saved current job progress', 'info');
+                }
+            }, 10000); // Every 10 seconds
+        }
+
+        // Performance monitoring
+        function setupPerformanceMonitoring() {
+            const startTime = performance.now();
+            
+            window.addEventListener('load', () => {
+                const loadTime = performance.now() - startTime;
+                Logger.log(`Page loaded in ${loadTime.toFixed(2)}ms`, 'info');
+                
+                // Monitor memory usage (if available)
+                if (performance.memory) {
+                    Logger.log('Memory usage', 'info', {
+                        used: `${(performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
+                        total: `${(performance.memory.totalJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
+                        limit: `${(performance.memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)}MB`
+                    });
+                }
+            });
+        }
+
         // Enhanced error reporting
         function setupErrorReporting() {
             window.addEventListener('unhandledrejection', (e) => {
@@ -2818,22 +2955,151 @@
             }
         }
 
+        // Enhanced file validation with preview
+        function setupEnhancedFileValidation() {
+            const originalHandleFileUpload = EmailFinderApp.handleFileUpload;
+            EmailFinderApp.handleFileUpload = async function(file) {
+                // Add visual feedback
+                Elements.fileUploadArea.classList.add('loading');
+                
+                try {
+                    // Enhanced validation with detailed feedback
+                    const validationResult = await EmailFinderApp.validateFileDetailed(file);
+                    
+                    if (!validationResult.isValid) {
+                        Elements.fileUploadArea.classList.add('error-animation');
+                        setTimeout(() => {
+                            Elements.fileUploadArea.classList.remove('error-animation');
+                        }, 600);
+                        
+                        NotificationSystem.showAlert(validationResult.error, 'error');
+                        return;
+                    }
+                    
+                    // Show success feedback
+                    Elements.fileUploadArea.classList.add('success-animation');
+                    setTimeout(() => {
+                        Elements.fileUploadArea.classList.remove('success-animation');
+                    }, 600);
+                    
+                    await originalHandleFileUpload.call(EmailFinderApp, file);
+                    
+                } finally {
+                    Elements.fileUploadArea.classList.remove('loading');
+                }
+            };
+
+            EmailFinderApp.validateFileDetailed = async function(file) {
+                const errors = FileValidator.validate(file);
+                
+                if (errors.length > 0) {
+                    return { isValid: false, error: errors.join(', ') };
+                }
+                
+                // Additional validation for CSV content preview
+                try {
+                    const preview = await EmailFinderApp.getFilePreview(file, 1000); // First 1KB
+                    
+                    if (!preview.includes(',')) {
+                        return { isValid: false, error: 'File does not appear to be a valid CSV (no commas detected)' };
+                    }
+                    
+                    const lines = preview.split('\n');
+                    if (lines.length < 2) {
+                        return { isValid: false, error: 'File must contain at least 2 lines (header + data)' };
+                    }
+                    
+                } catch (error) {
+                    return { isValid: false, error: 'Unable to read file content' };
+                }
+                
+                return { isValid: true };
+            };
+
+            EmailFinderApp.getFilePreview = function(file, bytes = 1000) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsText(file.slice(0, bytes));
+                });
+            };
+        }
+
         // Initialize all enhanced features
         document.addEventListener('DOMContentLoaded', function() {
             // Wait for main app to initialize first
             setTimeout(() => {
+                addFileOperationFeedback();
+                setupKeyboardShortcuts();
+                setupAutoSave();
+                setupPerformanceMonitoring();
                 setupErrorReporting();
                 setupStorageCleanup();
                 setupNetworkMonitoring();
+                setupEnhancedFileValidation();
                 
                 Logger.log('🎉 All enhanced features initialized', 'success');
+                
+                // Show welcome message in debug mode
+                if (AppState.debugMode) {
+                    NotificationSystem.show('Debug mode activated - All advanced features are available', 'info');
+                }
+                
+                // Add helpful keyboard shortcuts info
+                const shortcutsInfo = document.createElement('div');
+                shortcutsInfo.style.cssText = `
+                    position: fixed;
+                    bottom: 80px;
+                    right: 20px;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    z-index: 1000;
+                    display: none;
+                `;
+                shortcutsInfo.innerHTML = `
+                    <div><strong>Keyboard Shortcuts:</strong></div>
+                    <div>Ctrl/Cmd + U : Upload file</div>
+                    <div>Ctrl/Cmd + D : Debug mode</div>
+                    <div>Esc : Close notifications</div>
+                `;
+                document.body.appendChild(shortcutsInfo);
+                
+                // Show shortcuts on help
+                let shortcutsVisible = false;
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'F1' || (e.shiftKey && e.key === '?')) {
+                        e.preventDefault();
+                        shortcutsVisible = !shortcutsVisible;
+                        shortcutsInfo.style.display = shortcutsVisible ? 'block' : 'none';
+                    }
+                });
                 
             }, 1000);
         });
 
         // Final initialization message
         Logger.log('📋 Email Finder Enhanced - Ready for action!', 'success');
-        console.log(`🚀 Email Finder Enhanced Edition - Ready!`);
+        console.log(`
+        🚀 Email Finder Enhanced Edition
+        ================================
+        
+        ✅ Advanced file validation
+        ✅ Robust error handling
+        ✅ Automatic retry system
+        ✅ Real-time network monitoring
+        ✅ Complete debug mode
+        ✅ Keyboard shortcuts
+        ✅ Auto-save
+        ✅ Automatic cleanup
+        ✅ Animations and UX feedback
+        ✅ Offline/online handling
+        
+        Press F1 to see keyboard shortcuts!
+        `);
 
     </script>
 </body>
