@@ -383,25 +383,33 @@ header {
     font-family: var(--font-heading);
 }
 
+/* Enhanced Export Button - More Visible */
 .export-button {
-    background: white;
-    color: var(--primary);
-    border: 1px solid var(--gray-200);
+    background: linear-gradient(135deg, #10b981, #059669) !important; /* Green gradient */
+    color: white !important;
+    border: none !important;
     border-radius: var(--radius-md);
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 14px 24px !important; /* Increased padding */
+    font-size: 16px !important; /* Larger font */
+    font-weight: 700 !important; /* Bolder text */
     cursor: pointer;
     transition: var(--transition-standard);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important; /* Green shadow */
+    text-transform: uppercase; /* Make text uppercase */
+    letter-spacing: 0.5px; /* Add letter spacing */
 }
 
 .export-button:hover {
-    background-color: var(--primary-light);
-    border-color: var(--primary-light);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #059669, #047857) !important; /* Darker green on hover */
+    transform: translateY(-3px) !important; /* More pronounced hover effect */
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important; /* Stronger shadow on hover */
+}
+
+.export-button i {
+    font-size: 18px !important; /* Larger icon */
 }
 
 .results-table {
@@ -1334,9 +1342,14 @@ header {
         </li>
         <li class="menu-item">
             <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
-                <i class="fas fa-rocket"></i> Scrapper Linkedin sales navigator
+                <i class="fas fa-rocket"></i> Linkedin Scrapper
             </a>
         </li>
+        <li class="menu-item">
+                    <a href="https://unlimited-leads.online/account" class="menu-link">
+                        <i class="fas fa-user"></i> My Account
+                    </a>
+         </li>
     </ul>
 </div>
 
@@ -1480,6 +1493,15 @@ header {
             <label for="keywords">Keywords</label>
             <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech">
         </div>
+
+        <div class="form-group">
+    <label for="hasEmail">Has Email:</label>
+    <select id="hasEmail" name="hasEmail">
+        <option value="">All contacts</option>
+        <option value="yes">Has email only</option>
+        <option value="no">No email only</option>
+    </select>
+</div>
                 
         <div class="form-group">
             <button type="submit" class="search-button">
@@ -1637,7 +1659,7 @@ header {
             
             <div class="form-group" style="margin-top: 20px;">
                 <label for="exportLimit"><strong>Number of leads to export:</strong></label>
-                <input type="number" id="exportLimit" name="exportLimit" value="1000" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
+                <input type="number" id="exportLimit" name="exportLimit" value="250" min="1" max="2500" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
@@ -1911,6 +1933,57 @@ function token_verif() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const exportLimitInput = document.getElementById('exportLimit');
+    
+    if (exportLimitInput) {
+        // Create warning message element
+        const warningDiv = document.createElement('div');
+        warningDiv.id = 'exportLimitWarning';
+        warningDiv.style.cssText = `
+            color: #d73527;
+            font-size: 14px;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #ffeaea;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            display: none;
+        `;
+        warningDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Maximum export limit is 2,500 leads per request.';
+        
+        // Insert warning after the input
+        exportLimitInput.parentNode.insertBefore(warningDiv, exportLimitInput.nextSibling);
+        
+        // Add input validation
+        exportLimitInput.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const warningDiv = document.getElementById('exportLimitWarning');
+            
+            if (value > 2500) {
+                // Show warning and reset to max value
+                warningDiv.style.display = 'block';
+                this.value = 2500;
+                
+                // Hide warning after 3 seconds
+                setTimeout(() => {
+                    warningDiv.style.display = 'none';
+                }, 3000);
+            } else {
+                warningDiv.style.display = 'none';
+            }
+        });
+        
+        // Also validate on blur (when user clicks away)
+        exportLimitInput.addEventListener('blur', function() {
+            const value = parseInt(this.value);
+            if (value > 2500) {
+                this.value = 2500;
+            }
+        });
+    }
+});
+
 // Fonction pour afficher les crédits utilisateur
 function displayUserCredits(credits) {
     // Création d'un élément dans le header pour afficher les crédits
@@ -2080,6 +2153,7 @@ async function handleSearch(e) {
         const jobTitle = document.getElementById('jobTitle').value;
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
+        const hasEmail = document.getElementById('hasEmail').value;
         
         // If search criteria are provided, filter the data
         if (country || industry || companyName || keywords) {
@@ -2094,7 +2168,8 @@ async function handleSearch(e) {
                         keywords,
                         jobtitle: jobTitle,  
                         companysize: companySize,
-                        city: city
+                        city: city,
+                        hasemail: hasEmail
                     },
                     limit: 1000
                 };
@@ -2159,7 +2234,7 @@ async function exportToCSV() {
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
 
-        document.getElementById('exportLimit').value = Math.min(globalTrueCount, 1000);
+        document.getElementById('exportLimit').value = Math.min(globalTrueCount, 250);
         
         // Add event listener for the close button
         const closeExportModal = document.querySelector('.close-export-modal');
@@ -2238,7 +2313,8 @@ async function exportToCSV() {
                         keywords: document.getElementById('keywords').value,
                         city: document.getElementById('city').value,
                         jobtitle: document.getElementById('jobTitle').value,
-                        companysize: document.getElementById('companySize').value
+                        companysize: document.getElementById('companySize').value,
+                        hasemail: document.getElementById('hasEmail').value 
                     }
                 };
                 
@@ -2601,8 +2677,8 @@ function showCreditUpgradeModal() {
                 <div class="modal-body">
                     <div class="info-item" style="text-align: center;">
                         <div class="info-value">
-                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough credits to export these leads.</strong></p>
-                            <p>Upgrade your account to receive new credits automatically each month and unlock unlimited exports.</p>
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough exports for those leads.</strong></p>
+                            <p>Upgrade your account to unlock unlimited exports.</p>
                             <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue accessing leads data.</p>
                         </div>
                     </div>
@@ -2648,7 +2724,8 @@ async function fetchTotalCount() {
         keywords: document.getElementById('keywords').value,
         jobtitle: document.getElementById('jobTitle').value,
         companysize: document.getElementById('companySize').value,
-          city: document.getElementById('city').value
+        city: document.getElementById('city').value,
+        hasemail: document.getElementById('hasEmail').value
       }
     };
     const response = await fetch(N8N_WEBHOOK_URL, {
