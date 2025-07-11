@@ -757,28 +757,25 @@ header {
             const planType = data.plan || 'Free';
             
             // Plan configurations
-            const planConfigs = {
-                'Free': {
-                    title: 'Free Plan',
-                    description: 'You\'re currently on the <strong>Free Plan</strong>. Upgrade to get more credits and unlock premium features for unlimited lead generation.'
-                },
-                'Starter': {
-                    title: 'Starter Plan',
-                    description: 'You\'re on the <strong>Starter Plan</strong> ($25/month). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.'
-                },
-                'Premium': {
-                    title: 'Premium Plan', 
-                    description: 'You\'re on the <strong>Premium Plan</strong> ($38/month). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.'
-                },
-                'Annual Starter': {
-                    title: 'Annual Starter Plan',
-                    description: 'You\'re on the <strong>Annual Starter Plan</strong> (Save 25%). Get 5,000 leads monthly with advanced search filters, CSV exports, and email support.'
-                },
-                'Annual Premium': {
-                    title: 'Annual Premium Plan',
-                    description: 'You\'re on the <strong>Annual Premium Plan</strong> (Save 25%). Get 10,000 leads monthly with unlimited CSV exports, priority CRM integrations, and dedicated account manager.'
-                }
-            };
+            // Plan configurations
+const planConfigs = {
+    'Free': {
+        title: 'Free Plan',
+        description: 'You\'re currently on the <strong>Free Plan</strong>. Upgrade to get unlimited exports and unlimited email finder for your lead generation'
+    },
+    'Starter': {
+        title: 'Starter Plan',
+        description: 'You\'re on the <strong>Starter Plan</strong> ($99/month). You get unlimited exports from our 100M+ contact database. Upgrade to get Unlimited email finder'
+    },
+    'Pro': {
+        title: 'Pro Plan', 
+        description: 'You\'re on the <strong>Pro Plan</strong> ($149/month). You get unlimited exports plus unlimited email finder.'
+    },
+    'Premium': {
+        title: 'Pro Plan', 
+        description: 'You\'re on the <strong>Pro Plan</strong> ($149/month). You get unlimited exports plus unlimited email finder.'
+    }
+};
             
             // Get configuration for current plan
             const config = planConfigs[planType] || planConfigs['Free'];
