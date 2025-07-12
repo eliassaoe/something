@@ -599,120 +599,99 @@
             outline: none;
         }
 
-        /* Comparison Section Styles */
+/* Comparison Section Styles */
 #comparison {
-    background: var(--gray-50);
+    background: white;
 }
 
-.comparison-grid {
-    max-width: 1000px;
+.comparison-container {
+    max-width: 900px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+}
+
+.comparison-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.comparison-column-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.comparison-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .comparison-item {
-    background: white;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    border: 1px solid var(--gray-100);
-}
-
-.comparison-point {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.comparison-side {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.comparison-side:first-child {
-    border-right: 1px solid var(--gray-100);
-    background: rgba(239, 68, 68, 0.02);
-}
-
-.comparison-side:last-child {
-    background: rgba(16, 185, 129, 0.02);
-}
-
-.comparison-label {
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-.comparison-label.other {
-    background: rgba(239, 68, 68, 0.1);
-    color: #dc2626;
-}
-
-.comparison-label.us {
-    background: rgba(16, 185, 129, 0.1);
-    color: #059669;
-}
-
-.comparison-content {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
 }
 
 .comparison-icon {
-    font-size: 1.25rem;
-    margin-top: 0.125rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
+    margin-top: 0.2rem;
 }
 
-.comparison-icon.negative {
-    color: #dc2626;
-}
-
-.comparison-icon.positive {
-    color: #059669;
-}
-
-.comparison-content p {
+.comparison-item p {
     margin: 0;
     color: var(--gray-700);
     line-height: 1.6;
+    font-size: 1rem;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    .comparison-point {
+    .comparison-header {
         grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
     }
     
-    .comparison-side:first-child {
-        border-right: none;
-        border-bottom: 1px solid var(--gray-100);
+    .comparison-row {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
     }
     
-    .comparison-side {
-        padding: 1.5rem;
+    .comparison-item {
+        justify-content: center;
+        text-align: center;
     }
 }
 
 @media (max-width: 480px) {
-    .comparison-content {
+    .comparison-container {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .comparison-item {
         flex-direction: column;
+        align-items: center;
         gap: 0.75rem;
-        text-align: center;
     }
     
     .comparison-icon {
-        align-self: center;
         font-size: 1.5rem;
     }
 }
@@ -1271,7 +1250,6 @@
     </div>
 </div>
 
-        <!-- Comparison Section -->
 <section id="comparison" class="section container">
     <h2 class="section-title">You shouldn't have to deal with export limits anymore</h2>
     <p class="section-subtitle">See how UnlimitedLeads compares to traditional data providers</p>
@@ -1290,7 +1268,7 @@
                     <div class="comparison-label us">UnlimitedLeads</div>
                     <div class="comparison-content">
                         <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Unlimited exports with a straightforward fixed Cost.</p>
+                        <p>Unlimited exports with a straightforward, one-time payment model.</p>
                     </div>
                 </div>
             </div>
@@ -1309,7 +1287,7 @@
                     <div class="comparison-label us">UnlimitedLeads</div>
                     <div class="comparison-content">
                         <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Unlimited exports with no recurring fees or surprise charges.</p>
+                        <p>Lifetime access with a single payment—no recurring fees or surprise charges.</p>
                     </div>
                 </div>
             </div>
@@ -1347,13 +1325,14 @@
                     <div class="comparison-label us">UnlimitedLeads</div>
                     <div class="comparison-content">
                         <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Simple and intuitive interface for easy navigation and unlimited leads exporting.</p>
+                        <p>Simple and intuitive interface for easy navigation and unlimited exporting.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 
     <!-- How It Works -->
     <section id="how-it-works" class="section container">
