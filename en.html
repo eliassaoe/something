@@ -598,131 +598,6 @@
             border-color: var(--primary);
             outline: none;
         }
-
-#comparison {
-    background: white;
-}
-
-.comparison-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
-.comparison-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    margin-bottom: 3rem;
-    text-align: center;
-}
-
-.comparison-column-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--gray-900);
-    font-family: 'Montserrat', sans-serif;
-}
-
-.comparison-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--gray-200);
-    align-items: flex-start;
-}
-
-.comparison-row:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.comparison-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    min-height: 60px;
-}
-
-.comparison-item.left .comparison-icon {
-    color: #dc2626;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-}
-
-.comparison-item.right .comparison-icon {
-    color: #16a34a;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-}
-
-.comparison-item p {
-    margin: 0;
-    color: var(--gray-700);
-    line-height: 1.6;
-    font-size: 1rem;
-    flex: 1;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .comparison-container {
-        padding: 0 1rem;
-    }
-    
-    .comparison-header {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    
-    .comparison-row {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
-    }
-    
-    .comparison-item {
-        justify-content: flex-start;
-        text-align: left;
-        padding: 1rem;
-        background: var(--gray-50);
-        border-radius: var(--border-radius);
-    }
-    
-    .comparison-item.left {
-        order: 1;
-    }
-    
-    .comparison-item.right {
-        order: 2;
-    }
-}
-
-@media (max-width: 480px) {
-    .comparison-container {
-        padding: 0 0.5rem;
-    }
-    
-    .comparison-item {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem;
-    }
-    
-    .comparison-icon {
-        font-size: 1.5rem !important;
-        margin-top: 0 !important;
-    }
-}
-        
         .free-leads-badge {
             background: var(--accent);
             color: white;
@@ -1249,10 +1124,13 @@
                     <p>B2B Companies</p>
                 </div>
                 <div class="stat">
-                    <h3>95%</h3>
+                    <h3>99%</h3>
                     <p>Accuracy Rate</p>
                 </div>
-                
+                <div class="stat">
+                    <h3>∞</h3>
+                    <p>Lifetime Access</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1274,7 +1152,100 @@
     </div>
 </div>
 
-i need to replace this section : '        <!-- Features -->
+    <!-- How It Works -->
+    <section id="how-it-works" class="section container">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to unlock your unlimited lead generation potential</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>Define Your Target</h4>
+                <p>Precisely filter your ideal customer profile by industry, company size, revenue, tech stack, funding, and growth signals to find perfect-fit prospects.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h4>Verify & Enrich</h4>
+                <p>Automatically validate and enhance your prospect list with direct contact information, including verified emails, direct dials, and detailed professional profiles.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h4>Export & Use</h4>
+                <p>Download unlimited leads with a single lifetime purchase—scale your outreach without limits and never worry about running out of fresh prospects again.</p>
+            </div>
+        </div>
+    </section>
+        
+<!-- Pricing -->
+<section id="pricing" class="section container">
+    <h2 class="section-title">Professional B2B Lead Generation</h2>
+    <p class="section-subtitle">Access 450M+ verified contacts with unlimited exports. Start with 250 free leads!</p>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="savings-badge">Start Free</div>
+            <h3>Starter Plan</h3>
+            <span class="pricing-amount">$99<small>/month</small></span>
+            <ul class="pricing-features">
+                <li><strong>Unlimited exports</strong></li>
+            </ul>
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
+        </div>
+        <div class="pricing-card featured">
+            <div class="featured-badge">MOST POPULAR</div>
+            <div class="savings-badge">Best Value</div>
+            <h3>Pro Plan</h3>
+            <span class="pricing-amount">$149<small>/month</small></span>
+            <ul class="pricing-features">
+                <li><strong>Unlimited exports</strong></li>
+                <li><strong>Unlimited Email Finder</strong></li>
+  
+            </ul>
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
+        </div>
+    </div>
+</section>
+    
+    <!-- Enterprise option -->
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--gray-50); border-radius: var(--border-radius-lg);">
+        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need More Than 120K Leads?</h3>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Custom enterprise plans available for high-volume users</p>
+        <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Book a Call</a>
+    </div>
+</section>
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-lock"></i>
+                <h4>Secure Payment</h4>
+                <p>256-bit SSL encryption</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Data Privacy</h4>
+                <p>GDPR & CCPA compliant</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-undo"></i>
+                <h4>30-Day Guarantee</h4>
+                <p>Risk-free satisfaction</p>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-headset"></i>
+                <h4>24/7 Support</h4>
+                <p>Always here to help</p>
+            </div>
+        </div>
+    </section>
+
+          <!-- Features -->
     <section id="features" class="section container">
         <h2 class="section-title">Enterprise-Grade Features</h2>
         <p class="section-subtitle">Everything you need to supercharge your B2B lead generation and sales outreach</p>
@@ -1323,350 +1294,7 @@ i need to replace this section : '        <!-- Features -->
             </div>
         </div>
     </section>
-'  with a comparaison section (minimalist not like the one on truelit) and we are going to make it like truelist did 'You shouldn't have to deal with email validation credits anymore
-The other guys
-close The cost of credits can quickly add up, especially for high-volume users.
-Truelist
-check Unlimited email validation with a straightforward, fixed subscription pricing model.
-close Stuck waiting for hours for larger lists to validate.
-check Fast validation for single emails and large email lists without the need to manage credits.
-close Exporting cleaned lists is not always available or straightforward.
-check A simple and intuitive interface for easy navigation and exporting.' but for my tool UNlimited vs the other data provider (we are unlimited exports and email finding) it must use the style of my page (unlimited leads)  and simple like the one on truelist <!doctype html> <html lang="en"> <head> <meta charset="utf-8" /> <link rel="icon" href="/favicon.png" /> <link rel="stylesheet" href="https://rsms.me/inter/inter.css" /> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> <style> .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; } </style> <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" /> <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" /> <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" /> <link rel="manifest" href="/favicons/site.webmanifest" /> <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5" /> <meta name="msapplication-TileColor" content="#da532c" /> <meta name="theme-color" content="#ffffff" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <meta name="msvalidate.01" content="84F5D0862EA5177F6C3EF25ED0205619" /> <link rel="modulepreload" href="/_app/immutable/entry/start.DeD31Vmx.js"> <link rel="modulepreload" href="/_app/immutable/chunks/2wMo-Hrh.js"> <link rel="modulepreload" href="/_app/immutable/chunks/Buj3TWAG.js"> <link rel="modulepreload" href="/_app/immutable/entry/app.D6xjMMjv.js"> <link rel="modulepreload" href="/_app/immutable/chunks/B4sggOaF.js"> <!-- Google Tag Manager --> <script> ;(function (w, d, s, l, i) { w[l] = w[l] || [] w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }) var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '' j.async = true j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl f.parentNode.insertBefore(j, f) })(window, document, 'script', 'dataLayer', 'GTM-5TMSFHQN') window.dataLayer.push('config', 'AW-1066511287') </script> <!-- End Google Tag Manager --> <script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script> <script type="text/javascript"> iFrameResize({ log: false, checkOrigin: false }, '#testimonialto-truelist-io-tag-all-light') </script> </head> <body data-sveltekit-preload-data="hover"> <div style="display: contents"> <script> { __sveltekit_1gzgutx = { base: "" }; const element = document.currentScript.parentElement; Promise.all([ import("/_app/immutable/entry/start.DeD31Vmx.js"), import("/_app/immutable/entry/app.D6xjMMjv.js") ]).then(([kit, app]) => { kit.start(app, element); }); } </script> </div> </body> </html>
-Modifier
 
-The user wants me to replace the features section with a comparison section similar to what's on Truelist. They want to show "Unlimited Leads vs The other guys" with a comparison table/grid that highlights how their tool is better than other data providers.
-
-Looking at the Truelist example they provided, it shows a clean comparison format with:
-
-    A header "You shouldn't have to deal with email validation credits anymore"
-    Comparison points showing "The other guys" vs "Truelist"
-    Icons (close/check) to show bad vs good
-    Clean styling
-
-For UnlimitedLeads, I need to:
-
-    Create a comparison section that fits their existing style
-    Focus on unlimited exports and email finding as their key differentiators
-    Use their existing CSS variables and styling
-    Make it clean and minimalist like Truelist
-    Compare against "other data providers" in general
-
-Key points to highlight for UnlimitedLeads vs competitors:
-
-    Unlimited exports vs credit-based systems
-    One-time payment vs monthly subscriptions
-    No credit limits vs pay-per-credit
-    Unlimited email finder vs limited searches
-    Lifetime access vs recurring fees
-
-Let me create a comparison section that matches their existing design system.
-
-I'll help you create a comparison section that matches your UnlimitedLeads style and highlights your key advantages over other data providers. Here's the replacement section:
-
-I've created a comparison section that:
-
-    Matches the UnlimitedLeads style: Uses their existing CSS variables, color scheme, and design patterns
-    Follows the Truelist format: Clean comparison with "Other Data Providers" vs "UnlimitedLeads"
-    Highlights key differentiators:
-        Unlimited exports vs pay-per-credit
-        One-time payment vs recurring subscriptions
-        Unlimited email finder vs limited searches
-        No export restrictions vs download limits
-    Uses appropriate icons: Red X for competitors, green checkmark for UnlimitedLeads
-    Is mobile responsive: Stacks vertically on smaller screens
-    Fits the existing design: Uses the same section styling, container classes, and typography
-
-The section emphasizes their main value propositions:
-
-    No more dealing with export limits
-    Unlimited access model
-    One-time payment vs recurring fees
-    Better scalability for outreach
-
-This replacement section should integrate seamlessly with their existing page while clearly communicating their competitive advantages.
-
-This comparison section perfectly replaces your features section and highlights UnlimitedLeads' key advantages over traditional data providers. Here's what it includes:
-Key Features:
-
-    Clean, minimalist design matching your existing UnlimitedLeads style
-    Side-by-side comparison format like Truelist
-    Highlights your main differentiators:
-        Unlimited exports vs pay-per-credit systems
-        One-time payment vs recurring subscriptions
-        Unlimited email finder vs limited searches
-        No export restrictions vs download limits
-
-Design Elements:
-
-    Uses your existing CSS variables and color scheme
-    Red X icons for competitor weaknesses
-    Green checkmarks for your advantages
-    Subtle background colors to distinguish sides
-    Fully responsive for mobile devices
-
-Messaging Strategy:
-
-The section leads with "You shouldn't have to deal with export limits anymore" which directly addresses a pain point, then systematically shows how UnlimitedLeads solves each problem that competitors create.
-
-Simply replace your existing features section with this code and it will integrate seamlessly with your page while clearly communicating your competitive advantages to potential customers.
-Réessayer
-
-hre the right copywriting '' the thing to change is that on computer it is too wide i like it to be like smaller and even more simple (like just for each line a emojis croix red for bad and greend yes for good i send you a screen shot too)
-Modifier
-
-The user is showing me a screenshot of what appears to be Truelist's comparison section. They want me to modify the comparison section I created to be:
-
-    Smaller/more compact on desktop (not too wide)
-    Even more simple
-    Just use emoji icons - red X for bad, green checkmark for good
-    Make it more like the screenshot they shared
-
-Looking at the screenshot, I can see it's a very clean, simple design with:
-
-    A centered title
-    Two columns: "The other guys" and "Truelist"
-    Simple red X and green checkmark icons
-    Clean typography
-    Lots of white space
-    Much more compact than what I created
-
-I need to simplify my design significantly and make it more compact.
-
-I'll create a much simpler and more compact comparison section based on the Truelist style you showed me. Here's the updated version:
-
-Now I need to update the CSS to make it much simpler and more compact like the Truelist design. I need to:
-
-    Make it narrower/more compact
-    Use simple emoji icons instead of FontAwesome
-    Clean, minimal design
-    Two-column layout that's not too wide
-    Simple typography
-    Lots of white space
-
-Perfect! I've updated the comparison section to be much cleaner and simpler, just like the Truelist design in the screenshot. Here's what I changed:
-
-    Simplified layout: Removed the complex card design and background colors, made it clean and minimal
-    Used emoji icons: Simple ❌ for negative and ✅ for positive instead of FontAwesome icons
-    More compact: Reduced the max-width to 900px and simplified spacing
-    Clean two-column design: Like the Truelist example with clear headers
-    Removed unnecessary elements: No more cards, background colors, or complex styling
-    Better spacing: Added proper gaps and borders between rows
-
-The design is now much more like the Truelist screenshot - clean, simple, and effective at communicating the comparison points without being overwhelming.
-
-Perfect! I've simplified the comparison section to match the clean Truelist style you showed me. Here are the key changes:
-What I simplified:
-
-    Removed all the complex cards and backgrounds - now it's clean and minimal
-    Used simple emoji icons - ❌ for problems, ✅ for benefits
-    Made it more compact - reduced width to 900px max instead of 1000px
-    Cleaner two-column layout with clear headers like "The other guys" vs "UnlimitedLeads"
-    Removed unnecessary styling - no more colored backgrounds or complex borders
-
-The new design features:
-
-    Clean white background
-    Simple grid layout with proper spacing
-    Emoji icons instead of FontAwesome
-    Clear typography hierarchy
-    Mobile responsive (stacks on smaller screens)
-    Much more focused and scannable
-
-This matches the minimalist Truelist style much better - it's clean, direct, and gets the message across without visual clutter. The comparison points are now easy to scan and understand at a glance.
-Réessayer
-
-right now the comparaison section looks bad (like it text above the other but it should be one text next to the other (for computer ) and not above the other for mobile , enchance it also the cross is in red and the valid is in green
-Modifier
-
-The user is showing me that the current comparison section looks bad - the text is stacking vertically instead of being side by side on desktop. They want:
-
-    Text to be side by side on desktop (not stacked)
-    Stacked only on mobile
-    The cross (❌) should be red
-    The checkmark (✅) should be green
-
-Looking at the current code, I see the issue. The grid is working but maybe the styling isn't quite right. Let me fix this by making sure the desktop layout properly shows side-by-side comparison and add proper colors for the icons.
-
-I see the issue! The layout is stacking instead of being side-by-side on desktop. Let me fix that and add proper colors for the icons:
-
-I've updated the CSS to fix the comparison section. The key changes I made:
-
-    Fixed the side-by-side layout: Increased the grid gap to 6rem and made sure the grid is properly aligned
-    Added proper colors: Red (#dc2626) for the ❌ cross icon, green (#16a34a) for the ✅ checkmark
-    Improved spacing: Better padding and margins for desktop view
-    Enhanced mobile responsiveness: Proper stacking on mobile with better styling
-    Added min-height: To ensure consistent row heights
-    Better alignment: Items align properly at the top
-
-The comparison should now show properly side-by-side on desktop with colored icons, and stack nicely on mobile.
-
-Perfect! I've fixed the comparison section with these key improvements:
-✅ Fixed Issues:
-
-    Side-by-side layout on desktop - increased gap to 6rem for better spacing
-    Red cross icons - ❌ now displays in red (#dc2626)
-    Green checkmarks - ✅ now displays in green (#16a34a)
-    Proper alignment - items align at the top and maintain consistent spacing
-    Better mobile responsiveness - stacks vertically on mobile with improved styling
-
-🎯 Key Changes:
-
-    Added specific color classes for left (red) and right (green) icons
-    Increased container width to 1000px for better desktop experience
-    Improved grid gap spacing (6rem) for clearer separation
-    Added min-height to ensure consistent row heights
-    Enhanced mobile styling with background boxes for better readability
-
-Now your comparison section will display exactly like the Truelist style you wanted - clean side-by-side comparison on desktop with proper colors, and neat stacking on mobile devices!
-Réessayer
-
-
-<!-- Comparison Section -->
-<section id="comparison" class="section container">
-    <h2 class="section-title">You shouldn't have to deal with export limits anymore</h2>
-    <p class="section-subtitle">See how UnlimitedLeads compares to traditional data providers</p>
-    
-    <div class="comparison-grid">
-        <div class="comparison-item">
-            <div class="comparison-point">
-                <div class="comparison-side">
-                    <div class="comparison-label other">Other Data Providers</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-times comparison-icon negative"></i>
-                        <p>Pay-per-credit systems can quickly drain your budget, especially for high-volume prospecting.</p>
-                    </div>
-                </div>
-                <div class="comparison-side">
-                    <div class="comparison-label us">UnlimitedLeads</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Unlimited exports with a straightforward, one-time payment model.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="comparison-item">
-            <div class="comparison-point">
-                <div class="comparison-side">
-                    <div class="comparison-label other">Other Data Providers</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-times comparison-icon negative"></i>
-                        <p>Monthly subscription fees that keep adding up, even when you're not actively prospecting.</p>
-                    </div>
-                </div>
-                <div class="comparison-side">
-                    <div class="comparison-label us">UnlimitedLeads</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Lifetime access with a single payment—no recurring fees or surprise charges.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="comparison-item">
-            <div class="comparison-point">
-                <div class="comparison-side">
-                    <div class="comparison-label other">Other Data Providers</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-times comparison-icon negative"></i>
-                        <p>Limited email finder searches force you to upgrade to expensive plans.</p>
-                    </div>
-                </div>
-                <div class="comparison-side">
-                    <div class="comparison-label us">UnlimitedLeads</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Unlimited email finder with bulk processing for maximum efficiency.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="comparison-item">
-            <div class="comparison-point">
-                <div class="comparison-side">
-                    <div class="comparison-label other">Other Data Providers</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-times comparison-icon negative"></i>
-                        <p>Export restrictions and download limits prevent you from scaling your outreach.</p>
-                    </div>
-                </div>
-                <div class="comparison-side">
-                    <div class="comparison-label us">UnlimitedLeads</div>
-                    <div class="comparison-content">
-                        <i class="fas fa-check comparison-icon positive"></i>
-                        <p>Simple and intuitive interface for easy navigation and unlimited exporting.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="section container">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Three simple steps to unlock your unlimited lead generation potential</p>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-icon">
-                    <i class="fas fa-search"></i>
-                </div>
-                <h4>Define Your Target</h4>
-                <p>Precisely filter your ideal customer profile by industry, company size, revenue, tech stack, funding, and growth signals to find perfect-fit prospects.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h4>Verify & Enrich</h4>
-                <p>Automatically validate and enhance your prospect list with direct contact information, including verified emails, direct dials, and detailed professional profiles.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-icon">
-                    <i class="fas fa-download"></i>
-                </div>
-                <h4>Export & Use</h4>
-                <p>Download unlimited leads with a fixed cost, scale your outreach without limits and never worry about running out of fresh prospects again.</p>
-            </div>
-        </div>
-    </section>
-        
-<!-- Pricing -->
-<section id="pricing" class="section container">
-    <h2 class="section-title">Professional B2B Lead Generation</h2>
-    <p class="section-subtitle">Access 450M+ verified contacts with unlimited exports. Start with 250 free leads!</p>
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <div class="savings-badge">Start Free</div>
-            <h3>Starter Plan</h3>
-            <span class="pricing-amount">$99<small>/month</small></span>
-            <ul class="pricing-features">
-                <li><strong>Unlimited exports</strong></li>
-            </ul>
-            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
-        </div>
-        <div class="pricing-card featured">
-            <div class="featured-badge">MOST POPULAR</div>
-            <div class="savings-badge">Best Value</div>
-            <h3>Pro Plan</h3>
-            <span class="pricing-amount">$149<small>/month</small></span>
-            <ul class="pricing-features">
-                <li><strong>Unlimited exports</strong></li>
-                <li><strong>Unlimited Email Finder</strong></li>
-  
-            </ul>
-            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
-        </div>
-    </div>
-      
-    </section>
 
     <!-- Waitlist -->
     <section id="signup" class="waitlist-section">
@@ -1700,7 +1328,7 @@ Réessayer
             </div>
             <div class="testimonial">
                 <div class="testimonial-content">
-                    <p class="testimonial-text">"The quality of the data is exceptional. 95% of emails are deliverable. Best lead generation investment we've ever made."</p>
+                    <p class="testimonial-text">"The quality of the data is exceptional. 95% of emails are deliverable, and the direct phone numbers actually connect to the right people. Best lead generation investment we've ever made."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">JP</div>
                         <div class="testimonial-info">
@@ -1712,7 +1340,7 @@ Réessayer
             </div>
             <div class="testimonial">
                 <div class="testimonial-content">
-                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The Unlimited export model is refreshing, no more suprise fees eating into our margins. "</p>
+                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The one-time payment model is refreshing—no more monthly fees eating into our margins. The lifetime access has been a game-changer."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">KK</div>
                         <div class="testimonial-info">
@@ -1722,6 +1350,19 @@ Réessayer
                     </div>
                 </div>
             </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The advanced filtering options are game-changing. We've identified companies using competitors' products that are showing growth signals—perfect timing for our solution. Already closed 3 major deals."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JB</div>
+                        <div class="testimonial-info">
+                            <h4>Joseph Barnard</h4>
+                            <p>VP Business Development, Quantic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- CTA Section -->
@@ -1729,7 +1370,7 @@ Réessayer
         <div class="container">
             <div class="cta-content">
                 <h2>Don't Miss This Limited-Time Opportunity</h2>
-                <p>Sign up today to claim your 250 free verified leads and get immediate access to UnlimitedLeads—the only B2B database with truly Unlimited leads access.</p>
+                <p>Sign up today to claim your 250 free verified leads and get immediate access to UnlimitedLeads—the only B2B database with one-time payment and lifetime access.</p>
                 <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
     <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Get 250 leads for FREE</a>
 </div>
