@@ -598,6 +598,125 @@
             border-color: var(--primary);
             outline: none;
         }
+
+        /* Comparison Section Styles */
+#comparison {
+    background: var(--gray-50);
+}
+
+.comparison-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.comparison-item {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    border: 1px solid var(--gray-100);
+}
+
+.comparison-point {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.comparison-side {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comparison-side:first-child {
+    border-right: 1px solid var(--gray-100);
+    background: rgba(239, 68, 68, 0.02);
+}
+
+.comparison-side:last-child {
+    background: rgba(16, 185, 129, 0.02);
+}
+
+.comparison-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.comparison-label.other {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.comparison-label.us {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.comparison-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.comparison-icon {
+    font-size: 1.25rem;
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+}
+
+.comparison-icon.negative {
+    color: #dc2626;
+}
+
+.comparison-icon.positive {
+    color: #059669;
+}
+
+.comparison-content p {
+    margin: 0;
+    color: var(--gray-700);
+    line-height: 1.6;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .comparison-point {
+        grid-template-columns: 1fr;
+    }
+    
+    .comparison-side:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-100);
+    }
+    
+    .comparison-side {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-content {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+    
+    .comparison-icon {
+        align-self: center;
+        font-size: 1.5rem;
+    }
+}
+        
         .free-leads-badge {
             background: var(--accent);
             color: white;
@@ -1152,6 +1271,90 @@
     </div>
 </div>
 
+        <!-- Comparison Section -->
+<section id="comparison" class="section container">
+    <h2 class="section-title">You shouldn't have to deal with export limits anymore</h2>
+    <p class="section-subtitle">See how UnlimitedLeads compares to traditional data providers</p>
+    
+    <div class="comparison-grid">
+        <div class="comparison-item">
+            <div class="comparison-point">
+                <div class="comparison-side">
+                    <div class="comparison-label other">Other Data Providers</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-times comparison-icon negative"></i>
+                        <p>Pay-per-credit systems can quickly drain your budget, especially for high-volume prospecting.</p>
+                    </div>
+                </div>
+                <div class="comparison-side">
+                    <div class="comparison-label us">UnlimitedLeads</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-check comparison-icon positive"></i>
+                        <p>Unlimited exports with a straightforward, one-time payment model.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-item">
+            <div class="comparison-point">
+                <div class="comparison-side">
+                    <div class="comparison-label other">Other Data Providers</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-times comparison-icon negative"></i>
+                        <p>Monthly subscription fees that keep adding up, even when you're not actively prospecting.</p>
+                    </div>
+                </div>
+                <div class="comparison-side">
+                    <div class="comparison-label us">UnlimitedLeads</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-check comparison-icon positive"></i>
+                        <p>Lifetime access with a single payment—no recurring fees or surprise charges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-item">
+            <div class="comparison-point">
+                <div class="comparison-side">
+                    <div class="comparison-label other">Other Data Providers</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-times comparison-icon negative"></i>
+                        <p>Limited email finder searches force you to upgrade to expensive plans.</p>
+                    </div>
+                </div>
+                <div class="comparison-side">
+                    <div class="comparison-label us">UnlimitedLeads</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-check comparison-icon positive"></i>
+                        <p>Unlimited email finder with bulk processing for maximum efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-item">
+            <div class="comparison-point">
+                <div class="comparison-side">
+                    <div class="comparison-label other">Other Data Providers</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-times comparison-icon negative"></i>
+                        <p>Export restrictions and download limits prevent you from scaling your outreach.</p>
+                    </div>
+                </div>
+                <div class="comparison-side">
+                    <div class="comparison-label us">UnlimitedLeads</div>
+                    <div class="comparison-content">
+                        <i class="fas fa-check comparison-icon positive"></i>
+                        <p>Simple and intuitive interface for easy navigation and unlimited exporting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
     <!-- How It Works -->
     <section id="how-it-works" class="section container">
         <h2 class="section-title">How It Works</h2>
@@ -1211,15 +1414,6 @@
             <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
         </div>
     </div>
-</section>
-    
-    <!-- Enterprise option -->
-    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--gray-50); border-radius: var(--border-radius-lg);">
-        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Need More Than 120K Leads?</h3>
-        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Custom enterprise plans available for high-volume users</p>
-        <a href="mailto:support@unlimited-leads.online" class="btn btn-secondary">Book a Call</a>
-    </div>
-</section>
         <!-- Trust Badges -->
         <div class="trust-badges">
             <div class="trust-badge">
@@ -1244,57 +1438,6 @@
             </div>
         </div>
     </section>
-
-          <!-- Features -->
-    <section id="features" class="section container">
-        <h2 class="section-title">Enterprise-Grade Features</h2>
-        <p class="section-subtitle">Everything you need to supercharge your B2B lead generation and sales outreach</p>
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-infinity"></i>
-                </div>
-                <h3>Lifetime Access</h3>
-                <p>One-time payment grants you permanent access to verified leads—no monthly caps, no unexpected charges, just lifetime value.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-filter"></i>
-                </div>
-                <h3>Advanced Filtering</h3>
-                <p>Precisely target your ideal customers with 30+ advanced filters including revenue bands, headcount growth, tech stack, funding rounds, and hiring trends.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-database"></i>
-                </div>
-                <h3>Comprehensive Database</h3>
-                <p>Access 100M+ verified contacts and 63M+ B2B companies worldwide—refreshed weekly to ensure you're always working with the most current information.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>99% Data Accuracy</h3>
-                <p>Enjoy industry-leading verification rates through our proprietary 12-point validation system that ensures the highest quality contact information.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3>Real-Time Enrichment</h3>
-                <p>Instantly enhance your existing prospect lists with current titles, direct dials, verified emails, and social profiles for seamless outreach.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>Growth Intelligence</h3>
-                <p>Identify companies showing growth signals like new funding, executive hires, or expansion—the perfect timing indicators for your sales outreach.</p>
-            </div>
-        </div>
-    </section>
-
 
     <!-- Waitlist -->
     <section id="signup" class="waitlist-section">
