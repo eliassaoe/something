@@ -463,26 +463,7 @@ header {
     color: var(--gray-600);
 }
 
-.confidence-badge {
-    background: var(--primary);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-}
 
-.confidence-badge.high {
-    background: var(--success);
-}
-
-.confidence-badge.medium {
-    background: var(--warning);
-}
-
-.confidence-badge.low {
-    background: var(--danger);
-}
 
 /* LOADING */
 .loading {
@@ -1076,20 +1057,6 @@ header {
             const emailResult = document.createElement('div');
             emailResult.className = 'email-result success';
             
-            // Determine confidence level
-            let confidence = 'medium';
-            let confidenceText = 'Medium';
-            
-            if (data.confidence) {
-                if (data.confidence > 0.8) {
-                    confidence = 'high';
-                    confidenceText = 'High';
-                } else if (data.confidence < 0.5) {
-                    confidence = 'low';
-                    confidenceText = 'Low';
-                }
-            }
-            
             emailResult.innerHTML = `
                 <div class="email-display">
                     <div class="email-address success">${data.email}</div>
@@ -1101,9 +1068,6 @@ header {
                     <div>
                         <strong>Name:</strong> ${firstName} ${lastName} | 
                         <strong>Domain:</strong> ${domain}
-                    </div>
-                    <div class="confidence-badge ${confidence}">
-                        ${confidenceText} Confidence
                     </div>
                 </div>
             `;
