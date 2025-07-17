@@ -3,39 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Email Finder - Unlimited Leads</title>
+    <title>Unlimited Email Finder</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* Font imports */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #eff6ff;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2563eb;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
-            /* Color scheme */
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --primary-light: #eff6ff;
-            --secondary: #0ea5e9;
-            --secondary-dark: #0284c7;
-            --accent: #0d9488;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
             --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
             --gray-600: #4b5563;
             --gray-700: #374151;
             --gray-800: #1f2937;
@@ -43,60 +26,30 @@
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
-            
-            /* Design tokens */
-            --radius-sm: 0.5rem;
             --radius-md: 0.5rem;
             --radius-lg: 1rem;
             --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
-            --transition-standard: all 0.3s ease;
-            
-            /* Font families */
-            --font-primary: 'Inter', sans-serif;
-            --font-heading: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-primary);
         }
 
         body {
+            font-family: 'Inter', sans-serif;
             background-color: #ffffff;
             color: var(--gray-800);
-            line-height: 1.7;
+            line-height: 1.6;
             font-size: 15px;
-            letter-spacing: 0.01em;
-            overflow-x: hidden;
-        }
-
-        body:before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-            z-index: -1;
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 2rem;
-            width: 100%;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: var(--font-heading);
-            line-height: 1.3;
-            font-weight: 700;
-            margin-bottom: 0.8em;
         }
 
         /* HEADER */
@@ -104,372 +57,223 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid rgba(25, 43, 71, 0.08);
-            margin-bottom: 30px;
-            background-color: white;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            width: 100%;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 3rem;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 800;
-            font-family: var(--font-heading);
+            font-weight: 700;
             display: flex;
             align-items: center;
+            color: var(--gray-900);
         }
 
         .logo i {
             margin-right: 8px;
             color: var(--primary);
-            font-size: 1.5rem;
         }
 
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .user-credits-container {
+        .user-info {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .user-credits {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-
-        .logout-button, .upgrade-button {
-            border-radius: 0.5rem;
-            padding: 0.85rem 1.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition-standard);
-            font-size: 14px;
-        }
-
-        .logout-button {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--gray-200);
-        }
-
-        .upgrade-button {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            font-weight: 700;
-        }
-
-        .logout-button:hover {
-            background-color: var(--primary-light);
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .upgrade-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, var(--primary), #1e40af);
-        }
-
-        /* MENU */
-        .main-menu {
-            background-color: white;
-            margin-bottom: 20px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--gray-100);
-        }
-
-        .menu-list {
-            display: flex;
-            list-style: none;
-            padding: 0;
-        }
-
-        .menu-item {
-            padding: 0;
-        }
-
-        .menu-link {
-            display: inline-block;
-            padding: 18px 28px;
+        .credits {
+            background-color: var(--gray-100);
             color: var(--gray-700);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-standard);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
             font-size: 14px;
-            position: relative;
         }
 
-        .menu-link:hover {
-            color: var(--primary);
+        /* MAIN CONTENT */
+        .main-content {
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
-        .menu-item.active .menu-link {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .menu-link i {
-            margin-right: 10px;
-        }
-
-        /* SEARCH SECTION */
-        .search-section {
-            background-color: white;
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--gray-100);
-        }
-
-        .search-title {
-            font-size: 1.75rem;
+        .title {
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--gray-900);
-            font-family: var(--font-heading);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .search-title:after {
-            content: "";
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            margin-top: 0.75rem;
-            border-radius: 4px;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .info-box::before {
-            content: '\f05a';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 20px;
-            left: 25px;
-            color: var(--primary);
-            font-size: 20px;
-        }
-
-        .info-box-content {
-            margin-left: 35px;
-        }
-
-        .info-box h3 {
-            color: var(--primary);
-            font-size: 18px;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .info-box p {
-            margin: 0 0 15px 0;
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--gray-700);
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* SEARCH FORM */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
         .search-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-label {
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 8px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 8px;
+            box-shadow: var(--box-shadow);
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 15px;
+            gap: 0;
+            transition: var(--transition);
         }
 
-        .form-label i {
-            color: var(--primary);
-            font-size: 16px;
-        }
-
-        .required-star {
-            color: var(--danger);
-            font-weight: 900;
-        }
-
-        .form-input {
-            padding: 15px 18px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            font-size: 15px;
-            background-color: white;
-            font-weight: 500;
-            transition: var(--transition-standard);
-            font-family: var(--font-primary);
-        }
-
-        .form-input:focus {
-            outline: none;
+        .search-form:focus-within {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
+        .form-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 16px 18px;
+            font-size: 16px;
+            font-weight: 500;
+            background: transparent;
+            color: var(--gray-900);
+        }
+
         .form-input::placeholder {
             color: var(--gray-400);
-            font-style: italic;
+        }
+
+        .input-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--gray-300);
         }
 
         .search-button {
-            background: linear-gradient(135deg, var(--success), #059669);
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: var(--radius-lg);
-            padding: 18px 32px;
-            font-size: 16px;
-            font-weight: 700;
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-standard);
-            width: 100%;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-left: 8px;
         }
 
         .search-button:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            background: var(--primary-dark);
+            transform: translateY(-1px);
         }
 
         .search-button:disabled {
             background: var(--gray-300);
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
         /* RESULT SECTION */
         .result-section {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--gray-100);
+            max-width: 600px;
+            margin: 0 auto 3rem;
             display: none;
         }
 
         .result-section.show {
             display: block;
-            animation: slideDown 0.5s ease-out;
+            animation: slideDown 0.3s ease-out;
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .result-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .result-card {
+            background: white;
+            border: 2px solid var(--success);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--box-shadow);
         }
 
-        .result-success {
+        .result-card.error {
+            border-color: var(--danger);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .result-icon {
+            width: 24px;
+            height: 24px;
             color: var(--success);
         }
 
-        .result-error {
+        .result-card.error .result-icon {
             color: var(--danger);
         }
 
-        .result-content {
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            border-left: 4px solid var(--success);
-        }
-
-        .result-content.error {
-            border-left-color: var(--danger);
-            background: rgba(239, 68, 68, 0.05);
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
         }
 
         .email-result {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 10px;
-            font-family: 'Courier New', monospace;
-            background: white;
-            padding: 15px;
-            border-radius: var(--radius-sm);
+            background: var(--gray-50);
             border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
             word-break: break-all;
-        }
-
-        .result-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .meta-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .copy-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .copy-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .error-message {
             color: var(--gray-600);
+            text-align: center;
+            margin-top: 8px;
         }
 
-        .meta-item i {
-            color: var(--primary);
-        }
-
-        /* LOADING STATE */
+        /* LOADING */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -488,10 +292,10 @@
         }
 
         .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid var(--gray-200);
-            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -502,60 +306,29 @@
         }
 
         .loading-text {
-            margin-top: 20px;
+            margin-top: 16px;
             font-size: 16px;
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-
-        /* STATS CARDS */
-        .stats-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: var(--gray-50);
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            text-align: center;
-            border: 1px solid var(--gray-200);
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: var(--gray-600);
-            font-size: 14px;
             font-weight: 500;
+            color: var(--gray-700);
         }
 
         /* HISTORY SECTION */
         .history-section {
-            margin-top: 40px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
+        .history-title {
+            font-size: 1.5rem;
+            font-weight: 600;
             color: var(--gray-900);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .history-table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
+            background: white;
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--box-shadow);
@@ -563,7 +336,7 @@
         }
 
         .history-table th {
-            background: var(--gray-100);
+            background: var(--gray-50);
             color: var(--gray-700);
             text-align: left;
             padding: 16px 20px;
@@ -591,10 +364,10 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .status-found {
@@ -607,112 +380,57 @@
             color: var(--danger);
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition-standard);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-primary {
+        .action-button {
             background: var(--primary);
             color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .action-button:hover {
             background: var(--primary-dark);
-            transform: translateY(-1px);
         }
 
-        .btn-danger:hover {
+        .action-button.danger {
+            background: var(--danger);
+        }
+
+        .action-button.danger:hover {
             background: #dc2626;
-            transform: translateY(-1px);
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: var(--gray-600);
+            padding: 3rem 1rem;
+            color: var(--gray-500);
         }
 
         .empty-state i {
-            font-size: 64px;
+            font-size: 3rem;
             color: var(--gray-300);
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
-        .empty-state h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--gray-700);
-        }
-
-        /* ALERTS */
-        .alert {
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            margin: 15px 0;
-            display: none;
-            font-size: 14px;
-            font-weight: 500;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .alert-success {
-            background-color: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-        }
-
-        .alert-error {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-        }
-
-        .alert-warning {
-            background-color: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--warning);
-            color: var(--warning);
-        }
-
-        .alert-info {
-            background-color: rgba(37, 99, 235, 0.1);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-
-        /* STATUS INDICATOR */
-        .status-indicator {
+        /* NOTIFICATIONS */
+        .notification {
             position: fixed;
             top: 20px;
             right: 20px;
             background: white;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--success);
             border-radius: var(--radius-lg);
-            padding: 15px;
-            box-shadow: var(--box-shadow-lg);
+            padding: 16px 20px;
+            box-shadow: var(--box-shadow);
             z-index: 1000;
             display: none;
-            min-width: 300px;
+            max-width: 300px;
         }
 
-        .status-indicator.show {
+        .notification.show {
             display: block;
             animation: slideInRight 0.3s ease-out;
         }
@@ -722,15 +440,11 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        .status-indicator.success {
-            border-color: var(--success);
-        }
-
-        .status-indicator.error {
+        .notification.error {
             border-color: var(--danger);
         }
 
-        .status-indicator.warning {
+        .notification.warning {
             border-color: var(--warning);
         }
 
@@ -739,165 +453,72 @@
             .container {
                 padding: 0 1rem;
             }
-            
-            .search-section {
-                padding: 20px;
+
+            .title {
+                font-size: 2rem;
             }
-            
+
             .search-form {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            header {
-                padding: 1rem 0;
-            }
-            
-            .user-credits-container {
-                gap: 8px;
-            }
-            
-            .user-credits {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            
-            .logout-button, .upgrade-button {
-                padding: 0.5rem 1rem;
-                font-size: 12px;
-            }
-            
-            .menu-list {
-                justify-content: space-between;
-            }
-            
-            .menu-item {
-                flex: 1;
-                text-align: center;
-            }
-            
-            .menu-link {
-                padding: 14px 10px;
-                font-size: 13px;
-                display: flex;
                 flex-direction: column;
-                align-items: center;
+                gap: 8px;
+                padding: 16px;
             }
-            
-            .menu-link i {
-                margin-right: 0;
-                margin-bottom: 5px;
+
+            .form-input {
+                padding: 12px 16px;
+            }
+
+            .input-divider {
+                width: 100%;
+                height: 1px;
+            }
+
+            .search-button {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .email-result {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .copy-button {
+                align-self: center;
             }
 
             .history-table {
                 font-size: 12px;
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
             }
 
             .history-table th,
             .history-table td {
-                padding: 8px 6px;
-                min-width: 80px;
+                padding: 8px 12px;
             }
 
-            .action-buttons {
-                flex-direction: column;
-                gap: 4px;
-            }
-
-            .btn-small {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-
-            .status-indicator {
+            .notification {
                 right: 10px;
                 left: 10px;
-                min-width: auto;
-            }
-
-            .stats-cards {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .result-meta {
-                grid-template-columns: 1fr;
-                gap: 10px;
+                max-width: none;
             }
         }
 
         @media (max-width: 480px) {
-            .search-title {
-                font-size: 1.5rem;
+            .title {
+                font-size: 1.75rem;
             }
 
-            .stats-cards {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+            .subtitle {
+                font-size: 1rem;
             }
 
-            .stat-card {
-                padding: 15px;
+            header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
             }
-
-            .stat-value {
-                font-size: 24px;
-            }
-
-            .form-input {
-                padding: 12px 15px;
-            }
-        }
-
-        /* Success animation */
-        .success-animation {
-            animation: successPulse 0.6s ease-out;
-        }
-
-        @keyframes successPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Error shake animation */
-        .error-animation {
-            animation: errorShake 0.6s ease-out;
-        }
-
-        @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        /* Copy button styles */
-        .copy-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: var(--transition-standard);
-            margin-left: 10px;
-        }
-
-        .copy-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .email-display {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
         }
     </style>
 </head>
@@ -907,819 +528,410 @@
         <header>
             <div class="logo">
                 <i class="fas fa-bolt"></i>
-                <span class="gradient-text">Unlimited Leads</span>
+                Unlimited Email Finder
             </div>
-            <div class="user-credits-container">
-                <div id="userCredits" class="user-credits">
-                    <i class="fas fa-coins"></i> 0 credits
-                </div>
-                <button id="upgradeButton" class="upgrade-button">
-                    <i class="fas fa-crown"></i> Upgrade
-                </button>
-                <button id="logoutButton" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+            <div class="user-info">
+                <div id="userCredits" class="credits">0 credits</div>
             </div>
         </header>
 
-        <!-- Menu -->
-        <div class="main-menu">
-            <ul class="menu-list">
-                <li class="menu-item">
-                    <a href="search-leads.html" class="menu-link">
-                        <i class="fas fa-search"></i> Search Leads
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="email-finder.html" class="menu-link">
-                        <i class="fas fa-envelope-open"></i> Bulk Email Finder
-                    </a>
-                </li>
-                <li class="menu-item active">
-                    <a href="#" class="menu-link">
-                        <i class="fas fa-user-search"></i> Single Email Finder
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
-                        <i class="fas fa-rocket"></i> LinkedIn Scraper
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="title">Find Professional Email Addresses</h1>
+            <p class="subtitle">Enter a person's name and company domain to discover their email address</p>
 
-        <!-- Search Section -->
-        <section class="search-section">
-            <h2 class="search-title">Find Single Email Address</h2>
-            
-            <div id="searchAlert" class="alert"></div>
-
-            <div class="info-box">
-                <div class="info-box-content">
-                    <h3>How it works</h3>
-                    <p>Enter the person's information below to find their professional email address. We'll search across multiple databases and verify the email exists.</p>
-                    <p><strong>Processing:</strong> ~3-5 seconds • <strong>Cost:</strong> 1 credit per search</p>
-                </div>
+            <!-- Search Form -->
+            <div class="search-container">
+                <form id="searchForm" class="search-form">
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        class="form-input" 
+                        placeholder="First name"
+                        required
+                    >
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        class="form-input" 
+                        placeholder="Last name"
+                        required
+                    >
+                    <div class="input-divider"></div>
+                    <input 
+                        type="text" 
+                        id="website" 
+                        class="form-input" 
+                        placeholder="company.com"
+                        required
+                    >
+                    <button type="submit" class="search-button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                        Find
+                    </button>
+                </form>
             </div>
 
-            <form id="searchForm" class="search-form">
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-user"></i>
-                        First Name<span class="required-star">*</span>
-                    </label>
-                    <input type="text" id="firstName" class="form-input" placeholder="John" required>
+            <!-- Result Section -->
+            <div id="resultSection" class="result-section">
+                <div id="resultCard" class="result-card">
+                    <div class="result-header">
+                        <i id="resultIcon" class="fas fa-check-circle result-icon"></i>
+                        <span id="resultTitle" class="result-title">Email Found</span>
+                    </div>
+                    <div id="resultContent"></div>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-user-tag"></i>
-                        Last Name<span class="required-star">*</span>
-                    </label>
-                    <input type="text" id="lastName" class="form-input" placeholder="Smith" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-globe"></i>
-                        Website<span class="required-star">*</span>
-                    </label>
-                    <input type="text" id="website" class="form-input" placeholder="company.com" required>
-                </div>
-            </form>
-
-            <button type="submit" class="search-button" id="searchButton">
-                <i class="fas fa-search"></i> Find Email Address
-            </button>
-        </section>
-
-        <!-- Result Section -->
-        <section id="resultSection" class="result-section">
-            <div id="resultContent"></div>
-        </section>
+            </div>
+        </div>
 
         <!-- Loading Overlay -->
         <div id="loadingOverlay" class="loading-overlay">
             <div style="text-align: center;">
                 <div class="loading-spinner"></div>
-                <div class="loading-text">Searching for email address...</div>
-            </div>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="stats-cards">
-            <div class="stat-card">
-                <div class="stat-value" id="totalSearches">0</div>
-                <div class="stat-label">Total Searches</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="emailsFound">0</div>
-                <div class="stat-label">Emails Found</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="successRate">0%</div>
-                <div class="stat-label">Success Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="todaySearches">0</div>
-                <div class="stat-label">Today's Searches</div>
+                <div class="loading-text">Searching...</div>
             </div>
         </div>
 
         <!-- Search History -->
         <div class="history-section">
-            <h2 class="section-title">
-                <i class="fas fa-history"></i>
-                Search History
-            </h2>
-
+            <h2 class="history-title">Recent Searches</h2>
             <div id="historyContainer">
-                <!-- Table will be populated by JavaScript -->
+                <!-- History will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Status Indicator -->
-    <div id="statusIndicator" class="status-indicator">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-info-circle"></i>
-            <span id="statusMessage">Message</span>
-        </div>
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationMessage">Message</span>
     </div>
 
     <script>
-        // ========================================
-        // CONFIGURATION & CONSTANTS
-        // ========================================
-        
+        // Configuration
         const CONFIG = {
             SINGLE_EMAIL_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/single-email-finder',
             CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
-            
-            // Storage keys
-            STORAGE_KEYS: {
-                SEARCHES: 'single_email_searches',
-                TODAY_SEARCHES: 'today_single_searches'
-            }
+            STORAGE_KEY: 'email_searches'
         };
 
-        // ========================================
-        // GLOBAL STATE
-        // ========================================
-        
+        // State
         const AppState = {
             userToken: null,
             isSearching: false
         };
 
-        // ========================================
-        // DOM ELEMENTS
-        // ========================================
-        
+        // Elements
         const Elements = {
             searchForm: document.getElementById('searchForm'),
             searchButton: document.getElementById('searchButton'),
-            searchAlert: document.getElementById('searchAlert'),
             firstName: document.getElementById('firstName'),
             lastName: document.getElementById('lastName'),
             website: document.getElementById('website'),
             resultSection: document.getElementById('resultSection'),
+            resultCard: document.getElementById('resultCard'),
+            resultIcon: document.getElementById('resultIcon'),
+            resultTitle: document.getElementById('resultTitle'),
             resultContent: document.getElementById('resultContent'),
             loadingOverlay: document.getElementById('loadingOverlay'),
-            statusIndicator: document.getElementById('statusIndicator'),
-            statusMessage: document.getElementById('statusMessage')
+            notification: document.getElementById('notification'),
+            notificationMessage: document.getElementById('notificationMessage'),
+            historyContainer: document.getElementById('historyContainer'),
+            userCredits: document.getElementById('userCredits')
         };
 
-        // ========================================
-        // UTILITY CLASSES
-        // ========================================
-        
-        class Logger {
-            static log(message, type = 'info', data = null) {
-                const timestamp = new Date().toLocaleTimeString();
-                const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
-                
-                switch (type) {
-                    case 'error':
-                        console.error(logEntry, data);
-                        break;
-                    case 'warn':
-                        console.warn(logEntry, data);
-                        break;
-                    case 'success':
-                        console.log(`✅ ${logEntry}`, data);
-                        break;
-                    default:
-                        console.log(`ℹ️ ${logEntry}`, data);
+        // Utility Functions
+        function showNotification(message, type = 'success') {
+            Elements.notificationMessage.textContent = message;
+            Elements.notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                Elements.notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Email copied to clipboard!');
+            }).catch(() => {
+                showNotification('Failed to copy email', 'error');
+            });
+        }
+
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // API Functions
+        async function findEmail(searchData) {
+            const response = await fetch(CONFIG.SINGLE_EMAIL_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(searchData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function fetchUserCredits(token) {
+            try {
+                const response = await fetch(CONFIG.CREDIT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token, type: "token" })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && typeof data.credit === 'number') {
+                        return data.credit;
+                    }
                 }
+                return null;
+            } catch (error) {
+                console.error('Credit fetch failed:', error);
+                return null;
             }
         }
 
-        class NotificationSystem {
-            static show(message, type = 'info', duration = 5000) {
-                const statusIndicator = Elements.statusIndicator;
-                const statusMessage = Elements.statusMessage;
-                
-                statusMessage.textContent = message;
-                statusIndicator.className = `status-indicator ${type} show`;
-                
-                Logger.log(`Notification: ${message}`, type);
-                
-                setTimeout(() => {
-                    statusIndicator.classList.remove('show');
-                }, duration);
+        // Storage Functions
+        function getSearchHistory() {
+            const history = localStorage.getItem(CONFIG.STORAGE_KEY);
+            return history ? JSON.parse(history) : [];
+        }
+
+        function saveSearch(search) {
+            const history = getSearchHistory();
+            history.unshift(search);
+            
+            // Keep only last 50 searches
+            if (history.length > 50) {
+                history.splice(50);
             }
             
-            static showAlert(message, type = 'info', duration = 5000) {
-                const alert = Elements.searchAlert;
-                alert.textContent = message;
-                alert.className = `alert alert-${type}`;
-                alert.style.display = 'block';
-                
-                if (type === 'success' || type === 'info') {
-                    setTimeout(() => {
-                        alert.style.display = 'none';
-                    }, duration);
-                }
+            localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(history));
+            renderHistory();
+        }
+
+        function deleteSearch(searchId) {
+            if (confirm('Delete this search?')) {
+                const history = getSearchHistory();
+                const filtered = history.filter(s => s.id !== searchId);
+                localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(filtered));
+                renderHistory();
+                showNotification('Search deleted');
             }
         }
 
-        class APIClient {
-            static async findEmail(searchData) {
-                try {
-                    Logger.log('Starting email search API call', 'info', searchData);
-                    
-                    const response = await fetch(CONFIG.SINGLE_EMAIL_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(searchData)
-                    });
-                    
-                    Logger.log(`API Response: ${response.status} ${response.statusText}`, 
-                        response.ok ? 'success' : 'error');
-                    
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
-                    }
-                    
-                    const result = await response.json();
-                    Logger.log('Email search successful', 'success', result);
-                    
-                    return result;
-                    
-                } catch (error) {
-                    Logger.log(`Email search failed: ${error.message}`, 'error', error);
-                    throw error;
-                }
+        // UI Functions
+        function showResult(searchData, result) {
+            if (result.email) {
+                Elements.resultCard.classList.remove('error');
+                Elements.resultIcon.className = 'fas fa-check-circle result-icon';
+                Elements.resultTitle.textContent = 'Email Found';
+                Elements.resultContent.innerHTML = `
+                    <div class="email-result">
+                        <span>${result.email}</span>
+                        <button class="copy-button" onclick="copyToClipboard('${result.email}')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                `;
+            } else {
+                Elements.resultCard.classList.add('error');
+                Elements.resultIcon.className = 'fas fa-times-circle result-icon';
+                Elements.resultTitle.textContent = 'Email Not Found';
+                Elements.resultContent.innerHTML = `
+                    <div class="error-message">
+                        No email found for ${searchData.firstName} ${searchData.lastName} at ${searchData.website}
+                    </div>
+                `;
             }
             
-            static async fetchUserCredits(token) {
-                try {
-                    const requestData = {
-                        token: token,
-                        type: "token"
-                    };
-                    
-                    const response = await fetch(CONFIG.CREDIT_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(requestData)
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data && typeof data.credit === 'number') {
-                            Logger.log(`User credits: ${data.credit}`, 'info');
-                            return data.credit;
-                        }
-                    }
-                    
-                    return null;
-                } catch (error) {
-                    Logger.log(`Credit fetch failed: ${error.message}`, 'error');
-                    return null;
-                }
-            }
+            Elements.resultSection.classList.add('show');
         }
 
-        // ========================================
-        // SEARCH MANAGEMENT
-        // ========================================
-        
-        class SearchManager {
-            static generateId() {
-                return 'search_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        function renderHistory() {
+            const history = getSearchHistory();
+            
+            if (history.length === 0) {
+                Elements.historyContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>No searches yet</p>
+                    </div>
+                `;
+                return;
             }
 
-            static getAllSearches() {
-                const searches = localStorage.getItem(CONFIG.STORAGE_KEYS.SEARCHES);
-                return searches ? JSON.parse(searches) : [];
-            }
-
-            static saveSearches(searches) {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.SEARCHES, JSON.stringify(searches));
-                Logger.log(`Saved ${searches.length} searches to storage`, 'info');
-            }
-
-            static saveSearch(search) {
-                const searches = this.getAllSearches();
-                searches.unshift(search);
-                
-                // Keep only last 100 searches
-                if (searches.length > 100) {
-                    searches.splice(100);
-                }
-                
-                this.saveSearches(searches);
-                this.updateStats();
-            }
-
-            static deleteSearch(searchId) {
-                if (confirm('Are you sure you want to delete this search?')) {
-                    const searches = this.getAllSearches();
-                    const filteredSearches = searches.filter(search => search.id !== searchId);
-                    this.saveSearches(filteredSearches);
-                    this.loadSearchHistory();
-                    this.updateStats();
-                    NotificationSystem.showAlert('Search deleted successfully', 'success');
-                    Logger.log(`Deleted search: ${searchId}`, 'info');
-                }
-            }
-
-            static updateStats() {
-                const searches = this.getAllSearches();
-                const today = new Date().toDateString();
-                
-                const stats = searches.reduce((acc, search) => {
-                    acc.total++;
-                    if (search.email_found && search.email) {
-                        acc.found++;
-                    }
-                    
-                    const searchDate = new Date(search.timestamp).toDateString();
-                    if (searchDate === today) {
-                        acc.today++;
-                    }
-                    
-                    return acc;
-                }, { total: 0, found: 0, today: 0 });
-
-                const successRate = stats.total > 0 ? Math.round((stats.found / stats.total) * 100) : 0;
-
-                document.getElementById('totalSearches').textContent = stats.total;
-                document.getElementById('emailsFound').textContent = stats.found;
-                document.getElementById('successRate').textContent = successRate + '%';
-                document.getElementById('todaySearches').textContent = stats.today;
-                
-                Logger.log('Stats updated', 'info', stats);
-            }
-
-            static loadSearchHistory() {
-                const searches = this.getAllSearches();
-                this.renderSearchTable(searches);
-            }
-
-            static renderSearchTable(searches) {
-                const container = document.getElementById('historyContainer');
-                
-                if (searches.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-search"></i>
-                            <h3>No searches yet</h3>
-                            <p>Search for your first email address above</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                const table = `
-                    <table class="history-table">
-                        <thead>
+            Elements.historyContainer.innerHTML = `
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${history.map(search => `
                             <tr>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Website</th>
-                                <th>Status</th>
-                                <th>Email Found</th>
-                                <th>Actions</th>
+                                <td>${formatDate(search.timestamp)}</td>
+                                <td>${search.firstName} ${search.lastName}</td>
+                                <td>${search.website}</td>
+                                <td>
+                                    <span class="status-badge ${search.email_found ? 'status-found' : 'status-not-found'}">
+                                        <i class="fas fa-${search.email_found ? 'check' : 'times'}"></i>
+                                        ${search.email_found ? 'Found' : 'Not Found'}
+                                    </span>
+                                </td>
+                                <td style="font-family: 'Courier New', monospace;">
+                                    ${search.email || '—'}
+                                </td>
+                                <td>
+                                    ${search.email ? 
+                                        `<button class="action-button" onclick="copyToClipboard('${search.email}')">
+                                            <i class="fas fa-copy"></i>
+                                        </button>` : ''
+                                    }
+                                    <button class="action-button danger" onclick="deleteSearch('${search.id}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            ${searches.map(search => `
-                                <tr>
-                                    <td>${this.formatDate(search.timestamp)}</td>
-                                    <td>${search.firstName} ${search.lastName}</td>
-                                    <td style="font-family: 'Courier New', monospace; font-size: 12px;">
-                                        ${search.website}
-                                    </td>
-                                    <td>
-                                        <span class="status-badge ${search.email_found ? 'status-found' : 'status-not-found'}">
-                                            <i class="fas fa-${search.email_found ? 'check-circle' : 'times-circle'}"></i>
-                                            ${search.email_found ? 'Found' : 'Not Found'}
-                                        </span>
-                                    </td>
-                                    <td style="font-family: 'Courier New', monospace; font-size: 12px;">
-                                        ${search.email || '—'}
-                                        ${search.email ? `<button class="copy-button" onclick="SearchManager.copyEmail('${search.email}')"><i class="fas fa-copy"></i></button>` : ''}
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            ${search.email ? 
-                                                `<button class="btn-small btn-primary" onclick="SearchManager.copyEmail('${search.email}')">
-                                                    <i class="fas fa-copy"></i> Copy
-                                                </button>` : ''
-                                            }
-                                            <button class="btn-small btn-danger" onclick="SearchManager.deleteSearch('${search.id}')">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-                
-                container.innerHTML = table;
-            }
-
-            static formatDate(timestamp) {
-                return new Date(timestamp).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            }
-
-            static copyEmail(email) {
-                navigator.clipboard.writeText(email).then(() => {
-                    NotificationSystem.show('Email copied to clipboard!', 'success');
-                }).catch(() => {
-                    NotificationSystem.show('Failed to copy email', 'error');
-                });
-            }
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
         }
 
-        // ========================================
-        // RESULT DISPLAY
-        // ========================================
-        
-        class ResultDisplay {
-            static showSuccess(searchData, result) {
-                const resultContent = `
-                    <div class="result-title result-success">
-                        <i class="fas fa-check-circle"></i>
-                        Email Found Successfully!
-                    </div>
-                    <div class="result-content">
-                        <div class="email-display">
-                            <div class="email-result">${result.email}</div>
-                            <button class="copy-button" onclick="SearchManager.copyEmail('${result.email}')">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                        </div>
-                        <div class="result-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i>
-                                ${searchData.firstName} ${searchData.lastName}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-globe"></i>
-                                ${searchData.website}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-clock"></i>
-                                ${new Date().toLocaleTimeString()}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-shield-alt"></i>
-                                Verified Email
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                Elements.resultContent.innerHTML = resultContent;
-                Elements.resultSection.classList.add('show');
-                Elements.resultSection.classList.add('success-animation');
-                
-                setTimeout(() => {
-                    Elements.resultSection.classList.remove('success-animation');
-                }, 600);
-            }
-
-            static showError(searchData, message = 'Email not found') {
-                const resultContent = `
-                    <div class="result-title result-error">
-                        <i class="fas fa-times-circle"></i>
-                        ${message}
-                    </div>
-                    <div class="result-content error">
-                        <div style="text-align: center; padding: 20px;">
-                            <p style="margin-bottom: 15px; font-size: 16px;">
-                                We couldn't find an email address for <strong>${searchData.firstName} ${searchData.lastName}</strong> at <strong>${searchData.website}</strong>.
-                            </p>
-                            <p style="font-size: 14px; color: var(--gray-600);">
-                                Try with a different website domain or check the spelling of the name.
-                            </p>
-                        </div>
-                        <div class="result-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i>
-                                ${searchData.firstName} ${searchData.lastName}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-globe"></i>
-                                ${searchData.website}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-clock"></i>
-                                ${new Date().toLocaleTimeString()}
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-search"></i>
-                                Search Completed
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                Elements.resultContent.innerHTML = resultContent;
-                Elements.resultSection.classList.add('show');
-                Elements.resultSection.classList.add('error-animation');
-                
-                setTimeout(() => {
-                    Elements.resultSection.classList.remove('error-animation');
-                }, 600);
-            }
+        function showLoading() {
+            AppState.isSearching = true;
+            Elements.loadingOverlay.classList.add('show');
+            Elements.searchButton.disabled = true;
+            Elements.searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
         }
 
-        // ========================================
-        // MAIN APPLICATION CLASS
-        // ========================================
-        
-        class SingleEmailFinderApp {
-            static async init() {
-                Logger.log('🚀 SingleEmailFinderApp initialization started', 'info');
-                
-                try {
-                    await SingleEmailFinderApp.initializeAuth();
-                    SingleEmailFinderApp.initializeEventListeners();
-                    
-                    SearchManager.loadSearchHistory();
-                    SearchManager.updateStats();
-                    
-                    Logger.log('✅ SingleEmailFinderApp initialized successfully', 'success');
-                    
-                } catch (error) {
-                    Logger.log(`❌ Initialization failed: ${error.message}`, 'error');
-                    NotificationSystem.showAlert('Initialization error: ' + error.message, 'error');
-                }
+        function hideLoading() {
+            AppState.isSearching = false;
+            Elements.loadingOverlay.classList.remove('show');
+            Elements.searchButton.disabled = false;
+            Elements.searchButton.innerHTML = '<i class="fas fa-search"></i> Find';
+        }
+
+        // Event Handlers
+        async function handleSearch(e) {
+            e.preventDefault();
+            
+            if (AppState.isSearching) return;
+
+            const searchData = {
+                firstName: Elements.firstName.value.trim(),
+                lastName: Elements.lastName.value.trim(),
+                website: Elements.website.value.trim().replace(/^https?:\/\//, '').replace(/\/$/, ''),
+                token: AppState.userToken
+            };
+
+            if (!searchData.firstName || !searchData.lastName || !searchData.website) {
+                showNotification('Please fill in all fields', 'error');
+                return;
             }
 
-            static async initializeAuth() {
-                const urlParams = new URLSearchParams(window.location.search);
-                let token = urlParams.get('token');
+            try {
+                showLoading();
                 
-                if (!token) {
-                    token = localStorage.getItem('sessionToken');
-                    if (token) {
-                        const currentUrl = new URL(window.location.href);
-                        currentUrl.searchParams.set('token', token);
-                        window.history.replaceState({}, '', currentUrl.toString());
-                    }
-                } else {
-                    localStorage.setItem('sessionToken', token);
-                }
+                const result = await findEmail(searchData);
                 
-                if (!token) {
-                    Logger.log('No token found, redirecting to login', 'warn');
-                    window.location.href = 'https://unlimited-leads.online/en';
-                    return;
-                }
-
-                AppState.userToken = token;
-                Logger.log('User token loaded successfully', 'success');
-                
-                await SingleEmailFinderApp.fetchUserCredits();
-            }
-
-            static async fetchUserCredits() {
-                try {
-                    const credits = await APIClient.fetchUserCredits(AppState.userToken);
-                    if (credits !== null) {
-                        SingleEmailFinderApp.displayUserCredits(credits);
-                    }
-                } catch (error) {
-                    Logger.log(`Failed to fetch user credits: ${error.message}`, 'warn');
-                }
-            }
-
-            static displayUserCredits(credits) {
-                const creditsElement = document.getElementById('userCredits');
-                if (creditsElement) {
-                    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
-                    Logger.log(`User credits displayed: ${credits}`, 'info');
-                }
-            }
-
-            static initializeEventListeners() {
-                // Search form submission
-                Elements.searchForm.addEventListener('submit', SingleEmailFinderApp.handleSearch);
-                Elements.searchButton.addEventListener('click', SingleEmailFinderApp.handleSearch);
-                
-                // Input validation
-                [Elements.firstName, Elements.lastName, Elements.website].forEach(input => {
-                    input.addEventListener('input', SingleEmailFinderApp.validateForm);
-                });
-                
-                // Navigation buttons
-                SingleEmailFinderApp.setupNavigationButtons();
-                
-                // Global error handler
-                window.addEventListener('error', (e) => {
-                    Logger.log(`Global error: ${e.error?.message || 'Unknown error'}`, 'error', e.error);
-                    NotificationSystem.showAlert('An unexpected error occurred. Please refresh the page.', 'error');
-                });
-                
-                Logger.log('Event listeners initialized', 'info');
-            }
-
-            static setupNavigationButtons() {
-                const upgradeButton = document.getElementById('upgradeButton');
-                if (upgradeButton) {
-                    upgradeButton.addEventListener('click', () => {
-                        const token = localStorage.getItem('sessionToken');
-                        const url = token ? 
-                            `https://unlimited-leads.online/pricing?token=${token}` : 
-                            'https://unlimited-leads.online/pricing';
-                        window.location.href = url;
-                    });
-                }
-                
-                const logoutButton = document.getElementById('logoutButton');
-                if (logoutButton) {
-                    logoutButton.addEventListener('click', () => {
-                        localStorage.removeItem('sessionToken');
-                        window.location.href = 'https://unlimited-leads.online/en';
-                    });
-                }
-            }
-
-            static validateForm() {
-                const firstName = Elements.firstName.value.trim();
-                const lastName = Elements.lastName.value.trim();
-                const website = Elements.website.value.trim();
-                
-                const isValid = firstName && lastName && website;
-                Elements.searchButton.disabled = !isValid || AppState.isSearching;
-                
-                if (isValid) {
-                    Elements.searchButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-                } else {
-                    Elements.searchButton.style.background = 'var(--gray-300)';
-                }
-            }
-
-            static async handleSearch(e) {
-                e.preventDefault();
-                
-                if (AppState.isSearching) {
-                    return;
-                }
-                
-                Logger.log('🔍 Starting email search...', 'info');
-                
-                try {
-                    const searchData = SingleEmailFinderApp.getSearchData();
-                    
-                    // Validate input
-                    if (!SingleEmailFinderApp.validateSearchData(searchData)) {
-                        return;
-                    }
-                    
-                    // Show loading state
-                    SingleEmailFinderApp.showLoading();
-                    
-                    // Perform search
-                    const result = await APIClient.findEmail({
-                        ...searchData,
-                        token: AppState.userToken
-                    });
-                    
-                    // Save search to history
-                    const searchRecord = {
-                        id: SearchManager.generateId(),
-                        ...searchData,
-                        timestamp: new Date().toISOString(),
-                        email_found: !!result.email,
-                        email: result.email || null
-                    };
-                    
-                    SearchManager.saveSearch(searchRecord);
-                    
-                    // Show result
-                    if (result.email) {
-                        ResultDisplay.showSuccess(searchData, result);
-                        NotificationSystem.show('Email found successfully!', 'success');
-                        Logger.log('✅ Email search successful', 'success', result);
-                    } else {
-                        ResultDisplay.showError(searchData);
-                        NotificationSystem.show('Email not found for this contact', 'warning');
-                        Logger.log('⚠️ Email not found', 'warn', searchData);
-                    }
-                    
-                    // Refresh stats and history
-                    SearchManager.loadSearchHistory();
-                    await SingleEmailFinderApp.fetchUserCredits();
-                    
-                } catch (error) {
-                    Logger.log(`❌ Search failed: ${error.message}`, 'error', error);
-                    NotificationSystem.showAlert('Search failed: ' + error.message, 'error');
-                    ResultDisplay.showError(SingleEmailFinderApp.getSearchData(), 'Search Error');
-                } finally {
-                    SingleEmailFinderApp.hideLoading();
-                }
-            }
-
-            static getSearchData() {
-                return {
-                    firstName: Elements.firstName.value.trim(),
-                    lastName: Elements.lastName.value.trim(),
-                    website: Elements.website.value.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')
+                // Save to history
+                const searchRecord = {
+                    id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    ...searchData,
+                    timestamp: new Date().toISOString(),
+                    email_found: !!result.email,
+                    email: result.email || null
                 };
-            }
+                
+                saveSearch(searchRecord);
+                showResult(searchData, result);
+                
+                if (result.email) {
+                    showNotification('Email found!');
+                } else {
+                    showNotification('Email not found', 'warning');
+                }
 
-            static validateSearchData(data) {
-                if (!data.firstName || !data.lastName || !data.website) {
-                    NotificationSystem.showAlert('Please fill in all required fields', 'error');
-                    return false;
+                // Update credits
+                const credits = await fetchUserCredits(AppState.userToken);
+                if (credits !== null) {
+                    Elements.userCredits.textContent = `${credits} credits`;
                 }
                 
-                if (!AppState.userToken) {
-                    NotificationSystem.showAlert('User authentication required', 'error');
-                    return false;
-                }
-                
-                return true;
-            }
-
-            static showLoading() {
-                AppState.isSearching = true;
-                Elements.loadingOverlay.classList.add('show');
-                Elements.searchButton.disabled = true;
-                Elements.searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-                Logger.log('Loading state activated', 'info');
-            }
-
-            static hideLoading() {
-                AppState.isSearching = false;
-                Elements.loadingOverlay.classList.remove('show');
-                Elements.searchButton.disabled = false;
-                Elements.searchButton.innerHTML = '<i class="fas fa-search"></i> Find Email Address';
-                SingleEmailFinderApp.validateForm();
-                Logger.log('Loading state deactivated', 'info');
+            } catch (error) {
+                console.error('Search failed:', error);
+                showNotification('Search failed: ' + error.message, 'error');
+            } finally {
+                hideLoading();
             }
         }
 
-        // ========================================
-        // INITIALIZATION
-        // ========================================
+        // Initialize
+        async function init() {
+            // Get token from URL or localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            let token = urlParams.get('token');
+            
+            if (!token) {
+                token = localStorage.getItem('sessionToken');
+                if (token) {
+                    const currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set('token', token);
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
+            } else {
+                localStorage.setItem('sessionToken', token);
+            }
+            
+            if (!token) {
+                window.location.href = 'https://unlimited-leads.online/en';
+                return;
+            }
 
-        // Make functions globally available for onclick handlers
-        window.SearchManager = SearchManager;
+            AppState.userToken = token;
 
-        // Initialize application when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            Logger.log('🌟 DOM Content Loaded - Starting single email finder...', 'info');
-            SingleEmailFinderApp.init();
-        });
+            // Fetch credits
+            const credits = await fetchUserCredits(token);
+            if (credits !== null) {
+                Elements.userCredits.textContent = `${credits} credits`;
+            }
 
-        // Final initialization message
-        Logger.log('📧 Single Email Finder Ready!', 'success');
-        console.log(`
-        🎯 Single Email Finder
-        ======================
-        
-        ✅ Simple 3-field form (First Name, Last Name, Website)
-        ✅ Real-time validation
-        ✅ Instant search results
-        ✅ Search history tracking
-        ✅ Copy-to-clipboard functionality
-        ✅ Beautiful animations and UX
-        ✅ Mobile-responsive design
-        
-        Enter contact details and find emails instantly!
-        `);
+            // Render history
+            renderHistory();
 
+            // Event listeners
+            Elements.searchForm.addEventListener('submit', handleSearch);
+        }
+
+        // Make functions global for onclick handlers
+        window.copyToClipboard = copyToClipboard;
+        window.deleteSearch = deleteSearch;
+
+        // Start app
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
