@@ -3,935 +3,1196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unlimited Email Finder</title>
+    <title>Email Finder - Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        /* Font imports */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+   <style>
+   /* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #eff6ff;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --radius-md: 0.5rem;
-            --radius-lg: 1rem;
-            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --transition: all 0.3s ease;
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #eff6ff;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+:root {
+    /* Color scheme */
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --secondary: #0ea5e9;
+    --secondary-dark: #0284c7;
+    --accent: #0d9488;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Design tokens */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --transition-standard: all 0.3s ease;
+    
+    /* Font families */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--gray-800);
+    line-height: 1.7;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+}
+
+body:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0.8em;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 8px;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.user-credits-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-credits {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.logout-button, .upgrade-button {
+    border-radius: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-standard);
+    font-size: 14px;
+}
+
+.logout-button {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--gray-200);
+}
+
+.upgrade-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    font-weight: 700;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+.logout-button i, .upgrade-button i {
+    font-size: 16px;
+}
+
+/* MENU */
+.main-menu {
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 0;
+}
+
+.menu-link {
+    display: inline-block;
+    padding: 18px 28px;
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-standard);
+    font-size: 14px;
+    position: relative;
+}
+
+.menu-link:hover {
+    color: var(--primary);
+}
+
+.menu-item.active .menu-link {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.menu-link i {
+    margin-right: 10px;
+}
+
+/* EMAIL FINDER SECTION */
+.email-finder-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.email-finder-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: var(--font-heading);
+    margin-bottom: 1.5rem;
+}
+
+.email-finder-title:after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    margin-top: 0.75rem;
+    border-radius: 4px;
+}
+
+.email-finder-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: end;
+}
+
+.info-box {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 18px 20px;
+    margin-bottom: 25px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+}
+
+.info-box:before {
+    content: '\f05a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 12px;
+    color: var(--primary);
+    font-size: 18px;
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-700);
+}
+
+.form-group {
+    flex: 1 1 200px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    transition: var(--transition-standard);
+    background-color: #FCFDFF;
+    color: var(--gray-800);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: white;
+}
+
+.find-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+    height: 50px;
+}
+
+.find-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+.find-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* RESULTS SECTION */
+.results-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+    margin-top: 30px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.results-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-800);
+    font-family: var(--font-heading);
+}
+
+.email-result {
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: var(--transition-standard);
+}
+
+.email-result:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.email-result.success {
+    border-color: var(--success);
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.email-result.error {
+    border-color: var(--danger);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.email-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.email-address {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-800);
+    font-family: var(--font-heading);
+}
+
+.email-address.success {
+    color: var(--success);
+}
+
+.email-address.error {
+    color: var(--danger);
+}
+
+.copy-button {
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.copy-button:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.email-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--gray-600);
+}
+
+.confidence-badge {
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.confidence-badge.high {
+    background: var(--success);
+}
+
+.confidence-badge.medium {
+    background: var(--warning);
+}
+
+.confidence-badge.low {
+    background: var(--danger);
+}
+
+/* LOADING */
+.loading {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--primary);
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    animation: subtle-fade-in 0.5s ease-out;
+}
+
+@keyframes subtle-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.loading i {
+    color: var(--primary);
+    font-size: 40px;
+    margin-bottom: 20px;
+    animation: spin 1.5s linear infinite;
+}
+
+.loading p {
+    color: var(--gray-700);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.loading p:first-of-type {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ALERTS */
+.alert {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin: 15px 0;
+    display: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+.alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    color: var(--warning);
+}
+
+/* NO RESULTS */
+.no-results {
+    text-align: center;
+    padding: 50px 0;
+    color: var(--gray-600);
+    font-size: 16px;
+    display: none;
+}
+
+.no-results i {
+    font-size: 48px;
+    color: var(--gray-300);
+    margin-bottom: 20px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .loading {
+        margin: 15px auto;
+        padding: 25px 20px;
+        max-width: calc(100vw - 30px);
+    }
+    
+    .loading p:first-of-type {
+        font-size: 18px;
+    }
+    
+    .alert {
+        margin: 10px 0;
+        padding: 12px 15px;
+        font-size: 13px;
+        word-wrap: break-word;
+    }
+    
+    /* Header mobile */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+    }
+    
+    .user-credits-container {
+        gap: 8px;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+        min-height: 44px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Menu mobile */
+    .menu-list {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        width: 33.33%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Form mobile */
+    .email-finder-form {
+        flex-direction: column;
+    }
+    
+    .form-group {
+        flex: 1 1 100%;
+    }
+    
+    .form-group input,
+    .form-group select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .find-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Results mobile */
+    .results-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .email-display {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .email-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 1rem;
+        margin-right: 4px;
+    }
+    
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    .email-finder-section,
+    .results-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container { 
+        padding: 0 1.5rem; 
+    }
+    
+    .email-finder-title { 
+        font-size: 1.5rem; 
+    }
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+        
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .email-finder-title { font-size: 1.5rem; }
         }
 
-        * {
+        /* Prevent any element from causing horizontal scroll */
+        .email-finder-form,
+        .results-section,
+        .alert,
+        .loading {
+            max-width: 100%;
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: var(--gray-800);
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* HEADER */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 3rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            color: var(--gray-900);
-        }
-
-        .logo i {
-            margin-right: 8px;
-            color: var(--primary);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .credits {
-            background-color: var(--gray-100);
-            color: var(--gray-700);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--gray-600);
-            margin-bottom: 3rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* SEARCH FORM */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-
-        .search-form {
-            background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: 8px;
-            box-shadow: var(--box-shadow);
-            display: flex;
-            align-items: center;
-            gap: 0;
-            transition: var(--transition);
-        }
-
-        .search-form:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .form-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 16px 18px;
-            font-size: 16px;
-            font-weight: 500;
-            background: transparent;
-            color: var(--gray-900);
-        }
-
-        .form-input::placeholder {
-            color: var(--gray-400);
-        }
-
-        .input-divider {
-            width: 1px;
-            height: 24px;
-            background: var(--gray-300);
-        }
-
-        .search-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 8px;
-        }
-
-        .search-button:hover:not(:disabled) {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .search-button:disabled {
-            background: var(--gray-300);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* RESULT SECTION */
-        .result-section {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            display: none;
-        }
-
-        .result-section.show {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-card {
-            background: white;
-            border: 2px solid var(--success);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: var(--box-shadow);
-        }
-
-        .result-card.error {
-            border-color: var(--danger);
-        }
-
-        .result-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .result-icon {
-            width: 24px;
-            height: 24px;
-            color: var(--success);
-        }
-
-        .result-card.error .result-icon {
-            color: var(--danger);
-        }
-
-        .result-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .email-result {
-            background: var(--gray-50);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--gray-900);
-            word-break: break-all;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .copy-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 8px 12px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            flex-shrink: 0;
-        }
-
-        .copy-button:hover {
-            background: var(--primary-dark);
-        }
-
-        .error-message {
-            color: var(--gray-600);
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        /* LOADING */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .loading-overlay.show {
-            display: flex;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--gray-200);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            margin-top: 16px;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--gray-700);
-        }
-
-        /* HISTORY SECTION */
-        .history-section {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .history-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .history-table {
-            width: 100%;
-            background: white;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--gray-200);
-        }
-
-        .history-table th {
-            background: var(--gray-50);
-            color: var(--gray-700);
-            text-align: left;
-            padding: 16px 20px;
-            font-weight: 600;
-            font-size: 14px;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .history-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--gray-100);
-            color: var(--gray-800);
-            font-size: 14px;
-        }
-
-        .history-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .history-table tr:hover {
-            background: var(--gray-50);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .status-found {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .status-not-found {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        .action-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 6px 12px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .action-button:hover {
-            background: var(--primary-dark);
-        }
-
-        .action-button.danger {
-            background: var(--danger);
-        }
-
-        .action-button.danger:hover {
-            background: #dc2626;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--gray-500);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            color: var(--gray-300);
-            margin-bottom: 1rem;
-        }
-
-        /* NOTIFICATIONS */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: 2px solid var(--success);
-            border-radius: var(--radius-lg);
-            padding: 16px 20px;
-            box-shadow: var(--box-shadow);
-            z-index: 1000;
-            display: none;
-            max-width: 300px;
-        }
-
-        .notification.show {
-            display: block;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .notification.error {
-            border-color: var(--danger);
-        }
-
-        .notification.warning {
-            border-color: var(--warning);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .title {
-                font-size: 2rem;
-            }
-
-            .search-form {
-                flex-direction: column;
-                gap: 8px;
-                padding: 16px;
-            }
-
-            .form-input {
-                padding: 12px 16px;
-            }
-
-            .input-divider {
-                width: 100%;
-                height: 1px;
-            }
-
-            .search-button {
-                width: 100%;
-                justify-content: center;
-                margin-left: 0;
-            }
-
-            .email-result {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-
-            .copy-button {
-                align-self: center;
-            }
-
-            .history-table {
-                font-size: 12px;
-            }
-
-            .history-table th,
-            .history-table td {
-                padding: 8px 12px;
-            }
-
-            .notification {
-                right: 10px;
-                left: 10px;
-                max-width: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .title {
-                font-size: 1.75rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
-        }
+        
     </style>
 </head>
 <body>
+    
     <div class="container">
-        <!-- Header -->
         <header>
-            <div class="logo">
-                <i class="fas fa-bolt"></i>
-                Unlimited Email Finder
-            </div>
-            <div class="user-info">
-                <div id="userCredits" class="credits">0 credits</div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <h1 class="title">Find Professional Email Addresses</h1>
-            <p class="subtitle">Enter a person's name and company domain to discover their email address</p>
-
-            <!-- Search Form -->
-            <div class="search-container">
-                <form id="searchForm" class="search-form">
-                    <input 
-                        type="text" 
-                        id="firstName" 
-                        class="form-input" 
-                        placeholder="First name"
-                        required
-                    >
-                    <input 
-                        type="text" 
-                        id="lastName" 
-                        class="form-input" 
-                        placeholder="Last name"
-                        required
-                    >
-                    <div class="input-divider"></div>
-                    <input 
-                        type="text" 
-                        id="website" 
-                        class="form-input" 
-                        placeholder="company.com"
-                        required
-                    >
-                    <button type="submit" class="search-button" id="searchButton">
-                        <i class="fas fa-search"></i>
-                        Find
-                    </button>
-                </form>
-            </div>
-
-            <!-- Result Section -->
-            <div id="resultSection" class="result-section">
-                <div id="resultCard" class="result-card">
-                    <div class="result-header">
-                        <i id="resultIcon" class="fas fa-check-circle result-icon"></i>
-                        <span id="resultTitle" class="result-title">Email Found</span>
-                    </div>
-                    <div id="resultContent"></div>
-                </div>
-            </div>
+    <div class="user-credits-container">
+        <div id="userCredits" class="user-credits">
+            <i class="fas fa-coins"></i> 0 credits
         </div>
-
-        <!-- Loading Overlay -->
-        <div id="loadingOverlay" class="loading-overlay">
-            <div style="text-align: center;">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Searching...</div>
-            </div>
-        </div>
-
-        <!-- Search History -->
-        <div class="history-section">
-            <h2 class="history-title">Recent Searches</h2>
-            <div id="historyContainer">
-                <!-- History will be populated by JavaScript -->
-            </div>
-        </div>
+        <button id="upgradeButton" class="upgrade-button">
+            <i class="fas fa-crown"></i> Upgrade
+        </button>
+        <button id="logoutButton" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
     </div>
+</header>
 
-    <!-- Notification -->
-    <div id="notification" class="notification">
-        <span id="notificationMessage">Message</span>
+         <div class="main-menu">
+    <ul class="menu-list">
+        <li class="menu-item">
+            <a href="#" class="menu-link">
+                <i class="fas fa-search"></i> Search Leads
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
+                <i class="fas fa-rocket"></i> Linkedin Scrapper
+            </a>
+        </li>
+        <li class="menu-item active">
+            <a href="#" class="menu-link">
+                <i class="fas fa-envelope"></i> Email Finder
+            </a>
+        </li>
+        <li class="menu-item">
+                    <a href="https://unlimited-leads.online/account" class="menu-link">
+                        <i class="fas fa-user"></i> My Account
+                    </a>
+         </li>
+    </ul>
+</div>
+
+        
+<section class="email-finder-section">
+    <h2 class="email-finder-title">Find Email Address</h2>
+    
+    <div id="emailAlert" class="alert"></div>
+
+    <div class="info-box">
+         <p><strong>How it works:</strong> Enter a first name, last name, and company domain to find the email address</p>
     </div>
+    
+    <form id="emailFinderForm" class="email-finder-form">
+        <div class="form-group">
+            <label for="firstName">First Name (required)</label>
+            <input type="text" id="firstName" name="firstName" placeholder="e.g. John" required>
+        </div>
 
+        <div class="form-group">
+            <label for="lastName">Last Name (required)</label>
+            <input type="text" id="lastName" name="lastName" placeholder="e.g. Doe" required>
+        </div>
+                
+        <div class="form-group">
+            <label for="domain">Company Domain (required)</label>
+            <input type="text" id="domain" name="domain" placeholder="e.g. company.com" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="find-button">
+                <i class="fas fa-search"></i> Find Email
+            </button>
+        </div>
+    </form>
+</section>
+        
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Finding email address...</p>
+            <p>Please wait, this may take a few seconds.</p>
+        </div>
+        
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <div class="results-title">Email Found</div>
+            </div>
+            
+            <div id="noResults" class="no-results">
+                <i class="fas fa-envelope-open" style="font-size: 40px; margin-bottom: 15px;"></i>
+                <p>No email found. Try different variations or check the domain.</p>
+            </div>
+            
+            <div id="emailResults"></div>
+        </section>
+    </div>
+    
     <script>
-        // Configuration
-        const CONFIG = {
-            SINGLE_EMAIL_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/single-email-finder',
-            CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
-            STORAGE_KEY: 'email_searches'
-        };
-
-        // State
-        const AppState = {
-            userToken: null,
-            isSearching: false
-        };
-
-        // Elements
-        const Elements = {
-            searchForm: document.getElementById('searchForm'),
-            searchButton: document.getElementById('searchButton'),
-            firstName: document.getElementById('firstName'),
-            lastName: document.getElementById('lastName'),
-            website: document.getElementById('website'),
-            resultSection: document.getElementById('resultSection'),
-            resultCard: document.getElementById('resultCard'),
-            resultIcon: document.getElementById('resultIcon'),
-            resultTitle: document.getElementById('resultTitle'),
-            resultContent: document.getElementById('resultContent'),
-            loadingOverlay: document.getElementById('loadingOverlay'),
-            notification: document.getElementById('notification'),
-            notificationMessage: document.getElementById('notificationMessage'),
-            historyContainer: document.getElementById('historyContainer'),
-            userCredits: document.getElementById('userCredits')
-        };
-
-        // Utility Functions
-        function showNotification(message, type = 'success') {
-            Elements.notificationMessage.textContent = message;
-            Elements.notification.className = `notification ${type} show`;
-            
-            setTimeout(() => {
-                Elements.notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Email copied to clipboard!');
-            }).catch(() => {
-                showNotification('Failed to copy email', 'error');
-            });
-        }
-
-        function formatDate(timestamp) {
-            return new Date(timestamp).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // API Functions
-        async function findEmail(searchData) {
-            const response = await fetch(CONFIG.SINGLE_EMAIL_WEBHOOK_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(searchData)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            return await response.json();
-        }
-
-        async function fetchUserCredits(token) {
+        // Email finder webhook URL
+        const EMAIL_FINDER_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/email-finder';
+        
+        let userToken = null;
+        
+        // DOM Elements
+        const emailFinderForm = document.getElementById('emailFinderForm');
+        const emailAlert = document.getElementById('emailAlert');
+        const loading = document.getElementById('loading');
+        const resultsSection = document.getElementById('resultsSection');
+        const noResults = document.getElementById('noResults');
+        const emailResults = document.getElementById('emailResults');
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch(CONFIG.CREDIT_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ token, type: "token" })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data && typeof data.credit === 'number') {
-                        return data.credit;
-                    }
+                // Set up event listeners
+                emailFinderForm.addEventListener('submit', handleEmailSearch);
+                
+                // Add event listener for the upgrade button
+                const upgradeButton = document.getElementById('upgradeButton');
+                if (upgradeButton) {
+                    upgradeButton.addEventListener('click', function() {
+                        const token = localStorage.getItem('sessionToken');
+                        if (token) {
+                            window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                        } else {
+                            window.location.href = 'https://unlimited-leads.online/pricing';
+                        }
+                    });
                 }
-                return null;
+                
+                // Add event listener for the logout button
+                const logoutButton = document.getElementById('logoutButton');
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', function() {
+                        localStorage.removeItem('sessionToken');
+                        window.location.href = 'https://unlimited-leads.online/en';
+                    });
+                }
+                
+                // Show success message
+                showAlert("Email finder ready!", 'success');
             } catch (error) {
-                console.error('Credit fetch failed:', error);
-                return null;
+                console.error("Error initializing app:", error);
+                showAlert(`Error: ${error.message}`, 'error');
             }
-        }
+        });
 
-        // Storage Functions
-        function getSearchHistory() {
-            const history = localStorage.getItem(CONFIG.STORAGE_KEY);
-            return history ? JSON.parse(history) : [];
-        }
-
-        function saveSearch(search) {
-            const history = getSearchHistory();
-            history.unshift(search);
+        // Token verification function
+        function token_verif() {
+            console.log("Token verification started");
             
-            // Keep only last 50 searches
-            if (history.length > 50) {
-                history.splice(50);
-            }
+            const WEBHOOK_URL_A = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
             
-            localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(history));
-            renderHistory();
-        }
-
-        function deleteSearch(searchId) {
-            if (confirm('Delete this search?')) {
-                const history = getSearchHistory();
-                const filtered = history.filter(s => s.id !== searchId);
-                localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(filtered));
-                renderHistory();
-                showNotification('Search deleted');
-            }
-        }
-
-        // UI Functions
-        function showResult(searchData, result) {
-            if (result.email) {
-                Elements.resultCard.classList.remove('error');
-                Elements.resultIcon.className = 'fas fa-check-circle result-icon';
-                Elements.resultTitle.textContent = 'Email Found';
-                Elements.resultContent.innerHTML = `
-                    <div class="email-result">
-                        <span>${result.email}</span>
-                        <button class="copy-button" onclick="copyToClipboard('${result.email}')">
-                            <i class="fas fa-copy"></i> Copy
-                        </button>
-                    </div>
-                `;
-            } else {
-                Elements.resultCard.classList.add('error');
-                Elements.resultIcon.className = 'fas fa-times-circle result-icon';
-                Elements.resultTitle.textContent = 'Email Not Found';
-                Elements.resultContent.innerHTML = `
-                    <div class="error-message">
-                        No email found for ${searchData.firstName} ${searchData.lastName} at ${searchData.website}
-                    </div>
-                `;
-            }
-            
-            Elements.resultSection.classList.add('show');
-        }
-
-        function renderHistory() {
-            const history = getSearchHistory();
-            
-            if (history.length === 0) {
-                Elements.historyContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <p>No searches yet</p>
-                    </div>
-                `;
-                return;
-            }
-
-            Elements.historyContainer.innerHTML = `
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Company</th>
-                            <th>Status</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${history.map(search => `
-                            <tr>
-                                <td>${formatDate(search.timestamp)}</td>
-                                <td>${search.firstName} ${search.lastName}</td>
-                                <td>${search.website}</td>
-                                <td>
-                                    <span class="status-badge ${search.email_found ? 'status-found' : 'status-not-found'}">
-                                        <i class="fas fa-${search.email_found ? 'check' : 'times'}"></i>
-                                        ${search.email_found ? 'Found' : 'Not Found'}
-                                    </span>
-                                </td>
-                                <td style="font-family: 'Courier New', monospace;">
-                                    ${search.email || '—'}
-                                </td>
-                                <td>
-                                    ${search.email ? 
-                                        `<button class="action-button" onclick="copyToClipboard('${search.email}')">
-                                            <i class="fas fa-copy"></i>
-                                        </button>` : ''
-                                    }
-                                    <button class="action-button danger" onclick="deleteSearch('${search.id}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-        }
-
-        function showLoading() {
-            AppState.isSearching = true;
-            Elements.loadingOverlay.classList.add('show');
-            Elements.searchButton.disabled = true;
-            Elements.searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-        }
-
-        function hideLoading() {
-            AppState.isSearching = false;
-            Elements.loadingOverlay.classList.remove('show');
-            Elements.searchButton.disabled = false;
-            Elements.searchButton.innerHTML = '<i class="fas fa-search"></i> Find';
-        }
-
-        // Event Handlers
-        async function handleSearch(e) {
-            e.preventDefault();
-            
-            if (AppState.isSearching) return;
-
-            const searchData = {
-                firstName: Elements.firstName.value.trim(),
-                lastName: Elements.lastName.value.trim(),
-                website: Elements.website.value.trim().replace(/^https?:\/\//, '').replace(/\/$/, ''),
-                token: AppState.userToken
-            };
-
-            if (!searchData.firstName || !searchData.lastName || !searchData.website) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-
-            try {
-                showLoading();
-                
-                const result = await findEmail(searchData);
-                
-                // Save to history
-                const searchRecord = {
-                    id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                    ...searchData,
-                    timestamp: new Date().toISOString(),
-                    email_found: !!result.email,
-                    email: result.email || null
-                };
-                
-                saveSearch(searchRecord);
-                showResult(searchData, result);
-                
-                if (result.email) {
-                    showNotification('Email found!');
-                } else {
-                    showNotification('Email not found', 'warning');
-                }
-
-                // Update credits
-                const credits = await fetchUserCredits(AppState.userToken);
-                if (credits !== null) {
-                    Elements.userCredits.textContent = `${credits} credits`;
-                }
-                
-            } catch (error) {
-                console.error('Search failed:', error);
-                showNotification('Search failed: ' + error.message, 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Initialize
-        async function init() {
-            // Get token from URL or localStorage
             const urlParams = new URLSearchParams(window.location.search);
             let token = urlParams.get('token');
             
             if (!token) {
                 token = localStorage.getItem('sessionToken');
+                console.log("Token from localStorage:", token);
+                
                 if (token) {
                     const currentUrl = new URL(window.location.href);
                     currentUrl.searchParams.set('token', token);
                     window.history.replaceState({}, '', currentUrl.toString());
+                    console.log("URL updated with token from localStorage");
                 }
             } else {
                 localStorage.setItem('sessionToken', token);
+                console.log("Token saved to localStorage:", token);
             }
             
             if (!token) {
+                console.log("No token found, redirecting...");
                 window.location.href = 'https://unlimited-leads.online/en';
                 return;
             }
 
-            AppState.userToken = token;
-
-            // Fetch credits
-            const credits = await fetchUserCredits(token);
-            if (credits !== null) {
-                Elements.userCredits.textContent = `${credits} credits`;
-            }
-
-            // Render history
-            renderHistory();
-
-            // Event listeners
-            Elements.searchForm.addEventListener('submit', handleSearch);
+            userToken = token;
+            console.log("Valid token, sending API request...");
+            
+            const requestData = {
+                token: token,
+                type: "token"
+            };
+            
+            fetch(WEBHOOK_URL_A, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                if (!response.ok) {
+                    throw new Error('Network error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Token request success:', data);
+                if (data && typeof data.credit === 'number') {
+                    displayUserCredits(data.credit);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending token:', error);
+            });
         }
 
-        // Make functions global for onclick handlers
-        window.copyToClipboard = copyToClipboard;
-        window.deleteSearch = deleteSearch;
+        // Function to display user credits
+        function displayUserCredits(credits) {
+            let creditsElement = document.getElementById('userCredits');
+            
+            if (!creditsElement) {
+                const header = document.querySelector('header');
+                creditsElement = document.createElement('div');
+                creditsElement.id = 'userCredits';
+                creditsElement.className = 'user-credits';
+                header.appendChild(creditsElement);
+            }
+            
+            creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+        }
 
-        // Start app
-        document.addEventListener('DOMContentLoaded', init);
+        // Execute token verification
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Page loaded, executing token_verif");
+            token_verif();
+        });
+
+        token_verif();
+
+        // Handle email search
+        async function handleEmailSearch(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            loading.style.display = 'block';
+            resultsSection.style.display = 'none';
+            emailAlert.style.display = 'none';
+            
+            try {
+                // Get form values
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const domain = document.getElementById('domain').value.trim();
+                
+                // Validate required fields
+                if (!firstName || !lastName || !domain) {
+                    showAlert('Please fill in all required fields', 'error');
+                    return;
+                }
+                
+                // Prepare the data to send
+                const requestData = {
+                    action: 'findEmail',
+                    firstName: firstName,
+                    lastName: lastName,
+                    domain: domain,
+                    token: userToken
+                };
+                
+                console.log('Sending email finder request:', requestData);
+                
+                // Make POST request to email finder webhook
+                const response = await fetch(EMAIL_FINDER_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Email finder response:', data);
+                
+                // Handle insufficient credits
+                if (data && data.code === 403) {
+                    showAlert(data.message || "You do not have enough credits to find this email.", 'error');
+                    showCreditUpgradeModal();
+                    return;
+                }
+                
+                // Display results
+                displayEmailResults(data, firstName, lastName, domain);
+                
+                // Show success message
+                showAlert('Email search completed!', 'success');
+                
+            } catch (error) {
+                console.error("Error finding email:", error);
+                showAlert(`Error: ${error.message}`, 'error');
+            } finally {
+                // Hide loading indicator
+                loading.style.display = 'none';
+                resultsSection.style.display = 'block';
+            }
+        }
+
+        // Display email results
+        function displayEmailResults(data, firstName, lastName, domain) {
+            emailResults.innerHTML = '';
+            
+            if (!data || !data.email) {
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            // Create email result element
+            const emailResult = document.createElement('div');
+            emailResult.className = 'email-result success';
+            
+            // Determine confidence level
+            let confidence = 'medium';
+            let confidenceText = 'Medium';
+            
+            if (data.confidence) {
+                if (data.confidence > 0.8) {
+                    confidence = 'high';
+                    confidenceText = 'High';
+                } else if (data.confidence < 0.5) {
+                    confidence = 'low';
+                    confidenceText = 'Low';
+                }
+            }
+            
+            emailResult.innerHTML = `
+                <div class="email-display">
+                    <div class="email-address success">${data.email}</div>
+                    <button class="copy-button" onclick="copyToClipboard('${data.email}')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="email-details">
+                    <div>
+                        <strong>Name:</strong> ${firstName} ${lastName} | 
+                        <strong>Domain:</strong> ${domain}
+                    </div>
+                    <div class="confidence-badge ${confidence}">
+                        ${confidenceText} Confidence
+                    </div>
+                </div>
+            `;
+            
+            emailResults.appendChild(emailResult);
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(email) {
+            navigator.clipboard.writeText(email).then(() => {
+                showAlert('Email copied to clipboard!', 'success');
+            }).catch(err => {
+                console.error('Failed to copy email:', err);
+                showAlert('Failed to copy email', 'error');
+            });
+        }
+
+        // Show credit upgrade modal
+        function showCreditUpgradeModal() {
+            let creditUpgradeModal = document.getElementById('creditUpgradeModal');
+            
+            if (!creditUpgradeModal) {
+                creditUpgradeModal = document.createElement('div');
+                creditUpgradeModal.id = 'creditUpgradeModal';
+                creditUpgradeModal.className = 'contact-modal';
+                creditUpgradeModal.style.display = 'none';
+                creditUpgradeModal.style.position = 'fixed';
+                creditUpgradeModal.style.top = '0';
+                creditUpgradeModal.style.left = '0';
+                creditUpgradeModal.style.width = '100%';
+                creditUpgradeModal.style.height = '100%';
+                creditUpgradeModal.style.backgroundColor = 'rgba(15, 23, 42, 0.65)';
+                creditUpgradeModal.style.zIndex = '1000';
+                creditUpgradeModal.style.backdropFilter = 'blur(2px)';
+                
+                creditUpgradeModal.innerHTML = `
+                    <div class="modal-content" style="border-left: 4px solid #FF9999; position: relative; background-color: white; margin: 60px auto; padding: 30px; width: 80%; max-width: 600px; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
+                        <span class="close-credit-upgrade-modal" style="position: absolute; top: 24px; right: 24px; font-size: 22px; color: #4b5563; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s ease;">&times;</span>
+                        
+                        <div class="modal-header" style="margin-bottom: 25px; border-bottom: 1px solid #e5e7eb; padding-bottom: 20px;">
+                            <h2 class="modal-title" style="font-size: 24px; color: #111827; font-weight: 700; font-family: 'Montserrat', sans-serif;"><i class="fas fa-exclamation-circle" style="color: #d33;"></i> Insufficient Credits</h2>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="info-item" style="text-align: center;">
+                                <div class="info-value">
+                                    <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough credits to find this email.</strong></p>
+                                    <p>Upgrade your account to unlock unlimited email searches.</p>
+                                    <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue finding emails.</p>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 25px;">
+                                <a href="https://unlimited-leads.online/pricing" class="search-button" style="max-width: 200px; text-decoration: none; display: inline-block; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; border-radius: 0.5rem; padding: 16px 24px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+                                    <i class="fas fa-crown"></i> Upgrade Account
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(creditUpgradeModal);
+            }
+            
+            creditUpgradeModal.style.display = 'block';
+            
+            const closeBtn = creditUpgradeModal.querySelector('.close-credit-upgrade-modal');
+            closeBtn.addEventListener('click', () => {
+                creditUpgradeModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (event) => {
+                if (event.target === creditUpgradeModal) {
+                    creditUpgradeModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            emailAlert.textContent = message;
+            emailAlert.className = `alert alert-${type}`;
+            emailAlert.style.display = 'block';
+            
+            // Hide the alert after 5 seconds
+            setTimeout(() => {
+                emailAlert.style.display = 'none';
+            }, 5000);
+        }
     </script>
 </body>
 </html>
