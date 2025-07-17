@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Finder - Unlimited Leads</title>
+    <title>Single Email Finder - Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* Font imports */
@@ -236,8 +236,8 @@
             margin-right: 10px;
         }
 
-        /* UPLOAD SECTION */
-        .upload-section {
+        /* SEARCH SECTION */
+        .search-section {
             background-color: white;
             border-radius: var(--radius-lg);
             padding: 30px;
@@ -246,7 +246,7 @@
             border: 1px solid var(--gray-100);
         }
 
-        .upload-title {
+        .search-title {
             font-size: 1.75rem;
             font-weight: 700;
             color: var(--gray-900);
@@ -254,7 +254,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .upload-title:after {
+        .search-title:after {
             content: "";
             display: block;
             width: 60px;
@@ -302,195 +302,30 @@
             color: var(--gray-700);
         }
 
-        .required-fields {
+        /* SEARCH FORM */
+        .search-form {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .field-requirement {
-            background: white;
-            border: 2px solid var(--success);
-            border-radius: var(--radius-md);
-            padding: 15px;
-            text-align: center;
-            transition: var(--transition-standard);
-        }
-
-        .field-requirement:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-        }
-
-        .field-requirement i {
-            font-size: 24px;
-            color: var(--success);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .field-requirement .field-name {
-            font-weight: 700;
-            color: var(--gray-800);
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .field-requirement .field-example {
-            font-size: 12px;
-            color: var(--gray-600);
-            font-style: italic;
-        }
-
-        /* FILE UPLOAD */
-        .file-upload-area {
-            border: 2px dashed var(--gray-300);
-            border-radius: var(--radius-lg);
-            padding: 40px 20px;
-            text-align: center;
-            transition: var(--transition-standard);
-            background-color: var(--gray-50);
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .file-upload-area:hover {
-            border-color: var(--primary);
-            background-color: var(--primary-light);
-        }
-
-        .file-upload-area.dragover {
-            border-color: var(--primary);
-            background-color: var(--primary-light);
-            transform: scale(1.02);
-        }
-
-        .file-upload-icon {
-            font-size: 48px;
-            color: var(--gray-400);
-            margin-bottom: 16px;
-        }
-
-        .file-upload-text {
-            font-size: 16px;
-            color: var(--gray-700);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .file-upload-subtext {
-            font-size: 14px;
-            color: var(--gray-500);
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .upload-button {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-standard);
-            margin-top: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .upload-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* FILE PREVIEW */
-        .file-preview {
-            display: none;
-            background-color: white;
-            border: 2px solid var(--success);
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            margin-top: 20px;
-        }
-
-        .file-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--gray-100);
-        }
-
-        .file-icon {
-            font-size: 32px;
-            color: var(--success);
-        }
-
-        .file-details h4 {
-            margin: 0 0 4px 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-
-        .file-details p {
-            margin: 0;
-            font-size: 14px;
-            color: var(--gray-600);
-        }
-
-        .column-mapping {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
             margin-bottom: 25px;
         }
 
-        .column-mapping h4 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--gray-800);
+        .form-group {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
         }
 
-        .column-mapping h4 i {
-            color: var(--primary);
-        }
-
-        .column-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--gray-50), #f8fafc);
-            border-radius: var(--radius-md);
-            border: 2px solid var(--gray-200);
-            transition: var(--transition-standard);
-        }
-
-        .column-row:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .column-label {
+        .form-label {
             font-weight: 700;
-            min-width: 120px;
             color: var(--gray-800);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 15px;
         }
 
-        .column-label i {
+        .form-label i {
             color: var(--primary);
             font-size: 16px;
         }
@@ -500,24 +335,29 @@
             font-weight: 900;
         }
 
-        .column-select {
-            flex: 1;
-            padding: 12px 15px;
+        .form-input {
+            padding: 15px 18px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-md);
-            font-size: 14px;
+            font-size: 15px;
             background-color: white;
             font-weight: 500;
             transition: var(--transition-standard);
+            font-family: var(--font-primary);
         }
 
-        .column-select:focus {
+        .form-input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .process-button {
+        .form-input::placeholder {
+            color: var(--gray-400);
+            font-style: italic;
+        }
+
+        .search-button {
             background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             border: none;
@@ -535,66 +375,30 @@
             margin-top: 10px;
         }
 
-        .process-button:hover:not(:disabled) {
+        .search-button:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
 
-        .process-button:disabled {
+        .search-button:disabled {
             background: var(--gray-300);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
-        /* STATUS INDICATOR */
-        .status-indicator {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        /* RESULT SECTION */
+        .result-section {
             background: white;
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-lg);
-            padding: 15px;
-            box-shadow: var(--box-shadow-lg);
-            z-index: 1000;
-            display: none;
-            min-width: 300px;
-        }
-
-        .status-indicator.show {
-            display: block;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .status-indicator.success {
-            border-color: var(--success);
-        }
-
-        .status-indicator.error {
-            border-color: var(--danger);
-        }
-
-        .status-indicator.warning {
-            border-color: var(--warning);
-        }
-
-        /* PROGRESS SECTION */
-        .progress-section {
-            background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
-            border: 2px solid var(--primary);
             border-radius: var(--radius-lg);
             padding: 30px;
             margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-100);
             display: none;
         }
 
-        .progress-section.show {
+        .result-section.show {
             display: block;
             animation: slideDown 0.5s ease-out;
         }
@@ -604,109 +408,104 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .progress-title {
+        .result-title {
             font-size: 20px;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .current-filename {
-            background: white;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
+        .result-success {
+            color: var(--success);
+        }
+
+        .result-error {
+            color: var(--danger);
+        }
+
+        .result-content {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border-left: 4px solid var(--success);
+        }
+
+        .result-content.error {
+            border-left-color: var(--danger);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .email-result {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 10px;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-200);
             word-break: break-all;
         }
 
-        .progress-container {
-            margin-bottom: 20px;
+        .result-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        .progress-label {
+        .meta-item {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--gray-700);
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: var(--gray-200);
-            border-radius: 6px;
-            overflow: hidden;
+        .meta-item i {
+            color: var(--primary);
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 6px;
-            transition: width 0.3s ease;
-            position: relative;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
+        /* LOADING STATE */
+        .loading-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* CONNECTION STATUS */
-        .connection-status {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .connection-status.online {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.05);
+        .loading-overlay.show {
+            display: flex;
         }
 
-        .connection-status.offline {
-            border-color: var(--danger);
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .connection-dot {
-            width: 12px;
-            height: 12px;
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--gray-200);
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
+            animation: spin 1s linear infinite;
         }
 
-        .connection-status.offline .connection-dot {
-            background: var(--danger);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-700);
         }
 
         /* STATS CARDS */
@@ -753,7 +552,7 @@
             gap: 10px;
         }
 
-        .jobs-table {
+        .history-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
@@ -763,7 +562,7 @@
             border: 1px solid var(--gray-200);
         }
 
-        .jobs-table th {
+        .history-table th {
             background: var(--gray-100);
             color: var(--gray-700);
             text-align: left;
@@ -773,18 +572,18 @@
             border-bottom: 1px solid var(--gray-200);
         }
 
-        .jobs-table td {
+        .history-table td {
             padding: 16px 20px;
             border-bottom: 1px solid var(--gray-100);
             color: var(--gray-800);
             font-size: 14px;
         }
 
-        .jobs-table tr:last-child td {
+        .history-table tr:last-child td {
             border-bottom: none;
         }
 
-        .jobs-table tr:hover {
+        .history-table tr:hover {
             background: var(--gray-50);
         }
 
@@ -798,17 +597,12 @@
             font-weight: 600;
         }
 
-        .status-completed {
+        .status-found {
             background: rgba(16, 185, 129, 0.1);
             color: var(--success);
         }
 
-        .status-processing {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .status-failed {
+        .status-not-found {
             background: rgba(239, 68, 68, 0.1);
             color: var(--danger);
         }
@@ -830,13 +624,8 @@
             gap: 4px;
         }
 
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: var(--gray-600);
+        .btn-primary {
+            background: var(--primary);
             color: white;
         }
 
@@ -845,13 +634,8 @@
             color: white;
         }
 
-        .btn-success:hover {
-            background: #059669;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-700);
+        .btn-primary:hover {
+            background: var(--primary-dark);
             transform: translateY(-1px);
         }
 
@@ -913,28 +697,56 @@
             color: var(--primary);
         }
 
+        /* STATUS INDICATOR */
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 15px;
+            box-shadow: var(--box-shadow-lg);
+            z-index: 1000;
+            display: none;
+            min-width: 300px;
+        }
+
+        .status-indicator.show {
+            display: block;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .status-indicator.success {
+            border-color: var(--success);
+        }
+
+        .status-indicator.error {
+            border-color: var(--danger);
+        }
+
+        .status-indicator.warning {
+            border-color: var(--warning);
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .container {
                 padding: 0 1rem;
             }
             
-            .upload-section {
+            .search-section {
                 padding: 20px;
             }
             
-            .file-upload-area {
-                padding: 30px 15px;
-            }
-            
-            .column-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            
-            .column-label {
-                min-width: auto;
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
             
             header {
@@ -977,15 +789,15 @@
                 margin-bottom: 5px;
             }
 
-            .jobs-table {
+            .history-table {
                 font-size: 12px;
                 display: block;
                 overflow-x: auto;
                 white-space: nowrap;
             }
 
-            .jobs-table th,
-            .jobs-table td {
+            .history-table th,
+            .history-table td {
                 padding: 8px 6px;
                 min-width: 80px;
             }
@@ -1000,33 +812,26 @@
                 font-size: 10px;
             }
 
-            .progress-section {
-                padding: 20px;
-            }
-
             .status-indicator {
                 right: 10px;
                 left: 10px;
                 min-width: auto;
             }
 
-            .required-fields {
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .result-meta {
                 grid-template-columns: 1fr;
                 gap: 10px;
             }
         }
 
         @media (max-width: 480px) {
-            .upload-title {
+            .search-title {
                 font-size: 1.5rem;
-            }
-            
-            .file-upload-icon {
-                font-size: 36px;
-            }
-            
-            .file-upload-text {
-                font-size: 14px;
             }
 
             .stats-cards {
@@ -1041,28 +846,10 @@
             .stat-value {
                 font-size: 24px;
             }
-        }
 
-        /* Loading animations */
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: loading-sweep 1.5s infinite;
-        }
-
-        @keyframes loading-sweep {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            .form-input {
+                padding: 12px 15px;
+            }
         }
 
         /* Success animation */
@@ -1086,16 +873,36 @@
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+
+        /* Copy button styles */
+        .copy-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition-standard);
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .email-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Connection Status (Hidden by default, only shown on critical issues) -->
-        <div id="connectionStatus" class="connection-status online" style="display: none;">
-            <div class="connection-dot"></div>
-            <span>Connection status</span>
-        </div>
-
         <!-- Header -->
         <header>
             <div class="logo">
@@ -1123,9 +930,14 @@
                         <i class="fas fa-search"></i> Search Leads
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="email-finder.html" class="menu-link">
+                        <i class="fas fa-envelope-open"></i> Bulk Email Finder
+                    </a>
+                </li>
                 <li class="menu-item active">
                     <a href="#" class="menu-link">
-                        <i class="fas fa-envelope-open"></i> Email Finder
+                        <i class="fas fa-user-search"></i> Single Email Finder
                     </a>
                 </li>
                 <li class="menu-item">
@@ -1136,157 +948,92 @@
             </ul>
         </div>
 
-        <!-- Upload Section -->
-        <section class="upload-section">
-            <h2 class="upload-title">Find Email Addresses</h2>
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2 class="search-title">Find Single Email Address</h2>
             
-            <div id="uploadAlert" class="alert"></div>
+            <div id="searchAlert" class="alert"></div>
 
             <div class="info-box">
                 <div class="info-box-content">
                     <h3>How it works</h3>
-                    <p>Upload a CSV file with contact information to find their email addresses. Your CSV file must contain exactly these 3 columns:</p>
-                    
-                    <div class="required-fields">
-                        <div class="field-requirement">
-                            <i class="fas fa-user"></i>
-                            <div class="field-name">First Name</div>
-                            <div class="field-example">John, Sarah, David...</div>
-                        </div>
-                        <div class="field-requirement">
-                            <i class="fas fa-user-tag"></i>
-                            <div class="field-name">Last Name</div>
-                            <div class="field-example">Smith, Johnson, Wilson...</div>
-                        </div>
-                        <div class="field-requirement">
-                            <i class="fas fa-globe"></i>
-                            <div class="field-name">Website</div>
-                            <div class="field-example">company.com, example.org...</div>
-                        </div>
-                    </div>
-                    
-                    <p><strong>Processing:</strong> ~1 second per row (minimum 30 seconds) • <strong>Limit:</strong> 500 rows maximum</p>
+                    <p>Enter the person's information below to find their professional email address. We'll search across multiple databases and verify the email exists.</p>
+                    <p><strong>Processing:</strong> ~3-5 seconds • <strong>Cost:</strong> 1 credit per search</p>
                 </div>
             </div>
 
-            <div class="file-upload-area" id="fileUploadArea">
-                <div class="file-upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
+            <form id="searchForm" class="search-form">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i>
+                        First Name<span class="required-star">*</span>
+                    </label>
+                    <input type="text" id="firstName" class="form-input" placeholder="John" required>
                 </div>
-                <div class="file-upload-text">Drag and drop your CSV file here</div>
-                <div class="file-upload-subtext">or click to browse and select a file (max 500 rows)</div>
-                <button type="button" class="upload-button" id="uploadButton">
-                    <i class="fas fa-folder-open"></i> Choose File
-                </button>
-            </div>
-
-            <input type="file" id="fileInput" class="file-input" accept=".csv" />
-
-            <!-- File Preview -->
-            <div id="filePreview" class="file-preview">
-                <div class="file-info">
-                    <div class="file-icon">
-                        <i class="fas fa-file-csv"></i>
-                    </div>
-                    <div class="file-details">
-                        <h4 id="fileName">No file selected</h4>
-                        <p id="fileStats">0 rows, 0 columns</p>
-                    </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user-tag"></i>
+                        Last Name<span class="required-star">*</span>
+                    </label>
+                    <input type="text" id="lastName" class="form-input" placeholder="Smith" required>
                 </div>
-
-                <div class="column-mapping">
-                    <h4><i class="fas fa-map-marked-alt"></i> Map Your CSV Columns</h4>
-                    <div class="column-row">
-                        <span class="column-label">
-                            <i class="fas fa-user"></i>
-                            First Name<span class="required-star">*</span>:
-                        </span>
-                        <select id="firstNameColumn" class="column-select">
-                            <option value="">Select column...</option>
-                        </select>
-                    </div>
-                    <div class="column-row">
-                        <span class="column-label">
-                            <i class="fas fa-user-tag"></i>
-                            Last Name<span class="required-star">*</span>:
-                        </span>
-                        <select id="lastNameColumn" class="column-select">
-                            <option value="">Select column...</option>
-                        </select>
-                    </div>
-                    <div class="column-row">
-                        <span class="column-label">
-                            <i class="fas fa-globe"></i>
-                            Website<span class="required-star">*</span>:
-                        </span>
-                        <select id="websiteColumn" class="column-select">
-                            <option value="">Select column...</option>
-                        </select>
-                    </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-globe"></i>
+                        Website<span class="required-star">*</span>
+                    </label>
+                    <input type="text" id="website" class="form-input" placeholder="company.com" required>
                 </div>
+            </form>
 
-                <button type="button" class="process-button" id="processButton" disabled>
-                    <i class="fas fa-search"></i> Find Email Addresses
-                </button>
-            </div>
+            <button type="submit" class="search-button" id="searchButton">
+                <i class="fas fa-search"></i> Find Email Address
+            </button>
         </section>
 
-        <!-- Progress Section -->
-        <div id="progressSection" class="progress-section">
-            <div class="progress-title">
-                <i class="fas fa-search fa-spin"></i>
-                Processing Email Search
-            </div>
-            <div id="currentFileName" class="current-filename">
-                Processing...
-            </div>
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>Progress</span>
-                    <span id="progressText">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill" style="width: 0%"></div>
-                </div>
-            </div>
-            <div style="color: var(--gray-600); font-size: 14px; margin-bottom: 10px;">
-                <i class="fas fa-info-circle"></i>
-                Estimated time remaining: <span id="timeRemaining">Calculating...</span>
-            </div>
-            <div style="color: var(--success); font-size: 14px; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border-left: 4px solid var(--success);">
-                <i class="fas fa-check-circle"></i>
-                You can leave this page - processing runs on our secure servers
+        <!-- Result Section -->
+        <section id="resultSection" class="result-section">
+            <div id="resultContent"></div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div style="text-align: center;">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Searching for email address...</div>
             </div>
         </div>
 
         <!-- Stats Cards -->
         <div class="stats-cards">
             <div class="stat-card">
-                <div class="stat-value" id="totalJobs">0</div>
-                <div class="stat-label">Total Jobs</div>
+                <div class="stat-value" id="totalSearches">0</div>
+                <div class="stat-label">Total Searches</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="completedJobs">0</div>
-                <div class="stat-label">Completed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="processingJobs">0</div>
-                <div class="stat-label">Processing</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalEmailsFound">0</div>
+                <div class="stat-value" id="emailsFound">0</div>
                 <div class="stat-label">Emails Found</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="successRate">0%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="todaySearches">0</div>
+                <div class="stat-label">Today's Searches</div>
             </div>
         </div>
 
-        <!-- Email Finding History -->
+        <!-- Search History -->
         <div class="history-section">
             <h2 class="section-title">
                 <i class="fas fa-history"></i>
-                Email Finding History
+                Search History
             </h2>
 
-            <div id="jobsContainer">
+            <div id="historyContainer">
                 <!-- Table will be populated by JavaScript -->
             </div>
         </div>
@@ -1306,25 +1053,13 @@
         // ========================================
         
         const CONFIG = {
-            EMAIL_FINDER_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/email-finder-app',
+            SINGLE_EMAIL_WEBHOOK_URL: 'https://eliasse-n8n.onrender.com/webhook/single-email-finder',
             CREDIT_WEBHOOK_URL: 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2',
-            CHECK_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/check',
-            DOWNLOAD_ENDPOINT: 'https://email-finder-download.hamoureliasse.workers.dev/api/download',
-            
-            // Limits and timeouts
-            MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
-            MAX_ROWS: 500,
-            MIN_PROCESSING_TIME: 30, // seconds
-            PROCESSING_TIME_PER_ROW: 1, // second
-            
-            // Retry configuration
-            MAX_RETRIES: 3,
-            RETRY_DELAY: 2000, // milliseconds
             
             // Storage keys
             STORAGE_KEYS: {
-                JOBS: 'email_finder_jobs',
-                CURRENT_JOB: 'email_finder_current_job'
+                SEARCHES: 'single_email_searches',
+                TODAY_SEARCHES: 'today_single_searches'
             }
         };
 
@@ -1334,13 +1069,7 @@
         
         const AppState = {
             userToken: null,
-            uploadedFile: null,
-            csvData: null,
-            csvHeaders: [],
-            currentJob: null,
-            progressInterval: null,
-            isOnline: true,
-            retryCount: 0
+            isSearching: false
         };
 
         // ========================================
@@ -1348,27 +1077,21 @@
         // ========================================
         
         const Elements = {
-            fileUploadArea: document.getElementById('fileUploadArea'),
-            fileInput: document.getElementById('fileInput'),
-            uploadButton: document.getElementById('uploadButton'),
-            filePreview: document.getElementById('filePreview'),
-            fileName: document.getElementById('fileName'),
-            fileStats: document.getElementById('fileStats'),
-            uploadAlert: document.getElementById('uploadAlert'),
-            processButton: document.getElementById('processButton'),
-            progressSection: document.getElementById('progressSection'),
-            connectionStatus: document.getElementById('connectionStatus'),
+            searchForm: document.getElementById('searchForm'),
+            searchButton: document.getElementById('searchButton'),
+            searchAlert: document.getElementById('searchAlert'),
+            firstName: document.getElementById('firstName'),
+            lastName: document.getElementById('lastName'),
+            website: document.getElementById('website'),
+            resultSection: document.getElementById('resultSection'),
+            resultContent: document.getElementById('resultContent'),
+            loadingOverlay: document.getElementById('loadingOverlay'),
             statusIndicator: document.getElementById('statusIndicator'),
-            statusMessage: document.getElementById('statusMessage'),
-            
-            // Column mapping selects (simplified to 3 fields)
-            firstNameColumn: document.getElementById('firstNameColumn'),
-            lastNameColumn: document.getElementById('lastNameColumn'),
-            websiteColumn: document.getElementById('websiteColumn')
+            statusMessage: document.getElementById('statusMessage')
         };
 
         // ========================================
-        // LOGGING SYSTEM (Simplified)
+        // UTILITY CLASSES
         // ========================================
         
         class Logger {
@@ -1392,105 +1115,6 @@
             }
         }
 
-        // ========================================
-        // NETWORK & CONNECTION MONITORING
-        // ========================================
-        
-        class NetworkMonitor {
-            static async checkConnection() {
-                try {
-                    const response = await fetch(CONFIG.EMAIL_FINDER_WEBHOOK_URL, { 
-                        method: 'HEAD',
-                        mode: 'no-cors'
-                    });
-                    return true;
-                } catch (error) {
-                    return false;
-                }
-            }
-            
-            static updateStatus(isOnline) {
-                AppState.isOnline = isOnline;
-                
-                const statusEl = Elements.connectionStatus;
-                
-                if (!isOnline) {
-                    statusEl.className = 'connection-status offline';
-                    statusEl.innerHTML = '<div class="connection-dot"></div><span>Connection lost</span>';
-                    statusEl.style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        statusEl.style.display = 'none';
-                    }, 5000);
-                } else {
-                    statusEl.style.display = 'none';
-                }
-                
-                Logger.log(`Connection status: ${isOnline ? 'Online' : 'Offline'}`, isOnline ? 'success' : 'error');
-            }
-            
-            static async startMonitoring() {
-                const checkAndUpdate = async () => {
-                    const isOnline = await this.checkConnection();
-                    this.updateStatus(isOnline);
-                };
-                
-                await checkAndUpdate();
-                setInterval(checkAndUpdate, 30000);
-            }
-        }
-
-        // ========================================
-        // ERROR HANDLING & RETRY SYSTEM
-        // ========================================
-        
-        class ErrorHandler {
-            static async retryOperation(operation, maxRetries = CONFIG.MAX_RETRIES) {
-                for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                    try {
-                        Logger.log(`Attempt ${attempt}/${maxRetries}`, 'info');
-                        return await operation();
-                    } catch (error) {
-                        Logger.log(`Attempt ${attempt} failed: ${error.message}`, 'warn');
-                        
-                        if (attempt === maxRetries) {
-                            throw error;
-                        }
-                        
-                        await this.delay(CONFIG.RETRY_DELAY * attempt);
-                    }
-                }
-            }
-            
-            static delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-            
-            static formatError(error) {
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    return 'Connection error - Check your internet connection';
-                }
-                
-                if (error.message.includes('CORS')) {
-                    return 'CORS error - Server refusing connection';
-                }
-                
-                if (error.message.includes('429')) {
-                    return 'Too many requests - Please wait before retrying';
-                }
-                
-                if (error.message.includes('413')) {
-                    return 'File too large - Please reduce file size';
-                }
-                
-                return error.message || 'An unknown error occurred';
-            }
-        }
-
-        // ========================================
-        // NOTIFICATION SYSTEM
-        // ========================================
-        
         class NotificationSystem {
             static show(message, type = 'info', duration = 5000) {
                 const statusIndicator = Elements.statusIndicator;
@@ -1507,7 +1131,7 @@
             }
             
             static showAlert(message, type = 'info', duration = 5000) {
-                const alert = Elements.uploadAlert;
+                const alert = Elements.searchAlert;
                 alert.textContent = message;
                 alert.className = `alert alert-${type}`;
                 alert.style.display = 'block';
@@ -1520,247 +1144,35 @@
             }
         }
 
-        // ========================================
-        // FILE VALIDATION & PROCESSING
-        // ========================================
-        
-        class FileValidator {
-            static validate(file) {
-                const errors = [];
-                
-                if (!file) {
-                    errors.push('No file selected');
-                    return errors;
-                }
-                
-                if (!file.name.toLowerCase().endsWith('.csv')) {
-                    errors.push('Only CSV files are accepted');
-                }
-                
-                if (file.size === 0) {
-                    errors.push('File is empty');
-                }
-                
-                if (file.size > CONFIG.MAX_FILE_SIZE) {
-                    errors.push(`File must be less than ${CONFIG.MAX_FILE_SIZE / (1024 * 1024)}MB`);
-                }
-                
-                return errors;
-            }
-            
-            static validateCSVData(csvData, csvHeaders) {
-                const errors = [];
-                
-                if (!csvHeaders || csvHeaders.length === 0) {
-                    errors.push('No headers found in CSV file');
-                }
-                
-                if (!csvData || csvData.length === 0) {
-                    errors.push('No data found in CSV file');
-                }
-                
-                if (csvData && csvData.length > CONFIG.MAX_ROWS) {
-                    errors.push(`File cannot contain more than ${CONFIG.MAX_ROWS} rows`);
-                }
-                
-                return errors;
-            }
-        }
-
-        class CSVParser {
-            static parse(csvContent) {
-                try {
-                    const lines = csvContent.split('\n').filter(line => line.trim());
-                    
-                    if (lines.length < 2) {
-                        throw new Error('CSV file must contain at least a header and one data row');
-                    }
-                    
-                    const headers = this.parseCSVRow(lines[0]);
-                    Logger.log(`Headers found: ${headers.join(', ')}`, 'info');
-                    
-                    const data = [];
-                    for (let i = 1; i < lines.length; i++) {
-                        const row = this.parseCSVRow(lines[i]);
-                        if (row.length === headers.length) {
-                            data.push(row);
-                        } else {
-                            Logger.log(`Row ${i} skipped: column count mismatch`, 'warn');
-                        }
-                    }
-                    
-                    Logger.log(`Parsed ${data.length} valid rows`, 'success');
-                    
-                    return { headers, data };
-                } catch (error) {
-                    Logger.log(`CSV parsing failed: ${error.message}`, 'error');
-                    throw error;
-                }
-            }
-            
-            static parseCSVRow(row) {
-                const result = [];
-                let current = '';
-                let inQuotes = false;
-                
-                for (let i = 0; i < row.length; i++) {
-                    const char = row[i];
-                    
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        result.push(current.trim().replace(/"/g, ''));
-                        current = '';
-                    } else {
-                        current += char;
-                    }
-                }
-                
-                result.push(current.trim().replace(/"/g, ''));
-                return result;
-            }
-        }
-
-        // ========================================
-        // COLUMN MAPPING SYSTEM (Simplified to 3 fields)
-        // ========================================
-        
-        class ColumnMapper {
-            static autoDetect(headers) {
-                const mappings = {};
-                
-                headers.forEach((header, index) => {
-                    const lowerHeader = header.toLowerCase();
-                    
-                    // First name detection
-                    if (this.matchesPattern(lowerHeader, ['first', 'firstname', 'fname', 'given_name', 'prenom'])) {
-                        mappings.firstName = index;
-                    }
-                    
-                    // Last name detection
-                    if (this.matchesPattern(lowerHeader, ['last', 'lastname', 'lname', 'surname', 'family_name', 'nom'])) {
-                        mappings.lastName = index;
-                    }
-                    
-                    // Website detection (updated from domain)
-                    if (this.matchesPattern(lowerHeader, ['website', 'domain', 'site', 'web', 'company_domain', 'company_website', 'url'])) {
-                        mappings.website = index;
-                    }
-                });
-                
-                Logger.log('Auto-detected column mappings', 'info', mappings);
-                return mappings;
-            }
-            
-            static matchesPattern(header, patterns) {
-                return patterns.some(pattern => header.includes(pattern));
-            }
-            
-            static setupColumnSelects(headers) {
-                const selects = [
-                    Elements.firstNameColumn,
-                    Elements.lastNameColumn,
-                    Elements.websiteColumn
-                ];
-                
-                // Clear existing options
-                selects.forEach(select => {
-                    const defaultOption = select.querySelector('option[value=""]');
-                    select.innerHTML = '';
-                    select.appendChild(defaultOption.cloneNode(true));
-                });
-
-                // Add header options
-                headers.forEach((header, index) => {
-                    selects.forEach(select => {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.textContent = header;
-                        select.appendChild(option);
-                    });
-                });
-
-                // Auto-detect and apply mappings
-                const mappings = this.autoDetect(headers);
-                
-                if (mappings.firstName !== undefined) Elements.firstNameColumn.value = mappings.firstName;
-                if (mappings.lastName !== undefined) Elements.lastNameColumn.value = mappings.lastName;
-                if (mappings.website !== undefined) Elements.websiteColumn.value = mappings.website;
-                
-                // Validate after auto-detection
-                this.validateRequiredColumns();
-            }
-            
-            static validateRequiredColumns() {
-                const firstName = Elements.firstNameColumn.value;
-                const lastName = Elements.lastNameColumn.value;
-                const website = Elements.websiteColumn.value;
-
-                const isValid = firstName !== '' && lastName !== '' && website !== '';
-                Elements.processButton.disabled = !isValid;
-
-                if (isValid) {
-                    Elements.processButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-                    NotificationSystem.showAlert('✅ All 3 required columns mapped! Ready to find emails.', 'success');
-                    Logger.log('All required columns mapped successfully', 'success');
-                } else {
-                    Elements.processButton.style.background = 'var(--gray-300)';
-                    Logger.log('Required columns not fully mapped', 'warn');
-                }
-            }
-        }
-
-        // ========================================
-        // API COMMUNICATION
-        // ========================================
-        
         class APIClient {
-            static async makeRequest(url, options = {}) {
-                const defaultOptions = {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                };
-                
-                const finalOptions = { ...defaultOptions, ...options };
-                
-                Logger.log(`Making ${finalOptions.method} request to: ${url}`, 'info');
-                
-                if (finalOptions.body && finalOptions.body instanceof FormData) {
-                    Logger.log('Request contains FormData', 'info');
-                    delete finalOptions.headers['Content-Type'];
-                }
-                
-                const response = await fetch(url, finalOptions);
-                
-                Logger.log(`Response received: ${response.status} ${response.statusText}`, 
-                    response.ok ? 'success' : 'error');
-                
-                return response;
-            }
-            
-            static async sendFileToAPI(formData) {
+            static async findEmail(searchData) {
                 try {
-                    Logger.log('Starting file upload to API', 'info');
+                    Logger.log('Starting email search API call', 'info', searchData);
                     
-                    const response = await this.makeRequest(CONFIG.EMAIL_FINDER_WEBHOOK_URL, {
+                    const response = await fetch(CONFIG.SINGLE_EMAIL_WEBHOOK_URL, {
                         method: 'POST',
-                        body: formData
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(searchData)
                     });
+                    
+                    Logger.log(`API Response: ${response.status} ${response.statusText}`, 
+                        response.ok ? 'success' : 'error');
                     
                     if (!response.ok) {
                         const errorText = await response.text();
                         throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
                     }
                     
-                    const result = await response.text();
-                    Logger.log('API call successful', 'success', { response: result });
+                    const result = await response.json();
+                    Logger.log('Email search successful', 'success', result);
                     
                     return result;
                     
                 } catch (error) {
-                    Logger.log(`API call failed: ${error.message}`, 'error', error);
+                    Logger.log(`Email search failed: ${error.message}`, 'error', error);
                     throw error;
                 }
             }
@@ -1772,7 +1184,7 @@
                         type: "token"
                     };
                     
-                    const response = await this.makeRequest(CONFIG.CREDIT_WEBHOOK_URL, {
+                    const response = await fetch(CONFIG.CREDIT_WEBHOOK_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -1794,200 +1206,137 @@
                     return null;
                 }
             }
-            
-            static async checkJobStatus(jobId) {
-                try {
-                    const checkUrl = `${CONFIG.CHECK_ENDPOINT}?job_id=${jobId}`;
-                    const response = await this.makeRequest(checkUrl, { method: 'HEAD' });
-                    return response.ok;
-                } catch (error) {
-                    Logger.log(`Job status check failed for ${jobId}: ${error.message}`, 'warn');
-                    return false;
-                }
-            }
-            
-            static async downloadJobResult(jobId) {
-                try {
-                    const downloadUrl = `${CONFIG.DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
-                    const response = await this.makeRequest(downloadUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`Download failed: ${response.status}`);
-                    }
-                    
-                    return await response.blob();
-                } catch (error) {
-                    Logger.log(`Download failed for job ${jobId}: ${error.message}`, 'error');
-                    throw error;
-                }
-            }
         }
 
         // ========================================
-        // JOB MANAGEMENT
+        // SEARCH MANAGEMENT
         // ========================================
         
-        class JobManager {
+        class SearchManager {
             static generateId() {
-                return 'email_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                return 'search_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             }
 
-            static getAllJobs() {
-                const jobs = localStorage.getItem(CONFIG.STORAGE_KEYS.JOBS);
-                return jobs ? JSON.parse(jobs) : [];
+            static getAllSearches() {
+                const searches = localStorage.getItem(CONFIG.STORAGE_KEYS.SEARCHES);
+                return searches ? JSON.parse(searches) : [];
             }
 
-            static saveJobs(jobs) {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.JOBS, JSON.stringify(jobs));
-                Logger.log(`Saved ${jobs.length} jobs to storage`, 'info');
+            static saveSearches(searches) {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.SEARCHES, JSON.stringify(searches));
+                Logger.log(`Saved ${searches.length} searches to storage`, 'info');
             }
 
-            static saveJob(job) {
-                const jobs = this.getAllJobs();
-                const existingIndex = jobs.findIndex(j => j.id === job.id);
+            static saveSearch(search) {
+                const searches = this.getAllSearches();
+                searches.unshift(search);
                 
-                if (existingIndex >= 0) {
-                    jobs[existingIndex] = job;
-                    Logger.log(`Updated existing job: ${job.id}`, 'info');
-                } else {
-                    jobs.unshift(job);
-                    Logger.log(`Added new job: ${job.id}`, 'info');
+                // Keep only last 100 searches
+                if (searches.length > 100) {
+                    searches.splice(100);
                 }
                 
-                this.saveJobs(jobs);
+                this.saveSearches(searches);
                 this.updateStats();
             }
 
-            static deleteJob(jobId) {
-                if (confirm('Are you sure you want to delete this job?')) {
-                    const jobs = this.getAllJobs();
-                    const filteredJobs = jobs.filter(job => job.id !== jobId);
-                    this.saveJobs(filteredJobs);
-                    this.loadJobHistory();
+            static deleteSearch(searchId) {
+                if (confirm('Are you sure you want to delete this search?')) {
+                    const searches = this.getAllSearches();
+                    const filteredSearches = searches.filter(search => search.id !== searchId);
+                    this.saveSearches(filteredSearches);
+                    this.loadSearchHistory();
                     this.updateStats();
-                    NotificationSystem.showAlert('Job deleted successfully', 'success');
-                    Logger.log(`Deleted job: ${jobId}`, 'info');
-                }
-            }
-
-            static async checkPendingJobs() {
-                const jobs = this.getAllJobs();
-                const processingJobs = jobs.filter(job => job.status === 'processing');
-                
-                if (processingJobs.length === 0) {
-                    Logger.log('No pending jobs to check', 'info');
-                    return;
-                }
-                
-                Logger.log(`Checking ${processingJobs.length} pending jobs...`, 'info');
-                
-                let anyJobUpdated = false;
-                
-                for (const job of processingJobs) {
-                    try {
-                        const isCompleted = await APIClient.checkJobStatus(job.id);
-                        
-                        if (isCompleted) {
-                            job.status = 'completed';
-                            job.progress = 100;
-                            job.completed_at = new Date().toISOString();
-                            
-                            if (!job.emails_found) {
-                                const successRate = 0.6 + (Math.random() * 0.25);
-                                job.emails_found = Math.floor(job.total_rows * successRate);
-                            }
-                            
-                            this.saveJob(job);
-                            anyJobUpdated = true;
-                            Logger.log(`Job ${job.id} completed while user was away`, 'success');
-                        }
-                    } catch (error) {
-                        Logger.log(`Failed to check job ${job.id}: ${error.message}`, 'warn');
-                    }
-                }
-                
-                if (anyJobUpdated) {
-                    this.loadJobHistory();
-                    this.updateStats();
-                    NotificationSystem.show('Some email finding jobs completed while you were away!', 'success');
+                    NotificationSystem.showAlert('Search deleted successfully', 'success');
+                    Logger.log(`Deleted search: ${searchId}`, 'info');
                 }
             }
 
             static updateStats() {
-                const jobs = this.getAllJobs();
+                const searches = this.getAllSearches();
+                const today = new Date().toDateString();
                 
-                const stats = jobs.reduce((acc, job) => {
+                const stats = searches.reduce((acc, search) => {
                     acc.total++;
-                    if (job.status === 'completed') {
-                        acc.completed++;
-                        acc.totalEmails += job.emails_found || 0;
+                    if (search.email_found && search.email) {
+                        acc.found++;
                     }
-                    if (job.status === 'processing') acc.processing++;
+                    
+                    const searchDate = new Date(search.timestamp).toDateString();
+                    if (searchDate === today) {
+                        acc.today++;
+                    }
+                    
                     return acc;
-                }, { total: 0, completed: 0, processing: 0, totalEmails: 0 });
+                }, { total: 0, found: 0, today: 0 });
 
-                document.getElementById('totalJobs').textContent = stats.total;
-                document.getElementById('completedJobs').textContent = stats.completed;
-                document.getElementById('processingJobs').textContent = stats.processing;
-                document.getElementById('totalEmailsFound').textContent = stats.totalEmails;
+                const successRate = stats.total > 0 ? Math.round((stats.found / stats.total) * 100) : 0;
+
+                document.getElementById('totalSearches').textContent = stats.total;
+                document.getElementById('emailsFound').textContent = stats.found;
+                document.getElementById('successRate').textContent = successRate + '%';
+                document.getElementById('todaySearches').textContent = stats.today;
                 
                 Logger.log('Stats updated', 'info', stats);
             }
 
-            static loadJobHistory() {
-                const jobs = this.getAllJobs();
-                this.renderJobsTable(jobs);
+            static loadSearchHistory() {
+                const searches = this.getAllSearches();
+                this.renderSearchTable(searches);
             }
 
-            static renderJobsTable(jobs) {
-                const container = document.getElementById('jobsContainer');
+            static renderSearchTable(searches) {
+                const container = document.getElementById('historyContainer');
                 
-                if (jobs.length === 0) {
+                if (searches.length === 0) {
                     container.innerHTML = `
                         <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <h3>No email finding jobs yet</h3>
-                            <p>Upload your first CSV file to start finding email addresses</p>
+                            <i class="fas fa-search"></i>
+                            <h3>No searches yet</h3>
+                            <p>Search for your first email address above</p>
                         </div>
                     `;
                     return;
                 }
 
                 const table = `
-                    <table class="jobs-table">
+                    <table class="history-table">
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Filename</th>
+                                <th>Name</th>
+                                <th>Website</th>
                                 <th>Status</th>
-                                <th>Rows</th>
-                                <th>Emails Found</th>
+                                <th>Email Found</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${jobs.map(job => `
+                            ${searches.map(search => `
                                 <tr>
-                                    <td>${this.formatDate(job.created_at)}</td>
+                                    <td>${this.formatDate(search.timestamp)}</td>
+                                    <td>${search.firstName} ${search.lastName}</td>
                                     <td style="font-family: 'Courier New', monospace; font-size: 12px;">
-                                        ${job.filename || 'Unknown'}
+                                        ${search.website}
                                     </td>
                                     <td>
-                                        <span class="status-badge status-${job.status}">
-                                            <i class="fas fa-${this.getStatusIcon(job.status)}"></i>
-                                            ${this.getStatusText(job.status)}
+                                        <span class="status-badge ${search.email_found ? 'status-found' : 'status-not-found'}">
+                                            <i class="fas fa-${search.email_found ? 'check-circle' : 'times-circle'}"></i>
+                                            ${search.email_found ? 'Found' : 'Not Found'}
                                         </span>
                                     </td>
-                                    <td>${job.total_rows || '—'}</td>
-                                    <td>${job.emails_found || '—'}</td>
+                                    <td style="font-family: 'Courier New', monospace; font-size: 12px;">
+                                        ${search.email || '—'}
+                                        ${search.email ? `<button class="copy-button" onclick="SearchManager.copyEmail('${search.email}')"><i class="fas fa-copy"></i></button>` : ''}
+                                    </td>
                                     <td>
                                         <div class="action-buttons">
-                                            ${job.status === 'completed' ? 
-                                                `<button class="btn-small btn-success" onclick="JobManager.downloadFile('${job.id}')">
-                                                    <i class="fas fa-download"></i> Download
+                                            ${search.email ? 
+                                                `<button class="btn-small btn-primary" onclick="SearchManager.copyEmail('${search.email}')">
+                                                    <i class="fas fa-copy"></i> Copy
                                                 </button>` : ''
                                             }
-                                            <button class="btn-small btn-danger" onclick="JobManager.deleteJob('${job.id}')">
+                                            <button class="btn-small btn-danger" onclick="SearchManager.deleteSearch('${search.id}')">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                         </div>
@@ -2001,8 +1350,8 @@
                 container.innerHTML = table;
             }
 
-            static formatDate(dateString) {
-                return new Date(dateString).toLocaleDateString('en-US', {
+            static formatDate(timestamp) {
+                return new Date(timestamp).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     hour: '2-digit',
@@ -2010,154 +1359,106 @@
                 });
             }
 
-            static getStatusIcon(status) {
-                switch (status) {
-                    case 'completed': return 'check-circle';
-                    case 'processing': return 'clock';
-                    case 'failed': return 'times-circle';
-                    default: return 'question-circle';
-                }
-            }
-
-            static getStatusText(status) {
-                switch (status) {
-                    case 'completed': return 'Completed';
-                    case 'processing': return 'Processing';
-                    case 'failed': return 'Failed';
-                    default: return 'Unknown';
-                }
-            }
-
-            static async downloadFile(jobId) {
-                try {
-                    NotificationSystem.showAlert('Download starting...', 'info');
-                    Logger.log(`Starting download for job: ${jobId}`, 'info');
-                    
-                    const blob = await APIClient.downloadJobResult(jobId);
-                    
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `email_results_${jobId}.csv`;
-                    document.body.appendChild(a);
-                    a.click();
-                    
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
-                    
-                    NotificationSystem.showAlert('Download successful!', 'success');
-                    Logger.log(`Download completed for job: ${jobId}`, 'success');
-                    
-                } catch (error) {
-                    const errorMessage = ErrorHandler.formatError(error);
-                    NotificationSystem.showAlert('Download error: ' + errorMessage, 'error');
-                    Logger.log(`Download failed for job ${jobId}: ${error.message}`, 'error');
-                }
+            static copyEmail(email) {
+                navigator.clipboard.writeText(email).then(() => {
+                    NotificationSystem.show('Email copied to clipboard!', 'success');
+                }).catch(() => {
+                    NotificationSystem.show('Failed to copy email', 'error');
+                });
             }
         }
 
         // ========================================
-        // PROGRESS SIMULATION
+        // RESULT DISPLAY
         // ========================================
         
-        class ProgressManager {
-            static showProgress(filename) {
-                Elements.progressSection.classList.add('show');
-                document.getElementById('currentFileName').textContent = filename;
+        class ResultDisplay {
+            static showSuccess(searchData, result) {
+                const resultContent = `
+                    <div class="result-title result-success">
+                        <i class="fas fa-check-circle"></i>
+                        Email Found Successfully!
+                    </div>
+                    <div class="result-content">
+                        <div class="email-display">
+                            <div class="email-result">${result.email}</div>
+                            <button class="copy-button" onclick="SearchManager.copyEmail('${result.email}')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div class="result-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                ${searchData.firstName} ${searchData.lastName}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-globe"></i>
+                                ${searchData.website}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                ${new Date().toLocaleTimeString()}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-shield-alt"></i>
+                                Verified Email
+                            </div>
+                        </div>
+                    </div>
+                `;
                 
-                document.getElementById('progressFill').style.width = '0%';
-                document.getElementById('progressText').textContent = '0%';
-                document.getElementById('timeRemaining').textContent = 'Calculating...';
-                
-                Logger.log(`Progress display started for: ${filename}`, 'info');
-            }
-
-            static simulateProgress() {
-                if (!AppState.currentJob) {
-                    Logger.log('No current job for progress simulation', 'warn');
-                    return;
-                }
-
-                const totalSeconds = Math.max(CONFIG.MIN_PROCESSING_TIME, AppState.currentJob.total_rows * CONFIG.PROCESSING_TIME_PER_ROW);
-                
-                AppState.currentJob.simulation_start = AppState.currentJob.simulation_start || Date.now();
-                AppState.currentJob.total_duration_seconds = totalSeconds;
-                JobManager.saveJob(AppState.currentJob);
-
-                this.updateTimeDisplay(totalSeconds);
-
-                Logger.log(`Progress simulation started - estimated time: ${totalSeconds}s for ${AppState.currentJob.total_rows} rows`, 'info');
-
-                AppState.progressInterval = setInterval(() => {
-                    const elapsedSeconds = (Date.now() - AppState.currentJob.simulation_start) / 1000;
-                    const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
-
-                    document.getElementById('progressFill').style.width = progress + '%';
-                    document.getElementById('progressText').textContent = Math.round(progress) + '%';
-                    
-                    const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
-                    this.updateTimeDisplay(timeRemaining);
-
-                    if (AppState.currentJob) {
-                        AppState.currentJob.progress = Math.round(progress);
-                        JobManager.saveJob(AppState.currentJob);
-                    }
-
-                    if (progress >= 100) {
-                        clearInterval(AppState.progressInterval);
-                        this.completeJob();
-                    }
-                }, 1000);
-            }
-
-            static updateTimeDisplay(seconds) {
-                const timeElement = document.getElementById('timeRemaining');
-                if (!timeElement) return;
-                
-                if (seconds > 60) {
-                    const mins = Math.floor(seconds / 60);
-                    const secs = seconds % 60;
-                    timeElement.textContent = `${mins}m ${secs}s`;
-                } else {
-                    timeElement.textContent = `${seconds}s`;
-                }
-            }
-
-            static completeJob() {
-                if (!AppState.currentJob) return;
-                
-                Logger.log(`Completing job: ${AppState.currentJob.id}`, 'info');
-                
-                AppState.currentJob.status = 'completed';
-                AppState.currentJob.progress = 100;
-                AppState.currentJob.completed_at = new Date().toISOString();
-                
-                if (!AppState.currentJob.emails_found) {
-                    const successRate = 0.6 + (Math.random() * 0.25);
-                    AppState.currentJob.emails_found = Math.floor(AppState.currentJob.total_rows * successRate);
-                }
-                
-                JobManager.saveJob(AppState.currentJob);
+                Elements.resultContent.innerHTML = resultContent;
+                Elements.resultSection.classList.add('show');
+                Elements.resultSection.classList.add('success-animation');
                 
                 setTimeout(() => {
-                    Elements.progressSection.classList.remove('show');
-                    AppState.currentJob = null;
-                    JobManager.loadJobHistory();
-                    JobManager.updateStats();
-                }, 2000);
-
-                NotificationSystem.showAlert('Email finding completed successfully!', 'success');
-                NotificationSystem.show(`Found ${AppState.currentJob.emails_found} email addresses! Click download to get your results.`, 'success');
-                
-                Logger.log(`Job completed successfully: ${AppState.currentJob.emails_found} emails found`, 'success');
+                    Elements.resultSection.classList.remove('success-animation');
+                }, 600);
             }
 
-            static stopProgress() {
-                if (AppState.progressInterval) {
-                    clearInterval(AppState.progressInterval);
-                    AppState.progressInterval = null;
-                    Logger.log('Progress simulation stopped', 'info');
-                }
+            static showError(searchData, message = 'Email not found') {
+                const resultContent = `
+                    <div class="result-title result-error">
+                        <i class="fas fa-times-circle"></i>
+                        ${message}
+                    </div>
+                    <div class="result-content error">
+                        <div style="text-align: center; padding: 20px;">
+                            <p style="margin-bottom: 15px; font-size: 16px;">
+                                We couldn't find an email address for <strong>${searchData.firstName} ${searchData.lastName}</strong> at <strong>${searchData.website}</strong>.
+                            </p>
+                            <p style="font-size: 14px; color: var(--gray-600);">
+                                Try with a different website domain or check the spelling of the name.
+                            </p>
+                        </div>
+                        <div class="result-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                ${searchData.firstName} ${searchData.lastName}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-globe"></i>
+                                ${searchData.website}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                ${new Date().toLocaleTimeString()}
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-search"></i>
+                                Search Completed
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                Elements.resultContent.innerHTML = resultContent;
+                Elements.resultSection.classList.add('show');
+                Elements.resultSection.classList.add('error-animation');
+                
+                setTimeout(() => {
+                    Elements.resultSection.classList.remove('error-animation');
+                }, 600);
             }
         }
 
@@ -2165,25 +1466,22 @@
         // MAIN APPLICATION CLASS
         // ========================================
         
-        class EmailFinderApp {
+        class SingleEmailFinderApp {
             static async init() {
-                Logger.log('🚀 EmailFinderApp initialization started', 'info');
+                Logger.log('🚀 SingleEmailFinderApp initialization started', 'info');
                 
                 try {
-                    await EmailFinderApp.initializeAuth();
-                    EmailFinderApp.initializeEventListeners();
+                    await SingleEmailFinderApp.initializeAuth();
+                    SingleEmailFinderApp.initializeEventListeners();
                     
-                    await NetworkMonitor.startMonitoring();
-                    await JobManager.checkPendingJobs();
+                    SearchManager.loadSearchHistory();
+                    SearchManager.updateStats();
                     
-                    JobManager.loadJobHistory();
-                    JobManager.updateStats();
-                    
-                    Logger.log('✅ EmailFinderApp initialized successfully', 'success');
+                    Logger.log('✅ SingleEmailFinderApp initialized successfully', 'success');
                     
                 } catch (error) {
                     Logger.log(`❌ Initialization failed: ${error.message}`, 'error');
-                    NotificationSystem.showAlert('Initialization error: ' + ErrorHandler.formatError(error), 'error');
+                    NotificationSystem.showAlert('Initialization error: ' + error.message, 'error');
                 }
             }
 
@@ -2211,14 +1509,14 @@
                 AppState.userToken = token;
                 Logger.log('User token loaded successfully', 'success');
                 
-                await EmailFinderApp.fetchUserCredits();
+                await SingleEmailFinderApp.fetchUserCredits();
             }
 
             static async fetchUserCredits() {
                 try {
                     const credits = await APIClient.fetchUserCredits(AppState.userToken);
                     if (credits !== null) {
-                        EmailFinderApp.displayUserCredits(credits);
+                        SingleEmailFinderApp.displayUserCredits(credits);
                     }
                 } catch (error) {
                     Logger.log(`Failed to fetch user credits: ${error.message}`, 'warn');
@@ -2234,43 +1532,22 @@
             }
 
             static initializeEventListeners() {
-                // File upload events
-                Elements.fileUploadArea.addEventListener('click', () => Elements.fileInput.click());
-                Elements.fileUploadArea.addEventListener('dragover', EmailFinderApp.handleDragOver);
-                Elements.fileUploadArea.addEventListener('dragleave', EmailFinderApp.handleDragLeave);
-                Elements.fileUploadArea.addEventListener('drop', EmailFinderApp.handleFileDrop);
-                Elements.uploadButton.addEventListener('click', () => Elements.fileInput.click());
-                Elements.fileInput.addEventListener('change', EmailFinderApp.handleFileSelect);
+                // Search form submission
+                Elements.searchForm.addEventListener('submit', SingleEmailFinderApp.handleSearch);
+                Elements.searchButton.addEventListener('click', SingleEmailFinderApp.handleSearch);
                 
-                // Process button
-                Elements.processButton.addEventListener('click', EmailFinderApp.processFile);
-                
-                // Column mapping change events (simplified to 3 fields)
-                [Elements.firstNameColumn, Elements.lastNameColumn, Elements.websiteColumn].forEach(select => {
-                    select.addEventListener('change', ColumnMapper.validateRequiredColumns);
+                // Input validation
+                [Elements.firstName, Elements.lastName, Elements.website].forEach(input => {
+                    input.addEventListener('input', SingleEmailFinderApp.validateForm);
                 });
                 
                 // Navigation buttons
-                EmailFinderApp.setupNavigationButtons();
+                SingleEmailFinderApp.setupNavigationButtons();
                 
                 // Global error handler
                 window.addEventListener('error', (e) => {
                     Logger.log(`Global error: ${e.error?.message || 'Unknown error'}`, 'error', e.error);
                     NotificationSystem.showAlert('An unexpected error occurred. Please refresh the page.', 'error');
-                });
-
-                // Beforeunload warning
-                window.addEventListener('beforeunload', (e) => {
-                    if (AppState.currentJob && AppState.currentJob.status === 'processing') {
-                        e.preventDefault();
-                        e.returnValue = 'You have an email search job in progress. Are you sure you want to leave?';
-                        return e.returnValue;
-                    }
-                });
-
-                // Cleanup on unload
-                window.addEventListener('unload', () => {
-                    ProgressManager.stopProgress();
                 });
                 
                 Logger.log('Event listeners initialized', 'info');
@@ -2297,299 +1574,150 @@
                 }
             }
 
-            // ========================================
-            // FILE HANDLING METHODS
-            // ========================================
-
-            static handleDragOver(e) {
-                e.preventDefault();
-                Elements.fileUploadArea.classList.add('dragover');
-            }
-
-            static handleDragLeave(e) {
-                e.preventDefault();
-                Elements.fileUploadArea.classList.remove('dragover');
-            }
-
-            static handleFileDrop(e) {
-                e.preventDefault();
-                Elements.fileUploadArea.classList.remove('dragover');
+            static validateForm() {
+                const firstName = Elements.firstName.value.trim();
+                const lastName = Elements.lastName.value.trim();
+                const website = Elements.website.value.trim();
                 
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    EmailFinderApp.handleFileUpload(files[0]);
+                const isValid = firstName && lastName && website;
+                Elements.searchButton.disabled = !isValid || AppState.isSearching;
+                
+                if (isValid) {
+                    Elements.searchButton.style.background = 'linear-gradient(135deg, var(--success), #059669)';
+                } else {
+                    Elements.searchButton.style.background = 'var(--gray-300)';
                 }
             }
 
-            static handleFileSelect(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    EmailFinderApp.handleFileUpload(file);
-                }
-            }
-
-            static async handleFileUpload(file) {
-                Logger.log(`File upload started: ${file.name}`, 'info');
+            static async handleSearch(e) {
+                e.preventDefault();
                 
-                // Add loading animation
-                Elements.fileUploadArea.classList.add('loading');
+                if (AppState.isSearching) {
+                    return;
+                }
+                
+                Logger.log('🔍 Starting email search...', 'info');
                 
                 try {
-                    // Validate file
-                    const validationErrors = FileValidator.validate(file);
-                    if (validationErrors.length > 0) {
-                        const errorMessage = validationErrors.join(', ');
-                        NotificationSystem.showAlert(errorMessage, 'error');
-                        Logger.log(`File validation failed: ${errorMessage}`, 'error');
-                        Elements.fileUploadArea.classList.add('error-animation');
-                        setTimeout(() => Elements.fileUploadArea.classList.remove('error-animation'), 600);
+                    const searchData = SingleEmailFinderApp.getSearchData();
+                    
+                    // Validate input
+                    if (!SingleEmailFinderApp.validateSearchData(searchData)) {
                         return;
                     }
-
-                    AppState.uploadedFile = file;
-                    Elements.fileName.textContent = file.name;
                     
-                    // Read and parse CSV
-                    const fileContent = await EmailFinderApp.readFileAsText(file);
-                    EmailFinderApp.parseCSVFile(fileContent);
+                    // Show loading state
+                    SingleEmailFinderApp.showLoading();
                     
-                    // Add success animation
-                    Elements.fileUploadArea.classList.add('success-animation');
-                    setTimeout(() => Elements.fileUploadArea.classList.remove('success-animation'), 600);
-                    
-                } catch (error) {
-                    const errorMessage = ErrorHandler.formatError(error);
-                    NotificationSystem.showAlert('Error reading file: ' + errorMessage, 'error');
-                    Logger.log(`File reading failed: ${error.message}`, 'error');
-                    Elements.fileUploadArea.classList.add('error-animation');
-                    setTimeout(() => Elements.fileUploadArea.classList.remove('error-animation'), 600);
-                } finally {
-                    Elements.fileUploadArea.classList.remove('loading');
-                }
-            }
-
-            static readFileAsText(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(new Error('Unable to read file'));
-                    
-                    reader.readAsText(file);
-                });
-            }
-
-            static parseCSVFile(csvContent) {
-                try {
-                    const { headers, data } = CSVParser.parse(csvContent);
-                    
-                    // Validate parsed data
-                    const validationErrors = FileValidator.validateCSVData(data, headers);
-                    if (validationErrors.length > 0) {
-                        const errorMessage = validationErrors.join(', ');
-                        NotificationSystem.showAlert(errorMessage, 'error');
-                        Logger.log(`CSV validation failed: ${errorMessage}`, 'error');
-                        return;
-                    }
-
-                    AppState.csvHeaders = headers;
-                    AppState.csvData = data;
-
-                    // Update UI
-                    Elements.fileStats.textContent = `${data.length} rows, ${headers.length} columns`;
-                    
-                    // Setup column mapping
-                    ColumnMapper.setupColumnSelects(headers);
-                    
-                    // Show file preview section
-                    Elements.filePreview.style.display = 'block';
-                    
-                    NotificationSystem.showAlert('CSV file loaded successfully! Please map the 3 required columns below.', 'success');
-                    Logger.log(`CSV parsed successfully: ${data.length} rows, ${headers.length} columns`, 'success');
-                    
-                } catch (error) {
-                    const errorMessage = ErrorHandler.formatError(error);
-                    NotificationSystem.showAlert('Error parsing CSV: ' + errorMessage, 'error');
-                    Logger.log(`CSV parsing failed: ${error.message}`, 'error');
-                }
-            }
-
-            // ========================================
-            // FILE PROCESSING
-            // ========================================
-
-            static async processFile() {
-                Logger.log('🚀 Starting file processing...', 'info');
-                
-                try {
-                    // Comprehensive validation
-                    const validationResult = await EmailFinderApp.validateProcessingConditions();
-                    if (!validationResult.isValid) {
-                        NotificationSystem.showAlert(validationResult.error, 'error');
-                        Logger.log(`Processing validation failed: ${validationResult.error}`, 'error');
-                        return;
-                    }
-
-                    // Create job
-                    const job = EmailFinderApp.createJob();
-                    JobManager.saveJob(job);
-                    AppState.currentJob = job;
-
-                    Logger.log(`Job created: ${job.id}`, 'info', job);
-
-                    // Show progress UI
-                    ProgressManager.showProgress(AppState.uploadedFile.name);
-                    Elements.filePreview.style.display = 'none';
-
-                    // Prepare and send API request
-                    const formData = EmailFinderApp.prepareFormData(job);
-                    
-                    // Start progress simulation FIRST
-                    ProgressManager.simulateProgress();
-
-                    // Send to API with retry logic
-                    await ErrorHandler.retryOperation(async () => {
-                        return await APIClient.sendFileToAPI(formData);
+                    // Perform search
+                    const result = await APIClient.findEmail({
+                        ...searchData,
+                        token: AppState.userToken
                     });
-
-                    NotificationSystem.showAlert('Processing started successfully!', 'success');
-                    Logger.log('✅ File processing started successfully', 'success');
-
+                    
+                    // Save search to history
+                    const searchRecord = {
+                        id: SearchManager.generateId(),
+                        ...searchData,
+                        timestamp: new Date().toISOString(),
+                        email_found: !!result.email,
+                        email: result.email || null
+                    };
+                    
+                    SearchManager.saveSearch(searchRecord);
+                    
+                    // Show result
+                    if (result.email) {
+                        ResultDisplay.showSuccess(searchData, result);
+                        NotificationSystem.show('Email found successfully!', 'success');
+                        Logger.log('✅ Email search successful', 'success', result);
+                    } else {
+                        ResultDisplay.showError(searchData);
+                        NotificationSystem.show('Email not found for this contact', 'warning');
+                        Logger.log('⚠️ Email not found', 'warn', searchData);
+                    }
+                    
+                    // Refresh stats and history
+                    SearchManager.loadSearchHistory();
+                    await SingleEmailFinderApp.fetchUserCredits();
+                    
                 } catch (error) {
-                    EmailFinderApp.handleProcessingError(error);
+                    Logger.log(`❌ Search failed: ${error.message}`, 'error', error);
+                    NotificationSystem.showAlert('Search failed: ' + error.message, 'error');
+                    ResultDisplay.showError(SingleEmailFinderApp.getSearchData(), 'Search Error');
+                } finally {
+                    SingleEmailFinderApp.hideLoading();
                 }
             }
 
-            static async validateProcessingConditions() {
-                // Check file
-                if (!AppState.uploadedFile) {
-                    return { isValid: false, error: 'No file selected' };
-                }
-
-                if (!AppState.csvData || AppState.csvData.length === 0) {
-                    return { isValid: false, error: 'Invalid CSV data' };
-                }
-
-                // Check authentication
-                if (!AppState.userToken) {
-                    return { isValid: false, error: 'User token missing' };
-                }
-
-                // Check network
-                if (!AppState.isOnline) {
-                    return { isValid: false, error: 'Server connection required' };
-                }
-
-                // Check column mapping (simplified to 3 fields)
-                const firstName = Elements.firstNameColumn.value;
-                const lastName = Elements.lastNameColumn.value;
-                const website = Elements.websiteColumn.value;
-
-                if (firstName === '' || lastName === '' || website === '') {
-                    return { isValid: false, error: 'Please map all 3 required columns: First Name, Last Name, and Website' };
-                }
-
-                return { isValid: true };
-            }
-
-            static createJob() {
+            static getSearchData() {
                 return {
-                    id: JobManager.generateId(),
-                    filename: AppState.uploadedFile.name,
-                    status: 'processing',
-                    progress: 0,
-                    total_rows: AppState.csvData.length,
-                    emails_found: null,
-                    started_at: new Date().toISOString(),
-                    completed_at: null,
-                    created_at: new Date().toISOString()
+                    firstName: Elements.firstName.value.trim(),
+                    lastName: Elements.lastName.value.trim(),
+                    website: Elements.website.value.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')
                 };
             }
 
-            static prepareFormData(job) {
-                const formData = new FormData();
-                
-                Logger.log('📦 Preparing FormData for API call', 'info');
-                
-                // Add file and basic info
-                formData.append('file', AppState.uploadedFile);
-                formData.append('token', AppState.userToken);
-                formData.append('job_id', job.id);
-                
-                // Add column indexes (simplified to 3 fields)
-                const firstName = Elements.firstNameColumn.value;
-                const lastName = Elements.lastNameColumn.value;
-                const website = Elements.websiteColumn.value;
-                
-                formData.append('firstNameColumn', firstName);
-                formData.append('lastNameColumn', lastName);
-                formData.append('websiteColumn', website); // Updated from domainColumn
-                
-                // Add column names
-                formData.append('firstNameColumnName', AppState.csvHeaders[firstName]);
-                formData.append('lastNameColumnName', AppState.csvHeaders[lastName]);
-                formData.append('websiteColumnName', AppState.csvHeaders[website]); // Updated from domainColumnName
-
-                // Add metadata
-                formData.append('csvHeaders', JSON.stringify(AppState.csvHeaders));
-                formData.append('totalRows', job.total_rows);
-
-                Logger.log('✅ FormData prepared successfully', 'info');
-                return formData;
-            }
-
-            static handleProcessingError(error) {
-                Logger.log(`❌ Processing failed: ${error.message}`, 'error', error);
-                
-                // Update job status if exists
-                if (AppState.currentJob) {
-                    AppState.currentJob.status = 'failed';
-                    JobManager.saveJob(AppState.currentJob);
+            static validateSearchData(data) {
+                if (!data.firstName || !data.lastName || !data.website) {
+                    NotificationSystem.showAlert('Please fill in all required fields', 'error');
+                    return false;
                 }
                 
-                // Stop progress simulation
-                ProgressManager.stopProgress();
+                if (!AppState.userToken) {
+                    NotificationSystem.showAlert('User authentication required', 'error');
+                    return false;
+                }
                 
-                // Format and show error message
-                const errorMessage = ErrorHandler.formatError(error);
-                NotificationSystem.showAlert(`Processing error: ${errorMessage}`, 'error');
-                
-                // Hide progress section
-                Elements.progressSection.classList.remove('show');
-                
-                // Reset current job
-                AppState.currentJob = null;
+                return true;
+            }
+
+            static showLoading() {
+                AppState.isSearching = true;
+                Elements.loadingOverlay.classList.add('show');
+                Elements.searchButton.disabled = true;
+                Elements.searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                Logger.log('Loading state activated', 'info');
+            }
+
+            static hideLoading() {
+                AppState.isSearching = false;
+                Elements.loadingOverlay.classList.remove('show');
+                Elements.searchButton.disabled = false;
+                Elements.searchButton.innerHTML = '<i class="fas fa-search"></i> Find Email Address';
+                SingleEmailFinderApp.validateForm();
+                Logger.log('Loading state deactivated', 'info');
             }
         }
 
         // ========================================
-        // INITIALIZATION & EVENT HANDLERS
+        // INITIALIZATION
         // ========================================
 
         // Make functions globally available for onclick handlers
-        window.JobManager = JobManager;
+        window.SearchManager = SearchManager;
 
         // Initialize application when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            Logger.log('🌟 DOM Content Loaded - Starting application...', 'info');
-            EmailFinderApp.init();
+            Logger.log('🌟 DOM Content Loaded - Starting single email finder...', 'info');
+            SingleEmailFinderApp.init();
         });
 
         // Final initialization message
-        Logger.log('📧 Email Finder - Simplified Edition Ready!', 'success');
+        Logger.log('📧 Single Email Finder Ready!', 'success');
         console.log(`
-        🚀 Email Finder - Simplified Edition
-        ====================================
+        🎯 Single Email Finder
+        ======================
         
-        ✅ Clean interface with only 3 required fields
-        ✅ Auto-detection for First Name, Last Name, Website
-        ✅ Robust error handling
-        ✅ Automatic retry system
-        ✅ Real-time network monitoring
-        ✅ Beautiful animations and UX feedback
+        ✅ Simple 3-field form (First Name, Last Name, Website)
+        ✅ Real-time validation
+        ✅ Instant search results
+        ✅ Search history tracking
+        ✅ Copy-to-clipboard functionality
+        ✅ Beautiful animations and UX
         ✅ Mobile-responsive design
         
-        Just upload your CSV with First Name, Last Name, and Website columns!
+        Enter contact details and find emails instantly!
         `);
 
     </script>
