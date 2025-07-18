@@ -467,7 +467,7 @@
                 <ul class="pricing-features">
                     <li><strong>Unlimited exports from our 100M+ leads database</strong></li>
                 </ul>
-                <a href="https://buy.stripe.com/8x27sL8e1eFvca88AP8IU0V" class="btn btn-primary pricing-cta">Upgrade to Starter Plan</a>
+                <a href="https://buy.stripe.com/8x27sL8e1eFvca88AP8IU0V" class="btn btn-primary pricing-cta stripe-link">Upgrade to Starter Plan</a>
             </div>
             
             <div class="pricing-card featured">
@@ -480,7 +480,7 @@
                     <li><strong>Unlimited Email Finder</strong></li>
                     
                 </ul>
-                <a href="https://buy.stripe.com/3cI28reCp8h77TS9ET8IU0W" class="btn btn-primary pricing-cta">Upgrade to Pro Plan</a>
+                <a href="https://buy.stripe.com/3cI28reCp8h77TS9ET8IU0W" class="btn btn-primary pricing-cta stripe-link">Upgrade to Pro Plan</a>
             </div>
         </div>
         
@@ -584,12 +584,69 @@
             </div>
         </div>
     </footer>
-         <a href="https://buy.stripe.com/test_28EfZh79X40RdeccR58IU01" class="btn btn-primary pricing-cta"> Plan</a>
+    
+    <a href="https://buy.stripe.com/test_28EfZh79X40RdeccR58IU01" class="btn btn-primary pricing-cta stripe-link">Test Plan</a>
 
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // FAQ Toggle
+            
+            // Function to get user token from URL parameters or localStorage
+            function getUserToken() {
+                // First, try to get token from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
+                
+                // If not found in URL, try localStorage
+                if (!token) {
+                    token = localStorage.getItem('userToken') || 
+                           localStorage.getItem('customer_id') || 
+                           localStorage.getItem('user_id') ||
+                           localStorage.getItem('token');
+                }
+                
+                // If still not found, try sessionStorage
+                if (!token) {
+                    token = sessionStorage.getItem('userToken') || 
+                           sessionStorage.getItem('customer_id') || 
+                           sessionStorage.getItem('user_id') ||
+                           sessionStorage.getItem('token');
+                }
+                
+                return token;
+            }
+            
+            // Function to update Stripe URLs with customer_id
+            function updateStripeUrls() {
+                const token = getUserToken();
+                
+                if (token) {
+                    // Find all elements with Stripe URLs (class 'stripe-link' or hrefs containing 'stripe.com')
+                    const stripeLinks = document.querySelectorAll('.stripe-link, a[href*="stripe.com"]');
+                    
+                    stripeLinks.forEach(link => {
+                        const currentHref = link.getAttribute('href');
+                        if (currentHref && currentHref.includes('stripe.com')) {
+                            // Check if customer_id parameter already exists
+                            if (!currentHref.includes('customer_id=')) {
+                                // Add customer_id parameter
+                                const separator = currentHref.includes('?') ? '&' : '?';
+                                const newHref = currentHref + separator + 'customer_id=' + encodeURIComponent(token);
+                                link.setAttribute('href', newHref);
+                            }
+                        }
+                    });
+                    
+                    console.log('Stripe URLs updated with customer_id:', token);
+                } else {
+                    console.log('No user token found in URL parameters or storage');
+                }
+            }
+            
+            // Update Stripe URLs on page load
+            updateStripeUrls();
+            
+            // FAQ Toggle functionality
             const faqQuestions = document.querySelectorAll('.faq-question');
             
             faqQuestions.forEach(question => {
@@ -610,6 +667,9 @@
                     }
                 });
             });
+            
+            // Optional: Watch for URL changes (if using single-page application)
+            window.addEventListener('popstate', updateStripeUrls);
         });
     </script>
 </body>
