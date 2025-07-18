@@ -1975,7 +1975,7 @@ function displayUserCredits(credits) {
     }
     
     // Mettre à jour le contenu avec le nombre de crédits
-    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? '∞ Unlimited' : credits + ' credits'}`;
 }
 
 // Exécuter la fonction immédiatement
