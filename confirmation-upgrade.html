@@ -47,6 +47,16 @@
             font-size: 48px;
             margin-bottom: 20px;
         }
+        .debug-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
     </style>
 </head>
 <body>
@@ -55,40 +65,87 @@
         <h1>Payment Successful!</h1>
         <div class="spinner" id="spinner"></div>
         <div id="status">Processing...</div>
+        <div id="debug-info" class="debug-info"></div>
     </div>
     <script>
         // Execute immediately 
         (function() {
             // Get URL parameters
             const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get('id');
+            
+            // Try different parameter names that Stripe might use
+            const sessionId = urlParams.get('session_id') || 
+                             urlParams.get('checkout_session_id') || 
+                             urlParams.get('id');
+            
+            // Debug information
+            const debugInfo = document.getElementById('debug-info');
+            debugInfo.innerHTML = `
+                <strong>🔍 Debug Info:</strong><br>
+                <strong>Full URL:</strong> ${window.location.href}<br>
+                <strong>Session ID found:</strong> ${sessionId || 'NOT FOUND'}<br>
+                <strong>All URL parameters:</strong><br>
+                ${Array.from(urlParams.entries()).map(([key, value]) => `  • ${key}: ${value}`).join('<br>') || 'None'}
+            `;
             
             if (!sessionId) {
                 document.getElementById('status').textContent = "Error: Missing session ID";
+                document.getElementById('spinner').style.display = 'none';
+                debugInfo.innerHTML += '<br><br><strong>❌ Error:</strong> No session ID found in URL parameters';
                 return;
             }
+            
+            // Update status
+            document.getElementById('status').textContent = "Confirming payment...";
             
             // Send to webhook
             fetch('https://eliasse-n8n.onrender.com/webhook/upgraded', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({ 
-                    checkout_session_id: sessionId
+                    checkout_session_id: sessionId,
+                    lookup_session: true  // Tell backend to look up session details
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Webhook response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                return response.json();
+            })
             .then(data => {
-                document.getElementById('status').textContent = "Redirecting to your account...";
+                console.log('Webhook response data:', data);
+                
+                document.getElementById('status').textContent = "Payment confirmed! Redirecting to your account...";
                 document.getElementById('spinner').style.display = 'none';
+                
+                // Show success in debug info
+                debugInfo.innerHTML += '<br><br><strong>✅ Success:</strong> Payment confirmed successfully!';
                 
                 // Redirect after short delay
                 setTimeout(function() {
                     window.location.href = 'https://unlimited-leads.online/app';
-                }, 1500);
+                }, 2000);
             })
             .catch(error => {
-                document.getElementById('status').textContent = "Error: " + error.message;
+                console.error('Webhook error:', error);
+                
+                document.getElementById('status').textContent = "Payment successful, but there was an issue confirming it. Redirecting anyway...";
                 document.getElementById('spinner').style.display = 'none';
+                
+                // Show error in debug info
+                debugInfo.innerHTML += `<br><br><strong>⚠️ Warning:</strong> ${error.message}<br>Don't worry, your payment was successful. We'll redirect you to your account.`;
+                
+                // Still redirect after error, but with a longer delay
+                setTimeout(function() {
+                    window.location.href = 'https://unlimited-leads.online/app';
+                }, 3000);
             });
         })();
     </script>
