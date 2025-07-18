@@ -78,12 +78,24 @@
                              urlParams.get('checkout_session_id') || 
                              urlParams.get('id');
             
+            // Try to get user token from URL parameters OR stored values
+            const userToken = urlParams.get('token') || 
+                             urlParams.get('customer_id') || 
+                             urlParams.get('user_id') ||
+                             localStorage.getItem('payment_user_token') ||
+                             sessionStorage.getItem('payment_user_token') ||
+                             localStorage.getItem('userToken') ||
+                             localStorage.getItem('customer_id') ||
+                             sessionStorage.getItem('userToken') ||
+                             sessionStorage.getItem('customer_id');
+            
             // Debug information
             const debugInfo = document.getElementById('debug-info');
             debugInfo.innerHTML = `
                 <strong>🔍 Debug Info:</strong><br>
                 <strong>Full URL:</strong> ${window.location.href}<br>
                 <strong>Session ID found:</strong> ${sessionId || 'NOT FOUND'}<br>
+                <strong>User Token found:</strong> ${userToken || 'NOT FOUND'}<br>
                 <strong>All URL parameters:</strong><br>
                 ${Array.from(urlParams.entries()).map(([key, value]) => `  • ${key}: ${value}`).join('<br>') || 'None'}
             `;
@@ -107,7 +119,8 @@
                 },
                 body: JSON.stringify({ 
                     checkout_session_id: sessionId,
-                    lookup_session: true  // Tell backend to look up session details
+                    user_token: userToken,  // Include user token from storage
+                    lookup_session: true
                 })
             })
             .then(response => {
@@ -127,6 +140,10 @@
                 
                 // Show success in debug info
                 debugInfo.innerHTML += '<br><br><strong>✅ Success:</strong> Payment confirmed successfully!';
+                
+                // Clean up stored payment token
+                localStorage.removeItem('payment_user_token');
+                sessionStorage.removeItem('payment_user_token');
                 
                 // Redirect after short delay
                 setTimeout(function() {
