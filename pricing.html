@@ -616,7 +616,7 @@
                 return token;
             }
             
-            // Function to update Stripe URLs with customer_id
+            // Function to update Stripe URLs with client_reference_id
             function updateStripeUrls() {
                 const token = getUserToken();
                 
@@ -627,17 +627,17 @@
                     stripeLinks.forEach(link => {
                         const currentHref = link.getAttribute('href');
                         if (currentHref && currentHref.includes('stripe.com')) {
-                            // Check if customer_id parameter already exists
-                            if (!currentHref.includes('customer_id=')) {
-                                // Add customer_id parameter
+                            // Check if client_reference_id parameter already exists
+                            if (!currentHref.includes('client_reference_id=')) {
+                                // Add client_reference_id parameter
                                 const separator = currentHref.includes('?') ? '&' : '?';
-                                const newHref = currentHref + separator + 'customer_id=' + encodeURIComponent(token);
+                                const newHref = currentHref + separator + 'client_reference_id=' + encodeURIComponent(token);
                                 link.setAttribute('href', newHref);
                             }
                         }
                     });
                     
-                    console.log('Stripe URLs updated with customer_id:', token);
+                    console.log('Stripe URLs updated with client_reference_id:', token);
                 } else {
                     console.log('No user token found in URL parameters or storage');
                 }
