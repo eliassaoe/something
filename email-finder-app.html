@@ -960,7 +960,7 @@ header {
                 header.appendChild(creditsElement);
             }
             
-            creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+            creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
         }
 
         // Execute token verification
