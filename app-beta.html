@@ -1341,6 +1341,11 @@ header {
             </a>
         </li>
         <li class="menu-item">
+            <a href="https://unlimited-leads.online/email-finder-app" class="menu-link">
+                <i class="fas fa-envelope"></i> Email Finder
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
                 <i class="fas fa-rocket"></i> Linkedin Scrapper
             </a>
@@ -1659,7 +1664,7 @@ header {
             
             <div class="form-group" style="margin-top: 20px;">
                 <label for="exportLimit"><strong>Number of leads to export:</strong></label>
-                <input type="number" id="exportLimit" name="exportLimit" value="250" min="1" max="2500" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
+                <input type="number" id="exportLimit" name="exportLimit" value="250" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
@@ -1856,7 +1861,7 @@ function token_verif() {
     console.log("Fonction token_verif démarrée");
     
     // URL de l'API webhook
-    const WEBHOOK_URL_A = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook2';
+    const WEBHOOK_URL_A = 'https://eliasse-n8n.onrender.com/webhook/facdb275-fc73-463a-a0fe-8249291e579b';
     
     // Récupérer les paramètres de l'URL actuelle
     const urlParams = new URLSearchParams(window.location.search);
@@ -1933,57 +1938,6 @@ function token_verif() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const exportLimitInput = document.getElementById('exportLimit');
-    
-    if (exportLimitInput) {
-        // Create warning message element
-        const warningDiv = document.createElement('div');
-        warningDiv.id = 'exportLimitWarning';
-        warningDiv.style.cssText = `
-            color: #d73527;
-            font-size: 14px;
-            margin-top: 8px;
-            padding: 8px 12px;
-            background-color: #ffeaea;
-            border: 1px solid #f5c6cb;
-            border-radius: 6px;
-            display: none;
-        `;
-        warningDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Maximum export limit is 2,500 leads per request.';
-        
-        // Insert warning after the input
-        exportLimitInput.parentNode.insertBefore(warningDiv, exportLimitInput.nextSibling);
-        
-        // Add input validation
-        exportLimitInput.addEventListener('input', function() {
-            const value = parseInt(this.value);
-            const warningDiv = document.getElementById('exportLimitWarning');
-            
-            if (value > 2500) {
-                // Show warning and reset to max value
-                warningDiv.style.display = 'block';
-                this.value = 2500;
-                
-                // Hide warning after 3 seconds
-                setTimeout(() => {
-                    warningDiv.style.display = 'none';
-                }, 3000);
-            } else {
-                warningDiv.style.display = 'none';
-            }
-        });
-        
-        // Also validate on blur (when user clicks away)
-        exportLimitInput.addEventListener('blur', function() {
-            const value = parseInt(this.value);
-            if (value > 2500) {
-                this.value = 2500;
-            }
-        });
-    }
-});
-
 // Fonction pour afficher les crédits utilisateur
 function displayUserCredits(credits) {
     // Création d'un élément dans le header pour afficher les crédits
@@ -2021,7 +1975,7 @@ function displayUserCredits(credits) {
     }
     
     // Mettre à jour le contenu avec le nombre de crédits
-    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits} credits`;
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
 }
 
 // Exécuter la fonction immédiatement
@@ -2029,9 +1983,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Page chargée, exécution de token_verif");
     token_verif();
 });
-
-// Exécuter aussi immédiatement au cas où le script est chargé après DOMContentLoaded
-token_verif();
 
         
 // Fonction corrigée pour afficher les résultats initiaux
