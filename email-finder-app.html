@@ -987,6 +987,12 @@ header {
                     return;
                 }
                 
+                // Validate domain contains a dot
+                if (!domain.includes('.')) {
+                    showAlert('Please enter a valid domain (e.g. company.com)', 'error');
+                    return;
+                }
+                
                 // Prepare the data to send
                 const requestData = {
                     action: 'findEmail',
