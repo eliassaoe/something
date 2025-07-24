@@ -30,1482 +30,803 @@
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <!-- Fonts & Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     
     <style>
-        /* Font imports */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
-/* Custom scrollbar for premium feel */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-    background: #eff6ff;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #2563eb;
-}
-
-:root {
-    /* Color scheme */
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #eff6ff;
-    --secondary: #0ea5e9;
-    --secondary-dark: #0284c7;
-    --accent: #0d9488;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    
-    /* Design tokens */
-    --radius-sm: 0.5rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
-    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
-    --transition-standard: all 0.3s ease;
-    
-    /* Font families */
-    --font-primary: 'Inter', sans-serif;
-    --font-heading: 'Montserrat', sans-serif;
-    
-    /* Use the existing UnlimitedLeads CSS variables and base styles */
-    --border-radius: 0.5rem;
-    --border-radius-lg: 1rem;
-    --transition: all 0.3s ease;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-primary);
-}
-
-body {
-    background-color: #ffffff;
-    color: var(--gray-800);
-    line-height: 1.8;
-    font-size: 17px;
-    letter-spacing: 0.01em;
-    overflow-x: hidden;
-}
-
-body:before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
-    z-index: -1;
-}
-
-.container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    width: 100%;
-}
-
-h1, h2, h3, h4, h5 {
-    font-family: var(--font-heading);
-    line-height: 1.3;
-    font-weight: 700;
-    margin-bottom: 0.8em;
-}
-
-/* HEADER */
-.header { 
-    background: white; 
-    box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
-    padding: 1.25rem 0; 
-    position: sticky; 
-    top: 0; 
-    z-index: 100; 
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
-    margin-bottom: 30px;
-    background-color: white;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-}
-
-.header-content { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    font-family: var(--font-heading);
-    display: flex;
-    align-items: center;
-}
-
-.logo i {
-    margin-right: 8px;
-    color: var(--primary);
-    font-size: 1.5rem;
-}
-
-.logo-text { 
-    font-size: 1.5rem; 
-    font-weight: 800;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-}
-
-.user-credits-container {
-    display: none; /* Hidden by default for non-logged users */
-    align-items: center;
-    gap: 16px;
-}
-
-.sign-up-cta {
-    display: flex;
-    align-items: center;
-}
-
-.sign-up-cta .btn {
-    font-size: 14px;
-    padding: 0.75rem 1.5rem;
-}
-
-.user-credits {
-    background-color: var(--primary-light);
-    color: var(--primary);
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
-
-.logout-button, .upgrade-button {
-    border-radius: 0.5rem;
-    padding: 0.85rem 1.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition-standard);
-    font-size: 14px;
-}
-
-.logout-button {
-    background: white;
-    color: var(--primary);
-    border: 1px solid var(--gray-200);
-}
-
-.upgrade-button {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    font-weight: 700;
-}
-
-.logout-button:hover {
-    background-color: var(--primary-light);
-    border-color: var(--primary-light);
-    transform: translateY(-2px);
-}
-
-.upgrade-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-    background: linear-gradient(135deg, var(--primary), #1e40af);
-}
-
-.logout-button i, .upgrade-button i {
-    font-size: 16px;
-}
-
-/* MENU */
-.main-menu {
-    background-color: white;
-    margin-bottom: 20px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-}
-
-.menu-list {
-    display: flex;
-    list-style: none;
-    padding: 0;
-}
-
-.menu-item {
-    padding: 0;
-}
-
-.menu-link {
-    display: inline-block;
-    padding: 18px 28px;
-    color: var(--gray-700);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition-standard);
-    font-size: 14px;
-    position: relative;
-}
-
-.menu-link:hover {
-    color: var(--primary);
-}
-
-.menu-item.active .menu-link {
-    color: var(--primary);
-    border-bottom: 3px solid var(--primary);
-}
-
-.menu-link i {
-    margin-right: 10px;
-}
-
-.nav-links { 
-    display: flex; 
-    gap: 2rem; 
-    font-weight: 500; 
-}
-
-.nav-link {
-    color: var(--gray-700);
-    transition: color 0.2s ease;
-}
-
-.nav-link:hover {
-    color: var(--primary);
-}
-
-.btn { 
-    display: inline-block; 
-    font-weight: 600; 
-    padding: 0.85rem 1.75rem; 
-    border-radius: 0.5rem; 
-    transition: var(--transition); 
-    cursor: pointer; 
-    text-align: center;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    text-decoration: none;
-}
-
-.btn-primary { 
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-    color: white;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    font-weight: 700;
-}
-
-.btn-primary:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-}
-
-.btn-secondary { 
-    background: white; 
-    color: var(--primary);
-    border: 1px solid var(--gray-200);
-}
-
-.btn-secondary:hover { 
-    background: var(--primary-light);
-    transform: translateY(-2px);
-}
-
-.btn-large { 
-    font-size: 1.1rem; 
-    padding: 1.25rem 2.5rem; 
-}
-
-.btn-huge {
-    font-size: 1.2rem;
-    padding: 1.5rem 3rem;
-    border-radius: 0.75rem;
-}
-
-.btn-white {
-    background: white;
-    color: var(--primary);
-    font-weight: 700;
-}
-
-.btn-white:hover {
-    background: var(--gray-100);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
-}
-
-/* Hero Section */
-.hero { 
-    text-align: center; 
-    padding: 6rem 0; 
-    background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.hero h1 { 
-    font-size: 3.5rem; 
-    font-weight: 800; 
-    margin-bottom: 1.5rem; 
-    color: var(--gray-900);
-    line-height: 1.2;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem; 
-    margin-bottom: 3rem;
-    color: var(--gray-600);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.highlight {
-    background: linear-gradient(120deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.15) 100%);
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.25rem;
-    font-weight: 700;
-    color: var(--primary-dark);
-}
-
-/* SEARCH SECTION */
-.search-section {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    margin-bottom: 40px;
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-}
-
-.search-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gray-900);
-    font-family: var(--font-heading);
-    margin-bottom: 2rem;
-}
-
-.search-title:after {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    margin-top: 0.75rem;
-    border-radius: 4px;
-}
-
-.search-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-}
-
-.info-box {
-    background-color: var(--primary-light);
-    border-left: 4px solid var(--primary);
-    padding: 24px 28px;
-    margin-bottom: 35px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-}
-
-.info-box:before {
-    content: '\f05a';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    display: inline-block;
-    margin-right: 16px;
-    color: var(--primary);
-    font-size: 22px;
-}
-
-.info-box p {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--gray-700);
-}
-
-.form-group {
-    flex: 1 1 200px;
-}
-
-.form-group label {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--gray-700);
-    margin-bottom: 12px;
-    display: block;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 16px 20px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-md);
-    font-size: 17px;
-    transition: var(--transition-standard);
-    background-color: #FCFDFF;
-    color: var(--gray-800);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-    background-color: white;
-}
-
-.search-button {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    padding: 18px 32px;
-    font-size: 17px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition-standard);
-    margin-top: 32px;
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    letter-spacing: 0.01em;
-}
-
-.search-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-    background: linear-gradient(135deg, var(--primary), #1e40af);
-}
-
-/* RESULTS SECTION */
-.results-section {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-    margin-top: 40px;
-}
-
-.results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-}
-
-.results-count {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--gray-800);
-    font-family: var(--font-heading);
-}
-
-/* Enhanced Export Button - More Visible */
-.export-button {
-    background: linear-gradient(135deg, #10b981, #059669) !important; /* Green gradient */
-    color: white !important;
-    border: none !important;
-    border-radius: var(--radius-md);
-    padding: 14px 24px !important; /* Increased padding */
-    font-size: 16px !important; /* Larger font */
-    font-weight: 700 !important; /* Bolder text */
-    cursor: pointer;
-    transition: var(--transition-standard);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important; /* Green shadow */
-    text-transform: uppercase; /* Make text uppercase */
-    letter-spacing: 0.5px; /* Add letter spacing */
-}
-
-.export-button:hover {
-    background: linear-gradient(135deg, #059669, #047857) !important; /* Darker green on hover */
-    transform: translateY(-3px) !important; /* More pronounced hover effect */
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important; /* Stronger shadow on hover */
-}
-
-.export-button i {
-    font-size: 18px !important; /* Larger icon */
-}
-
-.results-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-}
-
-.results-table th {
-    background-color: var(--primary-light);
-    color: var(--gray-700);
-    text-align: left;
-    padding: 16px 20px;
-    font-weight: 600;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(37, 99, 235, 0.15);
-    position: relative;
-}
-
-.results-table th:not(:last-child):after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 25%;
-    height: 50%;
-    width: 1px;
-    background-color: rgba(37, 99, 235, 0.1);
-}
-
-.results-table td {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--gray-100);
-    color: var(--gray-800);
-    font-size: 14px;
-}
-
-.results-table tr:last-child td {
-    border-bottom: none;
-}
-
-.results-table tr:hover {
-    background-color: var(--primary-light);
-    transition: background-color 0.3s ease;
-}
-
-.action-icons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
-
-.action-icons i {
-    color: var(--gray-600);
-    cursor: pointer;
-    font-size: 16px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: var(--transition-standard);
-}
-
-.action-icons i:hover {
-    color: var(--primary);
-    background-color: var(--primary-light);
-}
-
-/* LOADING - AMÉLIORÉ */
-.loading {
-    display: none;
-    background: white;
-    border-radius: 12px;
-    padding: 35px 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid var(--gray-200);
-    border-top: 4px solid var(--primary);
-    max-width: 600px;
-    margin: 30px auto;
-    text-align: center;
-    animation: subtle-fade-in 0.5s ease-out;
-    position: relative;
-}
-
-@keyframes subtle-fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.loading i {
-    color: var(--primary);
-    font-size: 40px;
-    margin-bottom: 20px;
-    animation: spin 1.5s linear infinite;
-}
-
-.loading p {
-    color: var(--gray-700);
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.loading p:first-of-type {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--gray-900);
-    margin-bottom: 20px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* MODALS */
-.contact-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.65);
-    z-index: 1000;
-    overflow-y: auto;
-    backdrop-filter: blur(2px);
-}
-
-.modal-content {
-    position: relative;
-    background-color: white;
-    margin: 60px auto;
-    padding: 30px;
-    width: 80%;
-    max-width: 600px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--box-shadow-lg);
-    border: 1px solid var(--gray-100);
-    animation: modal-fade-in 0.3s ease-out;
-}
-
-@keyframes modal-fade-in {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-modal,
-.close-export-modal,
-.close-export-confirmation-modal {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    font-size: 22px;
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: var(--transition-standard);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.close-modal:hover,
-.close-export-modal:hover,
-.close-export-confirmation-modal:hover {
-    color: var(--primary);
-    background-color: var(--primary-light);
-}
-
-.modal-header {
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--gray-200);
-    padding-bottom: 20px;
-}
-
-.modal-title {
-    font-size: 24px;
-    color: var(--gray-900);
-    font-weight: 700;
-    font-family: var(--font-heading);
-}
-
-.modal-body {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-/* Export Modal Styles */
-#exportModal .modal-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 24px 30px;
-    border-bottom: none;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-#exportModal .modal-title {
-    color: white;
-    font-size: 22px;
-    font-weight: 700;
-    margin: 0;
-}
-
-#exportModal .modal-title::before {
-    content: '\f019 ';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    margin-right: 10px;
-    font-size: 24px;
-}
-
-#exportModal .close-export-modal {
-    color: white;
-    top: 20px;
-    right: 24px;
-}
-
-#exportModal .close-export-modal:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-#exportModal .form-group label {
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-#exportModal input[type="number"] {
-    border: 2px solid var(--gray-200);
-    padding: 14px 18px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 8px;
-    background: var(--gray-50);
-    transition: all 0.3s ease;
-}
-
-#exportModal input[type="number"]:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    background: white;
-    outline: none;
-}
-
-#exportModal .search-button,
-#exportModal #confirmExport {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-    border-radius: 8px;
-    padding: 16px 24px;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-/* Confirmation Modal Styles */
-#exportConfirmationModal .modal-content {
-    border-left: 4px solid var(--success);
-    overflow: hidden;
-}
-
-#exportConfirmationModal .modal-header {
-    background: linear-gradient(135deg, var(--success), #059669);
-    color: white;
-    padding: 30px;
-    text-align: center;
-    border-bottom: none;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-#exportConfirmationModal .modal-title {
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
-}
-
-#exportConfirmationModal .modal-title::before {
-    content: '\f058 ';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-size: 48px;
-    display: block;
-    margin-bottom: 15px;
-    animation: checkmark-bounce 0.6s ease-out;
-}
-
-@keyframes checkmark-bounce {
-    0% { transform: scale(0); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.contact-info, .company-info {
-    flex: 1 1 300px;
-}
-
-.info-section-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 20px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--primary-light);
-    font-family: var(--font-heading);
-}
-
-.info-item {
-    margin-bottom: 18px;
-}
-
-.info-label {
-    font-weight: 500;
-    color: var(--gray-600);
-    margin-bottom: 6px;
-    font-size: 14px;
-}
-
-.info-value {
-    color: var(--gray-800);
-    font-weight: 500;
-}
-
-/* ALERTS */
-.alert {
-    padding: 16px 20px;
-    border-radius: var(--radius-md);
-    margin: 15px 0;
-    display: none;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.alert-success {
-    background-color: rgba(16, 185, 129, 0.1);
-    border: 1px solid var(--success);
-    color: var(--success);
-}
-
-.alert-error {
-    background-color: rgba(239, 68, 68, 0.1);
-    border: 1px solid var(--danger);
-    color: var(--danger);
-}
-
-.alert-warning {
-    background-color: rgba(245, 158, 11, 0.1);
-    border: 1px solid var(--warning);
-    color: var(--warning);
-}
-
-/* NO RESULTS */
-.no-results {
-    text-align: center;
-    padding: 60px 0;
-    color: var(--gray-600);
-    font-size: 18px;
-    display: none;
-}
-
-.no-results i {
-    font-size: 56px;
-    color: var(--gray-300);
-    margin-bottom: 24px;
-}
-
-.results-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--gray-600);
-    border-top: 1px solid var(--gray-100);
-    padding-top: 15px;
-}
-
-/* Stats Section */
-.stats-section {
-    padding: 4rem 0;
-    background: white;
-}
-
-.stats-grid { 
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.stat-card { 
-    text-align: center;
-    padding: 2rem;
-    background: white;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    background: var(--primary-light);
-    margin-bottom: 1rem;
-}
-
-.stat-icon i {
-    font-size: 1.75rem;
-    color: var(--primary);
-}
-
-.stat-number { 
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--primary);
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-weight: 600;
-    color: var(--gray-700);
-}
-
-/* Features Section */
-.features-section {
-    padding: 5rem 0;
-    background: var(--gray-50);
-}
-
-.section-title {
-    font-size: 2.8rem; 
-    font-weight: 800; 
-    margin-bottom: 2rem; 
-    color: var(--gray-900);
-    text-align: center; 
-}
-
-.section-subtitle {
-    font-size: 1.4rem;
-    text-align: center;
-    color: var(--gray-600);
-    max-width: 800px;
-    margin: 0 auto 3.5rem;
-}
-
-.features-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 2rem; 
-    margin-top: 3rem; 
-}
-
-.feature-card { 
-    background: white; 
-    padding: 2.5rem 2rem; 
-    border-radius: var(--border-radius-lg); 
-    box-shadow: var(--box-shadow); 
-    transition: transform 0.3s ease;
-    border: 1px solid var(--gray-100);
-}
-
-.feature-card:hover { 
-    transform: translateY(-8px); 
-}
-
-.feature-icon { 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    background: var(--primary-light);
-    margin-bottom: 1.5rem;
-}
-
-.feature-icon i {
-    font-size: 1.75rem;
-    color: var(--primary);
-}
-
-.feature-card h3 { 
-    font-size: 1.35rem; 
-    margin-bottom: 1rem; 
-    color: var(--gray-900); 
-}
-
-.feature-card p {
-    color: var(--gray-600);
-}
-
-/* Types Section */
-.types-section {
-    padding: 5rem 0;
-    background: white;
-}
-
-/* Benefits Section */
-.benefits-section {
-    padding: 5rem 0;
-    background: var(--gray-50);
-}
-
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.benefit-card {
-    background: white;
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-100);
-}
-
-.benefit-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.benefit-card h3 {
-    margin-bottom: 1rem;
-    color: var(--gray-900);
-}
-
-.benefit-card p {
-    color: var(--gray-600);
-}
-
-/* CTA Section */
-.cta-section {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    text-align: center;
-    padding: 5rem 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.cta-section:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
-    opacity: 0.5;
-}
-
-.cta-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.cta-content h2 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    color: white;
-}
-
-.cta-content p {
-    font-size: 1.4rem;
-    margin-bottom: 3rem;
-    opacity: 0.95;
-}
-
-/* Footer */
-.footer { 
-    background: var(--gray-900); 
-    color: white; 
-    padding: 4rem 0 2rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-}
-
-.footer-links {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-links a {
-    color: var(--gray-300);
-    transition: color 0.2s ease;
-    text-decoration: none;
-}
-
-.footer-links a:hover {
-    color: white;
-}
-
-.footer-bottom {
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    color: var(--gray-300);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .container { padding: 0 1rem; }
-    .hero h1 { font-size: 2.5rem; }
-    .hero-subtitle { font-size: 1.1rem; }
-    .nav-links { display: none; }
-    .btn-huge { 
-        font-size: 1rem; 
-        padding: 1.25rem 2rem; 
-        width: 100%;
-        max-width: 300px;
-    }
-    .cta-content h2 { font-size: 2rem; }
-    .section-title { font-size: 2rem; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .features-grid { grid-template-columns: 1fr; }
-    .benefits-grid { grid-template-columns: 1fr; }
-    
-    .contact-modal {
-        padding: 10px;
-    }
-    
-    .modal-content {
-        width: calc(100vw - 20px);
-        max-width: calc(100vw - 20px);
-        margin: 10px auto;
-        padding: 20px;
-        max-height: calc(100vh - 40px);
-        overflow-y: auto;
-    }
-    
-    .loading {
-        margin: 15px auto;
-        padding: 25px 20px;
-        max-width: calc(100vw - 30px);
-    }
-    
-    .loading p:first-of-type {
-        font-size: 18px;
-    }
-    
-    .alert {
-        margin: 10px 0;
-        padding: 12px 15px;
-        font-size: 13px;
-        word-wrap: break-word;
-    }
-    
-    /* Header mobile */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 1rem 0;
-    }
-    
-    .user-credits-container {
-        gap: 8px;
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
-    
-    .sign-up-cta {
-        margin-left: auto;
-    }
-    
-    .sign-up-cta .btn {
-        padding: 0.5rem 1rem;
-        font-size: 12px;
-    }
-    
-    .user-credits {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-    
-    .logout-button, .upgrade-button {
-        padding: 0.5rem 1rem;
-        font-size: 12px;
-        min-height: 44px;
-    }
-    
-    .logout-button i, .upgrade-button i {
-        font-size: 12px;
-    }
-    
-    /* Form mobile */
-    .search-form {
-        flex-direction: column;
-    }
-    
-    .form-group {
-        flex: 1 1 100%;
-    }
-    
-    .form-group input,
-    .form-group select {
-        font-size: 18px; /* Prevents zoom on iOS and makes it more visible */
-    }
-    
-    .form-group label {
-        font-size: 17px;
-    }
-    
-    /* Results mobile */
-    .results-header {
-        flex-direction: column;
-        gap: 10px;
-        align-items: stretch;
-    }
-    
-    .export-button {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .results-table {
-        font-size: 12px;
-    }
-    
-    .results-table thead {
-        display: none;
-    }
-    
-    .results-table,
-    .results-table tbody,
-    .results-table tr,
-    .results-table td {
-        display: block;
-        width: 100%;
-    }
-    
-    .results-table tr {
-        border: 1px solid var(--gray-200);
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 8px;
-        background: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .results-table td {
-        border: none;
-        border-bottom: 1px solid var(--gray-100);
-        position: relative;
-        padding: 8px 10px 8px 35%;
-        text-align: left;
-    }
-    
-    .results-table td:before {
-        content: attr(data-label) ": ";
-        position: absolute;
-        left: 10px;
-        width: 30%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: 600;
-        color: var(--gray-600);
-        font-size: 11px;
-    }
-    
-    .results-table td:last-child {
-        border-bottom: none;
-        text-align: center;
-        padding: 15px;
-    }
-    
-    .results-table td:last-child:before {
-        display: none;
-    }
-    
-    .results-info {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 { font-size: 2rem; }
-    .stats-grid { grid-template-columns: 1fr; }
-    .stat-card { padding: 1.5rem; }
-    
-    .logo {
-        font-size: 1rem;
-    }
-    
-    .logo i {
-        font-size: 1rem;
-        margin-right: 4px;
-    }
-    
-    .sign-up-cta .btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 11px;
-    }
-    
-    .user-credits {
-        padding: 4px 8px;
-        font-size: 11px;
-    }
-    
-    .logout-button, .upgrade-button {
-        padding: 0.4rem 0.7rem;
-        font-size: 11px;  
-    }
-    
-    .search-section,
-    .results-section {
-        padding: 28px;
-    }
-    
-    .modal-content {
-        width: calc(100vw - 10px);
-        margin: 5px auto;
-        padding: 15px;
-    }
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-/* Fix horizontal scroll issues */
-.search-form,
-.results-table,
-.modal-content,
-.alert,
-.loading {
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-/* Ensure no element causes horizontal scroll */
-* {
-    max-width: 100%;
-    box-sizing: border-box;
-}
+        /* Use the existing UnlimitedLeads CSS variables and base styles */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --secondary-dark: #0284c7;
+            --accent: #0d9488;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --border-radius: 0.5rem;
+            --border-radius-lg: 1rem;
+            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --transition: all 0.3s ease;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+        
+        .container { 
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+        
+        /* Header Styles */
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
+            padding: 1.25rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo-text { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .gradient-text { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+        
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            font-weight: 500; 
+        }
+        
+        .nav-link {
+            color: var(--gray-700);
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.85rem 1.75rem; 
+            border-radius: 0.5rem; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            font-weight: 700;
+        }
+        
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .btn-secondary { 
+            background: white; 
+            color: var(--primary);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .btn-secondary:hover { 
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-large { 
+            font-size: 1.1rem; 
+            padding: 1.25rem 2.5rem; 
+        }
+        
+        .btn-huge {
+            font-size: 1.2rem;
+            padding: 1.5rem 3rem;
+            border-radius: 0.75rem;
+        }
+        
+        /* Hero Section */
+        .hero { 
+            text-align: center; 
+            padding: 6rem 0; 
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.35rem; 
+            margin-bottom: 2.5rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.15) 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* SEO Search Tool Styles */
+        .seo-search-section {
+            padding: 4rem 0;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .seo-search-container {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-100);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .seo-search-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .seo-search-subtitle {
+            text-align: center;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .seo-search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .seo-form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .seo-form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-form-group input,
+        .seo-form-group select {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .seo-form-group input:focus,
+        .seo-form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .seo-search-btn {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .seo-search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .seo-search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .seo-results {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .seo-results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+        }
+
+        .seo-results-count {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .seo-export-btn {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .seo-export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .seo-results-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--gray-200);
+        }
+
+        .seo-results-table th {
+            background: var(--gray-100);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 14px;
+        }
+
+        .seo-results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-800);
+            font-size: 14px;
+        }
+
+        .seo-results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .seo-results-table tr:hover {
+            background: var(--gray-50);
+        }
+
+        .seo-search-limit {
+            text-align: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: var(--border-radius);
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .seo-loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-600);
+        }
+
+        .seo-loading i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .stats-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card { 
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+        
+        .stat-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        
+        .stat-number { 
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+        
+        .section-title {
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            text-align: center; 
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 3rem; 
+        }
+        
+        .feature-card { 
+            background: white; 
+            padding: 2.5rem 2rem; 
+            border-radius: var(--border-radius-lg); 
+            box-shadow: var(--box-shadow); 
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .feature-card:hover { 
+            transform: translateY(-8px); 
+        }
+        
+        .feature-icon { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 { 
+            font-size: 1.35rem; 
+            margin-bottom: 1rem; 
+            color: var(--gray-900); 
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Types Section */
+        .types-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .type-item {
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s ease;
+        }
+        
+        .type-item:hover {
+            transform: translateX(5px);
+            background: var(--primary-light);
+        }
+        
+        .type-item h4 {
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .type-item p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-100);
+        }
+        
+        .benefit-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h3 {
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .benefit-card p {
+            color: var(--gray-600);
+        }
+        
+        /* Footer */
+        .footer { 
+            background: var(--gray-900); 
+            color: white; 
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h4 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray-300);
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-300);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .nav-links { display: none; }
+            .btn-huge { 
+                font-size: 1rem; 
+                padding: 1.25rem 2rem; 
+                width: 100%;
+                max-width: 300px;
+            }
+            .cta-content h2 { font-size: 2rem; }
+            .section-title { font-size: 2rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .types-grid { grid-template-columns: 1fr; }
+            .benefits-grid { grid-template-columns: 1fr; }
+
+            .seo-search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .seo-results-table {
+                font-size: 12px;
+            }
+
+            .seo-results-table thead {
+                display: none;
+            }
+
+            .seo-results-table,
+            .seo-results-table tbody,
+            .seo-results-table tr,
+            .seo-results-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .seo-results-table tr {
+                border: 1px solid var(--gray-200);
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                background: white;
+            }
+
+            .seo-results-table td {
+                border: none;
+                border-bottom: 1px solid var(--gray-100);
+                position: relative;
+                padding: 8px 0 8px 35%;
+                text-align: left;
+            }
+
+            .seo-results-table td:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: 0;
+                width: 30%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 600;
+                color: var(--gray-600);
+                font-size: 11px;
+            }
+
+            .seo-results-table td:last-child {
+                border-bottom: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card { padding: 1.5rem; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fa-spin {
+            animation: spin 1s linear infinite;
+        }
         
     </style>
 </head>
@@ -1517,1376 +838,640 @@ header {
                 <i class="fas fa-bolt" style="color: var(--primary); font-size:1rem;"></i>
                 <span class="logo-text"><span class="gradient-text">UnlimitedLeads</span></span>
             </a>
-            
-            <div class="user-credits-container">
-                <div id="userCredits" class="user-credits">
-                    <i class="fas fa-coins"></i> 0 credits
-                </div>
-                <button id="upgradeButton" class="upgrade-button">
-                    <i class="fas fa-crown"></i> Upgrade
-                </button>
-                <button id="logoutButton" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </div>
-            
-            <!-- Call-to-action for non-logged users (shown by default) -->
-            <div id="signUpCTA" class="sign-up-cta">
-                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">
-                    <i class="fas fa-user-plus"></i> Sign Up Free
-                </a>
-            </div>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Menu -->
-        <div class="main-menu">
-            <ul class="menu-list">
-                <li class="menu-item active">
-                    <a href="#" class="menu-link">
-                        <i class="fas fa-search"></i> Search Academic Professionals
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://unlimited-leads.online/email-finder-app" class="menu-link">
-                        <i class="fas fa-envelope"></i> Email Finder
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://unlimited-leads.online/account" class="menu-link">
-                        <i class="fas fa-user"></i> My Account
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Hero Section ENHANCED -->
-        <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
             <div class="hero-content fade-in-up">
-                <h1>Premium Academic Professionals Database<br><span class="gradient-text">314 Verified Contacts</span></h1>
-                <p class="hero-subtitle">
-                    Access the most comprehensive database from the $750 billion global education industry. 
-                    Search and discover academic professionals instantly!
-                </p>
+                <h1>academic professionals email list<br><span class="gradient-text">314 Verified Contacts</span></h1>
+                <p class="hero-subtitle">Access the most comprehensive database with 95% accuracy. Direct emails, phone numbers, and detailed company information.</p>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary btn-huge pulse">Access Database Now</a>
+                <p style="margin-top: 1rem; color: var(--gray-600); font-size: 0.9rem;">✅ Instant download • ✅ 95% accuracy guarantee • ✅ One-time payment</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Search Tool Section -->
+    <section class="seo-search-section">
+        <div class="container">
+            <div class="seo-search-container">
+                <h2 class="seo-search-title">Search Academic Professionals</h2>
+                <p class="seo-search-subtitle">Try our database with a live search preview</p>
                 
-                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary btn-large">Get Full Database Access</a>
-                <p style="margin-top: 1rem; color: var(--gray-600); font-size: 1rem;">✅ Instant download • ✅ 95% accuracy guarantee • ✅ One-time payment</p>
-            </div>
-        </section>
-
-        <!-- INTERACTIVE SEARCH SECTION -->
-        <section class="search-section">
-            <h2 class="search-title">Find Business Contacts</h2>
-            
-            <div id="searchAlert" class="alert"></div>
-
-            <div class="info-box">
-                 <p><strong>How it works:</strong> Search for contacts using our filters. Then export them with the Export to CSV button</p>
-            </div>
-            
-            <form id="searchForm" class="search-form">
-                <div class="form-group">
-                    <label for="country">Country (required)</label>
-                    <select id="country" name="country">
-                        <option value="United States">Select a country</option>
-                        <option value="Canada">Canada</option>
-                        <option value="France">France</option>
-                        <option value="India">India</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="United States">United States</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Netherlands">Netherlands</option>
-                        <option value="Italy">Italy</option>
-                        <option value="Spain">Spain</option>
-                        <!-- Add more countries as needed -->
-                    </select>
-                </div>
-
-               <div class="form-group">
-            <label for="companySize">Company Size:</label>
-            <select id="companySize" name="companySize">
-                <option value="">Select company size</option>
-                <option value="1-25">1-25</option>
-                <option value="26-50">26-50</option>
-                <option value="51-250">51-250</option>
-                <option value="251-1000">251-1000</option>
-                <option value="1000+">1000+</option>
-            </select>
-        </div>
-                        
-                <div class="form-group">
-            <label for="industry">Industry</label>
-            <select id="industry" name="industry">
-                <option value="">All Industries</option> 
-                <option value="Accounting">Accounting</option>
-                <option value="Agriculture">Agriculture</option>
-                <option value="Airlines/aviation">Airlines/aviation</option>
-                <option value="Animation">Animation</option>
-                <option value="Apparel & fashion">Apparel & fashion</option>
-                <option value="Architecture & planning">Architecture & planning</option>
-                <option value="Arts & crafts">Arts & crafts</option>
-                <option value="Automotive">Automotive</option>
-                <option value="Aviation & aerospace">Aviation & aerospace</option>
-                <option value="Banking">Banking</option>
-                <option value="Biotechnology">Biotechnology</option>
-                <option value="Broadcast media">Broadcast media</option>
-                <option value="Building materials">Building materials</option>
-                <option value="Business supplies & equipment">Business supplies & equipment</option>
-                <option value="Capital markets">Capital markets</option>
-                <option value="Chemicals">Chemicals</option>
-                <option value="Civic & social organization">Civic & social organization</option>
-                <option value="Civil engineering">Civil engineering</option>
-                <option value="Clean energy">Clean energy</option>
-                <option value="Computer & network security">Computer & network security</option>
-                <option value="Computer networking">Computer networking</option>
-                <option value="Computer software">Computer software</option>
-                <option value="Construction">Construction</option>
-                <option value="Consumer electronics">Consumer electronics</option>
-                <option value="Consumer goods">Consumer goods</option>
-                <option value="Consumer services">Consumer services</option>
-                <option value="Defense & space">Defense & space</option>
-                <option value="Design">Design</option>
-                <option value="Education">Education</option>
-                <option value="Electrical/electronic manufacturing">Electrical/electronic manufacturing</option>
-                <option value="Environmental services & clean energy">Environmental services & clean energy</option>
-                <option value="Events services">Events services</option>
-                <option value="Facilities & services">Facilities & services</option>
-                <option value="Finance">Finance</option>
-                <option value="Food & beverages">Food & beverages</option>
-                <option value="Food production">Food production</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Government administration">Government administration</option>
-                <option value="Health, Wellness & fitness">Health, Wellness & fitness</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Hospital & health care">Hospital & health care</option>
-                <option value="Hospitality">Hospitality</option>
-                <option value="Information technology & services">Information technology & services</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Internet">Internet</option>
-                <option value="Legal services">Legal services</option>
-                <option value="Leisure, Travel & tourism">Leisure, Travel & tourism</option>
-                <option value="Logistics & supply chain">Logistics & supply chain</option>
-                <option value="Luxury goods & jewelry">Luxury goods & jewelry</option>
-                <option value="Machinery">Machinery</option>
-                <option value="Management consulting">Management consulting</option>
-                <option value="Manufacturing">Manufacturing</option>
-                <option value="Maritime">Maritime</option>
-                <option value="Marketing & advertising">Marketing & advertising</option>
-                <option value="Media production">Media production</option>
-                <option value="Paper & forest products">Paper & forest products</option>
-                <option value="Paper & forest products">Printing</option>
-                <option value="Political organization">Political organization</option>
-                <option value="Public safety">Public safety</option>
-                <option value="Real estate">Real estate</option>
-                <option value="Restaurants">Restaurants</option>
-                <option value="Retail">Retail</option>
-                <option value="Sporting goods">Sporting goods</option>
-                <option value="Staffing & recruiting">Staffing & recruiting</option>
-                <option value="Technology">Technology</option>
-                <option value="Telecommunications">Telecommunications</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Utilities">Utilities</option>
-                <option value="Venture capital & private equity">Venture capital & private equity</option>
-                <option value="Warehousing">Warehousing</option>
-                <option value="Wholesale">Wholesale</option>
-                <option value="Wine & spirits">Wine & spirits</option>
-                <option value="Writing & editing">Writing & editing</option>
-            </select>
-        </div>
-                <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" id="city" name="city" placeholder="e.g. New York">
-                </div>
-                        
-
-                 <div class="form-group">
-                        <label for="jobTitle">Job Title:</label>
-                        <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g ceo,cto,founder">
+                <form id="seoSearchForm" class="seo-search-form">
+                    <div class="seo-form-group">
+                        <label for="seoJobTitle">Job Title</label>
+                        <input type="text" id="seoJobTitle" name="jobTitle" placeholder="e.g. academic professional" value="academic professional">
                     </div>
-                        
-                <div class="form-group">
-                    <label for="companyName">Company Name</label>
-                    <input type="text" id="companyName" name="companyName" placeholder="e.g. Acme Inc">
-                </div>
-                        
-                <div class="form-group">
-                    <label for="keywords">Keywords</label>
-                    <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech">
-                </div>
-
-                <div class="form-group">
-            <label for="hasEmail">Has Email:</label>
-            <select id="hasEmail" name="hasEmail">
-                <option value="">All contacts</option>
-                <option value="yes">Has email only</option>
-                <option value="no">No email only</option>
-            </select>
-        </div>
-                        
-                <div class="form-group">
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i> Search Contacts
+                    
+                    <div class="seo-form-group">
+                        <label for="seoCountry">Country</label>
+                        <select id="seoCountry" name="country">
+                            <option value="United States">United States</option>
+                            <option value="Canada">Canada</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="France">France</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Spain">Spain</option>
+                        </select>
+                    </div>
+                    
+                    <div class="seo-form-group">
+                        <label for="seoIndustry">Industry</label>
+                        <select id="seoIndustry" name="industry">
+                            <option value="Education">Education</option>
+                            <option value="">All Industries</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Government administration">Government</option>
+                            <option value="Research">Research</option>
+                        </select>
+                    </div>
+                    
+                    <div class="seo-form-group">
+                        <label for="seoCity">City</label>
+                        <input type="text" id="seoCity" name="city" placeholder="e.g. New York">
+                    </div>
+                    
+                    <button type="submit" id="seoSearchBtn" class="seo-search-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Search Database</span>
                     </button>
-                </div>
-            </form>
-        </section>
-        
-        <div id="loading" class="loading">
-            <i class="fas fa-spinner"></i>
-            <p>Searching for academic professionals. Please wait it can take up to 5 minutes...</p>
-        </div>
-        
-        <section id="resultsSection" class="results-section" style="display: none;">
-            <div class="results-header">
-                <div class="results-count">Found <span id="resultsNumber">0</span> academic professionals</div>
-                <button id="exportButton" class="export-button">
-                    <i class="fas fa-download"></i> Export to CSV
-                </button>
-            </div>
-            
-            <div id="noResults" class="no-results">
-                <i class="fas fa-search" style="font-size: 40px; margin-bottom: 15px;"></i>
-                <p>No academic professionals found. Try adjusting your search criteria.</p>
-            </div>
-            
-            <table id="resultsTable" class="results-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Title</th>
-                        <th>Institution</th>
-                        <th>Email</th>
-                        <th>Country</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="resultsBody">
-                    <!-- Results will be populated here -->
-                </tbody>
-            </table>
-            
-            <div id="resultsInfo" class="results-info">
-                <div class="pagination-info">
-                    Showing <span id="startRecord">0</span>-<span id="endRecord">0</span> of <span id="totalDisplayRecords">0</span> academic professionals 
-                </div>
-            </div>
-        </section>
+                </form>
 
-        <!-- Data Preview Section -->
-        <section class="types-section">
-            <div class="container">
-                <h2 class="section-title">Preview Our Academic Professionals Database</h2>
-                <p class="section-subtitle">See the quality and depth of contact information in our verified academic professionals email list</p>
-                
-                <div style="overflow-x: auto; margin-top: 3rem; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow);">
-                    <table style="width: 100%; border-collapse: separate; border-spacing: 0; background: white; border-radius: var(--border-radius-lg); overflow: hidden;">
+                <div id="seoLoading" class="seo-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Searching database...</p>
+                </div>
+
+                <div id="seoResults" class="seo-results">
+                    <div class="seo-results-header">
+                        <div class="seo-results-count">
+                            Found <span id="seoResultsCount">0</span> contacts matching your criteria
+                        </div>
+                        <button id="seoExportBtn" class="seo-export-btn">
+                            <i class="fas fa-download"></i>
+                            Export All Results
+                        </button>
+                    </div>
+                    
+                    <table id="seoResultsTable" class="seo-results-table">
                         <thead>
-                            <tr style="background: var(--primary-light);">
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Name</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Title</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Institution</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Email</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Country</th>
+                            <tr>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th>Company</th>
+                                <th>Location</th>
+                                <th>Industry</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--gray-100);">
-                                <td data-label="Name" style="padding: 1rem; color: var(--gray-800);">Jessica Pratt</td>
-                                <td data-label="Title" style="padding: 1rem; color: var(--gray-800);">Practicum And Career Coordinator Senior Academic Professional</td>
-                                <td data-label="Institution" style="padding: 1rem; color: var(--gray-800);">Georgia State University</td>
-                                <td data-label="Email" style="padding: 1rem; color: var(--primary);">Discover it inside the database</td>
-                                <td data-label="Country" style="padding: 1rem; color: var(--gray-600);">United States</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--gray-100);">
-                                <td data-label="Name" style="padding: 1rem; color: var(--gray-800);">Kevin Briscoe</td>
-                                <td data-label="Title" style="padding: 1rem; color: var(--gray-800);">Director Of Professional Services And Academic Funds Flow</td>
-                                <td data-label="Institution" style="padding: 1rem; color: var(--gray-800);">Childrens Medical Center of Dallas</td>
-                                <td data-label="Email" style="padding: 1rem; color: var(--primary);">Discover it inside the database</td>
-                                <td data-label="Country" style="padding: 1rem; color: var(--gray-600);">United States</td>
-                            </tr>
+                        <tbody id="seoResultsBody">
+                            <!-- Results will be populated here -->
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </section>
 
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <span class="stat-number">314</span>
-                        <div class="stat-label">Verified Academic Professionals</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-university"></i>
-                        </div>
-                        <span class="stat-number">314</span>
-                        <div class="stat-label">Academic Institutions</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <span class="stat-number">10+</span>
-                        <div class="stat-label">Countries</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-shield-check"></i>
-                        </div>
-                        <span class="stat-number">95%</span>
-                        <div class="stat-label">Data Accuracy</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <span class="stat-number">314</span>
-                        <div class="stat-label">Phone Numbers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-infinity"></i>
-                        </div>
-                        <span class="stat-number">∞</span>
-                        <div class="stat-label">Unlimited Access</div>
-                    </div>
+                <div id="seoSearchLimit" class="seo-search-limit" style="display: none;">
+                    <i class="fas fa-info-circle"></i>
+                    You've reached your free search limit. <a href="https://unlimited-leads.online/sign-up" style="color: #d97706; font-weight: 700;">Create an account</a> to continue searching and access unlimited contacts.
                 </div>
             </div>
-        </section>
-
-        <!-- Data Verification Process -->
-        <section style="background: var(--gray-50); padding: 5rem 0;">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 3rem; font-family: 'Montserrat', sans-serif; font-weight: 800;">How We Verify Our Academic Database</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <div style="text-align: center; background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--box-shadow);">
-                        <i class="fas fa-university" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">University Databases</h3>
-                        <p style="color: var(--gray-600);">Direct access to official university directories and academic staff listings</p>
-                    </div>
-                    <div style="text-align: center; background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--box-shadow);">
-                        <i class="fas fa-robot" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">AI + Manual Verification</h3>
-                        <p style="color: var(--gray-600);">12-point verification system combining AI validation with human quality checks</p>
-                    </div>
-                    <div style="text-align: center; background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--box-shadow);">
-                        <i class="fas fa-sync" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">Quarterly Updates</h3>
-                        <p style="color: var(--gray-600);">Database refreshed every 3 months during academic semester changes</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Main CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Get Instant Access to 314 Academic Professionals</h2>
-                    <p>Download our comprehensive academic professionals database now and start connecting with verified professionals within minutes.</p>
-                    <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-huge">Download Database Now</a>
-                    <p style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;">
-                        ✅ 95% Accuracy Guarantee &nbsp;&nbsp; ✅ GDPR Compliant &nbsp;&nbsp; ✅ Instant Download<br>
-                        ✅ Unlimited Updates &nbsp;&nbsp; ✅ Money-Back Guarantee &nbsp;&nbsp; ✅ Multiple Formats
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
     
-    <!-- MODALS -->
-    <div id="contactModal" class="contact-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
+    <!-- Data Preview Section -->
+    <section class="types-section">
+        <div class="container">
+            <h2 class="section-title">Preview Our academic professionals email list Database</h2>
+            <p class="section-subtitle">See the quality and depth of contact information in our verified academic professionals email list</p>
             
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalName">Contact Details</h2>
+            <div style="overflow-x: auto; margin-top: 3rem; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow);">
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; background: white; border-radius: var(--border-radius-lg); overflow: hidden;">
+                    <thead>
+                        <tr style="background: var(--primary-light);">
+                            <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Name</th>
+                            <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Title</th>
+                            <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Company</th>
+                            <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Email</th>
+                            <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);">Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--gray-100);">
+                            <td data-label="Name" style="padding: 1rem; color: var(--gray-800);">Jessica Pratt</td>
+                            <td data-label="Title" style="padding: 1rem; color: var(--gray-800);">Practicum And Career Coordinator Senior Academic Professional</td>
+                            <td data-label="Company" style="padding: 1rem; color: var(--gray-800);">Georgia State University</td>
+                            <td data-label="Email" style="padding: 1rem; color: var(--primary);">Discover it inside the database</td>
+                            <td data-label="Country" style="padding: 1rem; color: var(--gray-600);">United States</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--gray-100);">
+                            <td data-label="Name" style="padding: 1rem; color: var(--gray-800);">Kevin Briscoe</td>
+                            <td data-label="Title" style="padding: 1rem; color: var(--gray-800);">Director Of Professional Services And Academic Funds Flow</td>
+                            <td data-label="Company" style="padding: 1rem; color: var(--gray-800);">Childrens Medical Center of Dallas</td>
+                            <td data-label="Email" style="padding: 1rem; color: var(--primary);">Discover it inside the database</td>
+                            <td data-label="Country" style="padding: 1rem; color: var(--gray-600);">United States</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            
-            <div class="modal-body">
-                <div class="contact-info">
-                    <h3 class="info-section-title">Contact Information</h3>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Full Name</div>
-                        <div class="info-value" id="modalFullName"></div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Job Title</div>
-                        <div class="info-value" id="modalTitle"></div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Management Level</div>
-                        <div class="info-value" id="modalManagementLevel"></div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Email</div>
-                        <div class="info-value" id="modalEmail"></div>
-                    </div>
+        </div>
+    </section>
 
-                    <div class="info-item">
-                         <div class="info-label">Phone</div>
-                       <div class="info-value" id="modalPhone"></div>
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">LinkedIn</div>
-                        <div class="info-value" id="modalLinkedIn"></div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Location</div>
-                        <div class="info-value" id="modalLocation"></div>
-                    </div>
+                    <span class="stat-number">314</span>
+                    <div class="stat-label">Verified academic professionals email list</div>
                 </div>
-                
-                <div class="company-info">
-                    <h3 class="info-section-title">Institution Information</h3>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Institution</div>
-                        <div class="info-value" id="modalCompany"></div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Type</div>
-                        <div class="info-value" id="modalIndustry"></div>
+                    <span class="stat-number">314</span>
+                    <div class="stat-label">academic professionals email list Firms</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Institution Size</div>
-                        <div class="info-value" id="modalCompanySize"></div>
+                    <span class="stat-number">10+</span>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-check"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Website</div>
-                        <div class="info-value" id="modalWebsite"></div>
+                    <span class="stat-number">95%</span>
+                    <div class="stat-label">Data Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-phone"></i>
                     </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">Institution Phone</div>
-                        <div class="info-value" id="modalCompanyPhone"></div>
+                    <span class="stat-number">314</span>
+                    <div class="stat-label">Phone Numbers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-infinity"></i>
                     </div>
-                
-                    <div class="info-item">
-                        <div class="info-label">Description</div>
-                        <div class="info-value" id="modalDescription"></div>
-                    </div>
-                 
+                    <span class="stat-number">∞</span>
+                    <div class="stat-label">Unlimited Access</div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="exportModal" class="contact-modal">
-        <div class="modal-content">
-            <span class="close-export-modal">&times;</span>
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">What's Included in Our academic professionals email list</h2>
+            <p class="section-subtitle">Get comprehensive contact data and business intelligence for every academic professionals email list professional in our database</p>
             
-            <div class="modal-header">
-                <h2 class="modal-title">Export Academic Professionals</h2>
-            </div>
-            
-            <div class="modal-body">
-                <div class="info-item">
-                    <div class="info-value">
-                       <p>Are you sure you want to export this list of academic professionals? This will use credits from your account. </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
+                    <h3>Verified Email Addresses</h3>
+                    <p>Each email is verified through our 12-point validation system.</p>
                 </div>
                 
-                <div class="form-group" style="margin-top: 20px;">
-                    <label for="exportLimit"><strong>Number of contacts to export:</strong></label>
-                    <input type="number" id="exportLimit" name="exportLimit" value="250" min="1" max="5000" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Direct Phone Numbers</h3>
+                    <p>Direct dial phone numbers and mobile contacts for immediate outreach. Skip gatekeepers and connect directly with decision makers.</p>
                 </div>
                 
-                <div style="text-align: center; margin-top: 20px;">
-                    <button id="confirmExport" class="search-button" style="max-width: 200px;">
-                        Confirm Export
-                    </button>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Complete Professional Profiles</h3>
+                    <p>Full names, job titles, specializations, years of experience, and LinkedIn profiles for targeted outreach.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Company Information</h3>
+                    <p>Firm names, company size, revenue data, locations, website URLs, and industry classifications for better targeting.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Geographic Data</h3>
+                    <p>Complete address information including city, state, ZIP code, and country. Perfect for location-based marketing campaigns.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="exportConfirmationModal" class="contact-modal">
-        <div class="modal-content" style="border-left: 4px solid #AAF0D1;">
-            <span class="close-export-confirmation-modal">&times;</span>
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our academic professionals email list</h2>
+            <p class="section-subtitle">Superior data quality, comprehensive coverage, and unmatched value for your marketing campaigns</p>
             
-            <div class="modal-header" style="border-bottom-color: #AAF0D1;">
-                <h2 class="modal-title"><i class="fas fa-check-circle" style="color: #2a6;"></i> Export Request Confirmed</h2>
-            </div>
-            
-            <div class="modal-body">
-                <div class="info-item" style="text-align: center;">
-                    <div class="info-value">
-                        <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your export has been processed successfully!</strong></p>
-                        <p>The contact list will be downloaded in the coming minutes.</p>
-                    </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-number">1</div>
+                    <h3>95% Email Deliverability Rate</h3>
+                    <p>Our 12-point verification system ensures the highest email deliverability rates in the industry. Every email is validated in real-time before inclusion in our database.</p>
                 </div>
                 
-               <div style="text-align: center; margin-top: 25px;">
-                <button id="closeConfirmationBtn" class="search-button" style="max-width: 200px; background-color: #2a6;">
-                    Got it
-                </button>
-            </div>
+                <div class="benefit-card">
+                    <div class="benefit-number">2</div>
+                    <h3>Updated Monthly</h3>
+                    <p>We refresh our entire database monthly with new contacts, updated information, and removed bounced emails to maintain the highest accuracy standards.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-number">3</div>
+                    <h3>GDPR & CAN-SPAM Compliant</h3>
+                    <p>All contacts are obtained through legitimate means and comply with international data protection regulations including GDPR, CAN-SPAM, and CCPA.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-number">4</div>
+                    <h3>Instant Download</h3>
+                    <p>Get unlimited access to your academic professionals email list in multiple formats (CSV, Excel, PDF) as soon as your payment is processed.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-number">5</div>
+                    <h3>Advanced Filtering Options</h3>
+                    <p>Filter by location, company size, specialization, years of experience, certifications, and more to target your exact audience.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-number">6</div>
+                    <h3>Unlimited Value</h3>
+                    <p>Fixed cost gives you unlimited access to updates and new contacts. No hidden costs.</p>
+                </div>
             </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Main CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Get Instant Access to 314 academic professionals email list</h2>
+                <p>Download our comprehensive academic professionals email list now and start connecting with verified professionals within minutes.</p>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-huge">Download Database Now</a>
+                <p style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;">
+                    ✅ 95% Accuracy Guarantee &nbsp;&nbsp; ✅ GDPR Compliant &nbsp;&nbsp; ✅ Instant Download<br>
+                    ✅ Unlimited Updates &nbsp;&nbsp; ✅ Money-Back Guarantee &nbsp;&nbsp; ✅ Multiple Formats
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div style="text-align: left; margin-top: 3rem;">
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">What is included in the academic professionals email list?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">Our academic professionals email list includes verified email addresses, direct phone numbers, full names, job titles, company information, addresses, specializations, and certifications for million professionals worldwide.</p>
+                    
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">How accurate is your academic professionals email list?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">We guarantee 95% accuracy through our comprehensive 12-point verification system. All emails are validated in real-time, and our database is updated monthly to maintain the highest quality standards in the industry.</p>
+                    
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">Can I target specific types of academic professionals email list?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">Yes! Our database includes detailed filters ! You can also filter by location, company size, and experience level ...</p>
+                    
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">Is the contact database GDPR compliant?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">Absolutely. All contacts in our  database are obtained through legitimate means and comply with GDPR, CAN-SPAM, CCPA, and other international data protection regulations.</p>
+                    
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">What formats do you provide for the academic professionals email list professionals email list?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">We provide the academic professionals email list in CSV to ensure compatibility with your CRM, email marketing platform, or database system.</p>
+                    
+                    <h3 style="color: var(--gray-900); margin-bottom: 1rem;">How often is the academic professionals email list updated?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem;">Our academic professionals email list database is updated monthly with new contacts, verified information, and removed bounced emails.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Free Tools Section -->
+                <div class="footer-column">
+                    <h4>Free Tools</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                        <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
+                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                        <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                        <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
+                        <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
+                        <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                        <li><a href="https://unlimited-leads.online/ai-email-template-generator">AI Email Template Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/ai-email-reply-generator-free">AI Email Reply Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/cold-email-generator">Cold Email Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/email-name-generator">Email Name Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/linkedin-headline-generator">Linkedin Headline Generator</a></li>
+                        <li><a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li>
+                        <!-- NEW FREE TOOLS ADDED -->
+                        <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
+                        <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
+                        <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
+                    </ul>
+                </div>
+
+                <!-- Compare Section -->
+                <div class="footer-column">
+                    <h4>Compare</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/rocketreach-alternative">RocketReach Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/uplead-alternative">UpLead Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/evaboot-alternative">Evaboot Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/scrupp-alternative">Scrupp Alternative</a></li>
+                    </ul>
+                </div>
+
+                <!-- Industry Email List Section -->
+                <div class="footer-column">
+                    <h4>Industry Email List</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/accountants-email-list">Accountants Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/chiropractor-email-list">Chiropractor Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/construction-industry-email-list">Construction Industry Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/cpa-email-list">CPA Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/dentist-email-list">Dentist Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/hr-email-list">HR Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/nurses-email-list">Nurses Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/pharmacist-email-list">Pharmacist Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/physician-email-list">Physician Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/real-estate-agent-email-list">Real Estate Agent Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/architects-email-list">Architects Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/banking-email-list">Banking Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/business-owners-email-list">Business Owners Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/canadian-cfo-email-list​">Canadian CFO Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/chief-medical-officer-email-list​">Chief Medical Officer Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/chief-revenue-officers-email-list">Chief Revenue Officers Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/church-email-list">Church Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/cto-email-list​">CTO Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/golf-course-email-list">Golf Course Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/healthcare-email-list">Healthcare Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/hospital-cfo-email-list​">Hospital CFO Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/hotels-email-list">Hotels Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/insurance-agent-email-list">Insurance Agent Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/investors-email-list​">Investors Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/it-decision-makers-email-list">IT Decision Makers Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/marketing-directors-email-list">Marketing Directors Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/mortgage-broker-email-list">Mortgage Broker Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/restaurant-email-list">Restaurant Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/restaurant-owners-email-list​">Restaurant Owners Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/retail-email-list">Retail Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/sales-director-email-list">Sales Director Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/travel-agencies-email-list">Travel Agencies Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/veterinarians-email-list">Veterinarians Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/vp-email-list​">VP Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/vp-of-business-development-email-list">VP of Business Development Email List</a></li>
+                        <li><a href="https://unlimited-leads.online/vp-of-sales-email-list">VP of Sales Email List</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
+                        <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+                <p>
+                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // n8n webhook URL
-        const N8N_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook1';
-        
-        let allContacts = [];
-        let globalTrueCount = 0;
-        let userToken = null;
-        
-        // DOM Elements
-        const searchForm = document.getElementById('searchForm');
-        const countrySelect = document.getElementById('country');
-        const industrySelect = document.getElementById('industry');
-        const searchAlert = document.getElementById('searchAlert');
-        const loading = document.getElementById('loading');
-        const resultsSection = document.getElementById('resultsSection');
-        const resultsNumber = document.getElementById('resultsNumber');
-        const resultsBody = document.getElementById('resultsBody');
-        const noResults = document.getElementById('noResults');
-        const resultsTable = document.getElementById('resultsTable');
-        const exportButton = document.getElementById('exportButton');
-        const contactModal = document.getElementById('contactModal');
-        const closeModal = document.querySelector('.close-modal');
-        const startRecord = document.getElementById('startRecord');
-        const endRecord = document.getElementById('endRecord');
-        const totalDisplayRecords = document.getElementById('totalDisplayRecords');
+        // SEO Search Tool Configuration
+        const SEO_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook1';
+        let searchCount = 0;
+        const MAX_FREE_SEARCHES = 2;
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Show loading indicator
-            loading.style.display = 'block';
-            
-            try {
-                // Fetch initial data from Supabase via n8n
-                await fetchData();
-                globalTrueCount = await fetchTotalCount();
-                
-                // Display data immediately
-                displayInitialResults();
-                
-                // Set up event listeners
-                searchForm.addEventListener('submit', handleSearch);
-                exportButton.addEventListener('click', exportToCSV);
-                closeModal.addEventListener('click', () => {
-                    contactModal.style.display = 'none';
-                });
-                
-                // Add event listener for the upgrade button (only if user is logged in)
-                const upgradeButton = document.getElementById('upgradeButton');
-                if (upgradeButton) {
-                    upgradeButton.addEventListener('click', function() {
-                        const token = localStorage.getItem('sessionToken');
-                        if (token) {
-                            window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-                        } else {
-                            window.location.href = 'https://unlimited-leads.online/pricing';
-                        }
-                    });
-                }
-                
-                // Add event listener for the logout button (only if user is logged in)
-                const logoutButton = document.getElementById('logoutButton');
-                if (logoutButton) {
-                    logoutButton.addEventListener('click', function() {
-                        localStorage.removeItem('sessionToken');
-                        window.location.href = 'https://unlimited-leads.online/en';
-                    });
-                }
-                
-                // Close modal when clicking outside of it
-                window.addEventListener('click', (event) => {
-                    if (event.target === contactModal) {
-                        contactModal.style.display = 'none';
-                    }
-                });
-                
-                // Show success message
-                showAlert("Database loaded successfully! You can search academic professionals.", 'success');
-            } catch (error) {
-                console.error("Error initializing app:", error);
-                showAlert(`Error connecting to database: ${error.message}`, 'error');
-            } finally {
-                // Hide loading indicator
-                loading.style.display = 'none';
-            }
-        });
-
-        // Fetch data from Supabase via n8n webhook
-        async function fetchData() {
-            try {
-                // Show loading indicator
-                loading.style.display = 'block';
-                
-                // Prepare the data to send to n8n
-                const requestData = {
-                    action: 'fetchAll',
-                    limit: 1000
-                };
-                
-                // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Validate that data is an array
-                if (!Array.isArray(data)) {
-                    console.error('Response is not an array:', data);
-                    throw new Error('Expected array response from API');
-                }
-                
-                console.log(`Received ${data.length} contacts from API`);
-                
-                // Store the data directly
-                allContacts = data;
-                
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                throw error;
-            }
-        }
-
-        // Token verification
-        function token_verif() {
-            console.log("Fonction token_verif démarrée");
-            
-            const WEBHOOK_URL_A = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/credits';
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            let token = urlParams.get('token');
-            
-            if (!token) {
-                token = localStorage.getItem('sessionToken');
-                console.log("Token récupéré du localStorage:", token);
-                
-                if (token) {
-                    const currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('token', token);
-                    window.history.replaceState({}, '', currentUrl.toString());
-                    console.log("URL mise à jour avec le token du localStorage");
-                }
-            } else {
-                localStorage.setItem('sessionToken', token);
-                console.log("Token sauvegardé dans le localStorage:", token);
-            }
-            
-            if (!token) {
-                console.log("Aucun token trouvé - utilisateur non connecté");
-                // Hide user credits and show sign up call-to-action
-                const userCreditsContainer = document.querySelector('.user-credits-container');
-                if (userCreditsContainer) {
-                    userCreditsContainer.style.display = 'none';
-                }
-                return;
-            }
-
-            userToken = token;
-            
-            console.log("Token valide, envoi de la requête API...");
-            
-            const requestData = {
-                token: token,
-                type: "token"
-            };
-            
-            console.log("Données à envoyer:", requestData);
-            
-            fetch(WEBHOOK_URL_A, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => {
-                console.log("Statut de la réponse:", response.status);
-                if (!response.ok) {
-                    throw new Error('Erreur réseau: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Succès de la requête token:', data);
-                
-                if (data && typeof data.credit === 'number') {
-                    displayUserCredits(data.credit);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de l\'envoi du token:', error);
-            });
-        }
-
-        // Fonction pour afficher les crédits utilisateur
-        function displayUserCredits(credits) {
-            // Show the user credits container and hide sign up CTA
-            const userCreditsContainer = document.querySelector('.user-credits-container');
-            const signUpCTA = document.getElementById('signUpCTA');
-            
-            if (userCreditsContainer) {
-                userCreditsContainer.style.display = 'flex';
-            }
-            if (signUpCTA) {
-                signUpCTA.style.display = 'none';
-            }
-            
-            const header = document.querySelector('header');
-            let creditsElement = document.getElementById('userCredits');
-            
-            if (!creditsElement) {
-                creditsElement = document.createElement('div');
-                creditsElement.id = 'userCredits';
-                creditsElement.className = 'user-credits';
-                header.appendChild(creditsElement);
-                
-                const style = document.createElement('style');
-                style.textContent = `
-                    .user-credits {
-                        background-color: var(--primary-color);
-                        color: white;
-                        padding: 8px 15px;
-                        border-radius: 20px;
-                        font-weight: bold;
-                        display: flex;
-                        align-items: center;
-                        gap: 5px;
-                    }
-                    
-                    .user-credits i {
-                        font-size: 16px;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
-        }
-
-        // Exécuter la fonction immédiatement
+        // Initialize SEO search tool
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("Page chargée, exécution de token_verif");
-            token_verif();
-        });
+            const seoSearchForm = document.getElementById('seoSearchForm');
+            const seoSearchBtn = document.getElementById('seoSearchBtn');
+            const seoExportBtn = document.getElementById('seoExportBtn');
+            const seoLoading = document.getElementById('seoLoading');
+            const seoResults = document.getElementById('seoResults');
+            const seoResultsBody = document.getElementById('seoResultsBody');
+            const seoResultsCount = document.getElementById('seoResultsCount');
+            const seoSearchLimit = document.getElementById('seoSearchLimit');
 
-        // Fonction pour afficher les résultats initiaux
-        function displayInitialResults() {
-            resultsSection.style.display = 'block';
-            resultsBody.innerHTML = '';
-            
-            if (allContacts.length === 0) {
-                noResults.style.display = 'block';
-                resultsTable.style.display = 'none';
-                resultsNumber.textContent = '0';
-                totalDisplayRecords.textContent = '0';
-                startRecord.textContent = '0';
-                endRecord.textContent = '0';
-                globalTrueCount = 0;
-                return;
-            } else {
-                noResults.style.display = 'none';
-                resultsTable.style.display = 'table';
-            }
-            
-            const displayContacts = allContacts.slice(0, 25);
-            
-            startRecord.textContent = '1';
-            endRecord.textContent = displayContacts.length;
-            
-            displayContacts.forEach(contact => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td data-label="Name">${contact.name || 'N/A'}</td>
-                    <td data-label="Title">${contact.title || 'N/A'}</td>
-                    <td data-label="Institution">${contact.company || 'N/A'}</td>
-                    <td data-label="Email">${contact.email || 'N/A'}</td>
-                    <td data-label="Country">${contact.country || 'N/A'}</td>
-                    <td data-label="Actions">
-                        <div class="action-icons">
-                            <i class="fas fa-eye" title="View Details"></i>
-                            <i class="fas fa-save" title="Save Contact"></i>
-                        </div>
-                    </td>
-                `;
-                
-                row.querySelector('.fa-eye').addEventListener('click', () => {
-                    showContactDetails(contact);
-                });
-                
-                resultsBody.appendChild(row);
-            });
-        }
-
-        // Fonction pour afficher les détails du contact
-        function showContactDetails(contact) {
-            console.log("Contact data received:", contact);
-            
-            document.getElementById('modalName').textContent = contact.name || 'N/A';
-            document.getElementById('modalFullName').textContent = contact.name || 'N/A';
-            document.getElementById('modalTitle').textContent = contact.title || 'N/A';
-            document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
-            document.getElementById('modalEmail').textContent = contact.email || 'N/A';
-            document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
-            document.getElementById('modalLinkedIn').textContent = contact.linkedin || 'N/A';
-            
-            const locationParts = [contact.city, contact.state, contact.country].filter(part => part && part.trim() !== '');
-            const location = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
-            document.getElementById('modalLocation').textContent = location;
-            
-            document.getElementById('modalCompany').textContent = contact.company || 'N/A';
-            document.getElementById('modalIndustry').textContent = contact.industry || 'N/A';
-            document.getElementById('modalCompanySize').textContent = contact.employees || 'N/A';
-            document.getElementById('modalWebsite').textContent = contact.website || 'N/A';
-            document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'N/A';
-            document.getElementById('modalDescription').textContent = contact.description || 'N/A';
-            
-            contactModal.style.display = 'block';
-        }
-
-        // Fonction de recherche
-        async function handleSearch(e) {
-            e.preventDefault();
-
-            loading.innerHTML = `
-                <i class="fas fa-spinner"></i>
-                <p>Searching for academic professionals. Please wait it can take up to 5 minutes...</p>
-            `;
-            
-            loading.style.padding = "";
-            loading.style.border = "";
-            loading.style.boxShadow = "";
-            loading.style.maxWidth = "";
-            loading.style.margin = "30px 0";
-            
-            loading.style.display = 'block';
-            resultsSection.style.display = 'none';
-            searchAlert.style.display = 'none';
-            
-            try {
-                const country = countrySelect.value;
-                const industry = industrySelect.value;
-                const companyName = document.getElementById('companyName').value;
-                const keywords = document.getElementById('keywords').value;
-                const jobTitle = document.getElementById('jobTitle').value;
-                const companySize = document.getElementById('companySize').value;
-                const city = document.getElementById('city').value;
-                const hasEmail = document.getElementById('hasEmail').value;
-                
-                if (country || industry || companyName || keywords) {
-                    try {
-                        const requestData = {
-                            action: 'search',
-                            searchParams: {
-                                country,
-                                industry,
-                                company: companyName,  
-                                keywords,
-                                jobtitle: jobTitle,  
-                                companysize: companySize,
-                                city: city,
-                                hasemail: hasEmail
-                            },
-                            limit: 1000
-                        };
-                        
-                        const response = await fetch(N8N_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(requestData)
-                        });
-                        
-                        if (!response.ok) {
-                            throw new Error(`API error: ${response.status}`);
-                        }
-                        
-                        const data = await response.json();
-                        allContacts = data;
-
-                        const trueCount = await fetchTotalCount();
-                        globalTrueCount = trueCount;
-                        resultsNumber.textContent = trueCount;
-                        totalDisplayRecords.textContent = trueCount;
-                        startRecord.textContent = trueCount > 0 ? '1' : '0';
-                        endRecord.textContent = trueCount > 0 ? Math.min(25, trueCount) : '0';
-
-                        showAlert(`Search completed: Found ${trueCount} academic professionals.`, 'success');
-                    } catch (error) {
-                        showAlert(`Error searching: ${error.message}`, 'error');
-                    }
+            // Check if user has reached search limit
+            function checkSearchLimit() {
+                const storedSearchCount = localStorage.getItem('seoSearchCount');
+                if (storedSearchCount) {
+                    searchCount = parseInt(storedSearchCount);
                 }
                 
-                displayInitialResults();
-                
-            } catch (error) {
-                console.error("Error handling search:", error);
-                showAlert(`Error: ${error.message}`, 'error');
-            } finally {
-                loading.style.display = 'none';
-                resultsSection.style.display = 'block';
-            }
-        }
-
-        // Get the total count of contacts without fetching all data
-        async function fetchTotalCount() {
-          try {
-            const requestData = {
-              action: 'getCount',
-              searchParams: {
-                country: countrySelect.value,
-                industry: industrySelect.value,
-                company: document.getElementById('companyName').value,
-                keywords: document.getElementById('keywords').value,
-                jobtitle: document.getElementById('jobTitle').value,
-                companysize: document.getElementById('companySize').value,
-                city: document.getElementById('city').value,
-                hasemail: document.getElementById('hasEmail').value
-              }
-            };
-            const response = await fetch(N8N_WEBHOOK_URL, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(requestData)
-            });
-            if (!response.ok) throw new Error(`API error: ${response.status}`);
-            const data = await response.json();
-            const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
-            resultsNumber.textContent = trueCount;
-            totalDisplayRecords.textContent = trueCount;
-            return trueCount;
-          } catch (err) {
-            console.error('Error fetching count:', err);
-            return 0;
-          }
-        }
-
-        // Export functionality
-        async function exportToCSV() {
-            // Check if user is logged in
-            if (!userToken) {
-                // Redirect to sign up page if not logged in
-                window.location.href = 'https://unlimited-leads.online/sign-up';
-                return;
-            }
-
-            try {
-                const exportModal = document.getElementById('exportModal');
-                exportModal.style.display = 'block';
-
-                document.getElementById('exportLimit').value = Math.min(globalTrueCount, 250);
-                
-                const closeExportModal = document.querySelector('.close-export-modal');
-                closeExportModal.addEventListener('click', () => {
-                    exportModal.style.display = 'none';
-                });
-                
-                const confirmExportBtn = document.getElementById('confirmExport');
-                const newConfirmExportBtn = confirmExportBtn.cloneNode(true);
-                confirmExportBtn.parentNode.replaceChild(newConfirmExportBtn, confirmExportBtn);
-                
-                newConfirmExportBtn.addEventListener('click', async () => {
-                    try {
-                        exportModal.style.display = 'none';
-                        
-                        const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
-                        const startTime = new Date();
-                        
-                        loading.style.display = 'block';
-                        loading.style.padding = "40px 30px";
-                        loading.style.border = "3px solid var(--primary)";
-                        loading.style.boxShadow = "0 10px 30px rgba(37, 99, 235, 0.2)";
-                        loading.style.maxWidth = "600px";
-                        loading.style.margin = "30px auto";
-                        
-                        loading.innerHTML = `
-                           <div style="text-align: center;">
-                            <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
-                            
-                            <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
-                                Preparing your export...
-                            </p>
-                            
-                            <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
-                                This may take up to <strong>5 minutes</strong>. 
-                                Keep this page open.
-                            </p>
-                            
-                            <div id="exportTimer" style="font-size: 14px; color: var(--gray-700);">
-                                Processing...
-                            </div>
-                        </div>
-                        `;
-                        
-                        const currentCount = await fetchTotalCount();
-                        
-                        const requestData = {
-                            action: 'export',
-                            limit: exportLimit,
-                            token: userToken,
-                            totalCount: currentCount,
-                            type: 'unverified',
-                            searchParams: {
-                                country: countrySelect.value,
-                                industry: industrySelect.value,
-                                company: document.getElementById('companyName').value,
-                                keywords: document.getElementById('keywords').value,
-                                city: document.getElementById('city').value,
-                                jobtitle: document.getElementById('jobTitle').value,
-                                companysize: document.getElementById('companySize').value,
-                                hasemail: document.getElementById('hasEmail').value 
-                            }
-                        };
-                        
-                        console.log("Sending export request:", requestData);
-                        
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000);
-                        
-                        try {
-                            const response = await fetch('https://export.hamoureliasse.workers.dev/export', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(requestData),
-                                signal: controller.signal,
-                                keepalive: true
-                            });
-                            
-                            clearTimeout(timeoutId);
-                            loading.style.display = 'none';
-                            
-                            if (!response.ok) {
-                                throw new Error(`API error: ${response.status} ${response.statusText}`);
-                            }
-
-                            const contentType = response.headers.get('content-type');
-
-                            if (contentType && contentType.includes('text/csv')) {
-                                const blob = await response.blob();
-                                const url = window.URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.style.display = 'none';
-                                a.href = url;
-                                
-                                const contentDisposition = response.headers.get('content-disposition');
-                                let filename = `academic_professionals_export_${new Date().toISOString().slice(0,10)}.csv`;
-                                if (contentDisposition) {
-                                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
-                                    if (filenameMatch) filename = filenameMatch[1];
-                                }
-                                
-                                a.download = filename;
-                                document.body.appendChild(a);
-                                
-                                setTimeout(() => {
-                                    a.click();
-                                    setTimeout(() => {
-                                        document.body.removeChild(a);
-                                        window.URL.revokeObjectURL(url);
-                                    }, 1000);
-                                }, 100);
-                                
-                                showAlert(`Export successful! Downloaded academic professionals to your device.`, 'success');
-                                showExportConfirmation("your academic professionals", url);
-                                return;
-                            }
-                            
-                            const responseData = await response.json();
-
-                            if (responseData && responseData.code === 403) {
-                                showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
-                                showCreditUpgradeModal();
-                                return;
-                            }
-                            
-                            if (Array.isArray(responseData) && responseData.length > 0) {
-                                downloadCSV(responseData);
-                                
-                                const processingMinutes = Math.floor((new Date() - startTime) / 60000);
-                                const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
-                                const timeStr = processingMinutes > 0 ? 
-                                    `${processingMinutes} min ${processingSecs} sec` : 
-                                    `${processingSecs} seconds`;
-                                
-                                showAlert(`Export successful! Downloaded ${responseData.length} academic professionals (processed in ${timeStr}).`, 'success');
-                                showExportConfirmation(responseData.length);
-                            } else {
-                                showAlert("Export completed!", 'success');
-                                showExportConfirmation("your academic professionals");
-                            }
-                        } catch (error) {
-                            console.error("Export fetch error:", error);
-                            
-                            if (error.name === 'AbortError') {
-                                showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
-                            } else {
-                                showAlert(`Export error: ${error.message}. Please try again.`, 'error');
-                            }
-                        }
-                    } catch (generalError) {
-                        console.error("General export error:", generalError);
-                        showAlert(`Error processing export: ${generalError.message}`, 'error');
-                    } finally {
-                        loading.style.padding = "";
-                        loading.style.border = "";
-                        loading.style.boxShadow = "";
-                        loading.style.maxWidth = "";
-                        loading.style.margin = "30px 0";
-                        loading.style.display = 'none';
-                        newConfirmExportBtn.disabled = false;
-                        newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
-                    }
-                });
-                
-                window.addEventListener('click', (event) => {
-                    if (event.target === exportModal) {
-                        exportModal.style.display = 'none';
-                    }
-                });
-            } catch (error) {
-                console.error('Error initiating export process:', error);
-                showAlert(`Error: ${error.message}`, 'error');
-                loading.style.display = 'none';
-            }
-        }
-
-        function showExportConfirmation(recordCount, blobUrl = null) {
-            const confirmationModal = document.getElementById('exportConfirmationModal');
-            
-            let downloadButton = '';
-            if (blobUrl) {
-                downloadButton = `
-                <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
-                    <p style="margin-bottom: 12px; color: #6c757d; font-size: 14px;">
-                        <i class="fas fa-info-circle"></i> If download didn't start automatically:
-                    </p>
-                    <a href="${blobUrl}" download="academic_professionals_export_${new Date().toISOString().slice(0,10)}.csv" 
-                       class="search-button" style="font-size: 14px; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 0 auto;">
-                        <i class="fas fa-download"></i> Click to Download
-                    </a>
-                </div>`;
-            }
-            
-            const infoValue = confirmationModal.querySelector('.info-value');
-            if (infoValue) {
-                infoValue.innerHTML = `
-                    <div style="text-align: center;">
-                        <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your academic professionals are ready!</strong></p>
-                        <p style="margin-bottom: 10px;">Your academic professionals have been exported successfully.</p>
-                        ${downloadButton}
-                    </div>
-                `;
-                infoValue.style.textAlign = 'center';
-            }
-            
-            confirmationModal.style.display = 'block';
-            
-            const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
-            const newCloseConfirmBtn = closeConfirmBtn.cloneNode(true);
-            closeConfirmBtn.parentNode.replaceChild(newCloseConfirmBtn, closeConfirmBtn);
-            newCloseConfirmBtn.addEventListener('click', () => {
-                confirmationModal.style.display = 'none';
-                if (blobUrl && blobUrl.startsWith('blob:')) {
-                    URL.revokeObjectURL(blobUrl);
+                if (searchCount >= MAX_FREE_SEARCHES) {
+                    seoSearchBtn.disabled = true;
+                    seoSearchBtn.innerHTML = '<i class="fas fa-lock"></i> Sign Up Required';
+                    seoSearchLimit.style.display = 'block';
                 }
-            });
-            
-            const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-            const newCloseConfirmationBtn = closeConfirmationBtn.cloneNode(true);
-            closeConfirmationBtn.parentNode.replaceChild(newCloseConfirmationBtn, closeConfirmationBtn);
-            newCloseConfirmationBtn.addEventListener('click', () => {
-                confirmationModal.style.display = 'none';
-                if (blobUrl && blobUrl.startsWith('blob:')) {
-                    URL.revokeObjectURL(blobUrl);
-                }
-            });
-        }
-
-        function downloadCSV(data) {
-            if (!Array.isArray(data) || data.length === 0) {
-                console.warn("No data to export");
-                showAlert("No data to export", 'warning');
-                return false;
             }
-            
-            try {
-                console.log(`Processing CSV download for ${data.length} academic professionals`);
-                
-                const headers = Object.keys(data[0]);
-                let csvContent = headers.join(',') + '\r\n';
-                
-                data.forEach(item => {
-                    const row = headers.map(header => {
-                        let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
-                        value = String(value);
-                        
-                        if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
-                            value = '"' + value.replace(/"/g, '""') + '"';
+
+            // Handle search form submission
+            seoSearchForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Check search limit
+                if (searchCount >= MAX_FREE_SEARCHES) {
+                    window.location.href = 'https://unlimited-leads.online/sign-up';
+                    return;
+                }
+
+                // Show loading
+                seoLoading.style.display = 'block';
+                seoResults.style.display = 'none';
+                seoSearchBtn.disabled = true;
+
+                try {
+                    // Get form values
+                    const jobTitle = document.getElementById('seoJobTitle').value;
+                    const country = document.getElementById('seoCountry').value;
+                    const industry = document.getElementById('seoIndustry').value;
+                    const city = document.getElementById('seoCity').value;
+
+                    // First get total count
+                    const countRequestData = {
+                        action: 'getCount',
+                        searchParams: {
+                            country: country,
+                            industry: industry || undefined,
+                            jobtitle: jobTitle || undefined,
+                            city: city || undefined
                         }
-                        
-                        return value;
+                    };
+
+                    const countResponse = await fetch(SEO_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(countRequestData)
                     });
-                    
-                    csvContent += row.join(',') + '\r\n';
-                });
-                
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                
-                if (isMobile) {
-                    const url = URL.createObjectURL(blob);
-                    const filename = `academic_professionals_export_${new Date().toISOString().slice(0,10)}.csv`;
-                    
-                    try {
-                        const downloadWindow = window.open(url, '_blank');
-                        if (downloadWindow) {
-                            setTimeout(() => downloadWindow.close(), 1000);
-                        }
-                        
-                        setTimeout(() => {
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.download = filename;
-                            link.style.display = 'none';
-                            
-                            document.body.appendChild(link);
-                            link.click();
-                            
-                            const clickEvent = new MouseEvent('click', {
-                                view: window,
-                                bubbles: true,
-                                cancelable: true
-                            });
-                            link.dispatchEvent(clickEvent);
-                            
-                            setTimeout(() => {
-                                document.body.removeChild(link);
-                                URL.revokeObjectURL(url);
-                            }, 1000);
-                        }, 100);
-                        
-                    } catch (mobileError) {
-                        console.error('Mobile download failed:', mobileError);
-                        showAlert('Download prepared!', 'warning');
+
+                    if (!countResponse.ok) {
+                        throw new Error(`Count API error: ${countResponse.status}`);
                     }
-                    
-                } else {
-                    const link = document.createElement('a');
-                    const url = URL.createObjectURL(blob);
-                    
-                    link.setAttribute('href', url);
-                    link.setAttribute('download', `academic_professionals_export_${new Date().toISOString().slice(0,10)}.csv`);
-                    link.style.visibility = 'hidden';
-                    
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    }, 100);
-                }
-                
-                console.log("CSV download initiated");
-                return true;
-                
-            } catch (error) {
-                console.error('Error generating CSV:', error);
-                showAlert('Failed to generate CSV file: ' + error.message, 'error');
-                return false;
-            }
-        }
 
-        function showCreditUpgradeModal() {
-            let creditUpgradeModal = document.getElementById('creditUpgradeModal');
-            
-            if (!creditUpgradeModal) {
-                creditUpgradeModal = document.createElement('div');
-                creditUpgradeModal.id = 'creditUpgradeModal';
-                creditUpgradeModal.className = 'contact-modal';
-                
-                creditUpgradeModal.innerHTML = `
-                    <div class="modal-content" style="border-left: 4px solid #FF9999;">
-                        <span class="close-credit-upgrade-modal">&times;</span>
-                        
-                        <div class="modal-header" style="border-bottom-color: #FF9999;">
-                            <h2 class="modal-title"><i class="fas fa-exclamation-circle" style="color: #d33;"></i> Insufficient Credits</h2>
-                        </div>
-                        
-                        <div class="modal-body">
-                            <div class="info-item" style="text-align: center;">
-                                <div class="info-value">
-                                    <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough exports for those academic professionals.</strong></p>
-                                    <p>Upgrade your account to unlock unlimited exports.</p>
-                                    <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue accessing academic professionals data.</p>
-                                </div>
-                            </div>
+                    const countData = await countResponse.json();
+                    const totalCount = Array.isArray(countData) && countData[0] && countData[0].count 
+                        ? parseInt(countData[0].count) 
+                        : 0;
+
+                    // Now get the actual search results (limited to 5)
+                    const searchRequestData = {
+                        action: 'search',
+                        searchParams: {
+                            country: country,
+                            industry: industry || undefined,
+                            jobtitle: jobTitle || undefined,
+                            city: city || undefined
+                        },
+                        limit: 5
+                    };
+
+                    const searchResponse = await fetch(SEO_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(searchRequestData)
+                    });
+
+                    if (!searchResponse.ok) {
+                        throw new Error(`Search API error: ${searchResponse.status}`);
+                    }
+
+                    const searchData = await searchResponse.json();
+
+                    // Update results count with total count
+                    seoResultsCount.textContent = totalCount.toLocaleString();
+
+                    // Clear previous results
+                    seoResultsBody.innerHTML = '';
+
+                    // Populate results table with sample data (up to 5 results)
+                    if (Array.isArray(searchData) && searchData.length > 0) {
+                        searchData.forEach(contact => {
+                            const row = document.createElement('tr');
                             
-                            <div style="text-align: center; margin-top: 25px;">
-                                <a href="https://unlimited-leads.online/pricing" class="search-button" style="max-width: 200px; text-decoration: none; display: inline-block;">
-                                    <i class="fas fa-crown"></i> Upgrade Account
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(creditUpgradeModal);
-            }
-            
-            creditUpgradeModal.style.display = 'block';
-            
-            const closeBtn = creditUpgradeModal.querySelector('.close-credit-upgrade-modal');
-            closeBtn.addEventListener('click', () => {
-                creditUpgradeModal.style.display = 'none';
-            });
-            
-            window.addEventListener('click', (event) => {
-                if (event.target === creditUpgradeModal) {
-                    creditUpgradeModal.style.display = 'none';
+                            // Create location string
+                            const locationParts = [contact.city, contact.state, contact.country].filter(part => part && part.trim() !== '');
+                            const location = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
+                            
+                            row.innerHTML = `
+                                <td data-label="Name">${contact.name || 'N/A'}</td>
+                                <td data-label="Title">${contact.title || 'N/A'}</td>
+                                <td data-label="Company">${contact.company || 'N/A'}</td>
+                                <td data-label="Location">${location}</td>
+                                <td data-label="Industry">${contact.industry || 'N/A'}</td>
+                            `;
+                            
+                            seoResultsBody.appendChild(row);
+                        });
+                    } else {
+                        // Show "no results" message
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--gray-600);">
+                                <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                                No results found. Try different search criteria.
+                            </td>
+                        `;
+                        seoResultsBody.appendChild(row);
+                    }
+
+                    // Show results
+                    seoResults.style.display = 'block';
+
+                    // Increment search count
+                    searchCount++;
+                    localStorage.setItem('seoSearchCount', searchCount.toString());
+
+                    // Check if limit reached
+                    if (searchCount >= MAX_FREE_SEARCHES) {
+                        seoSearchBtn.disabled = true;
+                        seoSearchBtn.innerHTML = '<i class="fas fa-lock"></i> Sign Up Required';
+                        seoSearchLimit.style.display = 'block';
+                    }
+
+                } catch (error) {
+                    console.error('SEO Search Error:', error);
+                    
+                    // Show error message
+                    seoResultsBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--danger);">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                                Error searching database. Please try again.
+                            </td>
+                        </tr>
+                    `;
+                    seoResults.style.display = 'block';
+                } finally {
+                    // Hide loading and re-enable button
+                    seoLoading.style.display = 'none';
+                    if (searchCount < MAX_FREE_SEARCHES) {
+                        seoSearchBtn.disabled = false;
+                    }
                 }
             });
-        }
 
-        // Helper function to show alerts
-        function showAlert(message, type) {
-            searchAlert.textContent = message;
-            searchAlert.className = `alert alert-${type}`;
-            searchAlert.style.display = 'block';
-            
-            setTimeout(() => {
-                searchAlert.style.display = 'none';
-            }, 5000);
-        }
+            // Handle export button click - redirect to sign up
+            seoExportBtn.addEventListener('click', function() {
+                window.location.href = 'https://unlimited-leads.online/sign-up';
+            });
+
+            // Initialize search limit check
+            checkSearchLimit();
+        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
