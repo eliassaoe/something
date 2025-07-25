@@ -610,7 +610,7 @@
         <div class="upload-area" id="uploadArea">
           <i class="fas fa-cloud-upload-alt upload-icon"></i>
           <div class="upload-text">Drop your CSV file here</div>
-          <div class="upload-subtext">CSV must have columns: first_name, last_name, company_name (all required)</div>
+          <div class="upload-subtext">CSV must have columns: first_name, last_name, company_name (all required) - Max 50 rows</div>
           <input type="file" id="csvFile" accept=".csv" class="hidden">
           <button class="btn" onclick="document.getElementById('csvFile').click()">
             <i class="fas fa-file-csv"></i>
@@ -680,6 +680,14 @@
       // Show/hide forms
       document.getElementById('personForm').classList.toggle('hidden', type !== 'person');
       document.getElementById('companyForm').classList.toggle('hidden', type !== 'company');
+      
+      // Update upload subtext based on search type
+      const uploadSubtext = document.querySelector('.upload-subtext');
+      if (type === 'person') {
+        uploadSubtext.textContent = 'CSV must have columns: first_name, last_name, company_name (all required) - Max 50 rows';
+      } else {
+        uploadSubtext.textContent = 'CSV should have a column: company_name - Max 50 rows';
+      }
       
       // Reset results
       resetResults();
@@ -881,6 +889,11 @@
 
       if (csvData.length === 0) {
         alert('No valid data found in CSV file.');
+        return;
+      }
+
+      if (csvData.length > 50) {
+        alert(`CSV file contains ${csvData.length} rows. Maximum allowed is 50 rows for bulk processing.`);
         return;
       }
 
