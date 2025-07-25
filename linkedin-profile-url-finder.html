@@ -405,6 +405,86 @@
     /* Hidden elements */
     .hidden { display: none; }
 
+    /* Footer Styles */
+    .footer {
+      background: var(--gray-900);
+      color: white;
+      margin-top: 6rem;
+      padding: 3rem 0 1rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-column h4 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-size: 0.875rem;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-social {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--gray-800);
+    }
+
+    .footer-social a {
+      color: var(--gray-400);
+      font-size: 1.5rem;
+      margin: 0 1rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-800);
+    }
+
+    .footer-bottom p {
+      color: var(--gray-400);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-bottom a {
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-bottom a:hover {
+      color: white;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.25rem; }
@@ -412,6 +492,15 @@
       .form-grid { grid-template-columns: 1fr; }
       .btn-secondary { margin-left: 0; margin-top: 0.5rem; }
       .mode-toggle { flex-direction: column; gap: 0.5rem; }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-social a {
+        margin: 0 0.5rem;
+      }
     }
 
     @media (max-width: 640px) {
@@ -422,14 +511,24 @@
       .upload-area {
         padding: 2rem 1rem;
       }
+      
+      .footer {
+        margin-top: 4rem;
+        padding: 2rem 0 1rem;
+      }
+      
+      .footer-content {
+        gap: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="https://unlimited-leads.online" class="logo" target="_blank">
-        <span class="logo-text">Unlimited leads</span>
+      <a href="https://unlimited-leads.online/en" class="logo" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-linkedin"></i>
+        <span class="logo-text">LinkedIn Profile Finder</span>
       </a>
     </div>
   </header>
@@ -437,7 +536,7 @@
   <div class="container">
     <div class="hero">
       <h1>Find LinkedIn Profiles</h1>
-      <p>Discover LinkedIn profiles URLs for people and companies instantly</p>
+      <p>Discover LinkedIn profiles for people and companies instantly</p>
     </div>
 
     <div class="main-card">
@@ -477,7 +576,7 @@
               <input type="text" id="lastName" placeholder="Last Name *" required>
             </div>
             <div class="input-group single-input">
-              <input type="text" id="personCompany" placeholder="Company Name (optional)">
+              <input type="text" id="personCompany" placeholder="Company Name *" required>
             </div>
           </div>
           <button class="btn btn-full" onclick="findProfile()">
@@ -511,7 +610,7 @@
         <div class="upload-area" id="uploadArea">
           <i class="fas fa-cloud-upload-alt upload-icon"></i>
           <div class="upload-text">Drop your CSV file here</div>
-          <div class="upload-subtext">or click to browse files</div>
+          <div class="upload-subtext">CSV must have columns: first_name, last_name, company_name (all required)</div>
           <input type="file" id="csvFile" accept=".csv" class="hidden">
           <button class="btn" onclick="document.getElementById('csvFile').click()">
             <i class="fas fa-file-csv"></i>
@@ -624,14 +723,19 @@
         const company = document.getElementById('personCompany').value.trim();
 
         if (!firstName || !lastName) {
-          alert('Please enter both first name and last name.');
+          alert('Please enter first name, last name, and company name.');
+          return;
+        }
+
+        if (!company) {
+          alert('Company name is required.');
           return;
         }
 
         requestBody.first_name = firstName;
         requestBody.last_name = lastName;
-        if (company) requestBody.company_name = company;
-        searchTerm = `${firstName} ${lastName}${company ? ' at ' + company : ''}`;
+        requestBody.company_name = company;
+        searchTerm = `${firstName} ${lastName} at ${company}`;
       } else {
         const companyName = document.getElementById('companyName').value.trim();
         if (!companyName) {
@@ -743,18 +847,18 @@
         const lastNameIdx = findColumnIndex(headers, ['last_name', 'lastname', 'last name']);
         const companyIdx = findColumnIndex(headers, ['company_name', 'company name', 'company']);
 
-        if (firstNameIdx === -1 || lastNameIdx === -1) {
-          alert('CSV must have both first_name and last_name columns for person search.');
+        if (firstNameIdx === -1 || lastNameIdx === -1 || companyIdx === -1) {
+          alert('CSV must have all three required columns: first_name, last_name, and company_name for person search.');
           return;
         }
 
         for (let i = 1; i < lines.length; i++) {
           const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-          if (values[firstNameIdx] && values[lastNameIdx]) {
+          if (values[firstNameIdx] && values[lastNameIdx] && values[companyIdx]) {
             const row = {
               firstName: values[firstNameIdx],
               lastName: values[lastNameIdx],
-              companyName: companyIdx !== -1 ? values[companyIdx] : ''
+              companyName: values[companyIdx]
             };
             csvData.push(row);
           }
@@ -806,7 +910,7 @@
       preview.forEach(row => {
         tableHTML += '<tr>';
         if (currentSearchType === 'person') {
-          tableHTML += `<td>${row.firstName}</td><td>${row.lastName}</td><td>${row.companyName || '-'}</td>`;
+          tableHTML += `<td>${row.firstName}</td><td>${row.lastName}</td><td>${row.companyName}</td>`;
         } else {
           tableHTML += `<td>${row.companyName}</td>`;
         }
@@ -840,7 +944,7 @@
           if (currentSearchType === 'person') {
             requestBody.first_name = row.firstName;
             requestBody.last_name = row.lastName;
-            if (row.companyName) requestBody.company_name = row.companyName;
+            requestBody.company_name = row.companyName;
           } else {
             requestBody.company_name = row.companyName;
           }
@@ -895,7 +999,7 @@
 
         tableHTML += '<tr>';
         if (currentSearchType === 'person') {
-          tableHTML += `<td>${row.firstName} ${row.lastName}</td><td>${row.companyName || '-'}</td>`;
+          tableHTML += `<td>${row.firstName} ${row.lastName}</td><td>${row.companyName}</td>`;
         } else {
           tableHTML += `<td>${row.companyName}</td>`;
         }
@@ -917,7 +1021,7 @@
       if (currentSearchType === 'person') {
         csvContent = 'First Name,Last Name,Company,LinkedIn URL,Status\n';
         bulkResults.forEach(row => {
-          csvContent += `"${row.firstName}","${row.lastName}","${row.companyName || ''}","${row.linkedinUrl}","${row.status}"\n`;
+          csvContent += `"${row.firstName}","${row.lastName}","${row.companyName}","${row.linkedinUrl}","${row.status}"\n`;
         });
       } else {
         csvContent = 'Company Name,LinkedIn URL,Status\n';
@@ -967,88 +1071,5 @@
       });
     });
   </script>
-
-  <footer id="contact" class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <!-- Free Tools Section -->
-            <div class="footer-column">
-                <h4>Free Tools</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
-                    <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
-                    <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
-                    <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
-                    <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
-                    <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
-                    <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
-                    <li><a href="https://unlimited-leads.online/ai-email-template-generator">AI Email Template Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/ai-email-reply-generator-free">AI Email Reply Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/cold-email-generator">Cold Email Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/email-name-generator">Email Name Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/linkedin-headline-generator">Linkedin Headline Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li>
-                    <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
-                </ul>
-            </div>
-            <!-- Compare Section -->
-            <div class="footer-column">
-                <h4>Compare</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/rocketreach-alternative">RocketReach Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/uplead-alternative">UpLead Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/lead411-alternative">Lead411 Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/seamless-ai-alternative">Seamless ai Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/findthatlead-alternative">Findthatlead alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/cognism-alternative">Cognism alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/hunter-io-alternative">Hunter io alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/getprospect-alternative">Getprospect alternative</a></li>
-                </ul>
-            </div>
-            <!-- Industry Email List Section -->
-            <div class="footer-column">
-                <h4>Industry Email List</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/accountants-email-list">Accountants Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/construction-industry-email-list">Construction Industry Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/hr-email-list">HR Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/real-estate-agent-email-list">Real Estate Agent Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/email-list.html">All email lists</a></li>
-                </ul>
-            </div>
-            <!-- Contact Section -->
-            <div class="footer-column">
-                <h4>Contact Us</h4>
-                <ul class="footer-links">
-                    <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
-                    <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
-                </ul>
-            </div>
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
-                <p>
-                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
-                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-  
 </body>
 </html>
