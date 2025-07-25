@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Verification</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9fafb;
+        }
+        .container {
+            max-width: 480px;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #10B981;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            color: #111827;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #status {
+            color: #4b5563;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verifying your account</h1>
+        <div class="spinner" id="spinner"></div>
+        <div id="status">Please wait...</div>
+    </div>
+    <script>
+        // Execute immediately 
+        (function() {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const token_hash = urlParams.get('token_hash');
+            const type = urlParams.get('type') || 'signup';
+            
+            if (!email || !token_hash) {
+                document.getElementById('status').textContent = "Verifying your account...";
+                // Continue with empty values rather than showing an error
+            }
+            
+            // Send to webhook
+            fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: email,
+                    token_hash: token_hash,
+                    type: 'confirmation'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.success && data.userUuid) {
+                    document.getElementById('status').textContent = "Verification successful! Redirecting...";
+                    // Using token instead of uuid in the redirect URL
+                    const redirectUrl = 'https://unlimited-leads.online/app?token=' + data.userUuid;
+                    
+                    // Force redirect after short delay
+                    setTimeout(function() {
+                        window.location.href = redirectUrl;
+                    }, 1500);
+                } else {
+                    document.getElementById('status').textContent = "Error: " + (data.message || "Verification failed");
+                }
+            })
+            .catch(error => {
+                document.getElementById('status').textContent = "Error: " + error.message;
+            });
+        })();
+    </script>
+</body>
+</html>
