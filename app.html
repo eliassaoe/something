@@ -2679,12 +2679,21 @@ async function fetchTotalCount() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestData)
     });
+
+    console.log("🔥 RESPONSE STATUS:", response.status);
+    console.log("🔥 RESPONSE OK:", response.ok);
+      
     if (!response.ok) throw new Error(`API error: ${response.status}`);
     const data = await response.json();
+
+    console.log("🔥 RAW RESPONSE:", data);
+    console.log("🔥 TYPE OF DATA:", typeof data);
+    console.log("🔥 IS ARRAY:", Array.isArray(data));
     // data is [count], so grab first element
     const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
     resultsNumber.textContent       = trueCount;
     totalDisplayRecords.textContent = trueCount;
+    console.log("🔥 FINAL COUNT:", trueCount);
     return trueCount;
   } catch (err) {
     console.error('Error fetching count:', err);
