@@ -2690,7 +2690,7 @@ async function fetchTotalCount() {
     console.log("🔥 TYPE OF DATA:", typeof data);
     console.log("🔥 IS ARRAY:", Array.isArray(data));
     // data is [count], so grab first element
-    const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
+    const trueCount = Array.isArray(data) && data[0] ? parseInt(data[0]) : 0;
     resultsNumber.textContent       = trueCount;
     totalDisplayRecords.textContent = trueCount;
     console.log("🔥 FINAL COUNT:", trueCount);
