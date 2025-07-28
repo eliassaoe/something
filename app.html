@@ -1808,7 +1808,7 @@ async function fetchData() {
         };
         
         // Make POST request to n8n webhook
-        const response = await fetch('https://count.unlimited-leads.online', {
+        const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -2674,7 +2674,7 @@ async function fetchTotalCount() {
         hasemail: document.getElementById('hasEmail').value
       }
     };
-    const response = await fetch(N8N_WEBHOOK_URL, {
+    const response = await fetch('https://count.unlimited-leads.online', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestData)
