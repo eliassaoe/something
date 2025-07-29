@@ -8,7 +8,7 @@
         searchUrl: 'https://contacts-search.hamoureliasse.workers.dev/',
         countUrl: 'https://count-v2.hamoureliasse.workers.dev/',
         signupUrl: 'https://unlimited-leads.online/sign-up',
-        maxFreeSearches: 2
+        maxFreeSearches: 10
     };
 
     // Industry mapping based on your exact industry list
