@@ -1700,7 +1700,6 @@ header {
     <script>
         // n8n webhook URL
         const N8N_WEBHOOK_URL = 'https://contacts-fetch.hamoureliasse.workers.dev/';
-        const SEARCH_WEBHOOK_URL = 'https://contacts-search.hamoureliasse.workers.dev/';
         
         
         let allContacts = [];
@@ -1809,7 +1808,7 @@ async function fetchData() {
         };
         
         // Make POST request to n8n webhook
-        const response = await fetch(SEARCH_WEBHOOK_URL, {
+        const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
