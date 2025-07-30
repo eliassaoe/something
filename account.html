@@ -586,6 +586,22 @@ header {
                     <strong>Payment Security:</strong> We use Stripe to process payments. Your credit card information is never stored on our servers and is protected by industry-leading encryption.
                 </p>
             </div>
+
+            <div class="security-note">
+    <i class="fas fa-key"></i>
+    <div style="flex: 1;">
+        <p style="margin-bottom: 10px;">
+            <strong>Your API Key:</strong>
+        </p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <code id="apiKeyValue" style="background: #f1f1f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; word-break: break-all; flex: 1; font-size: 13px;">Loading...</code>
+            <button id="copyApiKey" style="background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+    </div>
+</div>
+            
         </section>
     </div>
     
@@ -597,6 +613,7 @@ header {
             console.log("Account page loaded, executing token verification");
             token_verif();
             setupEventListeners();
+            displayApiKey();
         });
 
         /**
@@ -787,7 +804,33 @@ const planConfigs = {
             
             console.log(`Plan updated to: ${config.title}`);
         }
-            
+
+        // Function to display API key
+function displayApiKey() {
+    const token = localStorage.getItem('sessionToken');
+    const apiKeyElement = document.getElementById('apiKeyValue');
+    
+    if (apiKeyElement && token) {
+        apiKeyElement.textContent = token;
+    }
+}
+
+// Add copy functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const copyButton = document.getElementById('copyApiKey');
+    if (copyButton) {
+        copyButton.addEventListener('click', function() {
+            const apiKey = document.getElementById('apiKeyValue').textContent;
+            navigator.clipboard.writeText(apiKey).then(function() {
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            });
+        });
+    }
+});
+        
             // Function to set up event listeners
         function setupEventListeners() {
             // Upgrade button
