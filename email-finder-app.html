@@ -745,7 +745,7 @@ header {
         <header>
     <div class="user-credits-container">
         <div id="userCredits" class="user-credits">
-            <i class="fas fa-coins"></i> 0 credits
+            <i class="fas fa-coins"></i> Loading...
         </div>
         <button id="upgradeButton" class="upgrade-button">
             <i class="fas fa-crown"></i> Upgrade
@@ -958,13 +958,17 @@ header {
             creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
         }
 
-        // Execute token verification
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Page loaded, executing token_verif");
-            token_verif();
-        });
+       // Execute token verification immediately
+(function() {
+    console.log("Starting immediate token verification...");
+    token_verif();
+})();
 
-        token_verif();
+// Execute token verification
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page loaded, executing token_verif");
+    token_verif();
+});
 
         // Handle email search
         async function handleEmailSearch(e) {
