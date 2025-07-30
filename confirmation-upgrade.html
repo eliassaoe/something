@@ -63,50 +63,113 @@
         <div class="success-icon">✓</div>
         <h1>Payment Successful!</h1>
         <div id="spinner" class="spinner"></div>
-        <div id="status">Processing your payment confirmation...</div>
+        <div id="status">Confirming payment...</div>
         <div id="error-container"></div>
     </div>
 
     <script>
-        // Ultra-reliable payment confirmation process
+        // ULTRA-RELIABLE payment confirmation with extensive logging
         (async function() {
             const statusElement = document.getElementById('status');
             const spinnerElement = document.getElementById('spinner');
             const errorContainer = document.getElementById('error-container');
+            
+            // Logging function (console only - no UI debug)
+            function log(message, data = null) {
+                const timestamp = new Date().toISOString();
+                const logEntry = `[${timestamp}] ${message}`;
+                console.log(logEntry, data || '');
+            }
 
-            // Utility function for retry logic
-            async function retryWithBackoff(fn, maxRetries = 3, baseDelay = 1000) {
-                for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                    try {
-                        return await fn();
-                    } catch (error) {
-                        console.log(`Attempt ${attempt} failed:`, error.message);
+            // Ultra-reliable fetch with multiple fallback strategies
+            async function ultraReliableFetch(url, options, maxRetries = 5) {
+                const methods = [
+                    // Method 1: Standard fetch
+                    () => fetch(url, options),
+                    
+                    // Method 2: XMLHttpRequest fallback
+                    () => new Promise((resolve, reject) => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', url, true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.setRequestHeader('Accept', 'application/json');
                         
-                        if (attempt === maxRetries) {
-                            throw error;
+                        xhr.onload = function() {
+                            resolve({
+                                ok: xhr.status >= 200 && xhr.status < 300,
+                                status: xhr.status,
+                                statusText: xhr.statusText,
+                                json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+                                text: () => Promise.resolve(xhr.responseText)
+                            });
+                        };
+                        
+                        xhr.onerror = () => reject(new Error('XMLHttpRequest failed'));
+                        xhr.ontimeout = () => reject(new Error('XMLHttpRequest timeout'));
+                        xhr.timeout = 60000; // 60 second timeout
+                        
+                        xhr.send(options.body);
+                    }),
+                    
+                    // Method 3: Direct worker bypass (fallback to server)
+                    () => fetch('https://eliasse-n8n.onrender.com/webhook/fd1d24eb-73b4-4d39-8b2e-781f2d05f1c6', options)
+                ];
+
+                for (let methodIndex = 0; methodIndex < methods.length; methodIndex++) {
+                    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                        try {
+                            log(`Attempt ${attempt}/${maxRetries} using method ${methodIndex + 1}`);
+                            
+                            const response = await Promise.race([
+                                methods[methodIndex](),
+                                new Promise((_, reject) => 
+                                    setTimeout(() => reject(new Error('Request timeout')), 60000)
+                                )
+                            ]);
+                            
+                            log(`Method ${methodIndex + 1} attempt ${attempt} succeeded`, {
+                                status: response.status,
+                                ok: response.ok
+                            });
+                            
+                            return response;
+                            
+                        } catch (error) {
+                            log(`Method ${methodIndex + 1} attempt ${attempt} failed`, {
+                                error: error.message,
+                                stack: error.stack
+                            });
+                            
+                            if (attempt < maxRetries) {
+                                const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+                                log(`Waiting ${delay}ms before retry...`);
+                                await new Promise(resolve => setTimeout(resolve, delay));
+                            }
                         }
-                        
-                        // Exponential backoff: wait longer between retries
-                        const delay = baseDelay * Math.pow(2, attempt - 1);
-                        console.log(`Retrying in ${delay}ms...`);
-                        await new Promise(resolve => setTimeout(resolve, delay));
                     }
                 }
+                
+                throw new Error('All methods and retries exhausted');
             }
 
             try {
-                // Get URL parameters with extensive fallback checking
+                log('=== PAYMENT CONFIRMATION STARTED ===');
+                log('Page URL', window.location.href);
+                
+                // Get URL parameters with comprehensive fallback
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlHash = window.location.hash ? new URLSearchParams(window.location.hash.substring(1)) : null;
                 
-                // Check URL parameters first (primary method)
+                log('URL search params', Object.fromEntries(urlParams));
+                if (urlHash) log('URL hash params', Object.fromEntries(urlHash));
+                
+                // Get session ID with all possible parameter names
                 let sessionId = urlParams.get('session_id') || 
                                urlParams.get('checkout_session_id') || 
                                urlParams.get('id') ||
                                urlParams.get('sessionId') ||
                                urlParams.get('checkoutSessionId');
                 
-                // Check hash parameters as fallback
                 if (!sessionId && urlHash) {
                     sessionId = urlHash.get('session_id') || 
                                urlHash.get('checkout_session_id') || 
@@ -115,128 +178,147 @@
                                urlHash.get('checkoutSessionId');
                 }
                 
-                // Check stored session ID as last resort
+                // Check localStorage/sessionStorage
                 if (!sessionId) {
-                    sessionId = localStorage.getItem('checkout_session_id') ||
-                               sessionStorage.getItem('checkout_session_id') ||
-                               localStorage.getItem('session_id') ||
-                               sessionStorage.getItem('session_id');
+                    const storageKeys = ['checkout_session_id', 'session_id'];
+                    for (const key of storageKeys) {
+                        sessionId = localStorage.getItem(key) || sessionStorage.getItem(key);
+                        if (sessionId) {
+                            log(`Found session ID in storage`, { key, sessionId });
+                            break;
+                        }
+                    }
                 }
                 
-                // Get user token with comprehensive fallback
+                // Get user token
                 let userToken = urlParams.get('token') || 
                                urlParams.get('customer_id') || 
                                urlParams.get('user_id') ||
-                               urlParams.get('userToken') ||
-                               urlParams.get('customerId') ||
-                               urlParams.get('userId');
+                               urlParams.get('userToken');
                 
-                // Check hash for token if not found in query params
                 if (!userToken && urlHash) {
                     userToken = urlHash.get('token') || 
                                urlHash.get('customer_id') || 
                                urlHash.get('user_id') ||
-                               urlHash.get('userToken') ||
-                               urlHash.get('customerId') ||
-                               urlHash.get('userId');
+                               urlHash.get('userToken');
                 }
                 
-                // Check all possible storage locations for user token
                 if (!userToken) {
-                    userToken = localStorage.getItem('payment_user_token') ||
-                               sessionStorage.getItem('payment_user_token') ||
-                               localStorage.getItem('userToken') ||
-                               localStorage.getItem('customer_id') ||
-                               localStorage.getItem('user_id') ||
-                               sessionStorage.getItem('userToken') ||
-                               sessionStorage.getItem('customer_id') ||
-                               sessionStorage.getItem('user_id') ||
-                               localStorage.getItem('customerId') ||
-                               sessionStorage.getItem('customerId');
+                    const tokenKeys = ['payment_user_token', 'userToken', 'customer_id', 'user_id'];
+                    for (const key of tokenKeys) {
+                        userToken = localStorage.getItem(key) || sessionStorage.getItem(key);
+                        if (userToken) {
+                            log(`Found user token in storage`, { key, hasToken: !!userToken });
+                            break;
+                        }
+                    }
                 }
+                
+                log('Extracted data', {
+                    sessionId: sessionId ? sessionId.substring(0, 15) + '...' : 'MISSING',
+                    userToken: userToken ? 'PRESENT' : 'MISSING',
+                    fullSessionId: sessionId // For debugging
+                });
                 
                 // Validate required data
                 if (!sessionId) {
-                    throw new Error('Missing payment session information. Please contact support if this persists.');
+                    throw new Error('❌ CRITICAL: No session ID found in URL or storage');
                 }
                 
-                console.log('Processing payment confirmation...', {
-                    sessionId: sessionId ? sessionId.substring(0, 10) + '...' : 'missing',
-                    userToken: userToken ? 'present' : 'missing',
-                    url: window.location.href
-                });
+                // Prepare request data
+                const requestData = {
+                    checkout_session_id: sessionId,
+                    user_token: userToken,
+                    lookup_session: true,
+                    timestamp: new Date().toISOString(),
+                    source: 'ultra_reliable_payment_page',
+                    page_url: window.location.href,
+                    user_agent: navigator.userAgent
+                };
                 
-                // Update status
-                statusElement.textContent = 'Confirming your payment with our servers...';
+                log('Request data prepared', requestData);
                 
-                // Define the API call function for retry logic
-                const makeApiCall = async () => {
-                    const response = await fetch('https://confirmation-upgrade.hamoureliasse.workers.dev/', {
+                // Update UI
+                statusElement.textContent = 'Confirming payment...';
+                
+                // Make the ultra-reliable API call
+                log('🚀 Starting API call to worker...');
+                
+                const response = await ultraReliableFetch(
+                    'https://confirmation-upgrade.hamoureliasse.workers.dev/', 
+                    {
                         method: 'POST',
                         headers: { 
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'User-Agent': 'PaymentConfirmation/1.0'
+                            'User-Agent': 'PaymentConfirmation/2.0'
                         },
-                        body: JSON.stringify({ 
-                            checkout_session_id: sessionId,
-                            user_token: userToken,
-                            lookup_session: true,
-                            timestamp: new Date().toISOString(),
-                            source: 'payment_success_page'
-                        }),
-                        timeout: 30000 // 30 second timeout
-                    });
-                    
-                    console.log('Webhook response status:', response.status);
-                    
-                    if (!response.ok) {
-                        const errorText = await response.text().catch(() => 'Unknown error');
-                        throw new Error(`Server responded with status ${response.status}: ${errorText}`);
+                        body: JSON.stringify(requestData)
                     }
-                    
-                    return await response.json();
-                };
+                );
                 
-                // Execute API call with retry logic
-                statusElement.textContent = 'Confirming your payment (this may take a moment)...';
-                const data = await retryWithBackoff(makeApiCall, 3, 2000);
+                log('✅ API call completed', {
+                    status: response.status,
+                    ok: response.ok,
+                    statusText: response.statusText
+                });
                 
-                console.log('Payment confirmation successful:', data);
+                if (!response.ok) {
+                    const errorText = await response.text().catch(() => 'Unknown error');
+                    throw new Error(`Server responded with ${response.status}: ${errorText}`);
+                }
                 
-                // Hide spinner and update status
+                let responseData;
+                try {
+                    responseData = await response.json();
+                    log('✅ Response data parsed', responseData);
+                } catch (jsonError) {
+                    log('⚠️ Failed to parse JSON response, getting text');
+                    responseData = { message: await response.text() };
+                }
+                
+                // Success!
+                log('🎉 PAYMENT CONFIRMATION SUCCESSFUL');
+                
                 spinnerElement.style.display = 'none';
-                statusElement.innerHTML = 'Payment confirmed successfully!<br>Redirecting you to your account...';
+                statusElement.innerHTML = 'Payment confirmed!<br>Redirecting...';
                 
-                // Clean up all possible stored payment tokens
-                ['payment_user_token', 'userToken', 'customer_id', 'user_id', 'customerId', 'checkout_session_id', 'session_id'].forEach(key => {
+                // Clean up storage
+                const keysToClean = ['payment_user_token', 'userToken', 'customer_id', 'user_id', 'checkout_session_id', 'session_id'];
+                keysToClean.forEach(key => {
                     localStorage.removeItem(key);
                     sessionStorage.removeItem(key);
                 });
+                log('🧹 Storage cleaned up');
                 
-                // Wait to show success message, then redirect
-                await new Promise(resolve => setTimeout(resolve, 2500));
-                
-                // Redirect to app
+                // Wait and redirect
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                log('🔄 Redirecting to app...');
                 window.location.href = 'https://unlimited-leads.online/app';
                 
             } catch (error) {
-                console.error('Payment confirmation error:', error);
+                log('❌ FATAL ERROR', {
+                    message: error.message,
+                    stack: error.stack
+                });
                 
-                // Hide spinner
                 spinnerElement.style.display = 'none';
+                statusElement.innerHTML = 'Unable to confirm payment automatically';
                 
-                // Show user-friendly message
-                statusElement.innerHTML = 'Payment was successful!<br>Redirecting you to your account...';
+                errorContainer.innerHTML = `
+                    <div class="error-message">
+                        <strong>Payment Processing Issue</strong><br><br>
+                        Your payment was successful, but we're having trouble confirming it automatically.
+                        <br><br>
+                        Please contact our support team and we'll activate your account manually:
+                        <br><br>
+                        <strong>📧 support@unlimited-leads.online</strong>
+                        <br><br>
+                        Please include your payment confirmation details when contacting support.
+                    </div>
+                `;
                 
-                // Add subtle support message
-                errorContainer.innerHTML = '<div style="font-size: 12px; color: #9ca3af; margin-top: 15px;">If you experience any issues accessing your account, please contact support with your payment confirmation.</div>';
-                
-                // Still redirect after longer delay
-                await new Promise(resolve => setTimeout(resolve, 4000));
-                
-                // Redirect anyway since payment was successful
-                window.location.href = 'https://unlimited-leads.online/app';
+                // Do NOT redirect on error - let user contact support
             }
         })();
     </script>
