@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Access - Email Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .nav {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        h2 {
+            color: #333;
+            margin: 30px 0 15px 0;
+            font-size: 18px;
+        }
+        
+        h3 {
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .endpoint {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        strong {
+            font-weight: bold;
+        }
+        
+        .note {
+            background: #fffbf0;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>Implementing API</h1>
+        
+        <h2>Authentication</h2>
+        <p>All API requests must include an <strong>Authorization</strong> header. The header should refer to your private key.</p>
+        <p>When you sign up for API access, Email Finder assigns an API private key to your account. Your private API key is only known by you and Email Finder. It is important to keep both confidential to protect your account. Your API key is accessible from the Account link.</p>
+
+        
+        <h2>API Call: find_email</h2>
+        
+        <div class="endpoint">
+           POST https://api.unlimited-leads-to.online
+        </div>
+        
+        <p>Returns a JSON-encoded object with the email address for the given person and domain. Calls to the API are metered and billed if there is an email returned with the result. If there is no email available you will not be billed.</p>
+        
+        <h3>POST Request Parameters</h3>
+        <ul>
+            <li><strong>firstName</strong> - The first name of the person (required)</li>
+            <li><strong>lastName</strong> - The last name of the person (required)</li>
+            <li><strong>domain</strong> - The domain to query (required)</li>
+        </ul>
+        
+        <h3>Example Request Parameters</h3>
+        <ul>
+            <li><strong>firstName</strong> - John</li>
+            <li><strong>lastName</strong> - Doe</li>
+            <li><strong>domain</strong> - company.com</li>
+        </ul>
+        
+        <h3>POST Response</h3>
+        
+        <div class="code-block">{
+  "email": "john.doe@company.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "domain": "company.com"
+}</div>
+        
+        <h3>curl Request Example</h3>
+        
+        <div class="code-block">> curl -vk \
+       -H "Content-Type: application/json" \
+       -H "Authorization: api_private_key" \
+       -X POST "https://api.unlimited-leads-to.online" \
+       -d '{
+         "firstName": "John",
+         "lastName": "Doe",
+         "domain": "company.com",
+         "action": "findEmail"
+       }'</div>
+        
+        <h3>No Email Found Response</h3>
+        
+        <div class="code-block">{
+  "email": null,
+  "firstName": "John",
+  "lastName": "Doe",
+  "domain": "company.com"
+}</div>
+        
+        <br><br>
+        <hr>
+        <p style="text-align: center; color: #666; font-size: 12px; margin-top: 30px;">
+            © Copyright 2025 All rights reserved<br>
+            <a href="#" style="color: #666;">about</a> | 
+            <a href="#" style="color: #666;">privacy policy</a> | 
+            <a href="#" style="color: #666;">faq</a> | 
+            <a href="#" style="color: #666;">contact us</a> | 
+            <a href="#" style="color: #666;">logout</a>
+        </p>
+    </div>
+</body>
+</html>
