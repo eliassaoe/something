@@ -552,6 +552,22 @@ header {
                 Manage your subscription and view your account details
             </p>
 
+             <div class="security-note">
+    <i class="fas fa-key"></i>
+    <div style="flex: 1;">
+        <p style="margin-bottom: 10px;">
+            <strong>Your API Key:</strong>
+        </p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <code id="apiKeyValue" style="background: #f1f1f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; word-break: break-all; flex: 1; font-size: 13px;">Loading...</code>
+            <button id="copyApiKey" style="background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+    </div>
+</div>
+            
+
             <div id="accountAlert" class="alert"></div>
 
             <div class="plan-card" id="planCard" style="display: none;">
@@ -579,21 +595,6 @@ header {
                     <p style="color: var(--gray-600); margin: 0;">Loading your plan details...</p>
                 </div>
             </div>
-
-            <div class="security-note">
-    <i class="fas fa-key"></i>
-    <div style="flex: 1;">
-        <p style="margin-bottom: 10px;">
-            <strong>Your API Key:</strong>
-        </p>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <code id="apiKeyValue" style="background: #f1f1f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; word-break: break-all; flex: 1; font-size: 13px;">Loading...</code>
-            <button id="copyApiKey" style="background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                <i class="fas fa-copy"></i> Copy
-            </button>
-        </div>
-    </div>
-</div>
             
         </section>
     </div>
