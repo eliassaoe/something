@@ -1784,9 +1784,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contactModal.style.display = 'none';
             }
         });
-        
-        // Show success message
-        showAlert("Connected to database successfully! Ready to search.", 'success');
+      
     } catch (error) {
         console.error("Error initializing app:", error);
         showAlert(`Error connecting to database: ${error.message}`, 'error');
