@@ -404,7 +404,8 @@
             }
         }
 
-        // Listen for auth state changes
+        // Listen for auth state changes - DISABLED to allow access to signup page
+        /*
         supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN' && session?.user) {
                 const userToken = session.access_token
@@ -416,6 +417,7 @@
                 window.location.href = `https://unlimited-leads.online/app?token=${userToken}`
             }
         })
+        */
 
         // Email/password signup form
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
