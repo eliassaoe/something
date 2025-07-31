@@ -50,6 +50,27 @@
             margin: 0;
         }
         
+        .success-icon {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            background: #4a90e2;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .success-icon::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
         .error {
             color: #dc3545;
             background: #f8d7da;
@@ -57,15 +78,26 @@
             border-radius: 5px;
             margin-top: 20px;
             border: 1px solid #f5c6cb;
+            display: none;
+        }
+        
+        .error a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        
+        .error a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="spinner"></div>
-        <h2>Signing you in...</h2>
-        <p>Redirecting to your account...</p>
-        <div id="error-message" class="error" style="display: none;"></div>
+        <div class="spinner" id="spinner"></div>
+        <div class="success-icon" id="successIcon"></div>
+        <h2 id="title">Signing you in...</h2>
+        <p id="message">Redirecting to your account...</p>
+        <div id="error-message" class="error"></div>
     </div>
 
     <script>
@@ -104,86 +136,129 @@
             }
         }
 
-        // Function to send to webhook (optional)
-        async function sendToWebhook(userInfo, token) {
+        // Function to send Google signup to your worker (which forwards to n8n)
+        async function sendGoogleSignupToWorker(userInfo, token) {
             try {
+                console.log('📤 Sending Google signup to worker...');
+                
                 const payload = {
                     email: userInfo.email,
-                    name: userInfo.name,
+                    name: userInfo.name || '',
                     userId: userInfo.userId,
                     provider: "google",
                     type: "signup",
                     token: token
                 }
                 
-                await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify(payload)
-                })
+                });
                 
-                console.log('✅ Google user sent to webhook')
+                if (response.ok) {
+                    console.log('✅ Google signup sent to worker successfully');
+                } else {
+                    console.warn('⚠️ Worker responded with:', response.status);
+                    // Continue anyway - don't block the user
+                }
+                
             } catch (error) {
-                console.error('❌ Webhook error:', error)
-                // Continue even if webhook fails
+                console.error('❌ Worker error:', error);
+                // Continue even if worker fails - don't block the user
             }
+        }
+
+        // Function to show success state
+        function showSuccess() {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('successIcon').style.display = 'block';
+            document.getElementById('title').textContent = 'Welcome!';
+            document.getElementById('message').textContent = 'Redirecting to your dashboard...';
         }
 
         // Main function
         async function processAuth() {
             try {
+                console.log('🔐 Processing Google authentication...');
+                
                 // 1. Extract parameters from hash
                 const hashParams = getHashParams()
                 const accessToken = hashParams.access_token
                 
-                console.log('Hash params:', hashParams)
+                console.log('Hash params found:', Object.keys(hashParams));
                 
                 if (!accessToken) {
-                    throw new Error('No access token found')
+                    throw new Error('No access token found in the URL. Please try signing up again.')
                 }
 
                 // 2. Decode user info
                 const userInfo = decodeToken(accessToken)
                 
                 if (!userInfo) {
-                    throw new Error('Unable to decode token')
+                    throw new Error('Unable to decode authentication token. Please try again.')
                 }
 
-                console.log('✅ User authenticated:', userInfo)
+                if (!userInfo.email) {
+                    throw new Error('No email found in Google account. Please try again.')
+                }
+
+                console.log('✅ User authenticated:', {
+                    email: userInfo.email,
+                    name: userInfo.name,
+                    userId: userInfo.userId
+                });
 
                 // 3. Store data in localStorage
                 localStorage.setItem('userToken', accessToken)
                 localStorage.setItem('userId', userInfo.userId)
                 localStorage.setItem('userEmail', userInfo.email)
-                localStorage.setItem('userName', userInfo.name)
-                localStorage.setItem('userAvatar', userInfo.avatar)
+                if (userInfo.name) localStorage.setItem('userName', userInfo.name)
+                if (userInfo.avatar) localStorage.setItem('userAvatar', userInfo.avatar)
 
-                // 4. Send to webhook (optional - remove this line if not needed)
-                await sendToWebhook(userInfo, accessToken)
+                // 4. Send Google signup to your worker (which handles rate limiting and forwards to n8n)
+                await sendGoogleSignupToWorker(userInfo, accessToken)
 
-                // 5. Clean redirect to /app with token
-                console.log('🚀 Redirecting to /app...')
-                window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`
+                // 5. Show success briefly
+                showSuccess();
+
+                // 6. Clean the URL hash and redirect
+                console.log('🚀 Redirecting to app...');
+                
+                // Clean the URL hash for security
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Redirect after a brief delay
+                setTimeout(() => {
+                    window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`;
+                }, 1500);
 
             } catch (error) {
-                console.error('❌ Authentication error:', error)
+                console.error('❌ Authentication error:', error);
                 
-                // Display error to user
-                const errorDiv = document.getElementById('error-message')
-                errorDiv.style.display = 'block'
+                // Hide spinner and show error
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('title').textContent = 'Sign In Failed';
+                document.getElementById('message').textContent = '';
+                
+                const errorDiv = document.getElementById('error-message');
+                errorDiv.style.display = 'block';
                 errorDiv.innerHTML = `
                     <strong>Authentication Error</strong><br>
-                    ${error.message}<br>
-                    <a href="https://unlimited-leads.online/signup" style="color: #4a90e2;">Back to signup page</a>
-                `
+                    ${error.message}<br><br>
+                    <a href="https://unlimited-leads.online/signup">← Back to signup page</a>
+                `;
             }
         }
 
         // Start process when page loads
-        window.addEventListener('load', processAuth)
+        window.addEventListener('load', processAuth);
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', processAuth);
     </script>
 </body>
 </html>
