@@ -354,29 +354,6 @@
             }
         }
 
-        // Check URL hash for tokens on page load (for OAuth redirects)
-        window.addEventListener('load', function() {
-            const hashParams = new URLSearchParams(window.location.hash.substring(1))
-            const accessToken = hashParams.get('access_token')
-            
-            if (accessToken) {
-                const tokenPayload = JSON.parse(atob(accessToken.split('.')[1]))
-                const userId = tokenPayload.sub
-                const userEmail = tokenPayload.email
-                const userName = tokenPayload.user_metadata?.full_name || tokenPayload.user_metadata?.name
-                
-                localStorage.setItem('userToken', accessToken)
-                localStorage.setItem('userId', userId)
-                localStorage.setItem('userEmail', userEmail)
-                localStorage.setItem('userName', userName)
-                
-                sendGoogleUserToWebhook(userEmail, userName, userId, accessToken)
-                
-                window.history.replaceState({}, document.title, window.location.pathname)
-                window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`
-            }
-        })
-
         // Send Google user data to webhook
         async function sendGoogleUserToWebhook(email, name, userId, token) {
             try {
