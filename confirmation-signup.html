@@ -240,6 +240,7 @@
                 
                 if (accessToken) {
                     console.log('✅ Google OAuth detected');
+                    document.getElementById('status').textContent = 'Processing Google account...';
                     
                     // Decode user info from Google token
                     const userInfo = decodeToken(accessToken);
@@ -250,14 +251,13 @@
 
                     console.log('📧 Google email:', userInfo.email);
 
-                    // Store data in localStorage
-                    localStorage.setItem('userToken', accessToken);
-                    localStorage.setItem('userId', userInfo.userId);
+                    // Store basic data in localStorage
                     localStorage.setItem('userEmail', userInfo.email);
                     if (userInfo.name) localStorage.setItem('userName', userInfo.name);
 
-                    // Send to worker
-                    console.log('📤 Sending Google signup to worker...');
+                    // Send to worker and WAIT for server token
+                    console.log('📤 Sending Google signup to server and waiting for response...');
+                    document.getElementById('status').textContent = 'Waiting for server response...';
                     
                     const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
                         method: 'POST',
@@ -275,18 +275,35 @@
                         })
                     });
 
-                    if (response.ok) {
-                        console.log('✅ Google signup processed successfully');
-                        showSuccess('Google account verified! Redirecting...');
-                        
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                        
-                        setTimeout(() => {
-                            window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`;
-                        }, 1500);
-                    } else {
-                        throw new Error(`Worker error: ${response.status}`);
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.status}`);
                     }
+
+                    // Parse server response to get the server token
+                    const serverResponse = await response.json();
+                    console.log('✅ Server response received:', serverResponse);
+
+                    // Check if server returned a token
+                    if (!serverResponse.token) {
+                        throw new Error('No token received from server');
+                    }
+
+                    const serverToken = serverResponse.token;
+                    console.log('🎫 Server token received, storing...');
+
+                    // Store the SERVER token (not Google token)
+                    localStorage.setItem('userToken', serverToken);
+                    localStorage.setItem('userId', userInfo.userId);
+
+                    showSuccess('Account verified! Redirecting...');
+                    
+                    // Clean URL hash
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    
+                    // Redirect with SERVER token
+                    setTimeout(() => {
+                        window.location.href = `https://unlimited-leads.online/app?token=${serverToken}`;
+                    }, 1500);
 
                 } else {
                     console.log('🔍 Checking for email confirmation...');
@@ -304,36 +321,45 @@
                         console.log('✅ Email extracted successfully:', userData.email);
                         document.getElementById('status').textContent = 'Email extracted! Sending to server...';
                         
-                        // Send to worker with actual email
+                        // Send to worker and WAIT for server token
                         const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ 
-                                email: userData.email,  // ← Real email from API !
+                                email: userData.email,
                                 token_hash: queryParams.token_hash,
                                 userId: userData.userId,
                                 type: 'confirmation'
                             })
                         });
 
-                        const data = await response.json();
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.status}`);
+                        }
+
+                        const serverResponse = await response.json();
+                        console.log('✅ Server response received:', serverResponse);
                         
-                        if (data && data.success) {
+                        if (serverResponse && serverResponse.success) {
                             console.log('✅ Email confirmation processed successfully');
                             showSuccess("Email verification successful! Redirecting...");
                             
                             // Store session data if available
                             if (userData.session) {
-                                localStorage.setItem('userToken', userData.session.access_token);
                                 localStorage.setItem('userEmail', userData.email);
+                            }
+
+                            // Use server token if provided, otherwise fallback
+                            const serverToken = serverResponse.token || userData.session?.access_token || 'verified';
+                            if (serverResponse.token) {
+                                localStorage.setItem('userToken', serverToken);
                             }
                             
                             setTimeout(() => {
-                                const token = data.userUuid || userData.session?.access_token || 'verified';
-                                window.location.href = `https://unlimited-leads.online/app?token=${token}`;
+                                window.location.href = `https://unlimited-leads.online/app?token=${serverToken}`;
                             }, 1500);
                         } else {
-                            throw new Error(data.message || "Email verification failed on server");
+                            throw new Error(serverResponse.message || "Email verification failed on server");
                         }
                         
                     } else {
@@ -348,7 +374,7 @@
                 
                 // Redirect to signup after error
                 setTimeout(() => {
-                    window.location.href = 'https://unlimited-leads.online/sign-up';
+                    window.location.href = 'https://unlimited-leads.online/signup';
                 }, 3000);
             }
         }
