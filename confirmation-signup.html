@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Verification</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -84,7 +85,12 @@
     </div>
 
     <script>
-        console.log('🔐 Starting account verification...');
+        // Initialize Supabase
+        const supabaseUrl = 'https://snxhsboboatjywgwdeds.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        console.log('🔐 Starting ultra-reliable account verification...');
         
         // Function to extract parameters from hash (Google OAuth)
         function getHashParams() {
@@ -121,7 +127,7 @@
             }
         }
 
-        // Function to get URL query parameters (Email confirmation)
+        // Function to get URL query parameters
         function getQueryParams() {
             const urlParams = new URLSearchParams(window.location.search);
             return {
@@ -131,11 +137,88 @@
             };
         }
 
+        // Function to get email from token_hash using Supabase API
+        async function getEmailFromTokenHash(tokenHash, type) {
+            try {
+                console.log('🔍 Getting email from token_hash via Supabase API...');
+                
+                // Use Supabase to verify the token and get user info
+                const { data, error } = await supabase.auth.verifyOtp({
+                    token_hash: tokenHash,
+                    type: type === 'recovery' ? 'recovery' : 'email'
+                });
+
+                if (error) {
+                    console.error('❌ Supabase verification error:', error);
+                    throw error;
+                }
+
+                if (data.user && data.user.email) {
+                    console.log('✅ Email retrieved from token_hash:', data.user.email);
+                    return {
+                        email: data.user.email,
+                        userId: data.user.id,
+                        session: data.session
+                    };
+                } else {
+                    throw new Error('No user data returned from token verification');
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to get email from token_hash:', error);
+                
+                // Fallback: Try direct API call
+                console.log('🔄 Trying direct API approach...');
+                
+                try {
+                    const response = await fetch(`${supabaseUrl}/auth/v1/verify`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': supabaseKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            token: tokenHash,
+                            type: type
+                        })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.user && result.user.email) {
+                            console.log('✅ Email retrieved via direct API:', result.user.email);
+                            return {
+                                email: result.user.email,
+                                userId: result.user.id,
+                                session: result.session
+                            };
+                        }
+                    }
+                } catch (apiError) {
+                    console.error('❌ Direct API call failed:', apiError);
+                }
+                
+                throw error;
+            }
+        }
+
         // Function to show success
         function showSuccess(message) {
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('successIcon').style.display = 'block';
             document.getElementById('status').textContent = message;
+        }
+
+        // Function to show account exists message
+        function showAccountExistsMessage(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('status').textContent = message;
+            
+            // Show a warning-style icon instead of success
+            const successIcon = document.getElementById('successIcon');
+            successIcon.style.display = 'block';
+            successIcon.style.background = '#f59e0b'; // Orange color for warning
+            successIcon.innerHTML = '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px; font-weight: bold;">!</div>';
         }
 
         // Function to show error
@@ -149,14 +232,14 @@
         // Main verification function
         async function processVerification() {
             try {
-                console.log('🔍 Checking for Google OAuth token...');
+                console.log('🔍 Checking verification type...');
                 
                 // Check for Google OAuth token first
                 const hashParams = getHashParams();
                 const accessToken = hashParams.access_token;
                 
                 if (accessToken) {
-                    console.log('✅ Google OAuth token found, processing...');
+                    console.log('✅ Google OAuth detected');
                     
                     // Decode user info from Google token
                     const userInfo = decodeToken(accessToken);
@@ -165,8 +248,7 @@
                         throw new Error('Unable to extract user information from Google token');
                     }
 
-                    console.log('📧 Google user email:', userInfo.email);
-                    console.log('👤 Google user name:', userInfo.name);
+                    console.log('📧 Google email:', userInfo.email);
 
                     // Store data in localStorage
                     localStorage.setItem('userToken', accessToken);
@@ -174,76 +256,84 @@
                     localStorage.setItem('userEmail', userInfo.email);
                     if (userInfo.name) localStorage.setItem('userName', userInfo.name);
 
-                    // Send Google signup to worker
+                    // Send to worker
                     console.log('📤 Sending Google signup to worker...');
                     
-                    const payload = {
-                        email: userInfo.email,
-                        name: userInfo.name || '',
-                        userId: userInfo.userId,
-                        provider: "google",
-                        type: "signup",
-                        token: accessToken
-                    };
-
                     const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify({
+                            email: userInfo.email,
+                            name: userInfo.name || '',
+                            userId: userInfo.userId,
+                            provider: "google",
+                            type: "signup",
+                            token: accessToken
+                        })
                     });
 
-                    console.log('📥 Worker response status:', response.status);
-
                     if (response.ok) {
-                        console.log('✅ Google signup sent successfully');
+                        console.log('✅ Google signup processed successfully');
                         showSuccess('Google account verified! Redirecting...');
                         
-                        // Clean URL and redirect
                         window.history.replaceState({}, document.title, window.location.pathname);
                         
                         setTimeout(() => {
                             window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`;
                         }, 1500);
-                        
                     } else {
-                        const errorText = await response.text();
-                        console.error('❌ Worker error:', response.status, errorText);
-                        throw new Error(`Server error: ${response.status}`);
+                        throw new Error(`Worker error: ${response.status}`);
                     }
 
                 } else {
-                    console.log('🔍 No Google token, checking for email confirmation...');
+                    console.log('🔍 Checking for email confirmation...');
                     
                     // Check for email confirmation parameters
                     const queryParams = getQueryParams();
                     
-                    if (queryParams.email || queryParams.token_hash) {
-                        console.log('📧 Email confirmation detected');
+                    if (queryParams.token_hash) {
+                        console.log('📧 Email confirmation detected, extracting email from token...');
+                        document.getElementById('status').textContent = 'Extracting email from verification token...';
                         
-                        // Send email confirmation to worker
+                        // Get email from token_hash using Supabase API
+                        const userData = await getEmailFromTokenHash(queryParams.token_hash, queryParams.type);
+                        
+                        console.log('✅ Email extracted successfully:', userData.email);
+                        document.getElementById('status').textContent = 'Email extracted! Sending to server...';
+                        
+                        // Send to worker with actual email
                         const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ 
-                                email: queryParams.email,
+                                email: userData.email,  // ← Real email from API !
                                 token_hash: queryParams.token_hash,
+                                userId: userData.userId,
                                 type: 'confirmation'
                             })
                         });
 
                         const data = await response.json();
                         
-                        if (data && data.success && data.userUuid) {
+                        if (data && data.success) {
+                            console.log('✅ Email confirmation processed successfully');
                             showSuccess("Email verification successful! Redirecting...");
                             
+                            // Store session data if available
+                            if (userData.session) {
+                                localStorage.setItem('userToken', userData.session.access_token);
+                                localStorage.setItem('userEmail', userData.email);
+                            }
+                            
                             setTimeout(() => {
-                                window.location.href = 'https://unlimited-leads.online/app?token=' + data.userUuid;
+                                const token = data.userUuid || userData.session?.access_token || 'verified';
+                                window.location.href = `https://unlimited-leads.online/app?token=${token}`;
                             }, 1500);
                         } else {
-                            throw new Error(data.message || "Email verification failed");
+                            throw new Error(data.message || "Email verification failed on server");
                         }
                         
                     } else {
@@ -254,11 +344,11 @@
 
             } catch (error) {
                 console.error('❌ Verification error:', error);
-                showError(error.message || 'Verification failed. Please try again.');
+                showError(`Verification failed: ${error.message}`);
                 
                 // Redirect to signup after error
                 setTimeout(() => {
-                    window.location.href = 'https://unlimited-leads.online/sign-up';
+                    window.location.href = 'https://unlimited-leads.online/signup';
                 }, 3000);
             }
         }
