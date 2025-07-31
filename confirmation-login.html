@@ -189,6 +189,8 @@
         // Send Google user data to webhook
         async function sendGoogleUserToWebhook(email, name, userId, token) {
             try {
+                console.log('📤 Sending Google login to server and waiting for response...');
+                
                 const payload = {
                     email: email,
                     name: name || email.split('@')[0],
@@ -207,12 +209,25 @@
                     body: JSON.stringify(payload)
                 });
                 
-                console.log('Webhook response:', response.status);
-                return response.ok;
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                // Parse server response to get the server token
+                const serverResponse = await response.json();
+                console.log('✅ Server response received:', serverResponse);
+
+                // Check if server returned a token
+                if (!serverResponse.token) {
+                    throw new Error('No token received from server');
+                }
+
+                console.log('🎫 Server token received');
+                return { success: true, serverToken: serverResponse.token };
                 
             } catch (error) {
                 console.error('Webhook error:', error);
-                return false;
+                return { success: false, error: error.message };
             }
         }
 
