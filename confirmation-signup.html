@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Verification</title>
     <style>
         body {
@@ -42,57 +44,227 @@
             color: #4b5563;
             font-size: 16px;
         }
+        .success-icon {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            background: #10B981;
+            border-radius: 50%;
+            position: relative;
+        }
+        .success-icon::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #fecaca;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Verifying your account</h1>
         <div class="spinner" id="spinner"></div>
+        <div class="success-icon" id="successIcon"></div>
         <div id="status">Please wait...</div>
+        <div id="error" class="error"></div>
     </div>
+
     <script>
-        // Execute immediately 
-        (function() {
-            // Get URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
-            const token_hash = urlParams.get('token_hash');
-            const type = urlParams.get('type') || 'signup';
+        console.log('🔐 Starting account verification...');
+        
+        // Function to extract parameters from hash (Google OAuth)
+        function getHashParams() {
+            const hashParams = {}
+            const hash = window.location.hash.substring(1)
             
-            if (!email || !token_hash) {
-                document.getElementById('status').textContent = "Verifying your account...";
-                // Continue with empty values rather than showing an error
-            }
+            if (!hash) return hashParams
             
-            // Send to WORKER instead of direct webhook
-            fetch('https://sign-up.hamoureliasse.workers.dev/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    email: email,
-                    token_hash: token_hash,
-                    type: 'confirmation'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.success && data.userUuid) {
-                    document.getElementById('status').textContent = "Verification successful! Redirecting...";
-                    // Using token instead of uuid in the redirect URL
-                    const redirectUrl = 'https://unlimited-leads.online/app?token=' + data.userUuid;
-                    
-                    // Force redirect after short delay
-                    setTimeout(function() {
-                        window.location.href = redirectUrl;
-                    }, 1500);
-                } else {
-                    document.getElementById('status').textContent = "Error: " + (data.message || "Verification failed");
+            const pairs = hash.split('&')
+            pairs.forEach(pair => {
+                const [key, value] = pair.split('=')
+                if (key && value) {
+                    hashParams[key] = decodeURIComponent(value)
                 }
             })
-            .catch(error => {
-                document.getElementById('status').textContent = "Error: " + error.message;
-            });
-        })();
+            
+            return hashParams
+        }
+
+        // Function to extract user info from JWT token
+        function decodeToken(token) {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]))
+                return {
+                    userId: payload.sub,
+                    email: payload.email,
+                    name: payload.user_metadata?.full_name || payload.user_metadata?.name,
+                    avatar: payload.user_metadata?.avatar_url || payload.user_metadata?.picture,
+                    exp: payload.exp
+                }
+            } catch (error) {
+                console.error('❌ Token decode error:', error)
+                return null
+            }
+        }
+
+        // Function to get URL query parameters (Email confirmation)
+        function getQueryParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                email: urlParams.get('email'),
+                token_hash: urlParams.get('token_hash'),
+                type: urlParams.get('type') || 'signup'
+            };
+        }
+
+        // Function to show success
+        function showSuccess(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('successIcon').style.display = 'block';
+            document.getElementById('status').textContent = message;
+        }
+
+        // Function to show error
+        function showError(message) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = message;
+            document.getElementById('status').textContent = 'Verification failed';
+        }
+
+        // Main verification function
+        async function processVerification() {
+            try {
+                console.log('🔍 Checking for Google OAuth token...');
+                
+                // Check for Google OAuth token first
+                const hashParams = getHashParams();
+                const accessToken = hashParams.access_token;
+                
+                if (accessToken) {
+                    console.log('✅ Google OAuth token found, processing...');
+                    
+                    // Decode user info from Google token
+                    const userInfo = decodeToken(accessToken);
+                    
+                    if (!userInfo || !userInfo.email) {
+                        throw new Error('Unable to extract user information from Google token');
+                    }
+
+                    console.log('📧 Google user email:', userInfo.email);
+                    console.log('👤 Google user name:', userInfo.name);
+
+                    // Store data in localStorage
+                    localStorage.setItem('userToken', accessToken);
+                    localStorage.setItem('userId', userInfo.userId);
+                    localStorage.setItem('userEmail', userInfo.email);
+                    if (userInfo.name) localStorage.setItem('userName', userInfo.name);
+
+                    // Send Google signup to worker
+                    console.log('📤 Sending Google signup to worker...');
+                    
+                    const payload = {
+                        email: userInfo.email,
+                        name: userInfo.name || '',
+                        userId: userInfo.userId,
+                        provider: "google",
+                        type: "signup",
+                        token: accessToken
+                    };
+
+                    const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    console.log('📥 Worker response status:', response.status);
+
+                    if (response.ok) {
+                        console.log('✅ Google signup sent successfully');
+                        showSuccess('Google account verified! Redirecting...');
+                        
+                        // Clean URL and redirect
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        
+                        setTimeout(() => {
+                            window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`;
+                        }, 1500);
+                        
+                    } else {
+                        const errorText = await response.text();
+                        console.error('❌ Worker error:', response.status, errorText);
+                        throw new Error(`Server error: ${response.status}`);
+                    }
+
+                } else {
+                    console.log('🔍 No Google token, checking for email confirmation...');
+                    
+                    // Check for email confirmation parameters
+                    const queryParams = getQueryParams();
+                    
+                    if (queryParams.email || queryParams.token_hash) {
+                        console.log('📧 Email confirmation detected');
+                        
+                        // Send email confirmation to worker
+                        const response = await fetch('https://sign-up.hamoureliasse.workers.dev/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                email: queryParams.email,
+                                token_hash: queryParams.token_hash,
+                                type: 'confirmation'
+                            })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (data && data.success && data.userUuid) {
+                            showSuccess("Email verification successful! Redirecting...");
+                            
+                            setTimeout(() => {
+                                window.location.href = 'https://unlimited-leads.online/app?token=' + data.userUuid;
+                            }, 1500);
+                        } else {
+                            throw new Error(data.message || "Email verification failed");
+                        }
+                        
+                    } else {
+                        console.log('❌ No verification data found');
+                        throw new Error('No verification data found in URL');
+                    }
+                }
+
+            } catch (error) {
+                console.error('❌ Verification error:', error);
+                showError(error.message || 'Verification failed. Please try again.');
+                
+                // Redirect to signup after error
+                setTimeout(() => {
+                    window.location.href = 'https://unlimited-leads.online/signup';
+                }, 3000);
+            }
+        }
+
+        // Start verification when page loads
+        window.addEventListener('load', processVerification);
     </script>
 </body>
 </html>
