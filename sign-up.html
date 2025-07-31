@@ -217,31 +217,6 @@
             text-decoration: underline;
         }
         
-        .verification-notice {
-            background: #e6fffa;
-            border: 1px solid #81e6d9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 24px;
-            display: none;
-        }
-        
-        .verification-notice.visible {
-            display: block;
-        }
-        
-        .verification-notice h3 {
-            margin: 0 0 8px 0;
-            color: #234e52;
-            font-size: 16px;
-        }
-        
-        .verification-notice p {
-            margin: 0;
-            color: #285e61;
-            font-size: 14px;
-        }
-        
         .spinner {
             width: 20px;
             height: 20px;
@@ -342,7 +317,7 @@
     <div class="container">
         <div class="logo">
             <h1>Create Account</h1>
-            <p class="subtitle">Join us to get started with unlimited leads</p>
+            <p class="subtitle">Get instant access to unlimited leads</p>
         </div>
         
         <!-- Google Sign Up Button -->
@@ -373,12 +348,6 @@
             </div>
             <button type="submit" id="submitButton">Create Account</button>
         </form>
-        
-        <!-- Verification Notice -->
-        <div id="verificationNotice" class="verification-notice">
-            <h3>Check your email!</h3>
-            <p>We've sent you a verification link. Please check your email inbox and click the link to activate your account.</p>
-        </div>
         
         <div class="login-link">
             <p>Already have an account? <a href="https://unlimited-leads.online/login">Sign in</a></p>
@@ -488,7 +457,6 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const submitButton = document.getElementById('submitButton');
-            const verificationNotice = document.getElementById('verificationNotice');
             
             // Validate inputs
             if (!email || !password) {
@@ -541,9 +509,35 @@
                 }
                 
                 if (response.ok) {
-                    showMessage('Account created successfully! Check your email to verify your account.', 'success');
-                    document.getElementById('signupForm').reset();
-                    verificationNotice.classList.add('visible');
+                    const responseData = await response.json();
+                    console.log('Signup successful:', responseData);
+                    
+                    // Check if we got a token in the response
+                    if (responseData.token || responseData.access_token) {
+                        const token = responseData.token || responseData.access_token;
+                        
+                        // Store token and user data
+                        localStorage.setItem('userToken', token);
+                        localStorage.setItem('userEmail', email);
+                        
+                        // Show success message briefly before redirect
+                        showMessage('Account created successfully! Redirecting...', 'success');
+                        
+                        // Redirect to app after short delay
+                        setTimeout(() => {
+                            window.location.href = `https://unlimited-leads.online/app?token=${token}`;
+                        }, 1500);
+                        
+                    } else {
+                        // Success but no token - show success message
+                        showMessage('Account created successfully! You can now log in.', 'success');
+                        document.getElementById('signupForm').reset();
+                        
+                        // Redirect to login page after delay
+                        setTimeout(() => {
+                            window.location.href = 'https://unlimited-leads.online/login';
+                        }, 2000);
+                    }
                 } else {
                     // Try to get error details
                     let errorMessage = 'Something went wrong. Please try again.';
