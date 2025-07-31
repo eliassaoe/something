@@ -64,8 +64,8 @@
                 // Continue with empty values rather than showing an error
             }
             
-            // Send to webhook
-            fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+            // Send to WORKER instead of direct webhook
+            fetch('https://sign-up.hamoureliasse.workers.dev/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
