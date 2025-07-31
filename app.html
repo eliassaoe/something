@@ -2120,26 +2120,26 @@ async function handleSearch(e) {
                 };
                 
                 // Make POST request to n8n webhook
-                const response = await fetch(SEARCH_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Update allContacts with search results
-                allContacts = data;
+                const [response, trueCount] = await Promise.all([
+    fetch(SEARCH_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    }),
+    fetchTotalCount()
+]);
 
-                    // ► NEW: fetch the true total count
-    const trueCount = await fetchTotalCount();
-    globalTrueCount = trueCount;
+if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+}
+
+const data = await response.json();
+
+// Update allContacts with search results
+allContacts = data;
+globalTrueCount = trueCount;
     // update your UI with the count from the RPC
     resultsNumber.textContent        = trueCount;
     totalDisplayRecords.textContent  = trueCount;
