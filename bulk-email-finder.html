@@ -1545,11 +1545,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, false);
     
-    function validateEmail(email) {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-    
     async function handleStandardizedFile(file) {
         if (!file) return;
         
@@ -1596,7 +1591,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 
                 // Now process this standardized file
-                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders, userEmail);
+                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders);
             } else {
                 // Headers are already correct, proceed with original file
                 processCSVWithAPI(file, loadingElement, null);
@@ -1635,9 +1630,8 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {File} file - Standardized CSV file
      * @param {HTMLElement} loadingElement - Loading indicator element
      * @param {Object} originalHeaders - Original headers (for reporting changes)
-     * @param {string} userEmail - User's email address for receiving results
      */
-    async function processCSVWithAPI(file, loadingElement, originalHeaders, userEmail) {
+    async function processCSVWithAPI(file, loadingElement, originalHeaders) {
         try {
             // Update loading message to show we're now processing with API
             if (loadingElement && loadingElement.querySelector('h3')) {
@@ -1819,7 +1813,7 @@ downloadResultsBtn.addEventListener('click', function() {
                 <div class="loader" style="width: 3rem; height: 3rem; margin: 0 auto 1.5rem;"></div>
                 <h3 style="margin-bottom: 1rem; color: var(--primary);">${message}</h3>
                 <p style="margin-bottom: 0.5rem;">This may take a few minutes for large files.</p>
-                <p style="color: var(--gray-400);">Please don't close this page. Keep it in background. Results will be sent to your email adress</p>
+                <p style="color: var(--gray-400);">Please don't close this page. Keep it in background.</p>
                 <div style="margin-top: 1.5rem; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
                     <div class="progress-bar" style="height: 100%; width: 0; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease;"></div>
                 </div>
