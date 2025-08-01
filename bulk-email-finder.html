@@ -1563,23 +1563,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
 }
 
-        const userEmail = document.getElementById('userEmail').value.trim();
-        if (!userEmail) {
-            showStatus('Please enter your email address to receive the results.', 'error');
-            return;
-        }
-        
-        if (!validateEmail(userEmail)) {
-            showStatus('Please enter a valid email address.', 'error');
-            return;
-        }
-        
         // Display loading state
         csvDropArea.style.display = 'none';
         const loadingElement = createLoadingElement('Standardizing CSV headers...');
         csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
         
-        showStatus('<span class="loader"></span> Processing CSV file.  It can take up to 1 hours for large files. You will receive the data in your Inbox !  You can leave this page ', 'loading');
+        showStatus('<span class="loader"></span> Processing CSV file. Keep this page open in background ', 'loading');
         
         try {
             // First step: Standardize the CSV headers
@@ -1610,7 +1599,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders, userEmail);
             } else {
                 // Headers are already correct, proceed with original file
-                processCSVWithAPI(file, loadingElement, null, userEmail);
+                processCSVWithAPI(file, loadingElement, null);
             }
         } catch (error) {
             console.error('Error processing CSV:', error);
@@ -1670,7 +1659,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('type', 'bulk');
             formData.append('file', file);
-            formData.append('email', userEmail); // Add email to the form data
             
             // Send the file to the API endpoint
             const response = await fetch(API_ENDPOINT, {
@@ -1729,14 +1717,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailDeliveryInfo = `
                 <div style="margin-top: 1rem; padding: 0.75rem; border-radius: 4px; background-color: rgba(79, 70, 229, 0.1); color: var(--primary); border: 1px solid var(--primary);">
                     <strong>Processing your request:</strong><br>
-                    • Your results are being processed and will be sent to <strong>${userEmail}</strong><br>
-                    • Please check both your inbox and spam folder within the next few hours<br>
-                    • You can also download your results directly below when processing completes
+                    • Your results are being processed </strong><br>
+                    • You can also download your results directly  when processing completes
                 </div>
             `;
             bulkResultArea.insertAdjacentHTML('afterbegin', emailDeliveryInfo);
             
-            showStatus('CSV processed successfully! Download your enriched file below or check your email for the results.', 'success');
+            showStatus('File processed successfully!', 'success');
             
             // Scroll to result
             bulkResultArea.scrollIntoView({ behavior: 'smooth' });
