@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirming Login...</title>
+    <title>Processing Login...</title>
     <style>
         * {
             box-sizing: border-box;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #f8fafc;
             margin: 0;
             padding: 20px;
@@ -18,7 +18,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            line-height: 1.6;
         }
         
         .container {
@@ -28,7 +27,6 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
-            margin: 0 auto;
             border: 1px solid #e5e7eb;
             text-align: center;
         }
@@ -52,25 +50,12 @@
             margin: 0 0 12px 0;
             font-size: 24px;
             font-weight: 600;
-            letter-spacing: -0.25px;
         }
         
         .subtitle {
             color: #6b7280;
             margin-bottom: 32px;
             font-size: 15px;
-            font-weight: 400;
-        }
-        
-        .success-icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 24px auto;
-            background: #10b981;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
         }
         
         .error-icon {
@@ -92,8 +77,6 @@
             text-decoration: none;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 15px;
-            transition: background-color 0.2s ease;
             margin-top: 16px;
         }
         
@@ -101,32 +84,8 @@
             background: #2563eb;
         }
         
-        .success {
-            color: #10b981;
-        }
-        
         .error {
             color: #ef4444;
-        }
-        
-        /* Mobile optimizations */
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
-            }
-            
-            .container {
-                padding: 24px;
-                border-radius: 6px;
-            }
-            
-            h1 {
-                font-size: 22px;
-            }
-            
-            .subtitle {
-                font-size: 14px;
-            }
         }
     </style>
 </head>
@@ -135,19 +94,8 @@
         <!-- Loading State -->
         <div id="loadingState">
             <div class="spinner"></div>
-            <h1>Confirming Login</h1>
-            <p class="subtitle">Please wait while we sign you in...</p>
-        </div>
-        
-        <!-- Success State -->
-        <div id="successState" style="display: none;">
-            <div class="success-icon" style="display: flex;">
-                <svg width="18" height="18" fill="white" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
-            </div>
-            <h1 class="success">Welcome Back!</h1>
-            <p class="subtitle">Redirecting to your dashboard...</p>
+            <h1>Processing Your Login</h1>
+            <p class="subtitle">We're completing your Google sign-in...</p>
         </div>
         
         <!-- Error State -->
@@ -157,142 +105,36 @@
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                 </svg>
             </div>
-            <h1 class="error">Login Failed</h1>
-            <p class="subtitle" id="errorMessage">Something went wrong. Please try again.</p>
+            <h1 class="error">Login Processing Failed</h1>
+            <p class="subtitle">We couldn't complete your Google sign-in. Please try again.</p>
             <a href="https://unlimited-leads.online/login" class="back-button">Back to Login</a>
         </div>
     </div>
 
     <script>
-        // Your Cloudflare Worker endpoint (handles CORS properly)
-        const WORKER_URL = 'https://log-in.hamoureliasse.workers.dev/';
-
-        function showError(message) {
+        function showError() {
             document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('successState').style.display = 'none';
             document.getElementById('errorState').style.display = 'block';
-            document.getElementById('errorMessage').textContent = message;
         }
 
-        function showSuccess() {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('errorState').style.display = 'none';
-            document.getElementById('successState').style.display = 'block';
+        // Check if we have a token in URL (direct success)
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (token) {
+            // Direct redirect if we have a token
+            console.log('✅ Token found, redirecting to app...');
+            window.location.href = `https://unlimited-leads.online/app?token=${token}`;
+        } else {
+            // If we're here, the worker should have already processed the login
+            // This is just a fallback page - wait a bit then show error
+            console.log('⚠️ No token found, this should not happen if worker processed correctly');
+            
+            // Wait 3 seconds then show error (gives worker time to process in rare cases)
+            setTimeout(() => {
+                showError();
+            }, 3000);
         }
-
-        // Get email from URL parameters (passed by worker)
-        function getEmailFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('email');
-        }
-
-        // Get token from URL parameters (if worker already processed login)
-        function getTokenFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('token');
-        }
-
-        // Send Google login request to YOUR worker (which handles CORS and forwards to n8n)
-        async function sendGoogleLoginToServer(email) {
-            try {
-                console.log('📤 Sending Google login to YOUR worker:', email);
-                
-                const payload = {
-                    email: email,
-                    provider: "google",
-                    type: "login"
-                };
-                
-                const response = await fetch(WORKER_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`Worker error: ${response.status}`);
-                }
-
-                // Parse YOUR worker response to get YOUR token
-                const serverResponse = await response.json();
-                console.log('✅ YOUR worker response received:', serverResponse);
-
-                // Check if YOUR worker returned a token
-                if (serverResponse.token) {
-                    console.log('🎫 YOUR server token received');
-                    return { success: true, serverToken: serverResponse.token };
-                } else if (serverResponse.connexion_success === "yes" && serverResponse.redirect_link) {
-                    return { success: true, redirectLink: serverResponse.redirect_link };
-                } else {
-                    throw new Error('No token received from YOUR server');
-                }
-                
-            } catch (error) {
-                console.error('YOUR worker error:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        // Handle page load
-        window.addEventListener('load', async function() {
-            try {
-                console.log('🚀 Page loaded, checking URL parameters...');
-                
-                // Check if we already have a token from the worker
-                const token = getTokenFromURL();
-                if (token) {
-                    console.log('🎫 Token found in URL, redirecting...');
-                    showSuccess();
-                    setTimeout(() => {
-                        window.location.href = `https://unlimited-leads.online/app?token=${token}`;
-                    }, 1500);
-                    return;
-                }
-
-                // Check if we have an email to process
-                const email = getEmailFromURL();
-                if (email) {
-                    console.log('📧 Email found in URL:', email);
-                    
-                    // Send to YOUR worker
-                    const result = await sendGoogleLoginToServer(email);
-                    
-                    if (result.success) {
-                        showSuccess();
-                        
-                        // Redirect ONLY with YOUR server's token
-                        setTimeout(() => {
-                            if (result.serverToken) {
-                                window.location.href = `https://unlimited-leads.online/app?token=${result.serverToken}`;
-                            } else if (result.redirectLink) {
-                                window.location.href = result.redirectLink;
-                            }
-                        }, 1500);
-                    } else {
-                        showError('Login processing failed. Please try again.');
-                    }
-                    return;
-                }
-
-                // If no email or token in URL, show error
-                showError('Login information not found. Please try again.');
-                
-            } catch (error) {
-                console.error('Page load error:', error);
-                showError('Failed to process login. Please try again.');
-            }
-        });
-
-        // Timeout fallback
-        setTimeout(() => {
-            const loadingState = document.getElementById('loadingState');
-            if (loadingState.style.display !== 'none') {
-                showError('Login verification timed out. Please try again.');
-            }
-        }, 10000);
     </script>
 </body>
 </html>
