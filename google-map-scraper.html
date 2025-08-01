@@ -110,6 +110,140 @@
       margin-top: 0.5rem;
       font-size: 0.85rem;
     }
+
+    /* Popup Modal Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .popup-modal {
+      background: white;
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      max-width: 480px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .popup-modal.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray-800);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .popup-close:hover {
+      background: var(--gray-200);
+      color: var(--primary);
+    }
+
+    .popup-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .popup-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+    }
+
+    .popup-text {
+      font-size: 1.125rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .popup-highlight {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .popup-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      margin-right: 1rem;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .popup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .popup-btn-secondary {
+      background: transparent;
+      color: var(--gray-600);
+      border: 2px solid var(--gray-300);
+      box-shadow: none;
+    }
+
+    .popup-btn-secondary:hover {
+      background: var(--gray-50);
+      color: var(--gray-800);
+      border-color: var(--gray-400);
+      box-shadow: none;
+    }
+
+    @media (max-width: 640px) {
+      .popup-modal {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+      
+      .popup-title {
+        font-size: 1.5rem;
+      }
+      
+      .popup-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -252,8 +386,72 @@
     </div>
 </footer>
 
+<!-- Popup Modal -->
+<div id="leadsPopup" class="popup-overlay">
+  <div class="popup-modal">
+    <button class="popup-close" onclick="closePopup()">&times;</button>
+    <div class="popup-icon">
+      <i class="fas fa-gift"></i>
+    </div>
+    <h3 class="popup-title">Get Your First <span class="popup-highlight">250 Leads FREE!</span></h3>
+    <p class="popup-text">
+      Start building your business with our premium lead generation tools. 
+      Sign up now and get <strong>250 high-quality leads absolutely free</strong> - no strings attached!
+    </p>
+    <div>
+      <a href="https://unlimited-leads.online/sign-up" class="popup-btn">
+        <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
+        Get My Free Leads
+      </a>
+      <button class="popup-btn popup-btn-secondary" onclick="closePopup()">
+        Maybe Later
+      </button>
+    </div>
+  </div>
+</div>
+
 
   <script>
+    // Popup functionality
+    let popupShown = false;
+
+    function showPopup() {
+      if (!popupShown && !localStorage.getItem('popupDismissed')) {
+        const popup = document.getElementById('leadsPopup');
+        const modal = popup.querySelector('.popup-modal');
+        
+        popup.style.display = 'flex';
+        setTimeout(() => {
+          modal.classList.add('show');
+        }, 50);
+        
+        popupShown = true;
+      }
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('leadsPopup');
+      const modal = popup.querySelector('.popup-modal');
+      
+      modal.classList.remove('show');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 300);
+      
+      // Remember that user dismissed the popup (for this session)
+      localStorage.setItem('popupDismissed', 'true');
+    }
+
+    // Show popup after 20 seconds
+    setTimeout(showPopup, 20000);
+
+    // Close popup when clicking outside
+    document.getElementById('leadsPopup').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePopup();
+      }
+    });
+
     function submitForm() {
       const googleSearch = document.getElementById("googleSearch").value;
       const email = document.getElementById("email").value;
@@ -279,8 +477,9 @@
           progressBarFill.style.width = `${progress}%`;
         }, 500);
 
-        // Send GET request to the API
-        const url = `https://eliasse-n8n.onrender.com/webhook/47b98cba-d347-4049-81df-67243ae21009?search=${encodeURIComponent(googleSearch)}&email=${encodeURIComponent(email)}`;
+        // Updated URL to use the Cloudflare Worker instead of direct webhook
+        // Replace 'your-worker-name.your-subdomain.workers.dev' with your actual worker URL
+        const url = `https://free-tool-google-maps.hamoureliasse.workers.dev?search=${encodeURIComponent(googleSearch)}&email=${encodeURIComponent(email)}`;
         
         // Fetch the response as blob (binary data)
         fetch(url)
