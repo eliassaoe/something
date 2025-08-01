@@ -250,7 +250,7 @@
             document.getElementById('message').style.display = 'none';
         }
 
-        // Google Sign In - Simple redirect to Supabase OAuth
+        // Google Sign In - Simple redirect to confirmation page
         async function signInWithGoogle() {
             try {
                 hideMessage();
@@ -258,7 +258,7 @@
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
-                        redirectTo: `${WORKER_URL}auth/callback`
+                        redirectTo: `https://unlimited-leads.online/confirmation-login`
                     }
                 });
                 
