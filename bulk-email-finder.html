@@ -1,978 +1,380 @@
 <!DOCTYPE html>
-<html lang="en">        
-<head>                  
-    <meta charset="utf-8"/>    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>         
-    <title>Bulk Free Email Finder | UnlimitedLeads</title>
-    <meta name="description" content="Bulk Free Email Finder - Find anyone's professional email address by name and company domain or upload a CSV file for bulk email finding"/>
- 
-    <!-- Preconnect externals -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bulk Free Email Finder | UnlimitedLeads</title>
+  <meta name="description" content="Bulk Free Email Finder - Find anyone's professional email address by name and company domain or upload a CSV file for bulk email finding"/>
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Bulk Free Email Finder | UnlimitedLeads" />
+  <meta property="og:description" content="Free Email Finder - Find anyone's professional email address by name and company domain or upload a CSV file for bulk email finding" />
+  <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+  
+  <!-- Fonts and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://unlimited-leads.online/bulk-free-email-finder" />
-    <meta property="og:title" content="Bulk Free Email Finder | UnlimitedLeads" />
-    <meta property="og:description" content="Free Email Finder - Find anyone's professional email address by name and company domain or upload a CSV file for bulk email finding" />
-    <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Styles -->
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --secondary: #0ea5e9;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-800: #1f2937;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border-radius: 0.5rem;
-            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        a { text-decoration: none; }
-
-        /* Header */
-        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
-        .header-content { display: flex; justify-content: center; align-items: center; }
-        .logo-link { display: flex; align-items: center; }
-        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
-        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
-
-        /* Hero */
-        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
-        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        .tab {
-            padding: 1rem 1.5rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            font-weight: 600;
-            color: var(--gray-400);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-        .tab:hover:not(.active) {
-            color: var(--gray-800);
-        }
-
-        /* Form Styles */
-        .finder-form {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            max-width: 900px;
-            margin: 0 auto 3rem;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .form-control {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-        }
-        .csv-input-area {
-            border: 2px dashed var(--gray-300);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .csv-input-area:hover {
-            border-color: var(--primary);
-        }
-        .csv-input-area i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .file-input {
-            display: none;
-        }
-        .btn {
-            display: inline-block;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            cursor: pointer;
-            text-align: center;
-            border: none;
-        }
-        .btn-primary {
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            color: white;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: var(--success);
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: var(--primary);
-        }
-        .btn-large {
-            width: 100%;
-            font-size: 1rem;
-            padding: 1rem;
-        }
-
-        /* Result Area */
-        .result-area {
-            display: none;
-            margin-top: 2rem;
-        }
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-        .result-header h3 {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-        .result-table th {
-            background: var(--gray-100);
-            padding: 0.75rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid var(--gray-300);
-        }
-        .result-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        .result-table tr:last-child td {
-            border-bottom: none;
-        }
-        .result-table tr:hover td {
-            background: var(--gray-50);
-        }
-        .result-table .email-cell {
-            font-weight: 500;
-            color: var(--primary);
-        }
-        .actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .actions .btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        /* CSV Results Area */
-        .csv-results {
-            display: none;
-            margin-top: 2rem;
-        }
-        .csv-stats {
-            background: var(--gray-50);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        .csv-stat-item {
-            text-align: center;
-        }
-        .csv-stat-item h4 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-        .csv-stat-item p {
-            color: var(--gray-400);
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-
-        /* Status Messages */
-        .status {
-            padding: 0.75rem 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-        .status-success {
-            background-color: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-        }
-        .status-error {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-        }
-        .status-loading {
-            background-color: rgba(79, 70, 229, 0.1);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .status-loading .loader {
-            border: 2px solid rgba(79, 70, 229, 0.3);
-            border-top-color: var(--primary);
-        }
-
-        /* Loader */
-        .loader {
-            display: inline-block;
-            width: 1.25rem;
-            height: 1.25rem;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Features Section */
-        .features {
-            padding: 3rem 0;
-            background: white;
-        }
-        .features h2 {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        .feature-card {
-            background: var(--gray-50);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            transition: var(--transition);
-            border: 1px solid var(--gray-200);
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--box-shadow);
-            border-color: var(--primary);
-        }
-        .feature-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 3rem;
-            height: 3rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 50%;
-            color: white;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* Hunter.io Alternative Section */
-.hunter-alternative {
-    padding: 3rem 0;
-    background: linear-gradient(to right, rgba(79,70,229,0.05), rgba(14,165,233,0.05));
-    border-left: 4px solid var(--primary);
-}
-.hunter-alternative h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--gray-800);
-}
-.comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-.comparison-card {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--box-shadow);
-}
-.comparison-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.comparison-card .icon {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-}
-.hunter-card .icon {
-    background: #ff6b35;
-    color: white;
-}
-.unlimited-card .icon {
-    background: var(--primary);
-    color: white;
-}
-.feature-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.feature-list li {
-    padding: 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.feature-list .check {
-    color: var(--success);
-    font-weight: bold;
-}
-.feature-list .cross {
-    color: var(--danger);
-    font-weight: bold;
-}
-
-/* Responsive pour la section */
-@media (max-width: 991px) {
-    .comparison-grid {
-        grid-template-columns: 1fr;
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #0ea5e9;
+      --gray-50: #f9fafb;
+      --gray-200: #e5e7eb;
+      --gray-800: #1f2937;
+      --success: #10b981;
+      --border-radius: 0.5rem;
+      --transition: all 0.3s ease;
     }
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); }
+    .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; }
+    
+    /* Header with CTA button */
+    .header-content { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 1.5rem; 
+    }
+    
+    .logo { display: flex; align-items: center; }
+    .logo i { font-size: 1.5rem; color: var(--primary); margin-right: 0.5rem; }
+    .logo-text { font-weight: 700; font-size: 1.5rem; }
+    .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
 
-        /* FAQ Section */
-        .faq {
-            padding: 3rem 0 4rem;
-            background: var(--gray-50);
-        }
-        .faq h2 {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-        .faq-item {
-            margin-bottom: 1rem;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            background: white;
-            overflow: hidden;
-        }
-        .faq-question {
-            padding: 1.25rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .faq-answer {
-            padding: 0 1.25rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-        .faq-item.active .faq-answer {
-            padding: 0 1.25rem 1.25rem;
-            max-height: 500px;
-        }
-        .faq-toggle {
-            transition: transform 0.3s ease;
-        }
-        .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
-        }
+    .header-cta {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        /* CSV Example Section */
-        .csv-example {
-            margin: 2rem 0;
-        }
-        .csv-example h3 {
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-        .csv-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.875rem;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-        }
-        .csv-table th,
-        .csv-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border: 1px solid var(--gray-200);
-        }
-        .csv-table th {
-            background: var(--gray-100);
-            font-weight: 600;
-        }
-        .csv-table tr:nth-child(even) {
-            background: var(--gray-50);
-        }
-        
-        /* Footer */
-        .footer { 
-            background: var(--gray-800); 
-            color: white; 
-            padding: 3rem 0 1rem; 
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        .footer-column h4 {
-            font-size: 1.125rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            display: inline-block;
-        }
-        .footer-column h4::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -0.5rem;
-            width: 2rem;
-            height: 2px;
-            background: var(--primary);
-        }
-        .footer-links {
-            list-style: none;
-        }
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-        .footer-links a {
-            color: var(--gray-300);
-            transition: var(--transition);
-        }
-        .footer-links a:hover {
-            color: white;
-        }
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .footer-social a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: white;
-            transition: var(--transition);
-        }
-        .footer-social a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.875rem;
-            color: var(--gray-400);
-        }
-        .footer-bottom p {
-            margin-bottom: 0.75rem;
-        }
-        .footer-bottom a {
-            color: var(--gray-300);
-            transition: var(--transition);
-        }
-        .footer-bottom a:hover {
-            color: white;
-        }
+    .header-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
 
-        /* Responsive */
-        @media (max-width: 991px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .csv-stats {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .actions {
-                flex-direction: column;
-            }
-            .csv-stats {
-                grid-template-columns: 1fr;
-            }
-            .tab {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
-        }
-    </style>
+    .hero { text-align: center; padding: 3rem 0; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+    .hero p { font-size: 1.125rem; }
+
+    .form-box { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; }
+    .form-box input { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); }
+    .form-row { display: flex; gap: 1rem; }
+    .form-row input { flex: 1; }
+    .btn { display: block; width: 100%; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; font-weight: 600; padding: 1rem; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); border: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .btn-secondary { background: var(--gray-800); margin-top: 0.5rem; }
+    .btn-secondary:hover { background: #374151; }
+
+    #result { display: none; margin-top: 1.5rem; }
+    #result textarea { width: 100%; height: 150px; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); background: var(--gray-50); }
+
+    /* Tab Styles */
+    .tab-nav { border-bottom: 2px solid var(--gray-200); }
+    .tab-btn { background: none; border: none; padding: 1rem 1.5rem; font-weight: 600; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .tab-btn:hover { color: var(--primary); }
+
+    /* Upload Area Styles */
+    .upload-area { border: 2px dashed var(--gray-200); border-radius: var(--border-radius); padding: 2rem; text-align: center; transition: var(--transition); cursor: pointer; }
+    .upload-area:hover { border-color: var(--primary); background: rgba(79,70,229,0.05); }
+    .upload-area.dragover { border-color: var(--primary); background: rgba(79,70,229,0.1); }
+
+    /* Table Styles */
+    .results-table { width: 100%; border-collapse: collapse; background: white; }
+    .results-table th, .results-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--gray-200); }
+    .results-table th { background: var(--gray-50); font-weight: 600; }
+    .results-table tr:hover { background: var(--gray-50); }
+    .status-success { color: var(--success); font-weight: 600; }
+    .status-error { color: #ef4444; font-weight: 600; }
+    .email-cell { max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--primary); font-weight: 500; }
+
+    /* Error Display */
+    .csv-error {
+      border: 2px solid #ef4444; 
+      border-radius: var(--border-radius); 
+      padding: 2rem; 
+      margin: 1.5rem 0; 
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+      text-align: center;
+      display: none;
+    }
+
+    .csv-error h3 {
+      color: #ef4444; 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+      margin-bottom: 1rem;
+    }
+
+    .csv-error .icon {
+      font-size: 3rem; 
+      color: #ef4444; 
+      margin-bottom: 1rem;
+    }
+
+    .error-details {
+      background: white; 
+      border: 1px solid #ef4444; 
+      border-radius: var(--border-radius); 
+      padding: 1.5rem; 
+      margin: 1.5rem 0; 
+      text-align: left;
+    }
+
+    .found-columns {
+      background: rgba(79,70,229,0.1); 
+      border: 1px solid var(--primary); 
+      border-radius: var(--border-radius); 
+      padding: 1.5rem; 
+      margin: 1.5rem 0; 
+      text-align: left;
+    }
+
+    .required-columns {
+      background: rgba(16,185,129,0.1); 
+      border: 1px solid var(--success); 
+      border-radius: var(--border-radius); 
+      padding: 1.5rem; 
+      margin: 1.5rem 0; 
+      text-align: left;
+    }
+
+    /* Results Upsell Banner */
+    .results-upsell {
+      background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(14,165,233,0.1));
+      border: 2px solid var(--primary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      display: none;
+    }
+
+    .results-upsell h4 {
+      color: var(--primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .results-upsell p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .results-upsell .btn {
+      width: auto;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+    }
+
+    footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: white; margin-top: 4rem; }
+    .footer-content { max-width: 1200px; margin: 0 auto; }
+    .footer-column { margin-bottom: 2rem; }
+    .footer-column h4 { color: white; margin-bottom: 1rem; font-weight: 600; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.5rem; }
+    .footer-links a { color: #d1d5db; text-decoration: none; transition: var(--transition); }
+    .footer-links a:hover { color: white; }
+    .footer-social { margin: 2rem 0; }
+    .footer-social a { color: #d1d5db; font-size: 1.5rem; margin: 0 1rem; transition: var(--transition); }
+    .footer-social a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid #374151; padding-top: 2rem; margin-top: 2rem; }
+    .footer-bottom p { color: #9ca3af; margin-bottom: 0.5rem; }
+    .footer-bottom a { color: #d1d5db; text-decoration: none; }
+    .footer-bottom a:hover { color: white; }
+
+    @media(max-width:768px) { 
+      .hero h1 { font-size: 2rem; }
+      .footer-content { display: block; }
+      .header-content { 
+        padding: 0 1rem;
+        gap: 1rem;
+      }
+      .header-cta { 
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+      }
+      .form-row { flex-direction: column; gap: 0; }
+    }
+    @media(min-width:768px) {
+      .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="https://unlimited-leads.online/en" class="logo-link">
-                    <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
-                    <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
-                </a>
-            </div>
+  <header>
+    <div class="header-content">
+      <a href="https://unlimited-leads.online/en" target="_blank" rel="noopener noreferrer">
+        <div class="logo">
+          <i class="fas fa-bolt"></i>
+          <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
         </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <h1>Bulk Free Email Finder</h1>
-            <p>Find anyone's professional email address in seconds. Search by name and company domain or upload a CSV file for bulk email finding - 100% free.</p>
-        </div>
-    </section>
-
-<!-- Email Finder Form -->
-<section class="container">
-    <div class="finder-form">
-        <div id="statusMessage" class="status"></div>
-        
-        <!-- Tabs -->
-        <div class="tabs">
-            <button id="singleTabBtn" class="tab active">Individual Search</button>
-            <button id="bulkTabBtn" class="tab">Bulk CSV Upload</button>
-        </div>
-        
-        <!-- Single Email Finder Form -->
-        <div id="singleFinderForm">
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" class="form-control" placeholder="John">
-            </div>
-            
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" class="form-control" placeholder="Smith">
-            </div>
-            
-            <div class="form-group">
-                <label for="companyDomain">Company Website</label>
-                <input type="text" id="companyDomain" class="form-control" placeholder="company.com">
-            </div>
-            
-            <button id="findEmailBtn" class="btn btn-primary btn-large">
-                <span>Find Email Address</span>
-            </button>
-            
-            <div id="singleResultArea" class="result-area">
-                <div class="result-header">
-                    <h3>Email Found!</h3>
-                </div>
-                
-                <table class="result-table">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Company</th>
-                            <th>Email Address</th>
-                            <th>Confidence</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="resultFirstName"></td>
-                            <td id="resultLastName"></td>
-                            <td id="resultCompany"></td>
-                            <td id="resultEmail" class="email-cell"></td>
-                            <td id="resultConfidence"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="actions">
-                    <button id="copyEmailBtn" class="btn btn-secondary">
-                        <i class="fas fa-copy"></i>
-                        <span>Copy Email</span>
-                    </button>
-                    <button id="newSearchBtn" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                        <span>New Search</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bulk Email Finder Form -->
-        <div id="bulkFinderForm" style="display: none;">
-            <p style="margin-bottom: 1.5rem;">Upload a CSV file with columns for first name, last name, and company domain. We'll find the email addresses for all your contacts.</p>
-
-            
-            <div class="csv-example">
-                <h3>Your CSV should look like this:</h3>
-                <table class="csv-table">
-                    <thead>
-                        <tr>
-                            <th>first_name</th>
-                            <th>last_name</th>
-                            <th>company_domain</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Smith</td>
-                            <td>company.com</td>
-                        </tr>
-                        <tr>
-                            <td>Jane</td>
-                            <td>Doe</td>
-                            <td>acme.com</td>
-                        </tr>
-                        <tr>
-                            <td>Michael</td>
-                            <td>Johnson</td>
-                            <td>example.org</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="csv-input-area" id="csvDropArea">
-                <i class="fas fa-file-csv"></i>
-                <h3>Drag & Drop CSV File Here</h3>
-                <p>or</p>
-                <button class="btn btn-primary" style="margin-top: 1rem;">Select CSV File</button>
-                <input type="file" id="csvFileInput" class="file-input" accept=".csv">
-            </div>
-            
-            <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--gray-400); text-align: center;">Max file size: 100KB (up to 50 contacts)</p>
-            
-            
-            <div id="bulkResultArea" class="csv-results">
-                <div class="csv-stats">
-                    <div class="csv-stat-item">
-                        <h4 id="totalContacts">0</h4>
-                        <p>TOTAL CONTACTS</p>
-                    </div>
-                    <div class="csv-stat-item">
-                        <h4 id="emailsFound">0</h4>
-                        <p>EMAILS FOUND</p>
-                    </div>
-                    <div class="csv-stat-item">
-                        <h4 id="successRate">0%</h4>
-                        <p>SUCCESS RATE</p>
-                    </div>
-                </div>
-                
-                <div class="actions">
-                    <button id="downloadResultsBtn" class="btn btn-secondary">
-                        <i class="fas fa-download"></i>
-                        <span>Download Results</span>
-                    </button>
-                    <button id="newBulkSearchBtn" class="btn btn-primary">
-                        <i class="fas fa-upload"></i>
-                        <span>Upload New File</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+      </a>
+      <a href="https://unlimited-leads.online/sign-up" class="header-cta">
+        <i class="fas fa-gift"></i>
+        Get 250 Free Leads
+      </a>
     </div>
-</section>
+  </header>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2>Why Use Our free bulk email finder ?</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Lightning Fast</h3>
-                    <p>Get instant results for individual searches and process up to 1000 contacts in minutes with our bulk finder.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>High Accuracy</h3>
-                    <p>Our advanced algorithm checks multiple data sources to ensure you get the most accurate professional email addresses.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Verified Results</h3>
-                    <p>We verify each email address to ensure deliverability and reduce bounce rates in your outreach campaigns.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>100% Free</h3>
-                    <p>Unlike other tools that charge per email, our finder is completely free with no hidden fees or credit card required.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-csv"></i>
-                    </div>
-                    <h3>Bulk Processing</h3>
-                    <p>Upload a CSV file with thousands of contacts and get all email addresses in one go - perfect for sales teams.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <h3>Privacy First</h3>
-                    <p>We don't store your search data or contact information. Your data privacy is our top priority.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="hero">
+    <div class="container">
+      <h1>Bulk Free Email Finder</h1>
+      <p>Find anyone's professional email address in seconds. Search by name and company domain or upload a CSV file for bulk email finding - 100% free.</p>
+    </div>
+  </section>
 
-      <!-- Hunter.io Alternative Section -->
-    <section class="hunter-alternative">
-        <div class="container">
-            <h2>Why Choose Our Free Hunter.io Alternative?</h2>
-            <div class="comparison-grid">
-                <div class="comparison-card hunter-card">
-                    <h3>
-                        <span class="icon">H</span>
-                        Hunter io
-                        
-                    </h3>
-                    <ul class="feature-list">
-                        <li><span class="cross">✗</span> Limited free searches (25/month)</li>
-                        <li><span class="cross">✗</span> Requires credit card for signup</li>
-                        <li><span class="cross">✗</span> Expensive paid plans ($49+/month)</li>
-                        <li><span class="check">✓</span> Good accuracy rates</li>
-                        <li><span class="cross">✗</span> Limited bulk upload features</li>
-                    </ul>
-                </div>
-                <div class="comparison-card unlimited-card">
-                    <h3>
-                        <span class="icon">U</span>
-                        Unlimited leads
-                        
-                    </h3>
-                    <ul class="feature-list">
-                        <li><span class="check">✓</span> 1000 free searches daily</li>
-                        <li><span class="check">✓</span> No credit card required</li>
-                        <li><span class="check">✓</span> Completely free to use</li>
-                        <li><span class="check">✓</span> High accuracy rates (85-95%)</li>
-                        <li><span class="check">✓</span> Unlimited bulk CSV uploads</li>
-                    </ul>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 1.125rem; color: var(--gray-800);">
-                Looking for a Hunter.io alternative that won't break your budget? Our free email finder offers the same powerful features without the high costs or monthly limits.
-            </p>
+  <section class="container">
+    <div class="form-box">
+      <!-- Tab Navigation -->
+      <div class="tab-nav" style="display: flex; margin-bottom: 2rem; border-bottom: 2px solid var(--gray-200);">
+        <button class="tab-btn active" onclick="switchTab('single')" id="singleTab">
+          <i class="fas fa-search"></i> Individual Search
+        </button>
+        <button class="tab-btn" onclick="switchTab('bulk')" id="bulkTab">
+          <i class="fas fa-upload"></i> Bulk CSV Upload
+        </button>
+      </div>
+
+      <!-- Single Search Tab -->
+      <div id="singleSearch" class="tab-content">
+        <div class="form-row">
+          <input type="text" id="firstName" placeholder="First Name (e.g. John)" />
+          <input type="text" id="lastName" placeholder="Last Name (e.g. Smith)" />
         </div>
-    </section>
+        <input type="text" id="companyDomain" placeholder="Company Website (e.g. company.com)" />
+        <button class="btn" onclick="findEmail()">Find Email Address</button>
+        <button class="btn btn-secondary" onclick="tryExample()">Try an Example</button>
+
+        <div id="result">
+          <h3 style="margin-top: 1rem;">Results:</h3>
+          <textarea readonly id="emailResults">Email will appear here...</textarea>
+          
+          <!-- Results Upsell Banner -->
+          <div class="results-upsell" id="resultsUpsell">
+            <h4>🚀 Want to scale your research?</h4>
+            <p>Get <strong>250 premium leads</strong> with advanced contact information, verified emails, and phone numbers!</p>
+            <a href="https://unlimited-leads.online/sign-up" class="btn">
+              <i class="fas fa-rocket"></i> Claim My Free Leads
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bulk Upload Tab -->
+      <div id="bulkSearch" class="tab-content" style="display: none;">
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-content">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h3 style="margin-bottom: 0.5rem;">Drop your CSV file here</h3>
+            <p style="color: #6b7280; margin-bottom: 1rem;">or click to browse</p>
+            <input type="file" id="csvFile" accept=".csv" style="display: none;" />
+            <button class="btn" onclick="document.getElementById('csvFile').click()" style="width: auto; padding: 0.75rem 1.5rem;">
+              Choose File
+            </button>
+          </div>
+        </div>
+        
+        <div style="margin-top: 1rem; padding: 1rem; background: var(--gray-50); border-radius: var(--border-radius);">
+          <h4 style="margin-bottom: 0.5rem;">CSV Format Requirements:</h4>
+          <p style="font-size: 0.9rem; color: #6b7280;">Your CSV should have columns: <strong>first_name</strong>, <strong>last_name</strong>, <strong>company_domain</strong></p>
+        </div>
+
+        <!-- CSV Error Display -->
+        <div id="csvError" class="csv-error"></div>
+        
+        <div id="csvPreview" style="display: none; margin-top: 1.5rem;">
+          <h4 style="margin-bottom: 1rem;">Preview (first 5 rows):</h4>
+          <div id="previewTable" style="overflow-x: auto; border: 1px solid var(--gray-200); border-radius: var(--border-radius);"></div>
+          <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn" onclick="processBulkSearch()" id="processBulkBtn">
+              Process <span id="contactCount">0</span> Contacts
+            </button>
+            <button class="btn btn-secondary" onclick="downloadTemplate()" style="width: auto;">
+              Download Template
+            </button>
+          </div>
+        </div>
+
+        <div id="bulkResults" style="display: none; margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4>Bulk Results:</h4>
+            <button class="btn" onclick="downloadResults()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;">
+              <i class="fas fa-download"></i> Download CSV
+            </button>
+          </div>
+          <div id="progressBar" style="background: var(--gray-200); height: 8px; border-radius: 4px; margin-bottom: 1rem;">
+            <div id="progressFill" style="background: var(--primary); height: 100%; border-radius: 4px; width: 0%; transition: width 0.3s ease;"></div>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <span id="progressText">Processing: 0 / 0 contacts</span>
+          </div>
+          <div id="bulkResultsTable" style="overflow-x: auto; border: 1px solid var(--gray-200); border-radius: var(--border-radius); max-height: 400px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="margin-top: 3rem;">
+    <h2 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;">How to Use Our Free Bulk Email Finder</h2>
     
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    How does the email finder work?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Our email finder uses a combination of pattern recognition, web data analysis, and verification techniques to discover professional email addresses. When you enter a person's name and company domain, our algorithm generates the most likely email formats based on common patterns (e.g., firstname.lastname@domain.com, firstinitial.lastname@domain.com) and then verifies each possibility to find the correct address.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    How accurate are the results?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Our email finder achieves an average accuracy rate of 85-95% for most companies. Each result includes a confidence score that indicates how certain we are about the email address. Results with "High" confidence (85%+) are verified and almost certainly correct, while "Medium" confidence results (70-85%) are likely correct but may require additional verification.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Is there a limit to how many emails I can find?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Our free email finder allows you to search for up to 1000 email addresses per day through the individual search or bulk CSV upload. For higher volume needs or API access, check out our premium plans at UnlimitedLeads which offer unlimited searches and advanced features.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    What format should my CSV file be in?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Your CSV file should have at least three columns: first_name, last_name, and company_domain. Make sure the headers match these exact names for optimal processing. The file should be in standard CSV format (comma-separated values) and we currently only support the .csv file extension (not Excel formats like .xlsx or .xls). For an example of the correct format, see the sample table above.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    How long does it take to process a bulk CSV file?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Processing time depends on the number of contacts in your CSV file. Small files (under 100 contacts) typically process in less than a minute. For larger files (up to 1000 contacts), it may take 5-10 minutes. Our system processes multiple contacts in parallel to deliver results as quickly as possible while maintaining accuracy.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Can I find emails for any company?
-                    <i class="fas fa-chevron-down faq-toggle"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Our email finder works best with company domains that have standardized email formats and public web presence. We have high success rates with most medium to large businesses, tech companies, and organizations with active online operations. Some smaller companies or those with unusual email patterns may have lower success rates. For best results, always use the official company domain (e.g., company.com) rather than generic email providers.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <p style="margin-bottom: 1.5rem;">
+      Our tool offers two powerful ways to find professional email addresses—single searches for quick lookups or bulk processing for large datasets.
+    </p>
 
-    <section class="container" style="padding: 4rem 0; background-color: white; margin-top: 3rem;">
-        <div style="max-width: 800px; margin: 0 auto;">
-            <h2 style="margin-bottom: 1.5rem; font-size: 1.75rem;">How to Use Email Finder to Supercharge Your Outreach</h2>
-            
-            <p style="margin-bottom: 1rem;">Finding the right contact information is the foundation of successful outreach campaigns. Whether you're in sales, recruiting, or marketing, having direct email addresses gives you a significant advantage in connecting with decision-makers.</p>
-            
-            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">Why Direct Email Addresses Matter</h3>
-            
-            <p style="margin-bottom: 1rem;">Using generic email addresses like info@ or contact@ significantly reduces your chances of getting a response. Studies show that personalized emails sent directly to the right person can increase response rates by up to 300%. Our email finder helps you bypass gatekeepers and connect directly with your target contacts.</p>
-            
-            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">Best Practices for Using Found Emails</h3>
-            
-            <ol style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Verify before sending:</strong> While our tool has high accuracy, it's always good practice to verify critical contacts before sending important messages.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Personalize your outreach:</strong> Now that you have their email, make sure your message is tailored to the recipient's role and company.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Respect privacy:</strong> Having someone's email is a privilege. Always provide value and respect opt-out requests.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Follow up thoughtfully:</strong> If you don't get a response, follow up 2-3 times with new value in each message before moving on.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Combine with other data points:</strong> For maximum effectiveness, use email finder alongside other prospect research for truly personalized outreach.
-                </li>
-            </ol>
-            
-            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.25rem;">Why Choose Our Email Finder</h3>
-            
-            <p style="margin-bottom: 1rem;">Unlike other email finding tools that charge per search or require expensive subscriptions, our tool is completely free for up to 1000 searches per day. We've built this tool to help entrepreneurs, salespeople, and recruiters connect with prospects without breaking the bank.</p>
-            
-            <p style="margin-bottom: 1.5rem;">Our email finder is more than just a tool—it's a gateway to higher response rates, more successful campaigns, and ultimately, more business opportunities. By combining our free email finder with thoughtful outreach strategies, you'll see dramatic improvements in your connect and conversion rates.</p>
-            
-            <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);">
-                <h4 style="margin-bottom: 0.75rem; color: var(--primary);">Need more advanced features?</h4>
-                <p style="margin-bottom: 0;">Check out our premium plans that include API access, unlimited searches, company information enrichment, and direct integration with your favorite CRM and outreach tools.</p>
-            </div>
-        </div>
-    </section>
-<footer id="contact" class="footer">
+    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Individual Search</h3>
+    <ol style="margin-left: 1.25rem; margin-bottom: 2rem;">
+      <li style="margin-bottom: 0.75rem;"><strong>Enter contact details:</strong> Fill in the first name, last name, and company domain.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>Click "Find Email Address":</strong> Our tool searches multiple sources to find the email.</li>
+      <li><strong>Get instant results:</strong> See the email address with confidence score.</li>
+    </ol>
+
+    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Bulk CSV Processing</h3>
+    <ol style="margin-left: 1.25rem; margin-bottom: 2rem;">
+      <li style="margin-bottom: 0.75rem;"><strong>Prepare your CSV:</strong> Create a CSV file with columns "first_name", "last_name", and "company_domain".</li>
+      <li style="margin-bottom: 0.75rem;"><strong>Upload your file:</strong> Drag and drop your CSV or click to browse and select it.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>Preview and process:</strong> Review the first 5 rows, then click "Process" to find emails for all contacts.</li>
+      <li><strong>Download results:</strong> Export your results as a new CSV file with email addresses and status.</li>
+    </ol>
+
+    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Why Use Our Email Finder?</h3>
+    <ul style="margin-left: 1.25rem; margin-bottom: 2rem;">
+      <li style="margin-bottom: 0.75rem;"><strong>High accuracy:</strong> Our advanced algorithm checks multiple data sources for the most accurate results.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>Bulk processing:</strong> Upload CSV files to process hundreds of contacts at once.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>Real-time progress:</strong> Watch your bulk searches progress with live updates.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>100% free:</strong> No limits, no paywalls—unlimited email finding.</li>
+      <li style="margin-bottom: 0.75rem;"><strong>CSV export:</strong> Download results in CSV format for easy import into CRMs.</li>
+      <li><strong>Privacy focused:</strong> We never store your data—all searches are confidential.</li>
+    </ul>
+  </section>
+
+  <footer id="contact" class="footer">
     <div class="container">
         <div class="footer-content">
-
             <!-- Free Tools Section -->
             <div class="footer-column">
                 <h4>Free Tools</h4>
@@ -1045,7 +447,6 @@
                 <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
             </div>
             
-            
             <div class="footer-bottom">
                 <p>© 2025 UnlimitedLeads. All rights reserved.</p>
                 <p>
@@ -1056,907 +457,515 @@
         </div>
     </div>
 </footer>
-    <!-- Scripts -->
 
-<script>
-// Tab Switching
-document.addEventListener('DOMContentLoaded', function() {
-    // CSV Header Standardizer 
-    const CSVStandardizer = {
-        /**
-         * Process a CSV file and standardize its headers
-         * @param {File} file - The CSV file to process
-         * @returns {Promise<Object>} - Result object with status and data
-         */
-        processFile: function(file) {
-            return new Promise((resolve, reject) => {
-                if (!file) {
-                    reject(new Error('No file provided'));
-                    return;
-                }
-                
-                const reader = new FileReader();
-                
-                reader.onload = (event) => {
-                    try {
-                        const result = this.processCSVContent(event.target.result);
-                        resolve(result);
-                    } catch (error) {
-                        reject(error);
-                    }
-                };
-                
-                reader.onerror = () => {
-                    reject(new Error('Failed to read file'));
-                };
-                
-                reader.readAsText(file);
-            });
-        },
-        
-        /**
-         * Process CSV content as string
-         * @param {string} csvString - CSV content as string
-         * @returns {Object} - Processing result
-         */
-        processCSVContent: function(csvString) {
-            // Split CSV into lines
-            const lines = csvString.split(/\r?\n/);
-            if (lines.length < 2) {
-                return { 
-                    success: false, 
-                    error: "CSV file appears to be empty or invalid"
-                };
-            }
-            
-            // Get headers from first line
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            
-            // Find relevant column indices with improved domain detection
-            const firstNameIndex = this.findColumnIndex(headers, [
-                'first name', 'firstname', 'fname', 'first', 'given name', 'name', 'givenname'
-            ], 'firstname');
-            
-            const lastNameIndex = this.findColumnIndex(headers, [
-                'last name', 'lastname', 'lname', 'last', 'surname', 'family name', 'familyname'
-            ], 'lastname');
-            
-            // For domain, use our specialized domain detection which avoids treating company name as domain
-            const domainIndex = this.findColumnIndex(headers, [
-                'domain', 'company domain', 'website', 'url', 'email domain',
-                'companydomain', 'email', 'company_domain', 'company_url', 'company_website', 'web'
-            ], 'domain');
-            
-            // Check if we found all required columns
-            const missingColumns = [];
-            if (firstNameIndex === -1) missingColumns.push('first name');
-            if (lastNameIndex === -1) missingColumns.push('last name');
-            if (domainIndex === -1) missingColumns.push('website/domain');
-            
-            if (missingColumns.length > 0) {
-                return { 
-                    success: false, 
-                    error: `Your CSV file is missing the following required columns: ${missingColumns.join(', ')}`,
-                    foundHeaders: headers
-                };
-            }
-            
-            // Process data rows
-            const data = [];
-            for (let i = 1; i < lines.length; i++) {
-                // Skip empty lines
-                if (!lines[i].trim()) continue;
-                
-                // Handle CSV parsing properly (simple approach)
-                const values = this.parseCSVLine(lines[i]);
-                
-                // Skip if line doesn't have enough values
-                if (values.length <= Math.max(firstNameIndex, lastNameIndex, domainIndex)) {
-                    continue;
-                }
-                
-                // Create standardized row
-                data.push({
-                    first_name: values[firstNameIndex] || '',
-                    last_name: values[lastNameIndex] || '',
-                    company_domain: this.cleanDomain(values[domainIndex] || '')
-                });
-            }
-            
-            if (data.length === 0) {
-                return {
-                    success: false,
-                    error: "No valid data rows found in the CSV file",
-                    foundHeaders: headers
-                };
-            }
-            
-            // Create standardized CSV content
-            const standardizedCSV = this.convertToCSV(data);
-            
-            return {
-                success: true,
-                data: data,
-                originalHeaders: {
-                    first_name: headers[firstNameIndex],
-                    last_name: headers[lastNameIndex],
-                    company_domain: headers[domainIndex]
-                },
-                standardizedCSV: standardizedCSV,
-                totalRows: data.length
-            };
-        },
-        
-        /**
-         * Find column index based on possible header names with improved domain matching
-         * @param {Array<string>} headers - CSV headers
-         * @param {Array<string>} possibleNames - Possible header names
-         * @param {string} columnType - Type of column being searched for
-         * @returns {number} - Index or -1 if not found
-         */
-        findColumnIndex: function(headers, possibleNames, columnType) {
-            // For domain columns, prioritize actual domain-related terms first
-            if (columnType === 'domain') {
-                // First priority: exact matches for domain/website-specific terms
-                const domainSpecificTerms = ['domain', 'website', 'url', 'email domain', 'company_domain', 'company domain', 'companydomain', 'web'];
-                for (const term of domainSpecificTerms) {
-                    const index = headers.findIndex(h => h === term);
-                    if (index !== -1) return index;
-                }
-                
-                // Second priority: partial matches for domain/website-specific terms
-                for (const term of domainSpecificTerms) {
-                    const index = headers.findIndex(h => h.includes(term));
-                    if (index !== -1) return index;
-                }
-                
-                // Lower priority: company-related terms (only if no domain terms were found)
-                const companyTerms = ['company', 'company_url', 'company_website'];
-                for (const term of companyTerms) {
-                    const index = headers.findIndex(h => h === term);
-                    if (index !== -1) return index;
-                }
-                
-                // Lowest priority: partial matches for company terms
-                for (const term of companyTerms) {
-                    const index = headers.findIndex(h => h.includes(term));
-                    if (index !== -1) return index;
-                }
-                
-                return -1;
-            }
-            
-            // For other columns, use the original logic
-            // First try exact matches
-            for (const name of possibleNames) {
-                const index = headers.findIndex(h => h === name);
-                if (index !== -1) return index;
-            }
-            
-            // Then try partial matches
-            for (const name of possibleNames) {
-                const index = headers.findIndex(h => h.includes(name));
-                if (index !== -1) return index;
-            }
-            
-            return -1;
-        },
-        
-        /**
-         * Parse a CSV line, handling quoted values
-         * @param {string} line - CSV line to parse
-         * @returns {Array<string>} - Array of values
-         */
-        parseCSVLine: function(line) {
-            const result = [];
-            let currentValue = '';
-            let inQuotes = false;
-            
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(currentValue.trim());
-                    currentValue = '';
-                } else {
-                    currentValue += char;
-                }
-            }
-            
-            // Add the last value
-            result.push(currentValue.trim());
-            return result;
-        },
-        
-        /**
-         * Clean domain format (remove http://, www, etc)
-         * @param {string} domain - Domain to clean
-         * @returns {string} - Cleaned domain
-         */
-        cleanDomain: function(domain) {
-            if (!domain) return '';
-            
-            // Remove http://, https://, www.
-            let clean = domain
-                .replace(/^https?:\/\//i, '')
-                .replace(/^www\./i, '');
-            
-            // Remove everything after the first slash
-            clean = clean.split('/')[0];
-            
-            // If it's an email address, extract the domain part
-            if (clean.includes('@')) {
-                clean = clean.split('@')[1];
-            }
-            
-            return clean;
-        },
-        
-        /**
-         * Convert data to CSV format
-         * @param {Array<Object>} data - Data array
-         * @returns {string} - CSV string
-         */
-        convertToCSV: function(data) {
-            // Create header row
-            const csvContent = ['first_name,last_name,company_domain'];
-            
-            // Add data rows
-            data.forEach(row => {
-                const firstName = this.escapeCsvValue(row.first_name);
-                const lastName = this.escapeCsvValue(row.last_name);
-                const domain = this.escapeCsvValue(row.company_domain);
-                
-                csvContent.push(`${firstName},${lastName},${domain}`);
-            });
-            
-            return csvContent.join('\n');
-        },
-        
-        /**
-         * Escape CSV value (handle commas, quotes, etc.)
-         * @param {string} value - Value to escape
-         * @returns {string} - Escaped value
-         */
-        escapeCsvValue: function(value) {
-            if (value === null || value === undefined) return '';
-            value = String(value);
-            
-            // If value contains comma, newline or double quote, enclose in quotes
-            if (value.includes(',') || value.includes('\n') || value.includes('"')) {
-                // Replace double quotes with two double quotes
-                value = value.replace(/"/g, '""');
-                return `"${value}"`;
-            }
-            
-            return value;
-        },
-        
-        /**
-         * Create File object from standardized CSV
-         * @param {string} csvContent - CSV content
-         * @param {string} fileName - Original file name
-         * @returns {File} - File object
-         */
-        createFileFromCSV: function(csvContent, fileName) {
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            return new File([blob], fileName || 'standardized.csv', { type: 'text/csv' });
-        }
-    };
-
-    const singleTabBtn = document.getElementById('singleTabBtn');
-    const bulkTabBtn = document.getElementById('bulkTabBtn');
-    const singleFinderForm = document.getElementById('singleFinderForm');
-    const bulkFinderForm = document.getElementById('bulkFinderForm');
-    
-    singleTabBtn.addEventListener('click', function() {
-        singleTabBtn.classList.add('active');
-        bulkTabBtn.classList.remove('active');
-        singleFinderForm.style.display = 'block';
-        bulkFinderForm.style.display = 'none';
-    });
-    
-    bulkTabBtn.addEventListener('click', function() {
-        bulkTabBtn.classList.add('active');
-        singleTabBtn.classList.remove('active');
-        bulkFinderForm.style.display = 'block';
-        singleFinderForm.style.display = 'none';
-    });
-    
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const item = question.parentElement;
-            item.classList.toggle('active');
-        });
-    });
+  <script>
+    let bulkResults = [];
+    let csvData = [];
+    let searchCount = 0;
     
     // API endpoint
     const API_ENDPOINT = 'https://free-tool-bulk-email-finder.hamoureliasse.workers.dev/';
-     
-    // Single Email Finder
-    const findEmailBtn = document.getElementById('findEmailBtn');
-    const singleResultArea = document.getElementById('singleResultArea');
-    const statusMessage = document.getElementById('statusMessage');
-    const copyEmailBtn = document.getElementById('copyEmailBtn');
-    const newSearchBtn = document.getElementById('newSearchBtn');
-    
-    findEmailBtn.addEventListener('click', async function() {
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const companyDomain = document.getElementById('companyDomain').value.trim();
-    
-    if (!firstName || !lastName || !companyDomain) {
-        showStatus('Please fill in all fields to find an email address.', 'error');
-        return;
+
+    // Tab switching functionality
+    function switchTab(tab) {
+      const singleTab = document.getElementById('singleTab');
+      const bulkTab = document.getElementById('bulkTab');
+      const singleSearch = document.getElementById('singleSearch');
+      const bulkSearch = document.getElementById('bulkSearch');
+
+      if (tab === 'single') {
+        singleTab.classList.add('active');
+        bulkTab.classList.remove('active');
+        singleSearch.style.display = 'block';
+        bulkSearch.style.display = 'none';
+      } else {
+        bulkTab.classList.add('active');
+        singleTab.classList.remove('active');
+        bulkSearch.style.display = 'block';
+        singleSearch.style.display = 'none';
+      }
     }
-    
-    // Disable the search button and show loading state
-    findEmailBtn.disabled = true;
-    findEmailBtn.innerHTML = '<span class="loader"></span> Searching...';
-    showStatus('<span class="loader"></span> Finding email address. This may take up to 1 minute...', 'loading');
-    
-    try {
-        // Set up timeout mechanism - create a promise that rejects after 2 minutes (120000ms)
-        const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('Request timed out. The server might be busy.')), 120000);
+
+    function findEmail() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const companyDomain = document.getElementById('companyDomain').value.trim();
+      const resultBox = document.getElementById('result');
+      const resultText = document.getElementById('emailResults');
+      const resultsUpsell = document.getElementById('resultsUpsell');
+      
+      if (!firstName || !lastName || !companyDomain) {
+        alert("Please fill in all fields (first name, last name, and company domain).");
+        return;
+      }
+      
+      resultText.value = `Searching email for: ${firstName} ${lastName} at ${companyDomain}...`;
+      resultBox.style.display = 'block';
+      resultsUpsell.style.display = 'none';
+
+      fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'individual',
+          firstName: firstName,
+          lastName: lastName,
+          companyDomain: companyDomain
+        })
+      })
+        .then(response => {
+          console.log('Response status:', response.status);
+          return response.json();
+        })
+        .then(data => {
+          console.log('Response data:', data);
+          if (data && data.email) {
+            resultText.value = `Email found: ${data.email}\nConfidence: ${data.confidence || 'High (95%)'}`;
+
+            // Show upsell banner after successful search
+            searchCount++;
+            if (searchCount >= 1) {
+              setTimeout(() => {
+                resultsUpsell.style.display = 'block';
+              }, 2000);
+            }
+          } else {
+            resultText.value = "No email found for this contact. Please verify the information and try again.";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          resultText.value = "An error occurred while searching for the email address. Please try again.";
+        });
+    }
+
+    function tryExample() {
+      document.getElementById('firstName').value = "Tim";
+      document.getElementById('lastName').value = "Cook";
+      document.getElementById('companyDomain').value = "apple.com";
+    }
+
+    // CSV Upload and Processing - SIMPLIFIED VERSION
+    function setupFileUpload() {
+      const fileInput = document.getElementById('csvFile');
+      const uploadArea = document.getElementById('uploadArea');
+
+      // File input change event
+      fileInput.addEventListener('change', handleFileSelect);
+
+      // Drag and drop events
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      });
+
+      uploadArea.addEventListener('click', () => {
+        fileInput.click();
+      });
+    }
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+    }
+
+    function handleFile(file) {
+      if (!file.name.toLowerCase().endsWith('.csv')) {
+        showCSVError('Wrong File Type', 'Please upload a CSV file (.csv extension only).', [], []);
+        return;
+      }
+
+      // Clear any previous errors and results
+      hideCSVError();
+      document.getElementById('csvPreview').style.display = 'none';
+      document.getElementById('bulkResults').style.display = 'none';
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const csv = e.target.result;
+        parseCSV(csv);
+      };
+      reader.readAsText(file);
+    }
+
+    function parseCSV(csvText) {
+      const lines = csvText.split('\n').filter(line => line.trim());
+      if (lines.length < 2) {
+        showCSVError('Empty File', 'Your CSV file appears to be empty or only has a header row.', [], []);
+        return;
+      }
+
+      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
+      csvData = [];
+
+      // Find required columns - EXACT MATCHES FIRST, THEN FLEXIBLE
+      let firstNameIndex = -1;
+      let lastNameIndex = -1;
+      let domainIndex = -1;
+
+      // Find first name column
+      const firstNameCols = ['first_name', 'firstname', 'first name', 'fname', 'first'];
+      for (let i = 0; i < headers.length; i++) {
+        if (firstNameCols.includes(headers[i])) {
+          firstNameIndex = i;
+          break;
+        }
+      }
+
+      // Find last name column
+      const lastNameCols = ['last_name', 'lastname', 'last name', 'lname', 'last', 'surname'];
+      for (let i = 0; i < headers.length; i++) {
+        if (lastNameCols.includes(headers[i])) {
+          lastNameIndex = i;
+          break;
+        }
+      }
+
+      // Find domain column
+      const domainCols = ['company_domain', 'companydomain', 'company domain', 'domain', 'website', 'company_website'];
+      for (let i = 0; i < headers.length; i++) {
+        if (domainCols.includes(headers[i])) {
+          domainIndex = i;
+          break;
+        }
+      }
+
+      // Check for missing columns
+      const missingColumns = [];
+      
+      if (firstNameIndex === -1) {
+        missingColumns.push('First Name');
+      }
+      if (lastNameIndex === -1) {
+        missingColumns.push('Last Name');
+      }
+      if (domainIndex === -1) {
+        missingColumns.push('Company Domain');
+      }
+
+      if (missingColumns.length > 0) {
+        showCSVError('Missing Required Columns', 
+          `Your CSV file is missing ${missingColumns.length} required column${missingColumns.length > 1 ? 's' : ''}:`, 
+          headers, 
+          missingColumns
+        );
+        return;
+      }
+
+      // Parse data rows
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+        if (values[firstNameIndex] && values[lastNameIndex] && values[domainIndex]) {
+          csvData.push({
+            originalRow: values,
+            firstName: values[firstNameIndex].trim(),
+            lastName: values[lastNameIndex].trim(),
+            domain: values[domainIndex].trim(),
+            rowIndex: i
+          });
+        }
+      }
+
+      if (csvData.length === 0) {
+        showCSVError('No Valid Data', 'No valid contact data found in your CSV file. Please check that your data rows contain values in all required columns.', headers, []);
+        return;
+      }
+
+      console.log('CSV parsed successfully:', csvData.length, 'contacts');
+      showPreview(headers, firstNameIndex, lastNameIndex, domainIndex);
+    }
+
+    function showCSVError(title, message, foundHeaders, missingColumns) {
+      let errorDiv = document.getElementById('csvError');
+      
+      let errorHTML = `
+        <div class="icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h3>❌ ${title}</h3>
+        
+        <p style="font-size: 1.125rem; margin-bottom: 1.5rem; color: #374151;">
+          ${message}
+        </p>
+      `;
+
+      if (missingColumns.length > 0) {
+        errorHTML += `
+          <div class="error-details">
+            <h4 style="color: #ef4444; font-weight: 600; margin-bottom: 1rem; text-align: center;">
+              🚫 Missing Columns (${missingColumns.length}):
+            </h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+        `;
+        
+        missingColumns.forEach(col => {
+          errorHTML += `<li style="padding: 0.5rem; margin: 0.25rem 0; background: rgba(239,68,68,0.1); border-left: 4px solid #ef4444; font-weight: 600;">❌ ${col}</li>`;
         });
         
-        // This is your actual API call promise
-        const fetchPromise = fetch(API_ENDPOINT, {
+        errorHTML += `</ul></div>`;
+      }
+
+      if (foundHeaders.length > 0) {
+        errorHTML += `
+          <div class="found-columns">
+            <h4 style="color: var(--primary); font-weight: 600; margin-bottom: 1rem; text-align: center;">
+              📋 Your Current Columns (${foundHeaders.length}):
+            </h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        `;
+        
+        foundHeaders.forEach(header => {
+          errorHTML += `<span style="background: white; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid var(--primary); font-weight: 500;">${header}</span>`;
+        });
+        
+        errorHTML += `</div></div>`;
+      }
+
+      errorHTML += `
+        <div class="required-columns">
+          <h4 style="color: var(--success); font-weight: 600; margin-bottom: 1rem; text-align: center;">
+            ✅ Required Columns:
+          </h4>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: 0.5rem; margin: 0.25rem 0; background: rgba(16,185,129,0.1); border-left: 4px solid var(--success);">✅ first_name (or firstname, first name, fname, first)</li>
+            <li style="padding: 0.5rem; margin: 0.25rem 0; background: rgba(16,185,129,0.1); border-left: 4px solid var(--success);">✅ last_name (or lastname, last name, lname, last, surname)</li>
+            <li style="padding: 0.5rem; margin: 0.25rem 0; background: rgba(16,185,129,0.1); border-left: 4px solid var(--success);">✅ company_domain (or domain, website, company_website)</li>
+          </ul>
+        </div>
+
+        <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: var(--border-radius); padding: 1.5rem; margin: 1.5rem 0;">
+          <h4 style="color: #d97706; font-weight: 600; margin-bottom: 1rem; text-align: center;">
+            🛠️ How to Fix This:
+          </h4>
+          <ol style="text-align: left; color: #92400e; line-height: 1.6;">
+            <li style="margin-bottom: 0.5rem;"><strong>Open your CSV file</strong> in Excel, Google Sheets, or any spreadsheet editor</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Rename your column headers</strong> to match the required names above</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Save the file</strong> and upload it again</li>
+            <li><strong>Or download our template</strong> and copy your data into it</li>
+          </ol>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <button class="btn btn-secondary" onclick="downloadTemplate()" style="width: auto; padding: 0.75rem 1.5rem;">
+            <i class="fas fa-download"></i> Download Template
+          </button>
+          <button class="btn" onclick="document.getElementById('csvFile').click()" style="width: auto; padding: 0.75rem 1.5rem;">
+            <i class="fas fa-upload"></i> Try Another File
+          </button>
+        </div>
+      `;
+
+      errorDiv.innerHTML = errorHTML;
+      errorDiv.style.display = 'block';
+      
+      // Scroll to error
+      errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideCSVError() {
+      const errorDiv = document.getElementById('csvError');
+      if (errorDiv) {
+        errorDiv.style.display = 'none';
+      }
+    }
+
+    function showPreview(headers, firstNameIndex, lastNameIndex, domainIndex) {
+      const previewDiv = document.getElementById('csvPreview');
+      const tableDiv = document.getElementById('previewTable');
+      const countSpan = document.getElementById('contactCount');
+
+      // Show first 5 rows
+      const previewData = csvData.slice(0, 5);
+      
+      let tableHTML = '<table class="results-table"><thead><tr>';
+      tableHTML += '<th style="background: rgba(79,70,229,0.1); color: var(--primary);">First Name</th>';
+      tableHTML += '<th style="background: rgba(79,70,229,0.1); color: var(--primary);">Last Name</th>';
+      tableHTML += '<th style="background: rgba(79,70,229,0.1); color: var(--primary);">Company Domain</th>';
+      tableHTML += '</tr></thead><tbody>';
+
+      previewData.forEach(row => {
+        tableHTML += `<tr>
+          <td style="font-weight: 600;">${row.firstName}</td>
+          <td style="font-weight: 600;">${row.lastName}</td>
+          <td style="font-weight: 600;">${row.domain}</td>
+        </tr>`;
+      });
+      tableHTML += '</tbody></table>';
+
+      tableDiv.innerHTML = tableHTML;
+      countSpan.textContent = csvData.length;
+      previewDiv.style.display = 'block';
+
+      console.log('Preview shown for', csvData.length, 'contacts');
+    }
+
+    async function processBulkSearch() {
+      const resultsDiv = document.getElementById('bulkResults');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const processBtn = document.getElementById('processBulkBtn');
+      
+      console.log('Starting bulk processing for', csvData.length, 'contacts');
+      
+      resultsDiv.style.display = 'block';
+      processBtn.disabled = true;
+      processBtn.textContent = 'Processing...';
+      
+      bulkResults = [];
+      let processed = 0;
+
+      for (const row of csvData) {
+        try {
+          progressText.textContent = `Processing: ${processed + 1} / ${csvData.length} contacts - ${row.firstName} ${row.lastName}`;
+
+          console.log(`Processing ${row.firstName} ${row.lastName} at ${row.domain}`);
+
+          const response = await fetch(API_ENDPOINT, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                type: 'individual',
-                firstName: firstName,
-                lastName: lastName,
-                companyDomain: companyDomain
+              type: 'individual',
+              firstName: row.firstName,
+              lastName: row.lastName,
+              companyDomain: row.domain
             })
-        });
-        
-        // Race the API call against the timeout
-        const response = await Promise.race([fetchPromise, timeoutPromise]);
-        
-        if (!response.ok) {
-            throw new Error('Failed to communicate with the server');
-        }
-        
-        const data = await response.json();
-        
-        // Re-enable button and restore text ONLY after data is received
-        findEmailBtn.disabled = false;
-        findEmailBtn.innerHTML = '<span>Find Email Address</span>';
-        
-        // If we have a valid response with an email
-        if (data && data.email) {
-            // Update result table with the response data
-            document.getElementById('resultFirstName').textContent = firstName;
-            document.getElementById('resultLastName').textContent = lastName;
-            document.getElementById('resultCompany').textContent = companyDomain;
-            document.getElementById('resultEmail').textContent = data.email;
-            document.getElementById('resultConfidence').textContent = data.confidence || 'High (95%)';
-            
-            // Show result area
-            singleResultArea.style.display = 'block';
-            showStatus('Email found successfully!', 'success');
-            
-            // Scroll to result
-            singleResultArea.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            // Handle case where email wasn't found
-            showStatus('Email not found for this contact. Please verify the information.', 'error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        
-        // Check if it's a timeout error
-        if (error.message === 'Request timed out. The server might be busy.') {
-            showStatus('The request is taking longer than expected. The server might be busy. Please try again later.', 'error');
-        } else {
-            showStatus('Failed to find email: ' + error.message + '. Please try again.', 'error');
-        }
-        
-        // Make sure button is re-enabled
-        findEmailBtn.disabled = false;
-        findEmailBtn.innerHTML = '<span>Find Email Address</span>';
-    }
-});
-    
-    // Copy Email to Clipboard
-    copyEmailBtn.addEventListener('click', function() {
-        const emailText = document.getElementById('resultEmail').textContent;
-        navigator.clipboard.writeText(emailText).then(function() {
-            const originalText = this.querySelector('span').textContent;
-            this.querySelector('span').textContent = 'Copied!';
-            
-            setTimeout(() => {
-                this.querySelector('span').textContent = originalText;
-            }, 2000);
-        }.bind(this));
-    });
-    
-    // New Search
-    newSearchBtn.addEventListener('click', function() {
-        document.getElementById('firstName').value = '';
-        document.getElementById('lastName').value = '';
-        document.getElementById('companyDomain').value = '';
-        singleResultArea.style.display = 'none';
-        statusMessage.style.display = 'none';
-    });
-    
-    // Bulk CSV Upload
-    const csvDropArea = document.getElementById('csvDropArea');
-    const csvFileInput = document.getElementById('csvFileInput');
-    const bulkResultArea = document.getElementById('bulkResultArea');
-    const downloadResultsBtn = document.getElementById('downloadResultsBtn');
-    const newBulkSearchBtn = document.getElementById('newBulkSearchBtn');
-    
-    let processedCsvData = null; // Store processed CSV data for download
-    
-    // Handle file selection via button
-    csvDropArea.addEventListener('click', function() {
-        csvFileInput.click();
-    });
-    
-    // Handle file drop
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        csvDropArea.addEventListener(eventName, preventDefaults, false);
-    });
-    
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    
-    ['dragenter', 'dragover'].forEach(eventName => {
-        csvDropArea.addEventListener(eventName, highlight, false);
-    });
-    
-    ['dragleave', 'drop'].forEach(eventName => {
-        csvDropArea.addEventListener(eventName, unhighlight, false);
-    });
-    
-    function highlight() {
-        csvDropArea.style.borderColor = 'var(--primary)';
-        csvDropArea.style.backgroundColor = 'rgba(79, 70, 229, 0.05)';
-    }
-    
-    function unhighlight() {
-        csvDropArea.style.borderColor = 'var(--gray-300)';
-        csvDropArea.style.backgroundColor = 'white';
-    }
-    
-    // Modified handlers to include header standardization
-    csvDropArea.addEventListener('drop', function(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files && files.length) {
-            handleStandardizedFile(files[0]);
-        }
-    }, false);
-    
-    csvFileInput.addEventListener('change', function(e) {
-        if (e.target.files && e.target.files.length) {
-            handleStandardizedFile(e.target.files[0]);
-        }
-    }, false);
-    
-    async function handleStandardizedFile(file) {
-        if (!file) return;
-        
-        if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
-            showStatus('Please upload a CSV file (.csv extension only).', 'error');
-            return;
-        }
-        
-        if (file.size > 100 * 1024) { // 100KB limit
-    showStatus('File size exceeds the 100KB limit (maximum 100 contacts).', 'error');
-    return;
-}
+          });
 
-        // Display loading state
-        csvDropArea.style.display = 'none';
-        const loadingElement = createLoadingElement('Standardizing CSV headers...');
-        csvDropArea.parentNode.insertBefore(loadingElement, csvDropArea.nextSibling);
-        
-        showStatus('<span class="loader"></span> Processing CSV file. Keep this page open in background ', 'loading');
-        
-        try {
-            // First step: Standardize the CSV headers
-            const standardizationResult = await CSVStandardizer.processFile(file);
-            
-            if (!standardizationResult.success) {
-                throw new Error(standardizationResult.error || 'Failed to standardize CSV headers');
-            }
-            
-            // Show standardization result if headers were changed
-            const originalHeaders = standardizationResult.originalHeaders;
-            const wereHeadersChanged = 
-                originalHeaders.first_name !== 'first_name' || 
-                originalHeaders.last_name !== 'last_name' || 
-                originalHeaders.company_domain !== 'company_domain';
-            
-            if (wereHeadersChanged) {
-                // Update loading message to show we're fixing headers
-                loadingElement.querySelector('h3').textContent = 'Fixing CSV Headers...';
-                
-                // Create a standardized file with corrected headers
-                const standardizedFile = CSVStandardizer.createFileFromCSV(
-                    standardizationResult.standardizedCSV,
-                    file.name.replace('.csv', '_standardized.csv')
-                );
-                
-                // Now process this standardized file
-                processCSVWithAPI(standardizedFile, loadingElement, standardizationResult.originalHeaders);
-            } else {
-                // Headers are already correct, proceed with original file
-                processCSVWithAPI(file, loadingElement, null);
-            }
+          console.log(`Response status for ${row.firstName} ${row.lastName}:`, response.status);
+
+          const data = await response.json();
+          console.log(`Response data for ${row.firstName} ${row.lastName}:`, data);
+
+          bulkResults.push({
+            ...row,
+            email: data && data.email ? data.email : 'Not found',
+            confidence: data && data.confidence ? data.confidence : 'N/A',
+            status: data && data.email ? 'Found' : 'Not found'
+          });
+
+          // Add small delay to avoid overwhelming the API
+          await new Promise(resolve => setTimeout(resolve, 200));
+
         } catch (error) {
-            console.error('Error processing CSV:', error);
-            
-            // Show error based on the type of error
-            if (error.message.includes('missing') || error.message.includes('required columns')) {
-                // This is a column identification error
-                let errorMessage = error.message;
-                
-                // Add information about found headers if available
-                if (error.foundHeaders) {
-                    errorMessage += '<br><br>Found these columns instead:<br>' + 
-                        error.foundHeaders.map(h => `• ${h}`).join('<br>');
-                }
-                
-                showStatus(errorMessage, 'error');
-            } else {
-                showStatus('Failed to process CSV file: ' + error.message, 'error');
-            }
-            
-            // Remove loading element
-            if (loadingElement.parentNode) {
-                loadingElement.parentNode.removeChild(loadingElement);
-            }
-            
-            // Show drop area again
-            csvDropArea.style.display = 'block';
+          console.error(`Error processing ${row.firstName} ${row.lastName}:`, error);
+          bulkResults.push({
+            ...row,
+            email: 'Error',
+            confidence: 'N/A',
+            status: 'Error'
+          });
         }
+
+        processed++;
+        const progress = (processed / csvData.length) * 100;
+        progressFill.style.width = `${progress}%`;
+
+        // Update results table in real-time
+        updateResultsTable();
+      }
+
+      processBtn.disabled = false;
+      processBtn.innerHTML = `Process <span id="contactCount">${csvData.length}</span> Contacts`;
+      progressText.textContent = `Completed: ${csvData.length} contacts processed`;
+      
+      console.log('Bulk processing completed. Results:', bulkResults);
     }
-    
-    /**
-     * Send standardized CSV file to API
-     * @param {File} file - Standardized CSV file
-     * @param {HTMLElement} loadingElement - Loading indicator element
-     * @param {Object} originalHeaders - Original headers (for reporting changes)
-     */
-    async function processCSVWithAPI(file, loadingElement, originalHeaders) {
-        try {
-            // Update loading message to show we're now processing with API
-            if (loadingElement && loadingElement.querySelector('h3')) {
-                loadingElement.querySelector('h3').textContent = 'Processing Your CSV File';
-            }
-            
-            // Start progress animation
-            const progressBar = loadingElement.querySelector('.progress-bar');
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                // Simulate progress but never reach 100% until we get the response
-                if (progress < 90) {
-                    progress += Math.random() * 5;
-                    progressBar.style.width = `${progress}%`;
-                }
-            }, 500);
-            
-            // Create FormData to send the file
-            const formData = new FormData();
-            formData.append('type', 'bulk');
-            formData.append('file', file);
-            
-            // Send the file to the API endpoint
-            const response = await fetch(API_ENDPOINT, {
-                method: 'POST',
-                body: formData
-            });
-            
-            // Complete the progress bar animation
-            clearInterval(progressInterval);
-            progressBar.style.width = '100%';
-            
-            // Remove the loading element after a short delay
-            setTimeout(() => {
-                if (loadingElement.parentNode) {
-                    loadingElement.parentNode.removeChild(loadingElement);
-                }
-                csvDropArea.style.display = 'block';
-            }, 500);
-            
-            if (!response.ok) {
-                throw new Error('Failed to process CSV file with API');
-            }
-            
-            const data = await response.json();
-            
-            // Store the processed data for download
-            processedCsvData = data;
-            
-            // Calculate statistics
-            const totalContacts = data.totalContacts || data.length || 0;
-            const emailsFound = data.emailsFound || data.filter(row => row.email).length || 0;
-            const successRate = totalContacts > 0 ? Math.round((emailsFound / totalContacts) * 100) : 0;
-            
-            // Update stats
-            document.getElementById('totalContacts').textContent = totalContacts;
-            document.getElementById('emailsFound').textContent = emailsFound;
-            document.getElementById('successRate').textContent = successRate + '%';
-            
-            // Show result area
-            bulkResultArea.style.display = 'block';
-            
-            // If headers were changed, add an info message about the standardization
-            if (originalHeaders) {
-                const headerInfo = `
-                    <div style="margin-top: 1rem; padding: 0.75rem; border-radius: 4px; background-color: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success);">
-                        <strong>CSV headers were automatically standardized:</strong><br>
-                        • "${originalHeaders.first_name}" → "first_name"<br>
-                        • "${originalHeaders.last_name}" → "last_name"<br>
-                        • "${originalHeaders.company_domain}" → "company_domain"
-                    </div>
-                    `;
-                bulkResultArea.insertAdjacentHTML('afterbegin', headerInfo);
-            }
-            
-            // Add a message about email delivery
-            const emailDeliveryInfo = `
-                <div style="margin-top: 1rem; padding: 0.75rem; border-radius: 4px; background-color: rgba(79, 70, 229, 0.1); color: var(--primary); border: 1px solid var(--primary);">
-                    <strong>Processing your request:</strong><br>
-                    • Your results are being processed </strong><br>
-                    • You can also download your results directly  when processing completes
-                </div>
-            `;
-            bulkResultArea.insertAdjacentHTML('afterbegin', emailDeliveryInfo);
-            
-            showStatus('File processed successfully!', 'success');
-            
-            // Scroll to result
-            bulkResultArea.scrollIntoView({ behavior: 'smooth' });
-        } catch (error) {
-            console.error('Error with API:', error);
-            showStatus('Failed to process CSV file with our email finder: ' + error.message, 'error');
-            
-            // Remove loading element and show the drop area again
-            if (loadingElement.parentNode) {
-                loadingElement.parentNode.removeChild(loadingElement);
-            }
-            
-            csvDropArea.style.display = 'block';
-        }
+
+    function updateResultsTable() {
+      const tableDiv = document.getElementById('bulkResultsTable');
+      
+      let tableHTML = '<table class="results-table"><thead><tr>';
+      tableHTML += '<th>First Name</th><th>Last Name</th><th>Company Domain</th><th>Email</th><th>Status</th>';
+      tableHTML += '</tr></thead><tbody>';
+
+      bulkResults.forEach(row => {
+        const statusClass = row.status === 'Found' ? 'status-success' : 'status-error';
+        const emailCell = row.email !== 'Not found' && row.email !== 'Error' ? 
+          `<div class="email-cell">${row.email}</div>` :
+          `<div class="email-cell">${row.email}</div>`;
+
+        tableHTML += `<tr>
+          <td>${row.firstName}</td>
+          <td>${row.lastName}</td>
+          <td>${row.domain}</td>
+          <td>${emailCell}</td>
+          <td><span class="${statusClass}">${row.status}</span></td>
+        </tr>`;
+      });
+
+      tableHTML += '</tbody></table>';
+      tableDiv.innerHTML = tableHTML;
     }
-    
-  // Download Results
-downloadResultsBtn.addEventListener('click', function() {
-    if (!processedCsvData) {
-        showStatus('No processed data available. Please upload a CSV file first.', 'error');
+
+    function downloadResults() {
+      if (bulkResults.length === 0) {
+        alert('No results to download.');
         return;
+      }
+
+      let csvContent = 'first_name,last_name,company_domain,email,confidence,status\n';
+      bulkResults.forEach(row => {
+        csvContent += `"${row.firstName}","${row.lastName}","${row.domain}","${row.email}","${row.confidence}","${row.status}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'email_finder_results.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
     }
-    
-    // Show download loading state
-    const originalBtnText = this.innerHTML;
-    this.disabled = true;
-    this.innerHTML = '<span class="loader"></span> Preparing download...';
-    
-    setTimeout(() => {
-        try {
-            // Convert the processed data back to CSV - CHANGED TO MATCH YOUR FORMAT
-            let csvContent = 'first_name,last_name,company_domain,email,confidence\n';
-            
-            const results = processedCsvData; // Your server returns an array directly
-            
-            results.forEach(row => {
-                // QUICK FIX: Use address instead of email
-                const firstName = escapeCsvValue(row.first_name || '');
-                const lastName = escapeCsvValue(row.last_name || '');
-                const domain = escapeCsvValue(row.domain || '');
-                const email = escapeCsvValue(row.address || ''); // CHANGED: Use address field
-                const confidence = escapeCsvValue('Medium (75%)'); // Default since you have email_state
-                
-                csvContent += `${firstName},${lastName},${domain},${email},${confidence}\n`;
-            });
-            
-            downloadCsv(csvContent, 'enriched_contacts.csv');
-            
-            // Restore button state
-            this.disabled = false;
-            this.innerHTML = originalBtnText;
-        } catch (error) {
-            console.error('Error preparing download:', error);
-            showStatus('Failed to prepare download. Please try again.', 'error');
-            
-            // Restore button state
-            this.disabled = false;
-            this.innerHTML = originalBtnText;
-        }
-    }, 500);
-});
-    
-    // New Bulk Search
-    newBulkSearchBtn.addEventListener('click', function() {
-        csvFileInput.value = '';
-        bulkResultArea.style.display = 'none';
-        statusMessage.style.display = 'none';
-        processedCsvData = null;
-        
-        // Remove any standardization messages
-        const headerInfo = bulkResultArea.querySelector('div[style*="background-color: rgba(16, 185, 129, 0.1)"]');
-        if (headerInfo) {
-            headerInfo.remove();
-        }
-        
-        // Remove any email delivery messages
-        const emailInfo = bulkResultArea.querySelector('div[style*="background-color: rgba(79, 70, 229, 0.1)"]');
-        if (emailInfo) {
-            emailInfo.remove();
-        }
+
+    function downloadTemplate() {
+      const csvContent = `first_name,last_name,company_domain
+John,Smith,apple.com
+Jane,Doe,microsoft.com
+Tim,Cook,apple.com
+Satya,Nadella,microsoft.com
+Elon,Musk,tesla.com
+Sundar,Pichai,google.com`;
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'email_finder_template.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Allow Enter key to trigger search
+    document.getElementById('companyDomain').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        findEmail();
+      }
     });
-    
-    /**
-     * Create loading element for CSV processing
-     * @param {string} message - Loading message to display
-     * @returns {HTMLElement} - Loading element
-     */
-    function createLoadingElement(message) {
-        const loadingElement = document.createElement('div');
-        loadingElement.className = 'csv-processing-loading';
-        loadingElement.innerHTML = `
-            <div style="text-align: center; padding: 3rem 1rem;">
-                <div class="loader" style="width: 3rem; height: 3rem; margin: 0 auto 1.5rem;"></div>
-                <h3 style="margin-bottom: 1rem; color: var(--primary);">${message}</h3>
-                <p style="margin-bottom: 0.5rem;">This may take a few minutes for large files.</p>
-                <p style="color: var(--gray-400);">Please don't close this page. Keep it in background.</p>
-                <div style="margin-top: 1.5rem; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
-                    <div class="progress-bar" style="height: 100%; width: 0; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease;"></div>
-                </div>
-            </div>
-        `;
-        return loadingElement;
-    }
-    
-    // Helper function to escape CSV values
-    function escapeCsvValue(value) {
-        if (value === null || value === undefined) return '';
-        value = String(value);
-        
-        // If the value contains a comma, newline, or double quote, enclose it in double quotes
-        if (value.includes(',') || value.includes('\n') || value.includes('"')) {
-            // Replace any double quotes with two double quotes
-            value = value.replace(/"/g, '""');
-            return `"${value}"`;
-        }
-        return value;
-    }
-    
-    function downloadCsv(csvContent, filename) {
-        // Create a blob and download link
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    }
-    
-    // Add CSS for loading indicators to the existing styles
-    document.head.insertAdjacentHTML('beforeend', `
-        <style>
-            /* Enhanced Loading States */
-            .loader {
-                display: inline-block;
-                width: 1.25rem;
-                height: 1.25rem;
-                border: 3px solid rgba(255,255,255,0.3);
-                border-top-color: white;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            .loading-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(255, 255, 255, 0.8);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                z-index: 1000;
-                backdrop-filter: blur(3px);
-            }
-            
-            .btn:disabled {
-                opacity: 0.7;
-                cursor: not-allowed;
-            }
-            
-            .status-loading {
-                background-color: rgba(79, 70, 229, 0.1);
-                border: 1px solid var(--primary);
-                color: var(--primary);
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .status-loading .loader {
-                border: 2px solid rgba(79, 70, 229, 0.3);
-                border-top-color: var(--primary);
-                margin-right: 0.5rem;
-            }
-            
-            /* Custom loader for CSV processing */
-            .csv-processing-loading .loader {
-                border: 3px solid rgba(79, 70, 229, 0.3);
-                border-top-color: var(--primary);
-            }
-            
-            @keyframes spin { to { transform: rotate(360deg); } }
-            
-            /* Timeout warning */
-            .timeout-warning {
-                display: none;
-                margin-top: 1rem;
-                padding: 0.75rem;
-                background-color: rgba(245, 158, 11, 0.1);
-                border: 1px solid var(--warning);
-                color: var(--warning);
-                border-radius: var(--border-radius);
-                font-size: 0.875rem;
-                text-align: center;
-            }
-        </style>
-    `);
-    
-    // Status message helper with timeout warning
-    function showStatus(message, type) {
-        statusMessage.innerHTML = message;
-        statusMessage.className = `status status-${type}`;
-        statusMessage.style.display = 'block';
-        
-        // Clear any existing timeout warning
-        const existingWarning = document.querySelector('.timeout-warning');
-        if (existingWarning) {
-            existingWarning.parentNode.removeChild(existingWarning);
-        }
-        
-        // For loading status, add a timeout warning after 30 seconds
-        if (type === 'loading') {
-            setTimeout(() => {
-                if (statusMessage.classList.contains('status-loading')) {
-                    const timeoutWarning = document.createElement('div');
-                    timeoutWarning.className = 'timeout-warning';
-                    timeoutWarning.innerHTML = `
-                        <strong>Taking longer than expected?</strong><br>
-                        The server might be busy. Please be patient, your request is still processing.
-                    `;
-                    statusMessage.parentNode.insertBefore(timeoutWarning, statusMessage.nextSibling);
-                    timeoutWarning.style.display = 'block';
-                }
-            }, 60000);  // Show warning after 30 seconds
-        } else if (type !== 'loading') {
-            // Hide status message after some time for non-loading messages
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 5000);
-        }
-    }
-});
-        
-    </script>
+
+    // Initialize file upload when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setupFileUpload();
+    });
+  </script>
 </body>
 </html>
