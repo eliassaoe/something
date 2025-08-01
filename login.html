@@ -345,7 +345,7 @@
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 
         // Cloudflare Worker URL for login processing
-        const WORKER_URL = 'https://login-v2.hamoureliasse.workers.dev/';
+        const WORKER_URL = 'https://log-in.hamoureliasse.workers.dev/';
 
         // Google Sign In
         async function signInWithGoogle() {
@@ -520,6 +520,16 @@
                 this.style.borderColor = '#ef4444';
             } else {
                 this.style.borderColor = '#d1d5db';
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('userToken');
+            if (token) {
+                // User already has a token, redirect to app
+                console.log('User already logged in, redirecting...');
+                window.location.href = `https://unlimited-leads.online/app?token=${token}`;
             }
         });
     </script>
