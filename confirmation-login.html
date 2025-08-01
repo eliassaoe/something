@@ -165,13 +165,13 @@
     </div>
 
     <script>
-        // Initialize Supabase
+        // Initialize Supabase (only to get email, ignore all tokens)
         const supabaseUrl = 'https://snxhsboboatjywgwdeds.supabase.co'
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 
-        // Cloudflare Worker URL for login processing
-        const WORKER_URL = 'https://login-v2.hamoureliasse.workers.dev/';
+        // Your server endpoint
+        const SERVER_URL = 'https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3';
 
         function showError(message) {
             document.getElementById('loadingState').style.display = 'none';
@@ -186,21 +186,18 @@
             document.getElementById('successState').style.display = 'block';
         }
 
-        // Send Google user data to webhook
-        async function sendGoogleUserToWebhook(email, name, userId, token) {
+        // Send Google login request to YOUR server and wait for YOUR token
+        async function sendGoogleLoginToServer(email) {
             try {
-                console.log('📤 Sending Google login to server and waiting for response...');
+                console.log('📤 Sending Google login to YOUR server:', email);
                 
                 const payload = {
                     email: email,
-                    name: name || email.split('@')[0],
-                    userId: userId,
                     provider: "google",
-                    type: "login",
-                    token: token
+                    type: "login"
                 };
                 
-                const response = await fetch(WORKER_URL, {
+                const response = await fetch(SERVER_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -213,61 +210,69 @@
                     throw new Error(`Server error: ${response.status}`);
                 }
 
-                // Parse server response to get the server token
+                // Parse YOUR server response to get YOUR token
                 const serverResponse = await response.json();
-                console.log('✅ Server response received:', serverResponse);
+                console.log('✅ YOUR server response received:', serverResponse);
 
-                // Check if server returned a token
-                if (!serverResponse.token) {
-                    throw new Error('No token received from server');
+                // Check if YOUR server returned a token
+                if (serverResponse.token) {
+                    console.log('🎫 YOUR server token received');
+                    return { success: true, serverToken: serverResponse.token };
+                } else if (serverResponse.connexion_success === "yes" && serverResponse.redirect_link) {
+                    return { success: true, redirectLink: serverResponse.redirect_link };
+                } else {
+                    throw new Error('No token received from YOUR server');
                 }
-
-                console.log('🎫 Server token received');
-                return { success: true, serverToken: serverResponse.token };
                 
             } catch (error) {
-                console.error('Webhook error:', error);
+                console.error('YOUR server error:', error);
                 return { success: false, error: error.message };
             }
         }
 
-        // Handle auth state changes
+        // Handle auth state changes (ONLY to get email, ignore Google tokens)
         supabase.auth.onAuthStateChange(async (event, session) => {
             console.log('Auth event:', event);
             
             if (event === 'SIGNED_IN' && session?.user) {
-                const user = session.user;
-                const userToken = session.access_token;
-                const userId = user.id;
-                const email = user.email;
-                const name = user.user_metadata?.full_name || user.user_metadata?.name;
+                const email = session.user.email;
                 
-                // Store user data
-                localStorage.setItem('userToken', userToken);
-                localStorage.setItem('userId', userId);
-                localStorage.setItem('userEmail', email);
+                if (!email) {
+                    showError('Could not get email from Google. Please try again.');
+                    return;
+                }
+
+                console.log('📧 Got email from Google:', email);
+                console.log('🚫 Ignoring Google tokens completely');
                 
-                // Send to webhook
-                const webhookSuccess = await sendGoogleUserToWebhook(email, name, userId, userToken);
+                // Immediately sign out from Supabase (we don't need their session)
+                await supabase.auth.signOut();
                 
-                if (webhookSuccess) {
+                // Send email to YOUR server and wait for YOUR token
+                const result = await sendGoogleLoginToServer(email);
+                
+                if (result.success) {
                     showSuccess();
-                    // Redirect after delay
+                    
+                    // Redirect ONLY with YOUR server's token
                     setTimeout(() => {
-                        window.location.href = `https://unlimited-leads.online/app?token=${userToken}`;
+                        if (result.serverToken) {
+                            window.location.href = `https://unlimited-leads.online/app?token=${result.serverToken}`;
+                        } else if (result.redirectLink) {
+                            window.location.href = result.redirectLink;
+                        }
                     }, 1500);
                 } else {
                     showError('Login processing failed. Please try again.');
                 }
                 
             } else if (event === 'SIGNED_OUT') {
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userId');
-                localStorage.removeItem('userEmail');
+                // Good, we don't want to store anything from Google
+                console.log('🚫 Signed out from Google, as intended');
             }
         });
 
-        // Check for existing session
+        // Check for existing session on page load
         window.addEventListener('load', async function() {
             try {
                 const { data: { session }, error } = await supabase.auth.getSession();
@@ -283,6 +288,38 @@
                     setTimeout(() => {
                         showError('Login session not found. Please try again.');
                     }, 5000);
+                } else {
+                    // If session exists, process it immediately
+                    const email = session.user.email;
+                    
+                    if (!email) {
+                        showError('Could not get email from Google. Please try again.');
+                        return;
+                    }
+
+                    console.log('📧 Got email from existing session:', email);
+                    console.log('🚫 Ignoring Google tokens completely');
+                    
+                    // Sign out from Supabase immediately
+                    await supabase.auth.signOut();
+                    
+                    // Send to YOUR server
+                    const result = await sendGoogleLoginToServer(email);
+                    
+                    if (result.success) {
+                        showSuccess();
+                        
+                        // Redirect ONLY with YOUR server's token
+                        setTimeout(() => {
+                            if (result.serverToken) {
+                                window.location.href = `https://unlimited-leads.online/app?token=${result.serverToken}`;
+                            } else if (result.redirectLink) {
+                                window.location.href = result.redirectLink;
+                            }
+                        }, 1500);
+                    } else {
+                        showError('Login processing failed. Please try again.');
+                    }
                 }
                 
             } catch (error) {
