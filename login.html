@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Create Account</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { box-sizing: border-box; }
@@ -166,7 +166,7 @@
             to { transform: rotate(360deg); }
         }
         
-        .signup-link {
+        .login-link {
             text-align: center;
             margin-top: 20px;
             padding-top: 20px;
@@ -175,27 +175,34 @@
             color: #6b7280;
         }
         
-        .signup-link a {
+        .login-link a {
             color: #3b82f6;
             text-decoration: none;
             font-weight: 500;
         }
         
-        .signup-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome Back</h1>
-        <p class="subtitle">Sign in to access your unlimited leads</p>
+        <h1>Create Account</h1>
+        <p class="subtitle">Get started with unlimited leads</p>
         
         <!-- Message area -->
         <div id="message" class="message"></div>
         
-        <!-- Google Sign In -->
-        <button class="google-btn" onclick="signInWithGoogle()">
+        <!-- Google Sign Up -->
+        <button class="google-btn" onclick="signUpWithGoogle()">
             <svg width="20" height="20" viewBox="0 0 24 24">
                 <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -206,30 +213,37 @@
         </button>
         
         <div class="divider">
-            <span>or sign in with email</span>
+            <span>or create account with email</span>
         </div>
         
         <!-- Email/Password Form -->
-        <form id="loginForm">
+        <form id="signupForm">
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" required placeholder="Enter your email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required placeholder="Enter your password">
+                <input type="password" id="password" required placeholder="Create a password">
+                <div class="password-requirements">
+                    Password must be at least 8 characters long
+                </div>
             </div>
-            <button type="submit" id="submitButton">Sign In</button>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+            </div>
+            <button type="submit" id="submitButton">Create Account</button>
         </form>
         
-        <div class="signup-link">
-            Don't have an account? <a href="https://unlimited-leads.online/signup">Create account</a>
+        <div class="login-link">
+            Already have an account? <a href="https://unlimited-leads.online/login">Sign in</a>
         </div>
     </div>
 
     <script>
-        // Your worker URL
-        const WORKER_URL = 'https://login-v2.hamoureliasse.workers.dev/';
+        // Your signup worker URL
+        const WORKER_URL = 'https://sign-up.hamoureliasse.workers.dev/';
         
         // Initialize Supabase
         const supabase = window.supabase.createClient(
@@ -250,41 +264,60 @@
             document.getElementById('message').style.display = 'none';
         }
 
-        // Google Sign In - Simple redirect to confirmation page
-        async function signInWithGoogle() {
+        // Google Sign Up - Redirect to confirmation page
+        async function signUpWithGoogle() {
             try {
                 hideMessage();
                 
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
-                        redirectTo: `https://unlimited-leads.online/confirmation-login`
+                        redirectTo: `https://unlimited-leads.online/confirmation-signup`
                     }
                 });
                 
                 if (error) {
-                    showMessage('Google sign in failed: ' + error.message);
+                    showMessage('Google sign up failed: ' + error.message);
                 }
             } catch (error) {
-                showMessage('Google sign in error: ' + error.message);
+                showMessage('Google sign up error: ' + error.message);
             }
         }
 
-        // Email/Password Login - Simple POST to worker
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        // Email/Password Signup - POST to worker
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             const submitButton = document.getElementById('submitButton');
             
-            if (!email || !password) {
+            // Validation
+            if (!email || !password || !confirmPassword) {
                 showMessage('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 8) {
+                showMessage('Password must be at least 8 characters long');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address');
                 return;
             }
             
             // Show loading
-            submitButton.innerHTML = '<span class="spinner"></span> Signing In...';
+            submitButton.innerHTML = '<span class="spinner"></span> Creating Account...';
             submitButton.disabled = true;
             hideMessage();
             
@@ -297,7 +330,7 @@
                     body: JSON.stringify({
                         email: email,
                         password: password,
-                        type: 'login'
+                        type: 'signup'
                     })
                 });
                 
@@ -305,23 +338,23 @@
                     const data = await response.json();
                     
                     if (data.token) {
-                        showMessage('Login successful! Redirecting...', 'success');
+                        showMessage('Account created successfully! Redirecting...', 'success');
                         setTimeout(() => {
                             window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
                         }, 1000);
                     } else {
-                        showMessage('Login successful but no token received');
+                        showMessage('Account created but no token received');
                     }
                 } else {
                     const errorData = await response.json().catch(() => ({}));
-                    showMessage(errorData.message || 'Invalid email or password');
+                    showMessage(errorData.message || 'Failed to create account. Please try again.');
                 }
             } catch (error) {
                 showMessage('Connection error. Please try again.');
-                console.error('Login error:', error);
+                console.error('Signup error:', error);
             } finally {
                 // Reset button
-                submitButton.innerHTML = 'Sign In';
+                submitButton.innerHTML = 'Create Account';
                 submitButton.disabled = false;
             }
         });
@@ -333,12 +366,38 @@
             const errorMessages = {
                 'google_auth_failed': 'Google authentication failed',
                 'no_auth_code': 'Google authentication cancelled',
-                'token_exchange_failed': 'Google login processing failed',
+                'token_exchange_failed': 'Google signup processing failed',
                 'no_email': 'Could not get email from Google account',
-                'callback_failed': 'Google login callback failed'
+                'callback_failed': 'Google signup callback failed'
             };
-            showMessage(errorMessages[error] || 'Login failed');
+            showMessage(errorMessages[error] || 'Signup failed');
         }
+
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const requirements = document.querySelector('.password-requirements');
+            
+            if (password.length >= 8) {
+                requirements.style.color = '#059669';
+                requirements.textContent = '✓ Password meets requirements';
+            } else {
+                requirements.style.color = '#6b7280';
+                requirements.textContent = 'Password must be at least 8 characters long';
+            }
+        });
+
+        // Confirm password validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '#d1d5db';
+            }
+        });
     </script>
 </body>
 </html>
