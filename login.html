@@ -347,9 +347,39 @@
         // Cloudflare Worker URL for login processing
         const WORKER_URL = 'https://log-in.hamoureliasse.workers.dev/';
 
+        // Clear any existing sessions and tokens on page load
+        window.addEventListener('load', async function() {
+            console.log('Clearing any existing sessions...');
+            
+            // Clear localStorage tokens
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userEmail');
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Sign out from Supabase to clear any OAuth sessions
+            try {
+                await supabase.auth.signOut();
+                console.log('Supabase session cleared');
+            } catch (error) {
+                console.log('No active Supabase session to clear');
+            }
+            
+            // Clear any cookies related to auth (optional)
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            
+            console.log('Page ready - no auto redirects will occur');
+        });
+
         // Google Sign In
         async function signInWithGoogle() {
             try {
+                // Clear any existing session first
+                await supabase.auth.signOut();
+                
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
@@ -520,16 +550,6 @@
                 this.style.borderColor = '#ef4444';
             } else {
                 this.style.borderColor = '#d1d5db';
-            }
-        });
-
-        // Check if user is already logged in
-        window.addEventListener('load', function() {
-            const token = localStorage.getItem('userToken');
-            if (token) {
-                // User already has a token, redirect to app
-                console.log('User already logged in, redirecting...');
-                window.location.href = `https://unlimited-leads.online/app?token=${token}`;
             }
         });
     </script>
