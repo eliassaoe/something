@@ -327,11 +327,7 @@
     </div>
 
     <script>
-        // Initialize Supabase
-        const supabaseUrl = 'https://snxhsboboatjywgwdeds.supabase.co'
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-
+       
         // Cloudflare Worker URL for signup processing
         const WORKER_URL = 'https://sign-up.hamoureliasse.workers.dev/';
 
@@ -380,21 +376,6 @@
                 console.error('Failed to send Google user to webhook:', error)
             }
         }
-
-        // Listen for auth state changes - DISABLED to allow access to signup page
-        /*
-        supabase.auth.onAuthStateChange(async (event, session) => {
-            if (event === 'SIGNED_IN' && session?.user) {
-                const userToken = session.access_token
-                const userId = session.user.id
-                
-                localStorage.setItem('userToken', userToken)
-                localStorage.setItem('userId', userId)
-                
-                window.location.href = `https://unlimited-leads.online/app?token=${userToken}`
-            }
-        })
-        */
 
         // Email/password signup form
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
