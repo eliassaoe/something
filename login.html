@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirming Login...</title>
+    <title>Sign In</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * {
@@ -31,83 +31,225 @@
             max-width: 400px;
             margin: 0 auto;
             border: 1px solid #e5e7eb;
+        }
+        
+        .logo {
             text-align: center;
-        }
-        
-        .spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid #e5e7eb;
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 24px auto;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            margin-bottom: 24px;
         }
         
         h1 {
+            text-align: center;
             color: #111827;
-            margin: 0 0 12px 0;
+            margin: 0 0 6px 0;
             font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.25px;
         }
         
         .subtitle {
+            text-align: center;
             color: #6b7280;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             font-size: 15px;
             font-weight: 400;
         }
         
-        .success-icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 24px auto;
-            background: #10b981;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        .error-icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 24px auto;
-            background: #ef4444;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 14px;
         }
         
-        .back-button {
-            display: inline-block;
-            padding: 12px 24px;
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        input::placeholder {
+            color: #9ca3af;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 6px;
+        }
+        
+        .forgot-password a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
             background: #3b82f6;
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 6px;
-            font-weight: 600;
             font-size: 15px;
-            transition: background-color 0.2s ease;
-            margin-top: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
         }
         
-        .back-button:hover {
+        button:hover:not(:disabled) {
             background: #2563eb;
         }
         
+        button:active:not(:disabled) {
+            background: #1d4ed8;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .google-btn {
+            background: #ffffff;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .google-btn:hover:not(:disabled) {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 12px;
+        }
+        
+        .message-container {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            transform: translateY(-100px);
+            transition: transform 0.3s ease;
+        }
+        
+        .message-container.visible {
+            transform: translateY(0);
+        }
+        
+        .message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            max-width: 400px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-size: 14px;
+        }
+        
         .success {
-            color: #10b981;
+            background: #10b981;
+            color: white;
         }
         
         .error {
-            color: #ef4444;
+            background: #ef4444;
+            color: white;
+        }
+        
+        .warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .signup-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .signup-link p {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin-right: 6px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Mobile optimizations */
@@ -128,40 +270,72 @@
             .subtitle {
                 font-size: 14px;
             }
+            
+            input, button {
+                padding: 12px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .container {
+                padding: 20px;
+            }
+        }
+        
+        /* Focus visible for accessibility */
+        button:focus-visible, input:focus-visible {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Loading State -->
-        <div id="loadingState">
-            <div class="spinner"></div>
-            <h1>Confirming Login</h1>
-            <p class="subtitle">Please wait while we sign you in...</p>
+        <div class="logo">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Sign in to access your unlimited leads</p>
         </div>
         
-        <!-- Success State -->
-        <div id="successState" style="display: none;">
-            <div class="success-icon" style="display: flex;">
-                <svg width="18" height="18" fill="white" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
-            </div>
-            <h1 class="success">Welcome Back!</h1>
-            <p class="subtitle">Redirecting to your dashboard...</p>
+        <!-- Google Sign In Button -->
+        <button class="google-btn" onclick="signInWithGoogle()">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google
+        </button>
+        
+        <div class="divider">
+            <span>or sign in with email</span>
         </div>
         
-        <!-- Error State -->
-        <div id="errorState" style="display: none;">
-            <div class="error-icon" style="display: flex;">
-                <svg width="18" height="18" fill="white" viewBox="0 0 24 24">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
+        <!-- Email/Password Form -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required placeholder="Enter your email address" autocomplete="email">
             </div>
-            <h1 class="error">Login Failed</h1>
-            <p class="subtitle" id="errorMessage">Something went wrong. Please try again.</p>
-            <a href="https://unlimited-leads.online/login" class="back-button">Back to Login</a>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Enter your password" autocomplete="current-password">
+                <div class="forgot-password">
+                    <a href="#" onclick="showMessage('Password reset feature coming soon!', 'warning')">Forgot password?</a>
+                </div>
+            </div>
+            <button type="submit" id="submitButton">Sign In</button>
+        </form>
+        
+        <div class="signup-link">
+            <p>Don't have an account? <a href="https://unlimited-leads.online/signup">Create account</a></p>
         </div>
+    </div>
+    
+    <!-- Message Container -->
+    <div id="messageContainer" class="message-container">
+        <div id="message" class="message"></div>
     </div>
 
     <script>
@@ -173,33 +347,87 @@
         // Cloudflare Worker URL for login processing
         const WORKER_URL = 'https://login-v2.hamoureliasse.workers.dev/';
 
-        function showError(message) {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('successState').style.display = 'none';
-            document.getElementById('errorState').style.display = 'block';
-            document.getElementById('errorMessage').textContent = message;
-        }
-
-        function showSuccess() {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('errorState').style.display = 'none';
-            document.getElementById('successState').style.display = 'block';
+        // Google Sign In
+        async function signInWithGoogle() {
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/confirmation-login`
+                    }
+                })
+                
+                if (error) {
+                    showMessage('Error: ' + error.message, 'error')
+                }
+            } catch (error) {
+                showMessage('Google sign in failed', 'error')
+                console.error('Google OAuth Error:', error)
+            }
         }
 
         // Send Google user data to webhook
         async function sendGoogleUserToWebhook(email, name, userId, token) {
             try {
-                console.log('📤 Sending Google login to server and waiting for response...');
-                
                 const payload = {
                     email: email,
-                    name: name || email.split('@')[0],
+                    name: name,
                     userId: userId,
                     provider: "google",
                     type: "login",
                     token: token
-                };
+                }
                 
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                
+                console.log('Google user sent to webhook:', response.status)
+            } catch (error) {
+                console.error('Failed to send Google user to webhook:', error)
+            }
+        }
+
+        // Email/password login form
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const submitButton = document.getElementById('submitButton');
+            
+            // Validate inputs
+            if (!email || !password) {
+                showMessage('Please fill in all fields.', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitButton.innerHTML = '<span class="spinner"></span> Signing In...';
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+            
+            const payload = {
+                email: email,
+                password: password,
+                type: "login"
+            };
+            
+            console.log('Submitting login request...');
+            
+            try {
                 const response = await fetch(WORKER_URL, {
                     method: 'POST',
                     headers: {
@@ -209,105 +437,91 @@
                     body: JSON.stringify(payload)
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
-
-                // Parse server response to get the server token
-                const serverResponse = await response.json();
-                console.log('✅ Server response received:', serverResponse);
-
-                // Check if server returned a token
-                if (!serverResponse.token) {
-                    throw new Error('No token received from server');
-                }
-
-                console.log('🎫 Server token received');
-                return { success: true, serverToken: serverResponse.token };
+                console.log('Response status:', response.status);
                 
-            } catch (error) {
-                console.error('Webhook error:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        // Handle auth state changes
-        supabase.auth.onAuthStateChange(async (event, session) => {
-            console.log('Auth event:', event);
-            
-            if (event === 'SIGNED_IN' && session?.user) {
-                const user = session.user;
-                const userToken = session.access_token;
-                const userId = user.id;
-                const email = user.email;
-                const name = user.user_metadata?.full_name || user.user_metadata?.name;
-                
-                // Store user data
-                localStorage.setItem('userToken', userToken);
-                localStorage.setItem('userId', userId);
-                localStorage.setItem('userEmail', email);
-                
-                // Send to webhook
-                const webhookSuccess = await sendGoogleUserToWebhook(email, name, userId, userToken);
-                
-                if (webhookSuccess) {
-                    showSuccess();
-                    // Redirect after delay
-                    setTimeout(() => {
-                        window.location.href = `https://unlimited-leads.online/app?token=${userToken}`;
-                    }, 1500);
-                } else {
-                    showError('Login processing failed. Please try again.');
-                }
-                
-            } else if (event === 'SIGNED_OUT') {
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userId');
-                localStorage.removeItem('userEmail');
-            }
-        });
-
-        // Check for existing session
-        window.addEventListener('load', async function() {
-            try {
-                const { data: { session }, error } = await supabase.auth.getSession();
-                
-                if (error) {
-                    console.error('Session error:', error);
-                    showError('Login verification failed. Please try again.');
+                if (response.status === 429) {
+                    // Rate limit exceeded
+                    const errorData = await response.json();
+                    showMessage(errorData.message || 'Too many login attempts. Please try again later.', 'warning');
                     return;
                 }
                 
-                if (!session?.user) {
-                    // Wait for potential auth callback
-                    setTimeout(() => {
-                        const currentLoadingState = document.getElementById('loadingState');
-                        if (currentLoadingState && currentLoadingState.style.display !== 'none') {
-                            showError('Login session not found. Please try again.');
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Login successful:', responseData);
+                    
+                    // Check if we got a token in the response
+                    if (responseData.token || responseData.access_token) {
+                        const token = responseData.token || responseData.access_token;
+                        
+                        // Store token and user data
+                        localStorage.setItem('userToken', token);
+                        localStorage.setItem('userEmail', email);
+                        
+                        // Show success message briefly before redirect
+                        showMessage('Login successful! Redirecting...', 'success');
+                        
+                        // Redirect to app after short delay
+                        setTimeout(() => {
+                            window.location.href = `https://unlimited-leads.online/app?token=${token}`;
+                        }, 1500);
+                        
+                    } else {
+                        // Success but no token - something went wrong
+                        showMessage('Login successful but no token received. Please try again.', 'warning');
+                        document.getElementById('loginForm').reset();
+                    }
+                } else {
+                    // Try to get error details
+                    let errorMessage = 'Invalid email or password.';
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.message) {
+                            errorMessage = errorData.message;
                         }
-                    }, 5000);
+                    } catch (e) {
+                        console.log('Could not parse error response');
+                    }
+                    
+                    showMessage(errorMessage, 'error');
                 }
-                // Note: If session exists, onAuthStateChange will handle it
-                
             } catch (error) {
-                console.error('Session check failed:', error);
-                showError('Failed to check login status. Please try again.');
+                console.error('Network error:', error);
+                showMessage('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = 'Sign In';
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
             }
         });
 
-        // Timeout fallback - NO GOOGLE TOKEN REDIRECT
-        setTimeout(() => {
-            const loadingState = document.getElementById('loadingState');
-            if (loadingState && loadingState.style.display !== 'none') {
-                console.error('❌ Login verification timed out - no server token received');
-                showError('Login verification timed out. Please try again.');
-                
-                // Clean up any stored data
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userId');
-                localStorage.removeItem('userEmail');
+        // Helper function to show messages
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            const messageContainer = document.getElementById('messageContainer');
+            
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageContainer.classList.add('visible');
+            
+            // Auto hide after 6 seconds
+            setTimeout(() => {
+                messageContainer.classList.remove('visible');
+            }, 6000);
+        }
+
+        // Enhance form validation
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '#d1d5db';
             }
-        }, 10000);
+        });
     </script>
 </body>
 </html>
