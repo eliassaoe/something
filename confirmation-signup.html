@@ -99,6 +99,16 @@
         .success { color: #10b981; }
         .error { color: #ef4444; }
     </style>
+    
+    <script>
+const source = document.referrer.includes("google") ? "SEO" : 
+               document.referrer ? "referral" : "direct";
+
+mixpanel.track("Free Signup", {
+  source: source
+});
+</script>
+    
 </head>
 <body>
     <div class="container">
@@ -257,5 +267,7 @@
             }
         }, 15000);
     </script>
+
+    
 </body>
 </html>
