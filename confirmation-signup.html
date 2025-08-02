@@ -100,10 +100,6 @@
         .error { color: #ef4444; }
     </style>
     
- <script>
-plausible('Sign up');
-</script>
-    
 </head>
 <body>
     <div class="container">
@@ -152,6 +148,9 @@ plausible('Sign up');
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('errorState').style.display = 'none';
             document.getElementById('successState').style.display = 'block';
+
+            plausible('Sign up');
+
         }
 
         function showError(message) {
