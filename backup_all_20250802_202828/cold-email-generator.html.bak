@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Free Cold Email Generator | AI-Powered Email Writer | UnlimitedLeads</title>
+    <meta name="description" content="Generate high-converting cold emails with our free AI-powered tool. Create personalized outreach emails that get responses - free!"/>
+    <meta name="keywords" content="cold email generator, free cold email generator, AI email writer, cold email template, email outreach tool, sales email generator"/>
+
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://unlimited-leads.online/cold-email-generator" />
+    <meta property="og:title" content="Free Cold Email Generator | AI-Powered Email Writer | UnlimitedLeads" />
+    <meta property="og:description" content="Generate high-converting cold emails with our free AI-powered tool. Create personalized outreach emails that get responses." />
+    <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Cold Email Generator",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Free AI-powered cold email generator that creates personalized outreach emails",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1247"
+        }
+    }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-600: #6b7280;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+
+        /* Hero */
+        .hero { 
+            text-align: center; 
+            padding: 4rem 0 2rem; 
+            background: linear-gradient(135deg, rgba(79,70,229,0.1) 0%, rgba(14,165,233,0.1) 100%); 
+            position: relative; 
+            overflow: hidden;
+        }
+        .hero::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 4px; 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+        }
+        .hero h1 { 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            font-weight: 800; 
+            margin-bottom: 1rem; 
+            background: linear-gradient(135deg, var(--gray-800) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero p { 
+            font-size: 1.25rem; 
+            color: var(--gray-600); 
+            margin-bottom: 2rem; 
+            max-width: 700px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        /* Generator Form */
+        .generator-container { 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            max-width: 900px; 
+            margin: -2rem auto 4rem; 
+            position: relative;
+            border: 1px solid var(--gray-200);
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .step-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .step-counter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--gray-800);
+        }
+        .step-description {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            font-size: 1rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-select {
+            position: relative;
+        }
+        .form-select select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79,70,229,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79,70,229,0.4);
+        }
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+        .btn-large {
+            padding: 1.25rem 2.5rem;
+            font-size: 1.125rem;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Navigation */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background: var(--gray-200);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 1rem;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Results */
+        .results-container {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 2rem auto;
+            border: 1px solid var(--gray-200);
+        }
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .results-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+        .email-output {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            min-height: 300px;
+            margin-bottom: 1.5rem;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        .email-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .email-actions .btn {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Loading */
+        .loading-container {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        .loader {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+        .loading-subtext {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Features */
+        .features {
+            padding: 4rem 0;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+        .features-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        .feature-card:hover::before {
+            transform: translateX(0);
+        }
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Comparison */
+        .comparison {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        }
+        .comparison h2 {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--gray-800);
+        }
+        .comparison-table {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid var(--gray-200);
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        .comparison-cell {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .comparison-header {
+            background: var(--gray-50);
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+        .comparison-feature {
+            justify-content: flex-start;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        .check-icon {
+            color: var(--success);
+            font-size: 1.25rem;
+        }
+        .x-icon {
+            color: var(--danger);
+            font-size: 1.25rem;
+        }
+        .unlimited-column {
+            background: linear-gradient(135deg, rgba(79,70,229,0.05) 0%, rgba(14,165,233,0.05) 100%);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 4rem 0;
+            background: white;
+        }
+        .faq h2 {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+        .faq-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+        }
+        .faq-item {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--gray-800);
+            background: white;
+        }
+        .faq-question:hover {
+            background: var(--gray-50);
+        }
+        .faq-toggle {
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: var(--gray-50);
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        .faq-answer p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer { 
+            background: var(--gray-800); 
+            color: white; 
+            padding: 3rem 0 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+        .footer-bottom p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-bottom a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 1rem;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            .generator-container,
+            .results-container {
+                padding: 1.5rem;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            .form-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .email-actions {
+                flex-direction: column;
+            }
+            .email-actions .btn {
+                min-width: auto;
+            }
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+            .comparison-cell {
+                border-bottom: 1px solid var(--gray-200);
+            }
+            .comparison-header:not(:first-child) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="https://unlimited-leads.online/en" class="logo-link">
+                    <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                    <span class="logo-text"><span class="gradient-text">unlimitedleads</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Free Cold Email Generator</h1>
+            <p>Create high-converting cold emails that get responses with our AI-powered generator. Get better results with personalized, data-driven email templates.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">47%</div>
+                    <div class="stat-label">Higher Open Rates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">User Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.3x</div>
+                    <div class="stat-label">More Responses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator -->
+    <section class="container">
+        <div class="generator-container">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+                </div>
+                <div class="progress-text" id="progressText">Step 1 of 4</div>
+            </div>
+
+            <form id="emailGeneratorForm">
+                <!-- Step 1: Company & Prospect Info -->
+                <div class="form-step active" id="step1">
+                    <div class="step-header">
+                        <div class="step-counter">1</div>
+                        <h2 class="step-title">Tell us about your prospect</h2>
+                        <p class="step-description">Help us understand who you're reaching out to for better personalization</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="prospectCompany">Prospect's Company Name</label>
+                        <input type="text" id="prospectCompany" class="form-input" placeholder="e.g., Tesla, Apple, Microsoft" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="prospectRole">Prospect's Job Title/Role</label>
+                        <input type="text" id="prospectRole" class="form-input" placeholder="e.g., Marketing Director, CEO, Sales Manager" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="industry">Industry</label>
+                        <div class="form-select">
+                            <select id="industry" class="form-input" required>
+                                <option value="">Select an industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="finance">Finance & Banking</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="retail">Retail & E-commerce</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="real-estate">Real Estate</option>
+                                <option value="education">Education</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="marketing">Marketing & Advertising</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Your Business -->
+                <div class="form-step" id="step2">
+                    <div class="step-header">
+                        <div class="step-counter">2</div>
+                        <h2 class="step-title">About your business</h2>
+                        <p class="step-description">Tell us about your company so we can craft the perfect introduction</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="yourCompany">Your Company Name</label>
+                        <input type="text" id="yourCompany" class="form-input" placeholder="Your company name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="yourRole">Your Job Title</label>
+                        <input type="text" id="yourRole" class="form-input" placeholder="e.g., Sales Director, Founder, Account Executive" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="businessDescription">What does your company do? (Brief description)</label>
+                        <textarea id="businessDescription" class="form-input" placeholder="e.g., We help SaaS companies increase their conversion rates through AI-powered analytics" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Email Purpose -->
+                <div class="form-step" id="step3">
+                    <div class="step-header">
+                        <div class="step-counter">3</div>
+                        <h2 class="step-title">Email objective</h2>
+                        <p class="step-description">What's the main goal of this cold email?</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="emailPurpose">Email Purpose</label>
+                        <div class="form-select">
+                            <select id="emailPurpose" class="form-input" required>
+                                <option value="">Select your goal</option>
+                                <option value="book-meeting">Book a discovery call/meeting</option>
+                                <option value="demo">Schedule a product demo</option>
+                                <option value="partnership">Explore partnership opportunities</option>
+                                <option value="sale">Direct sales pitch</option>
+                                <option value="networking">Networking and relationship building</option>
+                                <option value="feedback">Get feedback or testimonial</option>
+                                <option value="collaboration">Propose collaboration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="valueProposition">Key Value Proposition</label>
+                        <textarea id="valueProposition" class="form-input" placeholder="e.g., We can help you reduce customer acquisition costs by 40% while increasing lead quality" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 4: Email Style -->
+                <div class="form-step" id="step4">
+                    <div class="step-header">
+                        <div class="step-counter">4</div>
+                        <h2 class="step-title">Email style & tone</h2>
+                        <p class="step-description">Choose the tone that best fits your brand and target audience</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="emailTone">Email Tone</label>
+                        <div class="form-select">
+                            <select id="emailTone" class="form-input" required>
+                                <option value="">Select tone</option>
+                                <option value="professional">Professional & Formal</option>
+                                <option value="friendly">Friendly & Conversational</option>
+                                <option value="direct">Direct & Straightforward</option>
+                                <option value="consultative">Consultative & Advisory</option>
+                                <option value="casual">Casual & Relaxed</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="emailLength">Preferred Email Length</label>
+                        <div class="form-select">
+                            <select id="emailLength" class="form-input" required>
+                                <option value="">Select length</option>
+                                <option value="short">Short (50-100 words)</option>
+                                <option value="medium">Medium (100-150 words)</option>
+                                <option value="long">Long (150-200 words)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="form-navigation">
+                    <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" id="nextBtn" class="btn btn-primary">
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="generateBtn" class="btn btn-primary btn-large" style="display: none;">
+                        <i class="fas fa-magic"></i>
+                        Generate My Cold Email
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loader"></div>
+            <div class="loading-text">Generating your personalized cold email...</div>
+            <div class="loading-subtext">Our AI is analyzing your inputs and crafting the perfect message</div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-container" id="resultsContainer">
+            <div class="results-header">
+                <h2 class="results-title">Your Cold Email is Ready!</h2>
+                <p>Here's your AI-generated cold email optimized for maximum response rates:</p>
+            </div>
+            
+            <div class="email-output" id="emailOutput">
+                <!-- Generated email will appear here -->
+            </div>
+            
+            <div class="email-actions">
+                <button type="button" id="copyEmailBtn" class="btn btn-success">
+                    <i class="fas fa-copy"></i>
+                    Copy Email
+                </button>
+                <button type="button" id="regenerateBtn" class="btn btn-primary">
+                    <i class="fas fa-redo"></i>
+                    Generate Another Version
+                </button>
+                <button type="button" id="newEmailBtn" class="btn btn-secondary">
+                    <i class="fas fa-plus"></i>
+                    Create New Email
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Our Cold Email Generator?</h2>
+            <p class="features-subtitle">Get better results with our advanced AI-powered features</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Advanced AI Intelligence</h3>
+                    <p>Our AI analyzes industry-specific language patterns and successful email campaigns to generate highly personalized content that resonates with your prospects.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-target"></i>
+                    </div>
+                    <h3>Higher Response Rates</h3>
+                    <p>Users report 47% higher open rates and 2.3x more responses compared to generic email generators. Our smart personalization makes all the difference.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Spam-Free Guaranteed</h3>
+                    <p>Built-in spam detection ensures your emails reach the inbox. We automatically avoid trigger words and phrases that could harm deliverability.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Industry-Specific Templates</h3>
+                    <p>Our AI understands different industries and adapts language, tone, and approach based on your target sector for maximum relevance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Multiple Variations</h3>
+                    <p>Generate unlimited variations of your email to test different approaches and find what works best for your specific audience.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Every email is automatically optimized for mobile reading, ensuring your message looks perfect on any device your prospects use.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <p class="faq-subtitle">Everything you need to know about our cold email generator</p>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">Is the cold email generator really free?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Yes! Our cold email generator is completely free to use. You can generate unlimited emails without any hidden costs or premium upgrades required.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">How does the AI personalization work?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Our AI analyzes your inputs including prospect company, industry, role, and your value proposition to create contextually relevant emails. It adapts language patterns, tone, and messaging strategy based on proven successful email campaigns in similar scenarios.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">Can I generate multiple versions of the same email?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Absolutely! You can generate unlimited variations of your email to test different approaches, subject lines, and messaging strategies to find what works best for your audience.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">Does the generator help avoid spam filters?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Yes! Our AI is trained to avoid spam trigger words and phrases. It automatically ensures your emails are written in a way that maximizes deliverability and inbox placement rates.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">What information do I need to provide?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">You'll need basic information about your prospect (company, role, industry), your company details, your value proposition, and preferred email style. The process takes less than 2 minutes to complete.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">How long does it take to generate an email?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Email generation typically takes 10-30 seconds. Our AI processes your information and creates a personalized email optimized for your specific use case and target audience.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-question">
+                    <span itemprop="name">Can I use the generated emails for mass outreach?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">The emails are designed for personalized outreach. While you can use them as templates, we recommend customizing each email for individual prospects to maintain high response rates and compliance with email regulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer id="contact" class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Free Tools Section -->
+            <div class="footer-column">
+                <h4>Free Tools</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                    <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
+                    <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                    <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                    <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
+                    <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                    <li><a href="https://unlimited-leads.online/ai-email-template-generator">AI Email Template Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/ai-email-reply-generator-free">AI Email Reply Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/cold-email-generator">Cold Email Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/email-name-generator">Email Name Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-headline-generator">Linkedin Headline Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li>
+                    <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
+                </ul>
+            </div>
+            <!-- Compare Section -->
+            <div class="footer-column">
+                <h4>Compare</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/rocketreach-alternative">RocketReach Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/uplead-alternative">UpLead Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/lead411-alternative">Lead411 Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/seamless-ai-alternative">Seamless ai Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/findthatlead-alternative">Findthatlead alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/cognism-alternative">Cognism alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/hunter-io-alternative">Hunter io alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/getprospect-alternative">Getprospect alternative</a></li>
+                </ul>
+            </div>
+            <!-- Industry Email List Section -->
+            <div class="footer-column">
+                <h4>Industry Email List</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/accountants-email-list">Accountants Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/construction-industry-email-list">Construction Industry Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/hr-email-list">HR Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/real-estate-agent-email-list">Real Estate Agent Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/email-list.html">All email lists</a></li>
+                </ul>
+            </div>
+            <!-- Contact Section -->
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
+                    <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+                <p>
+                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form elements
+            const form = document.getElementById('emailGeneratorForm');
+            const steps = document.querySelectorAll('.form-step');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const generateBtn = document.getElementById('generateBtn');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Results elements
+            const generatorContainer = document.querySelector('.generator-container');
+            const loadingContainer = document.getElementById('loadingContainer');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const emailOutput = document.getElementById('emailOutput');
+            const copyEmailBtn = document.getElementById('copyEmailBtn');
+            const regenerateBtn = document.getElementById('regenerateBtn');
+            const newEmailBtn = document.getElementById('newEmailBtn');
+            
+            let currentStep = 0;
+            const totalSteps = steps.length;
+            
+            // Step navigation
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => {
+                    step.classList.toggle('active', index === stepIndex);
+                });
+                
+                currentStep = stepIndex;
+                
+                // Update progress
+                const progressPercent = ((stepIndex + 1) / totalSteps) * 100;
+                progressFill.style.width = `${progressPercent}%`;
+                progressText.textContent = `Step ${stepIndex + 1} of ${totalSteps}`;
+                
+                // Update buttons
+                prevBtn.style.display = stepIndex === 0 ? 'none' : 'inline-flex';
+                
+                if (stepIndex === totalSteps - 1) {
+                    nextBtn.style.display = 'none';
+                    generateBtn.style.display = 'inline-flex';
+                } else {
+                    nextBtn.style.display = 'inline-flex';
+                    generateBtn.style.display = 'none';
+                }
+            }
+            
+            function validateStep(stepIndex) {
+                const currentStepElement = steps[stepIndex];
+                const requiredFields = currentStepElement.querySelectorAll('[required]');
+                
+                for (let field of requiredFields) {
+                    if (!field.value.trim()) {
+                        field.focus();
+                        return false;
+                    }
+                }
+                return true;
+            }
+            
+            // Navigation event listeners
+            nextBtn.addEventListener('click', function() {
+                if (validateStep(currentStep)) {
+                    if (currentStep < totalSteps - 1) {
+                        showStep(currentStep + 1);
+                    }
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 0) {
+                    showStep(currentStep - 1);
+                }
+            });
+            
+            // Form submission
+            generateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+                
+                generateEmail();
+            });
+            
+            // Email generation
+            function generateEmail() {
+                // Collect form data
+                const formData = {
+                    prospectCompany: document.getElementById('prospectCompany').value,
+                    prospectRole: document.getElementById('prospectRole').value,
+                    industry: document.getElementById('industry').value,
+                    yourCompany: document.getElementById('yourCompany').value,
+                    yourRole: document.getElementById('yourRole').value,
+                    businessDescription: document.getElementById('businessDescription').value,
+                    emailPurpose: document.getElementById('emailPurpose').value,
+                    valueProposition: document.getElementById('valueProposition').value,
+                    emailTone: document.getElementById('emailTone').value,
+                    emailLength: document.getElementById('emailLength').value
+                };
+                
+                // Show loading
+                generatorContainer.style.display = 'none';
+                loadingContainer.style.display = 'block';
+                
+                // API call to generate email
+                fetch('https://eliasse-n8n.onrender.com/webhook/c1abdf8e-afd8-4673-bf31-91009fda71a3', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to generate email');
+                    }
+                    return response.text();
+                })
+                .then(emailContent => {
+                    // Check if content is HTML
+                    if (emailContent.trim().startsWith('<') || emailContent.includes('<br>') || emailContent.includes('<p>')) {
+                        // Clean and display HTML content
+                        const cleanHtml = sanitizeAndFormatHtml(emailContent);
+                        emailOutput.innerHTML = cleanHtml;
+                    } else {
+                        // Display as plain text
+                        emailOutput.textContent = emailContent;
+                    }
+                    
+                    loadingContainer.style.display = 'none';
+                    resultsContainer.style.display = 'block';
+                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Fallback with sample email
+                    const fallbackEmail = generateFallbackEmail(formData);
+                    emailOutput.textContent = fallbackEmail;
+                    loadingContainer.style.display = 'none';
+                    resultsContainer.style.display = 'block';
+                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+            
+            // Fallback email generator
+            function generateFallbackEmail(data) {
+                const subjectLines = {
+                    'book-meeting': `Quick question about ${data.prospectCompany}'s ${data.industry} strategy`,
+                    'demo': `${data.prospectCompany} + ${data.yourCompany}: Potential partnership opportunity`,
+                    'partnership': `Partnership opportunity for ${data.prospectCompany}`,
+                    'sale': `How ${data.yourCompany} can help ${data.prospectCompany}`,
+                    'networking': `Connecting with fellow ${data.industry} professionals`,
+                    'feedback': `Quick feedback request from ${data.yourCompany}`,
+                    'collaboration': `Collaboration opportunity between our companies`,
+                    'other': `Reaching out from ${data.yourCompany}`
+                };
+                
+                const subject = subjectLines[data.emailPurpose] || subjectLines['other'];
+                
+                let email = `Subject: ${subject}\n\n`;
+                email += `Hi [First Name],\n\n`;
+                email += `I hope this email finds you well. I'm ${data.yourRole} at ${data.yourCompany}, and I've been following ${data.prospectCompany}'s work in the ${data.industry} space.\n\n`;
+                email += `${data.businessDescription}\n\n`;
+                email += `${data.valueProposition}\n\n`;
+                
+                const closings = {
+                    'book-meeting': "Would you be open to a brief 15-minute call next week to discuss how we might be able to help?",
+                    'demo': "I'd love to show you a quick demo of how this could work for your team. Are you available for a brief call?",
+                    'partnership': "I believe there could be some interesting synergies between our companies. Would you be interested in exploring this further?",
+                    'sale': "I'd be happy to provide more details about how we can help achieve similar results for your team.",
+                    'networking': "I'd love to connect and learn more about your work at ${data.prospectCompany}.",
+                    'feedback': "Would you be willing to share your thoughts? It would be incredibly valuable for our team.",
+                    'collaboration': "I think there's potential for us to work together. Would you be open to discussing this?",
+                    'other': "I'd love to explore how we might be able to work together."
+                };
+                
+                email += closings[data.emailPurpose] || closings['other'];
+                email += `\n\nBest regards,\n[Your Name]\n${data.yourRole}\n${data.yourCompany}`;
+                
+                return email;
+            }
+            
+            // HTML sanitization and formatting function
+            function sanitizeAndFormatHtml(htmlContent) {
+                // Create a temporary div to parse HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                
+                // Convert common HTML tags to readable format
+                let formattedContent = htmlContent;
+                
+                // Replace HTML tags with formatting
+                formattedContent = formattedContent.replace(/<br\s*\/?>/gi, '\n');
+                formattedContent = formattedContent.replace(/<\/p>/gi, '\n\n');
+                formattedContent = formattedContent.replace(/<p[^>]*>/gi, '');
+                formattedContent = formattedContent.replace(/<b[^>]*>|<\/b>/gi, '');
+                formattedContent = formattedContent.replace(/<strong[^>]*>|<\/strong>/gi, '');
+                formattedContent = formattedContent.replace(/<i[^>]*>|<\/i>/gi, '');
+                formattedContent = formattedContent.replace(/<em[^>]*>|<\/em>/gi, '');
+                formattedContent = formattedContent.replace(/<u[^>]*>|<\/u>/gi, '');
+                formattedContent = formattedContent.replace(/<h[1-6][^>]*>|<\/h[1-6]>/gi, '');
+                formattedContent = formattedContent.replace(/<div[^>]*>|<\/div>/gi, '');
+                formattedContent = formattedContent.replace(/<span[^>]*>|<\/span>/gi, '');
+                
+                // Clean up extra whitespace and newlines
+                formattedContent = formattedContent.replace(/\n\s*\n\s*\n/g, '\n\n');
+                formattedContent = formattedContent.replace(/^\s+|\s+$/g, '');
+                
+                // Handle special cases for email structure
+                if (formattedContent.includes('Subject:') || formattedContent.includes('Objet:')) {
+                    // Format email with proper structure
+                    const lines = formattedContent.split('\n');
+                    let formatted = '';
+                    
+                    lines.forEach((line, index) => {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine) {
+                            if (trimmedLine.toLowerCase().startsWith('subject:') || trimmedLine.toLowerCase().startsWith('objet:')) {
+                                formatted += trimmedLine + '\n\n';
+                            } else {
+                                formatted += trimmedLine + '\n';
+                            }
+                        }
+                    });
+                    
+                    return formatted.trim();
+                }
+                
+                return formattedContent;
+            }
+            
+            // Copy email functionality (updated to handle HTML)
+            copyEmailBtn.addEventListener('click', function() {
+                let emailText;
+                
+                // Check if content is HTML or plain text
+                if (emailOutput.innerHTML !== emailOutput.textContent) {
+                    // HTML content - get clean text version
+                    emailText = sanitizeAndFormatHtml(emailOutput.innerHTML);
+                } else {
+                    // Plain text content
+                    emailText = emailOutput.textContent;
+                }
+                
+                navigator.clipboard.writeText(emailText).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    this.style.background = 'var(--success)';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    // Fallback: select text for manual copy
+                    const range = document.createRange();
+                    range.selectNode(emailOutput);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(range);
+                });
+            });
+            
+            // Regenerate email
+            regenerateBtn.addEventListener('click', function() {
+                generateEmail();
+            });
+            
+            // Create new email
+            newEmailBtn.addEventListener('click', function() {
+                // Reset form
+                form.reset();
+                showStep(0);
+                
+                // Hide results and show form
+                resultsContainer.style.display = 'none';
+                generatorContainer.style.display = 'block';
+                
+                // Scroll to top
+                generatorContainer.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all FAQ items
+                    faqItems.forEach(faqItem => {
+                        faqItem.classList.remove('active');
+                    });
+                    
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+            // Initialize
+            showStep(0);
+        });
+    </script>
+</body>
+</html>

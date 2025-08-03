@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script defer data-domain="unlimited-leads.online" src="https://plausible.io/js/script.tagged-events.js"></script>
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare | UnlimitedLeads</title>
+    <meta name="description" content="Compare 50+ sales tool alternatives. Find the best ZoomInfo, Apollo, Lusha, and other lead generation tool alternatives with detailed comparisons.">
+    <meta name="keywords" content="sales tool alternatives, lead generation alternatives, zoominfo alternative, apollo alternative, lusha alternative">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+        
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
+            padding: 1.25rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo-text { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+        
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.85rem 1.75rem; 
+            border-radius: 0.5rem; 
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .hero { 
+            text-align: center; 
+            padding: 4rem 0; 
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+        }
+        
+        .hero h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 1rem; 
+            color: var(--gray-900);
+        }
+        
+        .hero p { 
+            font-size: 1.25rem; 
+            margin-bottom: 2rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.25rem 1rem 3rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .category-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--gray-900);
+            margin: 0;
+        }
+
+        .category-count {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        .alternative-links {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .alternative-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            background: var(--gray-50);
+            border-radius: 0.5rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .alternative-link:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-left-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .alternative-link .tool-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .alternative-link .tool-description {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        .cta-section {
+            background: var(--gray-50);
+            padding: 4rem 0;
+            text-align: center;
+            border-radius: 1rem;
+            margin: 4rem 0;
+        }
+
+        .stats-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            background: var(--gray-50);
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .header-content { flex-wrap: wrap; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.75rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="https://unlimited-leads.online">
+                <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                <span class="logo-text">UnlimitedLeads</span>
+            </a>
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Get 250 Free Leads</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Compare Unlimited leads</h1>
+            <p>Compare 50+ sales intelligence platforms, lead generation tools, and email finders. Find the best alternatives to ZoomInfo, Apollo, Lusha, and other popular B2B tools with detailed feature comparisons and pricing analysis.</p>
+            
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search tool alternatives...">
+            </div>
+
+            <div class="stats-banner">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>50+</h3>
+                        <p>Tool Alternatives</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>12</h3>
+                        <p>Categories</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Detailed Comparisons</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>2025</h3>
+                        <p>Updated Reviews</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Lead Generation Platforms -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">Lead Generation Platforms</h3>
+                            <p class="category-count">5+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/zoominfo-alternatives" class="alternative-link">
+                            <span class="featured-badge">POPULAR</span>
+                            <div class="tool-name">ZoomInfo Alternatives</div>
+                            <div class="tool-description">Top 10 alternatives to ZoomInfo's sales intelligence platform</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/apollo-io-alternatives" class="alternative-link">
+                            <span class="featured-badge">TRENDING</span>
+                            <div class="tool-name">Apollo.io Alternatives</div>
+                            <div class="tool-description">Best alternatives to Apollo's all-in-one sales platform</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/seamless-ai-alternatives" class="alternative-link">
+                            <div class="tool-name">Seamless.AI Alternatives</div>
+                            <div class="tool-description">Compare alternatives to Seamless.AI's lead generation tool</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/lead411-alternatives" class="alternative-link">
+                            <div class="tool-name">Lead411 Alternatives</div>
+                            <div class="tool-description">Find better alternatives to Lead411's B2B database</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/uplead-alternatives" class="alternative-link">
+                            <div class="tool-name">UpLead Alternatives</div>
+                            <div class="tool-description">Discover alternatives to UpLead's prospecting platform</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Email Finding Tools -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">Email Finding Tools</h3>
+                            <p class="category-count">4+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/hunter-io-alternatives" class="alternative-link">
+                            <div class="tool-name">Hunter.io Alternatives</div>
+                            <div class="tool-description">Best alternatives to Hunter's email finder</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/voilanorbert-alternatives" class="alternative-link">
+                            <div class="tool-name">VoilaNorbert Alternatives</div>
+                            <div class="tool-description">Compare alternatives to VoilaNorbert's email search</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/snov-alternatives" class="alternative-link">
+                            <div class="tool-name">Snov.io Alternatives</div>
+                            <div class="tool-description">Find better alternatives to Snov.io's email tools</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/contactout-alternatives" class="alternative-link">
+                            <div class="tool-name">ContactOut Alternatives</div>
+                            <div class="tool-description">Top alternatives to ContactOut's contact finder</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sales Intelligence Platforms -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">Sales Intelligence Platforms</h3>
+                            <p class="category-count">3+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/lusha-alternatives" class="alternative-link">
+                            <div class="tool-name">Lusha Alternatives</div>
+                            <div class="tool-description">Best alternatives to Lusha's sales intelligence</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/cognism-alternatives" class="alternative-link">
+                            <div class="tool-name">Cognism Alternatives</div>
+                            <div class="tool-description">Compare alternatives to Cognism's B2B platform</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/rocketreach-alternatives" class="alternative-link">
+                            <div class="tool-name">RocketReach Alternatives</div>
+                            <div class="tool-description">Find better alternatives to RocketReach's database</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- LinkedIn Tools -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">LinkedIn Prospecting Tools</h3>
+                            <p class="category-count">2+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/evaboot-alternative" class="alternative-link">
+                            <div class="tool-name">Evaboot Alternative</div>
+                            <div class="tool-description">Better alternatives to Evaboot's LinkedIn scraper</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/findthatlead-alternative" class="alternative-link">
+                            <div class="tool-name">FindThatLead Alternative</div>
+                            <div class="tool-description">Compare alternatives to FindThatLead's platform</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Data Enrichment Tools -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">Data Enrichment Tools</h3>
+                            <p class="category-count">2+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/getprospect-alternative" class="alternative-link">
+                            <div class="tool-name">GetProspect Alternative</div>
+                            <div class="tool-description">Find better alternatives to GetProspect's enrichment</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/scrupp-alternative" class="alternative-link">
+                            <div class="tool-name">Scrupp Alternative</div>
+                            <div class="tool-description">Compare alternatives to Scrupp's data platform</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Individual Tool Alternatives -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div>
+                            <h3 class="category-title">Single Tool Comparisons</h3>
+                            <p class="category-count">10+ alternatives</p>
+                        </div>
+                    </div>
+                    <div class="alternative-links">
+                        <a href="https://unlimited-leads.online/zoominfo-alternative" class="alternative-link">
+                            <div class="tool-name">ZoomInfo Alternative</div>
+                            <div class="tool-description">Single best alternative to ZoomInfo</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/apollo-alternative" class="alternative-link">
+                            <div class="tool-name">Apollo Alternative</div>
+                            <div class="tool-description">Top alternative to Apollo.io</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/lusha-alternative" class="alternative-link">
+                            <div class="tool-name">Lusha Alternative</div>
+                            <div class="tool-description">Best single alternative to Lusha</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/hunter-io-alternative" class="alternative-link">
+                            <div class="tool-name">Hunter.io Alternative</div>
+                            <div class="tool-description">Top alternative to Hunter email finder</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/rocketreach-alternative" class="alternative-link">
+                            <div class="tool-name">RocketReach Alternative</div>
+                            <div class="tool-description">Best alternative to RocketReach</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/seamless-ai-alternative" class="alternative-link">
+                            <div class="tool-name">Seamless.AI Alternative</div>
+                            <div class="tool-description">Top alternative to Seamless.AI</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/cognism-alternative" class="alternative-link">
+                            <div class="tool-name">Cognism Alternative</div>
+                            <div class="tool-description">Best alternative to Cognism</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/lead411-alternative" class="alternative-link">
+                            <div class="tool-name">Lead411 Alternative</div>
+                            <div class="tool-description">Top alternative to Lead411</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/uplead-alternative" class="alternative-link">
+                            <div class="tool-name">UpLead Alternative</div>
+                            <div class="tool-description">Best alternative to UpLead</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/contact-out-alternative" class="alternative-link">
+                            <div class="tool-name">ContactOut Alternative</div>
+                            <div class="tool-description">Top alternative to ContactOut</div>
+                        </a>
+                        <a href="https://unlimited-leads.online/snov-alternative" class="alternative-link">
+                            <div class="tool-name">Snov Alternative</div>
+                            <div class="tool-description">Best alternative to Snov.io</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h2 style="color: var(--gray-900); margin-bottom: 1rem;">Why Choose UnlimitedLeads?</h2>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">Unlimited exports, 100M+ verified contacts, better pricing than any competitor</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem;">🚀</div>
+                        <h4 style="color: var(--gray-900); margin-bottom: 0.5rem;">Unlimited Exports</h4>
+                        <p style="color: var(--gray-600); font-size: 0.9rem;">No credit limits or export restrictions</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem;">💰</div>
+                        <h4 style="color: var(--gray-900); margin-bottom: 0.5rem;">Better Pricing</h4>
+                        <p style="color: var(--gray-600); font-size: 0.9rem;">Fixed monthly cost, no per-contact fees</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem;">✅</div>
+                        <h4 style="color: var(--gray-900); margin-bottom: 0.5rem;">99% Accuracy</h4>
+                        <p style="color: var(--gray-600); font-size: 0.9rem;">Verified and updated contact data</p>
+                    </div>
+                </div>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Start Free with 250 Leads</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const categories = document.querySelectorAll('.category-card');
+            
+            categories.forEach(category => {
+                const links = category.querySelectorAll('.alternative-link');
+                let hasVisibleLinks = false;
+                
+                links.forEach(link => {
+                    const linkText = link.textContent.toLowerCase();
+                    if (linkText.includes(searchTerm)) {
+                        link.style.display = 'block';
+                        hasVisibleLinks = true;
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+                
+                if (searchTerm === '') {
+                    category.style.display = 'block';
+                    links.forEach(link => link.style.display = 'block');
+                } else {
+                    category.style.display = hasVisibleLinks ? 'block' : 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
