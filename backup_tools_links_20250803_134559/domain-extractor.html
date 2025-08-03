@@ -6,8 +6,8 @@
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Phone Number Extractor | Extract Phone Numbers from Text or File</title>
-    <meta name="description" content="Free Phone Number Extractor - Extract phone numbers from any Text or CSV with our free tool"/>
+    <title>Domain Extractor | Extract Domains from Text or URL</title>
+    <meta name="description" content="Free Domain Extractor - Extract domain names from any Text, URL or CSV with our free tool"/>
 
     <!-- Preconnect externals -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,9 +20,9 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://unlimited-leads.online/phone-extractor" />
-    <meta property="og:title" content="Phone Number Extractor | Extract Phone Numbers from Text or File" />
-    <meta property="og:description" content="Free Phone Number Extractor - Extract phone numbers from any Text or CSV with our free tool" />
+    <meta property="og:url" content="https://unlimited-leads.online/domain-extractor" />
+    <meta property="og:title" content="Domain Extractor | Extract Domains from Text or URL" />
+    <meta property="og:description" content="Free Domain Extractor - Extract domain names from any Text, URL or CSV with our free tool" />
     <meta property="og:image" content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" />
 
     <!-- Fonts & Icons -->
@@ -108,9 +108,27 @@
         .seo-description ul, .seo-description ol { margin-left: 2rem; margin-bottom: 1.5rem; }
         .seo-description li { margin-bottom: 0.5rem; line-height: 1.6; }
 
+        /* Tab System */
+        .tab-container { margin-bottom: 1.5rem; }
+        .tab-buttons { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .tab-btn { padding: 0.75rem 1.5rem; border: 1px solid var(--gray-200); background: white; color: var(--gray-800); border-radius: var(--border-radius) var(--border-radius) 0 0; cursor: pointer; font-weight: 500; transition: var(--transition); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .tab-btn:hover:not(.active) { background: var(--gray-50); border-color: var(--primary); }
+        .tab-content { display: none; border: 1px solid var(--gray-200); border-radius: 0 var(--border-radius) var(--border-radius) var(--border-radius); padding: 1.5rem; background: white; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--gray-800); }
+        .tab-content p { color: var(--gray-600); margin-bottom: 1rem; }
+
+        /* Input Groups */
+        .url-input { width: 100%; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); font-size: 1rem; }
+        .url-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+
         @media (max-width:768px) { 
             .hero h1 { font-size: 2rem; } 
             .footer-content { grid-template-columns: 1fr; }
+            .tab-buttons { flex-direction: column; }
+            .tab-btn { border-radius: var(--border-radius); margin-bottom: 0.5rem; }
+            .tab-content { border-radius: var(--border-radius); }
         }
     </style>
 </head>
@@ -131,31 +149,46 @@
     <!-- Hero Extractor -->
     <section class="hero">
         <div class="container">
-            <h1>Phone Number Extractor</h1>
-            <p>Easily extract phone numbers from any text or file.</p>
+            <h1>Domain Extractor</h1>
+            <p>Easily extract domain names from any text, URL or file.</p>
         </div>
     </section>
 
     <!-- Extractor Form -->
     <section class="container">
         <div class="extractor-form">
-            <h3>Extract Phone Numbers from Text or Files</h3>
-            <p>Upload CSV/TXT files or paste text containing phone numbers in any format.</p>
-            
-            <div class="file-upload" id="dropZone">
-                <input type="file" id="fileInput" style="display:none;">
-                <p>Drag and drop your file <strong>.txt</strong>, <strong>.csv</strong> or paste text below.</p>
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="text">Text & Files</button>
+                    <button class="tab-btn" data-tab="url">URL</button>
+                </div>
+                
+                <div class="tab-content active" id="textTab">
+                    <h3>Extract from Text or Files</h3>
+                    <p>Upload CSV/TXT files or paste text containing URLs, emails, or domain names.</p>
+                    
+                    <div class="file-upload" id="dropZone">
+                        <input type="file" id="fileInput" style="display:none;">
+                        <p>Drag and drop your file <strong>.txt</strong>, <strong>.csv</strong> or paste text below.</p>
+                    </div>
+                    <div class="divider"><span>OR</span></div>
+                    <textarea id="domainsSource" placeholder="Paste your text here... (URLs, emails, or any text containing domains)"></textarea>
+                </div>
+                
+                <div class="tab-content" id="urlTab">
+                    <h3>Extract from Single URL</h3>
+                    <p>Enter any website URL to extract its domain name instantly.</p>
+                    <input type="url" id="urlInput" class="url-input" placeholder="https://example.com or www.example.com" />
+                </div>
             </div>
-            <div class="divider"><span>OR</span></div>
-            <textarea id="phoneSource" placeholder="Paste your text here... (Any text containing phone numbers)"></textarea>
             
             <button id="extractBtn" class="btn btn-primary btn-large">
-                <span>Extract phone numbers</span>
+                <span>Extract domains</span>
                 <span class="loader" style="display:none;"></span>
             </button>
             
             <div id="resultArea" class="result-area">
-                <textarea id="phoneResult" readonly placeholder="Phone numbers extracted..."></textarea>
+                <textarea id="domainsResult" readonly placeholder="Domains extracted..."></textarea>
                 <div class="actions">
                     <button id="copyBtn" class="btn btn-secondary">Copy</button>
                     <button id="downloadBtn" class="btn btn-primary">Download</button>
@@ -166,107 +199,70 @@
 
     <!-- SEO Content -->
     <section class="seo-description container" style="padding:2rem 0;">
-        <h2>How to Use Our Free Phone Number Extractor</h2>
+        <h2>How to Use Our Free Domain Extractor</h2>
         <p>
-            No more manual copy-pasting—our <strong>free phone number extractor</strong> gives you a clean list of phone numbers in seconds. Just follow these simple steps:
+            No more manual copy-pasting—our <strong>free domain extractor</strong> gives you a clean list of domain names in seconds. Just follow these simple steps:
         </p>
         <ol>
-            <li><strong>Upload or paste your content:</strong> Upload CSV/TXT files or paste any text containing phone numbers.</li>
-            <li><strong>Click "Extract":</strong> Hit the button and watch our <strong>phone number extractor</strong> scan for valid phone numbers.</li>
-            <li><strong>Get your results:</strong> See one phone number per line, ready to copy, download or import into your tools.</li>
+            <li><strong>Choose your method:</strong> Select "Text & Files" to upload CSV/TXT files or paste text, or "URL" for single website extraction.</li>
+            <li><strong>Enter your content:</strong> Upload files, paste text, or enter a URL depending on your chosen method.</li>
+            <li><strong>Click "Extract": </strong>Hit the button and watch our <strong>domain extractor</strong> scan for valid domain names.</li>
+            <li><strong>Get your results:</strong> See one domain per line, ready to copy, download or import into your tools.</li>
         </ol>
 
-        <h2>Why Choose Our Phone Number Extractor</h2>
+        <h2>Why Choose Our Domain Extractor to Extract Domains From URL, CSV or Text</h2>
         <p>
-            Whether you need to extract phone numbers from <strong>CSV files</strong>, <strong>text documents</strong>, or any other content, our tool handles it all:
+            Whether you need to extract from a <strong>single URL</strong>, a <strong>CSV domain extractor</strong> or want to pull domain names directly from raw text, our tool handles it all:
         </p>
         <ul>
-            <li><strong>Multiple formats:</strong> Recognizes US, international, and various phone number formats.</li>
-            <li><strong>CSV support:</strong> Instantly grab all phone numbers from any CSV file without opening spreadsheets.</li>
+            <li><strong>URL extraction:</strong> Simply paste any URL and instantly get the domain name.</li>
+            <li><strong>CSV support:</strong> Instantly grab all domains from any CSV file without opening spreadsheets.</li>
             <li><strong>Multi-format:</strong> Works with TXT, Excel, HTML snippets and more—no extra plugins required.</li>
-            <li><strong>Duplicate removal:</strong> Automatically filters out repeats so you only keep unique phone numbers.</li>
-            <li><strong>Smart detection:</strong> Finds phone numbers in various formats including international codes.</li>
-            <li><strong>Bulk processing:</strong> Handle large files with thousands of entries at once.</li>
+            <li><strong>Duplicate removal:</strong> Automatically filters out repeats so you only keep unique domain names.</li>
+            <li><strong>Email domain extraction:</strong> Extracts domains from email addresses automatically.</li>
+            <li><strong>URL domain extraction:</strong> Pulls domain names from full URLs and links.</li>
         </ul>
 
-        <h2>Phone Number Formats We Support</h2>
+        <h2>How Our Domain Extraction Tool Works</h2>
         <p>
-            Our advanced <strong>phone number extractor</strong> recognizes phone numbers in multiple formats:
+            Our advanced <strong>domain extractor</strong> uses sophisticated pattern matching to identify domain names from various sources:
         </p>
         <ul>
-            <li><strong>US formats:</strong> (555) 123-4567, 555-123-4567, 555.123.4567, 5551234567</li>
-            <li><strong>International formats:</strong> +1 555 123 4567, +44 20 7946 0958, +33 1 42 86 83 26</li>
-            <li><strong>Extensions:</strong> 555-123-4567 ext 123, (555) 123-4567 x456</li>
-            <li><strong>Toll-free numbers:</strong> 1-800-555-1234, 800.555.1234</li>
+            <li><strong>Email addresses:</strong> Extracts the domain part after the @ symbol</li>
+            <li><strong>Full URLs:</strong> Identifies domains from http/https links</li>
+            <li><strong>Subdomains:</strong> Captures complete domain structures including subdomains</li>
+            <li><strong>Text mentions:</strong> Finds domain names mentioned in plain text</li>
         </ul>
 
-        <h2>Key Benefits of Our Phone Number Extraction Tool</h2>
+        <h2>Key Benefits of Our Domain Extraction Tool</h2>
         <p>
-            From startups to enterprises, here's why our <strong>phone number extractor</strong> stands out:
+            From startups to enterprises, here's why our <strong>domain extractor</strong> stands out:
         </p>
         <ul>
-            <li><strong>Time-saving:</strong> Automate large-scale extractions and focus on your outreach.</li>
-            <li><strong>High accuracy:</strong> Advanced pattern matching ensures only valid phone numbers make the cut.</li>
-            <li><strong>Free to use:</strong> Our core <strong>free phone number extractor</strong> gives you unlimited extractions.</li>
+            <li><strong>Time-saving:</strong> Automate large-scale extractions and focus on your analysis.</li>
+            <li><strong>High accuracy:</strong> Advanced regex and pattern matching ensure only valid domains make the cut.</li>
+            <li><strong>Free to use:</strong> Our core <strong>free domain extractor</strong> gives you unlimited extractions without a paywall.</li>
             <li><strong>Scalable:</strong> Handle thousands of rows or massive text files in one go.</li>
-            <li><strong>Instant download:</strong> Export in .txt or .csv and plug directly into your CRM tools.</li>
-            <li><strong>Multiple sources:</strong> Extract from contact lists, web pages, documents, and any text content.</li>
+            <li><strong>Instant download:</strong> Export in .txt or .csv and plug directly into your analysis tools.</li>
+            <li><strong>Multiple sources:</strong> Extract from emails, URLs, social media posts, and any text content.</li>
         </ul>
 
-        <h2>Common Use Cases for Phone Number Extraction</h2>
+        <h2>Common Use Cases for Domain Extraction</h2>
         <p>
-            Our <strong>phone number extractor</strong> is perfect for various professional needs:
+            Our <strong>domain extractor</strong> is perfect for various professional needs:
         </p>
         <ul>
-            <li><strong>Lead generation:</strong> Extract prospect phone numbers from various sources</li>
-            <li><strong>Contact list cleanup:</strong> Clean and organize existing contact databases</li>
-            <li><strong>Sales research:</strong> Extract phone numbers from industry reports and directories</li>
-            <li><strong>Marketing campaigns:</strong> Build calling lists for telemarketing efforts</li>
-            <li><strong>Data migration:</strong> Extract phone numbers when switching CRM systems</li>
-            <li><strong>Document processing:</strong> Pull contact info from contracts and agreements</li>
-            <li><strong>Bulk processing:</strong> Handle large CSV files with thousands of contacts</li>
+            <li><strong>Single URL analysis:</strong> Quickly extract domain from any website URL</li>
+            <li><strong>Competitive analysis:</strong> Extract competitor domains from industry reports</li>
+            <li><strong>Lead generation:</strong> Build prospect lists from email domains</li>
+            <li><strong>Security research:</strong> Analyze domains from logs and reports</li>
+            <li><strong>SEO analysis:</strong> Extract domains for backlink analysis</li>
+            <li><strong>Data cleaning:</strong> Normalize domain data from various sources</li>
+            <li><strong>Bulk processing:</strong> Handle large CSV files with thousands of URLs</li>
         </ul>
     </section>
 
     <!-- Footer -->
-    <!-- Related Free Tools Section -->
-    <section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-        <div class="container">
-            <h2 style="font-size: 2rem; text-align: center; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Related Free Tools</h2>
-            <p style="text-align: center; color: var(--gray-600); margin-bottom: 2.5rem; font-size: 1.1rem;">Boost your productivity with these complementary free tools for email prospecting and lead generation</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
-                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #43e97b, #38f9d7); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <span style="font-size: 1.4rem;">📧</span>
-                    </div>
-                    <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Email Extractor</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;">Extract email addresses from websites, documents, and text content.</p>
-                    <a href="https://unlimited-leads.online/email-extractor.html" style="background: #43e97b; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Try Free Tool →</a>
-                </div>
-                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
-                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #43e97b, #38f9d7); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <span style="font-size: 1.4rem;">🔍</span>
-                    </div>
-                    <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Domain Extractor</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;">Extract domain names from text, URLs, and email lists efficiently.</p>
-                    <a href="https://unlimited-leads.online/domain-extractor.html" style="background: #43e97b; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Try Free Tool →</a>
-                </div>
-                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
-                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #a8edea, #fed6e3); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <span style="font-size: 1.4rem;">🔍</span>
-                    </div>
-                    <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Find Email from Phone</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;">Discover email addresses associated with phone numbers for lead enrichment.</p>
-                    <a href="https://unlimited-leads.online/find-email-from-phone-number.html" style="background: #a8edea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Try Free Tool →</a>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 0.75rem; backdrop-filter: blur(10px);">
-                <p style="color: var(--gray-700); font-size: 1rem; margin-bottom: 0.5rem;"><strong>💡 Pro Tip:</strong> Combine multiple tools for maximum efficiency!</p>
-                <p style="color: var(--gray-600); font-size: 0.9rem;">Use these tools together to create a complete prospecting workflow that saves time and increases your success rate.</p>
-            </div>
-        </div>
-    </section>
-
 <footer id="contact" class="footer">
     <div class="container">
         <div class="footer-content">
@@ -352,62 +348,79 @@
 
     <!-- Scripts -->
     <script>
-        function extractPhoneNumbersFromText(text) {
-            if (!text) return { phones: [], count: 0 };
+        // Tab System
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.dataset.tab;
+                
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            });
+        });
+
+        function extractDomainsFromText(text) {
+            if (!text) return { domains: [], count: 0 };
             
             // Clean HTML tags
             const clean = text.replace(/<[^>]*>/g, ' ');
             
-            // Multiple regex patterns to catch different phone number formats
+            // Multiple regex patterns to catch different domain formats
             const patterns = [
-                // US formats: (555) 123-4567, (555)123-4567
-                /\(?\b(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\b/g,
-                // International format: +1 555 123 4567, +44 20 7946 0958
-                /\+\d{1,4}[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{1,4}[\s.-]?\d{1,9}/g,
-                // Toll-free: 1-800-555-1234, 800-555-1234
-                /\b1?[-.\s]?8(00|44|55|66|77|88)[-.\s]?\d{3}[-.\s]?\d{4}\b/g,
-                // Extensions: 555-123-4567 ext 123, (555) 123-4567 x456
-                /\(?\b(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})[\s]?(ext|extension|x)[\s]?\d{1,5}/gi,
-                // Simple 10+ digit numbers
-                /\b\d{10,15}\b/g
+                // Standard domains (domain.com, subdomain.domain.com, etc.)
+                /(?:^|[\s\n\r\t,;()\[\]{}'"<>])((?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})/g,
+                // Domains from URLs (http://domain.com, https://domain.com)
+                /https?:\/\/(?:www\.)?([a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)*[a-zA-Z]{2,})/g,
+                // Domains from emails (user@domain.com)
+                /@([a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)*[a-zA-Z]{2,})/g
             ];
             
-            const phones = new Set();
+            const domains = new Set();
             
             patterns.forEach(pattern => {
                 let match;
                 while ((match = pattern.exec(clean)) !== null) {
-                    let phone = match[0];
-                    // Clean up the phone number
-                    phone = phone.replace(/[^\d\+\(\)\-\.\sx]/gi, '');
-                    phone = phone.trim();
+                    let domain = match[1] || match[0];
+                    // Clean up the domain
+                    domain = domain.replace(/^[.,;:()"'<>\[\]{}]+|[.,;:!?)"'<>\[\]{}]+$/g, '');
+                    domain = domain.toLowerCase();
                     
-                    // Basic validation - must have at least 10 digits
-                    const digitCount = (phone.match(/\d/g) || []).length;
-                    if (digitCount >= 10 && digitCount <= 15) {
-                        phones.add(phone);
+                    // Validate domain format
+                    if (domain && /^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)*[a-zA-Z]{2,}$/.test(domain)) {
+                        domains.add(domain);
                     }
                 }
             });
             
-            const uniquePhones = Array.from(phones).sort();
-            return { phones: uniquePhones, count: uniquePhones.length };
+            const uniqueDomains = Array.from(domains).sort();
+            return { domains: uniqueDomains, count: uniqueDomains.length };
         }
 
         document.getElementById('extractBtn').addEventListener('click', function(){
-            const inputText = document.getElementById('phoneSource').value;
+            const activeTab = document.querySelector('.tab-content.active').id;
+            let inputText = '';
+            
+            if (activeTab === 'textTab') {
+                inputText = document.getElementById('domainsSource').value;
+            } else if (activeTab === 'urlTab') {
+                inputText = document.getElementById('urlInput').value.trim();
+            }
             
             const btn = this.querySelector('span'); 
             const loader = this.querySelector('.loader');
             
-            btn.textContent = 'Extracting phone numbers...'; 
+            btn.textContent = 'Extracting domains...'; 
             loader.style.display = 'inline-block';
             
             setTimeout(() => {
-                const res = extractPhoneNumbersFromText(inputText);
-                document.getElementById('phoneResult').value = res.phones.join('\n');
+                const res = extractDomainsFromText(inputText);
+                document.getElementById('domainsResult').value = res.domains.join('\n');
                 document.getElementById('resultArea').style.display = 'block';
-                btn.textContent = 'Extract phone numbers'; 
+                btn.textContent = 'Extract domains'; 
                 loader.style.display = 'none';
                 
                 // Scroll to results
@@ -416,7 +429,7 @@
         });
 
         document.getElementById('copyBtn').addEventListener('click', function(){
-            const out = document.getElementById('phoneResult'); 
+            const out = document.getElementById('domainsResult'); 
             out.select(); 
             document.execCommand('copy'); 
             this.textContent = 'Copied!'; 
@@ -424,12 +437,12 @@
         });
 
         document.getElementById('downloadBtn').addEventListener('click', function(){
-            const data = document.getElementById('phoneResult').value;
+            const data = document.getElementById('domainsResult').value;
             const blob = new Blob([data], {type: 'text/plain'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); 
             a.href = url; 
-            a.download = 'phone_numbers.txt'; 
+            a.download = 'domains.txt'; 
             document.body.appendChild(a); 
             a.click(); 
             document.body.removeChild(a);
@@ -460,7 +473,7 @@
             const file = e.dataTransfer.files[0]; 
             if (file) { 
                 const reader = new FileReader(); 
-                reader.onload = e => document.getElementById('phoneSource').value = e.target.result; 
+                reader.onload = e => document.getElementById('domainsSource').value = e.target.result; 
                 reader.readAsText(file);
             } 
         });
@@ -469,7 +482,7 @@
             const file = e.target.files[0]; 
             if (file) { 
                 const reader = new FileReader(); 
-                reader.onload = e => document.getElementById('phoneSource').value = e.target.result; 
+                reader.onload = e => document.getElementById('domainsSource').value = e.target.result; 
                 reader.readAsText(file);
             } 
         });
