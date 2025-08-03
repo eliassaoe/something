@@ -10,7 +10,7 @@
             popupShown = true;
             sessionStorage.setItem('leadPopupShown', 'true');
         }
-    }, 20000);
+    }, 10000);
 
     function showLeadPopup() {
         const overlay = document.createElement('div');
