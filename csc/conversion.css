@@ -1,131 +1,84 @@
-# Remove the external CSS link and add inline styles instead
-for file in "${TOOL_FILES[@]}"; do
-    if [ -f "$file" ]; then
-        echo "Fixing sticky header for $file..."
-        
-        # Remove the external CSS link
-        sed -i '/<link rel="stylesheet" href="css\/conversion.css">/d' "$file"
-        
-        # Add inline styles after the existing <style> tag
-        sed -i '/<\/style>/a\
-    <style>\
-        /* Conversion Sticky Header - Fixed */\
-        .conversion-sticky-header {\
-            position: fixed;\
-            top: 0;\
-            left: 0;\
-            right: 0;\
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);\
-            color: white;\
-            padding: 10px 20px;\
-            text-align: center;\
-            z-index: 10000;\
-            font-weight: 500;\
-            box-shadow: 0 2px 15px rgba(0,0,0,0.15);\
-            font-size: 14px;\
-        }\
-\
-        .conversion-sticky-header .cta-btn {\
-            background: #ffffff;\
-            color: #10b981;\
-            padding: 6px 16px;\
-            border-radius: 20px;\
-            text-decoration: none;\
-            font-weight: bold;\
-            margin-left: 10px;\
-            transition: all 0.3s ease;\
-            font-size: 13px;\
-        }\
-\
-        .conversion-sticky-header .cta-btn:hover {\
-            transform: translateY(-1px);\
-            box-shadow: 0 4px 12px rgba(255,255,255,0.3);\
-        }\
-\
-        /* Adjust existing header to account for conversion header */\
-        .header {\
-            top: 44px !important;\
-        }\
-\
-        /* Adjust body padding */\
-        body.has-sticky-header {\
-            padding-top: 104px !important;\
-        }\
-\
-        /* Tool completion message */\
-        .tool-completion-message {\
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);\
-            color: white;\
-            padding: 20px;\
-            border-radius: 12px;\
-            margin: 25px 0;\
-            text-align: center;\
-            display: none;\
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);\
-        }\
-\
-        .tool-completion-message.show {\
-            display: block;\
-            animation: slideInUp 0.6s ease-out;\
-        }\
-\
-        .tool-completion-message h3 {\
-            margin: 0 0 12px 0;\
-            font-size: 1.3em;\
-            font-weight: 700;\
-        }\
-\
-        .tool-completion-message p {\
-            margin: 12px 0;\
-            opacity: 0.95;\
-            font-size: 1.05em;\
-            line-height: 1.5;\
-        }\
-\
-        .upgrade-btn {\
-            background: #ffffff;\
-            color: #10b981;\
-            padding: 14px 32px;\
-            border: none;\
-            border-radius: 25px;\
-            font-weight: bold;\
-            cursor: pointer;\
-            font-size: 1.1em;\
-            margin-top: 12px;\
-            transition: all 0.3s ease;\
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);\
-        }\
-\
-        .upgrade-btn:hover {\
-            transform: translateY(-2px);\
-            box-shadow: 0 6px 20px rgba(255,255,255,0.3);\
-        }\
-\
-        @keyframes slideInUp {\
-            from { opacity: 0; transform: translateY(30px); }\
-            to { opacity: 1; transform: translateY(0); }\
-        }\
-\
-        /* Mobile adjustments */\
-        @media (max-width: 768px) {\
-            .conversion-sticky-header {\
-                padding: 8px 15px;\
-                font-size: 13px;\
-            }\
-            .conversion-sticky-header .cta-btn {\
-                padding: 5px 12px;\
-                font-size: 12px;\
-                margin-left: 8px;\
-            }\
-            .header {\
-                top: 38px !important;\
-            }\
-            body.has-sticky-header {\
-                padding-top: 98px !important;\
-            }\
-        }\
-    </style>' "$file"
-        
-        echo "✅ Fixed $file"
-    fi
-done
+/* Sticky Header for Conversion */
+.conversion-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    z-index: 1000;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.conversion-sticky-header .cta-btn {
+    background: #ffffff;
+    color: #667eea;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.conversion-sticky-header .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+}
+
+/* Tool Completion Message */
+.tool-completion-message {
+    background: linear-gradient(135deg, #00C851 0%, #007E33 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: center;
+    display: none;
+}
+
+.tool-completion-message.show {
+    display: block;
+    animation: slideIn 0.5s ease-out;
+}
+
+.tool-completion-message h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.tool-completion-message p {
+    margin: 10px 0;
+    opacity: 0.9;
+}
+
+.upgrade-btn {
+    background: #ffffff;
+    color: #00C851;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.upgrade-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Adjust body padding for sticky header */
+body.has-sticky-header {
+    padding-top: 60px;
+}
