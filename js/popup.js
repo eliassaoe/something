@@ -43,7 +43,7 @@
                 '</div>' +
                 '<div style="padding: 32px;">' +
                     '<div style="background: #f1f5f9; border-left: 4px solid #3b82f6; padding: 20px; margin-bottom: 24px; border-radius: 8px;">' +
-                        '<p style="margin: 0 0 12px 0; font-size: 16px; color: #334155; font-weight: 600;">Get instant access to 250 premium business contacts:</p>' +
+                        '<p style="margin: 0 0 12px 0; font-size: 16px; color: #334155; font-weight: 600;">Get instant access to premium business contacts:</p>' +
                         '<ul style="margin: 0; padding-left: 20px; color: #475569; font-size: 14px;">' +
                             '<li>Verified email addresses</li>' +
                             '<li>Direct phone numbers</li>' +
