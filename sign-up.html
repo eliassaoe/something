@@ -4,7 +4,7 @@
     <link rel="icon" type="image/png" href="/icon128.png">
     <script defer data-domain="unlimited-leads.online" src="https://plausible.io/js/script.tagged-events.js"></script>
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
-    <script>plausible('Sign up');</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
@@ -272,6 +272,8 @@
         async function signUpWithGoogle() {
             try {
                 hideMessage();
+
+                plausible('Sign up', {props: {method: 'google'}});
                 
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
@@ -342,6 +344,9 @@
                     const data = await response.json();
                     
                     if (data.token) {
+
+                        plausible('Sign up', {props: {method: 'email'}});
+                        
                         showMessage('Account created successfully! Redirecting...', 'success');
                         setTimeout(() => {
                             window.location.href = `https://unlimited-leads.online/app?token=${data.token}`;
