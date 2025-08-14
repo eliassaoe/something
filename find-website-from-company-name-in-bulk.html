@@ -260,6 +260,105 @@
       padding: 0.75rem 1.5rem;
     }
 
+    /* Premium Tools Preview Section */
+    .premium-preview {
+      background: linear-gradient(135deg, rgba(79,70,229,0.05), rgba(14,165,233,0.05));
+      border: 1px solid rgba(79,70,229,0.2);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      margin: 3rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-preview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .premium-preview h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .premium-preview .premium-icon {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .premium-preview p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .premium-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .premium-feature {
+      background: white;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(79,70,229,0.1);
+      text-align: left;
+    }
+
+    .premium-feature h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .premium-feature p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    .reddit-link {
+      display: inline-block;
+      background: #ff4500;
+      color: white;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    }
+
+    .reddit-link:hover {
+      background: #e63e00;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 69, 0, 0.4);
+    }
+
+    .reddit-link i {
+      margin-right: 0.5rem;
+    }
+
     footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: white; margin-top: 4rem; }
     .footer-content { max-width: 1200px; margin: 0 auto; }
     .footer-column { margin-bottom: 2rem; }
@@ -290,6 +389,9 @@
       .popup-modal { padding: 2rem 1.5rem; margin: 1rem; }
       .popup-title { font-size: 1.5rem; }
       .popup-btn { display: block; width: 100%; margin-bottom: 0.5rem; margin-right: 0; }
+      .premium-preview { padding: 2rem 1.5rem; }
+      .premium-preview h3 { font-size: 1.5rem; }
+      .premium-features { grid-template-columns: 1fr; }
     }
     @media(min-width:768px) {
       .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
@@ -446,29 +548,46 @@
     </ul>
   </section>
 
-  <!-- Popup Modal -->
-  <div id="leadsPopup" class="popup-overlay">
-    <div class="popup-modal">
-      <button class="popup-close" onclick="closePopup()">&times;</button>
-      <div class="popup-icon">
-        <i class="fas fa-gift"></i>
-      </div>
-      <h3 class="popup-title">Get Your First <span class="popup-highlight">250 Leads FREE!</span></h3>
-      <p class="popup-text">
-        Start building your business with our premium lead generation tools. 
-        Sign up now and get <strong>250 high-quality leads absolutely free</strong> - no strings attached!
+  <!-- Premium Tools Preview Section -->
+  <section class="container">
+    <div class="premium-preview">
+      <h3>
+        <i class="fas fa-rocket premium-icon"></i>
+        What's Coming Next: Premium Tools & API Access
+      </h3>
+      <p>
+        We're building the next generation of these tools with enterprise-grade accuracy, advanced bulk processing capabilities, and full API access for developers. Our premium version will offer significantly improved data quality and processing speeds for businesses that need reliable, scalable solutions.
       </p>
-      <div>
-        <a href="https://unlimited-leads.online/sign-up" class="popup-btn">
-          <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
-          Get My Free Leads
-        </a>
-        <button class="popup-btn popup-btn-secondary" onclick="closePopup()">
-          Maybe Later
-        </button>
+      
+      <div class="premium-features">
+        <div class="premium-feature">
+          <h4><i class="fas fa-bullseye"></i> Enhanced Accuracy</h4>
+          <p>Advanced algorithms with multiple data sources for 95%+ accuracy rates</p>
+        </div>
+        <div class="premium-feature">
+          <h4><i class="fas fa-code"></i> Full API Access</h4>
+          <p>Integrate directly into your applications with our RESTful API</p>
+        </div>
+        <div class="premium-feature">
+          <h4><i class="fas fa-tachometer-alt"></i> High-Speed Processing</h4>
+          <p>Process thousands of companies in minutes, not hours</p>
+        </div>
+        <div class="premium-feature">
+          <h4><i class="fas fa-database"></i> Advanced Data Sources</h4>
+          <p>Access to premium databases and real-time verification systems</p>
+        </div>
       </div>
+
+      <p style="margin-bottom: 1rem;">
+        We're actively discussing the development roadmap and gathering feedback from the community. Join the conversation to help shape these tools and be among the first to access the premium features.
+      </p>
+
+      <a href="https://www.reddit.com/r/SaaS/comments/1mq8d4r/company_url_finder/" target="_blank" rel="dofollow" class="reddit-link">
+        <i class="fab fa-reddit"></i>
+        Join the Discussion on Reddit
+      </a>
     </div>
-  </div>
+  </section>
 
     <!-- Related Free Tools Section -->
     <section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
@@ -507,6 +626,30 @@
             </div>
         </div>
     </section>
+
+  <!-- Popup Modal -->
+  <div id="leadsPopup" class="popup-overlay">
+    <div class="popup-modal">
+      <button class="popup-close" onclick="closePopup()">&times;</button>
+      <div class="popup-icon">
+        <i class="fas fa-gift"></i>
+      </div>
+      <h3 class="popup-title">Get Your First <span class="popup-highlight">250 Leads FREE!</span></h3>
+      <p class="popup-text">
+        Start building your business with our premium lead generation tools. 
+        Sign up now and get <strong>250 high-quality leads absolutely free</strong> - no strings attached!
+      </p>
+      <div>
+        <a href="https://unlimited-leads.online/sign-up" class="popup-btn">
+          <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
+          Get My Free Leads
+        </a>
+        <button class="popup-btn popup-btn-secondary" onclick="closePopup()">
+          Maybe Later
+        </button>
+      </div>
+    </div>
+  </div>
 
  <footer id="contact" class="footer">
     <div class="container">
