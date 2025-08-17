@@ -14,6 +14,7 @@
     // Industry mapping based on your exact industry list
     function getIndustryFromKeyword(keyword) {
         const industryMap = {
+            // Medical & Healthcare
             'academic': 'Education',
             'accountant': 'Accounting',
             'accounting': 'Accounting',
@@ -43,8 +44,173 @@
             'healthcare': 'Hospital & health care',
             'hospital': 'Hospital & health care',
             'medical': 'Hospital & health care',
+            'emt': 'Hospital & health care',
+            'paramedic': 'Hospital & health care',
+            
+            // Construction & Trade Services
+            'electrician': 'Construction',
+            'hvac': 'Construction',
+            'hvac technician': 'Construction',
+            'welder': 'Construction',
+            'roofer': 'Construction',
+            'painter': 'Construction',
+            'flooring installer': 'Construction',
+            'carpet installer': 'Construction',
+            'window installer': 'Construction',
+            'solar panel installer': 'Clean energy',
             'architect': 'Architecture & planning',
             'engineer': 'Civil engineering',
+            'construction': 'Construction',
+            'contractor': 'Construction',
+            'plumber': 'Construction',
+            
+            // Automotive & Mechanics
+            'automotive mechanic': 'Automotive',
+            'automotive': 'Automotive',
+            'mechanic': 'Automotive',
+            
+            // Services & Repair
+            'locksmith': 'Consumer services',
+            'appliance repair': 'Consumer services',
+            'appliance repair technician': 'Consumer services',
+            
+            // Landscaping & Environmental
+            'landscaper': 'Environmental services & clean energy',
+            'tree service': 'Environmental services & clean energy',
+            'environmental consultant': 'Environmental services & clean energy',
+            'waste management': 'Environmental services & clean energy',
+            'environmental engineer': 'Environmental services & clean energy',
+            'recycling': 'Environmental services & clean energy',
+            'pest control': 'Environmental services & clean energy',
+            
+            // Creative & Design
+            'graphic designer': 'Design',
+            'photographer': 'Media production',
+            'video producer': 'Media production',
+            'film producer': 'Media production',
+            'web designer': 'Design',
+            'content creator': 'Media production',
+            'copywriter': 'Writing & editing',
+            'art director': 'Design',
+            'design': 'Design',
+            
+            // Marketing & Advertising
+            'marketing agency': 'Marketing & advertising',
+            'advertising professional': 'Marketing & advertising',
+            'social media manager': 'Marketing & advertising',
+            'brand manager': 'Marketing & advertising',
+            'marketing': 'Marketing & advertising',
+            'advertising': 'Marketing & advertising',
+            
+            // Beauty & Personal Care
+            'hair stylist': 'Consumer services',
+            'barber': 'Consumer services',
+            'esthetician': 'Health, Wellness & fitness',
+            'nail technician': 'Consumer services',
+            'spa owner': 'Health, Wellness & fitness',
+            'cosmetologist': 'Consumer services',
+            
+            // Fitness & Wellness
+            'personal trainer': 'Health, Wellness & fitness',
+            'fitness instructor': 'Health, Wellness & fitness',
+            'yoga instructor': 'Health, Wellness & fitness',
+            'pilates instructor': 'Health, Wellness & fitness',
+            'gym owner': 'Health, Wellness & fitness',
+            'swimming instructor': 'Health, Wellness & fitness',
+            
+            // Emergency Services & Public Safety
+            'firefighter': 'Public safety',
+            'police': 'Public safety',
+            'police department': 'Public safety',
+            'security company': 'Computer & network security',
+            'private security guard': 'Computer & network security',
+            'security': 'Computer & network security',
+            
+            // Agriculture & Food
+            'farmer': 'Agriculture',
+            'livestock farmer': 'Agriculture',
+            'crop farmer': 'Agriculture',
+            'dairy farmer': 'Agriculture',
+            'agricultural equipment dealer': 'Agriculture',
+            'food processing company': 'Food production',
+            'organic food producer': 'Food production',
+            'agriculture': 'Agriculture',
+            'food truck owner': 'Restaurants',
+            'caterer': 'Events services',
+            
+            // Transportation & Logistics
+            'logistics coordinator': 'Logistics & supply chain',
+            'warehouse manager': 'Warehousing',
+            'shipping company': 'Transportation',
+            'freight broker': 'Transportation',
+            'moving company': 'Transportation',
+            'courier service': 'Transportation',
+            'delivery service': 'Transportation',
+            'transportation': 'Transportation',
+            'trucking': 'Transportation',
+            'railroad': 'Transportation',
+            'logistics': 'Logistics & supply chain',
+            'supply': 'Logistics & supply chain',
+            'warehouse': 'Warehousing',
+            
+            // Social Services & Non-Profit
+            'social worker': 'Civic & social organization',
+            'non-profit organization': 'Civic & social organization',
+            'family therapist': 'Health, Wellness & fitness',
+            'mental health counselor': 'Health, Wellness & fitness',
+            'community organizer': 'Civic & social organization',
+            
+            // Energy & Clean Technology
+            'renewable energy company': 'Clean energy',
+            'solar energy company': 'Clean energy',
+            'wind energy company': 'Clean energy',
+            'solar': 'Clean energy',
+            'renewable energy': 'Clean energy',
+            'clean energy': 'Clean energy',
+            
+            // Retail & Store Management
+            'retail store manager': 'Retail',
+            'grocery store manager': 'Retail',
+            'gas station owner': 'Retail',
+            'convenience store owner': 'Retail',
+            'pet store owner': 'Retail',
+            'retail': 'Retail',
+            
+            // Cleaning & Facility Services
+            'dry cleaner': 'Consumer services',
+            'laundromat owner': 'Consumer services',
+            'cleaning service': 'Facilities & services',
+            'janitorial service': 'Facilities & services',
+            'facility': 'Facilities & services',
+            
+            // Sports & Recreation
+            'sports coach': 'Sporting goods',
+            'athletic director': 'Sporting goods',
+            'recreation center': 'Leisure, Travel & tourism',
+            'sports equipment dealer': 'Sporting goods',
+            'golf pro': 'Leisure, Travel & tourism',
+            'tennis instructor': 'Sporting goods',
+            'golf': 'Leisure, Travel & tourism',
+            
+            // Government & Public Administration
+            'mayor': 'Government administration',
+            'city council': 'Government administration',
+            'government employee': 'Government administration',
+            'municipal worker': 'Government administration',
+            'county official': 'Government administration',
+            'state employee': 'Government administration',
+            'government': 'Government administration',
+            'public': 'Government administration',
+            'political': 'Political organization',
+            
+            // Event Services
+            'event planner': 'Events services',
+            'wedding planner': 'Events services',
+            'funeral director': 'Consumer services',
+            'funeral home': 'Consumer services',
+            'event': 'Events services',
+            
+            // Business & Executive
             'teacher': 'Education',
             'professor': 'Education',
             'principal': 'Education',
@@ -55,63 +221,58 @@
             'cto': 'Information technology & services',
             'cio': 'Information technology & services',
             'cmo': 'Marketing & advertising',
+            
+            // Real Estate & Property
             'real estate': 'Real estate',
             'realtor': 'Real estate',
+            'property': 'Real estate',
+            
+            // Hospitality & Food Service
             'restaurant': 'Restaurants',
             'hotel': 'Hospitality',
+            'travel': 'Leisure, Travel & tourism',
+            
+            // Finance & Insurance
             'insurance': 'Insurance',
             'bank': 'Banking',
             'banking': 'Banking',
-            'construction': 'Construction',
-            'contractor': 'Construction',
+            'finance': 'Finance',
+            'financial': 'Finance',
+            'investor': 'Venture capital & private equity',
+            
+            // Manufacturing & Industry
             'manufacturing': 'Manufacturing',
             'oil': 'Utilities',
             'gas': 'Utilities',
-            'automotive': 'Automotive',
-            'agriculture': 'Agriculture',
             'aviation': 'Aviation & aerospace',
             'aerospace': 'Aviation & aerospace',
             'biotechnology': 'Biotechnology',
             'pharmaceutical': 'Hospital & health care',
             'mining': 'Utilities',
-            'transportation': 'Transportation',
-            'trucking': 'Transportation',
-            'railroad': 'Transportation',
             'telecommunications': 'Telecommunications',
             'telecom': 'Telecommunications',
             'printing': 'Paper & forest products',
             'packaging': 'Paper & forest products',
-            'facility': 'Facilities & services',
-            'property': 'Real estate',
-            'marketing': 'Marketing & advertising',
-            'advertising': 'Marketing & advertising',
-            'hr': 'Staffing & recruiting',
-            'human resources': 'Staffing & recruiting',
-            'recruiter': 'Staffing & recruiting',
-            'travel': 'Leisure, Travel & tourism',
-            'church': 'Civic & social organization',
-            'pastor': 'Civic & social organization',
-            'retail': 'Retail',
-            'jewelry': 'Luxury goods & jewelry',
-            'gift': 'Retail',
-            'golf': 'Leisure, Travel & tourism',
-            'event': 'Events services',
-            'pest': 'Environmental services & clean energy',
-            'plumber': 'Construction',
+            
+            // Technology & IT
             'software': 'Computer software',
             'it': 'Information technology & services',
             'msp': 'Information technology & services',
+            
+            // HR & Staffing
+            'hr': 'Staffing & recruiting',
+            'human resources': 'Staffing & recruiting',
+            'recruiter': 'Staffing & recruiting',
+            
+            // Other Services
+            'church': 'Civic & social organization',
+            'pastor': 'Civic & social organization',
             'business owner': 'Business supplies & equipment',
-            'investor': 'Venture capital & private equity',
-            'finance': 'Finance',
-            'financial': 'Finance',
-            'warehouse': 'Warehousing',
             'wholesale': 'Wholesale',
             'food': 'Food & beverages',
             'beverage': 'Food & beverages',
             'wine': 'Wine & spirits',
             'spirits': 'Wine & spirits',
-            'design': 'Design',
             'furniture': 'Furniture',
             'electronics': 'Consumer electronics',
             'machinery': 'Machinery',
@@ -121,13 +282,7 @@
             'media': 'Media production',
             'broadcasting': 'Broadcast media',
             'internet': 'Internet',
-            'government': 'Government administration',
-            'public': 'Government administration',
-            'political': 'Political organization',
             'safety': 'Public safety',
-            'security': 'Computer & network security',
-            'logistics': 'Logistics & supply chain',
-            'supply': 'Logistics & supply chain',
             'maritime': 'Maritime',
             'writing': 'Writing & editing',
             'editing': 'Writing & editing'
