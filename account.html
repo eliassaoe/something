@@ -744,7 +744,7 @@ header {
             const creditsElement = document.getElementById('userCredits');
             
             if (creditsElement) {
-                creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
+                creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${(credits === -1 || credits === -2) ? 'Unlimited' : credits + ' credits'}`;
             }
         }
 
