@@ -19,6 +19,7 @@
             
             // Healthcare & Medical
             'healthcare', 'medical', 'hospital', 'health care', 'biotechnology', 'pharmaceutical',
+            'medical device', 'medical equipment', 'dental equipment',
             
             // Technology & IT
             'technology', 'software', 'computer software', 'information technology', 'it services', 
@@ -27,6 +28,7 @@
             // Manufacturing & Industry
             'manufacturing', 'automotive', 'aviation', 'aerospace', 'chemicals', 'machinery',
             'electrical manufacturing', 'electronic manufacturing', 'building materials',
+            'packaging', 'printing', 'publishing',
             
             // Energy & Utilities
             'oil', 'gas', 'utilities', 'mining', 'clean energy', 'renewable energy', 'solar energy',
@@ -60,10 +62,14 @@
             // Education & Social Services
             'education', 'health wellness fitness', 'wellness', 'fitness',
             
+            // Service Industries
+            'call center', 'facility management', 'facilities management', 'janitorial services',
+            'cleaning services', 'security services',
+            
             // Other Industries
             'hospitality', 'leisure', 'travel', 'tourism', 'events services', 'facilities services',
             'design', 'animation', 'arts', 'crafts', 'sporting goods', 'paper', 'forest products',
-            'printing', 'packaging', 'textiles', 'defense', 'space', 'writing', 'editing',
+            'printing and publishing', 'textiles', 'defense', 'space', 'writing', 'editing',
             'business supplies', 'equipment'
         ];
 
@@ -355,7 +361,18 @@
             'safety': 'Public safety',
             'maritime': 'Maritime',
             'writing': 'Writing & editing',
-            'editing': 'Writing & editing'
+            'editing': 'Writing & editing',
+            
+            // Additional Industry Terms
+            'call center': 'Consumer services',
+            'medical device': 'Hospital & health care',
+            'medical equipment': 'Hospital & health care',
+            'dental equipment': 'Hospital & health care',
+            'packaging': 'Paper & forest products',
+            'publishing': 'Media production',
+            'printing and publishing': 'Paper & forest products',
+            'facility management': 'Facilities & services',
+            'facilities management': 'Facilities & services'
         };
 
         const lowerKeyword = keyword.toLowerCase();
