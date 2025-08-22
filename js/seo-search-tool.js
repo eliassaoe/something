@@ -288,10 +288,14 @@
             // Beauty & Personal Care
             'hair stylist': 'Consumer services',
             'barber': 'Consumer services',
-            'esthetician': 'Health, Wellness & fitness',
-            'nail technician': 'Consumer services',
+            'esthetician': 'Beauty & cosmetics',
+            'nail technician': 'Beauty & cosmetics',
             'spa owner': 'Health, Wellness & fitness',
-            'cosmetologist': 'Consumer services',
+            'cosmetologist': 'Beauty & cosmetics',
+            'beauty': 'Beauty & cosmetics',
+            'beauty industry': 'Beauty & cosmetics',
+            'cosmetics': 'Beauty & cosmetics',
+            'beauty and cosmetics': 'Beauty & cosmetics',
             
             // Fitness & Wellness
             'personal trainer': 'Health, Wellness & fitness',
@@ -495,7 +499,10 @@
             'mining': 'Utilities',
             'telecommunications': 'Telecommunications',
             'telecom': 'Telecommunications',
-            'printing': 'Paper & forest products',
+            'printing': 'Printing & publishing',
+            'publishing': 'Printing & publishing',
+            'printing and publishing': 'Printing & publishing',
+            'printing and publishing industry': 'Printing & publishing',
             'packaging': 'Paper & forest products',
             
             // Technology & IT
@@ -544,17 +551,12 @@
             'medical device': 'Hospital & health care',
             'medical equipment': 'Hospital & health care',
             'dental equipment': 'Hospital & health care',
-            'packaging': 'Paper & forest products',
-            'publishing': 'Media production',
-            'printing and publishing': 'Paper & forest products',
             'facility management': 'Facilities & services',
             'facilities management': 'Facilities & services',
             
             // Missing Industry Keywords
-            'beauty industry': 'Consumer services',
             'travel industry': 'Leisure, Travel & tourism',
             'wholesale industry': 'Wholesale',
-            'printing and publishing industry': 'Paper & forest products',
             'banking and finance industry': 'Banking',
             'aviation and aerospace industry': 'Aviation & aerospace',
             'technology industry': 'Technology',
@@ -702,6 +704,7 @@
                                 <option value="Automotive">Automotive</option>
                                 <option value="Aviation & aerospace">Aviation & aerospace</option>
                                 <option value="Banking">Banking</option>
+                                <option value="Beauty & cosmetics">Beauty & cosmetics</option>
                                 <option value="Biotechnology">Biotechnology</option>
                                 <option value="Broadcast media">Broadcast media</option>
                                 <option value="Building materials">Building materials</option>
@@ -749,6 +752,7 @@
                                 <option value="Media production">Media production</option>
                                 <option value="Paper & forest products">Paper & forest products</option>
                                 <option value="Political organization">Political organization</option>
+                                <option value="Printing & publishing">Printing & publishing</option>
                                 <option value="Public safety">Public safety</option>
                                 <option value="Real estate">Real estate</option>
                                 <option value="Restaurants">Restaurants</option>
