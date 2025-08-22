@@ -16,61 +16,84 @@
         const industryKeywords = [
             // Finance & Banking
             'banking', 'finance', 'financial', 'insurance', 'capital markets', 'venture capital', 'private equity',
+            'banking and finance', 'banking and finance industry',
             
             // Healthcare & Medical
             'healthcare', 'medical', 'hospital', 'health care', 'biotechnology', 'pharmaceutical',
-            'medical device', 'medical equipment', 'dental equipment',
+            'medical device', 'medical equipment', 'dental equipment', 'health wellness fitness',
             
             // Technology & IT
             'technology', 'software', 'computer software', 'information technology', 'it services', 
             'computer networking', 'computer security', 'network security', 'internet',
+            'technology industry', 'computer software industry', 'computer networking industry',
+            'computer and network security', 'internet industry',
             
             // Manufacturing & Industry
             'manufacturing', 'automotive', 'aviation', 'aerospace', 'chemicals', 'machinery',
             'electrical manufacturing', 'electronic manufacturing', 'building materials',
-            'packaging', 'printing', 'publishing',
+            'packaging', 'printing', 'publishing', 'printing and publishing',
+            'aviation and aerospace', 'chemicals industry', 'machinery industry',
+            'electrical and electronic manufacturing',
             
             // Energy & Utilities
             'oil', 'gas', 'utilities', 'mining', 'clean energy', 'renewable energy', 'solar energy',
-            'wind energy', 'environmental services',
+            'wind energy', 'environmental services', 'utilities industry',
             
             // Construction & Real Estate
             'construction', 'real estate', 'property', 'architecture', 'planning', 'civil engineering',
+            'architecture and planning', 'civil engineering industry',
             
             // Retail & Consumer
             'retail', 'consumer goods', 'consumer electronics', 'consumer services', 'wholesale',
             'apparel', 'fashion', 'furniture', 'luxury goods', 'jewelry',
+            'consumer goods industry', 'consumer electronics industry', 'consumer services industry',
+            'apparel and fashion', 'luxury goods and jewelry', 'furniture industry',
             
             // Food & Agriculture
             'agriculture', 'food', 'beverages', 'food production', 'wine', 'spirits', 'restaurants',
+            'food and beverages', 'food production industry', 'wine and spirits',
             
             // Transportation & Logistics
             'transportation', 'logistics', 'supply chain', 'warehousing', 'shipping', 'trucking',
             'railroad', 'maritime', 'airlines', 'aviation',
+            'logistics and supply chain', 'warehousing industry', 'maritime industry',
+            'airlines industry',
             
             // Media & Communications
             'media', 'media production', 'broadcasting', 'broadcast media', 'telecommunications', 
             'telecom', 'marketing', 'advertising',
+            'media production industry', 'broadcast media industry', 'marketing and advertising',
             
             // Legal & Professional Services
             'legal services', 'legal', 'accounting', 'management consulting', 'staffing', 'recruiting',
+            'management consulting industry', 'staffing and recruiting',
             
             // Government & Public
             'government', 'government administration', 'public safety', 'public administration',
             'political organization', 'civic organization', 'social organization',
+            'government administration industry', 'public safety industry', 'political organization industry',
+            'civic and social organization',
             
             // Education & Social Services
             'education', 'health wellness fitness', 'wellness', 'fitness',
             
             // Service Industries
             'call center', 'facility management', 'facilities management', 'janitorial services',
-            'cleaning services', 'security services',
+            'cleaning services', 'security services', 'events services', 'facilities services',
+            'events services industry', 'facilities and services',
             
-            // Other Industries
-            'hospitality', 'leisure', 'travel', 'tourism', 'events services', 'facilities services',
+            // Creative & Design Industries
             'design', 'animation', 'arts', 'crafts', 'sporting goods', 'paper', 'forest products',
             'printing and publishing', 'textiles', 'defense', 'space', 'writing', 'editing',
-            'business supplies', 'equipment'
+            'business supplies', 'equipment',
+            'design industry', 'animation industry', 'arts and crafts', 'sporting goods industry',
+            'paper and forest products', 'defense and space', 'writing and editing',
+            'business supplies and equipment',
+            
+            // Additional Industries
+            'hospitality', 'leisure', 'travel', 'tourism', 'beauty', 'wholesale',
+            'beauty industry', 'travel industry', 'wholesale industry', 'leisure industry',
+            'environmental services industry'
         ];
 
         const lowerKeyword = keyword.toLowerCase();
@@ -527,6 +550,64 @@
             'facility management': 'Facilities & services',
             'facilities management': 'Facilities & services',
             
+            // Missing Industry Keywords
+            'beauty industry': 'Consumer services',
+            'travel industry': 'Leisure, Travel & tourism',
+            'wholesale industry': 'Wholesale',
+            'printing and publishing industry': 'Paper & forest products',
+            'banking and finance industry': 'Banking',
+            'aviation and aerospace industry': 'Aviation & aerospace',
+            'technology industry': 'Technology',
+            'airlines industry': 'Airlines/aviation',
+            'animation industry': 'Animation',
+            'apparel and fashion industry': 'Apparel & fashion',
+            'architecture and planning industry': 'Architecture & planning',
+            'arts and crafts industry': 'Arts & crafts',
+            'broadcast media industry': 'Broadcast media',
+            'building materials industry': 'Building materials',
+            'business supplies and equipment industry': 'Business supplies & equipment',
+            'capital markets industry': 'Capital markets',
+            'chemicals industry': 'Chemicals',
+            'civic and social organization industry': 'Civic & social organization',
+            'civil engineering industry': 'Civil engineering',
+            'computer and network security industry': 'Computer & network security',
+            'computer networking industry': 'Computer networking',
+            'computer software industry': 'Computer software',
+            'consumer electronics industry': 'Consumer electronics',
+            'consumer goods industry': 'Consumer goods',
+            'consumer services industry': 'Consumer services',
+            'defense and space industry': 'Defense & space',
+            'design industry': 'Design',
+            'electrical and electronic manufacturing industry': 'Electrical/electronic manufacturing',
+            'environmental services industry': 'Environmental services & clean energy',
+            'events services industry': 'Events services',
+            'facilities and services industry': 'Facilities & services',
+            'finance industry': 'Finance',
+            'food and beverages industry': 'Food & beverages',
+            'food production industry': 'Food production',
+            'furniture industry': 'Furniture',
+            'government administration industry': 'Government administration',
+            'health wellness and fitness industry': 'Health, Wellness & fitness',
+            'internet industry': 'Internet',
+            'leisure industry': 'Leisure, Travel & tourism',
+            'logistics and supply chain industry': 'Logistics & supply chain',
+            'luxury goods and jewelry industry': 'Luxury goods & jewelry',
+            'machinery industry': 'Machinery',
+            'management consulting industry': 'Management consulting',
+            'maritime industry': 'Maritime',
+            'marketing and advertising industry': 'Marketing & advertising',
+            'media production industry': 'Media production',
+            'paper and forest products industry': 'Paper & forest products',
+            'political organization industry': 'Political organization',
+            'public safety industry': 'Public safety',
+            'sporting goods industry': 'Sporting goods',
+            'staffing and recruiting industry': 'Staffing & recruiting',
+            'utilities industry': 'Utilities',
+            'venture capital and private equity industry': 'Venture capital & private equity',
+            'warehousing industry': 'Warehousing',
+            'wine and spirits industry': 'Wine & spirits',
+            'writing and editing industry': 'Writing & editing',
+            
             // Additional Job Titles
             'small business owners': 'Business supplies & equipment',
             'professionals': 'Education',
@@ -538,11 +619,21 @@
         };
 
         const lowerKeyword = keyword.toLowerCase();
-        for (let [key, industry] of Object.entries(industryMap)) {
+        
+        // First, try exact match
+        if (industryMap[lowerKeyword]) {
+            return industryMap[lowerKeyword];
+        }
+        
+        // Then try partial matches, prioritizing longer matches first
+        const sortedKeys = Object.keys(industryMap).sort((a, b) => b.length - a.length);
+        
+        for (let key of sortedKeys) {
             if (lowerKeyword.includes(key)) {
-                return industry;
+                return industryMap[key];
             }
         }
+        
         return 'Education'; // Default fallback
     }
 
