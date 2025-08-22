@@ -11,6 +11,69 @@
         maxFreeSearches: 10
     };
 
+    // Check if keyword represents an industry rather than a job title
+    function isIndustryKeyword(keyword) {
+        const industryKeywords = [
+            // Finance & Banking
+            'banking', 'finance', 'financial', 'insurance', 'capital markets', 'venture capital', 'private equity',
+            
+            // Healthcare & Medical
+            'healthcare', 'medical', 'hospital', 'health care', 'biotechnology', 'pharmaceutical',
+            
+            // Technology & IT
+            'technology', 'software', 'computer software', 'information technology', 'it services', 
+            'computer networking', 'computer security', 'network security', 'internet',
+            
+            // Manufacturing & Industry
+            'manufacturing', 'automotive', 'aviation', 'aerospace', 'chemicals', 'machinery',
+            'electrical manufacturing', 'electronic manufacturing', 'building materials',
+            
+            // Energy & Utilities
+            'oil', 'gas', 'utilities', 'mining', 'clean energy', 'renewable energy', 'solar energy',
+            'wind energy', 'environmental services',
+            
+            // Construction & Real Estate
+            'construction', 'real estate', 'property', 'architecture', 'planning', 'civil engineering',
+            
+            // Retail & Consumer
+            'retail', 'consumer goods', 'consumer electronics', 'consumer services', 'wholesale',
+            'apparel', 'fashion', 'furniture', 'luxury goods', 'jewelry',
+            
+            // Food & Agriculture
+            'agriculture', 'food', 'beverages', 'food production', 'wine', 'spirits', 'restaurants',
+            
+            // Transportation & Logistics
+            'transportation', 'logistics', 'supply chain', 'warehousing', 'shipping', 'trucking',
+            'railroad', 'maritime', 'airlines', 'aviation',
+            
+            // Media & Communications
+            'media', 'media production', 'broadcasting', 'broadcast media', 'telecommunications', 
+            'telecom', 'marketing', 'advertising',
+            
+            // Legal & Professional Services
+            'legal services', 'legal', 'accounting', 'management consulting', 'staffing', 'recruiting',
+            
+            // Government & Public
+            'government', 'government administration', 'public safety', 'public administration',
+            'political organization', 'civic organization', 'social organization',
+            
+            // Education & Social Services
+            'education', 'health wellness fitness', 'wellness', 'fitness',
+            
+            // Other Industries
+            'hospitality', 'leisure', 'travel', 'tourism', 'events services', 'facilities services',
+            'design', 'animation', 'arts', 'crafts', 'sporting goods', 'paper', 'forest products',
+            'printing', 'packaging', 'textiles', 'defense', 'space', 'writing', 'editing',
+            'business supplies', 'equipment'
+        ];
+
+        const lowerKeyword = keyword.toLowerCase();
+        return industryKeywords.some(industry => {
+            // Check for exact matches or if the keyword contains the industry term
+            return lowerKeyword === industry || lowerKeyword.includes(industry) || industry.includes(lowerKeyword);
+        });
+    }
+
     // Industry mapping based on your exact industry list
     function getIndustryFromKeyword(keyword) {
         const industryMap = {
@@ -20,6 +83,10 @@
             'accounting': 'Accounting',
             'lawyer': 'Legal services',
             'attorney': 'Legal services',
+            'legal': 'Legal services',
+            'legal services': 'Legal services',
+            'law': 'Legal services',
+            'law firm': 'Legal services',
             'doctor': 'Hospital & health care',
             'physician': 'Hospital & health care',
             'dentist': 'Hospital & health care',
@@ -258,6 +325,9 @@
             'software': 'Computer software',
             'it': 'Information technology & services',
             'msp': 'Information technology & services',
+            'technology': 'Technology',
+            'computer software': 'Computer software',
+            'information technology': 'Information technology & services',
             
             // HR & Staffing
             'hr': 'Staffing & recruiting',
@@ -318,18 +388,18 @@
     }
 
     // Create the SEO search tool HTML
-    function createSearchToolHTML(keyword, industry) {
+    function createSearchToolHTML(jobTitle, industry, displayKeyword) {
         return `
         <section style="padding: 4rem 0; background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
             <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
                 <div style="background: white; border-radius: 1rem; padding: 2.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); border: 1px solid #f3f4f6; max-width: 900px; margin: 0 auto;">
-                    <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #111827; font-family: 'Montserrat', sans-serif;">Search ${keyword.charAt(0).toUpperCase() + keyword.slice(1)} Database</h2>
+                    <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #111827; font-family: 'Montserrat', sans-serif;">Search ${displayKeyword.charAt(0).toUpperCase() + displayKeyword.slice(1)} Database</h2>
                     <p style="text-align: center; color: #4b5563; margin-bottom: 2rem; font-size: 1.1rem;">Try our database with a live search preview</p>
                     
                     <form id="seoSearchForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
                         <div style="display: flex; flex-direction: column;">
                             <label style="font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Job Title</label>
-                            <input type="text" id="seoJobTitle" name="jobTitle" placeholder="e.g. ${keyword}" value="${keyword}" style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 15px; transition: all 0.3s ease; background: white;">
+                            <input type="text" id="seoJobTitle" name="jobTitle" placeholder="e.g. lawyer, manager, director" value="${jobTitle}" style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 15px; transition: all 0.3s ease; background: white;">
                         </div>
                         
                         <div style="display: flex; flex-direction: column;">
@@ -758,12 +828,17 @@
             return;
         }
 
-        // Extract keyword and industry
+        // Extract keyword and determine if it's an industry or job title
         const keyword = extractKeyword();
+        const isIndustry = isIndustryKeyword(keyword);
         const industry = getIndustryFromKeyword(keyword);
-
+        
+        // Set values based on whether it's an industry or job title
+        const jobTitle = isIndustry ? '' : keyword;
+        const displayKeyword = keyword; // For the title display
+        
         // Create and inject the search tool
-        const searchToolHTML = createSearchToolHTML(keyword, industry);
+        const searchToolHTML = createSearchToolHTML(jobTitle, industry, displayKeyword);
         targetElement.insertAdjacentHTML('afterend', searchToolHTML);
 
         // Add styles and initialize functionality
