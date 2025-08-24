@@ -11,6 +11,402 @@
         maxFreeSearches: 10
     };
 
+    // Check if keyword represents a country
+    function isCountryKeyword(keyword) {
+        const countryKeywords = [
+            // North America
+            'united states', 'usa', 'us', 'america', 'american', 'united states of america',
+            'canada', 'canadian', 'north america', 'north american',
+            'mexico', 'mexican',
+            
+            // Europe
+            'united kingdom', 'uk', 'britain', 'british', 'england', 'english', 'scotland', 'scottish', 'wales', 'welsh', 'northern ireland',
+            'france', 'french', 'paris',
+            'germany', 'german', 'deutschland', 'berlin',
+            'italy', 'italian', 'rome', 'milan',
+            'spain', 'spanish', 'madrid', 'barcelona',
+            'netherlands', 'dutch', 'holland', 'amsterdam',
+            'sweden', 'swedish', 'stockholm',
+            'norway', 'norwegian', 'oslo',
+            'denmark', 'danish', 'copenhagen',
+            'finland', 'finnish', 'helsinki',
+            'belgium', 'belgian', 'brussels',
+            'switzerland', 'swiss', 'zurich', 'geneva',
+            'austria', 'austrian', 'vienna',
+            'poland', 'polish', 'warsaw',
+            'portugal', 'portuguese', 'lisbon',
+            'ireland', 'irish', 'dublin',
+            'czech republic', 'czech', 'prague',
+            'greece', 'greek', 'athens',
+            'hungary', 'hungarian', 'budapest',
+            'romania', 'romanian', 'bucharest',
+            'bulgaria', 'bulgarian', 'sofia',
+            'croatia', 'croatian', 'zagreb',
+            'slovenia', 'slovenian', 'ljubljana',
+            'slovakia', 'slovak', 'bratislava',
+            'estonia', 'estonian', 'tallinn',
+            'latvia', 'latvian', 'riga',
+            'lithuania', 'lithuanian', 'vilnius',
+            'europe', 'european',
+            
+            // Asia
+            'india', 'indian', 'mumbai', 'delhi', 'bangalore', 'chennai', 'kolkata', 'hyderabad',
+            'china', 'chinese', 'beijing', 'shanghai', 'guangzhou', 'shenzhen',
+            'japan', 'japanese', 'tokyo', 'osaka', 'kyoto',
+            'south korea', 'korean', 'seoul', 'busan',
+            'singapore', 'singaporean',
+            'hong kong', 'hk',
+            'malaysia', 'malaysian', 'kuala lumpur',
+            'thailand', 'thai', 'bangkok',
+            'philippines', 'filipino', 'manila',
+            'indonesia', 'indonesian', 'jakarta',
+            'vietnam', 'vietnamese', 'ho chi minh', 'hanoi',
+            'taiwan', 'taiwanese', 'taipei',
+            'israel', 'israeli', 'tel aviv', 'jerusalem',
+            'uae', 'emirates', 'dubai', 'abu dhabi',
+            'saudi arabia', 'saudi', 'riyadh',
+            'asia', 'asian',
+            
+            // Oceania
+            'australia', 'australian', 'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide',
+            'new zealand', 'kiwi', 'auckland', 'wellington',
+            'oceania',
+            
+            // Africa
+            'south africa', 'south african', 'cape town', 'johannesburg',
+            'nigeria', 'nigerian', 'lagos',
+            'kenya', 'kenyan', 'nairobi',
+            'egypt', 'egyptian', 'cairo',
+            'morocco', 'moroccan', 'casablanca',
+            'africa', 'african',
+            
+            // South America
+            'brazil', 'brazilian', 'sao paulo', 'rio de janeiro',
+            'argentina', 'argentinian', 'buenos aires',
+            'chile', 'chilean', 'santiago',
+            'colombia', 'colombian', 'bogota',
+            'peru', 'peruvian', 'lima',
+            'south america', 'latin america'
+        ];
+
+        const lowerKeyword = keyword.toLowerCase();
+        return countryKeywords.some(country => {
+            // Check for exact matches or if the keyword contains the country term
+            return lowerKeyword === country || lowerKeyword.includes(country) || country.includes(lowerKeyword);
+        });
+    }
+
+    // Country mapping based on keywords
+    function getCountryFromKeyword(keyword) {
+        const countryMap = {
+            // North America
+            'united states': 'United States',
+            'usa': 'United States',
+            'us': 'United States',
+            'america': 'United States',
+            'american': 'United States',
+            'united states of america': 'United States',
+            'north america': 'United States',
+            'north american': 'United States',
+            
+            'canada': 'Canada',
+            'canadian': 'Canada',
+            
+            'mexico': 'Mexico',
+            'mexican': 'Mexico',
+            
+            // Europe
+            'united kingdom': 'United Kingdom',
+            'uk': 'United Kingdom',
+            'britain': 'United Kingdom',
+            'british': 'United Kingdom',
+            'england': 'United Kingdom',
+            'english': 'United Kingdom',
+            'scotland': 'United Kingdom',
+            'scottish': 'United Kingdom',
+            'wales': 'United Kingdom',
+            'welsh': 'United Kingdom',
+            'northern ireland': 'United Kingdom',
+            
+            'france': 'France',
+            'french': 'France',
+            'paris': 'France',
+            
+            'germany': 'Germany',
+            'german': 'Germany',
+            'deutschland': 'Germany',
+            'berlin': 'Germany',
+            
+            'italy': 'Italy',
+            'italian': 'Italy',
+            'rome': 'Italy',
+            'milan': 'Italy',
+            
+            'spain': 'Spain',
+            'spanish': 'Spain',
+            'madrid': 'Spain',
+            'barcelona': 'Spain',
+            
+            'netherlands': 'Netherlands',
+            'dutch': 'Netherlands',
+            'holland': 'Netherlands',
+            'amsterdam': 'Netherlands',
+            
+            'sweden': 'Sweden',
+            'swedish': 'Sweden',
+            'stockholm': 'Sweden',
+            
+            'norway': 'Norway',
+            'norwegian': 'Norway',
+            'oslo': 'Norway',
+            
+            'denmark': 'Denmark',
+            'danish': 'Denmark',
+            'copenhagen': 'Denmark',
+            
+            'finland': 'Finland',
+            'finnish': 'Finland',
+            'helsinki': 'Finland',
+            
+            'belgium': 'Belgium',
+            'belgian': 'Belgium',
+            'brussels': 'Belgium',
+            
+            'switzerland': 'Switzerland',
+            'swiss': 'Switzerland',
+            'zurich': 'Switzerland',
+            'geneva': 'Switzerland',
+            
+            'austria': 'Austria',
+            'austrian': 'Austria',
+            'vienna': 'Austria',
+            
+            'poland': 'Poland',
+            'polish': 'Poland',
+            'warsaw': 'Poland',
+            
+            'portugal': 'Portugal',
+            'portuguese': 'Portugal',
+            'lisbon': 'Portugal',
+            
+            'ireland': 'Ireland',
+            'irish': 'Ireland',
+            'dublin': 'Ireland',
+            
+            'czech republic': 'Czech Republic',
+            'czech': 'Czech Republic',
+            'prague': 'Czech Republic',
+            
+            'greece': 'Greece',
+            'greek': 'Greece',
+            'athens': 'Greece',
+            
+            'hungary': 'Hungary',
+            'hungarian': 'Hungary',
+            'budapest': 'Hungary',
+            
+            'romania': 'Romania',
+            'romanian': 'Romania',
+            'bucharest': 'Romania',
+            
+            'bulgaria': 'Bulgaria',
+            'bulgarian': 'Bulgaria',
+            'sofia': 'Bulgaria',
+            
+            'croatia': 'Croatia',
+            'croatian': 'Croatia',
+            'zagreb': 'Croatia',
+            
+            'slovenia': 'Slovenia',
+            'slovenian': 'Slovenia',
+            'ljubljana': 'Slovenia',
+            
+            'slovakia': 'Slovakia',
+            'slovak': 'Slovakia',
+            'bratislava': 'Slovakia',
+            
+            'estonia': 'Estonia',
+            'estonian': 'Estonia',
+            'tallinn': 'Estonia',
+            
+            'latvia': 'Latvia',
+            'latvian': 'Latvia',
+            'riga': 'Latvia',
+            
+            'lithuania': 'Lithuania',
+            'lithuanian': 'Lithuania',
+            'vilnius': 'Lithuania',
+            
+            // Default Europe mapping
+            'europe': 'United Kingdom',
+            'european': 'United Kingdom',
+            
+            // Asia
+            'india': 'India',
+            'indian': 'India',
+            'mumbai': 'India',
+            'delhi': 'India',
+            'bangalore': 'India',
+            'chennai': 'India',
+            'kolkata': 'India',
+            'hyderabad': 'India',
+            
+            'china': 'China',
+            'chinese': 'China',
+            'beijing': 'China',
+            'shanghai': 'China',
+            'guangzhou': 'China',
+            'shenzhen': 'China',
+            
+            'japan': 'Japan',
+            'japanese': 'Japan',
+            'tokyo': 'Japan',
+            'osaka': 'Japan',
+            'kyoto': 'Japan',
+            
+            'south korea': 'South Korea',
+            'korean': 'South Korea',
+            'seoul': 'South Korea',
+            'busan': 'South Korea',
+            
+            'singapore': 'Singapore',
+            'singaporean': 'Singapore',
+            
+            'hong kong': 'Hong Kong',
+            'hk': 'Hong Kong',
+            
+            'malaysia': 'Malaysia',
+            'malaysian': 'Malaysia',
+            'kuala lumpur': 'Malaysia',
+            
+            'thailand': 'Thailand',
+            'thai': 'Thailand',
+            'bangkok': 'Thailand',
+            
+            'philippines': 'Philippines',
+            'filipino': 'Philippines',
+            'manila': 'Philippines',
+            
+            'indonesia': 'Indonesia',
+            'indonesian': 'Indonesia',
+            'jakarta': 'Indonesia',
+            
+            'vietnam': 'Vietnam',
+            'vietnamese': 'Vietnam',
+            'ho chi minh': 'Vietnam',
+            'hanoi': 'Vietnam',
+            
+            'taiwan': 'Taiwan',
+            'taiwanese': 'Taiwan',
+            'taipei': 'Taiwan',
+            
+            'israel': 'Israel',
+            'israeli': 'Israel',
+            'tel aviv': 'Israel',
+            'jerusalem': 'Israel',
+            
+            'uae': 'United Arab Emirates',
+            'emirates': 'United Arab Emirates',
+            'dubai': 'United Arab Emirates',
+            'abu dhabi': 'United Arab Emirates',
+            
+            'saudi arabia': 'Saudi Arabia',
+            'saudi': 'Saudi Arabia',
+            'riyadh': 'Saudi Arabia',
+            
+            // Default Asia mapping
+            'asia': 'India',
+            'asian': 'India',
+            
+            // Oceania
+            'australia': 'Australia',
+            'australian': 'Australia',
+            'sydney': 'Australia',
+            'melbourne': 'Australia',
+            'brisbane': 'Australia',
+            'perth': 'Australia',
+            'adelaide': 'Australia',
+            
+            'new zealand': 'New Zealand',
+            'kiwi': 'New Zealand',
+            'auckland': 'New Zealand',
+            'wellington': 'New Zealand',
+            
+            // Default Oceania mapping
+            'oceania': 'Australia',
+            
+            // Africa
+            'south africa': 'South Africa',
+            'south african': 'South Africa',
+            'cape town': 'South Africa',
+            'johannesburg': 'South Africa',
+            
+            'nigeria': 'Nigeria',
+            'nigerian': 'Nigeria',
+            'lagos': 'Nigeria',
+            
+            'kenya': 'Kenya',
+            'kenyan': 'Kenya',
+            'nairobi': 'Kenya',
+            
+            'egypt': 'Egypt',
+            'egyptian': 'Egypt',
+            'cairo': 'Egypt',
+            
+            'morocco': 'Morocco',
+            'moroccan': 'Morocco',
+            'casablanca': 'Morocco',
+            
+            // Default Africa mapping
+            'africa': 'South Africa',
+            'african': 'South Africa',
+            
+            // South America
+            'brazil': 'Brazil',
+            'brazilian': 'Brazil',
+            'sao paulo': 'Brazil',
+            'rio de janeiro': 'Brazil',
+            
+            'argentina': 'Argentina',
+            'argentinian': 'Argentina',
+            'buenos aires': 'Argentina',
+            
+            'chile': 'Chile',
+            'chilean': 'Chile',
+            'santiago': 'Chile',
+            
+            'colombia': 'Colombia',
+            'colombian': 'Colombia',
+            'bogota': 'Colombia',
+            
+            'peru': 'Peru',
+            'peruvian': 'Peru',
+            'lima': 'Peru',
+            
+            // Default South America mapping
+            'south america': 'Brazil',
+            'latin america': 'Brazil'
+        };
+
+        const lowerKeyword = keyword.toLowerCase();
+        
+        // First, try exact match
+        if (countryMap[lowerKeyword]) {
+            return countryMap[lowerKeyword];
+        }
+        
+        // Then try partial matches, prioritizing longer matches first
+        const sortedKeys = Object.keys(countryMap).sort((a, b) => b.length - a.length);
+        
+        for (let key of sortedKeys) {
+            if (lowerKeyword.includes(key)) {
+                return countryMap[key];
+            }
+        }
+        
+        return 'United States'; // Default fallback
+    }
+
     // Check if keyword represents an industry rather than a job title
     function isIndustryKeyword(keyword) {
         const industryKeywords = [
@@ -660,7 +1056,7 @@
     }
 
     // Create the SEO search tool HTML
-    function createSearchToolHTML(jobTitle, industry, displayKeyword) {
+    function createSearchToolHTML(jobTitle, country, industry, displayKeyword) {
         return `
         <section style="padding: 4rem 0; background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
             <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
@@ -677,6 +1073,8 @@
                         <div style="display: flex; flex-direction: column;">
                             <label style="font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Country</label>
                             <select id="seoCountry" name="country" style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 15px; transition: all 0.3s ease; background: white;">
+                                <option value="${country}">${country}</option>
+                                <option value="">All Countries</option>
                                 <option value="United States">United States</option>
                                 <option value="Canada">Canada</option>
                                 <option value="United Kingdom">United Kingdom</option>
@@ -686,6 +1084,54 @@
                                 <option value="Netherlands">Netherlands</option>
                                 <option value="Italy">Italy</option>
                                 <option value="Spain">Spain</option>
+                                <option value="India">India</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Norway">Norway</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Finland">Finland</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Bulgaria">Bulgaria</option>
+                                <option value="Croatia">Croatia</option>
+                                <option value="Slovenia">Slovenia</option>
+                                <option value="Slovakia">Slovakia</option>
+                                <option value="Estonia">Estonia</option>
+                                <option value="Latvia">Latvia</option>
+                                <option value="Lithuania">Lithuania</option>
+                                <option value="China">China</option>
+                                <option value="Japan">Japan</option>
+                                <option value="South Korea">South Korea</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Hong Kong">Hong Kong</option>
+                                <option value="Malaysia">Malaysia</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Vietnam">Vietnam</option>
+                                <option value="Taiwan">Taiwan</option>
+                                <option value="Israel">Israel</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="New Zealand">New Zealand</option>
+                                <option value="South Africa">South Africa</option>
+                                <option value="Nigeria">Nigeria</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Egypt">Egypt</option>
+                                <option value="Morocco">Morocco</option>
+                                <option value="Brazil">Brazil</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Chile">Chile</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Peru">Peru</option>
+                                <option value="Mexico">Mexico</option>
                             </select>
                         </div>
                         
@@ -995,7 +1441,7 @@
                     city: city || undefined
                 };
 
-                // Get count - utilise maintenant countUrl
+                // Get count
                 const countResponse = await fetch(CONFIG.countUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1006,7 +1452,7 @@
                 const totalCount = Array.isArray(countData) && countData[0] && countData[0].count 
                     ? parseInt(countData[0].count) : 0;
 
-                // Get sample results - utilise maintenant searchUrl
+                // Get sample results
                 const searchResponse = await fetch(CONFIG.searchUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1102,17 +1548,36 @@
             return;
         }
 
-        // Extract keyword and determine if it's an industry or job title
+        // Extract keyword and determine what it represents
         const keyword = extractKeyword();
-        const isIndustry = isIndustryKeyword(keyword);
-        const industry = getIndustryFromKeyword(keyword);
+        const isCountry = isCountryKeyword(keyword);
+        const isIndustry = !isCountry && isIndustryKeyword(keyword);
         
-        // Set values based on whether it's an industry or job title
-        const jobTitle = isIndustry ? '' : keyword;
-        const displayKeyword = keyword; // For the title display
+        // Set values based on keyword type
+        let jobTitle, country, industry, displayKeyword;
+        
+        if (isCountry) {
+            // If it's a country, set country and leave others empty
+            jobTitle = '';
+            country = getCountryFromKeyword(keyword);
+            industry = '';
+            displayKeyword = keyword;
+        } else if (isIndustry) {
+            // If it's an industry, set industry and leave job title empty
+            jobTitle = '';
+            country = 'United States'; // Default country
+            industry = getIndustryFromKeyword(keyword);
+            displayKeyword = keyword;
+        } else {
+            // If it's a job title, set job title and get industry mapping
+            jobTitle = keyword;
+            country = 'United States'; // Default country
+            industry = getIndustryFromKeyword(keyword);
+            displayKeyword = keyword;
+        }
         
         // Create and inject the search tool
-        const searchToolHTML = createSearchToolHTML(jobTitle, industry, displayKeyword);
+        const searchToolHTML = createSearchToolHTML(jobTitle, country, industry, displayKeyword);
         targetElement.insertAdjacentHTML('afterend', searchToolHTML);
 
         // Add styles and initialize functionality
