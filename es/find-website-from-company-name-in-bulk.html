@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Buscador de URL de empresas gratuito </title><meta content="Encuentre sitios web a partir del nombre de su empresa al por mayor con nuestra herramienta gratuita y rápida de búsqueda de sitios web. Ingrese el nombre de una empresa o envíe un archivo CSV para obtener la URL oficial de su sitio web al instante." name="description"/><!-- Open Graph --><meta content="website" property="og:type"/><meta content="Encuentre sitios web a partir del nombre de su empresa de forma masiva | Clientes potenciales ilimitados" property="og:title"/><meta content="Herramienta gratuita para encontrar sitios web a partir del nombre de la empresa. Buscador rápido, preciso y sencillo para cualquier empresa." property="og:description"/><meta content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" property="og:image"/><!-- Favicon --><link href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" rel="icon"/><!-- Fonts and Icons --><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"><style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #0ea5e9;
+      --gray-50: #f9fafb;
+      --gray-200: #e5e7eb;
+      --gray-800: #1f2937;
+      --success: #10b981;
+      --border-radius: 0.5rem;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); }
+    .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; }
+    
+    /* Header with CTA button */
+    .header-content { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 1.5rem; 
+    }
+    
+    .logo { display: flex; align-items: center; }
+    .logo i { font-size: 1.5rem; color: var(--primary); margin-right: 0.5rem; }
+    .logo-text { font-weight: 700; font-size: 1.5rem; }
+    .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+    .header-cta {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .hero { text-align: center; padding: 3rem 0; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+    .hero p { font-size: 1.125rem; }
+
+    .form-box { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; }
+    .form-box input { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); }
+    .btn { display: block; width: 100%; background: linear-gradient(to right, var(--primary), var(--primary-dark)); color: white; font-weight: 600; padding: 1rem; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); border: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-secondary { background: var(--gray-800); margin-top: 0.5rem; }
+    .btn-secondary:hover { background: #374151; }
+
+    #result { display: none; margin-top: 1.5rem; }
+    #result textarea { width: 100%; height: 200px; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--border-radius); background: var(--gray-50); }
+
+    .website-link { display: inline-block; background: var(--success); color: white; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); text-decoration: none; margin-top: 1rem; font-weight: 600; transition: var(--transition); }
+    .website-link:hover { background: #059669; transform: translateY(-1px); }
+
+    /* Tab Styles */
+    .tab-nav { border-bottom: 2px solid var(--gray-200); }
+    .tab-btn { background: none; border: none; padding: 1rem 1.5rem; font-weight: 600; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .tab-btn:hover { color: var(--primary); }
+
+    /* Upload Area Styles */
+    .upload-area { border: 2px dashed var(--gray-200); border-radius: var(--border-radius); padding: 2rem; text-align: center; transition: var(--transition); cursor: pointer; }
+    .upload-area:hover { border-color: var(--primary); background: rgba(79,70,229,0.05); }
+    .upload-area.dragover { border-color: var(--primary); background: rgba(79,70,229,0.1); }
+
+    /* Table Styles */
+    .results-table { width: 100%; border-collapse: collapse; background: white; }
+    .results-table th, .results-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--gray-200); }
+    .results-table th { background: var(--gray-50); font-weight: 600; }
+    .results-table tr:hover { background: var(--gray-50); }
+    .status-success { color: var(--success); font-weight: 600; }
+    .status-error { color: #ef4444; font-weight: 600; }
+    .website-cell { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .website-cell a { color: var(--primary); text-decoration: none; }
+    .website-cell a:hover { text-decoration: underline; }
+
+    /* Popup Modal Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .popup-modal {
+      background: white;
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      max-width: 480px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .popup-modal.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray-800);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .popup-close:hover {
+      background: var(--gray-200);
+      color: var(--primary);
+    }
+
+    .popup-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .popup-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+    }
+
+    .popup-text {
+      font-size: 1.125rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .popup-highlight {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .popup-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      margin-right: 1rem;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .popup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .popup-btn-secondary {
+      background: transparent;
+      color: var(--gray-600);
+      border: 2px solid var(--gray-300);
+      box-shadow: none;
+    }
+
+    .popup-btn-secondary:hover {
+      background: var(--gray-50);
+      color: var(--gray-800);
+      border-color: var(--gray-400);
+      box-shadow: none;
+    }
+
+    /* Results Upsell Banner */
+    .results-upsell {
+      background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(14,165,233,0.1));
+      border: 2px solid var(--primary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      display: none;
+    }
+
+    .results-upsell h4 {
+      color: var(--primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .results-upsell p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .results-upsell .btn {
+      width: auto;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+    }
+
+    /* Premium Tools Preview Section */
+    .premium-preview {
+      background: linear-gradient(135deg, rgba(79,70,229,0.05), rgba(14,165,233,0.05));
+      border: 1px solid rgba(79,70,229,0.2);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      margin: 3rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-preview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .premium-preview h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .premium-preview .premium-icon {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .premium-preview p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .premium-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .premium-feature {
+      background: white;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(79,70,229,0.1);
+      text-align: left;
+    }
+
+    .premium-feature h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .premium-feature p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    .reddit-link {
+      display: inline-block;
+      background: #ff4500;
+      color: white;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    }
+
+    .reddit-link:hover {
+      background: #e63e00;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 69, 0, 0.4);
+    }
+
+    .reddit-link i {
+      margin-right: 0.5rem;
+    }
+
+    footer { text-align: center; padding: 2rem 1rem; background: var(--gray-800); color: white; margin-top: 4rem; }
+    .footer-content { max-width: 1200px; margin: 0 auto; }
+    .footer-column { margin-bottom: 2rem; }
+    .footer-column h4 { color: white; margin-bottom: 1rem; font-weight: 600; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.5rem; }
+    .footer-links a { color: #d1d5db; text-decoration: none; transition: var(--transition); }
+    .footer-links a:hover { color: white; }
+    .footer-social { margin: 2rem 0; }
+    .footer-social a { color: #d1d5db; font-size: 1.5rem; margin: 0 1rem; transition: var(--transition); }
+    .footer-social a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid #374151; padding-top: 2rem; margin-top: 2rem; }
+    .footer-bottom p { color: #9ca3af; margin-bottom: 0.5rem; }
+    .footer-bottom a { color: #d1d5db; text-decoration: none; }
+    .footer-bottom a:hover { color: white; }
+
+    @media(max-width:768px) { 
+      .hero h1 { font-size: 2rem; }
+      .footer-content { display: block; }
+      .header-content { 
+        padding: 0 1rem;
+        gap: 1rem;
+      }
+      .header-cta { 
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+      }
+      .popup-modal { padding: 2rem 1.5rem; margin: 1rem; }
+      .popup-title { font-size: 1.5rem; }
+      .popup-btn { display: block; width: 100%; margin-bottom: 0.5rem; margin-right: 0; }
+      .premium-preview { padding: 2rem 1.5rem; }
+      .premium-preview h3 { font-size: 1.5rem; }
+      .premium-features { grid-template-columns: 1fr; }
+    }
+    @media(min-width:768px) {
+      .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    }
+  </style></link><link href="https://your-domain.com/en/find-website-from-company-name-in-bulk/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/find-website-from-company-name-in-bulk/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/find-website-from-company-name-in-bulk/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/find-website-from-company-name-in-bulk/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/find-website-from-company-name-in-bulk/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/find-website-from-company-name-in-bulk/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/find-website-from-company-name-in-bulk/" hreflang="pt" rel="alternate"/></head><body><header><div class="header-content"><i class="fas fa-globe"></i><span class="logo-text"><span class="gradient-text">__RESERVA_1____RESERVA_2__</span></span></div> <a class="header-cta" href="https://unlimited-leads.online/sign-up"><i class="fas fa-gift"></i>Obtenga 250 clientes potenciales gratis</a></header><section class="hero"><div class="container"><h1> Buscar la URL del sitio web a partir del nombre de la empresa</h1><p> Ingrese <strong>el nombre de una empresa</strong> para encontrar la URL de su sitio web oficial al instante y de forma gratuita. </p></div></section><section class="container"><div class="form-box"><!-- Tab Navigation --><div class="tab-nav" style="display: flex; margin-bottom: 2rem; border-bottom: 2px solid var(--gray-200);"> <button class="tab-btn active" id="singleTab" onclick="switchTab('single')"><i class="fas fa-search"></i>Búsqueda única</button> <button class="tab-btn" id="bulkTab" onclick="switchTab('bulk')"><i class="fas fa-upload"></i>Carga masiva</button> </div><!-- Single Search Tab --><div class="tab-content" id="singleSearch"><input id="companyName" placeholder="Enter company name e.g. Apple, Microsoft, Tesla" type="text"/><button class="btn" onclick="findWebsite()">Buscar sitio web</button> <button class="btn btn-secondary" onclick="tryExample()">Pruebe un ejemplo</button><div id="result"><h3 style="margin-top: 1rem;"> Resultados:</h3><textarea id="websiteResults" readonly=""> El sitio web aparecerá aquí... </textarea><div id="websiteLink"></div><!-- Results Upsell Banner --><div class="results-upsell" id="resultsUpsell"><h4> ¿Quieres escalar tu investigación?</h4><p> ¡Obtén <strong>250 leads premium</strong> con información de contacto avanzada, correos electrónicos verificados y números de teléfono!</p> <a class="btn" href="https://unlimited-leads.online/sign-up"><i class="fas fa-rocket"></i>Reclama mis leads gratuitos</a> </div></div></div><!-- Bulk Upload Tab --><div class="tab-content" id="bulkSearch" style="display: none;"><div class="upload-area" id="uploadArea"><div class="upload-content"><i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i><h3 style="margin-bottom: 0.5rem;"> Suelta tu archivo CSV aquí</h3><p style="color: #6b7280; margin-bottom: 1rem;"> o haga clic para navegar</p><input accept=".csv" id="csvFile" style="display: none;" type="file"/> <button class="btn" onclick="document.getElementById('csvFile').click()" style="width: auto; padding: 0.75rem 1.5rem;">Seleccionar archivo</button> </div></div><div id="csvPreview" style="display: none; margin-top: 1.5rem;"><h4 style="margin-bottom: 1rem;"> Vista previa (primeras 5 filas): </h4><div id="previewTable" style="overflow-x: auto; border: 1px solid var(--gray-200); border-radius: var(--border-radius);"></div><div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;"> <button class="btn" id="processBulkBtn" onclick="processBulkSearch()">Proceso <span id="companyCount">0</span> Empresas</button> <button class="btn btn-secondary" onclick="downloadTemplate()" style="width: auto;">Descargar Plantilla</button> </div></div><div id="bulkResults" style="display: none; margin-top: 1.5rem;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;"><h4> Resultados masivos:</h4> <button class="btn" onclick="downloadResults()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;"><i class="fas fa-download"></i>Descargar CSV</button> </div><div id="progressBar" style="background: var(--gray-200); height: 8px; border-radius: 4px; margin-bottom: 1rem;"><div id="progressFill" style="background: var(--primary); height: 100%; border-radius: 4px; width: 0%; transition: width 0.3s ease;"></div></div><div id="bulkResultsTable" style="overflow-x: auto; border: 1px solid var(--gray-200); border-radius: var(--border-radius); max-height: 400px; overflow-y: auto;"></div></div></div></div></section><section class="container" style="margin-top: 3rem;"><h2 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;"> Cómo utilizar nuestro buscador de sitios web gratuito</h2><p style="margin-bottom: 1.5rem;"> Nuestra herramienta ofrece dos formas poderosas de <strong>encontrar un sitio web a partir del nombre de la empresa</strong> : búsquedas individuales para búsquedas rápidas o procesamiento masivo para grandes conjuntos de datos.</p><h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;"> Búsqueda única</h3><ol style="margin-left: 1.25rem; margin-bottom: 2rem;"><li style="margin-bottom: 0.75rem;"> <strong>Introduzca un nombre de empresa:</strong> escriba cualquier nombre de empresa en el campo de búsqueda.</li><li style="margin-bottom: 0.75rem;"> <strong>Haga clic en "Buscar sitio web":</strong> nuestra herramienta ejecuta una búsqueda exhaustiva para identificar el sitio web oficial.</li><li> <strong>Obtenga resultados instantáneos:</strong> vea la URL del sitio web mostrada con un enlace directo para visitarlo.</li></ol><h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;"> Procesamiento masivo de CSV</h3><ol style="margin-left: 1.25rem; margin-bottom: 2rem;"><li style="margin-bottom: 0.75rem;"> <strong>Prepare su CSV:</strong> cree un archivo CSV con una columna llamada "company_name", "company" o "name".</li><li style="margin-bottom: 0.75rem;"> <strong>Sube tu archivo:</strong> arrastra y suelta tu CSV o haz clic para buscarlo y seleccionarlo.</li><li style="margin-bottom: 0.75rem;"> <strong>Vista previa y procesamiento:</strong> revise las primeras 5 filas, luego haga clic en "Procesar" para encontrar los sitios web de todas las empresas.</li><li> <strong>Descargar resultados:</strong> exporte sus resultados como un nuevo archivo CSV con nombres de empresas, sitios web y estado.</li></ol><h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;"> ¿Por qué utilizar nuestro buscador de sitios web por nombre de empresa?</h3><p style="margin-bottom: 1.5rem;"> Ya sea que desee <strong>encontrar el sitio web de una empresa a partir del nombre</strong> o investigar clientes potenciales, nuestra herramienta lo hace muy sencillo:</p><ul style="margin-left: 1.25rem; margin-bottom: 2rem;"><li style="margin-bottom: 0.75rem;"> <strong>Procesamiento masivo:</strong> cargue archivos CSV para procesar cientos o miles de empresas a la vez.</li><li style="margin-bottom: 0.75rem;"> <strong>Resultados precisos:</strong> encuentre el sitio web oficial, no cualquier página relacionada.</li><li style="margin-bottom: 0.75rem;"> <strong>Coincidencia inteligente:</strong> utiliza algoritmos avanzados para identificar el sitio web correcto de la empresa.</li><li style="margin-bottom: 0.75rem;"> <strong>Progreso en tiempo real:</strong> observe el progreso de sus búsquedas masivas con actualizaciones en vivo y seguimiento del estado.</li><li style="margin-bottom: 0.75rem;"> <strong>Sin instalaciones:</strong> 100 % basado en web, no necesita software ni complementos.</li><li> <strong>Centrado en la privacidad:</strong> nunca almacenamos ni compartimos sus entradas; las búsquedas son confidenciales y seguras.</li></ul><h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;"> Encuentre el sitio web a partir del nombre de la empresa: gratis e ilimitado</h3><p style="margin-bottom: 1rem;"> Nuestro objetivo es democratizar la inteligencia empresarial. Por eso, nuestra herramienta <strong>gratuita para encontrar sitios web a partir del nombre de la empresa</strong> ofrece:</p><ul style="margin-left: 1.25rem;"><li style="margin-bottom: 0.75rem;"> <strong>Búsquedas ilimitadas:</strong> sin límites, sin muros de pago: procese empresas individuales o bases de datos completas.</li><li style="margin-bottom: 0.75rem;"> <strong>Exportación CSV:</strong> descargue sus resultados masivos en formato CSV para importarlos fácilmente a CRMs, hojas de cálculo o bases de datos.</li><li style="margin-bottom: 0.75rem;"> <strong>Listo para investigación:</strong> perfecto para generación de clientes potenciales, análisis de la competencia o investigación de mercado a escala.</li><li style="margin-bottom: 0.75rem;"> <strong>Rápido y confiable:</strong> funciona para pequeñas empresas emergentes y compañías Fortune 500 con la misma velocidad.</li><li> <strong>Plantilla incluida:</strong> Descargue nuestra plantilla CSV para comenzar de inmediato con el formato correcto. </li></ul></section><!-- Premium Tools Preview Section --><section class="container"><div class="premium-preview"><h3><i class="fas fa-rocket premium-icon"></i> Lo que viene a continuación: Herramientas premium y acceso a API</h3><p> Estamos desarrollando la próxima generación de estas herramientas con precisión de nivel empresarial, capacidades avanzadas de procesamiento masivo y acceso completo a API para desarrolladores. Nuestra versión premium ofrecerá una calidad de datos y una velocidad de procesamiento significativamente mejoradas para las empresas que necesitan soluciones fiables y escalables.</p><div class="premium-features"><div class="premium-feature"><h4><i class="fas fa-bullseye"></i> Precisión mejorada</h4><p> Algoritmos avanzados con múltiples fuentes de datos para tasas de precisión superiores al 95 %</p></div><div class="premium-feature"><h4><i class="fas fa-code"></i> Acceso completo a API</h4><p> Integre directamente en sus aplicaciones con nuestro RESTful API</p></div><div class="premium-feature"><h4><i class="fas fa-tachometer-alt"></i> Procesamiento de alta velocidad</h4><p> Procese miles de empresas en minutos, no en horas</p></div><div class="premium-feature"><h4><i class="fas fa-database"></i> Fuentes de datos avanzadas</h4><p> Acceso a bases de datos premium y sistemas de verificación en tiempo real</p></div></div><p style="margin-bottom: 1rem;"> Estamos debatiendo activamente la hoja de ruta de desarrollo y recopilando comentarios de la comunidad. Únete a la conversación para ayudar a desarrollar estas herramientas y ser de los primeros en acceder a las funciones premium.</p> <a class="reddit-link" href="https://www.reddit.com/r/SaaS/comments/1mq8d4r/company_url_finder/" rel="dofollow" target="_blank"><i class="fab fa-reddit"></i>Únase a la discusión en Reddit</a> </div></section><!-- Related Free Tools Section --><section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"><div class="container"><h2 style="font-size: 2rem; text-align: center; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;"> Herramientas gratuitas relacionadas </h2><p style="text-align: center; color: var(--gray-600); margin-bottom: 2.5rem; font-size: 1.1rem;"> Aumente su productividad con estas herramientas gratuitas complementarias para la prospección por correo electrónico y la generación de clientes potenciales. </p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;"><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #43e97b, #38f9d7); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">🔍</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Extractor de dominios </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Extraiga nombres de dominio de texto, URL y listas de correo electrónico de manera eficiente.</p> <a href="https://unlimited-leads.online/domain-extractor" style="background: #43e97b; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Pruebe la herramienta gratuita →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #43e97b, #38f9d7); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">🔍</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Raspador de mapas de Google </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Extraiga información comercial y leads de los listados de Google Maps.</p> <a href="https://unlimited-leads.online/google-map-scraper" style="background: #43e97b; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Pruebe la herramienta gratuita →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">📧</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Buscador de correo electrónico masivo </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Encuentre varias direcciones de correo electrónico a la vez con nuestra poderosa herramienta de descubrimiento masivo.</p> <a href="https://unlimited-leads.online/bulk-email-finder" style="background: #f5576c; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Pruebe la herramienta gratuita →</a> </div></div><div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 0.75rem; backdrop-filter: blur(10px);"><p style="color: var(--gray-700); font-size: 1rem; margin-bottom: 0.5rem;"> <strong>Consejo profesional: ¡</strong> Combina varias herramientas para lograr la máxima eficiencia!</p><p style="color: var(--gray-600); font-size: 0.9rem;"> Utilice estas herramientas juntas para crear un flujo de trabajo de prospección completo que ahorre tiempo y aumente su tasa de éxito. </p></div></div></section><!-- Popup Modal --><div class="popup-overlay" id="leadsPopup"><div class="popup-modal"> <button class="popup-close" onclick="closePopup()">×</button><div class="popup-icon"><i class="fas fa-gift"></i></div><h3 class="popup-title"> ¡Obtén tus primeros <span class="popup-highlight">250 leads GRATIS!</span></h3><p class="popup-text"> Empieza a desarrollar tu negocio con nuestras herramientas premium de generación de leads. Regístrate ahora y obtén <strong>250 leads de alta calidad totalmente gratis</strong> , ¡sin compromiso!</p><div> <a class="popup-btn" href="https://unlimited-leads.online/sign-up"><i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>Obtenga mis clientes potenciales gratuitos</a> <button class="popup-btn popup-btn-secondary" onclick="closePopup()">Quizás más tarde</button> </div></div></div><footer class="footer" id="contact"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Herramientas gratuitas</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/bulk-email-finder">Buscador de correos electrónicos masivos</a></li><li> <a href="https://unlimited-leads.online/spam-words-checker">Comprobador de palabras spam</a></li><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Buscar correo electrónico a partir del número de teléfono</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Búsqueda masiva de MX</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extractor de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/spintax-generator">Generador de Spintax</a></li><li> <a href="https://unlimited-leads.online/email-permutator">Permutador de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper">Raspador de mapas de Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Buscador de correo electrónico Apollo</a></li><li> <a href="https://unlimited-leads.online/ai-email-template-generator">Generador de plantillas de correo electrónico con IA</a></li><li> <a href="https://unlimited-leads.online/ai-email-reply-generator-free">Generador de respuestas de correo electrónico con IA</a></li><li> <a href="https://unlimited-leads.online/cold-email-generator">Generador de correo electrónico frío</a></li><li> <a href="https://unlimited-leads.online/email-name-generator">Generador de nombres de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/linkedin-headline-generator">Generador de titulares de Linkedin</a></li><li> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Navegador de ventas de Linkedin Scrapper</a></li><li> <a href="https://unlimited-leads.online/domain-extractor">Extractor de dominios</a></li><li> <a href="https://unlimited-leads.online/phone-number-extractor">Extractor de números de teléfono</a></li><li> <a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Buscar sitios web a partir del nombre de la empresa de forma masiva</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparar</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa a Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa a ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa a Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa de ContactOut</a></li><li> <a href="https://unlimited-leads.online/rocketreach-alternative">Alternativa a RocketReach</a></li><li> <a href="https://unlimited-leads.online/uplead-alternative">Alternativa a UpLead</a></li><li> <a href="https://unlimited-leads.online/evaboot-alternative">Alternativa a Evaboot</a></li><li> <a href="https://unlimited-leads.online/scrupp-alternative">Alternativa a Scrupp</a></li></ul></div><!-- Industry Email List Section --><div class="footer-column"><h4> Lista de correo electrónico de la industria</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/accountants-email-list">Lista de correo electrónico de contables</a></li><li> <a href="https://unlimited-leads.online/attorney-email-list">Lista de correo electrónico de abogados</a></li><li> <a href="https://unlimited-leads.online/ceo-email-list">Lista de correo electrónico de directores ejecutivos</a></li><li> <a href="https://unlimited-leads.online/cfo-email-list">Lista de correo electrónico de directores financieros</a></li><li> <a href="https://unlimited-leads.online/construction-industry-email-list">Lista de correo electrónico de la industria de la construcción</a></li><li> <a href="https://unlimited-leads.online/hr-email-list">Lista de correo electrónico de RR.HH.</a></li><li> <a href="https://unlimited-leads.online/real-estate-agent-email-list">Lista de correo electrónico de agentes inmobiliarios</a></li><li> <a href="https://unlimited-leads.online/email-list">Todas las listas de correo electrónico</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contáctenos</h4><ul class="footer-links"><li> <a href="mailto:support@unlimited-leads.online">soporte@unlimited-leads.online</a></li><li> <a href="mailto:support@unlimited-leads.online">Solicitar plan personalizado</a></li></ul></div><div class="footer-social"><a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Todos los derechos reservados.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Política de privacidad</a> | <a href="https://unlimited-leads.online/legal-notice">Condiciones de servicio</a></p></div></div></div></footer><script>
+    let bulkResults = [];
+    let csvData = [];
+    let searchCount = 0;
+    let popupShown = false;
+
+    // Popup functionality
+    function showPopup() {
+      if (!popupShown && !localStorage.getItem('popupDismissed')) {
+        const popup = document.getElementById('leadsPopup');
+        const modal = popup.querySelector('.popup-modal');
+        
+        popup.style.display = 'flex';
+        setTimeout(() => {
+          modal.classList.add('show');
+        }, 50);
+        
+        popupShown = true;
+      }
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('leadsPopup');
+      const modal = popup.querySelector('.popup-modal');
+      
+      modal.classList.remove('show');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 300);
+      
+      // Remember that user dismissed the popup (for this session)
+      localStorage.setItem('popupDismissed', 'true');
+    }
+
+    // Show popup after 20 seconds
+    setTimeout(showPopup, 20000);
+
+    // Close popup when clicking outside
+    document.getElementById('leadsPopup').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePopup();
+      }
+    });
+
+    // Tab switching functionality
+    function switchTab(tab) {
+      const singleTab = document.getElementById('singleTab');
+      const bulkTab = document.getElementById('bulkTab');
+      const singleSearch = document.getElementById('singleSearch');
+      const bulkSearch = document.getElementById('bulkSearch');
+
+      if (tab === 'single') {
+        singleTab.classList.add('active');
+        bulkTab.classList.remove('active');
+        singleSearch.style.display = 'block';
+        bulkSearch.style.display = 'none';
+      } else {
+        bulkTab.classList.add('active');
+        singleTab.classList.remove('active');
+        bulkSearch.style.display = 'block';
+        singleSearch.style.display = 'none';
+      }
+    }
+
+    function findWebsite() {
+      const companyName = document.getElementById('companyName').value.trim();
+      const resultBox = document.getElementById('result');
+      const resultText = document.getElementById('websiteResults');
+      const websiteLink = document.getElementById('websiteLink');
+      const resultsUpsell = document.getElementById('resultsUpsell');
+      
+      if (!companyName) {
+        alert("Please enter a company name.");
+        return;
+      }
+      
+      resultText.value = `Searching website for: ${companyName}...`;
+      resultBox.style.display = 'block';
+      websiteLink.innerHTML = '';
+      resultsUpsell.style.display = 'none';
+
+      // Replace with your actual worker URL
+      fetch('https://free-tool-company-website.hamoureliasse.workers.dev/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          company_name: companyName
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.website) {
+            const website = data.website;
+            resultText.value = `Website found: ${website}`;
+            
+            // Add clickable link
+            const link = document.createElement('a');
+            link.href = website.startsWith('http') ? website : `https://${website}`;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.className = 'website-link';
+            link.innerHTML = `<i class="fas fa-external-link-alt"></i> Visit Website`;
+            
+            websiteLink.appendChild(link);
+
+            // Show upsell banner after successful search
+            searchCount++;
+            if (searchCount >= 1) {
+              setTimeout(() => {
+                resultsUpsell.style.display = 'block';
+              }, 2000);
+            }
+          } else {
+            resultText.value = "No website found for this company name.";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          resultText.value = "An error occurred while fetching the website data.";
+        });
+    }
+
+    function tryExample() {
+      document.getElementById('companyName').value = "Apple";
+    }
+
+    // CSV Upload and Processing
+    function setupFileUpload() {
+      const fileInput = document.getElementById('csvFile');
+      const uploadArea = document.getElementById('uploadArea');
+
+      // File input change event
+      fileInput.addEventListener('change', handleFileSelect);
+
+      // Drag and drop events
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      });
+
+      uploadArea.addEventListener('click', () => {
+        fileInput.click();
+      });
+    }
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+    }
+
+    function handleFile(file) {
+      if (!file.name.toLowerCase().endsWith('.csv')) {
+        alert('Please upload a CSV file.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const csv = e.target.result;
+        parseCSV(csv);
+      };
+      reader.readAsText(file);
+    }
+
+    function parseCSV(csvText) {
+      const lines = csvText.split('\n').filter(line => line.trim());
+      if (lines.length < 2) {
+        alert('CSV file must have at least a header row and one data row.');
+        return;
+      }
+
+      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+      csvData = [];
+
+      // Find company name column
+      let companyColumnIndex = -1;
+      const possibleNames = ['company', 'company_name', 'company name', 'name', 'business', 'organization'];
+      
+      for (let i = 0; i < headers.length; i++) {
+        if (possibleNames.includes(headers[i].toLowerCase())) {
+          companyColumnIndex = i;
+          break;
+        }
+      }
+
+      if (companyColumnIndex === -1) {
+        alert('Could not find a company name column. Please ensure your CSV has a column named "company", "company_name", or "name".');
+        return;
+      }
+
+      // Parse data rows
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+        if (values[companyColumnIndex] && values[companyColumnIndex].trim()) {
+          csvData.push({
+            originalRow: values,
+            companyName: values[companyColumnIndex].trim(),
+            rowIndex: i
+          });
+        }
+      }
+
+      if (csvData.length === 0) {
+        alert('No valid company names found in the CSV file.');
+        return;
+      }
+
+      showPreview(headers, companyColumnIndex);
+    }
+
+    function showPreview(headers, companyColumnIndex) {
+      const previewDiv = document.getElementById('csvPreview');
+      const tableDiv = document.getElementById('previewTable');
+      const countSpan = document.getElementById('companyCount');
+
+      // Show first 5 rows
+      const previewData = csvData.slice(0, 5);
+      
+      let tableHTML = '<table class="results-table"><thead><tr>';
+      headers.forEach((header, index) => {
+        const isCompanyColumn = index === companyColumnIndex;
+        tableHTML += `<th style="${isCompanyColumn ? 'background: rgba(79,70,229,0.1); color: var(--primary);' : ''}">${header}</th>`;
+      });
+      tableHTML += '</tr></thead><tbody>';
+
+      previewData.forEach(row => {
+        tableHTML += '<tr>';
+        row.originalRow.forEach((cell, index) => {
+          const isCompanyColumn = index === companyColumnIndex;
+          tableHTML += `<td style="${isCompanyColumn ? 'font-weight: 600;' : ''}">${cell}</td>`;
+        });
+        tableHTML += '</tr>';
+      });
+      tableHTML += '</tbody></table>';
+
+      tableDiv.innerHTML = tableHTML;
+      countSpan.textContent = csvData.length;
+      previewDiv.style.display = 'block';
+    }
+
+    async function processBulkSearch() {
+      const resultsDiv = document.getElementById('bulkResults');
+      const progressFill = document.getElementById('progressFill');
+      const processBtn = document.getElementById('processBulkBtn');
+      
+      resultsDiv.style.display = 'block';
+      processBtn.disabled = true;
+      processBtn.textContent = 'Processing...';
+      
+      bulkResults = [];
+      let processed = 0;
+
+      for (const row of csvData) {
+        try {
+          // Replace with your actual worker URL
+          const response = await fetch('https://free-tool-company-website.hamoureliasse.workers.dev/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              company_name: row.companyName
+            })
+          });
+
+          const data = await response.json();
+          bulkResults.push({
+            ...row,
+            website: data && data.website ? data.website : 'Not found',
+            status: data && data.website ? 'Found' : 'Not found'
+          });
+
+          // Add small delay to avoid overwhelming the API
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+        } catch (error) {
+          console.error(`Error processing ${row.companyName}:`, error);
+          bulkResults.push({
+            ...row,
+            website: 'Error',
+            status: 'Error'
+          });
+        }
+
+        processed++;
+        const progress = (processed / csvData.length) * 100;
+        progressFill.style.width = `${progress}%`;
+
+        // Update results table in real-time
+        updateResultsTable();
+      }
+
+      processBtn.disabled = false;
+      processBtn.innerHTML = `Process <span id="companyCount">${csvData.length}</span> Companies`;
+    }
+
+    function updateResultsTable() {
+      const tableDiv = document.getElementById('bulkResultsTable');
+      
+      let tableHTML = '<table class="results-table"><thead><tr>';
+      tableHTML += '<th>Company Name</th><th>Website</th><th>Status</th>';
+      tableHTML += '</tr></thead><tbody>';
+
+      bulkResults.forEach(row => {
+        const statusClass = row.status === 'Found' ? 'status-success' : 'status-error';
+        const websiteCell = row.website !== 'Not found' && row.website !== 'Error' ? 
+          `<div class="website-cell"><a href="${row.website.startsWith('http') ? row.website : 'https://' + row.website}" target="_blank" rel="noopener">${row.website}</a></div>` :
+          `<div class="website-cell">${row.website}</div>`;
+
+        tableHTML += `<tr>
+          <td>${row.companyName}</td>
+          <td>${websiteCell}</td>
+          <td><span class="${statusClass}">${row.status}</span></td>
+        </tr>`;
+      });
+
+      tableHTML += '</tbody></table>';
+      tableDiv.innerHTML = tableHTML;
+    }
+
+    function downloadResults() {
+      if (bulkResults.length === 0) {
+        alert('No results to download.');
+        return;
+      }
+
+      let csvContent = 'Company Name,Website,Status\n';
+      bulkResults.forEach(row => {
+        csvContent += `"${row.companyName}","${row.website}","${row.status}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'company_websites_results.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    function downloadTemplate() {
+      const csvContent = 'company_name\nApple\nMicrosoft\nTesla\nGoogle\nAmazon';
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'company_website_finder_template.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Allow Enter key to trigger search
+    document.getElementById('companyName').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        findWebsite();
+      }
+    });
+
+    // Initialize file upload when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setupFileUpload();
+    });
+  </script><script src="js/popup.js"></script></body></html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Permutatore di e-mail | UnlimitedLeads </title><meta content="Strumento gratuito per la permutazione di indirizzi email: trova l'indirizzo email di chiunque generando tutte le possibili combinazioni e varianti di email" name="description"/><!-- Preconnect externals --><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com" rel="preconnect"/><!-- Favicon --><link href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" rel="icon" sizes="32x32" type="image/png"/><link href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" rel="icon" sizes="16x16" type="image/png"/><!-- Open Graph --><meta content="website" property="og:type"/><meta content="https://unlimited-leads.online/email-permutator" property="og:url"/><meta content="Permutatore di e-mail | UnlimitedLeads" property="og:title"/><meta content="Strumento gratuito per la permutazione di indirizzi email: trova l'indirizzo email di chiunque generando tutte le possibili combinazioni e varianti di email" property="og:description"/><meta content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" property="og:image"/><!-- Fonts & Icons --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><!-- Styles --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-800: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        a { text-decoration: none; }
+
+        /* Header */
+        .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: center; align-items: center; }
+        .logo-link { display: flex; align-items: center; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-800); margin-left: 0.5rem; }
+        .gradient-text { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 4rem 0 2rem; background: linear-gradient(to bottom, rgba(79,70,229,0.1), rgba(79,70,229,0.02)); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary)); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--gray-800); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* Email Permutator Form */
+        .permutator-form { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--box-shadow); 
+            max-width: 900px; 
+            margin: 0 auto 3rem; 
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--border-radius); 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+        }
+        .btn-primary { 
+            background: linear-gradient(to right, var(--primary), var(--primary-dark)); 
+            color: white; 
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+        }
+        .btn-secondary { 
+            background: var(--success); 
+            color: white; 
+        }
+        .btn-secondary:hover { 
+            background: var(--primary); 
+        }
+        .btn-large { 
+            width: 100%; 
+            font-size: 1rem; 
+            padding: 1rem; 
+        }
+        .how-it-works {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .how-it-works i {
+            margin-right: 0.25rem;
+        }
+
+        /* Results Area */
+        .results-area {
+            display: none;
+            margin-top: 2rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .results-header h3 {
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0;
+        }
+        .results-count {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .email-list {
+            max-height: 350px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+        .email-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .email-item:last-child {
+            border-bottom: none;
+        }
+        .email-copy {
+            color: var(--primary);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1rem;
+        }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .actions .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary);
+        }
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 3rem 0 4rem;
+            background: white;
+        }
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            background: var(--gray-50);
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            max-height: 500px;
+        }
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* How it Works Section */
+        .how-it-works-section {
+            padding: 4rem 0;
+            background: var(--gray-50);
+        }
+        .how-it-works-section h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .how-it-works-video {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+        .video-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(79, 70, 229, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .play-button i {
+            color: white;
+            font-size: 2rem;
+            margin-left: 5px;
+        }
+
+        /* Testimonial Section */
+        .testimonial {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .testimonial-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .testimonial h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        .testimonial-count {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .testimonial-text {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .rating {
+            margin-bottom: 2rem;
+        }
+        .star {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin: 0 0.25rem;
+        }
+
+        /* Footer */
+        .footer { 
+            background: var(--gray-800); 
+            color: white; 
+            padding: 3rem 0 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+        .footer-bottom p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-bottom a {
+            color: var(--gray-300);
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* SEO Section */
+        .seo-content {
+            padding: 4rem 0;
+            background: white;
+        }
+        .seo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .seo-content h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        .seo-content h3 {
+            margin: 1.5rem 0 1rem;
+            font-size: 1.25rem;
+        }
+        .seo-content p {
+            margin-bottom: 1rem;
+        }
+        .seo-content ul, .seo-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+        .cta-box {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+            margin-top: 2rem;
+        }
+        .cta-box h4 {
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: var(--gray-800);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -70px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+        }
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--gray-800) transparent transparent transparent;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Satisfaction Rating */
+        .satisfaction {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+        }
+        .satisfaction p {
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .rating-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .rating-btn {
+            background: none;
+            border: none;
+            font-size: 1.75rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .rating-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .features-grid, .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .features-grid, .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            .actions {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 576px) {
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style><link href="https://your-domain.com/en/email-permutator/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/email-permutator/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/email-permutator/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/email-permutator/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/email-permutator/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/email-permutator/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/email-permutator/" hreflang="pt" rel="alternate"/></head><body><!-- Header --><header class="header"><div class="container"><div class="header-content"> <a class="logo-link" href="https://unlimited-leads.online/en"><i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i><span class="logo-text"><span class="gradient-text">__PRESERVA_1____PRESERVA_2__</span></span></a></div></div></header><!-- Hero --><section class="hero"><div class="container"><h1> Permutatore di posta elettronica</h1><p> Trova l'indirizzo email di chiunque generando tutte le possibili combinazioni in base al nome e al dominio. Il nostro strumento gratuito per la permutazione degli indirizzi email ti aiuta a entrare in contatto con potenziali clienti e ad ampliare la tua rete. </p></div></section><!-- Email Permutator Form --><section class="container"><div class="permutator-form"><div class="form-group"> <label for="firstName">Nome di battesimo</label> <input class="form-control" id="firstName" placeholder="e.g. John" type="text"/></div><div class="form-group"> <label for="lastName">Cognome</label> <input class="form-control" id="lastName" placeholder="e.g. Smith" type="text"/></div><div class="form-group"> <label for="domain">Dominio</label> <div style="display: flex; align-items: center;"><input class="form-control" id="domain" placeholder="e.g. company.com" type="text"/></div></div> <button class="btn btn-primary btn-large" id="generateBtn"><span>Trova indirizzi email</span></button> <a class="how-it-works" href="#how-it-works"><i class="fas fa-question-circle"></i>Come funziona?</a><div class="results-area" id="resultsArea"><div class="results-header"><h3> Permutazioni e-mail generate</h3> <span class="results-count" id="resultsCount">34 email generate</span> </div><div class="email-list" id="emailList"><!-- Email items will be inserted here by JavaScript --></div><div class="actions"> <button class="btn btn-secondary" id="copyAllBtn"><i class="fas fa-copy"></i><span>Copia tutto</span></button> <button class="btn btn-primary" id="gmailBtn"><i class="far fa-envelope"></i><span>Apri in Gmail</span></button> </div></div></div></section><!-- Features Section --><section class="features"><div class="container"><h2>Perché utilizzare il nostro Email Permutator? </h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-search"></i></div><h3> Trova l'email di chiunque</h3><p> Scopri l'indirizzo email corretto testando diverse varianti di formato in base a nome, cognome e dominio.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-magic"></i></div><h3>Oltre 34 combinazioni di e-mail</h3><p> Il nostro algoritmo genera decine di possibili formati di posta elettronica, tra cui nome.cognome, nomecognome, nome_cognome e molti altri.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3> Risultati immediati</h3><p> Ottieni tutte le possibili combinazioni di posta elettronica in pochi secondi, senza dover pensare a ogni possibile combinazione.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-lock"></i></div><h3> 100% gratuito</h3><p> Il nostro strumento di permutazione delle email è completamente gratuito, senza limiti, registrazioni o costi nascosti. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-envelope-open-text"></i></div><h3> Scrivi in Gmail</h3><p> Invia email direttamente agli indirizzi generati con un clic utilizzando la nostra integrazione Gmail. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3> Incentrato sulla privacy</h3><p> Non memorizziamo i tuoi dati né gli indirizzi email generati. Tutta l'elaborazione avviene nel tuo browser.</p></div></div></div></section><!-- FAQ Section --><section class="faq"><div class="container"><h2>Domande e risposte su Email Permutator</h2><div class="faq-item"><div class="faq-question"> Come utilizzare Email Permutator?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Utilizzare il nostro permutatore di posta elettronica è semplice:</p><ol><li> Inserisci il nome della persona nel campo "Nome"</li><li> Inserisci il loro cognome nel campo "Cognome"</li><li> Inserisci il dominio aziendale (senza "http://" o "www.") nel campo "Dominio"</li><li> Fai clic su "Trova indirizzi e-mail" per generare tutte le possibili combinazioni</li><li> Copia le singole email o usa "Copia tutto" per ottenere l'elenco completo</li><li> Facoltativamente, fai clic su "Apri in Gmail" per iniziare a scrivere a questi indirizzi</li></ol></div></div><div class="faq-item"><div class="faq-question"> Come trovare l'indirizzo email di qualcuno?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Per trovare l'indirizzo email di qualcuno sono necessarie diverse strategie:</p><ol><li> <strong>Utilizza il nostro permutatore di email:</strong> genera tutte le possibili combinazioni in base al nome e al dominio aziendale</li><li> <strong>Prova gli indirizzi:</strong> usa il nostro validatore email o invia email di prova per verificare quale indirizzo funziona</li><li> <strong>Controlla il sito web dell'azienda:</strong> a volte i formati e-mail sono menzionati nelle pagine dei contatti o nei comunicati stampa</li><li> <strong>Trova l'email di un collega:</strong> se conosci il formato email di qualcun altro nella stessa azienda, è probabile che la persona di destinazione utilizzi lo stesso formato</li><li> <strong>Social media:</strong> controlla i loro profili LinkedIn, Twitter o altri poiché a volte elencano indirizzi e-mail</li></ol><p> Il nostro convertitore di posta elettronica rende questo processo molto più rapido, generando automaticamente tutti i formati possibili.</p></div></div><div class="faq-item"><div class="faq-question"> Esiste un video tutorial?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Sì! Abbiamo un video tutorial di 2 minuti che mostra esattamente come utilizzare in modo efficiente il nostro strumento di permutazione email. Puoi guardarlo nella sezione "Come trovare l'indirizzo email di chiunque" qui sopra. Il video illustra l'intero processo, dall'inserimento dei dati della persona alla verifica dell'indirizzo email corretto.</p></div></div><div class="faq-item"><div class="faq-question"> Foglio di calcolo per la permutazione delle email?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Sebbene online siano disponibili modelli di fogli di calcolo per la permutazione delle e-mail, il nostro strumento basato sul Web offre diversi vantaggi:</p><ul><li> Non c'è bisogno di scaricare o mantenere fogli di calcolo</li><li> Aggiornamenti regolari con nuovi modelli di formato e-mail</li><li> Generazione istantanea senza formule o macro</li><li> Integrazione diretta con Gmail per l'invio di email</li><li> Interfaccia mobile-friendly che funziona su qualsiasi dispositivo</li></ul><p> Tuttavia, se preferisci utilizzare un foglio di calcolo, puoi facilmente copiare tutte le permutazioni e-mail generate e incollarle nella tua applicazione di foglio di calcolo preferita.</p></div></div><div class="faq-item"><div class="faq-question"> Email Permutator è gratuito?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Sì, il nostro strumento di permutazione email è completamente gratuito e senza limitazioni. Puoi generare tutte le permutazioni email di cui hai bisogno senza registrarti o fornire informazioni di pagamento. Questo fa parte del nostro impegno nel fornire strumenti preziosi a professionisti e aziende di tutte le dimensioni.</p></div></div><div class="faq-item"><div class="faq-question"> Email Permutator utilizza i miei dati?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Prendiamo sul serio la privacy. Il nostro strumento di permutazione email elabora tutti i dati interamente all'interno del tuo browser: non memorizziamo, raccogliamo o tracciamo i nomi, i domini o gli indirizzi email generati che inserisci. Nessun dato viene inviato ai nostri server durante il processo di permutazione. Puoi utilizzare il nostro strumento con la massima sicurezza che le tue informazioni di ricerca rimarranno private.</p></div></div><div class="faq-item"><div class="faq-question"> Cosa fare una volta trovato l'indirizzo email di qualcuno?<i class="fas fa-chevron-down faq-toggle"></i></div><div class="faq-answer"><p> Una volta trovato l'indirizzo email corretto, ecco cosa fare:</p><ol><li> <strong>Verificalo:</strong> usa il nostro strumento di convalida e-mail per confermare che l'indirizzo è valido</li><li> <strong>Crea un messaggio personalizzato:</strong> le email di massa generiche vengono ignorate: adatta il tuo messaggio al destinatario</li><li> <strong>Utilizza un oggetto chiaro:</strong> rendilo pertinente e convincente (prova il nostro strumento Generatore di oggetti)</li><li> <strong>Sii conciso:</strong> rispetta il loro tempo con un messaggio breve e mirato</li><li> <strong>Includi una call-to-action specifica:</strong> indica chiaramente cosa vuoi che facciano dopo</li><li> <strong>Follow-up:</strong> se non ricevi una risposta, invia un cortese follow-up dopo 3-5 giorni</li></ol><p> Ricorda che trovare l'indirizzo email di qualcuno è solo il primo passo: il contenuto e la tempistica del messaggio sono altrettanto importanti per ottenere una risposta. </p></div></div></div></section><!-- SEO Content Section --><section class="seo-content"><div class="container"><div class="seo-container"><h2> Come usare Email Permutator per trovare l'indirizzo email di chiunque</h2><p> Trovare l'indirizzo email giusto è fondamentale per un'attività di outreach di successo, che si voglia entrare in contatto con potenziali clienti, contattare investitori o entrare in contatto con professionisti del settore. Il nostro strumento Email Permutator semplifica questo processo generando automaticamente tutte le possibili combinazioni di email in base al nome della persona e al dominio aziendale.</p><h3> Cosa rende diverso il nostro Email Permutator</h3><p> A differenza delle semplici ipotesi di email, il nostro Email Permutator utilizza algoritmi sofisticati per creare ogni possibile combinazione basata sui modelli di email più comuni utilizzati dalle aziende in tutto il mondo. Lo strumento genera varianti, tra cui:</p><ul><li> <strong>Varianti del nome:</strong> john@company.com, j@company.com</li><li> <strong>Varianti del cognome:</strong> smith@company.com, s@company.com</li><li> <strong>Formati di nomi combinati:</strong> john.smith@company.com, johnsmith@company.com</li><li> <strong>Combinazioni iniziali:</strong> js@company.com, j.smith@company.com</li><li> <strong>Varianti di separazione:</strong> john_smith@company.com, john-smith@company.com</li></ul><p> Con oltre 34 diversi modelli di posta elettronica generati istantaneamente, aumenterai notevolmente le tue possibilità di trovare l'indirizzo email corretto al primo tentativo.</p><h3> Buone pratiche per trovare indirizzi email</h3><ol><li> <strong>Inizia con lo schema di posta elettronica dell'azienda:</strong> se conosci gli indirizzi email di altri dipendenti dell'azienda, cerca schemi coerenti (nome.cognome@azienda.com, nomeinizialecognome@azienda.com, ecc.).</li><li> <strong>Utilizzare tecniche di verifica:</strong> dopo aver generato le permutazioni, verificare quale indirizzo è valido utilizzando strumenti di verifica e-mail o inviando un messaggio di prova.</li><li> <strong>Verificare le policy aziendali in materia di posta elettronica:</strong> le grandi organizzazioni spesso adottano convenzioni di denominazione delle e-mail coerenti per tutti i dipendenti.</li><li> <strong>Prova domini alternativi:</strong> alcune aziende utilizzano domini diversi per reparti o regioni diversi (ad esempio, sales.company.com anziché company.com).</li><li> <strong>Da utilizzare con LinkedIn:</strong> trova il nome professionale completo della persona su LinkedIn, quindi utilizza il nostro permutatore con il dominio della sua azienda.</li></ol><h3> Perché la permutazione delle e-mail è importante per la crescita aziendale</h3><p> L'outreach diretto via email rimane uno dei metodi più efficaci per generare leads e costruire relazioni commerciali. La possibilità di trovare rapidamente l'indirizzo email di chiunque offre un vantaggio competitivo:</p><ul><li> Bypassare i gatekeeper per raggiungere direttamente i decisori</li><li> Personalizzare il tuo approccio a individui specifici</li><li> Miglioramento dei tassi di risposta rispetto ai moduli di contatto o ai social media</li><li> Ampliare in modo efficiente i tuoi sforzi di sensibilizzazione</li><li> Creare un prezioso database di contatti verificati</li></ul><p> Il nostro strumento Email Permutator gestisce gli aspetti tecnici della scoperta delle email, consentendoti di concentrarti sulla creazione di messaggi accattivanti che troveranno riscontro nei tuoi destinatari.</p><div class="cta-box"><h4> Pronti a trovare l'indirizzo email di chiunque?</h4><p> Prova subito il nostro strumento gratuito Email Permutator e inizia a entrare in contatto con le persone giuste. Non è richiesta alcuna registrazione: basta inserire un nome e un dominio per generare all'istante tutte le possibili varianti di email. </p></div></div></div></section><!-- Footer --><!-- Related Free Tools Section --><section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"><div class="container"><h2 style="font-size: 2rem; text-align: center; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;"> Strumenti gratuiti correlati </h2><p style="text-align: center; color: var(--gray-600); margin-bottom: 2.5rem; font-size: 1.1rem;"> Aumenta la tua produttività con questi strumenti gratuiti complementari per la ricerca di potenziali clienti via e-mail e la generazione di lead </p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;"><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">⚡</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Generatore di nomi e-mail </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Genera varianti di indirizzi email in base ai nomi e ai domini aziendali.</p> <a href="https://unlimited-leads.online/email-name-generator" style="background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">📧</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Ricerca di e-mail in blocco </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Trova più indirizzi email contemporaneamente con il nostro potente strumento di ricerca in blocco.</p> <a href="https://unlimited-leads.online/bulk-email-finder" style="background: #f5576c; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #a8edea, #fed6e3); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">🛠️</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Controllo della disponibilità di Gmail </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Controlla se gli indirizzi Gmail sono disponibili o già occupati.</p> <a href="https://unlimited-leads.online/gmail-address-availability-check" style="background: #a8edea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div></div><div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 0.75rem; backdrop-filter: blur(10px);"><p style="color: var(--gray-700); font-size: 1rem; margin-bottom: 0.5rem;"> <strong>💡 Consiglio da professionisti:</strong> combina più strumenti per la massima efficienza!</p><p style="color: var(--gray-600); font-size: 0.9rem;"> Utilizza questi strumenti insieme per creare un flusso di lavoro di ricerca clienti completo che ti faccia risparmiare tempo e aumenti il tasso di successo. </p></div></div></section><footer class="footer" id="contact"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Strumenti gratuiti</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/bulk-email-finder">Strumento di ricerca di e-mail in blocco</a></li><li> <a href="https://unlimited-leads.online/spam-words-checker">Controllo delle parole spam</a></li><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Trova l'email dal numero di telefono</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Ricerca mx in blocco</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Estrattore di posta elettronica</a></li><li> <a href="https://unlimited-leads.online/spintax-generator">Generatore Spintax</a></li><li> <a href="https://unlimited-leads.online/email-permutator">Permutatore di posta elettronica</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper">Strumento di scraping di Google Maps</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Trova e-mail Apollo</a></li><li> <a href="https://unlimited-leads.online/ai-email-template-generator">Generatore di modelli di email AI</a></li><li> <a href="https://unlimited-leads.online/ai-email-reply-generator-free">Generatore di risposte e-mail AI</a></li><li> <a href="https://unlimited-leads.online/cold-email-generator">Generatore di e-mail a freddo</a></li><li> <a href="https://unlimited-leads.online/email-name-generator">Generatore di nomi e-mail</a></li><li> <a href="https://unlimited-leads.online/linkedin-headline-generator">Generatore di titoli Linkedin</a></li><li> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li><li> <a href="https://unlimited-leads.online/domain-extractor">Estrattore di dominio</a></li><li> <a href="https://unlimited-leads.online/phone-number-extractor">Estrattore di numeri di telefono</a></li><li> <a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Trova il sito web in base al nome dell'azienda in blocco</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Confrontare</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa a ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa a Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa a ContactOut</a></li><li> <a href="https://unlimited-leads.online/rocketreach-alternative">Alternativa a RocketReach</a></li><li> <a href="https://unlimited-leads.online/uplead-alternative">Alternativa a UpLead</a></li><li> <a href="https://unlimited-leads.online/lead411-alternative">Alternativa a Lead411</a></li><li> <a href="https://unlimited-leads.online/seamless-ai-alternative">Alternativa all'intelligenza artificiale senza soluzione di continuità</a></li><li> <a href="https://unlimited-leads.online/findthatlead-alternative">Trova l'alternativa al lead</a></li><li> <a href="https://unlimited-leads.online/cognism-alternative">Alternativa al cognismo</a></li><li> <a href="https://unlimited-leads.online/hunter-io-alternative">Alternativa a Hunter io</a></li><li> <a href="https://unlimited-leads.online/getprospect-alternative">Alternativa a Getprospect</a></li></ul></div><!-- Industry Email List Section --><div class="footer-column"><h4> Elenco e-mail del settore</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/accountants-email-list">Elenco e-mail dei contabili</a></li><li> <a href="https://unlimited-leads.online/attorney-email-list">Elenco e-mail degli avvocati</a></li><li> <a href="https://unlimited-leads.online/ceo-email-list">Elenco e-mail del CEO</a></li><li> <a href="https://unlimited-leads.online/cfo-email-list">Elenco e-mail del CFO</a></li><li> <a href="https://unlimited-leads.online/construction-industry-email-list">Elenco e-mail del settore edile</a></li><li> <a href="https://unlimited-leads.online/hr-email-list">Elenco e-mail delle risorse umane</a></li><li> <a href="https://unlimited-leads.online/real-estate-agent-email-list">Elenco e-mail degli agenti immobiliari</a></li><li> <a href="https://unlimited-leads.online/email-list">Tutti gli elenchi di posta elettronica</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contattaci</h4><ul class="footer-links"><li> <a href="mailto:support@unlimited-leads.online">supporto@unlimited-leads.online</a></li><li> <a href="mailto:support@unlimited-leads.online">Richiedi un piano personalizzato</a></li></ul></div><div class="footer-social"><a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Tutti i diritti riservati.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Informativa sulla privacy</a> | <a href="https://unlimited-leads.online/legal-notice">Termini di servizio</a></p></div></div></div></footer><!-- Scripts --><script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Email Permutator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            const domain = document.getElementById('domain');
+            const generateBtn = document.getElementById('generateBtn');
+            const resultsArea = document.getElementById('resultsArea');
+            const emailList = document.getElementById('emailList');
+            const resultsCount = document.getElementById('resultsCount');
+            const copyAllBtn = document.getElementById('copyAllBtn');
+            const gmailBtn = document.getElementById('gmailBtn');
+            
+            // Generate Email Permutations
+            generateBtn.addEventListener('click', function() {
+                const first = firstName.value.trim().toLowerCase();
+                const last = lastName.value.trim().toLowerCase();
+                const domainValue = domain.value.trim().toLowerCase();
+                
+                if (!first || !last || !domainValue) {
+                    alert('Please fill in all fields to generate email permutations.');
+                    return;
+                }
+                
+                // Clean domain (remove http://, https://, www. if present)
+                let cleanDomain = domainValue.replace(/^https?:\/\//, '').replace(/^www\./, '');
+                
+                // Generate email permutations
+                const permutations = generateEmailPermutations(first, last, cleanDomain);
+                
+                // Display results
+                displayResults(permutations);
+            });
+            
+            // Generate all possible email permutations
+            function generateEmailPermutations(first, last, domain) {
+                const firstInitial = first.charAt(0);
+                const lastInitial = last.charAt(0);
+                
+                const templates = [
+                    // First name variations
+                    `${first}@${domain}`,
+                    `${firstInitial}@${domain}`,
+                    
+                    // Last name variations
+                    `${last}@${domain}`,
+                    `${lastInitial}@${domain}`,
+                    
+                    // Combined with dots
+                    `${first}.${last}@${domain}`,
+                    `${firstInitial}.${last}@${domain}`,
+                    `${first}.${lastInitial}@${domain}`,
+                    `${firstInitial}.${lastInitial}@${domain}`,
+                    
+                    // Combined with underscores
+                    `${first}_${last}@${domain}`,
+                    `${firstInitial}_${last}@${domain}`,
+                    `${first}_${lastInitial}@${domain}`,
+                    `${firstInitial}_${lastInitial}@${domain}`,
+                    
+                    // Combined with hyphens
+                    `${first}-${last}@${domain}`,
+                    `${firstInitial}-${last}@${domain}`,
+                    `${first}-${lastInitial}@${domain}`,
+                    `${firstInitial}-${lastInitial}@${domain}`,
+                    
+                    // Combined without separator
+                    `${first}${last}@${domain}`,
+                    `${firstInitial}${last}@${domain}`,
+                    `${first}${lastInitial}@${domain}`,
+                    `${firstInitial}${lastInitial}@${domain}`,
+                    
+                    // Last name first
+                    `${last}.${first}@${domain}`,
+                    `${last}_${first}@${domain}`,
+                    `${last}-${first}@${domain}`,
+                    `${last}${first}@${domain}`,
+                    
+                    // Last name + first initial
+                    `${last}.${firstInitial}@${domain}`,
+                    `${last}_${firstInitial}@${domain}`,
+                    `${last}-${firstInitial}@${domain}`,
+                    `${last}${firstInitial}@${domain}`,
+                    
+                    // Additional variations
+                    `${first}${last[0]}${last[last.length-1]}@${domain}`,
+                    `${first}.${last[0]}${last[last.length-1]}@${domain}`,
+                    `${first[0]}${first[first.length-1]}${last}@${domain}`,
+                    `${first[0]}${first[first.length-1]}.${last}@${domain}`,
+                    
+                    // Company specific formats
+                    `${first}${last[0]}@${domain}`,
+                    `${first[0]}${last}@${domain}`
+                ];
+                
+                return templates;
+            }
+            
+            // Display the generated email permutations
+            function displayResults(permutations) {
+                // Clear previous results
+                emailList.innerHTML = '';
+                
+                // Update count
+                resultsCount.textContent = `${permutations.length} emails generated`;
+                
+                // Create email items
+                permutations.forEach(email => {
+                    const emailItem = document.createElement('div');
+                    emailItem.className = 'email-item';
+                    
+                    const emailText = document.createElement('div');
+                    emailText.textContent = email;
+                    
+                    const copyButton = document.createElement('button');
+                    copyButton.className = 'email-copy tooltip';
+                    copyButton.innerHTML = '<i class="far fa-copy"></i><span class="tooltiptext">Copy</span>';
+                    copyButton.onclick = function() {
+                        copyToClipboard(email);
+                        this.querySelector('.tooltiptext').textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.querySelector('.tooltiptext').textContent = 'Copy';
+                        }, 2000);
+                    };
+                    
+                    emailItem.appendChild(emailText);
+                    emailItem.appendChild(copyButton);
+                    emailList.appendChild(emailItem);
+                });
+                
+                // Show results area
+                resultsArea.style.display = 'block';
+                
+                // Scroll to results
+                resultsArea.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Copy all emails to clipboard
+            copyAllBtn.addEventListener('click', function() {
+                const allEmails = Array.from(emailList.querySelectorAll('.email-item'))
+                    .map(item => item.firstChild.textContent)
+                    .join('\n');
+                
+                copyToClipboard(allEmails);
+                
+                // Change button text temporarily
+                const originalText = this.querySelector('span').textContent;
+                this.querySelector('span').textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    this.querySelector('span').textContent = originalText;
+                }, 2000);
+            });
+            
+            // Open in Gmail
+            gmailBtn.addEventListener('click', function() {
+                const allEmails = Array.from(emailList.querySelectorAll('.email-item'))
+                    .map(item => item.firstChild.textContent)
+                    .join(',');
+                
+                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(allEmails)}`, '_blank');
+            });
+            
+            // Helper function to copy text to clipboard
+            function copyToClipboard(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+            
+            // Satisfaction Rating
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Reset all buttons
+                    document.querySelectorAll('.rating-btn').forEach(b => {
+                        b.style.transform = 'scale(1)';
+                    });
+                    
+                    // Highlight selected button
+                    this.style.transform = 'scale(1.2)';
+                    
+                    // Here you would typically send the rating to your server
+                    // For this example, we'll just show a thank you message
+                    setTimeout(() => {
+                        const parent = this.parentElement.parentElement;
+                        parent.innerHTML = '<p>Thank you for your feedback!</p>';
+                    }, 500);
+                });
+            });
+        });
+    </script><script src="js/popup.js"></script></body></html>

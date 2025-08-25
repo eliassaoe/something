@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> LinkedIn Sales Navigator Scraper - Extrayez plus de 10 000 prospects en quelques minutes | UnlimitedLeads </title><meta content="L'extension Chrome n° 1 pour le Sales Navigator Scraper LinkedIn. Extrayez unlimited et leads ciblés avec des adresses e-mail vérifiées en quelques secondes. Taux de précision de 99 %. Installez-la gratuitement dès aujourd'hui !" name="description"/><meta content="Outil de capture de données pour LinkedIn Sales Navigator, outil de capture de données pour LinkedIn, extension de Sales Navigator, outil de capture de données pour LinkedIn Leads, outil de capture de données pour LinkedIn Emails, outil de capture de données pour LinkedIn Prospects" name="keywords"/><!-- Structured Data for SEO --><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "UnlimitedLeads LinkedIn Sales Navigator Scraper",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Chrome",
+        "description": "Professional LinkedIn Sales Navigator scraper for extracting verified leads and contact information",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "2847"
+        }
+    }
+    </script><!-- Preconnect externals --><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><!-- Favicon --><link href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" rel="icon" sizes="32x32" type="image/png"/><!-- Fonts & Styles --><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+        :root {
+            --primary: #0073b1;
+            --primary-dark: #005885;
+            --primary-light: #e8f4fd;
+            --secondary: #0a66c2;
+            --accent: #00a0dc;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --linkedin-blue: #0077b5;
+            --chrome-blue: #4285f4;
+            --border-radius: 0.5rem;
+            --border-radius-lg: 1rem;
+            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+        
+        .container { 
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        .btn { 
+            display: inline-block; 
+            font-weight: 700; 
+            padding: 1rem 2rem; 
+            border-radius: 0.5rem; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.01em;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 115, 177, 0.4);
+        }
+        
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 25px rgba(0, 115, 177, 0.5);
+        }
+        
+        .btn-chrome {
+            background: linear-gradient(135deg, var(--chrome-blue), #3367d6);
+            color: white;
+            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4);
+        }
+        
+        .btn-chrome:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn-large { 
+            font-size: 1.25rem; 
+            padding: 1.25rem 2.5rem; 
+        }
+
+        /* Header */
+        .header { 
+            background: white; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo-text { 
+            font-size: 1.75rem; 
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            font-weight: 600; 
+        }
+        
+        .nav-link {
+            color: var(--gray-700);
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Urgent Banner */
+        .urgent-banner {
+            background: linear-gradient(135deg, var(--warning), #ea580c);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .urgent-banner:before {
+            content: "⚡ LIMITED TIME";
+            position: absolute;
+            background: var(--danger);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 2rem;
+            top: 0.5rem;
+            left: -1.5rem;
+            transform: rotate(-45deg);
+        }
+
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 160, 220, 0.05) 100%);
+            padding: 4rem 0 3rem; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230073b1' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 1;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            line-height: 1.1;
+        }
+        
+        .linkedin-highlight {
+            background: linear-gradient(135deg, var(--linkedin-blue), var(--primary));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-subtitle { 
+            font-size: 1.5rem; 
+            margin-bottom: 2rem;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .chrome-install-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chrome-install-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Stats */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            padding: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat { 
+            text-align: center;
+        }
+        
+        .stat h3 { 
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 900;
+        }
+        
+        .stat p { 
+            font-weight: 600; 
+            color: var(--gray-700);
+            margin-bottom: 0;
+        }
+
+        /* Demo Video */
+        .demo-section {
+            padding: 4rem 0;
+            background: var(--gray-50);
+        }
+        
+        .demo-video {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-light), var(--gray-100));
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--gray-100);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .comparison-table .highlight {
+            background: var(--primary-light);
+            font-weight: 700;
+        }
+        
+        .check-icon {
+            color: var(--success);
+            font-size: 1.25rem;
+        }
+        
+        .cross-icon {
+            color: var(--danger);
+            font-size: 1.25rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--primary-light);
+            margin: 1.5rem auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .step-icon i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+        
+        .testimonial-card:after {
+            content: """;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 4rem;
+            line-height: 1;
+            font-family: serif;
+            color: var(--gray-200);
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray-700);
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .author-info h4 {
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info p {
+            color: var(--gray-600);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .stars {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.05)' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Security Section */
+        .security-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .security-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .security-badge i {
+            font-size: 2.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+        
+        .security-badge h4 {
+            font-size: 1.25rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .security-badge p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Floating Install Button */
+        .floating-install {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--chrome-blue);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: var(--box-shadow-lg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        
+        .floating-install:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(66, 133, 244, 0.4);
+        }
+        
+        .floating-install i {
+            font-size: 1.25rem;
+        }
+
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container { 
+                max-width: 1000px;
+                padding: 0 1.5rem; 
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .hero h1 { font-size: 2.75rem; }
+            .section-title { font-size: 2.25rem; }
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .nav-links { 
+                display: none;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 { 
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .hero-stats { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .stat h3 {
+                font-size: 2rem;
+            }
+            
+            .features-grid,
+            .steps-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .feature-card,
+            .step-card,
+            .testimonial-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+            .btn-large {
+                padding: 1.1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .demo-video {
+                padding: 1.5rem;
+            }
+            .video-placeholder {
+                height: 250px;
+            }
+            
+            .comparison-table {
+                overflow-x: auto;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 1rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .floating-install {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                width: auto;
+                justify-content: center;
+                padding: 0.85rem 1.25rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+            .cta-content p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .security-badges {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container { 
+                padding: 0 1rem; 
+            }
+            
+            .header {
+                padding: 0.75rem 0;
+            }
+            .header-content {
+                justify-content: space-between;
+            }
+            .logo-text {
+                font-size: 1.25rem;
+            }
+            .btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero {
+                padding: 3rem 0 2rem;
+            }
+            .hero h1 { 
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .feature-card,
+            .step-card,
+            .testimonial-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .feature-icon,
+            .step-icon {
+                width: 60px;
+                height: 60px;
+            }
+            .feature-icon i,
+            .step-icon i {
+                font-size: 1.5rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+                top: -15px;
+            }
+            
+            .demo-video {
+                padding: 1rem;
+            }
+            .video-placeholder {
+                height: 200px;
+            }
+            .play-button {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .testimonial-text {
+                font-size: 1rem;
+            }
+            
+            .security-badges {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 1.75rem;
+            }
+            .cta-content p {
+                font-size: 1rem;
+            }
+            
+            .floating-install {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.65rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .feature-card h3,
+            .step-card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .section-title {
+                font-size: 1.35rem;
+            }
+        }
+    </style></link><link href="https://your-domain.com/en/linkedin-sales-navigator-scrapper/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/linkedin-sales-navigator-scrapper/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/linkedin-sales-navigator-scrapper/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/linkedin-sales-navigator-scrapper/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/linkedin-sales-navigator-scrapper/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/linkedin-sales-navigator-scrapper/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/linkedin-sales-navigator-scrapper/" hreflang="pt" rel="alternate"/></head><body><!-- Header --><header class="header"><div class="container header-content"><div style="display: flex; align-items: center; gap: 0.75rem;"> <span class="logo-text">Leads illimités</span></div><nav class="nav-links"> <a class="nav-link" href="#features">Fonctionnalités</a> <a class="nav-link" href="#how-it-works">Comment ça marche</a> <a class="nav-link" href="#testimonials">Avis</a> <a class="nav-link" href="#comparison">vs concurrents</a></nav> <a class="btn btn-chrome" href="https://chromewebstore.google.com/detail/Unlimited%20Leads%20:%20Linkedin%20Sales%20Navigator%20Scraper/hcjohgbpfcjhkpipckaibiibmeigmpfa" style="padding: 0.75rem 1.5rem;"><i class="fab fa-chrome"></i>Installer l'extension</a> </div></header><!-- Hero Section --><section class="hero"><div class="container"><div class="hero-content"><h1> Le <span class="linkedin-highlight">grattoir ultime du navigateur de ventes LinkedIn</span></h1><p class="hero-subtitle"> Extrayez plus de 10 000 prospects ciblés avec des e-mails vérifiés en quelques minutes</p><p class="hero-description"> L'extension Chrome la plus puissante pour Sales Navigator LinkedIn. Extrayez les données des prospects unlimited, les adresses e-mail vérifiées et les coordonnées avec une précision de 99 %. Plus de 50 000 commerciaux du monde entier lui font confiance.</p><div class="chrome-install-btn"> <a class="btn btn-chrome btn-large pulse" href="https://chromewebstore.google.com/detail/Unlimited%20Leads%20:%20Linkedin%20Sales%20Navigator%20Scraper/hcjohgbpfcjhkpipckaibiibmeigmpfa"><i class="fab fa-chrome"></i>Installer l'extension Chrome</a></div><p style="color: var(--gray-600); font-size: 0.95rem; margin-top: 1rem;"> ⭐ Noté 4,9/5 étoiles par plus de 2 847 utilisateurs • Installation 100 % gratuite</p></div><div class="hero-stats"><div class="stat"><h3> 10 000+</h3><p> prospects par heure</p></div><div class="stat"><h3> 99%</h3><p> Exactitude des e-mails</p></div><div class="stat"><h3> 50 000+</h3><p> Utilisateurs actifs</p></div><div class="stat"><h3> GRATUIT</h3><p> Extension Chrome </p></div></div></div></section><!-- Features Section --><section class="features-section" id="features"><div class="container"><h2 class="section-title"> Pourquoi Unlimited leads est le grattoir LinkedIn n°1</h2><p class="section-subtitle"> Des fonctionnalités avancées qui rendent la génération de leads sans effort et très efficace pour les équipes de vente </p><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-rocket"></i></div><h3> Extraction ultra-rapide</h3><p> Extrayez jusqu'à 10 000 leads par heure à partir des recherches LinkedIn de Sales Navigator. Nos algorithmes avancés sont 50 fois plus rapides que la copie manuelle, vous faisant gagner des centaines d'heures. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-envelope-open-text"></i></div><h3> Adresses e-mail vérifiées à 99 %</h3><p> Obtenez des adresses e-mail professionnelles vérifiées avec un taux de précision de 99 %. Notre outil de recherche d'e-mails utilise plus de 15 sources de données et une vérification en temps réel pour garantir la délivrabilité. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mouse-pointer"></i></div><h3> Scraping LinkedIn en un clic</h3><p> Lancez simplement votre recherche Sales Navigator LinkedIn et cliquez sur notre bouton d'extension. UnlimitedLeads extrait automatiquement toutes les données de profil, les coordonnées et les informations de l'entreprise. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-file-csv"></i></div><h3> Exportation CSV instantanée</h3><p> Téléchargez instantanément vos données leads récupérées sous forme de fichiers CSV organisés. Inclut le prénom, le nom, le titre, l'entreprise, l'adresse e-mail, le numéro de téléphone, l'URL LinkedIn et d'autres données. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3> LinkedIn-Technologie sûre</h3><p> Conçu en tenant compte des limites de débit de LinkedIn. Notre scraping intelligent respecte les conditions d'utilisation de LinkedIn et évite les restrictions de compte tout en optimisant la vitesse d'extraction. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-sync-alt"></i></div><h3> Enrichissement des données en temps réel</h3><p> Enrichissez automatiquement les profils extraits avec des points de données supplémentaires, notamment les numéros de téléphone, les profils de réseaux sociaux, la taille de l'entreprise et les mises à jour d'activité récentes. </p></div></div></div></section><!-- How It Works Section --><section class="how-it-works" id="how-it-works"><div class="container"><h2 class="section-title"> Comment extraire LinkedIn leads en 3 étapes simples</h2><p class="section-subtitle"> Démarrez en moins de 2 minutes et commencez à extraire des prospects qualifiés immédiatement</p><div class="steps-grid"><div class="step-card"><div class="step-number"> 1</div><div class="step-icon"><i class="fab fa-chrome"></i></div><h3> Installer l'extension Chrome</h3><p> Ajoutez UnlimitedLeads à Chrome en un clic. L'extension s'intègre parfaitement à Sales Navigator et est immédiatement opérationnelle.</p></div><div class="step-card"><div class="step-number"> 2</div><div class="step-icon"><i class="fas fa-search"></i></div><h3> Exécutez votre recherche Sales Navigator</h3><p> Utilisez les puissants filtres de Sales Navigator pour trouver vos prospects idéaux. Appliquez des critères tels que le secteur d'activité, la taille de l'entreprise, l'ancienneté et la localisation.</p></div><div class="step-card"><div class="step-number"> 3</div><div class="step-icon"><i class="fas fa-download"></i></div><h3> Extraire et télécharger des leads</h3><p> Cliquez sur le bouton UnlimitedLeads pour récupérer automatiquement tous les profils visibles dont l'adresse e-mail est vérifiée. Téléchargez instantanément votre liste de prospects organisée au format CSV. </p></div></div></div></section><!-- Testimonials Section --><section class="testimonials-section" id="testimonials"><div class="container"><h2 class="section-title"> Ce que disent les professionnels de la vente</h2><p class="section-subtitle"> Rejoignez des milliers d'utilisateurs satisfaits qui ont optimisé leur génération de leads avec Unlimited leads </p><div class="testimonials-grid"><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> « Unlimited leads est une révolution ! J'ai extrait 8 000 leads qualifiés en un après-midi. La précision des e-mails est incroyable : 98 % des e-mails sont valides. J'ai déjà réservé 15 rencontres cette semaine grâce à leads. »</p><div class="testimonial-author"><div class="author-avatar"> MJ</div><div class="author-info"><h4> Michael Johnson</h4><p> Directeur des ventes chez TechFlow Solutions </p></div></div></div></div><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> J'ai essayé de nombreux outils de récupération de données pour Linkedin, mais Unlimited leads est de loin le plus rapide et le plus précis. Sa gratuité le rend encore meilleur. Notre équipe a économisé 500 $ par mois en outils.</p><div class="testimonial-author"><div class="author-avatar"> Sud-Ouest</div><div class="author-info"><h4> Sarah Williams</h4><p> Vice-président des ventes chez GrowthTech </p></div></div></div></div><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> L'intégration de LinkedIn est fluide et sécurisée. Aucune restriction de compte après des mois d'utilisation intensive. Les exportations CSV sont parfaitement formatées pour notre CRM. Je recommande vivement !</p><div class="testimonial-author"><div class="author-avatar"> DT</div><div class="author-info"><h4> David Thompson</h4><p> Responsable du développement commercial </p></div></div></div></div><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> « Unlimited leads a transformé notre processus de prospection. Nous sommes passés de 50 leads par jour à plus de 2 000 leads par jour. Les e-mails vérifiés ont augmenté le taux de réponse à nos campagnes de 300 %. »</p><div class="testimonial-author"><div class="author-avatar"> LC</div><div class="author-info"><h4> Lisa Chen</h4><p> Responsable de la croissance chez ScaleUp Inc. </p></div></div></div></div><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> En tant que conseiller commercial indépendant, Unlimited leads m'offre des fonctionnalités de niveau entreprise à coût nul. La fonction numéro de téléphone est géniale : elle me permet d'appeler directement les décideurs.</p><div class="testimonial-author"><div class="author-avatar"> RT</div><div class="author-info"><h4> Robert Taylor</h4><p> Conseiller commercial indépendant </p></div></div></div></div><div class="testimonial-card"><div class="testimonial-content"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text"> La vérification des e-mails en temps réel est parfaite. Nous avons réduit le taux de rebond à moins de 2 %. leads illimité est désormais un outil essentiel pour l'ensemble de notre équipe commerciale.</p><div class="testimonial-author"><div class="author-avatar"> AK</div><div class="author-info"><h4> Amanda Kim</h4><p> Responsable des opérations commerciales </p></div></div></div></div></div></div></section><!-- Final CTA Section --><section class="cta-section" id="install"><div class="container"><div class="cta-content"><h2> Commencez à extraire LinkedIn Leads dès aujourd'hui</h2><p> Rejoignez plus de 50 000 commerciaux qui utilisent Unlimited leads pour multiplier par 10 leur génération de leads. Installez l'extension Chrome gratuite et extrayez vos 1 000 premiers leads en 10 minutes.</p><div style="margin-bottom: 2rem;"> <a class="btn btn-white btn-large pulse" href="https://chromewebstore.google.com/detail/Unlimited%20Leads%20:%20Linkedin%20Sales%20Navigator%20Scraper/hcjohgbpfcjhkpipckaibiibmeigmpfa"><i class="fab fa-chrome"></i>Installer l'extension Chrome gratuite</a> </div><div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem;"><div style="display: flex; align-items: center; gap: 0.5rem; color: white; opacity: 0.9;"><i class="fas fa-check-circle"></i> <span>Installation 100% gratuite</span> </div><div style="display: flex; align-items: center; gap: 0.5rem; color: white; opacity: 0.9;"><i class="fas fa-check-circle"></i> <span>Fonctionne instantanément</span> </div><div style="display: flex; align-items: center; gap: 0.5rem; color: white; opacity: 0.9;"><i class="fas fa-check-circle"></i> <span>Aucune carte de crédit requise</span> </div></div></div></div></section><!-- Footer --><!-- Related Free Tools Section --><section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"><div class="container"><h2 style="font-size: 2rem; text-align: center; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;"> Outils gratuits associés </h2><p style="text-align: center; color: var(--gray-600); margin-bottom: 2.5rem; font-size: 1.1rem;"> Boostez votre productivité avec ces outils gratuits complémentaires de prospection par e-mail et de génération de leads </p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;"><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">💼</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Recherche d'URL LinkedIn </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Recherchez les URL de profil LinkedIn à l'aide des noms et des informations sur l'entreprise.</p> <a href="https://unlimited-leads.online/linkedin-profile-url-finder" style="background: #4facfe; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Essayer l'outil gratuit →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">💼</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Générateur de titres LinkedIn </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Créez des titres LinkedIn convaincants qui attirent votre public cible.</p> <a href="https://unlimited-leads.online/linkedin-headline-generator" style="background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Essayer l'outil gratuit →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">📧</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Outil de recherche d'e-mails en masse </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Trouvez plusieurs adresses e-mail à la fois avec notre puissant outil de découverte en masse.</p> <a href="https://unlimited-leads.online/bulk-email-finder" style="background: #f5576c; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Essayer l'outil gratuit →</a> </div></div><div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 0.75rem; backdrop-filter: blur(10px);"><p style="color: var(--gray-700); font-size: 1rem; margin-bottom: 0.5rem;"> <strong>💡 Astuce de pro :</strong> combinez plusieurs outils pour une efficacité maximale !</p><p style="color: var(--gray-600); font-size: 0.9rem;"> Utilisez ces outils ensemble pour créer un flux de travail de prospection complet qui vous fait gagner du temps et augmente votre taux de réussite. </p></div></div></section><footer class="footer" id="contact"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Outils gratuits</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/bulk-email-finder">Outil de recherche d'e-mails en masse</a></li><li> <a href="https://unlimited-leads.online/spam-words-checker">Vérificateur de mots indésirables</a></li><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Rechercher un e-mail à partir d'un numéro de téléphone</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Recherche MX en masse</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extracteur d'e-mails</a></li><li> <a href="https://unlimited-leads.online/spintax-generator">Générateur Spintax</a></li><li> <a href="https://unlimited-leads.online/email-permutator">Permutateur d'e-mails</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper">Outil de récupération de cartes Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Recherche d'e-mails Apollo</a></li><li> <a href="https://unlimited-leads.online/ai-email-template-generator">Générateur de modèles d'e-mails AI</a></li><li> <a href="https://unlimited-leads.online/ai-email-reply-generator-free">Générateur de réponses par e-mail AI</a></li><li> <a href="https://unlimited-leads.online/cold-email-generator">Générateur d'e-mails à froid</a></li><li> <a href="https://unlimited-leads.online/email-name-generator">Générateur de noms de courrier électronique</a></li><li> <a href="https://unlimited-leads.online/linkedin-headline-generator">Générateur de titres Linkedin</a></li><li> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li><li> <a href="https://unlimited-leads.online/domain-extractor">Extracteur de domaine</a></li><li> <a href="https://unlimited-leads.online/phone-number-extractor">Extracteur de numéros de téléphone</a></li><li> <a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Rechercher un site Web à partir du nom de l'entreprise en masse</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparer</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternative à Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternative à ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternative à Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternative à Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternative à ContactOut</a></li><li> <a href="https://unlimited-leads.online/rocketreach-alternative">Alternative à RocketReach</a></li><li> <a href="https://unlimited-leads.online/uplead-alternative">Alternative à UpLead</a></li><li> <a href="https://unlimited-leads.online/lead411-alternative">Alternative à Lead411</a></li><li> <a href="https://unlimited-leads.online/seamless-ai-alternative">Alternative transparente à l'IA</a></li><li> <a href="https://unlimited-leads.online/findthatlead-alternative">Alternative à Findthatlead</a></li><li> <a href="https://unlimited-leads.online/cognism-alternative">Alternative au cognisme</a></li><li> <a href="https://unlimited-leads.online/hunter-io-alternative">Alternative à Hunter io</a></li><li> <a href="https://unlimited-leads.online/getprospect-alternative">Alternative à Getprospect</a></li></ul></div><!-- Industry Email List Section --><div class="footer-column"><h4> Liste de diffusion de l'industrie</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/accountants-email-list">Liste de courrier électronique des comptables</a></li><li> <a href="https://unlimited-leads.online/attorney-email-list">Liste de courrier électronique des avocats</a></li><li> <a href="https://unlimited-leads.online/ceo-email-list">Liste de diffusion des PDG</a></li><li> <a href="https://unlimited-leads.online/cfo-email-list">Liste de diffusion des directeurs financiers</a></li><li> <a href="https://unlimited-leads.online/construction-industry-email-list">Liste de diffusion du secteur de la construction</a></li><li> <a href="https://unlimited-leads.online/hr-email-list">Liste de diffusion des RH</a></li><li> <a href="https://unlimited-leads.online/real-estate-agent-email-list">Liste de diffusion des agents immobiliers</a></li><li> <a href="https://unlimited-leads.online/email-list">Toutes les listes de courrier électronique</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contactez-nous</h4><ul class="footer-links"><li> <a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li><li> <a href="mailto:support@unlimited-leads.online">Demander un plan personnalisé</a></li></ul></div><div class="footer-social"><a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 UnlimitedLeads. Tous droits réservés.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Politique de confidentialité</a> | <a href="https://unlimited-leads.online/legal-notice">Conditions d'utilisation</a></p></div></div></div></footer><!-- Floating Install Button --><div class="floating-install"> <a class="fab fa-chrome" href="https://chromewebstore.google.com/detail/Unlimited%20Leads%20:%20Linkedin%20Sales%20Navigator%20Scraper/hcjohgbpfcjhkpipckaibiibmeigmpfa"><span>Installer l'extension gratuite</span></a><script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hide/show floating button based on scroll position
+        window.addEventListener('scroll', function() {
+            const floatingBtn = document.querySelector('.floating-install');
+            const ctaSection = document.querySelector('#install');
+            const ctaRect = ctaSection.getBoundingClientRect();
+            
+            if (ctaRect.top <= window.innerHeight && ctaRect.bottom >= 0) {
+                floatingBtn.style.display = 'none';
+            } else {
+                floatingBtn.style.display = 'flex';
+            }
+        });
+    </script><script src="js/popup.js"></script></div></body></html>

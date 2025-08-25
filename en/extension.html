@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<link href="/icon128.png" rel="icon" type="image/png"/>
+<script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Unlimited leads scrapers extension app</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .credits {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+        }
+
+        .page-subtitle {
+            color: var(--gray-600);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Platform Selection */
+        .platform-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .platform-card {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .platform-card.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .platform-icon img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .apollo-icon {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .linkedin-icon {
+            background: linear-gradient(135deg, #0077b5, #0a66c2);
+        }
+
+        .platform-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+        }
+
+        .platform-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Scraper Options */
+        .scraper-options {
+            display: none;
+            margin-top: 30px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .scraper-options.show {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scraper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .scraper-card {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 25px;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+        }
+
+        .scraper-card:hover {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .scraper-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .scraper-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .scraper-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .scraper-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .scraper-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .scraper-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            font-size: 14px;
+        }
+
+        .scraper-features li i {
+            color: var(--success);
+            font-size: 16px;
+        }
+
+        .scraper-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .scraper-actions .btn {
+            padding: 18px 30px !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            border-radius: 12px !important;
+            width: 100% !important;
+            justify-content: center !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+            }
+
+            .header {
+                padding: 10px 15px;
+                gap: 10px;
+            }
+
+            .logo h1 {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+            }
+
+            .nav-item {
+                font-size: 12px;
+            }
+
+            .user-info {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .credits {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+
+            .logout-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
+            .platform-selection {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .platform-card {
+                padding: 20px 15px;
+            }
+
+            .platform-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .platform-icon img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .platform-name {
+                font-size: 18px;
+            }
+
+            .platform-description {
+                font-size: 13px;
+            }
+
+            .scraper-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<link href="https://your-domain.com/en/extension/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/extension/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/extension/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/extension/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/extension/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/extension/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/extension/" hreflang="pt" rel="alternate"/></head>
+<body>
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="logo">
+<h1>Unlimited leads</h1>
+</div>
+<nav class="nav-menu">
+<a class="nav-item active" href="#">New Export</a>
+<a class="nav-item" href="https://unlimited-leads.online/extension-scraping">All Exports</a>
+</nav>
+<div class="user-info">
+<div class="credits">
+<i class="fas fa-coins"></i>
+<span id="creditsCount">0</span> credits
+                </div>
+<a class="btn btn-primary" href="https://unlimited-leads.online/extension-upgrade">
+<i class="fas fa-credit-card"></i>
+                    Buy Credits
+                </a>
+<button class="logout-btn" onclick="logout()">
+<i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="main-content">
+<h1 class="page-title">Choose Your Scraping Platform</h1>
+<p class="page-subtitle">Select the platform you want to scrape data from</p>
+<!-- Platform Selection -->
+<div class="platform-selection">
+<div class="platform-card" onclick="selectPlatform('apollo')">
+<div class="platform-icon apollo-icon">
+<img alt="Apollo IO" src="https://foxeet.fr/images/logo/88b9ffef-cf69-4409-929b-ddde902a68f5/plateforme-prospection-b2b-apollo-io.webp"/>
+</div>
+<h3 class="platform-name">Apollo io</h3>
+<p class="platform-description">
+                        Scrape comprehensive contact and company data from Apollo's extensive database with advanced filtering options.
+                    </p>
+</div>
+<div class="platform-card" onclick="selectPlatform('linkedin')">
+<div class="platform-icon linkedin-icon">
+<i class="fab fa-linkedin"></i>
+</div>
+<h3 class="platform-name">LinkedIn Sales Navigator</h3>
+<p class="platform-description">
+                        Extract detailed profile and company information from LinkedIn Sales Navigator with premium data access.
+                    </p>
+</div>
+</div>
+<!-- Apollo Scraper Options -->
+<div class="scraper-options" id="apollo-options">
+<h2 style="font-size: 28px; margin-bottom: 30px; color: var(--gray-900);">Apollo Scrapers</h2>
+<div class="scraper-grid">
+<div class="scraper-card">
+<div class="scraper-header">
+<div class="scraper-icon">
+<i class="fas fa-user-tie"></i>
+</div>
+<h3 class="scraper-title">Apollo People Scraper</h3>
+</div>
+<ul class="scraper-features">
+<li><i class="fas fa-check"></i> Email addresses and phone numbers</li>
+<li><i class="fas fa-check"></i> Company information</li>
+<li><i class="fas fa-check"></i> Social media profiles</li>
+</ul>
+<div class="scraper-actions">
+<button class="btn btn-primary" onclick="window.location.href='https://app.apollo.io/#/people'">
+<i class="fas fa-play"></i> Launch Export
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- LinkedIn Scraper Options -->
+<div class="scraper-options" id="linkedin-options">
+<h2 style="font-size: 28px; margin-bottom: 30px; color: var(--gray-900);">LinkedIn Sales Navigator Scrapers</h2>
+<div class="scraper-grid">
+<div class="scraper-card">
+<div class="scraper-header">
+<div class="scraper-icon">
+<i class="fas fa-user-circle"></i>
+</div>
+<h3 class="scraper-title">Navigator Profile Scraper</h3>
+</div>
+<ul class="scraper-features">
+<li><i class="fas fa-check"></i> Complete profile information</li>
+<li><i class="fas fa-check"></i> Contact details and emails</li>
+<li><i class="fas fa-check"></i> Work experience and education</li>
+</ul>
+<div class="scraper-actions">
+<button class="btn btn-primary" onclick="window.location.href='https://www.linkedin.com/sales/search/people'">
+<i class="fas fa-play"></i>
+                           Launch Export
+                           </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        let currentCredits = 0;
+        let selectedPlatform = null;
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuthentication()) {
+                return; // Will redirect to login
+            }
+            
+            loadUserData();
+            fetchUserCredits();
+        });
+
+        function checkAuthentication() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            const token = localStorage.getItem('unlimited_leads_token');
+            const expires = localStorage.getItem('unlimited_leads_expires');
+            
+            // Check if data exists
+            if (!userData || !userData.id || !token) {
+                console.log('No auth data found, redirecting to login');
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            // Check if expired
+            if (expires && new Date().getTime() > parseInt(expires)) {
+                console.log('Token expired, redirecting to login');
+                clearAuthData();
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            console.log('User authenticated:', userData);
+            return true;
+        }
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            if (userData && userData.id) {
+                console.log('Loaded user:', userData.id);
+                // You can display user info here if needed
+            }
+        }
+
+        async function fetchUserCredits() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+                if (!userData || !userData.id) {
+                    console.log('No user data for credits fetch');
+                    return;
+                }
+                
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('unlimited_leads_token')}`
+                    },
+                    body: JSON.stringify({
+                        user_id: userData.id,
+                        type: 'credits'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    currentCredits = data.credits || 0;
+                    updateCreditsDisplay();
+                } else {
+                    console.log('Failed to fetch credits:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching credits:', error);
+            }
+        }
+
+        function selectPlatform(platform) {
+            selectedPlatform = platform;
+            
+            // Remove previous selections
+            document.querySelectorAll('.platform-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Hide all options
+            document.querySelectorAll('.scraper-options').forEach(option => {
+                option.classList.remove('show');
+            });
+            
+            // Select current platform
+            event.currentTarget.classList.add('selected');
+            
+            // Show relevant options
+            setTimeout(() => {
+                document.getElementById(platform + '-options').classList.add('show');
+            }, 200);
+        }
+
+        function updateCreditsDisplay() {
+            document.getElementById('creditsCount').textContent = currentCredits;
+        }
+
+        function clearAuthData() {
+            localStorage.removeItem('unlimited_leads_user');
+            localStorage.removeItem('unlimited_leads_token');
+            localStorage.removeItem('unlimited_leads_expires');
+            localStorage.removeItem('unlimited_leads_refresh_token');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                clearAuthData();
+                window.location.href = '/extension-login';
+            }
+        }
+    </script>
+</body>
+</html>

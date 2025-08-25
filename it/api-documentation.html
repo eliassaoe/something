@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> API Accesso - Illimitato leads</title><style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .nav {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        h2 {
+            color: #333;
+            margin: 30px 0 15px 0;
+            font-size: 18px;
+        }
+        
+        h3 {
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .endpoint {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        strong {
+            font-weight: bold;
+        }
+        
+        .note {
+            background: #fffbf0;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style><link href="https://your-domain.com/en/api-documentation/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/api-documentation/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/api-documentation/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/api-documentation/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/api-documentation/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/api-documentation/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/api-documentation/" hreflang="pt" rel="alternate"/></head><body><div class="container"><h1>Illimitato leads API</h1><h2> Autenticazione</h2><p> Tutte le richieste API devono includere un'intestazione <strong>di autorizzazione</strong> . L'intestazione deve fare riferimento alla tua chiave privata.</p><p> Quando ti registri per l'accesso a API, Unlimited leads assegna una chiave privata API al tuo account. La tua chiave privata API è nota solo a te e a Unlimited leads. È importante mantenere entrambe riservate per proteggere il tuo account. La tua chiave API è accessibile dal link Account.</p><h2> API Chiama: trova email</h2><div class="endpoint"> POST https://api.unlimited-leads-to.online</div><p> Restituisce un oggetto codificato in JSON con l'indirizzo email della persona e del dominio specificati. Le chiamate a API vengono misurate e fatturate se viene restituita un'email con il risultato. Se non è disponibile alcuna email, non verrà addebitato alcun costo.</p><h3> Parametri della richiesta POST</h3><ul><li> <strong>firstName</strong> - Il nome della persona (obbligatorio)</li><li> <strong>lastName</strong> - Il cognome della persona (obbligatorio)</li><li> <strong>dominio</strong> - Il dominio da interrogare (obbligatorio)</li></ul><h3> Parametri di richiesta di esempio</h3><ul><li> <strong>Nome</strong> - John</li><li> <strong>cognome</strong> - Doe</li><li> <strong>dominio</strong> - company.com</li></ul><h3> Risposta POST</h3><div class="code-block"> { "email": "john.doe@company.com" }</div><h3> Esempio di richiesta curl</h3><div class="code-block"> &gt; curl -vk \ -H "Content-Type: application/json" \ -H "Authorization: api_private_key" \ -X POST "https://api.unlimited-leads-to.online" \ -d '{ "firstName": "John", "lastName": "Doe", "domain": "company.com", }'</div><h3> Nessuna risposta e-mail trovata</h3><div class="code-block"> { "email": null }</div></div></body></html>

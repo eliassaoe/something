@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Créer un compte</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        
+        button:hover {
+            background-color: #3a7bc8;
+        }
+        
+        /* Google button styling */
+        .google-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .google-btn:hover {
+            background: #3367d6;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: #666;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+        }
+        
+        /* Message styling - improved visibility */
+        .message-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 100;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .message-container.visible {
+            transform: translateY(0);
+        }
+        
+        .message {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 90%;
+            font-weight: 500;
+        }
+        
+        .success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .error {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .login-link a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 1.25rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Loading indicator */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        button.loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+        }
+        
+        /* Email verification message */
+        .verification-notice {
+            background-color: #e8f4fd;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid #4a90e2;
+            display: none;
+        }
+        
+        .verification-notice.visible {
+            display: block;
+            animation: fade-in 0.5s ease-in-out;
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style><link href="https://your-domain.com/en/sign-up-beta/" hreflang="en" rel="alternate"/><link href="https://your-domain.com/en/sign-up-beta/" hreflang="x-default" rel="alternate"/><link href="https://your-domain.com/fr/sign-up-beta/" hreflang="fr" rel="alternate"/><link href="https://your-domain.com/es/sign-up-beta/" hreflang="es" rel="alternate"/><link href="https://your-domain.com/de/sign-up-beta/" hreflang="de" rel="alternate"/><link href="https://your-domain.com/it/sign-up-beta/" hreflang="it" rel="alternate"/><link href="https://your-domain.com/pt/sign-up-beta/" hreflang="pt" rel="alternate"/></head><body><div class="container"><h1>Créer un compte</h1><!-- Google Sign Up Button --> <button class="google-btn" onclick="signUpWithGoogle()"><svg height="20" viewbox="0 0 24 24" width="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="currentColor"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path></svg> Continuer avec Google</button><div class="divider"> <span>ou</span></div><!-- Email/Password Form --><form id="signupForm"><div class="form-group"> <label for="email">E-mail</label> <input id="email" placeholder="Enter your email" required="" type="email"/></div><div class="form-group"> <label for="password">Mot de passe</label><input id="password" minlength="6" placeholder="Create a password" required="" type="password"/><small style="color: #666; font-size: 0.8rem; margin-top: 0.3rem; display: block;">Le mot de passe doit comporter au moins 6 caractères</small></div> <button id="submitButton" type="submit">Créer un compte</button> </form><!-- Always visible verification notice after submission --><div class="verification-notice" id="verificationNotice"> <strong>Presque là !</strong><p> Veuillez vérifier votre boîte mail pour vérifier votre compte. Vous devrez cliquer sur le lien de vérification avant de pouvoir vous connecter.</p></div><div class="login-link"><p> Vous avez déjà un compte ? <a href="https://unlimited-leads.online/login">Connectez-vous</a> </p></div></div><!-- Fixed position message that slides in from top --><div class="message-container" id="messageContainer"><div class="message" id="message"></div></div><script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://snxhsboboatjywgwdeds.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        // Google Sign Up
+        async function signUpWithGoogle() {
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/auth/callback` // Page intermédiaire
+                    }
+                })
+                
+                if (error) {
+                    showMessage('Error: ' + error.message, 'error')
+                }
+            } catch (error) {
+                showMessage('Google sign up failed', 'error')
+                console.error('Google OAuth Error:', error)
+            }
+        }
+
+        // Check URL hash for tokens on page load (for OAuth redirects)
+        window.addEventListener('load', function() {
+            const hashParams = new URLSearchParams(window.location.hash.substring(1))
+            const accessToken = hashParams.get('access_token')
+            
+            if (accessToken) {
+                // Extract user info from the token
+                const tokenPayload = JSON.parse(atob(accessToken.split('.')[1]))
+                const userId = tokenPayload.sub
+                const userEmail = tokenPayload.email
+                const userName = tokenPayload.user_metadata?.full_name || tokenPayload.user_metadata?.name
+                
+                // Store token and user data
+                localStorage.setItem('userToken', accessToken)
+                localStorage.setItem('userId', userId)
+                localStorage.setItem('userEmail', userEmail)
+                localStorage.setItem('userName', userName)
+                
+                // Optional: Send user data to your webhook (same as email signup)
+                sendGoogleUserToWebhook(userEmail, userName, userId, accessToken)
+                
+                // Clean URL and redirect to app with token
+                window.history.replaceState({}, document.title, window.location.pathname)
+                window.location.href = `https://unlimited-leads.online/app?token=${accessToken}`
+            }
+        })
+
+        // Optional: Send Google user data to your webhook
+        async function sendGoogleUserToWebhook(email, name, userId, token) {
+            try {
+                const payload = {
+                    email: email,
+                    name: name,
+                    userId: userId,
+                    provider: "google",
+                    type: "signup",
+                    token: token
+                }
+                
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                
+                console.log('Google user sent to webhook:', response.status)
+            } catch (error) {
+                console.error('Failed to send Google user to webhook:', error)
+            }
+        }
+
+        // Listen for auth state changes (for future logins)
+        supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'SIGNED_IN' && session?.user) {
+                const userToken = session.access_token
+                const userId = session.user.id
+                
+                // Store token for later use
+                localStorage.setItem('userToken', userToken)
+                localStorage.setItem('userId', userId)
+                
+                // Redirect to app with token
+                window.location.href = `https://unlimited-leads.online/app?token=${userToken}`
+            }
+        })
+
+        // Original email/password signup form
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitButton = document.getElementById('submitButton');
+            const verificationNotice = document.getElementById('verificationNotice');
+            
+            // Validate password length
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitButton.innerHTML = '<span class="spinner"></span> Creating Account...';
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+            
+            // Create payload with explicit string typing
+            const payload = {
+                email: email,
+                password: password,
+                type: "signup"
+            };
+            
+            console.log('Sending payload:', payload);
+            
+            // Immediately show verification message (without waiting for API response)
+            verificationNotice.classList.add('visible');
+            
+            try {
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/c56a0557-0e55-450d-a2b4-52e476de88c3', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (response.ok) {
+                    // Success message
+                    showMessage('Account created! Check your email to confirm your address.', 'success');
+                    
+                    // Reset form
+                    document.getElementById('signupForm').reset();
+                    
+                    // Keep verification notice visible
+                    verificationNotice.classList.add('visible');
+                } else {
+                    // Try to get error details if available
+                    try {
+                        const errorData = await response.text();
+                        console.error('Server error response:', errorData);
+                    } catch (e) {
+                        console.error('Could not parse error response');
+                    }
+                    
+                    // Keep verification notice visible anyway
+                    showMessage('Your account is being processed. Please check your email.', 'success');
+                }
+            } catch (error) {
+                // Error message
+                showMessage('Network issue detected. Your account may still have been created. Please check your email.', 'error');
+                console.error('Error:', error);
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = 'Create Account';
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+            }
+        });
+
+        // Helper function to show messages
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            const messageContainer = document.getElementById('messageContainer');
+            
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageContainer.classList.add('visible');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                messageContainer.classList.remove('visible');
+            }, 5000);
+        }
+    </script></body></html>
