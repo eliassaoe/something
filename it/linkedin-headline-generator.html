@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="it"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Generatore di titoli LinkedIn gratuito | Lead illimitati </title><meta content="Genera titoli LinkedIn accattivanti in pochi secondi con il nostro strumento basato sull'intelligenza artificiale. Distinguiti dai potenziali clienti e aumenta la visibilità del tuo profilo con il generatore gratuito di titoli LinkedIn di Unlimited Leads." name="description"/><!-- Preconnect externals --><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><!-- Favicon --><link href="https://i.ibb.co/jPjX9SSp/Screen-Shot-2025-03-28-at-8-16-15-PM.png" rel="icon" sizes="32x32" type="image/png"/><!-- Open Graph --><meta content="website" property="og:type"/><meta content="https://unlimited-leads.online/it/linkedin-headline-generator/" property="og:url"/><meta content="Generatore di titoli LinkedIn gratuito | Lead illimitati" property="og:title"/><meta content="Genera titoli LinkedIn accattivanti in pochi secondi con il nostro strumento basato sull'intelligenza artificiale. Distinguiti dai potenziali clienti e aumenta la visibilità del tuo profilo." property="og:description"/><meta content="https://i.ibb.co/Zzz35ByG/Screen-Shot-2025-03-28-at-8-21-34-PM.png" property="og:image"/><!-- Fonts & Icons --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><!-- Styles --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0ea5e9;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --border-radius: 0.75rem;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            color: var(--gray-800); 
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 1.5rem; 
+        }
+        
+        /* Header */
+        .header { 
+            background: var(--white); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .logo-link { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none;
+        }
+        
+        .logo-text { 
+            font-size: 1.75rem; 
+            font-weight: 800; 
+            color: var(--gray-800); 
+            margin-left: 0.75rem; 
+        }
+        
+        .gradient-text { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Hero Section */
+        .hero { 
+            text-align: center; 
+            padding: 4rem 0 3rem; 
+            background: linear-gradient(135deg, rgba(79,70,229,0.05), rgba(14,165,233,0.05));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .hero h1 { 
+            font-size: 3rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gray-900), var(--gray-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p { 
+            font-size: 1.25rem; 
+            color: var(--gray-600); 
+            margin-bottom: 2.5rem; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Generator Form */
+        .generator-section {
+            padding: 3rem 0;
+        }
+        
+        .generator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 2rem;
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .form-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .form-content {
+            padding: 2.5rem;
+        }
+        
+        .form-step {
+            margin-bottom: 2rem;
+        }
+        
+        .step-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            font-size: 1.1rem;
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--white);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Results Section */
+        .results-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gray-100);
+            display: none;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .result-card {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-text {
+            font-size: 1rem;
+            color: var(--gray-800);
+            line-height: 1.5;
+            background: var(--white);
+            padding: 1rem;
+            border-radius: calc(var(--border-radius) / 2);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .copy-btn {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: calc(var(--border-radius) / 2);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary);
+            transform: translateY(-1px);
+        }
+        
+        /* Status Messages */
+        .status-message {
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
+            font-weight: 500;
+        }
+        
+        .status-loading {
+            background: rgba(79,70,229,0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .status-success {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .status-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        /* Loader */
+        .loader {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 3px solid rgba(79,70,229,0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        .footer { 
+            background: var(--gray-900); 
+            color: var(--white); 
+            padding: 3rem 0 1.5rem; 
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-600);
+            color: var(--gray-400);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { 
+                font-size: 2rem; 
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .form-content {
+                padding: 1.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style><link href="https://unlimited-leads.online/linkedin-headline-generator/" hreflang="en" rel="alternate"/><link href="https://unlimited-leads.online/linkedin-headline-generator/" hreflang="x-default" rel="alternate"/><link href="https://unlimited-leads.online/fr/linkedin-headline-generator/" hreflang="fr" rel="alternate"/><link href="https://unlimited-leads.online/es/linkedin-headline-generator/" hreflang="es" rel="alternate"/><link href="https://unlimited-leads.online/de/linkedin-headline-generator/" hreflang="de" rel="alternate"/><link href="https://unlimited-leads.online/it/linkedin-headline-generator/" hreflang="it" rel="alternate"/><link href="https://unlimited-leads.online/pt/linkedin-headline-generator/" hreflang="pt" rel="alternate"/></head><body><!-- Header --><header class="header"><div class="container"><div class="header-content"> <a class="logo-link" href="https://unlimited-leads.online/en"><i class="fas fa-bolt" style="color: var(--primary); font-size:1.75rem;"></i><span class="logo-text"><span class="gradient-text">__UNLIMITED_LEADS__</span></span></a> </div></div></header><!-- Hero Section --><section class="hero"><div class="container"><div class="hero-badge"><i class="fas fa-magic"></i> <span>Strumento LinkedIn basato sull'intelligenza artificiale</span></div><h1> Generatore di titoli LinkedIn</h1><p> Crea titoli LinkedIn accattivanti che attraggano potenziali clienti e aumentino la visibilità del tuo profilo. Distinguiti in pochi secondi con il nostro generatore intelligente di titoli. </p></div></section><!-- Generator Section --><section class="generator-section"><div class="container"><div class="generator-container"><div class="form-header"><h2> Crea il titolo perfetto per LinkedIn</h2><p> Rispondi a 3 semplici domande e ricevi subito un titolo professionale </p></div><div class="form-content"><div class="status-message" id="statusMessage"></div><form id="headlineForm"><div class="form-step"><label class="step-label"><span class="step-number">1</span> Qual è il tuo ruolo o la tua professione attuale?</label> <input class="form-input" name="role" placeholder="e.g., Sales Manager, Marketing Director, Business Owner..." required="" type="text"/></div><div class="form-step"> <label class="step-label"><span class="step-number">2</span> Qual è il tuo pubblico di riferimento?</label> <input class="form-input" name="audience" placeholder="e.g., B2B companies, startups, enterprise clients..." required="" type="text"/></div><div class="form-step"> <label class="step-label"><span class="step-number">3</span> Quale valore fornisci?</label> <input class="form-input" name="value" placeholder="e.g., increase revenue, improve efficiency, generate leads..." required="" type="text"/></div> <button class="generate-btn" id="generateBtn" type="submit"><i class="fas fa-bolt"></i><span>Genera il mio titolo LinkedIn</span></button> </form><div class="results-section" id="resultsSection"><div class="results-header"><h3 class="results-title"> Il tuo titolo LinkedIn ottimizzato</h3></div><div class="result-card"><div class="result-label"> Il tuo titolo LinkedIn</div><div class="result-text" id="aboutResult"></div> <button class="copy-btn" onclick="copyToClipboard('aboutResult')"><i class="fas fa-copy"></i>Copia titolo</button> </div></div></div></div></div></section><!-- Features Section --><section class="features"><div class="container"><h2>Perché scegliere il nostro generatore di titoli LinkedIn? </h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-rocket"></i></div><h3> Risultati immediati</h3><p> Ottieni titoli LinkedIn professionali in pochi secondi, non ore. Il nostro strumento analizza i tuoi input e crea immediatamente contenuti accattivanti. </p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-bullseye"></i></div><h3> Incentrato sui potenziali clienti</h3><p> Titoli pensati per attrarre i tuoi potenziali clienti ideali e generare più visualizzazioni del profilo, richieste di contatto e opportunità di business.</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-brain"></i></div><h3>Ottimizzato per l'intelligenza artificiale</h3><p> Basato su modelli avanzati che comprendono l'algoritmo di LinkedIn e ciò che rende i titoli efficaci nelle reti professionali. </p></div></div></div></section><!-- Footer --><!-- Related Free Tools Section --><section style="padding: 3rem 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"><div class="container"><h2 style="font-size: 2rem; text-align: center; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;"> Strumenti gratuiti correlati </h2><p style="text-align: center; color: var(--gray-600); margin-bottom: 2.5rem; font-size: 1.1rem;"> Aumenta la tua produttività con questi strumenti gratuiti complementari per la ricerca di potenziali clienti via e-mail e la generazione di lead </p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;"><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">💼</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Trova URL LinkedIn </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Trova gli URL dei profili LinkedIn utilizzando nomi e informazioni aziendali.</p> <a href="https://unlimited-leads.online/linkedin-profile-url-finder" style="background: #4facfe; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">💼</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">LinkedIn Sales Navigator Scraper </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Estrai in modo efficiente lead e potenziali clienti da LinkedIn Sales Navigator.</p> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper" style="background: #4facfe; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div><div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);"><div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"> <span style="font-size: 1.4rem;">🤖</span></div><h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--gray-900); font-weight: 700;">Generatore di e-mail a freddo </h3><p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;"> Crea email di cold outreach accattivanti che ottengano risposte e producano risultati.</p> <a href="https://unlimited-leads.online/cold-email-generator" style="background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">Prova lo strumento gratuito →</a> </div></div><div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 0.75rem; backdrop-filter: blur(10px);"><p style="color: var(--gray-700); font-size: 1rem; margin-bottom: 0.5rem;"> <strong>💡 Consiglio da professionisti:</strong> combina più strumenti per la massima efficienza!</p><p style="color: var(--gray-600); font-size: 0.9rem;"> Utilizza questi strumenti insieme per creare un flusso di lavoro di ricerca clienti completo che ti faccia risparmiare tempo e aumenti il tasso di successo. </p></div></div></section><footer class="footer" id="contact"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Strumenti gratuiti</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/bulk-email-finder">Strumento di ricerca di e-mail in blocco</a></li><li> <a href="https://unlimited-leads.online/spam-words-checker">Controllo delle parole spam</a></li><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Trova l'email dal numero di telefono</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Ricerca mx in blocco</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Estrattore di posta elettronica</a></li><li> <a href="https://unlimited-leads.online/spintax-generator">Generatore Spintax</a></li><li> <a href="https://unlimited-leads.online/email-permutator">Permutatore di posta elettronica</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper">Strumento di scraping di Google Maps</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Trova e-mail Apollo</a></li><li> <a href="https://unlimited-leads.online/ai-email-template-generator">Generatore di modelli di email AI</a></li><li> <a href="https://unlimited-leads.online/ai-email-reply-generator-free">Generatore di risposte e-mail AI</a></li><li> <a href="https://unlimited-leads.online/cold-email-generator">Generatore di e-mail a freddo</a></li><li> <a href="https://unlimited-leads.online/email-name-generator">Generatore di nomi e-mail</a></li><li> <a href="https://unlimited-leads.online/linkedin-headline-generator">Generatore di titoli Linkedin</a></li><li> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li><li> <a href="https://unlimited-leads.online/domain-extractor">Estrattore di dominio</a></li><li> <a href="https://unlimited-leads.online/phone-number-extractor">Estrattore di numeri di telefono</a></li><li> <a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Trova il sito web dal nome dell'azienda in blocco</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Confrontare</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa a ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa a Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa a ContactOut</a></li><li> <a href="https://unlimited-leads.online/rocketreach-alternative">Alternativa a RocketReach</a></li><li> <a href="https://unlimited-leads.online/uplead-alternative">Alternativa a UpLead</a></li><li> <a href="https://unlimited-leads.online/lead411-alternative">Alternativa a Lead411</a></li><li> <a href="https://unlimited-leads.online/seamless-ai-alternative">Alternativa all'intelligenza artificiale senza soluzione di continuità</a></li><li> <a href="https://unlimited-leads.online/findthatlead-alternative">Trova l'alternativa al lead</a></li><li> <a href="https://unlimited-leads.online/cognism-alternative">Alternativa al cognismo</a></li><li> <a href="https://unlimited-leads.online/hunter-io-alternative">Alternativa a Hunter io</a></li><li> <a href="https://unlimited-leads.online/getprospect-alternative">Alternativa a Getprospect</a></li></ul></div><!-- Industry Email List Section --><div class="footer-column"><h4> Elenco e-mail del settore</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/accountants-email-list">Elenco e-mail dei contabili</a></li><li> <a href="https://unlimited-leads.online/attorney-email-list">Elenco e-mail degli avvocati</a></li><li> <a href="https://unlimited-leads.online/ceo-email-list">Elenco e-mail del CEO</a></li><li> <a href="https://unlimited-leads.online/cfo-email-list">Elenco e-mail del CFO</a></li><li> <a href="https://unlimited-leads.online/construction-industry-email-list">Elenco e-mail del settore edile</a></li><li> <a href="https://unlimited-leads.online/hr-email-list">Elenco e-mail delle risorse umane</a></li><li> <a href="https://unlimited-leads.online/real-estate-agent-email-list">Elenco e-mail degli agenti immobiliari</a></li><li> <a href="https://unlimited-leads.online/email-list">Tutti gli elenchi di posta elettronica</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contattaci</h4><ul class="footer-links"><li> <a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li><li> <a href="mailto:support@unlimited-leads.online">Richiedi un piano personalizzato</a></li></ul></div><div class="footer-social"> <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 __UNLIMITED_LEADS__. Tutti i diritti riservati.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Informativa sulla privacy</a> | <a href="https://unlimited-leads.online/legal-notice">Termini di servizio</a></p></div></div></div></footer><!-- Scripts --><script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('headlineForm');
+            const generateBtn = document.getElementById('generateBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const resultsSection = document.getElementById('resultsSection');
+            const aboutResult = document.getElementById('aboutResult');
+            
+            // Helper function to capitalize first letter and handle proper formatting
+            function formatText(text) {
+                if (!text) return '';
+                // Trim and convert to lowercase first
+                text = text.trim().toLowerCase();
+                // Capitalize first letter
+                return text.charAt(0).toUpperCase() + text.slice(1);
+            }
+            
+            // Helper function to ensure proper article usage
+            function getArticle(text) {
+                if (!text) return '';
+                const firstChar = text.charAt(0).toLowerCase();
+                const vowels = ['a', 'e', 'i', 'o', 'u'];
+                return vowels.includes(firstChar) ? 'an' : 'a';
+            }
+            
+            // Multiple template variations for better generalization
+            function generateHeadline(role, audience, value) {
+                const templates = [
+                    // Template 1: Professional helping approach
+                    `${formatText(role)} helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 2: Expertise-focused
+                    `${formatText(role)} specializing in helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 3: Results-oriented
+                    `${formatText(role)} | Helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 4: Direct value proposition
+                    `I help ${formatText(audience)} ${formatText(value)} as ${getArticle(role)} ${formatText(role)}`,
+                    
+                    // Template 5: Achievement-focused
+                    `${formatText(role)} focused on helping ${formatText(audience)} ${formatText(value)}`,
+                    
+                    // Template 6: Mission-driven
+                    `${formatText(role)} dedicated to helping ${formatText(audience)} ${formatText(value)}`
+                ];
+                
+                // Randomly select a template for variety
+                return templates[Math.floor(Math.random() * templates.length)];
+            }
+            
+            // Form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const data = {
+                    role: formData.get('role').trim(),
+                    audience: formData.get('audience').trim(),
+                    value: formData.get('value').trim()
+                };
+                
+                // Validation
+                if (!data.role || !data.audience || !data.value) {
+                    showStatus('Please fill in all fields.', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = '<div class="loader"></div><span>Generating...</span>';
+                showStatus('<div class="loader"></div>Creating your optimized LinkedIn Headline...', 'loading');
+                
+                // Generate the Headline with improved template
+                setTimeout(() => {
+                    const headline = generateHeadline(data.role, data.audience, data.value);
+                    
+                    aboutResult.textContent = headline;
+                    resultsSection.style.display = 'block';
+                    showStatus('Your LinkedIn Headline has been generated successfully!', 'success');
+                    
+                    // Reset button
+                    generateBtn.disabled = false;
+                    generateBtn.innerHTML = '<i class="fas fa-bolt"></i><span>Generate My LinkedIn Headline</span>';
+                    
+                    // Scroll to results
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+            });
+            
+            // Status message helper
+            function showStatus(message, type) {
+                statusMessage.innerHTML = message;
+                statusMessage.className = `status-message status-${type}`;
+                statusMessage.style.display = 'flex';
+                
+                if (type !== 'loading') {
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+        });
+        
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Visual feedback
+                const button = event.target.closest('.copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i>Copied!';
+                button.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script><script src="js/popup.js"></script></body></html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="de"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>plausible('paid customer');</script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><title> Zahlung erfolgreich</title><style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9fafb;
+        }
+        .container {
+            max-width: 480px;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #10B981;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            color: #111827;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #status {
+            color: #4b5563;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .success-icon {
+            color: #10B981;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            color: #ef4444;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style><meta content="https://unlimited-leads.online/de/confirmation-upgrade/" property="og:url"/><link href="https://unlimited-leads.online/confirmation-upgrade/" hreflang="en" rel="alternate"/><link href="https://unlimited-leads.online/confirmation-upgrade/" hreflang="x-default" rel="alternate"/><link href="https://unlimited-leads.online/fr/confirmation-upgrade/" hreflang="fr" rel="alternate"/><link href="https://unlimited-leads.online/es/confirmation-upgrade/" hreflang="es" rel="alternate"/><link href="https://unlimited-leads.online/de/confirmation-upgrade/" hreflang="de" rel="alternate"/><link href="https://unlimited-leads.online/it/confirmation-upgrade/" hreflang="it" rel="alternate"/><link href="https://unlimited-leads.online/pt/confirmation-upgrade/" hreflang="pt" rel="alternate"/></head><body><div class="container"><div class="success-icon">✓</div><h1> Zahlung erfolgreich!</h1><div class="spinner" id="spinner"></div><div id="status"> Zahlung wird bestätigt...</div><div id="error-container"></div></div><script>
+        // ULTRA-RELIABLE payment confirmation with extensive logging
+        (async function() {
+            const statusElement = document.getElementById('status');
+            const spinnerElement = document.getElementById('spinner');
+            const errorContainer = document.getElementById('error-container');
+            
+            // Logging function (console only - no UI debug)
+            function log(message, data = null) {
+                const timestamp = new Date().toISOString();
+                const logEntry = `[${timestamp}] ${message}`;
+                console.log(logEntry, data || '');
+            }
+
+            // Ultra-reliable fetch with multiple fallback strategies
+            async function ultraReliableFetch(url, options, maxRetries = 5) {
+                const methods = [
+                    // Method 1: Standard fetch
+                    () => fetch(url, options),
+                    
+                    // Method 2: XMLHttpRequest fallback
+                    () => new Promise((resolve, reject) => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', url, true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.setRequestHeader('Accept', 'application/json');
+                        
+                        xhr.onload = function() {
+                            resolve({
+                                ok: xhr.status >= 200 && xhr.status < 300,
+                                status: xhr.status,
+                                statusText: xhr.statusText,
+                                json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+                                text: () => Promise.resolve(xhr.responseText)
+                            });
+                        };
+                        
+                        xhr.onerror = () => reject(new Error('XMLHttpRequest failed'));
+                        xhr.ontimeout = () => reject(new Error('XMLHttpRequest timeout'));
+                        xhr.timeout = 60000; // 60 second timeout
+                        
+                        xhr.send(options.body);
+                    }),
+                    
+                    // Method 3: Direct worker bypass (fallback to server)
+                    () => fetch('https://eliasse-n8n.onrender.com/webhook/fd1d24eb-73b4-4d39-8b2e-781f2d05f1c6', options)
+                ];
+
+                for (let methodIndex = 0; methodIndex < methods.length; methodIndex++) {
+                    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                        try {
+                            log(`Attempt ${attempt}/${maxRetries} using method ${methodIndex + 1}`);
+                            
+                            const response = await Promise.race([
+                                methods[methodIndex](),
+                                new Promise((_, reject) => 
+                                    setTimeout(() => reject(new Error('Request timeout')), 60000)
+                                )
+                            ]);
+                            
+                            log(`Method ${methodIndex + 1} attempt ${attempt} succeeded`, {
+                                status: response.status,
+                                ok: response.ok
+                            });
+                            
+                            return response;
+                            
+                        } catch (error) {
+                            log(`Method ${methodIndex + 1} attempt ${attempt} failed`, {
+                                error: error.message,
+                                stack: error.stack
+                            });
+                            
+                            if (attempt < maxRetries) {
+                                const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+                                log(`Waiting ${delay}ms before retry...`);
+                                await new Promise(resolve => setTimeout(resolve, delay));
+                            }
+                        }
+                    }
+                }
+                
+                throw new Error('All methods and retries exhausted');
+            }
+
+            try {
+                log('=== PAYMENT CONFIRMATION STARTED ===');
+                log('Page URL', window.location.href);
+                
+                // Get URL parameters with comprehensive fallback
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlHash = window.location.hash ? new URLSearchParams(window.location.hash.substring(1)) : null;
+                
+                log('URL search params', Object.fromEntries(urlParams));
+                if (urlHash) log('URL hash params', Object.fromEntries(urlHash));
+                
+                // Get session ID with all possible parameter names
+                let sessionId = urlParams.get('session_id') || 
+                               urlParams.get('checkout_session_id') || 
+                               urlParams.get('id') ||
+                               urlParams.get('sessionId') ||
+                               urlParams.get('checkoutSessionId');
+                
+                if (!sessionId && urlHash) {
+                    sessionId = urlHash.get('session_id') || 
+                               urlHash.get('checkout_session_id') || 
+                               urlHash.get('id') ||
+                               urlHash.get('sessionId') ||
+                               urlHash.get('checkoutSessionId');
+                }
+                
+                // Check localStorage/sessionStorage
+                if (!sessionId) {
+                    const storageKeys = ['checkout_session_id', 'session_id'];
+                    for (const key of storageKeys) {
+                        sessionId = localStorage.getItem(key) || sessionStorage.getItem(key);
+                        if (sessionId) {
+                            log(`Found session ID in storage`, { key, sessionId });
+                            break;
+                        }
+                    }
+                }
+                
+                // Get user token
+                let userToken = urlParams.get('token') || 
+                               urlParams.get('customer_id') || 
+                               urlParams.get('user_id') ||
+                               urlParams.get('userToken');
+                
+                if (!userToken && urlHash) {
+                    userToken = urlHash.get('token') || 
+                               urlHash.get('customer_id') || 
+                               urlHash.get('user_id') ||
+                               urlHash.get('userToken');
+                }
+                
+                if (!userToken) {
+                    const tokenKeys = ['payment_user_token', 'userToken', 'customer_id', 'user_id'];
+                    for (const key of tokenKeys) {
+                        userToken = localStorage.getItem(key) || sessionStorage.getItem(key);
+                        if (userToken) {
+                            log(`Found user token in storage`, { key, hasToken: !!userToken });
+                            break;
+                        }
+                    }
+                }
+                
+                log('Extracted data', {
+                    sessionId: sessionId ? sessionId.substring(0, 15) + '...' : 'MISSING',
+                    userToken: userToken ? 'PRESENT' : 'MISSING',
+                    fullSessionId: sessionId // For debugging
+                });
+                
+                // Validate required data
+                if (!sessionId) {
+                    throw new Error('❌ CRITICAL: No session ID found in URL or storage');
+                }
+                
+                // Prepare request data
+                const requestData = {
+                    checkout_session_id: sessionId,
+                    user_token: userToken,
+                    lookup_session: true,
+                    timestamp: new Date().toISOString(),
+                    source: 'ultra_reliable_payment_page',
+                    page_url: window.location.href,
+                    user_agent: navigator.userAgent
+                };
+                
+                log('Request data prepared', requestData);
+                
+                // Update UI
+                statusElement.textContent = 'Confirming payment...';
+                
+                // Make the ultra-reliable API call
+                log('🚀 Starting API call to worker...');
+                
+                const response = await ultraReliableFetch(
+                    'https://confirmation-upgrade.hamoureliasse.workers.dev/', 
+                    {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'User-Agent': 'PaymentConfirmation/2.0'
+                        },
+                        body: JSON.stringify(requestData)
+                    }
+                );
+                
+                log('✅ API call completed', {
+                    status: response.status,
+                    ok: response.ok,
+                    statusText: response.statusText
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text().catch(() => 'Unknown error');
+                    throw new Error(`Server responded with ${response.status}: ${errorText}`);
+                }
+                
+                let responseData;
+                try {
+                    responseData = await response.json();
+                    log('✅ Response data parsed', responseData);
+                } catch (jsonError) {
+                    log('⚠️ Failed to parse JSON response, getting text');
+                    responseData = { message: await response.text() };
+                }
+                
+                // Success!
+                log('🎉 PAYMENT CONFIRMATION SUCCESSFUL');
+                
+                spinnerElement.style.display = 'none';
+                statusElement.innerHTML = 'Payment confirmed!<br>Redirecting...';
+                
+                // Clean up storage
+                const keysToClean = ['payment_user_token', 'userToken', 'customer_id', 'user_id', 'checkout_session_id', 'session_id'];
+                keysToClean.forEach(key => {
+                    localStorage.removeItem(key);
+                    sessionStorage.removeItem(key);
+                });
+                log('🧹 Storage cleaned up');
+                
+                // Wait and redirect
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                log('🔄 Redirecting to app...');
+                window.location.href = 'https://unlimited-leads.online/app';
+                
+            } catch (error) {
+                log('❌ FATAL ERROR', {
+                    message: error.message,
+                    stack: error.stack
+                });
+                
+                spinnerElement.style.display = 'none';
+                statusElement.innerHTML = 'Unable to confirm payment automatically';
+                
+                errorContainer.innerHTML = `
+                    <div class="error-message">
+                        <strong>Payment Processing Issue</strong><br><br>
+                        Your payment was successful, but we're having trouble confirming it automatically.
+                        <br><br>
+                        Please contact our support team and we'll activate your account manually:
+                        <br><br>
+                        <strong>📧 support@unlimited-leads.online</strong>
+                        <br><br>
+                        Please include your payment confirmation details when contacting support.
+                    </div>
+                `;
+                
+                // Do NOT redirect on error - let user contact support
+            }
+        })();
+    </script></body></html>

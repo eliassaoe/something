@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="es"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Clientes potenciales ilimitados - Panel de raspado </title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/><style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+       .nav-item {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
+.nav-item:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.nav-item.active {
+    color: var(--primary);
+    font-weight: 600;
+    background: var(--primary-light);
+}
+
+/* Special styling for the New Export button */
+.nav-item[href*="extension"] {
+    background: linear-gradient(135deg, var(--success), #059669) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    padding: 12px 20px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item[href*="extension"]:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+}
+
+.nav-item[href*="extension"]:before {
+    content: "🚀 ";
+    margin-right: 5px;
+}
+
+/* Add pulsing animation to make it even more noticeable */
+.nav-item[href*="extension"]:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+        @keyframes pulse {
+    0% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .credits {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .page-subtitle {
+            color: var(--gray-600);
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Current Scraping */
+        .current-scraping {
+            background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .current-scraping.show {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .current-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .current-url {
+            background: white;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            word-break: break-all;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .current-url:hover {
+            background: var(--primary-light);
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 6px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Scraping History Table */
+        .history-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .exports-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .exports-table th {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            text-align: left;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .exports-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-800);
+            font-size: 14px;
+        }
+
+        .exports-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exports-table tr:hover {
+            background: var(--gray-50);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-processing {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-failed {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .url-cell {
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .url-cell:hover {
+            text-decoration: underline;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--gray-600);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-700);
+            transform: translateY(-1px);
+        }
+
+        .credits-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    backdrop-filter: blur(8px);
+}
+
+.credits-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.credits-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+.credits-modal-icon {
+    font-size: 64px;
+    color: var(--warning);
+    margin-bottom: 20px;
+}
+
+.credits-modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 10px;
+}
+
+.credits-modal-message {
+    color: var(--gray-600);
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.credits-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-upgrade {
+    background: linear-gradient(135deg, var(--warning), #d97706);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.btn-upgrade:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-cancel {
+    background: var(--gray-200);
+    color: var(--gray-700);
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: var(--gray-300);
+    transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-600);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--gray-700);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo h1 {
+                font-size: 18px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                font-size: 12px;
+                padding: 8px 12px;
+                border-radius: 6px;
+                background: var(--gray-100);
+            }
+
+            .nav-item.active {
+                background: var(--primary-light);
+            }
+
+            .nav-item[href*="extension"] {
+        padding: 10px 16px !important;
+        font-size: 12px !important; /* Changed from 14px to 12px for consistency */
+        font-weight: 600 !important;
+        /* Keep all the other styles from the main definition */
+        background: linear-gradient(135deg, var(--success), #059669) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .nav-item[href*="extension"]:hover {
+        background: linear-gradient(135deg, #059669, #047857) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+    }
+    
+    .nav-item[href*="extension"]:before {
+        content: "🚀 ";
+        margin-right: 5px;
+    }
+    
+    .nav-item[href*="extension"]:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        animation: pulse 2s infinite;
+        pointer-events: none;
+    }
+
+            .user-info {
+                gap: 10px;
+                flex-wrap: wrap;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .credits {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                gap: 4px;
+            }
+
+            .main-content {
+                padding: 25px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .exports-table {
+                font-size: 11px;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .exports-table th,
+            .exports-table td {
+                padding: 8px 6px;
+                min-width: 80px;
+            }
+
+            .url-cell {
+                max-width: 120px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .btn-small {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+
+            .current-scraping {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px;
+            }
+
+             .credits-modal-content {
+        padding: 30px 20px;
+    }
+    
+    .credits-modal-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-upgrade, .btn-cancel {
+        width: 100%;
+        padding: 14px 20px;
+    }
+
+            .nav-menu {
+                gap: 8px;
+            }
+
+           {
+    .nav-item[href*="extension"] {
+        padding: 8px 12px !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+    
+    .nav-item[href*="extension"]:before {
+        content: "🚀 ";
+        margin-right: 3px;
+    }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .stats-cards {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .logout-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                gap: 2px;
+            }
+        }
+    </style><meta content="https://unlimited-leads.online/es/extension-scraping/" property="og:url"/><link href="https://unlimited-leads.online/extension-scraping/" hreflang="en" rel="alternate"/><link href="https://unlimited-leads.online/extension-scraping/" hreflang="x-default" rel="alternate"/><link href="https://unlimited-leads.online/fr/extension-scraping/" hreflang="fr" rel="alternate"/><link href="https://unlimited-leads.online/es/extension-scraping/" hreflang="es" rel="alternate"/><link href="https://unlimited-leads.online/de/extension-scraping/" hreflang="de" rel="alternate"/><link href="https://unlimited-leads.online/it/extension-scraping/" hreflang="it" rel="alternate"/><link href="https://unlimited-leads.online/pt/extension-scraping/" hreflang="pt" rel="alternate"/></head><body><div class="container"><!-- Header --><header class="header"><div class="logo"><h1> Clientes potenciales ilimitados</h1></div><nav class="nav-menu"> <a class="nav-item" href="https://unlimited-leads.online/extension">Nueva Exportación</a> <a class="nav-item active" href="#">Todas las Exportaciones</a></nav><div class="user-info"><div class="credits"><i class="fas fa-coins"></i> <span id="creditsCount">0</span> créditos</div> <a class="btn btn-primary" href="https://unlimited-leads.online/extension-upgrade"><i class="fas fa-credit-card"></i>Comprar créditos</a> <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</button> </div></header><!-- Main Content --><main class="main-content"><div class="page-header"><div><h1 class="page-title"> Panel de raspado</h1><p class="page-subtitle"> Supervise y administre sus trabajos de extracción de datos </p></div></div><!-- Stats Cards --><div class="stats-cards"><div class="stat-card"><div class="stat-value" id="totalExports"> 0</div><div class="stat-label"> Exportaciones totales</div></div><div class="stat-card"><div class="stat-value" id="completedExports"> 0</div><div class="stat-label"> Terminado</div></div><div class="stat-card"><div class="stat-value" id="processingExports"> 0</div><div class="stat-label"> Tratamiento </div></div></div><!-- Current Scraping --><div class="current-scraping" id="currentScraping"><div class="current-title"><i class="fas fa-cog fa-spin"></i> Actualmente raspando</div><div class="current-url" id="currentUrl" onclick="openScrapingUrl()"> Cargando...</div><div class="progress-container"><div class="progress-label"> <span>Progreso</span> <span id="progressText">0%</span> </div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div></div><div style="color: var(--gray-600); font-size: 14px; margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Tiempo restante estimado: <span id="timeRemaining">Calculando...</span> </div><div style="color: var(--success); font-size: 14px; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border-left: 4px solid var(--success);"><i class="fas fa-check-circle"></i> Puedes abandonar esta página: el scraping se ejecuta en nuestros servidores seguros </div></div><!-- Scraping History --><div class="history-section"><h2 class="section-title"><i class="fas fa-history"></i> Historial de exportaciones </h2><div id="exportsContainer"><!-- Table will be populated by JavaScript --></div></div><div class="credits-modal" id="creditsModal"><div class="credits-modal-content"><div class="credits-modal-icon"><i class="fas fa-coins"></i></div><h3 class="credits-modal-title"> No quedan créditos</h3><p class="credits-modal-message"> Necesitas créditos para iniciar un nuevo trabajo de scraping. Compra créditos para seguir extrayendo leads valiosos de tus páginas objetivo.</p><div class="credits-modal-buttons"> <a class="btn-upgrade" href="https://unlimited-leads.online/extension-upgrade"><i class="fas fa-credit-card"></i>Comprar créditos ahora</a> <button class="btn-cancel" onclick="hideCreditsModal()">Cancelar</button></div></div></div></main></div><script>
+        // Configuration
+     const WORKER_BASE_URL = 'https://scraping-extension.hamoureliasse.workers.dev';
+     const DOWNLOAD_ENDPOINT = `${WORKER_BASE_URL}/api/download`;
+    const CHECK_ENDPOINT = `${WORKER_BASE_URL}/api/check`;
+
+        
+        // localStorage keys
+        const STORAGE_KEYS = {
+            JOBS: 'unlimited_leads_jobs',
+            CURRENT_JOB: 'unlimited_leads_current_job'
+        };
+
+        // Global variables
+        let currentScrapingJob = null;
+        let scrapingUrl = null;
+        let progressInterval = null;
+
+        // Check authentication on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (!checkAuthentication()) {
+        return; // Will redirect to login
+    }
+    
+    loadUserData();
+    fetchUserCredits();
+    
+    // Nettoyer les jobs expirés
+    const cleanedCount = cleanupExpiredJobs();
+    if (cleanedCount > 0) {
+        console.log(`Cleaned up ${cleanedCount} expired jobs`);
+    }
+    
+   // 🔥 REMPLACE la section localStorage dans ta fonction DOMContentLoaded par :
+
+// Vérifier les jobs en attente
+checkPendingJobs();
+
+let scrapingStarted = false;
+
+// 🔥 NOUVELLE LOGIQUE : Écouter les données de l'extension
+window.addEventListener('extensionScrapingData', (event) => {
+    if (scrapingStarted) return;
+    scrapingStarted = true;
+    
+    const scrapingData = event.detail;
+    console.log('✅ Received scraping data from extension:', scrapingData);
+    scrapingUrl = scrapingData.url;
+    startNewScrapingWithData(scrapingData);
+});
+
+// Alternative : Vérifier directement si l'extension est disponible
+setTimeout(() => {
+    if (scrapingStarted) return;
+    
+    if (window.getScrapingDataFromExtension) {
+        console.log('🔍 Extension detected, checking for data...');
+        window.getScrapingDataFromExtension();
+    } else {
+        console.log('❌ Extension required for cookies');
+        // ✅ Ligne supprimée = plus de call API sans cookies
+    }
+}, 100);
+    
+    // Load existing data
+    loadExportHistory();
+    updateStats();
+});
+
+    // 🔥 NOUVELLE FONCTION : Démarrer le scraping avec les données de l'extension
+async function startNewScrapingWithData(scrapingData) {
+    try {
+        const decodedUrl = scrapingData.url;
+        const platform = detectPlatform(decodedUrl);
+        const cookies = scrapingData.cookies; // 🔥 Cookies frais de l'extension !
+        
+        console.log('🚀 Starting scraping with extension data:', decodedUrl);
+        console.log('🔑 Platform detected:', platform);
+        console.log('🍪 Cookies received:', cookies.length);
+
+        // Vérifier si cette URL a déjà été scrapée (ton code existant)
+        const existingJobs = getAllJobs();
+        const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+
+        if (existingJob) {
+            console.log('URL already scraped, downloading existing file...');
+            showNotification('URL already scraped! Downloading existing file...', 'info');
+            downloadFile(existingJob.id);
+            return;
+        }
+        
+        // Create new job (ton code existant avec l'ID de l'extension)
+        const job = {
+            id: scrapingData.jobId, // 🔥 Utiliser l'ID de l'extension
+            url: decodedUrl,
+            platform: platform,
+            status: 'processing',
+            progress: 0,
+            records_found: null,
+            download_url: null,
+            started_at: new Date().toISOString(),
+            completed_at: null,
+            created_at: new Date().toISOString()
+        };
+        
+        // Save job (ton code existant)
+        saveJob(job);
+        currentScrapingJob = job;
+        
+        // Show scraping UI (ton code existant)
+        showCurrentScraping(decodedUrl);
+        
+        await fetchUserCredits(); 
+        simulateProgress();
+        
+        // 🔥 API call avec les cookies de l'extension
+        try {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            
+            const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
+            const requestBody = {
+                type: platform,
+                url: decodedUrl,
+                job_id: job.id,
+                user_id: userData.id,
+                cookies: cookies // 🔥 Cookies frais et complets de l'extension !
+            };
+            
+            console.log('📡 Sending API request with extension cookies:', requestBody);
+            
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
+            });
+            
+            if (response.ok) {
+                console.log('✅ API call successful');
+                
+                try {
+                    const responseData = await response.json();
+                    console.log('📊 Server response:', responseData);
+                    
+                    // Update job with response data
+                    if (responseData.success) {
+                        job.records_found = responseData.records_found || null;
+                        saveJob(job);
+                    }
+                } catch (jsonError) {
+                    console.log('Response not JSON, continuing with simulation');
+                }
+                
+                showNotification('Scraping started successfully!', 'success');
+            } else {
+                // Handle API error response (ton code existant)
+                try {
+                    const errorData = await response.json();
+                    
+                    // Check if it's a credits error
+                    if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
+                        showCreditsModal();
+                        return;
+                    }
+                } catch (parseError) {
+                    console.log('Could not parse error response');
+                }
+                
+                throw new Error(`API call failed: ${response.status}`);
+            }
+        } catch (apiError) {
+            console.log('API call failed, continuing with simulation:', apiError);
+            
+            // Check if error message mentions credits
+            if (apiError.message && apiError.message.toLowerCase().includes('credit')) {
+                showCreditsModal();
+                return;
+            }
+            
+            showNotification('Scraping started', 'warning');
+        }
+
+    } catch (error) {
+        console.error('❌ Error starting scraping with extension data:', error);
+        
+        // Check if error message mentions credits
+        if (error.message && error.message.toLowerCase().includes('credit')) {
+            showCreditsModal();
+            return;
+        }
+        
+        showNotification('Failed to start scraping job: ' + error.message, 'error');
+    }
+}
+        function checkAuthentication() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            const token = localStorage.getItem('unlimited_leads_token');
+            const expires = localStorage.getItem('unlimited_leads_expires');
+            
+            // Check if data exists
+            if (!userData || !userData.id || !token) {
+                console.log('No auth data found, redirecting to login');
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            // Check if expired
+            if (expires && new Date().getTime() > parseInt(expires)) {
+                console.log('Token expired, redirecting to login');
+                clearAuthData();
+                window.location.href = '/extension-login';
+                return false;
+            }
+            
+            console.log('User authenticated:', userData);
+            return true;
+        }
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            if (userData && userData.id) {
+                console.log('Loaded user:', userData.id);
+            }
+        }
+
+        async function fetchUserCredits() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+                if (!userData || !userData.id) {
+                    console.log('No user data for credits fetch');
+                    return;
+                }
+                
+                const response = await fetch('https://eliasse-n8n.onrender.com/webhook/28f27e42-0c53-4006-a4f7-b85ebaa37c3f', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('unlimited_leads_token')}`
+                    },
+                    body: JSON.stringify({
+                        user_id: userData.id,
+                        type: 'credits'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('creditsCount').textContent = data.credits || 0;
+                } else {
+                    console.log('Failed to fetch credits:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching credits:', error);
+            }
+        }
+
+        // Generate unique ID
+        function generateId() {
+            return 'job_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Get all jobs from localStorage
+        function getAllJobs() {
+            const jobs = localStorage.getItem(STORAGE_KEYS.JOBS);
+            return jobs ? JSON.parse(jobs) : [];
+        }
+
+        // Save jobs to localStorage
+        function saveJobs(jobs) {
+            localStorage.setItem(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
+        }
+
+        // Save single job
+        function saveJob(job) {
+            const jobs = getAllJobs();
+            const existingIndex = jobs.findIndex(j => j.id === job.id);
+            
+            if (existingIndex >= 0) {
+                jobs[existingIndex] = job;
+            } else {
+                jobs.unshift(job); // Add to beginning
+            }
+            
+            saveJobs(jobs);
+        }
+
+        function showCreditsModal() {
+    const modal = document.getElementById('creditsModal');
+    modal.classList.add('show');
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function hideCreditsModal() {
+    const modal = document.getElementById('creditsModal');
+    modal.classList.remove('show');
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside
+document.getElementById('creditsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideCreditsModal();
+    }
+});
+
+// Escape key to close modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideCreditsModal();
+    }
+});
+
+async function startNewScraping(url) {
+    try {
+        const decodedUrl = decodeURIComponent(url);
+        const platform = detectPlatform(decodedUrl);
+        const urlParams = new URLSearchParams(window.location.search);
+        const cookiesParam = urlParams.get('cookies');
+        let cookies = null;
+
+if (cookiesParam) {
+    try {
+        cookies = JSON.parse(decodeURIComponent(cookiesParam));
+        console.log('Extracted cookies from URL:', cookies);
+    } catch (error) {
+        console.error('Failed to parse cookies from URL:', error);
+    }
+}
+        
+        console.log('Starting scraping for:', decodedUrl);
+        console.log('Platform detected:', platform);
+
+        // Vérifier si cette URL a déjà été scrapée
+        const existingJobs = getAllJobs();
+        const existingJob = existingJobs.find(job => job.url === decodedUrl && job.status === 'completed');
+
+        if (existingJob) {
+            console.log('URL already scraped, downloading existing file...');
+            showNotification('URL already scraped! Downloading existing file...', 'info');
+            downloadFile(existingJob.id);
+            return;
+        }
+        
+        // Create new job
+        const job = {
+            id: generateId(),
+            url: decodedUrl,
+            platform: platform,
+            status: 'processing',
+            progress: 0,
+            records_found: null,
+            download_url: null,
+            started_at: new Date().toISOString(),
+            completed_at: null,
+            created_at: new Date().toISOString()
+        };
+        
+        // Save job
+        saveJob(job);
+        currentScrapingJob = job;
+        
+        // Show scraping UI
+        showCurrentScraping(decodedUrl);
+        
+        await fetchUserCredits(); 
+
+        simulateProgress();
+        
+        // Make API call to webhook
+        try {
+            const userData = JSON.parse(localStorage.getItem('unlimited_leads_user') || 'null');
+            
+            const webhookUrl = 'https://eliasse-n8n.onrender.com/webhook/a96a7639-3552-4a58-8849-b1df4dd0e6b9';
+            const requestBody = {
+    type: platform,
+    url: decodedUrl,
+    job_id: job.id,
+    user_id: userData.id,
+    cookies: cookies // Add this line
+};
+            
+            console.log('Sending API request:', requestBody);
+            
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
+            });
+            
+            if (response.ok) {
+                console.log('API call successful');
+                
+                try {
+                    const responseData = await response.json();
+                    console.log('Server response:', responseData);
+                    
+                    // Update job with response data
+                    if (responseData.success) {
+                        job.records_found = responseData.records_found || null;
+                        saveJob(job);
+                    }
+                } catch (jsonError) {
+                    console.log('Response not JSON, continuing with simulation');
+                }
+                
+                showNotification('Scraping started successfully!', 'success');
+            } else {
+                // Handle API error response
+                try {
+                    const errorData = await response.json();
+                    
+                    // Check if it's a credits error
+                    if (errorData.error && errorData.error.toLowerCase().includes('credit')) {
+                        showCreditsModal();
+                        return;
+                    }
+                } catch (parseError) {
+                    console.log('Could not parse error response');
+                }
+                
+                throw new Error(`API call failed: ${response.status}`);
+            }
+        } catch (apiError) {
+            console.log('API call failed, continuing with simulation:', apiError);
+            
+            // Check if error message mentions credits
+            if (apiError.message && apiError.message.toLowerCase().includes('credit')) {
+                showCreditsModal();
+                return;
+            }
+            
+            showNotification('Scraping started', 'warning');
+        }
+
+    } catch (error) {
+        console.error('Error starting scraping:', error);
+        
+        // Check if error message mentions credits
+        if (error.message && error.message.toLowerCase().includes('credit')) {
+            showCreditsModal();
+            return;
+        }
+        
+        showNotification('Failed to start scraping job: ' + error.message, 'error');
+    }
+}
+        // Show current scraping section
+        function showCurrentScraping(url) {
+            const currentScrapingDiv = document.getElementById('currentScraping');
+            const currentUrlDiv = document.getElementById('currentUrl');
+            
+            currentScrapingDiv.classList.add('show');
+            currentUrlDiv.textContent = url;
+            currentUrlDiv.onclick = () => window.open(url, '_blank');
+            
+            // Reset progress
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressText').textContent = '0%';
+            document.getElementById('timeRemaining').textContent = 'Calculating...';
+        }
+
+function simulateProgress() {
+    // Détecter la plateforme du job actuel
+    const platform = currentScrapingJob ? currentScrapingJob.platform : 'apollo';
+    
+    // Calculer le temps estimé basé sur les crédits ET la plateforme
+    const userCredits = parseInt(document.getElementById('creditsCount').textContent) || 1000;
+    
+    let estimatedMinutes;
+    let minimumMinutes;
+    
+    if (platform === 'linkedin') {
+        const estimatedSeconds = userCredits * 5; // 5 seconde par crédit
+        estimatedMinutes = estimatedSeconds / 60; // Convertir en minutes
+        minimumMinutes = 1; // Minimum 1 minute
+    } else {
+        // Apollo: 6.5 minutes pour 1000 leads (comme avant)
+        estimatedMinutes = (userCredits * 6) / 1000 + 3; // 1000 credits = 6.5 minutes
+        minimumMinutes = 1;
+    }
+    
+    const totalSeconds = Math.round(estimatedMinutes * 60);
+    
+    // Stocker l'heure de début et la durée totale dans le job
+    if (currentScrapingJob) {
+        currentScrapingJob.simulation_start = currentScrapingJob.simulation_start || Date.now();
+        currentScrapingJob.total_duration_seconds = totalSeconds;
+        saveJob(currentScrapingJob);
+    }
+    
+    // Afficher le temps estimé dès le début
+    if (totalSeconds > 60) {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
+    } else {
+        document.getElementById('timeRemaining').textContent = `${totalSeconds}s`;
+    }
+    
+    console.log(`Estimated time for ${userCredits} credits on ${platform}: ${estimatedMinutes.toFixed(1)} minutes`);
+    
+    progressInterval = setInterval(() => {
+        // Calculer le progrès basé sur le temps écoulé au lieu d'incrémenter
+        const elapsedSeconds = (Date.now() - currentScrapingJob.simulation_start) / 1000;
+        const progress = Math.min((elapsedSeconds / totalSeconds) * 100, 100);
+
+        // Update UI
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        
+        // Calcul du temps restant précis
+        const timeRemaining = Math.max(0, Math.round(totalSeconds - elapsedSeconds));
+        
+        if (timeRemaining > 60) {
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            document.getElementById('timeRemaining').textContent = `${mins}m ${secs}s`;
+        } else {
+            document.getElementById('timeRemaining').textContent = `${timeRemaining}s`;
+        }
+
+        if (currentScrapingJob) {
+            currentScrapingJob.progress = Math.round(progress);
+            saveJob(currentScrapingJob);
+        }
+
+        if (progress >= 100) {
+            clearInterval(progressInterval);
+            completeScraping();
+        }
+    }, 1000);
+}// Complete scraping job
+        function completeScraping() {
+            if (!currentScrapingJob) return;
+            
+            // Update job status
+            currentScrapingJob.status = 'completed';
+            currentScrapingJob.progress = 100;
+            currentScrapingJob.completed_at = new Date().toISOString();
+            
+            // Set records found if not already set
+            if (!currentScrapingJob.records_found) {
+                currentScrapingJob.records_found = Math.floor(Math.random() * 1000) + 50;
+            }
+            
+            // Save updated job
+            saveJob(currentScrapingJob);
+            
+            // Hide current scraping after delay
+            setTimeout(() => {
+                document.getElementById('currentScraping').classList.remove('show');
+                currentScrapingJob = null;
+                loadExportHistory();
+                updateStats();
+            }, 2000);
+
+            showNotification('Scraping completed successfully!', 'success');
+        }
+
+        // Load export history
+        function loadExportHistory() {
+            const jobs = getAllJobs();
+            renderExportsTable(jobs);
+        }
+
+        // Update stats
+        function updateStats() {
+            const jobs = getAllJobs();
+            
+            const stats = jobs.reduce((acc, job) => {
+                acc.total++;
+                if (job.status === 'completed') acc.completed++;
+                if (job.status === 'processing') acc.processing++;
+                return acc;
+            }, { total: 0, completed: 0, processing: 0 });
+
+            document.getElementById('totalExports').textContent = stats.total;
+            document.getElementById('completedExports').textContent = stats.completed;
+            document.getElementById('processingExports').textContent = stats.processing;
+        }
+
+        // Render exports table
+        function renderExportsTable(exports) {
+            const container = document.getElementById('exportsContainer');
+            
+            if (exports.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No exports yet</h3>
+                        <p>Start your first scraping job to see it here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const table = `
+                <table class="exports-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Platform</th>
+                            <th>URL</th>
+                            <th>Status</th>
+                            <th>Records</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${exports.map(job => `
+                            <tr>
+                                <td>${formatDate(job.created_at)}</td>
+                                <td>
+                                    <i class="fab fa-${job.platform === 'apollo' ? 'affiliatetheme' : 'linkedin'}"></i>
+                                    ${job.platform || 'Unknown'}
+                                </td>
+                                <td class="url-cell" onclick="window.open('${job.url}', '_blank')" title="${job.url}">
+                                    ${job.url}
+                                </td>
+                                <td>
+                                    <span class="status-badge status-${job.status}">
+                                        <i class="fas fa-${getStatusIcon(job.status)}"></i>
+                                        ${job.status}
+                                    </span>
+                                </td>
+                                <td>${job.records_found || '—'}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        ${job.status === 'completed' ? 
+                                            `<button class="btn btn-success btn-small" onclick="downloadFile('${job.id}')">
+                                                <i class="fas fa-download"></i> Download
+                                            </button>` : ''
+                                        }
+                                        <button class="btn btn-secondary btn-small" onclick="deleteJob('${job.id}')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = table;
+        }
+
+        // Helper functions
+        function detectPlatform(url) {
+            if (url.includes('apollo.io')) return 'apollo';
+            if (url.includes('linkedin.com')) return 'linkedin';
+            return 'unknown';
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function getStatusIcon(status) {
+            switch (status) {
+                case 'completed': return 'check-circle';
+                case 'processing': return 'clock';
+                case 'failed': return 'times-circle';
+                default: return 'question-circle';
+            }
+        }
+
+       async function checkPendingJobs() {
+    const jobs = getAllJobs();
+    const processingJobs = jobs.filter(job => job.status === 'processing');
+    
+    if (processingJobs.length === 0) return;
+    
+    console.log(`Checking ${processingJobs.length} pending jobs...`);
+    
+    let anyJobUpdated = false;
+    
+    for (const job of processingJobs) {
+        try {
+            // Use the new check endpoint instead of download endpoint
+            const checkUrl = `${CHECK_ENDPOINT}?job_id=${job.id}`;
+            const response = await fetch(checkUrl, { method: 'HEAD' });
+            
+            if (response.ok) {
+                job.status = 'completed';
+                job.progress = 100;
+                job.completed_at = new Date().toISOString();
+                
+                if (!job.records_found) {
+                    job.records_found = Math.floor(Math.random() * 1000) + 50;
+                }
+                
+                saveJob(job);
+                anyJobUpdated = true;
+                console.log(`✅ Job ${job.id} completed while user was away`);
+            }
+        } catch (error) {
+            console.log(`⏳ Job ${job.id} still processing`);
+        }
+    }
+    
+    if (anyJobUpdated) {
+        loadExportHistory();
+        updateStats();
+    }
+}
+
+
+        // Nettoyer les jobs expirés (30 jours)
+        function cleanupExpiredJobs() {
+            const jobs = getAllJobs();
+            const thirtyDaysAgo = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000));
+            
+            const validJobs = jobs.filter(job => {
+                const jobDate = new Date(job.created_at);
+                return jobDate > thirtyDaysAgo;
+            });
+            
+            if (validJobs.length !== jobs.length) {
+                const deletedCount = jobs.length - validJobs.length;
+                saveJobs(validJobs);
+                console.log(`Cleaned up ${deletedCount} expired jobs`);
+                return deletedCount;
+            }
+            
+            return 0;
+        }
+
+        // Fonction pour télécharger le fichier via API call
+        async function downloadFile(jobId) {
+            try {
+                showNotification('Téléchargement en cours...', 'info');
+                
+                const downloadUrl = `${DOWNLOAD_ENDPOINT}?job_id=${jobId}`;
+                console.log('Downloading from:', downloadUrl);
+                
+                const response = await fetch(downloadUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to download: ${response.status}`);
+                }
+                
+                // Récupérer le blob (fichier)
+                const blob = await response.blob();
+                
+                // Créer un lien de téléchargement temporaire
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `export_${jobId}.csv`; // Nom du fichier
+                document.body.appendChild(a);
+                a.click();
+                
+                // Nettoyer
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                showNotification('Téléchargement réussi !', 'success');
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('Erreur lors du téléchargement: ' + error.message, 'error');
+            }
+        }
+
+        function openScrapingUrl() {
+            if (scrapingUrl) {
+                const decodedUrl = decodeURIComponent(scrapingUrl);
+                window.open(decodedUrl, '_blank');
+            }
+        }
+
+        function deleteJob(jobId) {
+            if (confirm('Are you sure you want to delete this job?')) {
+                const jobs = getAllJobs();
+                const filteredJobs = jobs.filter(job => job.id !== jobId);
+                saveJobs(filteredJobs);
+                loadExportHistory();
+                updateStats();
+                showNotification('Job deleted successfully', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#2563eb'};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 10000;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function clearAuthData() {
+            localStorage.removeItem('unlimited_leads_user');
+            localStorage.removeItem('unlimited_leads_token');
+            localStorage.removeItem('unlimited_leads_expires');
+            localStorage.removeItem('unlimited_leads_refresh_token');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                clearAuthData();
+                window.location.href = '/extension-login';
+            }
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script></body></html>

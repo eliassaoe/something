@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="es"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Raspador de plomo Apollo </title><meta content="Rastreador de clientes potenciales de Apollo. Proporciona una URL de búsqueda de Apollo y exporta tus clientes potenciales." name="description"/><!-- Preconnect for external domains --><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com" rel="preconnect"/><!-- In the <head> section --><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-V6NTYLJ115"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V6NTYLJ115');
+</script><!-- Critical inline CSS for initial render --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+        .container {width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;}
+        .hero {
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01));
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), #0ea5e9);
+        }
+        .text-center {text-align: center;}
+        .mb-4 {margin-bottom: 1rem;}
+        .mb-8 {margin-bottom: 2rem;}
+        h1 {
+            color: var(--gray-900);
+            font-weight: 700;
+            line-height: 1.2;
+            font-size: 2.25rem;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), #0ea5e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 600;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            background-color: var(--primary);
+        }
+        .section {padding: 3rem 0;}
+        p {color: var(--gray-600);}
+    </style><!-- Asynchronous font loading with font-display: swap --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" media="print" onload="this.media='all'" rel="stylesheet"/><!-- Non-critical CSS loaded asynchronously --><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" rel="stylesheet"/><!-- Fallback for JavaScript disabled --><noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></noscript><!-- Optimized full CSS with reduced complex calculations --><style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --primary-50: #eef2ff;
+            --secondary: #0ea5e9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
+
+        /* Simplified layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+        .col {
+            flex: 1;
+            padding: 0 1rem;
+            width: 100%;
+            min-width: 0;
+        }
+        @media (max-width: 991px) {
+            .row {flex-direction: column;}
+            .col {margin-bottom: 2rem;}
+            .col:last-child {margin-bottom: 0;}
+        }
+
+        /* Typography */
+        h2, h3, h4, h5, h6 {
+            color: var(--gray-900);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .text-sm {font-size: 0.875rem;}
+        .text-base {font-size: 1rem;}
+        .text-lg {font-size: 1.125rem;}
+        .text-xl {font-size: 1.25rem;}
+        .text-2xl {font-size: 1.5rem;}
+        .text-3xl {font-size: 1.875rem;}
+        .text-4xl {font-size: 2.25rem;}
+        @media (max-width: 768px) {
+            .text-4xl {font-size: 1.875rem;}
+            .text-3xl {font-size: 1.5rem;}
+            .text-2xl {font-size: 1.25rem;}
+        }
+        .font-medium {font-weight: 500;}
+        .font-semibold {font-weight: 600;}
+        .font-bold {font-weight: 700;}
+        .text-gray-500 {color: var(--gray-500);}
+        .text-gray-600 {color: var(--gray-600);}
+        .text-gray-700 {color: var(--gray-700);}
+        .text-primary {color: var(--primary);}
+        .leading-tight {line-height: 1.25;}
+        .mb-1 {margin-bottom: 0.25rem;}
+        .mb-2 {margin-bottom: 0.5rem;}
+        .mb-3 {margin-bottom: 0.75rem;}
+        .mb-6 {margin-bottom: 1.5rem;}
+        .mb-12 {margin-bottom: 3rem;}
+        .mt-1 {margin-top: 0.25rem;}
+        .mt-2 {margin-top: 0.5rem;}
+        .mt-4 {margin-top: 1rem;}
+        .mt-6 {margin-top: 1.5rem;}
+        .mt-8 {margin-top: 2rem;}
+        .mx-auto {margin-left: auto; margin-right: auto;}
+
+        /* Card with optimized rendering */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transform: translateZ(0); /* Force GPU acceleration */
+            will-change: transform; /* Hint for browser optimization */
+        }
+        .card-body {padding: 1.5rem;}
+        @media (min-width: 768px) {
+            .card-body {padding: 2rem;}
+        }
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        /* Form styles */
+        .form-group {margin-bottom: 1.5rem;}
+        .form-label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--gray-900);
+            background-color: white;
+            background-clip: padding-box;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: var(--primary-light);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .form-select {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--gray-900);
+            background-color: white;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234B5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            appearance: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .form-select:focus {
+            border-color: var(--primary-light);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .form-text {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.5rem;
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .btn-primary {
+            color: white;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-dark));
+            border-color: var(--primary-dark);
+        }
+        .btn-success {
+            color: white;
+            background: linear-gradient(to right, var(--success), #059669);
+            border-color: var(--success);
+        }
+        .btn-success:hover {
+            background: linear-gradient(to right, #059669, #047857);
+            border-color: #059669;
+        }
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        .btn:disabled {
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        /* Features */
+        .features {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .feature-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            background-color: var(--primary-50);
+            color: var(--primary);
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+        .feature-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        .testimonial-content {
+            font-size: 1rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        .testimonial-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .testimonial-title {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Pricing */
+        .pricing-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transform: translateZ(0); /* Force GPU acceleration */
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .pricing-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            text-align: center;
+        }
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .pricing-description {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        .pricing-features {
+            padding: 1.5rem;
+            flex: 1;
+        }
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+        .pricing-feature-icon {
+            color: var(--success);
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .pricing-cta {
+            padding: 1.5rem;
+            background-color: var(--gray-50);
+            border-top: 1px solid var(--gray-100);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 4rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .footer-logo-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        .footer-logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .footer-description {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            max-width: 24rem;
+        }
+        .footer-heading {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-link {
+            margin-bottom: 0.75rem;
+        }
+        .footer-link a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-link a:hover {
+            color: var(--primary);
+        }
+        .footer-bottom {
+            border-top: 1px solid var(--gray-100);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* Utilities */
+        .d-flex {display: flex;}
+        .align-items-center {align-items: center;}
+        .justify-content-center {justify-content: center;}
+        .flex-column {flex-direction: column;}
+        .w-100 {width: 100%;}
+        .text-decoration-none {text-decoration: none;}
+
+        /* Custom Styles with optimizations */
+        .gradient-bg {background: linear-gradient(to right, var(--primary), var(--secondary));}
+        .card-shadow {box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);}
+        .form-card {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 991px) {
+            .form-card {margin-top: 2rem;}
+        }
+        .success-badge {background-color: var(--success);}
+        .error-message {
+            background-color: #FEE2E2;
+            border: 1px solid #EF4444;
+            color: #B91C1C;
+            padding: 10px;
+            border-radius: 0.5rem;
+            margin-top: 10px;
+        }
+        .success-message {
+            background-color: #D1FAE5;
+            border: 1px solid #10B981;
+            color: #047857;
+            padding: 10px;
+            border-radius: 0.5rem;
+            margin-top: 10px;
+        }
+
+        /* Optimized lead section styles */
+        .sample-leads-image {
+            max-width: 100%;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .sample-leads-image img {max-width: 100%;}
+        }
+
+        /* Optimized video section styles */
+        .video-section {
+            padding: 40px 0;
+            width: 100%;
+        }
+        .video-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .video-section {padding: 30px 0;}
+        }
+        @media (max-width: 480px) {
+            .video-section {padding: 20px 0;}
+        }
+    </style><meta content="https://unlimited-leads.online/es/apollo-email-finder/" property="og:url"/><link href="https://unlimited-leads.online/apollo-email-finder/" hreflang="en" rel="alternate"/><link href="https://unlimited-leads.online/apollo-email-finder/" hreflang="x-default" rel="alternate"/><link href="https://unlimited-leads.online/fr/apollo-email-finder/" hreflang="fr" rel="alternate"/><link href="https://unlimited-leads.online/es/apollo-email-finder/" hreflang="es" rel="alternate"/><link href="https://unlimited-leads.online/de/apollo-email-finder/" hreflang="de" rel="alternate"/><link href="https://unlimited-leads.online/it/apollo-email-finder/" hreflang="it" rel="alternate"/><link href="https://unlimited-leads.online/pt/apollo-email-finder/" hreflang="pt" rel="alternate"/></head><body><!-- Hero Section --><section class="hero" id="top"><div class="container"><div class="text-center mb-8"><h1 class="text-4xl font-bold mb-4"> <span class="gradient-text">__MARCADOR_DE_POSICIÓN_DE_MARCA__</span></h1><p class="text-xl text-gray-600 mb-4"> Exporta tus leads Apollo: ilimitados y sin esfuerzo</p><div class="mt-4"> <span class="badge">5$ por 500 clientes potenciales</span> </div></div></div></section><!-- Form Section --><section class="section"><div class="container"><div class="row"><div class="col"><div class="card card-shadow form-card" id="form-card"><div class="card-header"><h2 class="text-2xl font-bold mb-2"> Pide tus leads ahora</h2><p class="text-gray-600"> Complete el formulario a continuación para recibir sus clientes potenciales Apollo</p></div><div class="card-body"><form id="leads-form"><div class="form-group"> <label class="form-label" for="name">Nombre *</label> <input class="form-control" id="name" name="name" required="" type="text"/></div><div class="form-group"> <label class="form-label" for="email">Correo electrónico *</label><input class="form-control" id="email" name="email" required="" type="email"/> <small class="form-text">Enviaremos sus clientes potenciales a esta dirección</small></div><div class="form-group"> <label class="form-label" for="apollo-link">Enlace Apolo * <a href="#video-section" style="font-size: 0.8rem; color: var(--primary); text-decoration: none;">(¿que es esto?)</a></label> <input class="form-control" id="apollo-link" name="apollo-link" placeholder="https://app.apollo.io/..." required="" type="url"/></div><div class="form-group"> <label class="form-label" for="leads-count">Número de clientes potenciales *</label><select class="form-select" id="leads-count" name="leads-count" required=""><option value=""> Elegir</option><option value="500"> 500 clientes potenciales - 5$</option><option value="1000"> 1000 clientes potenciales - 10$</option><option value="2000"> 2000 clientes potenciales - 20$</option><option value="3000"> 3000 clientes potenciales - 30$</option><option value="4000"> 4000 clientes potenciales - 40$</option><option value="5000"> 5000 clientes potenciales - 50$</option><option value="6000"> 6000 clientes potenciales - 60$</option><option value="7000"> 7000 clientes potenciales - 70$</option><option value="8000"> 8000 clientes potenciales - 80$</option><option value="9000"> 9000 clientes potenciales - 90$</option><option value="10000"> 10000 clientes potenciales - 100$</option></select></div><div class="form-group"> <label class="form-label" for="file-name">Nombre del archivo *</label> <input class="form-control" id="file-name" name="file-name" placeholder="Ex: leads_tech_france" required="" type="text"/></div><!-- Promo code field --><div class="form-group"> <label class="form-label" for="promo-code">Código promocional (opcional)</label> <input class="form-control" id="promo-code" name="promo-code" placeholder="Enter your promo code" type="text"/> <button class="btn btn-primary" id="check-promo" style="margin-top: 10px;" type="button">Código de verificación</button><div id="promo-message" style="margin-top: 10px;"></div></div> <button class="btn btn-primary btn-lg btn-block" id="submit-button" type="submit"><i class="fas fa-paper-plane"></i>Obtener mis pistas de Apollo</button></form></div></div></div><div class="col"><div class="mb-8"><h2 class="text-3xl font-bold mb-4"> ¿Cómo puedes extraer leads Apollo ilimitados?</h2><p class="text-gray-600 mb-4"> Un proceso simple para obtener clientes potenciales específicos de Apollo.io en solo unos pocos clics. </p></div><div class="feature"><div class="feature-icon"><i class="fas fa-check"></i></div><div class="feature-content"><h3 class="text-lg font-semibold mb-2"> URL de búsqueda de Apollo</h3><p class="text-gray-600"> Inicie sesión en Apollo, aplique sus filtros y copie la URL de su búsqueda de Apollo. </p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-filter"></i></div><div class="feature-content"><h3 class="text-lg font-semibold mb-2"> Orden simple</h3><p class="text-gray-600"> Pegue la URL de Apollo en el formulario y complete la información de su pedido. </p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-bolt"></i></div><div class="feature-content"><h3 class="text-lg font-semibold mb-2"> Entrega rápida</h3><p class="text-gray-600"> Reciba sus clientes potenciales dentro de las 24 horas posteriores a su pedido, listos para usar. </p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-lock"></i></div><div class="feature-content"><h3 class="text-lg font-semibold mb-2"> Correos electrónicos verificados (¡Rebote &lt; 4% garantizado!)</h3><p class="text-gray-600"> Todos nuestros datos están verificados para garantizar que tus campañas tengan una tasa de rebote inferior al 4%. </p></div></div></div></div></div></section><!-- Section Example of Leads --><section class="section"><div class="container"><div class="text-center mb-8"><h2 class="text-3xl font-bold mb-4"> Una vista previa de sus futuros clientes potenciales</h2><p class="text-gray-600"> Así es como se ven los clientes potenciales que recibirás </p></div><div class="card card-shadow"><div class="leads-image-container"><img alt="Fichier BtoB con información de contactos" class="leads-image" src="https://i.imgur.com/aH13sck.png"/></div><div class="leads-description"><p class="text-gray-700"> <strong>Nuestros contactos incluyen:</strong> direcciones de correo electrónico verificadas, números de teléfono, información detallada sobre los contactos y sus empresas. </p></div></div></div></section><!-- Process Section --><section class="section"><div class="container"><div class="text-center mb-8"><h2 class="text-3xl font-bold mb-4"> Cómo funciona</h2><p class="text-gray-600"> Un proceso sencillo de tres pasos </p></div><div class="row"><div class="col"><div class="card text-center"><div class="card-body"><div class="mb-4"><i class="fas fa-list-alt text-4xl text-primary"></i></div><h3 class="text-xl font-semibold mb-2"> 1. Orden</h3><p class="text-gray-600"> Llene nuestro formulario con sus criterios específicos y la cantidad deseada de clientes potenciales. </p></div></div></div><div class="col"><div class="card text-center"><div class="card-body"><div class="mb-4"><i class="fas fa-credit-card text-4xl text-primary"></i></div><h3 class="text-xl font-semibold mb-2"> 2. Pagar</h3><p class="text-gray-600"> Realiza tu pago a través de nuestra plataforma segura para validar tu pedido. </p></div></div></div><div class="col"><div class="card text-center"><div class="card-body"><div class="mb-4"><i class="fas fa-envelope-open-text text-4xl text-primary"></i></div><h3 class="text-xl font-semibold mb-2"> 3. Recibir</h3><p class="text-gray-600"> Reciba sus leads verificados por correo electrónico en formato CSV y Excel, listos para usar. </p></div></div></div></div></div></section><!-- Video Section --><section class="section video-section" id="video-section"><div class="container"><div class="text-center mb-8"><h2 class="text-3xl font-bold mb-4"> Cómo utilizar __UNLIMITED_LEADS__</h2><p class="text-gray-600"> Mira nuestro video tutorial para entender el proceso. </p></div><div class="video-wrapper"><div style="position: relative; padding-bottom: 62.5%; height: 0;"><!-- Iframe with lazy loading attributes --><iframe allowfullscreen="" data-src="https://www.loom.com/embed/a3748df5d5fb425ca1d7283e4ab84925?sid=287849d5-95bc-4cc8-88cd-b4a49e53b9e4" frameborder="0" height="400" loading="lazy" mozallowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);" webkitallowfullscreen="" width="640"></iframe></div></div></div></section><div class="text-center mt-6 mb-6"> <a class="btn btn-primary" href="https://www.apollo.io/" rel="noopener noreferrer" target="_blank">Enlace útil de Apollo.io</a> </div><!-- Pricing Section --><section class="section"><div class="container"><div class="text-center mb-8"><h2 class="text-3xl font-bold mb-4"> Nuestros precios</h2><p class="text-gray-600"> Precios asequibles para todos los presupuestos. </p></div><div class="card card-shadow"><div class="card-body"><table class="w-100" style="border-collapse: collapse; width: 100%;"><thead><tr style="border-bottom: 2px solid var(--gray-200);"><th style="padding: 1rem; text-align: left; font-weight: 600;"> Número de clientes potenciales</th><th style="padding: 1rem; text-align: center; font-weight: 600;"> Precio</th><th style="padding: 1rem; text-align: right; font-weight: 600;"> Acción</th></tr></thead><tbody id="pricing-table"><!-- Content will be generated by JavaScript --></tbody></table></div></div><div class="text-center mt-4 text-sm text-gray-600"><p> Todos nuestros clientes potenciales incluyen: correos electrónicos verificados, formato CSV/Excel y entrega en 24 horas.</p></div></div></section><!-- Optimized script with deferred loading and reduced DOM operations --><script>
+    // Global configuration defined once
+    const STRIPE_LINKS = {
+        "500": "https://buy.stripe.com/cN2bKb1Bt7t5cykbJ0",
+        "1000": "https://buy.stripe.com/9AQ6pR1Bt5kXfKw28r",
+        "2000": "https://buy.stripe.com/3cs4hJ4NF6p19m8eVe",
+        "3000": "https://buy.stripe.com/4gw4hJ2Fx3cPfKw14p",
+        "4000": "https://buy.stripe.com/dR6bKbbc3eVxbugcN8",
+        "5000": "https://buy.stripe.com/28og0r5RJ9Bd7e0eVh",
+        "6000": "https://buy.stripe.com/8wM8xZbc3fZB41O6oM",
+        "7000": "https://buy.stripe.com/dR6g0reofcNp7e014t",
+        "8000": "https://buy.stripe.com/00g8xZeof3cP8i4cNc",
+        "9000": "https://buy.stripe.com/fZeeWn93V14H9m87sT",
+        "10000": "https://buy.stripe.com/3cs6pRbc3eVx2XK6oQ"
+    };
+    
+    const WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/e02ff554-2115-46a5-be56-48ef12324345";
+    const PROMO_CODE_WEBHOOK_URL = "https://eliasse-n8n.onrender.com/webhook/db5df0fd-e71b-4e63-9ca8-3f678a78b573";
+    
+    // Preload pricing data for table
+    const PRICING_DATA = [
+        { count: "500", price: "5$" },
+        { count: "1000", price: "10$" },
+        { count: "2000", price: "20$" },
+        { count: "3000", price: "30$" },
+        { count: "4000", price: "40$" },
+        { count: "5000", price: "50$" },
+        { count: "6000", price: "60$" },
+        { count: "7000", price: "70$" },
+        { count: "8000", price: "80$" },
+        { count: "9000", price: "90$" },
+        { count: "10000", price: "100$" }
+    ];
+    
+    // Optimized initialization function
+    function initApp() {
+        // Use a single initialization function to avoid repetition
+        initFormHandlers();
+        initLazyLoading();
+        initPricingTable();
+    }
+    
+    // Form event handlers
+    function initFormHandlers() {
+        const form = document.getElementById('leads-form');
+        const promoCodeInput = document.getElementById('promo-code');
+        const checkPromoButton = document.getElementById('check-promo');
+        const promoMessage = document.getElementById('promo-message');
+        const formCard = document.getElementById('form-card');
+        
+        // Event delegation for the form
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
+        
+        // Promo code validation handler
+        if (checkPromoButton && promoCodeInput && promoMessage) {
+            checkPromoButton.addEventListener('click', () => {
+                checkPromoCode(promoCodeInput.value.trim(), promoMessage, formCard);
+            });
+        }
+    }
+    
+    // Handle lazy loading of images and iframes
+    function initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const lazyLoadObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        if (element.dataset.src) {
+                            element.src = element.dataset.src;
+                            element.removeAttribute('data-src');
+                        }
+                        lazyLoadObserver.unobserve(element);
+                    }
+                });
+            });
+            
+            // Observe elements with data-src
+            document.querySelectorAll('[data-src]').forEach(element => {
+                lazyLoadObserver.observe(element);
+            });
+        } else {
+            // Fallback for browsers without IntersectionObserver
+            document.querySelectorAll('[data-src]').forEach(element => {
+                element.src = element.dataset.src;
+            });
+        }
+    }
+    
+    // Initialize pricing table
+    function initPricingTable() {
+        const pricingTable = document.getElementById('pricing-table');
+        if (!pricingTable) return;
+        
+        // Create table content in a single DOM operation
+        let tableHTML = '';
+        
+        PRICING_DATA.forEach(plan => {
+            tableHTML += `
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 1rem; text-align: left;"><strong>${plan.count} leads</strong></td>
+                    <td style="padding: 1rem; text-align: center; color: var(--primary); font-weight: 700;">${plan.price}</td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button type="button" class="btn btn-primary plan-btn" data-plan="${plan.count}" style="padding: 0.5rem 1rem;">Order</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        pricingTable.innerHTML = tableHTML;
+        
+        // Event delegation for plan buttons
+        pricingTable.addEventListener('click', (e) => {
+            const button = e.target.closest('.plan-btn');
+            if (button) {
+                selectPlan(button.dataset.plan);
+            }
+        });
+    }
+    
+    // CORRECTED Form submission function
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        
+        // Cache DOM references to avoid repetitive DOM queries
+        const submitButton = document.getElementById('submit-button');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const apolloLink = document.getElementById('apollo-link').value;
+        const leadsCount = document.getElementById('leads-count').value;
+        const fileName = document.getElementById('file-name').value;
+        const promoCode = document.getElementById('promo-code')?.value.trim() || '';
+        
+        if (!name || !email || !apolloLink || !leadsCount || !fileName) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Display loading state
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        
+        // Data preparation
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount,
+            fileName,
+            promoCode,
+            language: "eng", // Add language parameter
+            timestamp: new Date().toISOString()
+        };
+        
+        // Set up abort controller with a timeout of 10 seconds
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Wait for the API call to complete
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Clear timeout
+            clearTimeout(timeoutId);
+            
+            // Check if response is OK (status 200-299)
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            // Try to read response body as JSON
+            try {
+                const responseData = await response.json();
+                console.log('Server response:', responseData);
+            } catch (jsonError) {
+                // If body is not JSON, that's okay
+                console.log('Response received but not in JSON format');
+            }
+            
+            // Redirect to Stripe only after successful API call
+            if (STRIPE_LINKS[leadsCount]) {
+                window.location.href = STRIPE_LINKS[leadsCount];
+            } else {
+                alert('Please select a valid number of leads');
+                // Reset button in case of error
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my verified leads';
+            }
+        } catch (error) {
+            // Clear timeout if not already cleared
+            clearTimeout(timeoutId);
+            
+            // Handle error
+            console.error('Error:', error);
+            
+            // Specific error message for timeouts
+            if (error.name === 'AbortError') {
+                alert('The server is taking too long to respond. Please try again.');
+            } else {
+                alert('An error occurred while sending data. Please try again.');
+            }
+            
+            // Reset button in case of error
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my verified leads';
+        }
+    }
+    
+    // CORRECTED Promo code verification function
+    async function checkPromoCode(code, messageElement, formCardElement) {
+        if (!code) {
+            messageElement.textContent = 'Please enter a promo code';
+            messageElement.style.color = 'var(--danger)';
+            return;
+        }
+        
+        messageElement.textContent = 'Verifying code...';
+        messageElement.style.color = 'var(--gray-600)';
+        
+        // Use async/await for clearer error handling
+        try {
+            const response = await fetch(PROMO_CODE_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code: code, action: 'check'})
+            });
+            
+            // Check if response is OK
+            if (!response.ok) {
+                throw new Error('Server error: ' + response.status);
+            }
+            
+            const data = await response.json();
+            
+            if (data.valid) {
+                showFreeLeadsForm(code, formCardElement);
+            } else {
+                showInvalidCodeMessage(data.error || 'Invalid code', messageElement);
+            }
+        } catch (error) {
+            console.error('Error while verifying code:', error);
+            messageElement.textContent = '❌ Error verifying code';
+            messageElement.style.color = 'var(--danger)';
+        }
+    }
+    
+    // Function to display the free leads form
+    function showFreeLeadsForm(promoCode, formCard) {
+        // Save current form values
+        const formValues = {
+            name: document.getElementById('name')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            apolloLink: document.getElementById('apollo-link')?.value || '',
+            fileName: document.getElementById('file-name')?.value || ''
+        };
+        
+        // Create HTML for the free leads form
+        formCard.innerHTML = `
+            <div class="card-header">
+                <h2 class="text-2xl font-bold mb-2">Get your 1000 free leads</h2>
+                <p class="text-gray-600">Fill out the form below to receive your verified leads for free</p>
+                <div class="mt-4">
+                    <span class="badge success-badge">Valid Promo Code: ${promoCode}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="free-leads-form">
+                    <div class="form-group">
+                        <label for="free-name" class="form-label">Name *</label>
+                        <input type="text" id="free-name" name="free-name" class="form-control" value="${formValues.name}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-email" class="form-label">Email *</label>
+                        <input type="email" id="free-email" name="free-email" class="form-control" value="${formValues.email}" required>
+                        <small class="form-text">We will send your leads to this address</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-apollo-link" class="form-label">Apollo Link *</label>
+                        <input type="url" id="free-apollo-link" name="free-apollo-link" class="form-control" placeholder="https://app.apollo.io/..." value="${formValues.apolloLink}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="free-file-name" class="form-label">File Name *</label>
+                        <input type="text" id="free-file-name" name="free-file-name" class="form-control" placeholder="Ex: leads_tech_france" value="${formValues.fileName}" required>
+                    </div>
+                    
+                    <input type="hidden" id="free-promo-code" name="free-promo-code" value="${promoCode}">
+                    <input type="hidden" id="free-leads-count" name="free-leads-count" value="100">
+                    
+                    <button type="submit" id="free-submit-button" class="btn btn-lg btn-block btn-success">
+                        <i class="fas fa-paper-plane"></i> Get my 1000 free leads
+                    </button>
+                </form>
+                <div id="free-form-message" class="mt-4"></div>
+            </div>
+        `;
+        
+        // Add event handler for the new form
+        const freeLeadsForm = document.getElementById('free-leads-form');
+        if (freeLeadsForm) {
+            freeLeadsForm.addEventListener('submit', handleFreeFormSubmit);
+        }
+    }
+    
+    // CORRECTED Function to handle free form submission
+    async function handleFreeFormSubmit(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('free-name').value;
+        const email = document.getElementById('free-email').value;
+        const apolloLink = document.getElementById('free-apollo-link').value;
+        const fileName = document.getElementById('free-file-name').value;
+        const promoCode = document.getElementById('free-promo-code').value;
+        
+        if (!name || !email || !apolloLink || !fileName) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        const submitButton = document.getElementById('free-submit-button');
+        const messageContainer = document.getElementById('free-form-message');
+        
+        // Disable button during processing
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        
+        // Prepare data for webhook
+        const formData = {
+            name,
+            email,
+            apolloLink,
+            leadsCount: '100',
+            fileName,
+            promoCode,
+            isFreeOrder: true,
+            language: "eng",
+            timestamp: new Date().toISOString()
+        };
+        
+        // Set up abort controller with a timeout of 10 seconds
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        try {
+            // Wait for the API call to complete
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+                signal: controller.signal
+            });
+            
+            // Clear timeout
+            clearTimeout(timeoutId);
+            
+            // Check if response is OK (status 200-299)
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            // Try to read response body as JSON
+            try {
+                const responseData = await response.json();
+                console.log('Server response:', responseData);
+            } catch (jsonError) {
+                // If body is not JSON, that's okay
+                console.log('Response received but not in JSON format');
+            }
+            
+            // Redirect to confirmation page only after successful API call
+            window.location.href = "https://unlimited-leads.online/confirmation";
+        } catch (error) {
+            // Clear timeout if not already cleared
+            clearTimeout(timeoutId);
+            
+            // Handle error in detail
+            console.error('Error:', error);
+            
+            // More informative error message
+            messageContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> <strong>Error:</strong> ${
+                        error.name === 'AbortError' 
+                        ? 'The server is taking too long to respond. Please try again.' 
+                        : error.message || 'An error occurred while processing your request.'
+                    }
+                </div>
+            `;
+            
+            // Reset button
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Get my 1000 free leads';
+        }
+    }
+    
+    // Function to display error message
+    function showInvalidCodeMessage(errorMessage, promoMessage) {
+        promoMessage.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-times-circle"></i> <strong>Invalid promo code:</strong> ${errorMessage}
+            </div>
+        `;
+    }
+    
+    // Optimized plan selection function
+    function selectPlan(planValue) {
+        const formCard = document.getElementById('form-card');
+        const leadsCountSelect = document.getElementById('leads-count');
+        
+        // Smooth scroll to form
+        if (formCard) {
+            formCard.scrollIntoView({behavior: 'smooth', block: 'center'});
+            
+            // Select option in dropdown
+            if (leadsCountSelect) {
+                leadsCountSelect.value = planValue;
+                
+                // Focus on first empty field after scrolling
+                setTimeout(() => {
+                    const nameInput = document.getElementById('name');
+                    if (nameInput && !nameInput.value) {
+                        nameInput.focus();
+                    }
+                }, 800);
+            }
+        }
+    }
+    
+    // Initialize app on DOM load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
+    
+    // Deferred analytics
+    window.addEventListener('load', function() {
+        // Delayed loading of Google Analytics
+        setTimeout(() => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V6NTYLJ115', { 'send_page_view': true });
+        }, 2000);
+    });
+    </script><!-- FAQ Section CSS --><style>
+    .faq-section {
+        padding: 4rem 1rem;
+    }
+    
+    .faq-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .faq-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .faq-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .faq-subtitle {
+        color: #718096;
+    }
+    
+    .faq-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .faq-card-body {
+        padding: 2rem;
+    }
+    
+    .faq-item {
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 1rem;
+    }
+    
+    .faq-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    
+    .faq-question {
+        padding: 1rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f1f5f9;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .faq-question:hover {
+        background-color: #e2e8f0;
+    }
+    
+    .faq-question-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+    
+    .faq-answer {
+        padding: 1rem 1.5rem;
+        display: none;
+    }
+    
+    .faq-answer p {
+        margin-bottom: 1rem;
+    }
+    
+    .faq-answer p:last-child {
+        margin-bottom: 0;
+    }
+    
+    .faq-answer ul {
+        list-style-type: disc;
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .faq-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: #3182ce;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .faq-title {
+            font-size: 1.5rem;
+        }
+        
+        .faq-question-text {
+            font-size: 1.1rem;
+        }
+        
+        .faq-card-body {
+            padding: 1rem;
+        }
+    }
+</style><!-- FAQ Section HTML --><section class="faq-section" id="faq"><div class="faq-container"><div class="faq-header"><h2 class="faq-title"> Preguntas frecuentes</h2><p class="faq-subtitle"> Todo lo que necesita saber sobre el uso de nuestro raspador de plomo Apollo y el servicio de exportación </p></div><div class="faq-card"><div class="faq-card-body"><!-- Accordion FAQ --><div class="faq-accordion"><!-- Question 1 --><div class="faq-item"><div class="faq-question"><h3 class="faq-question-text"> ¿Qué es el raspador de plomo Apollo y cómo funciona?</h3> <span class="faq-icon">+</span></div><div class="faq-answer"><p> Apollo Lead Scraper es una herramienta diseñada para ayudarte a encontrar direcciones de correo electrónico verificadas para tus clientes potenciales. Con la plataforma de búsqueda Apollo, puedes aplicar los filtros que desees y generar una lista de contactos con información detallada, incluyendo correos electrónicos y números de teléfono verificados.</p><p> Una vez que encuentre sus clientes potenciales, puede exportarlos fácilmente con nuestro servicio para un proceso sin complicaciones. Esto permite a las empresas recopilar rápidamente la información de contacto que necesitan para campañas de email marketing o de difusión. </p></div></div><!-- Question 2 --><div class="faq-item"><div class="faq-question"><h3 class="faq-question-text"> ¿Cómo funciona Apollo Email Export?</h3> <span class="faq-icon">+</span></div><div class="faq-answer"><p> Con Apollo Email Export, puede exportar fácilmente sus clientes potenciales directamente desde Apollo.io. El proceso es sencillo: pegue la URL de búsqueda de Apollo en nuestro formulario, seleccione la cantidad de clientes potenciales que necesita y realice su pedido. En 24 horas, recibirá un archivo CSV o Excel con sus clientes potenciales, junto con sus direcciones de correo electrónico verificadas y otros datos de contacto. </p></div></div><!-- Question 3 --><div class="faq-item"><div class="faq-question"><h3 class="faq-question-text"> ¿Qué tipo de datos obtengo cuando exporto clientes potenciales desde Apollo?</h3> <span class="faq-icon">+</span></div><div class="faq-answer"><p> Cuando exporta clientes potenciales mediante nuestro servicio de exportación de correo electrónico Apollo, recibirá un archivo que contiene una variedad de información valiosa, que incluye:</p><ul><li> Direcciones de correo electrónico verificadas</li><li> Números de teléfono</li><li> Información de la empresa</li><li> Nombres de las personas de contacto y puestos de trabajo</li></ul><p> Todos nuestros datos están verificados para garantizar la máxima calidad y minimizar las tasas de rebote, asegurando que sus campañas de marketing por correo electrónico sean lo más efectivas posible. </p></div></div><!-- Question 4 --><div class="faq-item"><div class="faq-question"><h3 class="faq-question-text"> ¿Qué tan rápido recibiré mis clientes potenciales Apollo después de realizar un pedido?</h3> <span class="faq-icon">+</span></div><div class="faq-answer"><p> Una vez que realice su pedido de Apollo Email Export, le entregaremos sus clientes potenciales en 24 horas. Esta entrega rápida le garantiza que podrá empezar a usar los datos para sus campañas lo antes posible, sin retrasos innecesarios. </p></div></div><!-- Question 5 --><div class="faq-item"><div class="faq-question"><h3 class="faq-question-text"> ¿Cuáles son los beneficios de utilizar Apollo Lead Scraper para mis campañas de marketing?</h3> <span class="faq-icon">+</span></div><div class="faq-answer"><p> El raspador de clientes potenciales Apollo ofrece varios beneficios clave para sus campañas de marketing:</p><ul><li> Acceso a clientes potenciales verificados y de alta calidad para mejorar sus esfuerzos de divulgación</li><li> Fácil exportación de clientes potenciales con direcciones de correo electrónico verificadas, lo que minimiza las tasas de rebote (menos del 4 % garantizado)</li><li> Proceso que ahorra tiempo y le permite encontrar y utilizar sus clientes potenciales específicos con el mínimo esfuerzo</li><li> Precios flexibles con opciones asequibles para empresas de todos los tamaños.</li><li> Información de contacto detallada, incluidos números de teléfono, puestos de trabajo y datos de la empresa.</li></ul><p> Al utilizar el raspador de clientes potenciales Apollo, puede mejorar la eficacia de sus campañas de marketing y aumentar las posibilidades de lograr una interacción exitosa con clientes potenciales.</p></div></div></div></div></div></div></section><!-- FAQ JavaScript --><script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            
+            question.addEventListener('click', () => {
+                // Toggle current item
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    item.querySelector('.faq-icon').textContent = '+';
+                } else {
+                    answer.style.display = 'block';
+                    item.querySelector('.faq-icon').textContent = '−';
+                }
+            });
+        });
+    });
+</script><!-- Footer --><footer class="footer" id="contact"><div class="container"><div class="footer-content"><!-- Free Tools Section --><div class="footer-column"><h4> Herramientas gratuitas</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/bulk-email-finder">Buscador de correos electrónicos masivos</a></li><li> <a href="https://unlimited-leads.online/spam-words-checker">Comprobador de palabras spam</a></li><li> <a href="https://unlimited-leads.online/find-email-from-phone-number">Buscar correo electrónico a partir del número de teléfono</a></li><li> <a href="https://unlimited-leads.online/bulk-mx-lookup">Búsqueda masiva de MX</a></li><li> <a href="https://unlimited-leads.online/email-extractor">Extractor de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/spintax-generator">Generador de Spintax</a></li><li> <a href="https://unlimited-leads.online/email-permutator">Permutador de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/google-map-scraper">Raspador de mapas de Google</a></li><li> <a href="https://unlimited-leads.online/apollo-email-finder">Buscador de correo electrónico Apollo</a></li><li> <a href="https://unlimited-leads.online/ai-email-template-generator">Generador de plantillas de correo electrónico con IA</a></li><li> <a href="https://unlimited-leads.online/ai-email-reply-generator-free">Generador de respuestas de correo electrónico con IA</a></li><li> <a href="https://unlimited-leads.online/cold-email-generator">Generador de correo electrónico frío</a></li><li> <a href="https://unlimited-leads.online/email-name-generator">Generador de nombres de correo electrónico</a></li><li> <a href="https://unlimited-leads.online/linkedin-headline-generator">Generador de titulares de Linkedin</a></li><li> <a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Navegador de ventas de Linkedin Scrapper</a></li><li> <a href="https://unlimited-leads.online/domain-extractor">Extractor de dominios</a></li><li> <a href="https://unlimited-leads.online/phone-number-extractor">Extractor de números de teléfono</a></li><li> <a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Buscar sitios web a partir del nombre de la empresa de forma masiva</a></li></ul></div><!-- Compare Section --><div class="footer-column"><h4> Comparar</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/lusha-alternative">Alternativa a Lusha</a></li><li> <a href="https://unlimited-leads.online/zoominfo-alternative">Alternativa a ZoomInfo</a></li><li> <a href="https://unlimited-leads.online/apollo-alternative">Alternativa Apollo</a></li><li> <a href="https://unlimited-leads.online/snov-alternative">Alternativa a Snov</a></li><li> <a href="https://unlimited-leads.online/contact-out-alternative">Alternativa de ContactOut</a></li><li> <a href="https://unlimited-leads.online/rocketreach-alternative">Alternativa a RocketReach</a></li><li> <a href="https://unlimited-leads.online/uplead-alternative">Alternativa a UpLead</a></li><li> <a href="https://unlimited-leads.online/lead411-alternative">Alternativa a Lead411</a></li><li> <a href="https://unlimited-leads.online/seamless-ai-alternative">Alternativa de inteligencia artificial sin fisuras</a></li><li> <a href="https://unlimited-leads.online/findthatlead-alternative">Encuentra esa alternativa</a></li><li> <a href="https://unlimited-leads.online/cognism-alternative">Alternativa al cognismo</a></li><li> <a href="https://unlimited-leads.online/hunter-io-alternative">Alternativa a Hunter io</a></li><li> <a href="https://unlimited-leads.online/getprospect-alternative">Alternativa a Getprospect</a></li></ul></div><!-- Industry Email List Section --><div class="footer-column"><h4> Lista de correo electrónico de la industria</h4><ul class="footer-links"><li> <a href="https://unlimited-leads.online/accountants-email-list">Lista de correo electrónico de contables</a></li><li> <a href="https://unlimited-leads.online/attorney-email-list">Lista de correo electrónico de abogados</a></li><li> <a href="https://unlimited-leads.online/ceo-email-list">Lista de correo electrónico de directores ejecutivos</a></li><li> <a href="https://unlimited-leads.online/cfo-email-list">Lista de correo electrónico de directores financieros</a></li><li> <a href="https://unlimited-leads.online/construction-industry-email-list">Lista de correo electrónico de la industria de la construcción</a></li><li> <a href="https://unlimited-leads.online/hr-email-list">Lista de correo electrónico de RR.HH.</a></li><li> <a href="https://unlimited-leads.online/real-estate-agent-email-list">Lista de correo electrónico de agentes inmobiliarios</a></li><li> <a href="https://unlimited-leads.online/email-list">Todas las listas de correo electrónico</a></li></ul></div><!-- Contact Section --><div class="footer-column"><h4> Contáctenos</h4><ul class="footer-links"><li> <a href="mailto:support@unlimited-leads.online">soporte@unlimited-leads.online</a></li><li> <a href="mailto:support@unlimited-leads.online">Solicitar plan personalizado</a></li></ul></div><div class="footer-social"> <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-bottom"><p> © 2025 __UNLIMITED_LEADS__. Todos los derechos reservados.</p><p> <a href="https://unlimited-leads.online/privacy-policy">Política de privacidad</a> | <a href="https://unlimited-leads.online/legal-notice">Condiciones de servicio</a></p></div></div></div></footer><script src="js/popup.js"></script></body></html>

@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="de"><head><link href="/icon128.png" rel="icon" type="image/png"/><script data-domain="unlimited-leads.online" defer="" src="https://plausible.io/js/script.tagged-events.js"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title> Unbegrenzte Leads </title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/><style>
+   /* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #eff6ff;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+:root {
+    /* Color scheme */
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --secondary: #0ea5e9;
+    --secondary-dark: #0284c7;
+    --accent: #0d9488;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Design tokens */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --transition-standard: all 0.3s ease;
+    
+    /* Font families */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--gray-800);
+    line-height: 1.7;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+}
+
+body:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0.8em;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(25, 43, 71, 0.08);
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 8px;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.user-credits-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-credits {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.logout-button, .upgrade-button {
+    border-radius: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-standard);
+    font-size: 14px;
+}
+
+.logout-button {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--gray-200);
+}
+
+.upgrade-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    font-weight: 700;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+.logout-button i, .upgrade-button i {
+    font-size: 16px;
+}
+
+/* MENU */
+.main-menu {
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 0;
+}
+
+.menu-link {
+    display: inline-block;
+    padding: 18px 28px;
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-standard);
+    font-size: 14px;
+    position: relative;
+}
+
+.menu-link:hover {
+    color: var(--primary);
+}
+
+.menu-item.active .menu-link {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.menu-link i {
+    margin-right: 10px;
+}
+
+/* SEARCH SECTION */
+.search-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.search-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: var(--font-heading);
+    margin-bottom: 1.5rem;
+}
+
+.search-title:after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    margin-top: 0.75rem;
+    border-radius: 4px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.info-box {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 18px 20px;
+    margin-bottom: 25px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+}
+
+.info-box:before {
+    content: '\f05a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    display: inline-block;
+    margin-right: 12px;
+    color: var(--primary);
+    font-size: 18px;
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-700);
+}
+
+.form-group {
+    flex: 1 1 200px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    transition: var(--transition-standard);
+    background-color: #FCFDFF;
+    color: var(--gray-800);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: white;
+}
+
+.search-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    margin-top: 28px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+}
+
+.search-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary), #1e40af);
+}
+
+/* RESULTS SECTION */
+.results-section {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+    margin-top: 30px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.results-count {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-800);
+    font-family: var(--font-heading);
+}
+
+/* Enhanced Export Button - More Visible */
+.export-button {
+    background: linear-gradient(135deg, #10b981, #059669) !important; /* Green gradient */
+    color: white !important;
+    border: none !important;
+    border-radius: var(--radius-md);
+    padding: 14px 24px !important; /* Increased padding */
+    font-size: 16px !important; /* Larger font */
+    font-weight: 700 !important; /* Bolder text */
+    cursor: pointer;
+    transition: var(--transition-standard);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important; /* Green shadow */
+    text-transform: uppercase; /* Make text uppercase */
+    letter-spacing: 0.5px; /* Add letter spacing */
+}
+
+.export-button:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important; /* Darker green on hover */
+    transform: translateY(-3px) !important; /* More pronounced hover effect */
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important; /* Stronger shadow on hover */
+}
+
+.export-button i {
+    font-size: 18px !important; /* Larger icon */
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-100);
+}
+
+.results-table th {
+    background-color: var(--primary-light);
+    color: var(--gray-700);
+    text-align: left;
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+    position: relative;
+}
+
+.results-table th:not(:last-child):after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.results-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-800);
+    font-size: 14px;
+}
+
+.results-table tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table tr:hover {
+    background-color: var(--primary-light);
+    transition: background-color 0.3s ease;
+}
+
+.action-icons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.action-icons i {
+    color: var(--gray-600);
+    cursor: pointer;
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-standard);
+}
+
+.action-icons i:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+/* LOADING - AMÉLIORÉ */
+.loading {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--gray-200);
+    border-top: 4px solid var(--primary);
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    animation: subtle-fade-in 0.5s ease-out;
+    position: relative;
+}
+
+@keyframes subtle-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.loading i {
+    color: var(--primary);
+    font-size: 40px;
+    margin-bottom: 20px;
+    animation: spin 1.5s linear infinite;
+}
+
+.loading p {
+    color: var(--gray-700);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.loading p:first-of-type {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+}
+
+.loading::after {
+    display: block;
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    border: 1px solid var(--warning);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    color: #92400e;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 769px) {
+    #exportConfirmationModal .info-value,
+    #exportConfirmationModal .info-value p {
+        text-align: center !important;
+    }
+}
+
+/* MODALS */
+.contact-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.65);
+    z-index: 1000;
+    overflow-y: auto;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 60px auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--box-shadow-lg);
+    border: 1px solid var(--gray-100);
+    animation: modal-fade-in 0.3s ease-out;
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal,
+.close-export-modal,
+.close-export-confirmation-modal {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 22px;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: var(--transition-standard);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-modal:hover,
+.close-export-modal:hover,
+.close-export-confirmation-modal:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.modal-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--gray-200);
+    padding-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 24px;
+    color: var(--gray-900);
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.modal-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* EXPORT MODAL - AMÉLIORÉ */
+#exportModal .modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 24px 30px;
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+#exportModal .modal-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+#exportModal .modal-title::before {
+    content: '\f019 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+#exportModal .close-export-modal {
+    color: white;
+    top: 20px;
+    right: 24px;
+}
+
+#exportModal .close-export-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+#exportModal .info-item {
+    display: none;
+}
+
+#exportModal .form-group label {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#exportModal .form-group label::before {
+    content: '\f0c0 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--primary);
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+#exportModal input[type="number"] {
+    border: 2px solid var(--gray-200);
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: var(--gray-50);
+    transition: all 0.3s ease;
+}
+
+#exportModal input[type="number"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    background: white;
+    outline: none;
+}
+
+#exportModal .checkbox-container,
+#exportModal .form-group:has(input[type="checkbox"]) > div {
+    background: var(--primary-light);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#exportModal .checkbox-container:hover,
+#exportModal .form-group:has(input[type="checkbox"]) > div:hover {
+    background: rgba(37, 99, 235, 0.08);
+    transform: translateY(-1px);
+}
+
+#exportModal input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+#exportModal .checkbox-label,
+#exportModal label[for="verifyBeforeExport"] {
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    margin: 0;
+    flex: 1;
+}
+
+#exportModal label[for="verifyBeforeExport"] strong::after {
+    content: ' 10 min';
+    background: var(--success);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#exportModal .search-button,
+#exportModal #confirmExport {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+#exportModal .search-button::before,
+#exportModal #confirmExport::before {
+    content: '\f058 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+@media (min-width: 769px) {
+    #exportConfirmationModal .info-value {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+
+    #exportConfirmationModal .info-value p {
+        text-align: center !important;
+        width: 100% !important;
+    }
+}
+
+/* CONFIRMATION MODAL - AMÉLIORÉ */
+#exportConfirmationModal .modal-content {
+    border-left: 4px solid var(--success);
+    overflow: hidden;
+}
+
+#exportConfirmationModal .modal-header {
+    background: linear-gradient(135deg, var(--success), #059669);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+#exportConfirmationModal .modal-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+#exportConfirmationModal .modal-title::before {
+    content: '\f058 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 48px;
+    display: block;
+    margin-bottom: 15px;
+    animation: checkmark-bounce 0.6s ease-out;
+}
+
+@keyframes checkmark-bounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+#exportConfirmationModal .close-export-confirmation-modal {
+    color: white;
+    top: 20px;
+    right: 24px;
+}
+
+#exportConfirmationModal .close-export-confirmation-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+#exportConfirmationModal .info-value {
+    text-align: center;
+}
+
+#exportConfirmationModal .info-value p:first-child {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#exportConfirmationModal .info-value p:not(:first-child) {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+#exportConfirmationModal .info-value p:last-child {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 15px;
+    color: #92400e;
+    font-weight: 500;
+    text-align: center;
+}
+
+#exportConfirmationModal .info-value p:last-child::before {
+    content: '\f0e0 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #d97706;
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+#exportConfirmationModal .search-button,
+#exportConfirmationModal #closeConfirmationBtn {
+    background: linear-gradient(135deg, var(--success), #059669);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    font-weight: 700;
+    padding: 16px 24px;
+}
+
+#exportConfirmationModal .search-button::before,
+#exportConfirmationModal #closeConfirmationBtn::before {
+    content: '\f164 ';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+#exportConfirmationModal .search-button:hover,
+#exportConfirmationModal #closeConfirmationBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* AUTRES STYLES MODAUX */
+.contact-info, .company-info {
+    flex: 1 1 300px;
+}
+
+.info-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-light);
+    font-family: var(--font-heading);
+}
+
+.info-item {
+    margin-bottom: 18px;
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.info-value {
+    color: var(--gray-800);
+    font-weight: 500;
+}
+
+.info-tag {
+    display: inline-block;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/* ALERTS */
+.alert {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin: 15px 0;
+    display: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+.alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    color: var(--warning);
+}
+
+/* NO RESULTS */
+.no-results {
+    text-align: center;
+    padding: 50px 0;
+    color: var(--gray-600);
+    font-size: 16px;
+    display: none;
+}
+
+.no-results i {
+    font-size: 48px;
+    color: var(--gray-300);
+    margin-bottom: 20px;
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.pagination button {
+    background-color: white;
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-standard);
+}
+
+.pagination button.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.pagination button:hover:not(.active) {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.pagination button:disabled {
+    border-color: var(--gray-300);
+    color: var(--gray-300);
+    cursor: not-allowed;
+}
+
+.results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--gray-600);
+    border-top: 1px solid var(--gray-100);
+    padding-top: 15px;
+}
+
+.pagination-info {
+    font-style: italic;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-size-selector select {
+    padding: 6px 10px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background-color: white;
+    font-size: 14px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .contact-modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+        margin: 10px auto;
+        padding: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
+    
+    .loading {
+        margin: 15px auto;
+        padding: 25px 20px;
+        max-width: calc(100vw - 30px);
+    }
+    
+    .loading p:first-of-type {
+        font-size: 18px;
+    }
+    
+    .alert {
+        margin: 10px 0;
+        padding: 12px 15px;
+        font-size: 13px;
+        word-wrap: break-word;
+    }
+    
+    /* Header mobile */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+    }
+    
+    .user-credits-container {
+        gap: 8px;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .user-credits {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.5rem 1rem;
+        font-size: 12px;
+        min-height: 44px;
+    }
+    
+    .logout-button i, .upgrade-button i {
+        font-size: 12px;
+    }
+    
+    /* Menu mobile */
+    .menu-list {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .menu-item {
+        width: 50%;
+        text-align: center;
+    }
+    
+    .menu-link {
+        padding: 14px 10px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    /* Form mobile */
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .form-group {
+        flex: 1 1 100%;
+    }
+    
+    .form-group input,
+    .form-group select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Results mobile */
+    .results-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .export-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .results-table {
+        font-size: 12px;
+    }
+    
+    .results-table thead {
+        display: none;
+    }
+    
+    .results-table,
+    .results-table tbody,
+    .results-table tr,
+    .results-table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .results-table tr {
+        border: 1px solid var(--gray-200);
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .results-table td {
+        border: none;
+        border-bottom: 1px solid var(--gray-100);
+        position: relative;
+        padding: 8px 10px 8px 35%;
+        text-align: left;
+    }
+    
+    .results-table td:before {
+        content: attr(data-label) ": ";
+        position: absolute;
+        left: 10px;
+        width: 30%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        color: var(--gray-600);
+        font-size: 11px;
+    }
+    
+    .results-table td:last-child {
+        border-bottom: none;
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .results-table td:last-child:before {
+        display: none;
+    }
+    
+    .results-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Modal headers mobile */
+    #exportModal .modal-header,
+    #exportConfirmationModal .modal-header {
+        padding: 20px;
+    }
+    
+    #exportModal .modal-title,
+    #exportConfirmationModal .modal-title {
+        font-size: 20px;
+    }
+    
+    #exportModal .modal-body,
+    #exportConfirmationModal .modal-body {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 1rem;
+        margin-right: 4px;
+    }
+    
+    .user-credits {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .logout-button, .upgrade-button {
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+    }
+    
+    .menu-link {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    .search-section,
+    .results-section {
+        padding: 20px;
+    }
+    
+    .modal-content {
+        width: calc(100vw - 10px);
+        margin: 5px auto;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container { 
+        padding: 0 1.5rem; 
+    }
+    
+    .search-title { 
+        font-size: 1.5rem; 
+    }
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+        
+        @media (max-width: 992px) {
+            .container { padding: 0 1.5rem; }
+            .search-title { font-size: 1.5rem; }
+        }
+
+        /* Prevent any element from causing horizontal scroll */
+        .search-form,
+        .results-table,
+        .modal-content,
+        .alert,
+        .loading {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+    </style><meta content="https://unlimited-leads.online/de/app-beta/" property="og:url"/><link href="https://unlimited-leads.online/app-beta/" hreflang="en" rel="alternate"/><link href="https://unlimited-leads.online/app-beta/" hreflang="x-default" rel="alternate"/><link href="https://unlimited-leads.online/fr/app-beta/" hreflang="fr" rel="alternate"/><link href="https://unlimited-leads.online/es/app-beta/" hreflang="es" rel="alternate"/><link href="https://unlimited-leads.online/de/app-beta/" hreflang="de" rel="alternate"/><link href="https://unlimited-leads.online/it/app-beta/" hreflang="it" rel="alternate"/><link href="https://unlimited-leads.online/pt/app-beta/" hreflang="pt" rel="alternate"/></head><body><div class="container"><header><div class="user-credits-container"><div class="user-credits" id="userCredits"><i class="fas fa-coins"></i> 0 Credits</div> <button class="upgrade-button" id="upgradeButton"><i class="fas fa-crown"></i>Upgrade</button> <button class="logout-button" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Ausloggen</button></div></header><div class="main-menu"><ul class="menu-list"><li class="menu-item active"> <a class="menu-link" href="#"><i class="fas fa-search"></i>Leads suchen</a></li><li class="menu-item"> <a class="menu-link" href="https://unlimited-leads.online/email-finder-app"><i class="fas fa-envelope"></i>E-Mail-Finder</a></li><li class="menu-item"> <a class="menu-link" href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&amp;hl=fr"><i class="fas fa-rocket"></i>Linkedin Scrapper</a></li><li class="menu-item"> <a class="menu-link" href="https://unlimited-leads.online/account"><i class="fas fa-user"></i>Mein Konto</a></li></ul></div><section class="search-section"><h2 class="search-title"> Geschäftskontakte finden</h2><div class="alert" id="searchAlert"></div><div class="info-box"><p> <strong>So funktioniert es:</strong> Suchen Sie mit unseren Filtern nach Kontakten. Exportieren Sie diese anschließend mit der Schaltfläche „Als CSV exportieren“.</p></div><form class="search-form" id="searchForm"><div class="form-group"> <label for="country">Land (erforderlich)</label><select id="country" name="country"><option value="United States"> Wählen Sie ein Land</option><option value="Canada"> Kanada</option><option value="France"> Frankreich</option><option value="India"> Indien</option><option value="United Kingdom"> Vereinigtes Königreich</option><option value="United States"> Vereinigte Staaten</option><option value="Germany"> Deutschland</option><option value="Australia"> Australien</option><option value="Netherlands"> Niederlande</option><option value="Italy"> Italien</option><option value="Spain"> Spanien</option><!-- Add more countries as needed --></select></div><div class="form-group"> <label for="companySize">Unternehmensgröße:</label><select id="companySize" name="companySize"><option value=""> Unternehmensgröße auswählen</option><option value="1-25"> 1-25</option><option value="26-50"> 26-50</option><option value="51-250"> 51-250</option><option value="251-1000"> 251-1000</option><option value="1000+"> 1000+</option></select></div><div class="form-group"> <label for="industry">Industrie</label><select id="industry" name="industry"><option value=""> Alle Branchen</option><option value="Accounting"> Buchhaltung</option><option value="Agriculture"> Landwirtschaft</option><option value="Airlines/aviation"> Fluggesellschaften/Luftfahrt</option><option value="Animation"> Animation</option><option value="Apparel &amp; fashion"> Bekleidung &amp; Mode</option><option value="Architecture &amp; planning"> Architektur &amp; Planung</option><option value="Arts &amp; crafts"> Kunsthandwerk</option><option value="Automotive"> Automobilindustrie</option><option value="Aviation &amp; aerospace"> Luft- und Raumfahrt</option><option value="Banking"> Bankwesen</option><option value="Biotechnology"> Biotechnologie</option><option value="Broadcast media"> Rundfunkmedien</option><option value="Building materials"> Baustoffe</option><option value="Business supplies &amp; equipment"> Geschäftsbedarf und -ausstattung</option><option value="Capital markets"> Kapitalmärkte</option><option value="Chemicals"> Chemikalien</option><option value="Civic &amp; social organization"> Bürgerliche und soziale Organisation</option><option value="Civil engineering"> Bauingenieurwesen</option><option value="Clean energy"> Saubere Energie</option><option value="Computer &amp; network security"> Computer- und Netzwerksicherheit</option><option value="Computer networking"> Computernetzwerke</option><option value="Computer software"> Computersoftware</option><option value="Construction"> Konstruktion</option><option value="Consumer electronics"> Unterhaltungselektronik</option><option value="Consumer goods"> Konsumgüter</option><option value="Consumer services"> Verbraucherdienste</option><option value="Defense &amp; space"> Verteidigung &amp; Weltraum</option><option value="Design"> Design</option><option value="Education"> Ausbildung</option><option value="Electrical/electronic manufacturing"> Elektro-/Elektronikfertigung</option><option value="Environmental services &amp; clean energy"> Umweltdienstleistungen und saubere Energie</option><option value="Events services"> Veranstaltungsservices</option><option value="Facilities &amp; services"> Einrichtungen und Dienstleistungen</option><option value="Finance"> Finanzen</option><option value="Food &amp; beverages"> Essen &amp; Getränke</option><option value="Food production"> Lebensmittelproduktion</option><option value="Furniture"> Möbel</option><option value="Government administration"> Regierungsverwaltung</option><option value="Health, Wellness &amp; fitness"> Gesundheit, Wellness &amp; Fitness</option><option value="Healthcare"> Gesundheitspflege</option><option value="Hospital &amp; health care"> Krankenhaus &amp; Gesundheitswesen</option><option value="Hospitality"> Gastfreundschaft</option><option value="Information technology &amp; services"> Informationstechnologie und -dienste</option><option value="Insurance"> Versicherung</option><option value="Internet"> Internet</option><option value="Legal services"> Juristische Dienstleistungen</option><option value="Leisure, Travel &amp; tourism"> Freizeit, Reisen &amp; Tourismus</option><option value="Logistics &amp; supply chain"> Logistik und Lieferkette</option><option value="Luxury goods &amp; jewelry"> Luxusgüter &amp; Schmuck</option><option value="Machinery"> Maschinen</option><option value="Management consulting"> Unternehmensberatung</option><option value="Manufacturing"> Herstellung</option><option value="Maritime"> Seefahrt</option><option value="Marketing &amp; advertising"> Marketing &amp; Werbung</option><option value="Media production"> Medienproduktion</option><option value="Paper &amp; forest products"> Papier &amp; Forstprodukte</option><option value="Paper &amp; forest products"> Drucken</option><option value="Political organization"> Politische Organisation</option><option value="Public safety"> Öffentliche Sicherheit</option><option value="Real estate"> Immobilie</option><option value="Restaurants"> Restaurants</option><option value="Retail"> Einzelhandel</option><option value="Sporting goods"> Sportartikel</option><option value="Staffing &amp; recruiting"> Personalbesetzung und Rekrutierung</option><option value="Technology"> Technologie</option><option value="Telecommunications"> Telekommunikation</option><option value="Transportation"> Transport</option><option value="Utilities"> Dienstprogramme</option><option value="Venture capital &amp; private equity"> Risikokapital und Private Equity</option><option value="Warehousing"> Lagerung</option><option value="Wholesale"> Großhandel</option><option value="Wine &amp; spirits"> Wein &amp; Spirituosen</option><option value="Writing &amp; editing"> Schreiben &amp; Bearbeiten</option></select></div><div class="form-group"> <label for="city">Stadt</label><input id="city" name="city" placeholder="e.g. New York" type="text"/></div><div class="form-group"> <label for="jobTitle">Berufsbezeichnung:</label> <input id="jobTitle" name="jobTitle" placeholder="e.g ceo,cto,founder" type="text"/></div><div class="form-group"> <label for="companyName">Name der Firma</label> <input id="companyName" name="companyName" placeholder="e.g. Acme Inc" type="text"/></div><div class="form-group"> <label for="keywords">Schlüsselwörter</label> <input id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech" type="text"/></div><div class="form-group"> <label for="hasEmail">Hat E-Mail:</label><select id="hasEmail" name="hasEmail"><option value=""> Alle Kontakte</option><option value="yes"> Hat nur E-Mail</option><option value="no"> Nur keine E-Mail</option></select></div><div class="form-group"> <button class="search-button" type="submit"><i class="fas fa-search"></i>Kontakte suchen</button></div></form></section><div class="loading" id="loading"><i class="fas fa-spinner"></i><p>Suche nach Kontakten. Bitte warten Sie, es kann bis zu 5 Minuten dauern ... </p></div><section class="results-section" id="resultsSection" style="display: none;"><div class="results-header"><div class="results-count"> <span id="resultsNumber">0</span> Kontakte gefunden</div> <button class="export-button" id="exportButton"><i class="fas fa-download"></i>Exportieren in CSV</button> </div><div class="no-results" id="noResults"><i class="fas fa-search" style="font-size: 40px; margin-bottom: 15px;"></i><p> Keine Kontakte gefunden. Versuchen Sie, Ihre Suchkriterien anzupassen.</p></div><table class="results-table" id="resultsTable"><thead><tr><th> Name</th><th> Titel</th><th> Unternehmen</th><th> E-Mail</th><th> Land</th><th> Aktionen </th></tr></thead><tbody id="resultsBody"><!-- Results will be populated here --></tbody></table><div class="results-info" id="resultsInfo"><div class="pagination-info"> Es werden <span id="startRecord">0</span> - <span id="endRecord">0</span> von <span id="totalDisplayRecords">0</span> Kontakten angezeigt</div></div></section></div><div class="contact-modal" id="contactModal"><div class="modal-content"><span class="close-modal">×</span><div class="modal-header"><h2 class="modal-title" id="modalName"> Kontaktdetails</h2></div><div class="modal-body"><div class="contact-info"><h3 class="info-section-title"> Kontaktinformationen</h3><div class="info-item"><div class="info-label"> Vollständiger Name </div><div class="info-value" id="modalFullName"></div></div><div class="info-item"><div class="info-label"> Berufsbezeichnung </div><div class="info-value" id="modalTitle"></div></div><div class="info-item"><div class="info-label"> Führungsebene </div><div class="info-value" id="modalManagementLevel"></div></div><div class="info-item"><div class="info-label"> E-Mail </div><div class="info-value" id="modalEmail"></div></div><div class="info-item"><div class="info-label"> Telefon </div><div class="info-value" id="modalPhone"></div></div><div class="info-item"><div class="info-label"> LinkedIn </div><div class="info-value" id="modalLinkedIn"></div></div><div class="info-item"><div class="info-label"> Standort </div><div class="info-value" id="modalLocation"></div></div></div><div class="company-info"><h3 class="info-section-title"> Firmeninformation</h3><div class="info-item"><div class="info-label"> Unternehmen </div><div class="info-value" id="modalCompany"></div></div><div class="info-item"><div class="info-label"> Industrie </div><div class="info-value" id="modalIndustry"></div></div><div class="info-item"><div class="info-label"> Unternehmensgröße </div><div class="info-value" id="modalCompanySize"></div></div><div class="info-item"><div class="info-label"> Webseite </div><div class="info-value" id="modalWebsite"></div></div><div class="info-item"><div class="info-label"> Firmentelefon </div><div class="info-value" id="modalCompanyPhone"></div></div><div class="info-item"><div class="info-label"> Beschreibung </div><div class="info-value" id="modalDescription"></div></div></div></div></div></div><div class="contact-modal" id="exportModal"><div class="modal-content"> <span class="close-export-modal">×</span><div class="modal-header"><h2 class="modal-title"> Kontakte exportieren</h2></div><div class="modal-body"><div class="info-item"><div class="info-value"><p> Möchten Sie diese Lead-Liste wirklich exportieren? Hierfür werden Guthaben aus Ihrem Konto verbraucht.</p></div></div><div class="form-group" style="margin-top: 20px;"> <label for="exportLimit"><strong>Anzahl der zu exportierenden Leads:</strong></label> <input id="exportLimit" max="5000" min="1" name="exportLimit" style="width: 100%; padding: 10px; border: 3px solid var(--primary); border-radius: 8px; font-size: 16px; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2); background-color: #F0F7FF; transition: all 0.3s ease;" type="number" value="250"/></div><div style="text-align: center; margin-top: 20px;"> <button class="search-button" id="confirmExport" style="max-width: 200px;">Export bestätigen</button> </div></div></div></div><div class="contact-modal" id="exportConfirmationModal"><div class="modal-content" style="border-left: 4px solid #AAF0D1;"> <span class="close-export-confirmation-modal">×</span> <div class="modal-header" style="border-bottom-color: #AAF0D1;"><h2 class="modal-title"><i class="fas fa-check-circle" style="color: #2a6;"></i> Exportanfrage bestätigt </h2></div><div class="modal-body"><div class="info-item" style="text-align: center;"><div class="info-value"><p style="font-size: 18px; margin-bottom: 15px;"> <strong>Ihr Export wurde erfolgreich verarbeitet!</strong></p><p> Die Kontaktliste wird in den nächsten Minuten heruntergeladen.</p></div></div><div style="text-align: center; margin-top: 25px;"> <button class="search-button" id="closeConfirmationBtn" style="max-width: 200px; background-color: #2a6;">Habe es</button></div></div></div></div><script>
+        // n8n webhook URL
+        const N8N_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook1';
+        
+        
+        let allContacts = [];
+        let globalTrueCount = 0;
+        let userToken = null;
+        // DOM Elements
+        const searchForm = document.getElementById('searchForm');
+        const countrySelect = document.getElementById('country');
+        const industrySelect = document.getElementById('industry');
+        const searchAlert = document.getElementById('searchAlert');
+        const loading = document.getElementById('loading');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsNumber = document.getElementById('resultsNumber');
+        const resultsBody = document.getElementById('resultsBody');
+        const noResults = document.getElementById('noResults');
+        const resultsTable = document.getElementById('resultsTable');
+        const exportButton = document.getElementById('exportButton');
+        const contactModal = document.getElementById('contactModal');
+        const closeModal = document.querySelector('.close-modal');
+        const startRecord = document.getElementById('startRecord');
+        const endRecord = document.getElementById('endRecord');
+        const totalDisplayRecords = document.getElementById('totalDisplayRecords');
+        
+       // Initialize the app
+// Initialize the app
+document.addEventListener('DOMContentLoaded', async () => {
+    // Show loading indicator
+    loading.style.display = 'block';
+    
+    try {
+        // Fetch initial data from Supabase via n8n
+        await fetchData();
+        globalTrueCount = await fetchTotalCount();
+        
+        // Display data immediately
+        displayInitialResults();
+        
+        // Set up event listeners
+        searchForm.addEventListener('submit', handleSearch);
+        exportButton.addEventListener('click', exportToCSV);
+        closeModal.addEventListener('click', () => {
+            contactModal.style.display = 'none';
+        });
+        
+        // Add event listener for the upgrade button
+        const upgradeButton = document.getElementById('upgradeButton');
+        if (upgradeButton) {
+            upgradeButton.addEventListener('click', function() {
+                // Get the token from localStorage
+                const token = localStorage.getItem('sessionToken');
+                
+                // Redirect to the pricing page with the token
+                if (token) {
+                    window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+                } else {
+                    // If no token, just go to pricing page
+                    window.location.href = 'https://unlimited-leads.online/pricing';
+                }
+            });
+            console.log('Upgrade button event listener attached');
+        } else {
+            console.error('Upgrade button not found in the DOM');
+        }
+        
+        // Add event listener for the logout button
+        const logoutButton = document.getElementById('logoutButton');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                // Clear the sessionToken from localStorage
+                localStorage.removeItem('sessionToken');
+                
+                // Redirect to the home page
+                window.location.href = 'https://unlimited-leads.online/en';
+            });
+            console.log('Logout button event listener attached');
+        }
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === contactModal) {
+                contactModal.style.display = 'none';
+            }
+        });
+        
+        // Show success message
+        showAlert("Connected to database successfully! Ready to search.", 'success');
+    } catch (error) {
+        console.error("Error initializing app:", error);
+        showAlert(`Error connecting to database: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+    }
+});
+
+// Fetch data from Supabase via n8n webhook
+async function fetchData() {
+    try {
+        // Show loading indicator
+        loading.style.display = 'block';
+        
+        // Prepare the data to send to n8n
+        const requestData = {
+            action: 'fetchAll', // Changed to new table name
+            limit: 1000
+        };
+        
+        // Make POST request to n8n webhook
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Validate that data is an array
+        if (!Array.isArray(data)) {
+            console.error('Response is not an array:', data);
+            throw new Error('Expected array response from API');
+        }
+        
+        console.log(`Received ${data.length} contacts from API`);
+        
+        // Store the data directly
+        allContacts = data;
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+}
+
+  /**
+/**
+/**
+ * token_verif
+ * Fonction qui vérifie et traite le token de l'URL :
+ * - Récupère le token depuis l'URL ou le localStorage
+ * - Si aucun token n'est trouvé, redirige vers la page d'accueil
+ * - Si un token est trouvé, l'ajoute à l'URL si nécessaire et envoie une requête API avec le token
+ */
+/**
+ * token_verif
+ * Fonction qui vérifie le token et affiche les crédits de l'utilisateur
+ */
+function token_verif() {
+    console.log("Fonction token_verif démarrée");
+    
+    // URL de l'API webhook
+    const WEBHOOK_URL_A = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/credits';
+    
+    // Récupérer les paramètres de l'URL actuelle
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Extraire la valeur du paramètre "token"
+    let token = urlParams.get('token');
+    
+    // Si aucun token dans l'URL, vérifier dans le localStorage
+    if (!token) {
+        token = localStorage.getItem('sessionToken');
+        console.log("Token récupéré du localStorage:", token);
+        
+        // Si un token existe dans le localStorage, l'ajouter à l'URL
+        if (token) {
+            // Créer une nouvelle URL avec le token
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('token', token);
+            
+            // Mettre à jour l'URL sans recharger la page
+            window.history.replaceState({}, '', currentUrl.toString());
+            console.log("URL mise à jour avec le token du localStorage");
+        }
+    } else {
+        // Si un token est présent dans l'URL, le sauvegarder dans le localStorage
+        localStorage.setItem('sessionToken', token);
+        console.log("Token sauvegardé dans le localStorage:", token);
+    }
+    
+    // Vérifier si on a un token (soit de l'URL, soit du localStorage)
+    if (!token) {
+        console.log("Aucun token trouvé, redirection...");
+        window.location.href = 'https://unlimited-leads.online/en';
+        return;
+    }
+
+    userToken = token;
+    
+    console.log("Token valide, envoi de la requête API...");
+    
+    // Créer l'objet de données à envoyer
+    const requestData = {
+        token: token,
+        type: "token"
+    };
+    
+    console.log("Données à envoyer:", requestData);
+    
+    // Configuration de la requête fetch
+    fetch(WEBHOOK_URL_A, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => {
+        console.log("Statut de la réponse:", response.status);
+        if (!response.ok) {
+            throw new Error('Erreur réseau: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Succès de la requête token:', data);
+        
+        // Vérifier si la réponse contient des crédits
+        if (data && typeof data.credit === 'number') {
+            // Afficher les crédits dans l'interface
+            displayUserCredits(data.credit);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi du token:', error);
+    });
+}
+
+// Fonction pour afficher les crédits utilisateur
+function displayUserCredits(credits) {
+    // Création d'un élément dans le header pour afficher les crédits
+    const header = document.querySelector('header');
+    
+    // Vérifier si l'élément des crédits existe déjà
+    let creditsElement = document.getElementById('userCredits');
+    
+    if (!creditsElement) {
+        // Créer l'élément s'il n'existe pas
+        creditsElement = document.createElement('div');
+        creditsElement.id = 'userCredits';
+        creditsElement.className = 'user-credits';
+        header.appendChild(creditsElement);
+        
+        // Ajouter du CSS pour cet élément
+        const style = document.createElement('style');
+        style.textContent = `
+            .user-credits {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .user-credits i {
+                font-size: 16px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Mettre à jour le contenu avec le nombre de crédits
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
+}
+
+// Exécuter la fonction immédiatement
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page chargée, exécution de token_verif");
+    token_verif();
+});
+
+        
+// Fonction corrigée pour afficher les résultats initiaux
+function displayInitialResults() {
+    // Show results section
+    resultsSection.style.display = 'block';
+    
+    // Clear existing results
+    resultsBody.innerHTML = '';
+    
+    // Show or hide no results message
+    if (allContacts.length === 0) {
+        noResults.style.display = 'block';
+        resultsTable.style.display = 'none';
+        resultsNumber.textContent = '0';
+        totalDisplayRecords.textContent = '0';
+        startRecord.textContent = '0';
+        endRecord.textContent = '0';
+        globalTrueCount = 0;
+        return;
+    } else {
+        noResults.style.display = 'none';
+        resultsTable.style.display = 'table';
+    }
+    
+    // Display only the first 25 contacts
+    const displayContacts = allContacts.slice(0, 25);
+    
+    // Update pagination info
+    startRecord.textContent = '1';
+    endRecord.textContent = displayContacts.length;
+    
+    // Populate the table with contacts - UTILISER LES BONS NOMS DE PROPRIÉTÉS
+    displayContacts.forEach(contact => {
+        const row = document.createElement('tr');
+        
+        // Utiliser les noms corrects basés sur votre JSON
+        row.innerHTML = `
+            <td>${contact.name || 'N/A'}</td>
+            <td>${contact.title || 'N/A'}</td>
+            <td>${contact.company || 'N/A'}</td>
+            <td>${contact.email || 'N/A'}</td>
+            <td>${contact.country || 'N/A'}</td>
+            <td>
+                <div class="action-icons">
+                    <i class="fas fa-eye" title="View Details"></i>
+                    <i class="fas fa-save" title="Save Contact"></i>
+                </div>
+            </td>
+        `;
+        
+        // Add event listener to view contact details
+        row.querySelector('.fa-eye').addEventListener('click', () => {
+            showContactDetails(contact);
+        });
+        
+        resultsBody.appendChild(row);
+    });
+}
+
+// Fonction corrigée pour afficher les détails du contact
+function showContactDetails(contact) {
+    console.log("Contact data received:", contact); // Pour débugger
+    
+    // Contact Information
+    document.getElementById('modalName').textContent = contact.name || 'N/A';
+    document.getElementById('modalFullName').textContent = contact.name || 'N/A';
+    document.getElementById('modalTitle').textContent = contact.title || 'N/A';
+    document.getElementById('modalManagementLevel').textContent = contact.managementlevel || 'N/A';
+    document.getElementById('modalEmail').textContent = contact.email || 'N/A';
+    document.getElementById('modalPhone').textContent = contact.phone || 'N/A';
+    document.getElementById('modalLinkedIn').textContent = contact.linkedin || 'N/A';
+    
+    // Location - combinaison de city, state, country
+    const locationParts = [contact.city, contact.state, contact.country].filter(part => part && part.trim() !== '');
+    const location = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
+    document.getElementById('modalLocation').textContent = location;
+    
+    // Company Information
+    document.getElementById('modalCompany').textContent = contact.company || 'N/A';
+    document.getElementById('modalIndustry').textContent = contact.industry || 'N/A';
+    document.getElementById('modalCompanySize').textContent = contact.employees || 'N/A';
+    document.getElementById('modalWebsite').textContent = contact.website || 'N/A';
+    document.getElementById('modalCompanyPhone').textContent = contact.cphone || 'N/A';
+    document.getElementById('modalDescription').textContent = contact.description || 'N/A';
+    
+    // Show the modal
+    contactModal.style.display = 'block';
+}
+
+// Également, il faut modifier la fonction handleSearch pour utiliser les bons noms de colonnes
+async function handleSearch(e) {
+    e.preventDefault();
+
+     loading.innerHTML = `
+        <i class="fas fa-spinner"></i>
+        <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+    `;
+    
+    // Reset any custom styles applied during export
+    loading.style.padding = "";
+    loading.style.border = "";
+    loading.style.boxShadow = "";
+    loading.style.maxWidth = "";
+    loading.style.margin = "30px 0";
+    
+    
+    // Show loading indicator
+    loading.style.display = 'block';
+    resultsSection.style.display = 'none';
+    searchAlert.style.display = 'none';
+    
+    try {
+        // Get form values
+        const country = countrySelect.value;
+        const industry = industrySelect.value;
+        const companyName = document.getElementById('companyName').value;
+        const keywords = document.getElementById('keywords').value;
+        const jobTitle = document.getElementById('jobTitle').value;
+        const companySize = document.getElementById('companySize').value;
+        const city = document.getElementById('city').value;
+        const hasEmail = document.getElementById('hasEmail').value;
+        
+        // If search criteria are provided, filter the data
+        if (country || industry || companyName || keywords) {
+            try {
+                // Search contacts using n8n webhook
+                const requestData = {
+                    action: 'search',
+                    searchParams: {
+                        country,
+                        industry,
+                        company: companyName,  
+                        keywords,
+                        jobtitle: jobTitle,  
+                        companysize: companySize,
+                        city: city,
+                        hasemail: hasEmail
+                    },
+                    limit: 1000
+                };
+                
+                // Make POST request to n8n webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Update allContacts with search results
+                allContacts = data;
+
+                    // ► NEW: fetch the true total count
+    const trueCount = await fetchTotalCount();
+    globalTrueCount = trueCount;
+    // update your UI with the count from the RPC
+    resultsNumber.textContent        = trueCount;
+    totalDisplayRecords.textContent  = trueCount;
+    startRecord.textContent          = trueCount > 0 ? '1' : '0';
+    endRecord.textContent            = trueCount > 0
+                                        ? Math.min(25, trueCount)
+                                        : '0';
+
+                
+                // Show search completion message
+                    showAlert(`Search completed: Found ${trueCount} contacts.`, 'success');
+            } catch (error) {
+                showAlert(`Error searching: ${error.message}`, 'error');
+            }
+        }
+        
+        // Display the results (either original or filtered)
+        displayInitialResults();
+        
+    } catch (error) {
+        console.error("Error handling search:", error);
+        showAlert(`Error: ${error.message}`, 'error');
+    } finally {
+        // Hide loading indicator
+        loading.style.display = 'none';
+        resultsSection.style.display = 'block';
+    }
+}
+
+
+// Define the export-specific webhook URL
+const EXPORT_WEBHOOK_URL = 'https://export.hamoureliasse.workers.dev/export';
+
+async function exportToCSV() {
+    try {
+        // Show the custom export modal
+        const exportModal = document.getElementById('exportModal');
+        exportModal.style.display = 'block';
+
+        document.getElementById('exportLimit').value = Math.min(globalTrueCount, 250);
+        
+        // Add event listener for the close button
+        const closeExportModal = document.querySelector('.close-export-modal');
+        closeExportModal.addEventListener('click', () => {
+            exportModal.style.display = 'none';
+        });
+        
+        // Add event listener for the confirm button
+        const confirmExportBtn = document.getElementById('confirmExport');
+        
+        // Create a new button to replace the original (to remove any existing event listeners)
+        const newConfirmExportBtn = confirmExportBtn.cloneNode(true);
+        confirmExportBtn.parentNode.replaceChild(newConfirmExportBtn, confirmExportBtn);
+        
+        // Add event listener to the new button
+        newConfirmExportBtn.addEventListener('click', async () => {
+            try {
+                // Hide the export modal
+                exportModal.style.display = 'none';
+                
+                // Get the export limit from the input field
+                const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+                
+                // REMOVED: verification checkbox logic
+                
+                // Calculate estimated wait time based on number of records
+                const estimatedMinutes = Math.max(5, Math.ceil(exportLimit / 1000) * 3);
+                
+                // Start time for tracking
+                const startTime = new Date();
+                
+                // Show loading screen with clear message to keep page open and time estimate
+                loading.style.display = 'block';
+                
+                // Apply custom styling to make loading more prominent
+                loading.style.padding = "40px 30px";
+                loading.style.border = "3px solid var(--primary)";
+                loading.style.boxShadow = "0 10px 30px rgba(37, 99, 235, 0.2)";
+                loading.style.maxWidth = "600px";
+                loading.style.margin = "30px auto";
+                
+                loading.innerHTML = `
+                   <div style="text-align: center;">
+    <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"></i>
+    
+    <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--gray-800);">
+        Preparing your export...
+    </p>
+    
+    <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 15px;">
+        This may take up to <strong>5 minutes</strong>. 
+        Keep this page open.
+    </p>
+    
+    <div id="exportTimer" style="font-size: 14px; color: var(--gray-700);">
+        Processing...
+    </div>
+</div>
+                `;
+                
+                // Always fetch the latest count before exporting
+                const currentCount = await fetchTotalCount();
+                
+                // Prepare the data to send to the export webhook
+                const requestData = {
+                    action: 'export',
+                    limit: exportLimit,
+                    token: userToken,
+                    totalCount: currentCount,
+                    // REMOVED: verification type - always use 'unverified'
+                    type: 'unverified',
+                    searchParams: {
+                        country: countrySelect.value,
+                        industry: industrySelect.value,
+                        company: document.getElementById('companyName').value,
+                        keywords: document.getElementById('keywords').value,
+                        city: document.getElementById('city').value,
+                        jobtitle: document.getElementById('jobTitle').value,
+                        companysize: document.getElementById('companySize').value,
+                        hasemail: document.getElementById('hasEmail').value 
+                    }
+                };
+                
+                console.log("Sending export request to export webhook with data:", requestData);
+                
+                // Create a special fetch with a very long timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30 * 60 * 1000); // 30 minute timeout
+                
+                try {
+                    // Make POST request to EXPORT webhook (using the new URL)
+                    const response = await fetch(EXPORT_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData),
+                        signal: controller.signal,
+                        keepalive: true // Add keepalive flag for long requests
+                    });
+                    
+                    // Clear the timeout since we got a response
+                    clearTimeout(timeoutId);
+
+                    loading.style.display = 'none';
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    // Check for CSV content type
+                    const contentType = response.headers.get('content-type');
+
+                    if (contentType && contentType.includes('text/csv')) {
+                        // It's a CSV file - handle direct download
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        
+                        // Get filename from Content-Disposition header if available
+                        const contentDisposition = response.headers.get('content-disposition');
+                        let filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+                        if (contentDisposition) {
+                            const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                            if (filenameMatch) filename = filenameMatch[1];
+                        }
+                        
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        
+                        console.log("Starting CSV download with blob size:", blob.size);
+                        console.log("Download URL:", url);
+                        console.log("Download filename:", filename);
+                        
+                        setTimeout(() => {
+                            a.click();
+                            console.log("Download click triggered");
+                            
+                            setTimeout(() => {
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                                console.log("Download link cleaned up");
+                            }, 1000);
+                        }, 100);
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation("your contacts", url);
+                        
+                        return; // Exit early - we've handled the CSV response
+                    }
+                    
+                    console.log("Received response from export webhook, parsing JSON...");
+                    
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+
+                    console.log("Parsed JSON response:", responseData);
+                    
+                    if (responseData && responseData.code === 403) {
+                        // Handle insufficient credits error
+                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+                        showCreditUpgradeModal();
+                        return;
+                    }
+                    
+                    if (Array.isArray(responseData) && responseData.length > 0) {
+                        // Download the data as CSV
+                        downloadCSV(responseData);
+                        
+                        // Calculate the total processing time
+                        const processingMinutes = Math.floor((new Date() - startTime) / 60000);
+                        const processingSecs = Math.floor(((new Date() - startTime) % 60000) / 1000);
+                        const timeStr = processingMinutes > 0 ? 
+                            `${processingMinutes} min ${processingSecs} sec` : 
+                            `${processingSecs} seconds`;
+                        
+                        // Show success message
+                        showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
+                        
+                        // Show the confirmation modal
+                        showExportConfirmation(responseData.length);
+                    } else {
+                        // Handle unexpected response format - show success message
+                        console.warn("Unexpected response format:", responseData);
+                        showAlert("Export completed!", 'success');
+                        
+                        // Also show the confirmation modal
+                        showExportConfirmation("your leads");
+                    }
+                } catch (error) {
+                    console.error("Export fetch error:", error);
+                    
+                    // Check if this was a timeout error
+                    if (error.name === 'AbortError') {
+                        showAlert(`Export timed out after 30 minutes. Your request may be too large. Try exporting fewer contacts or contact support.`, 'error');
+                    } else {
+                        showAlert(`Export error: ${error.message}. Please try again.`, 'error');
+                    }
+                }
+            } catch (generalError) {
+                console.error("General export error:", generalError);
+                showAlert(`Error processing export: ${generalError.message}`, 'error');
+            } finally {
+                // Stop any running timers
+                if (typeof timerInterval !== 'undefined') {
+                    clearInterval(timerInterval);
+                }
+                if (typeof secondsInterval !== 'undefined') {
+                    clearInterval(secondsInterval);
+                }
+                
+                // Reset loading style
+                loading.style.padding = "";
+                loading.style.border = "";
+                loading.style.boxShadow = "";
+                loading.style.maxWidth = "";
+                loading.style.margin = "30px 0";
+                
+                // Hide loading screen
+                loading.style.display = 'none';
+                
+                // Reset the export flag and button state
+                if (typeof isExporting !== 'undefined') {
+                    isExporting = false;
+                }
+                newConfirmExportBtn.disabled = false;
+                newConfirmExportBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Export';
+            }
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target === exportModal) {
+                exportModal.style.display = 'none';
+            }
+        });
+    } catch (error) {
+        console.error('Error initiating export process:', error);
+        showAlert(`Error: ${error.message}`, 'error');
+        loading.style.display = 'none';
+    }
+}
+
+// Function to show export confirmation modal
+function showExportConfirmation(recordCount, blobUrl = null) {
+    const confirmationModal = document.getElementById('exportConfirmationModal');
+    
+    // Create download button only if we have a blob URL
+    let downloadButton = '';
+    if (blobUrl) {
+        downloadButton = `
+        <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+            <p style="margin-bottom: 12px; color: #6c757d; font-size: 14px;">
+                <i class="fas fa-info-circle"></i> If download didn't start automatically:
+            </p>
+            <a href="${blobUrl}" download="contacts_export_${new Date().toISOString().slice(0,10)}.csv" 
+               class="search-button" style="font-size: 14px; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 0 auto;">
+                <i class="fas fa-download"></i> Click to Download
+            </a>
+        </div>`;
+    }
+    
+    // Update the confirmation message
+    const infoValue = confirmationModal.querySelector('.info-value');
+    if (infoValue) {
+        infoValue.innerHTML = `
+            <div style="text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 15px;"><strong>Your leads are ready!</strong></p>
+                <p style="margin-bottom: 10px;">Your leads have been exported successfully.</p>
+                ${downloadButton}
+            </div>
+        `;
+        infoValue.style.textAlign = 'center';
+    }
+    
+    confirmationModal.style.display = 'block';
+    
+    // Set up close button for confirmation modal
+    const closeConfirmBtn = document.querySelector('.close-export-confirmation-modal');
+    const newCloseConfirmBtn = closeConfirmBtn.cloneNode(true);
+    closeConfirmBtn.parentNode.replaceChild(newCloseConfirmBtn, closeConfirmBtn);
+    newCloseConfirmBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+        // Clean up blob URL if it exists
+        if (blobUrl && blobUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(blobUrl);
+        }
+    });
+    
+    // Set up "Got it" button
+    const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+    const newCloseConfirmationBtn = closeConfirmationBtn.cloneNode(true);
+    closeConfirmationBtn.parentNode.replaceChild(newCloseConfirmationBtn, closeConfirmationBtn);
+    newCloseConfirmationBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+        // Clean up blob URL if it exists
+        if (blobUrl && blobUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(blobUrl);
+        }
+    });
+}
+function downloadCSV(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data to export");
+        showAlert("No data to export", 'warning');
+        return false;
+    }
+    
+    try {
+        console.log(`Processing CSV download for ${data.length} contacts`);
+        
+        // Get headers from the first object's keys
+        const headers = Object.keys(data[0]);
+        
+        // Create CSV header row
+        let csvContent = headers.join(',') + '\r\n';
+        
+        // Add data rows
+        data.forEach(item => {
+            const row = headers.map(header => {
+                let value = item[header] !== undefined && item[header] !== null ? item[header] : '';
+                value = String(value);
+                
+                if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
+                    value = '"' + value.replace(/"/g, '""') + '"';
+                }
+                
+                return value;
+            });
+            
+            csvContent += row.join(',') + '\r\n';
+        });
+        
+        // Create a Blob with the CSV content
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        
+        // Mobile-friendly download approach
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // For mobile: Use a different approach
+            const url = URL.createObjectURL(blob);
+            const filename = `contacts_export_${new Date().toISOString().slice(0,10)}.csv`;
+            
+            // Try multiple mobile download methods
+            try {
+                // Method 1: Direct window.open (works on most mobile browsers)
+                const downloadWindow = window.open(url, '_blank');
+                if (downloadWindow) {
+                    // If window opened successfully, close it after a short delay
+                    setTimeout(() => downloadWindow.close(), 1000);
+                }
+                
+                // Method 2: Fallback link click (for browsers that block window.open)
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    // For mobile, we need to add to DOM and trigger with user gesture context
+                    document.body.appendChild(link);
+                    
+                    // Use both click() and dispatchEvent for maximum compatibility
+                    link.click();
+                    
+                    const clickEvent = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    link.dispatchEvent(clickEvent);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                }, 100);
+                
+            } catch (mobileError) {
+                console.error('Mobile download failed:', mobileError);
+                // Show user-friendly message for mobile
+                showAlert('Download prepared!', 'warning');
+            }
+            
+        } else {
+            // Desktop: Use the existing method
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `contacts_export_${new Date().toISOString().slice(0,10)}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+        
+        console.log("CSV download initiated");
+        return true;
+        
+    } catch (error) {
+        console.error('Error generating CSV:', error);
+        showAlert('Failed to generate CSV file: ' + error.message, 'error');
+        return false;
+    }
+}
+
+// Add this new function to create and show the credit upgrade modal
+function showCreditUpgradeModal() {
+    // Check if the modal already exists
+    let creditUpgradeModal = document.getElementById('creditUpgradeModal');
+    
+    // If the modal doesn't exist, create it
+    if (!creditUpgradeModal) {
+        creditUpgradeModal = document.createElement('div');
+        creditUpgradeModal.id = 'creditUpgradeModal';
+        creditUpgradeModal.className = 'contact-modal';
+        
+        // Create the modal content
+        creditUpgradeModal.innerHTML = `
+            <div class="modal-content" style="border-left: 4px solid #FF9999;">
+                <span class="close-credit-upgrade-modal">&times;</span>
+                
+                <div class="modal-header" style="border-bottom-color: #FF9999;">
+                    <h2 class="modal-title"><i class="fas fa-exclamation-circle" style="color: #d33;"></i> Insufficient Credits</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="info-item" style="text-align: center;">
+                        <div class="info-value">
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You do not have enough exports for those leads.</strong></p>
+                            <p>Upgrade your account to unlock unlimited exports.</p>
+                            <p style="color: #d33; margin-top: 15px;"><i class="fas fa-arrow-circle-up"></i> Upgrade now to continue accessing leads data.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://unlimited-leads.online/pricing" class="search-button" style="max-width: 200px; text-decoration: none; display: inline-block;">
+                            <i class="fas fa-crown"></i> Upgrade Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add the modal to the document
+        document.body.appendChild(creditUpgradeModal);
+    }
+    
+    // Show the modal
+    creditUpgradeModal.style.display = 'block';
+    
+    // Add event listener for the close button
+    const closeBtn = creditUpgradeModal.querySelector('.close-credit-upgrade-modal');
+    closeBtn.addEventListener('click', () => {
+        creditUpgradeModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === creditUpgradeModal) {
+            creditUpgradeModal.style.display = 'none';
+        }
+    });
+}
+ // Get the total count of contacts without fetching all data
+async function fetchTotalCount() {
+  try {
+    const requestData = {
+      action: 'getCount',
+      searchParams: {
+        country: countrySelect.value,
+        industry: industrySelect.value,
+        company: document.getElementById('companyName').value,
+        keywords: document.getElementById('keywords').value,
+        jobtitle: document.getElementById('jobTitle').value,
+        companysize: document.getElementById('companySize').value,
+        city: document.getElementById('city').value,
+        hasemail: document.getElementById('hasEmail').value
+      }
+    };
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestData)
+    });
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    const data = await response.json();
+    // data is [count], so grab first element
+    const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
+    resultsNumber.textContent       = trueCount;
+    totalDisplayRecords.textContent = trueCount;
+    return trueCount;
+  } catch (err) {
+    console.error('Error fetching count:', err);
+    return 0;
+  }
+}
+
+        // Add this function to your script section
+function redirectToApolloFinder() {
+    // Use the userToken global variable that's already defined in your code
+    window.location.href = `https://unlimited-leads.online/emailverif-app.html?token=${userToken}`;
+}
+
+        // Upgrade function
+function upgrade() {
+    // Get the token from localStorage
+    const token = localStorage.getItem('sessionToken');
+    
+    // Redirect to the pricing page with the token
+    if (token) {
+        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+    } else {
+        // If no token, just go to pricing page
+        window.location.href = 'https://unlimited-leads.online/pricing';
+    }
+}
+
+
+        function logout() {
+    // Clear the sessionToken from localStorage
+    localStorage.removeItem('sessionToken');
+    
+    // Redirect to the home page
+    window.location.href = 'https://unlimited-leads.online/en';
+}
+
+// Add event listener to the logout button
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', logout);
+    }
+});
+
+// Also add this to the existing token_verif function to handle showing/hiding the logout button
+// Add this at the end of the displayUserCredits function (around line 865):
+
+// Make sure the logout button is visible
+const logoutButton = document.getElementById('logoutButton');
+if (logoutButton) {
+    logoutButton.style.display = 'flex';
+}
+
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            searchAlert.textContent = message;
+            searchAlert.className = `alert alert-${type}`;
+            searchAlert.style.display = 'block';
+            
+            // Hide the alert after 5 seconds
+            setTimeout(() => {
+                searchAlert.style.display = 'none';
+            }, 5000);
+        }
+    </script></body></html>
