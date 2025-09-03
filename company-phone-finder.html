@@ -746,45 +746,6 @@
     let bulkResults = [];
     let csvData = [];
     let searchCount = 0;
-    let popupShown = false;
-
-    // Popup functionality
-    function showPopup() {
-      if (!popupShown && !localStorage.getItem('popupDismissed')) {
-        const popup = document.getElementById('leadsPopup');
-        const modal = popup.querySelector('.popup-modal');
-        
-        popup.style.display = 'flex';
-        setTimeout(() => {
-          modal.classList.add('show');
-        }, 50);
-        
-        popupShown = true;
-      }
-    }
-
-    function closePopup() {
-      const popup = document.getElementById('leadsPopup');
-      const modal = popup.querySelector('.popup-modal');
-      
-      modal.classList.remove('show');
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 300);
-      
-      // Remember that user dismissed the popup (for this session)
-      localStorage.setItem('popupDismissed', 'true');
-    }
-
-    // Show popup after 20 seconds
-    setTimeout(showPopup, 20000);
-
-    // Close popup when clicking outside
-    document.getElementById('leadsPopup').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePopup();
-      }
-    });
 
     // Tab switching functionality
     function switchTab(tab) {
@@ -1023,8 +984,8 @@
           const data = await response.json();
           bulkResults.push({
             ...row,
-            phoneNumber: data && data.primaryPhone ? data.primaryPhone : 'Not found',
-            status: data && data.primaryPhone ? 'Found' : 'Not found'
+            phoneNumber: data && data.phone ? data.phone : 'Not found',
+            status: data && data.phone ? 'Found' : 'Not found'
           });
 
           // Add small delay to avoid overwhelming the API
