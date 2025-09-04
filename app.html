@@ -2218,8 +2218,19 @@ async function exportToCSV() {
                 // Hide the export modal
                 exportModal.style.display = 'none';
                 
-                // Get the export limit from the input field
+               // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+
+// Add validation to enforce the 10,000 limit
+            if (exportLimit > 10000) {
+                showAlert('Export limit cannot exceed 10,000 contacts. Please enter a smaller number.', 'error');
+                return; // Stop the export process
+            }
+
+            if (exportLimit < 1) {
+                showAlert('Export limit must be at least 1 contact.', 'error');
+                return; // Stop the export process
+            }
                 
                 // REMOVED: verification checkbox logic
                 
@@ -2792,12 +2803,17 @@ async function fetchTotalCount() {
   }
 }
 
-        // Add this function to your script section
-function redirectToApolloFinder() {
-    // Use the userToken global variable that's already defined in your code
-    window.location.href = `https://unlimited-leads.online/emailverif-app.html?token=${userToken}`;
-}
-
+// Add real-time validation for export limit input
+document.getElementById('exportLimit').addEventListener('input', function() {
+    const value = parseInt(this.value);
+    if (value > 10000) {
+        this.value = 10000;
+        showAlert('Maximum export limit is 10,000 contacts.', 'warning');
+    }
+    if (value < 1 && this.value !== '') {
+        this.value = 1;
+    }
+});
         // Upgrade function
 function upgrade() {
     // Get the token from localStorage
