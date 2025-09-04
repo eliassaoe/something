@@ -2361,13 +2361,21 @@ async function exportToCSV() {
 
                     console.log("Parsed JSON response:", responseData);
                     
+                    if (responseData && responseData.code === 403 && responseData.message === "You are above your daily rate limit") {
+    // Handle rate limit error
+                    console.log("*** DAILY RATE LIMIT REACHED ***");
+                    showAlert(responseData.message, 'warning');
+                    showRateLimitModal();
+                    return;
+            }
+
                     if (responseData && responseData.code === 403) {
-                        // Handle insufficient credits error
-                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
-                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
-                        showCreditUpgradeModal();
-                        return;
-                    }
+    // Handle insufficient credits error
+                    console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                    showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+                    showCreditUpgradeModal();
+                    return;
+            }
                     
                     if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
@@ -2675,6 +2683,72 @@ function showCreditUpgradeModal() {
         }
     });
 }
+
+// Add this new function right after showCreditUpgradeModal()
+function showRateLimitModal() {
+    // Check if the modal already exists
+    let rateLimitModal = document.getElementById('rateLimitModal');
+    
+    // If the modal doesn't exist, create it
+    if (!rateLimitModal) {
+        rateLimitModal = document.createElement('div');
+        rateLimitModal.id = 'rateLimitModal';
+        rateLimitModal.className = 'contact-modal';
+        
+        // Create the modal content
+        rateLimitModal.innerHTML = `
+            <div class="modal-content" style="border-left: 4px solid #F59E0B;">
+                <span class="close-rate-limit-modal">&times;</span>
+                
+                <div class="modal-header" style="background: linear-gradient(135deg, #F59E0B, #D97706); border-bottom: none;">
+                    <h2 class="modal-title" style="color: white;"><i class="fas fa-clock" style="color: white;"></i> Daily Rate Limit Reached</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="info-item" style="text-align: center;">
+                        <div class="info-value">
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You have reached your daily rate limit.</strong></p>
+                            <p>Our platform has rate limits in place to prevent data harvesting and scraping of our database.</p>
+                            <p style="color: #92400e; margin-top: 15px;"><i class="fas fa-shield-alt"></i> This helps us maintain data quality and service availability for all users.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button id="understandRateLimitBtn" class="search-button" style="max-width: 200px; background: linear-gradient(135deg, #F59E0B, #D97706);">
+                            <i class="fas fa-check"></i> I Understand
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add the modal to the document
+        document.body.appendChild(rateLimitModal);
+    }
+    
+    // Show the modal
+    rateLimitModal.style.display = 'block';
+    
+    // Add event listener for the close button
+    const closeBtn = rateLimitModal.querySelector('.close-rate-limit-modal');
+    closeBtn.addEventListener('click', () => {
+        rateLimitModal.style.display = 'none';
+    });
+    
+    // Add event listener for the "I Understand" button
+    const understandBtn = document.getElementById('understandRateLimitBtn');
+    understandBtn.addEventListener('click', () => {
+        rateLimitModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === rateLimitModal) {
+            rateLimitModal.style.display = 'none';
+        }
+    });
+}
+        
  // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
   try {
