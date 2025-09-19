@@ -2124,6 +2124,7 @@ async function handleSearch(e) {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
+                    token: userToken,
                     searchParams: {
                         country,
                         industry,
@@ -2765,6 +2766,7 @@ async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
+      token: userToken,
       searchParams: {
         country: countrySelect.value,
         industry: industrySelect.value,
