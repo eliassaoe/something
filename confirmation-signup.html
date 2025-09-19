@@ -172,7 +172,9 @@
         async function sendEmailToServer(email) {
             try {
                 console.log('📤 Sending email to your signup server:', email);
-                
+                console.log('🔍 DEBUG: About to send request to worker');
+                console.log('🔍 DEBUG: Worker URL:', WORKER_URL);
+               
                 const response = await fetch(WORKER_URL, {
                     method: 'POST',
                     headers: {
@@ -184,6 +186,9 @@
                         type: 'signup'
                     })
                 });
+
+                console.log('🔍 DEBUG: Worker response status:', response.status);
+                console.log('🔍 DEBUG: Worker response ok:', response.ok);
                 
                 if (!response.ok) {
                     throw new Error(`Server error: ${response.status}`);
@@ -226,6 +231,8 @@
                 }
                 
                 console.log('📧 Got email from Google:', email);
+
+                console.log('🔍 DEBUG: Full Supabase session:', JSON.stringify(session, null, 2));
                 
                 // Send ONLY the email to your server (forget the Google token!)
                 const result = await sendEmailToServer(email);
