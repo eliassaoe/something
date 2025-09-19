@@ -2156,6 +2156,14 @@ if (!response.ok) {
 
 const data = await response.json();
 
+// Add rate limit check for search
+if (data && data.code === 403 && data.message === "You are above your daily rate limit") {
+    console.log("*** SEARCH RATE LIMIT REACHED ***");
+    showAlert(data.message, 'warning');
+    showRateLimitModal();
+    return; // Stop the search process
+}
+
 // Update allContacts with search results
 allContacts = data;
 globalTrueCount = trueCount;
@@ -2789,6 +2797,13 @@ async function fetchTotalCount() {
       
     if (!response.ok) throw new Error(`API error: ${response.status}`);
     const data = await response.json();
+
+    if (data && data.code === 403 && data.message === "You are above your daily rate limit") {
+    console.log("*** COUNT RATE LIMIT REACHED ***");
+    showAlert(data.message, 'warning');
+    showRateLimitModal();
+    return 0; // Return 0 count when rate limited
+  }
 
     console.log("🔥 RAW RESPONSE:", data);
     console.log("🔥 TYPE OF DATA:", typeof data);
