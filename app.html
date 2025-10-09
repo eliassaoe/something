@@ -1417,8 +1417,8 @@ header {
 </div>
                 
         <div class="form-group">
-    <label for="industry">Industry</label>
-    <select id="industry" name="industry">
+    <label for="industry">Industry (required)</label>
+    <select id="industry" name="industry" required>
         <option value="">All Industries</option> 
         <option value="Accounting">Accounting</option>
         <option value="Agriculture">Agriculture</option>
@@ -2117,6 +2117,11 @@ async function handleSearch(e) {
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
         const hasEmail = document.getElementById('hasEmail').value;
+
+        if (!industry) {
+    showAlert('Please select an industry before searching.', 'error');
+    return;
+    }
         
         // If search criteria are provided, filter the data
         if (country || industry || companyName || keywords) {
