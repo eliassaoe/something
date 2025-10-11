@@ -1834,8 +1834,10 @@ async function fetchData() {
         });
         
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-        }
+    console.log(`API error: ${response.status}`);
+    allContacts = [];
+    return; // Exit silently
+      }
         
         const data = await response.json();
         
@@ -2330,8 +2332,10 @@ async function exportToCSV() {
                     loading.style.display = 'none';
                     
                     if (!response.ok) {
-                        throw new Error(`API error: ${response.status} ${response.statusText}`);
-                    }
+    console.log(`API error: ${response.status} ${response.statusText}`);
+    loading.style.display = 'none';
+    return; // Exit silently
+                     }
 
                     // Check for CSV content type
                     const contentType = response.headers.get('content-type');
@@ -2800,7 +2804,11 @@ async function fetchTotalCount() {
     console.log("🔥 RESPONSE STATUS:", response.status);
     console.log("🔥 RESPONSE OK:", response.ok);
       
-    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    if (!response.ok) {
+    console.log(`API error: ${response.status}`);
+    loading.style.display = 'none';
+    return;
+    }
     const data = await response.json();
 
     if (data && data.code === 403 && data.message === "You are above your daily rate limit") {
