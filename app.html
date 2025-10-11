@@ -2186,8 +2186,9 @@ globalTrueCount = trueCount;
                 // Show search completion message
                     showAlert(`Search completed: Found ${trueCount} contacts.`, 'success');
             } catch (error) {
-                showAlert(`Error searching: ${error.message}`, 'error');
-            }
+    console.log(`Error searching: ${error.message}`);
+    loading.style.display = 'none';
+           }
         }
         
         // Display the results (either original or filtered)
