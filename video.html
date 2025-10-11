@@ -495,10 +495,21 @@
         </div>
     </section>
 
-    <!-- Footer -->
+<!-- Footer -->
 <footer id="contact" class="footer">
     <div class="container">
         <div class="footer-content">
+            <!-- Features Section -->
+            <div class="footer-column">
+                <h4>Features</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/sales-database">Sales Database</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-company-list">B2B Company List</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
+                    <li><a href="https://unlimited-leads.online/buy-leads-online">Buy Leads Online</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-data-purchase">B2B Data Purchase</a></li>
+                </ul>
+            </div>
             <!-- Free Tools Section -->
             <div class="footer-column">
                 <h4>Free Tools</h4>
@@ -521,6 +532,8 @@
                     <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
                     <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
                     <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-profile-url-finder">Linkedin profiles url finder</a></li>
+                    <li><a href="https://linkfinderai.com/">LinkFinder AI</a></li>
                 </ul>
             </div>
             <!-- Compare Section -->
@@ -540,13 +553,14 @@
                     <li><a href="https://unlimited-leads.online/cognism-alternative">Cognism alternative</a></li>
                     <li><a href="https://unlimited-leads.online/hunter-io-alternative">Hunter io alternative</a></li>
                     <li><a href="https://unlimited-leads.online/getprospect-alternative">Getprospect alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/alternatives">All Alternatives</a></li>
                 </ul>
             </div>
             <!-- Industry Email List Section -->
             <div class="footer-column">
                 <h4>Industry Email List</h4>
                 <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/accountants-email-list">Accountants Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/business-owner-email-list">Business Owner Email List</a></li>
                     <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
                     <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
                     <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
@@ -564,67 +578,38 @@
                     <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
                 </ul>
             </div>
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
-                <p>
-                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
-                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a>
-                </p>
-            </div>
+        </div>
+        <div class="footer-social">
+            <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.reddit.com/r/b2bmarketing/comments/1mt0xz4/unlimited_sales_leads/"><i class="fab fa-reddit"></i></a>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+            <p>
+                <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a> |
+                <a href="https://unlimited-leads.online/about-us">About us</a> 
+            </p>
         </div>
     </div>
-<div class="language-links"><a href="https://unlimited-leads.online/video">🇺🇸 English</a> <a href="https://unlimited-leads.online/fr/video">🇫🇷 Français</a> <a href="https://unlimited-leads.online/es/video">🇪🇸 Español</a> <a href="https://unlimited-leads.online/de/video">🇩🇪 Deutsch</a> <a href="https://unlimited-leads.online/pt/video">🇵🇹 Português</a></div></footer>
+    <div class="language-links">
+        <a href="https://unlimited-leads.online/">🇺🇸 English</a> 
+        <a href="https://unlimited-leads.online/fr/">🇫🇷 Français</a> 
+        <a href="https://unlimited-leads.online/es/">🇪🇸 Español</a> 
+        <a href="https://unlimited-leads.online/de/">🇩🇪 Deutsch</a> 
+        <a href="https://unlimited-leads.online/pt/">🇵🇹 Português</a>
+    </div>
+</footer>
 
-
-    <!-- Script pour la vidéo -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const videoOverlay = document.getElementById('video-overlay');
-            const videoFrame = document.getElementById('video-frame');
-            
-            if (videoOverlay && videoFrame) {
-                // Précharger la vidéo
-                videoFrame.src = videoFrame.getAttribute('data-src');
-                
-                // Ajouter l'événement de clic
-                videoOverlay.addEventListener('click', function() {
-                    // Masquer l'overlay
-                    videoOverlay.style.display = 'none';
-                    
-                    // Ajouter des paramètres pour l'autoplay
-                    if (videoFrame.src.indexOf('?') > -1) {
-                        videoFrame.src += '&autoplay=1';
-                    } else {
-                        videoFrame.src += '?autoplay=1';
-                    }
-                });
-            }
-            
-            // Ajouter une animation au survol du conteneur vidéo
-            const videoContainer = document.getElementById('video-container');
-            if (videoContainer) {
-                videoContainer.addEventListener('mouseenter', function() {
-                    if (videoOverlay.style.display !== 'none') {
-                        const playButton = videoContainer.querySelector('.play-button');
-                        if (playButton) {
-                            playButton.style.transform = 'scale(1.1)';
-                        }
-                    }
-                });
-                
-                videoContainer.addEventListener('mouseleave', function() {
-                    if (videoOverlay.style.display !== 'none') {
-                        const playButton = videoContainer.querySelector('.play-button');
-                        if (playButton) {
-                            playButton.style.transform = 'scale(1)';
-                        }
-                    }
-                });
-            }
-        });
-    </script>
+<!-- Floating Badge -->
+<div class="floating-badge">
+    <div class="floating-badge-icon">
+        <i class="fas fa-gift"></i>
+    </div>
+    <div class="floating-badge-content">
+        <a href="https://unlimited-leads.online/sign-up" class="btn btn-white">Sign Up Now and Get 250 FREE Leads</a>
+    </div>
+</div>
 </body>
 </html>
