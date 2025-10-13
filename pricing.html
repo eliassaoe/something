@@ -438,54 +438,12 @@
         .language-links a:hover {
             color: #2563eb;
         }
-        
-        .floating-badge {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1000;
-            max-width: 350px;
-        }
-        
-        .floating-badge-icon {
-            font-size: 1.5rem;
-            color: #2563eb;
-        }
-        
-        .floating-badge-content .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: #2563eb;
-            color: white;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        
-        .floating-badge-content .btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
 
         @media (max-width: 768px) {
             .pricing-header h1 { font-size: 2rem; }
             .pricing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .testimonial-grid { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; }
-            .floating-badge { 
-                bottom: 10px; 
-                right: 10px; 
-                left: 10px;
-                max-width: none;
-            }
         }
     </style>
 </head>
@@ -542,9 +500,7 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <button class="plan-cta" data-plan="starter">
-                    Get Started
-                </button>
+                <a href="https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17" class="btn plan-cta stripe-link">Get Started</a>
             </div>
             
             <div class="pricing-card featured">
@@ -570,9 +526,7 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <button class="plan-cta" data-plan="pro">
-                    Get Started
-                </button>
+                <a href="https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X" class="btn plan-cta stripe-link">Get Started</a>
             </div>
         </div>
     </section>
@@ -652,29 +606,6 @@
                         <li><a href="https://unlimited-leads.online/sales-database">Sales Database</a></li>
                         <li><a href="https://unlimited-leads.online/b2b-company-list">B2B Company List</a></li>
                         <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
-                        <li><a href="https://unlimited-leads.online/buy-leads-online">Buy Leads Online</a></li>
-                        <li><a href="https://unlimited-leads.online/b2b-data-purchase">B2B Data Purchase</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Free Tools</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
-                        <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
-                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
-                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
-                        <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Compare</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
-                        <li><a href="https://unlimited-leads.online/alternatives">All Alternatives</a></li>
                     </ul>
                 </div>
                 
@@ -682,7 +613,6 @@
                     <h4>Contact Us</h4>
                     <ul class="footer-links">
                         <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
-                        <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
                     </ul>
                 </div>
             </div>
@@ -711,117 +641,110 @@
         </div>
     </footer>
 
-
-
     <script>
-        // Monthly/Annual Toggle
-        const monthlyToggle = document.getElementById('monthlyToggle');
-        const annualToggle = document.getElementById('annualToggle');
-        const annualPrices = document.querySelectorAll('.annual-price');
-        const monthlyPrices = document.querySelectorAll('.monthly-price');
-
-        monthlyToggle.addEventListener('click', function() {
-            monthlyToggle.classList.add('active');
-            annualToggle.classList.remove('active');
+        document.addEventListener('DOMContentLoaded', function() {
             
-            annualPrices.forEach(price => price.style.display = 'none');
-            monthlyPrices.forEach(price => price.style.display = 'block');
-        });
-
-        annualToggle.addEventListener('click', function() {
-            annualToggle.classList.add('active');
-            monthlyToggle.classList.remove('active');
-            
-            monthlyPrices.forEach(price => price.style.display = 'none');
-            annualPrices.forEach(price => price.style.display = 'block');
-        });
-
-        // Stripe payment links - COMPLETE URLs
-        const stripeLinks = {
-            starter: {
-                monthly: 'https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17',
-                annual: 'https://buy.stripe.com/fZu5kDdylfJzfmk5oD8IU1b'
-            },
-            pro: {
-                monthly: 'https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X',
-                annual: 'https://buy.stripe.com/28E8wPgKx7d35LKcR58IU1c'
-            }
-        };
-
-        // Function to get user token from URL parameters or storage
-        function getUserToken() {
-            // First, try to get token from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
-            
-            // If not found in URL, try localStorage
-            if (!token) {
-                token = localStorage.getItem('userToken') || 
-                       localStorage.getItem('customer_id') || 
-                       localStorage.getItem('user_id') ||
-                       localStorage.getItem('token');
-            }
-            
-            // If still not found, try sessionStorage
-            if (!token) {
-                token = sessionStorage.getItem('userToken') || 
-                       sessionStorage.getItem('customer_id') || 
-                       sessionStorage.getItem('user_id') ||
-                       sessionStorage.getItem('token');
-            }
-            
-            return token;
-        }
-
-        // Handle CTA button clicks - redirect to Stripe
-        const ctaButtons = document.querySelectorAll('.plan-cta');
-        ctaButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const plan = this.getAttribute('data-plan');
-                const billing = annualToggle.classList.contains('active') ? 'annual' : 'monthly';
-                let stripeUrl = stripeLinks[plan][billing];
+            // Function to get user token from URL parameters or localStorage
+            function getUserToken() {
+                // First, try to get token from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
                 
-                if (stripeUrl) {
-                    // Add user token if available
-                    const token = getUserToken();
-                    if (token) {
-                        // Check if client_reference_id parameter already exists
-                        if (!stripeUrl.includes('client_reference_id=')) {
-                            const separator = stripeUrl.includes('?') ? '&' : '?';
-                            stripeUrl = stripeUrl + separator + 'client_reference_id=' + encodeURIComponent(token);
-                        }
-                        console.log('Redirecting with token:', token);
-                    } else {
-                        console.log('No user token found');
-                    }
+                // If not found in URL, try localStorage
+                if (!token) {
+                    token = localStorage.getItem('userToken') || 
+                           localStorage.getItem('customer_id') || 
+                           localStorage.getItem('user_id') ||
+                           localStorage.getItem('token');
+                }
+                
+                // If still not found, try sessionStorage
+                if (!token) {
+                    token = sessionStorage.getItem('userToken') || 
+                           sessionStorage.getItem('customer_id') || 
+                           sessionStorage.getItem('user_id') ||
+                           sessionStorage.getItem('token');
+                }
+                
+                return token;
+            }
+            
+            // Function to update Stripe URLs with client_reference_id
+            function updateStripeUrls() {
+                const token = getUserToken();
+                
+                if (token) {
+                    // Find all elements with Stripe URLs (class 'stripe-link' or hrefs containing 'stripe.com')
+                    const stripeLinks = document.querySelectorAll('.stripe-link, a[href*="stripe.com"]');
                     
-                    window.location.href = stripeUrl;
+                    stripeLinks.forEach(link => {
+                        const currentHref = link.getAttribute('href');
+                        if (currentHref && currentHref.includes('stripe.com')) {
+                            // Check if client_reference_id parameter already exists
+                            if (!currentHref.includes('client_reference_id=')) {
+                                // Add client_reference_id parameter
+                                const separator = currentHref.includes('?') ? '&' : '?';
+                                const newHref = currentHref + separator + 'client_reference_id=' + encodeURIComponent(token);
+                                link.setAttribute('href', newHref);
+                            }
+                        }
+                    });
+                    
+                    console.log('Stripe URLs updated with client_reference_id:', token);
+                } else {
+                    console.log('No user token found in URL parameters or storage');
                 }
-                
-                // Track with Plausible
-                if (typeof plausible !== 'undefined') {
-                    plausible('Click Upgrade', {props: {plan: plan, billing: billing}});
-                }
-            });
-        });
+            }
+            
+            // Update Stripe URLs on page load
+            updateStripeUrls();
+            
+            // Monthly/Annual Toggle
+            const monthlyToggle = document.getElementById('monthlyToggle');
+            const annualToggle = document.getElementById('annualToggle');
+            const annualPrices = document.querySelectorAll('.annual-price');
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
 
-        // FAQ Toggle
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', function() {
-                const answer = this.nextElementSibling;
-                const isActive = this.classList.contains('active');
+            monthlyToggle.addEventListener('click', function() {
+                monthlyToggle.classList.add('active');
+                annualToggle.classList.remove('active');
                 
-                faqQuestions.forEach(q => {
-                    q.classList.remove('active');
-                    q.nextElementSibling.classList.remove('active');
-                });
-                
-                if (!isActive) {
-                    this.classList.add('active');
-                    answer.classList.add('active');
-                }
+                annualPrices.forEach(price => price.style.display = 'none');
+                monthlyPrices.forEach(price => price.style.display = 'block');
             });
+
+            annualToggle.addEventListener('click', function() {
+                annualToggle.classList.add('active');
+                monthlyToggle.classList.remove('active');
+                
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                annualPrices.forEach(price => price.style.display = 'block');
+            });
+            
+            // FAQ Toggle functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all FAQs
+                    document.querySelectorAll('.faq-question').forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+                    
+                    // If it wasn't active before, open it
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
+                });
+            });
+            
+            // Optional: Watch for URL changes (if using single-page application)
+            window.addEventListener('popstate', updateStripeUrls);
         });
     </script>
 </body>
