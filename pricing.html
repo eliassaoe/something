@@ -711,14 +711,7 @@
         </div>
     </footer>
 
-    <div class="floating-badge">
-        <div class="floating-badge-icon">
-            <i class="fas fa-gift"></i>
-        </div>
-        <div class="floating-badge-content">
-            <a href="https://unlimited-leads.online/sign-up" class="btn btn-white">Sign Up Now and Get 250 FREE Leads</a>
-        </div>
-    </div>
+
 
     <script>
         // Monthly/Annual Toggle
@@ -755,12 +748,29 @@
             }
         };
 
-        // Get user token if available
+        // Function to get user token from URL parameters or storage
         function getUserToken() {
+            // First, try to get token from URL parameters
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('token') || 
-                   localStorage.getItem('userToken') || 
-                   sessionStorage.getItem('userToken');
+            let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
+            
+            // If not found in URL, try localStorage
+            if (!token) {
+                token = localStorage.getItem('userToken') || 
+                       localStorage.getItem('customer_id') || 
+                       localStorage.getItem('user_id') ||
+                       localStorage.getItem('token');
+            }
+            
+            // If still not found, try sessionStorage
+            if (!token) {
+                token = sessionStorage.getItem('userToken') || 
+                       sessionStorage.getItem('customer_id') || 
+                       sessionStorage.getItem('user_id') ||
+                       sessionStorage.getItem('token');
+            }
+            
+            return token;
         }
 
         // Handle CTA button clicks - redirect to Stripe
@@ -769,17 +779,23 @@
             button.addEventListener('click', function() {
                 const plan = this.getAttribute('data-plan');
                 const billing = annualToggle.classList.contains('active') ? 'annual' : 'monthly';
-                const stripeUrl = stripeLinks[plan][billing];
+                let stripeUrl = stripeLinks[plan][billing];
                 
                 if (stripeUrl) {
                     // Add user token if available
                     const token = getUserToken();
                     if (token) {
-                        const separator = stripeUrl.includes('?') ? '&' : '?';
-                        window.location.href = stripeUrl + separator + 'client_reference_id=' + encodeURIComponent(token);
+                        // Check if client_reference_id parameter already exists
+                        if (!stripeUrl.includes('client_reference_id=')) {
+                            const separator = stripeUrl.includes('?') ? '&' : '?';
+                            stripeUrl = stripeUrl + separator + 'client_reference_id=' + encodeURIComponent(token);
+                        }
+                        console.log('Redirecting with token:', token);
                     } else {
-                        window.location.href = stripeUrl;
+                        console.log('No user token found');
                     }
+                    
+                    window.location.href = stripeUrl;
                 }
                 
                 // Track with Plausible
