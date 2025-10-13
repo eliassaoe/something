@@ -500,7 +500,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17" class="btn plan-cta stripe-link">Get Started</a>
+                <a href="https://buy.stripe.com/fZu5kDdylfJzfmk5oD8IU1b" class="btn plan-cta stripe-link annual-link">Get Started</a>
+                <a href="https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17" class="btn plan-cta stripe-link monthly-link" style="display: none;">Get Started</a>
             </div>
             
             <div class="pricing-card featured">
@@ -526,7 +527,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X" class="btn plan-cta stripe-link">Get Started</a>
+                <a href="https://buy.stripe.com/28E8wPgKx7d35LKcR58IU1c" class="btn plan-cta stripe-link annual-link">Get Started</a>
+                <a href="https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X" class="btn plan-cta stripe-link monthly-link" style="display: none;">Get Started</a>
             </div>
         </div>
     </section>
@@ -646,12 +648,22 @@
             
             // Function to get user token from URL parameters or localStorage
             function getUserToken() {
+                console.log('=== TOKEN DEBUG ===');
+                
                 // First, try to get token from URL parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
+                console.log('Token from URL:', token);
                 
                 // If not found in URL, try localStorage
                 if (!token) {
+                    console.log('Checking localStorage...');
+                    console.log('All localStorage keys:', Object.keys(localStorage));
+                    console.log('localStorage.userToken:', localStorage.getItem('userToken'));
+                    console.log('localStorage.customer_id:', localStorage.getItem('customer_id'));
+                    console.log('localStorage.user_id:', localStorage.getItem('user_id'));
+                    console.log('localStorage.token:', localStorage.getItem('token'));
+                    
                     token = localStorage.getItem('userToken') || 
                            localStorage.getItem('customer_id') || 
                            localStorage.getItem('user_id') ||
@@ -660,12 +672,17 @@
                 
                 // If still not found, try sessionStorage
                 if (!token) {
+                    console.log('Checking sessionStorage...');
+                    console.log('All sessionStorage keys:', Object.keys(sessionStorage));
+                    
                     token = sessionStorage.getItem('userToken') || 
                            sessionStorage.getItem('customer_id') || 
                            sessionStorage.getItem('user_id') ||
                            sessionStorage.getItem('token');
                 }
                 
+                console.log('Final token found:', token);
+                console.log('=================');
                 return token;
             }
             
@@ -704,6 +721,8 @@
             const annualToggle = document.getElementById('annualToggle');
             const annualPrices = document.querySelectorAll('.annual-price');
             const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const annualLinks = document.querySelectorAll('.annual-link');
+            const monthlyLinks = document.querySelectorAll('.monthly-link');
 
             monthlyToggle.addEventListener('click', function() {
                 monthlyToggle.classList.add('active');
@@ -711,6 +730,11 @@
                 
                 annualPrices.forEach(price => price.style.display = 'none');
                 monthlyPrices.forEach(price => price.style.display = 'block');
+                annualLinks.forEach(link => link.style.display = 'none');
+                monthlyLinks.forEach(link => link.style.display = 'block');
+                
+                // Re-update Stripe URLs after toggle
+                updateStripeUrls();
             });
 
             annualToggle.addEventListener('click', function() {
@@ -719,6 +743,11 @@
                 
                 monthlyPrices.forEach(price => price.style.display = 'none');
                 annualPrices.forEach(price => price.style.display = 'block');
+                monthlyLinks.forEach(link => link.style.display = 'none');
+                annualLinks.forEach(link => link.style.display = 'block');
+                
+                // Re-update Stripe URLs after toggle
+                updateStripeUrls();
             });
             
             // FAQ Toggle functionality
