@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pricing - UnlimitedLeads</title>
     <meta name="description" content="Simple, transparent pricing to access unlimited leads export and email finder" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -31,7 +31,6 @@
         
         a { text-decoration: none; color: inherit; }
         
-        /* Header */
         .header { 
             background: white; 
             padding: 1rem 0; 
@@ -50,7 +49,6 @@
             color: #2563eb;
         }
 
-        /* Top Banner (subtle FOMO) */
         .top-banner {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
             text-align: center;
@@ -61,7 +59,6 @@
             border-bottom: 1px solid #fbbf24;
         }
 
-        /* Pricing Header */
         .pricing-header {
             text-align: center;
             padding: 3rem 0 2rem;
@@ -81,7 +78,6 @@
             margin: 0 auto;
         }
 
-        /* Pricing Toggle */
         .pricing-toggle {
             text-align: center;
             margin: 2rem 0;
@@ -122,7 +118,6 @@
             font-weight: 700;
         }
 
-        /* Pricing Cards */
         .pricing-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -242,56 +237,6 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        /* Simple Comparison */
-        .comparison {
-            max-width: 700px;
-            margin: 3rem auto;
-            padding: 2rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            text-align: center;
-        }
-        
-        .comparison h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #111827;
-        }
-        
-        .comparison-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-        
-        .stat-value {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #111827;
-        }
-        
-        .stat-value.highlight {
-            color: #10b981;
-        }
-        
-        .vs-text {
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin-top: 1rem;
-        }
-
-        /* Testimonials (simple) */
         .testimonials {
             max-width: 900px;
             margin: 3rem auto;
@@ -341,7 +286,6 @@
             font-weight: 600;
         }
 
-        /* FAQ (minimal) */
         .faq {
             max-width: 700px;
             margin: 3rem auto 4rem;
@@ -397,36 +341,160 @@
             max-height: 300px;
         }
 
-        /* Footer */
         .footer { 
             background: #f9fafb; 
-            padding: 2rem 0;
-            text-align: center;
+            padding: 3rem 0 1rem;
             border-top: 1px solid #e5e7eb;
         }
         
-        .footer-text {
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #6b7280;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: #2563eb;
+        }
+        
+        .footer-social {
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 0.5rem;
+            background: #e5e7eb;
+            border-radius: 50%;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        
+        .footer-social a:hover {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
             color: #6b7280;
             font-size: 0.9rem;
         }
+        
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+        
+        .footer-bottom a {
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        
+        .footer-bottom a:hover {
+            color: #2563eb;
+        }
+        
+        .language-links {
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .language-links a {
+            margin: 0 0.5rem;
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        
+        .language-links a:hover {
+            color: #2563eb;
+        }
+        
+        .floating-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+            max-width: 350px;
+        }
+        
+        .floating-badge-icon {
+            font-size: 1.5rem;
+            color: #2563eb;
+        }
+        
+        .floating-badge-content .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .floating-badge-content .btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .pricing-header h1 { font-size: 2rem; }
             .pricing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .comparison-stats { grid-template-columns: 1fr; }
             .testimonial-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .floating-badge { 
+                bottom: 10px; 
+                right: 10px; 
+                left: 10px;
+                max-width: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Banner (subtle FOMO) -->
     <div class="top-banner">
         ⚡ Limited time: Save 40% on annual plans - Lock in 2025 pricing
     </div>
 
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -435,14 +503,12 @@
         </div>
     </header>
 
-    <!-- Pricing Header -->
     <section class="pricing-header">
         <div class="container">
             <h1>Pricing</h1>
         </div>
     </section>
 
-    <!-- Pricing Toggle -->
     <div class="pricing-toggle">
         <div class="toggle-wrapper">
             <div class="toggle-option" id="monthlyToggle">Monthly</div>
@@ -453,20 +519,16 @@
         </div>
     </div>
 
-    <!-- Pricing Cards -->
     <section class="container">
         <div class="pricing-grid">
-            <!-- Starter Plan -->
             <div class="pricing-card">
                 <div class="plan-name">Starter</div>
                 
-                <!-- Annual (default) -->
                 <div class="plan-price annual-price">
                     <div class="price-amount">$58<small>/month</small></div>
                     <div class="price-save">Save $498/year</div>
                 </div>
                 
-                <!-- Monthly (hidden) -->
                 <div class="plan-price monthly-price" style="display: none;">
                     <div class="price-amount">$99<small>/month</small></div>
                 </div>
@@ -476,7 +538,7 @@
                 </p>
                 
                 <ul class="plan-features">
-                    <li><strong>Unlimited Exports</strong> (fair usage limits applies) </li>
+                    <li><strong>Unlimited Exports</strong> (fair usage limits applies)</li>
                     <li>95% email accuracy</li>
                 </ul>
                 
@@ -485,18 +547,15 @@
                 </button>
             </div>
             
-            <!-- Pro Plan -->
             <div class="pricing-card featured">
                 <div class="featured-tag">MOST POPULAR</div>
                 <div class="plan-name">Pro</div>
                 
-                <!-- Annual (default) -->
                 <div class="plan-price annual-price">
                     <div class="price-amount">$82<small>/month</small></div>
                     <div class="price-save">Save $798/year</div>
                 </div>
                 
-                <!-- Monthly (hidden) -->
                 <div class="plan-price monthly-price" style="display: none;">
                     <div class="price-amount">$149<small>/month</small></div>
                 </div>
@@ -518,7 +577,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
     <section class="testimonials">
         <h3>Trusted by 4,200+ Sales Teams</h3>
         <div class="testimonial-grid">
@@ -554,7 +612,6 @@
         </div>
     </section>
 
-    <!-- FAQ -->
     <section class="faq">
         <h3>FAQ</h3>
         <div class="faq-item">
@@ -565,11 +622,11 @@
         </div>
 
         <div class="faq-item">
-    <div class="faq-question">What are the daily export limits?</div>
-    <div class="faq-answer">
-        Starter plan: Up to 10,000 leads per day. Pro plan: Up to 25,000 leads per day. Both plans have generous monthly allowances that reset each billing cycle to ensure fair usage for all customers.
-    </div>
-   </div>
+            <div class="faq-question">What are the daily export limits?</div>
+            <div class="faq-answer">
+                Starter plan: Up to 10,000 leads per day. Pro plan: Up to 25,000 leads per day. Both plans have generous monthly allowances that reset each billing cycle to ensure fair usage for all customers.
+            </div>
+        </div>
         
         <div class="faq-item">
             <div class="faq-question">Can I cancel anytime?</div>
@@ -586,76 +643,119 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <footer id="contact" class="footer">
         <div class="container">
-            <p class="footer-text">
-                © 2025 UnlimitedLeads. All rights reserved.<br>
-                <a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a>
-            </p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/sales-database">Sales Database</a></li>
+                        <li><a href="https://unlimited-leads.online/b2b-company-list">B2B Company List</a></li>
+                        <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
+                        <li><a href="https://unlimited-leads.online/buy-leads-online">Buy Leads Online</a></li>
+                        <li><a href="https://unlimited-leads.online/b2b-data-purchase">B2B Data Purchase</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Free Tools</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                        <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
+                        <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                        <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                        <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Compare</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                        <li><a href="https://unlimited-leads.online/alternatives">All Alternatives</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
+                        <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.reddit.com/r/b2bmarketing/comments/1mt0xz4/unlimited_sales_leads/"><i class="fab fa-reddit"></i></a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+                <p>
+                    <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a> |
+                    <a href="https://unlimited-leads.online/about-us">About us</a> 
+                </p>
+            </div>
+        </div>
+        <div class="language-links">
+            <a href="https://unlimited-leads.online/">🇺🇸 English</a> 
+            <a href="https://unlimited-leads.online/fr/">🇫🇷 Français</a> 
+            <a href="https://unlimited-leads.online/es/">🇪🇸 Español</a> 
+            <a href="https://unlimited-leads.online/de/">🇩🇪 Deutsch</a> 
+            <a href="https://unlimited-leads.online/pt/">🇵🇹 Português</a>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <div class="floating-badge">
+        <div class="floating-badge-icon">
+            <i class="fas fa-gift"></i>
+        </div>
+        <div class="floating-badge-content">
+            <a href="https://unlimited-leads.online/sign-up" class="btn btn-white">Sign Up Now and Get 250 FREE Leads</a>
+        </div>
+    </div>
+
     <script>
-        // Pricing toggle
+        // Monthly/Annual Toggle
         const monthlyToggle = document.getElementById('monthlyToggle');
         const annualToggle = document.getElementById('annualToggle');
         const annualPrices = document.querySelectorAll('.annual-price');
         const monthlyPrices = document.querySelectorAll('.monthly-price');
-        
-        annualToggle.addEventListener('click', () => {
-            annualToggle.classList.add('active');
-            monthlyToggle.classList.remove('active');
-            annualPrices.forEach(el => el.style.display = 'block');
-            monthlyPrices.forEach(el => el.style.display = 'none');
-        });
-        
-        monthlyToggle.addEventListener('click', () => {
+
+        monthlyToggle.addEventListener('click', function() {
             monthlyToggle.classList.add('active');
             annualToggle.classList.remove('active');
-            annualPrices.forEach(el => el.style.display = 'none');
-            monthlyPrices.forEach(el => el.style.display = 'block');
+            
+            annualPrices.forEach(price => price.style.display = 'none');
+            monthlyPrices.forEach(price => price.style.display = 'block');
         });
 
-        // Stripe links
+        annualToggle.addEventListener('click', function() {
+            annualToggle.classList.add('active');
+            monthlyToggle.classList.remove('active');
+            
+            monthlyPrices.forEach(price => price.style.display = 'none');
+            annualPrices.forEach(price => price.style.display = 'block');
+        });
+
+        // Stripe payment links
         const stripeLinks = {
             starter: {
-                monthly: 'https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17',
-                annual: 'https://buy.stripe.com/fZu5kDdylfJzfmk5oD8IU1b' // Add your link
+                monthly: 'https://buy.stripe.com/9B68wPcuhapffmk6sH',
+                annual: 'https://buy.stripe.com/fZu5kDdylfJzfmk5oD'
             },
             pro: {
-                monthly: 'https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X',
-                annual: 'https://buy.stripe.com/28E8wPgKx7d35LKcR58IU1c' // Add your link
+                monthly: 'https://buy.stripe.com/9B67sLdylfJza20g3h',
+                annual: 'https://buy.stripe.com/28E8wPgKx7d35LKcR5'
             }
         };
-        
-        // Handle CTA clicks
-        document.querySelectorAll('.plan-cta').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const plan = this.dataset.plan;
-                const billing = annualToggle.classList.contains('active') ? 'annual' : 'monthly';
-                const url = stripeLinks[plan][billing];
-                
-                if (url) {
-                    // Add user token if available
-                    const token = getUserToken();
-                    if (token) {
-                        const separator = url.includes('?') ? '&' : '?';
-                        window.location.href = url + separator + 'client_reference_id=' + encodeURIComponent(token);
-                    } else {
-                        window.location.href = url;
-                    }
-                }
-                
-                // Track
-                if (typeof plausible !== 'undefined') {
-                    plausible('Click Upgrade', {props: {plan, billing}});
-                }
-            });
-        });
 
-        // Get user token
+        // Get user token if available
         function getUserToken() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('token') || 
@@ -663,19 +763,44 @@
                    sessionStorage.getItem('userToken');
         }
 
-        // FAQ toggle
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', function() {
+        // Handle CTA button clicks - redirect to Stripe
+        const ctaButtons = document.querySelectorAll('.plan-cta');
+        ctaButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                const billing = annualToggle.classList.contains('active') ? 'annual' : 'monthly';
+                const stripeUrl = stripeLinks[plan][billing];
+                
+                if (stripeUrl) {
+                    // Add user token if available
+                    const token = getUserToken();
+                    if (token) {
+                        const separator = stripeUrl.includes('?') ? '&' : '?';
+                        window.location.href = stripeUrl + separator + 'client_reference_id=' + encodeURIComponent(token);
+                    } else {
+                        window.location.href = stripeUrl;
+                    }
+                }
+                
+                // Track with Plausible
+                if (typeof plausible !== 'undefined') {
+                    plausible('Click Upgrade', {props: {plan: plan, billing: billing}});
+                }
+            });
+        });
+
+        // FAQ Toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
                 const answer = this.nextElementSibling;
                 const isActive = this.classList.contains('active');
                 
-                // Close all
-                document.querySelectorAll('.faq-question').forEach(q => {
+                faqQuestions.forEach(q => {
                     q.classList.remove('active');
                     q.nextElementSibling.classList.remove('active');
                 });
                 
-                // Open if wasn't active
                 if (!isActive) {
                     this.classList.add('active');
                     answer.classList.add('active');
