@@ -27,37 +27,18 @@
             margin: 0 auto;
         }
         
-        .nav {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-        
-        .nav a {
-            text-decoration: none;
-            color: #0066cc;
-        }
-        
-        .nav a:hover {
-            text-decoration: underline;
-        }
-        
         h1 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
         }
         
         h2 {
             color: #333;
-            margin: 30px 0 15px 0;
-            font-size: 18px;
+            margin: 40px 0 15px 0;
+            font-size: 20px;
         }
         
         h3 {
@@ -71,12 +52,14 @@
         }
         
         .endpoint {
-            background: #f5f5f5;
-            padding: 10px;
+            background: #0066cc;
+            color: white;
+            padding: 15px;
             border-radius: 4px;
             font-family: monospace;
-            margin: 10px 0;
-            font-size: 14px;
+            margin: 15px 0;
+            font-size: 15px;
+            font-weight: bold;
         }
         
         .code-block {
@@ -88,6 +71,7 @@
             overflow-x: auto;
             font-size: 13px;
             line-height: 1.4;
+            border-left: 3px solid #0066cc;
         }
         
         ul {
@@ -111,14 +95,15 @@
             border-radius: 4px;
         }
         
+        .api-section {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
-            }
-            
-            .nav ul {
-                flex-direction: column;
-                gap: 10px;
             }
         }
     </style>
@@ -133,57 +118,103 @@
 <body>
     <div class="container">
         
-        <h1>Unlimited leads API</h1>
+        <h1>Unlimited leads API Documentation</h1>
         
         <h2>Authentication</h2>
-        <p>All API requests must include an <strong>Authorization</strong> header. The header should refer to your private key.</p>
-        <p>When you sign up for API access, Unlimited leads assigns an API private key to your account. Your private API key is only known by you and Unlimited leads. It is important to keep both confidential to protect your account. Your API key is accessible from the Account link.</p>
+        <p>All API requests must include an <strong>Authorization</strong> header with your API key:</p>
+        <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
+        <p>Your API key is available in your account dashboard.</p>
 
-        
-        <h2>API Call: find email</h2>
-        
-        <div class="endpoint">
-           POST https://api.unlimited-leads-to.online
+        <div class="note">
+            <strong>Rate Limits:</strong><br>
+            • Email Finder: 1 request every 15 seconds, 1000 per day<br>
+            • Email Verifier: 1 request every 5 seconds, 1000 per day
         </div>
-        
-        <p>Returns a JSON-encoded object with the email address for the given person and domain. Calls to the API are metered and billed if there is an email returned with the result. If there is no email available you will not be billed.</p>
-        
-        <h3>POST Request Parameters</h3>
-        <ul>
-            <li><strong>firstName</strong> - The first name of the person (required)</li>
-            <li><strong>lastName</strong> - The last name of the person (required)</li>
-            <li><strong>domain</strong> - The domain to query (required)</li>
-        </ul>
-        
-        <h3>Example Request Parameters</h3>
-        <ul>
-            <li><strong>firstName</strong> - John</li>
-            <li><strong>lastName</strong> - Doe</li>
-            <li><strong>domain</strong> - company.com</li>
-        </ul>
-        
-        <h3>POST Response</h3>
-        
-        <div class="code-block">{
+
+        <div class="api-section">
+            <h2>1. Find Email</h2>
+            
+            <div class="endpoint">POST https://api.unlimited-leads-to.online</div>
+            
+            <p>Find email addresses for any person at any company.</p>
+            
+            <h3>Request Parameters</h3>
+            <ul>
+                <li><strong>firstName</strong> - First name (required)</li>
+                <li><strong>lastName</strong> - Last name (required)</li>
+                <li><strong>domain</strong> - Company domain like company.com (required)</li>
+            </ul>
+            
+            <h3>Example Request</h3>
+            <div class="code-block">curl -X POST https://api.unlimited-leads-to.online \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "domain": "company.com"
+  }'</div>
+            
+            <h3>Response - Email Found</h3>
+            <div class="code-block">{
   "email": "john.doe@company.com"
 }</div>
-        
-        <h3>curl Request Example</h3>
-        
-        <div class="code-block">> curl -vk \
-       -H "Content-Type: application/json" \
-       -H "Authorization: api_private_key" \
-       -X POST "https://api.unlimited-leads-to.online" \
-       -d '{
-         "firstName": "John",
-         "lastName": "Doe",
-         "domain": "company.com",
-       }'</div>
-        
-        <h3>No Email Found Response</h3>
-        
-        <div class="code-block">{
+            
+            <h3>Response - No Email Found</h3>
+            <div class="code-block">{
   "email": null
 }</div>
+        </div>
+
+        <div class="api-section">
+            <h2>2. Verify Email</h2>
+            
+            <div class="endpoint">POST https://verify-api.unlimited-leads-to.online</div>
+            
+            <p>Verify if an email address is valid and can receive messages.</p>
+            
+            <h3>Request Parameters</h3>
+            <ul>
+                <li><strong>email</strong> - Email address to verify (required)</li>
+            </ul>
+            
+            <h3>Example Request</h3>
+            <div class="code-block">curl -X POST https://verify-api.unlimited-leads-to.online \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "email": "john.doe@company.com"
+  }'</div>
+            
+            <h3>Response - Valid Email</h3>
+            <div class="code-block">{
+  "status": "valid",
+  "message": "Accepted",
+  "email": "john.doe@company.com",
+  "domain": "company.com",
+  "deliverable": true,
+  "mx": "mail.company.com"
+}</div>
+            
+            <h3>Response - Invalid Email</h3>
+            <div class="code-block">{
+  "status": "invalid",
+  "message": "Rejected",
+  "email": "fake@company.com",
+  "domain": "company.com",
+  "deliverable": false,
+  "mx": "mail.company.com"
+}</div>
+
+            <h3>Response Fields</h3>
+            <ul>
+                <li><strong>status</strong> - "valid" or "invalid"</li>
+                <li><strong>message</strong> - "Accepted" or "Rejected"</li>
+                <li><strong>deliverable</strong> - true if email can receive messages</li>
+                <li><strong>mx</strong> - Mail server for the domain</li>
+            </ul>
+        </div>
+
+    </div>
 </body>
 </html>
