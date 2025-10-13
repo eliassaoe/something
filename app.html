@@ -2234,9 +2234,9 @@ async function exportToCSV() {
                // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
 
-// Add validation to enforce the 10,000 limit
-            if (exportLimit > 10000) {
-                showAlert('Export limit cannot exceed 10,000 contacts. Please enter a smaller number.', 'error');
+// Add validation to enforce the 5000 limit
+            if (exportLimit > 5000) {
+                showAlert('Export limit cannot exceed 5000 contacts. Please enter a smaller number.', 'error');
                 return; // Stop the export process
             }
 
@@ -2833,9 +2833,9 @@ async function fetchTotalCount() {
 // Add real-time validation for export limit input
 document.getElementById('exportLimit').addEventListener('input', function() {
     const value = parseInt(this.value);
-    if (value > 10000) {
-        this.value = 10000;
-        showAlert('Maximum export limit is 10,000 contacts.', 'warning');
+    if (value > 5000) {
+        this.value = 5000;
+        showAlert('Maximum export limit is 5000 contacts.', 'warning');
     }
     if (value < 1 && this.value !== '') {
         this.value = 1;
