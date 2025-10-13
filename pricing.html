@@ -9,9 +9,9 @@
     <title>Pricing - UnlimitedLeads</title>
     <meta name="description" content="Simple, transparent pricing to access unlimited leads export and email finder" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -123,7 +123,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 2rem; 
             max-width: 900px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 1rem;
         }
         
         .pricing-card { 
@@ -211,6 +211,14 @@
             color: #10b981;
             font-weight: 700;
         }
+
+        .asterisk {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-left: 2px;
+            vertical-align: super;
+            line-height: 0;
+        }
         
         .plan-cta {
             display: block;
@@ -235,6 +243,19 @@
         .featured .plan-cta {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .usage-note {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .usage-note p {
+            font-size: 0.8rem;
+            color: #6b7280;
+            line-height: 1.5;
         }
 
         .testimonials {
@@ -496,7 +517,7 @@
                 </p>
                 
                 <ul class="plan-features">
-                    <li><strong>Unlimited Exports</strong> (fair usage limits applies)</li>
+                    <li><strong>Unlimited Exports</strong><span class="asterisk">*</span></li>
                     <li>95% email accuracy</li>
                 </ul>
                 
@@ -522,7 +543,7 @@
                 </p>
                 
                 <ul class="plan-features">
-                    <li><strong>Unlimited Exports</strong></li>
+                    <li><strong>Unlimited Exports</strong><span class="asterisk">*</span></li>
                     <li><strong>Unlimited Email Finder</strong></li>
                     <li>95% email accuracy</li>
                 </ul>
@@ -530,6 +551,10 @@
                 <a href="https://buy.stripe.com/28E8wPgKx7d35LKcR58IU1c" class="btn plan-cta stripe-link annual-link">Get Started</a>
                 <a href="https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X" class="btn plan-cta stripe-link monthly-link" style="display: none;">Get Started</a>
             </div>
+        </div>
+
+        <div class="usage-note">
+            <p><span class="asterisk">*</span>Daily export limits: Starter up to 5,000/day, Pro up to 10,000/day. More than enough for most teams.</p>
         </div>
     </section>
 
@@ -573,14 +598,14 @@
         <div class="faq-item">
             <div class="faq-question">What's the difference between plans?</div>
             <div class="faq-answer">
-                Starter gives you unlimited exports (fair usage rate applies) Pro gives you unlimited exports plus unlimited email finder.
+                Starter gives you unlimited exports with a 5,000/day limit. Pro gives you unlimited exports with a 10,000/day limit plus unlimited email finder.
             </div>
         </div>
 
         <div class="faq-item">
             <div class="faq-question">What are the daily export limits?</div>
             <div class="faq-answer">
-                Starter plan: Up to 10,000 leads per day. Pro plan: Up to 25,000 leads per day. Both plans have generous monthly allowances that reset each billing cycle to ensure fair usage for all customers.
+                Starter plan: Up to 5,000 leads per day (~150,000/month). Pro plan: Up to 10,000 leads per day (~300,000/month). Both limits are more than enough for most sales teams and reset daily.
             </div>
         </div>
         
@@ -594,7 +619,7 @@
         <div class="faq-item">
             <div class="faq-question">How accurate is the data?</div>
             <div class="faq-answer">
-                95% email deliverability.
+                95% email deliverability rate with verified contacts and real-time validation.
             </div>
         </div>
     </section>
@@ -639,84 +664,55 @@
             <a href="https://unlimited-leads.online/fr/">🇫🇷 Français</a> 
             <a href="https://unlimited-leads.online/es/">🇪🇸 Español</a> 
             <a href="https://unlimited-leads.online/de/">🇩🇪 Deutsch</a> 
-            <a href="https://unlimited-leads.online/pt/">🇵🇹 Português</a>
+            <a href="https://unlimited-leads.online/pt/">🇵🇸 Português</a>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
-            // Function to get user token from URL parameters or localStorage
             function getUserToken() {
-                console.log('=== TOKEN DEBUG ===');
-                
-                // First, try to get token from URL parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
-                console.log('Token from URL:', token);
                 
-                // If not found in URL, try localStorage
                 if (!token) {
-                    console.log('Checking localStorage...');
-                    console.log('All localStorage keys:', Object.keys(localStorage));
-                    console.log('localStorage.userToken:', localStorage.getItem('userToken'));
-                    console.log('localStorage.customer_id:', localStorage.getItem('customer_id'));
-                    console.log('localStorage.user_id:', localStorage.getItem('user_id'));
-                    console.log('localStorage.token:', localStorage.getItem('token'));
-                    
                     token = localStorage.getItem('userToken') || 
                            localStorage.getItem('customer_id') || 
                            localStorage.getItem('user_id') ||
                            localStorage.getItem('token');
                 }
                 
-                // If still not found, try sessionStorage
                 if (!token) {
-                    console.log('Checking sessionStorage...');
-                    console.log('All sessionStorage keys:', Object.keys(sessionStorage));
-                    
                     token = sessionStorage.getItem('userToken') || 
                            sessionStorage.getItem('customer_id') || 
                            sessionStorage.getItem('user_id') ||
                            sessionStorage.getItem('token');
                 }
                 
-                console.log('Final token found:', token);
-                console.log('=================');
                 return token;
             }
             
-            // Function to update Stripe URLs with client_reference_id
             function updateStripeUrls() {
                 const token = getUserToken();
                 
                 if (token) {
-                    // Find all elements with Stripe URLs (class 'stripe-link' or hrefs containing 'stripe.com')
                     const stripeLinks = document.querySelectorAll('.stripe-link, a[href*="stripe.com"]');
                     
                     stripeLinks.forEach(link => {
                         const currentHref = link.getAttribute('href');
                         if (currentHref && currentHref.includes('stripe.com')) {
-                            // Check if client_reference_id parameter already exists
                             if (!currentHref.includes('client_reference_id=')) {
-                                // Add client_reference_id parameter
                                 const separator = currentHref.includes('?') ? '&' : '?';
                                 const newHref = currentHref + separator + 'client_reference_id=' + encodeURIComponent(token);
                                 link.setAttribute('href', newHref);
                             }
                         }
                     });
-                    
-                    console.log('Stripe URLs updated with client_reference_id:', token);
-                } else {
-                    console.log('No user token found in URL parameters or storage');
                 }
             }
             
-            // Update Stripe URLs on page load
             updateStripeUrls();
             
-            // Monthly/Annual Toggle
             const monthlyToggle = document.getElementById('monthlyToggle');
             const annualToggle = document.getElementById('annualToggle');
             const annualPrices = document.querySelectorAll('.annual-price');
@@ -733,7 +729,6 @@
                 annualLinks.forEach(link => link.style.display = 'none');
                 monthlyLinks.forEach(link => link.style.display = 'block');
                 
-                // Re-update Stripe URLs after toggle
                 updateStripeUrls();
             });
 
@@ -746,11 +741,9 @@
                 monthlyLinks.forEach(link => link.style.display = 'none');
                 annualLinks.forEach(link => link.style.display = 'block');
                 
-                // Re-update Stripe URLs after toggle
                 updateStripeUrls();
             });
             
-            // FAQ Toggle functionality
             const faqQuestions = document.querySelectorAll('.faq-question');
             
             faqQuestions.forEach(question => {
@@ -758,13 +751,11 @@
                     const answer = this.nextElementSibling;
                     const isActive = this.classList.contains('active');
                     
-                    // Close all FAQs
                     document.querySelectorAll('.faq-question').forEach(q => {
                         q.classList.remove('active');
                         q.nextElementSibling.classList.remove('active');
                     });
                     
-                    // If it wasn't active before, open it
                     if (!isActive) {
                         this.classList.add('active');
                         answer.classList.add('active');
@@ -772,7 +763,6 @@
                 });
             });
             
-            // Optional: Watch for URL changes (if using single-page application)
             window.addEventListener('popstate', updateStripeUrls);
         });
     </script>
