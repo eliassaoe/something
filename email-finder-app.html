@@ -305,6 +305,39 @@ header {
     color: var(--gray-700);
 }
 
+.try-example-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.try-example-button {
+  background: white;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+  border-radius: 0.5rem;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 0.95rem;
+}
+
+.try-example-button:hover {
+  background: #2563eb;
+  color: white;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .try-example-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+}
+
+
 .form-group {
     flex: 1 1 200px;
 }
@@ -817,12 +850,12 @@ header {
             <input type="text" id="domain" name="domain" placeholder="e.g. company.com" required>
         </div>
 
-        <div class="form-group" style="flex-basis: 100%; display: flex; justify-content: flex-end;">
-    <button type="button" id="tryExampleButton" 
-        style="background: #e5f0ff; color: #2563eb; border: 1px solid #2563eb; border-radius: 0.5rem; padding: 10px 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-        <i class="fas fa-lightbulb"></i> Try Example
-    </button>
+       <div class="form-group try-example-container">
+  <button type="button" id="tryExampleButton" class="try-example-button">
+    💡 Try Example
+  </button>
 </div>
+
 
 
         <div class="form-group">
