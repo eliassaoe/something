@@ -817,6 +817,14 @@ header {
             <input type="text" id="domain" name="domain" placeholder="e.g. company.com" required>
         </div>
 
+        <div class="form-group" style="flex-basis: 100%; display: flex; justify-content: flex-end;">
+    <button type="button" id="tryExampleButton" 
+        style="background: #e5f0ff; color: #2563eb; border: 1px solid #2563eb; border-radius: 0.5rem; padding: 10px 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+        <i class="fas fa-lightbulb"></i> Try Example
+    </button>
+</div>
+
+
         <div class="form-group">
             <button type="submit" class="find-button">
                 <i class="fas fa-search"></i> Find Email
@@ -1173,6 +1181,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+
+        // Try Example button logic
+document.addEventListener('DOMContentLoaded', () => {
+    const tryExampleButton = document.getElementById('tryExampleButton');
+    if (tryExampleButton) {
+        tryExampleButton.addEventListener('click', () => {
+            document.getElementById('firstName').value = 'Bill';
+            document.getElementById('lastName').value = 'Gates';
+            document.getElementById('domain').value = 'microsoft.com';
+            
+            // Add a little visual feedback
+            tryExampleButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Example...';
+            tryExampleButton.disabled = true;
+
+            // Wait a moment, then trigger the form submission
+            setTimeout(() => {
+                tryExampleButton.innerHTML = '<i class="fas fa-lightbulb"></i> Try Example';
+                tryExampleButton.disabled = false;
+                document.getElementById('emailFinderForm').dispatchEvent(new Event('submit'));
+            }, 800);
+        });
+    }
+});
+
 
         // Helper function to show alerts
         function showAlert(message, type) {
