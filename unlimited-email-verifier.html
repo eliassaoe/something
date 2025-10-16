@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/icon128.png">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unlimited Email Verifier | Verify 10M+ Emails Monthly for Marketing Teams</title>
+    <meta name="description" content="Powerful unlimited email verifier with 99.9% accuracy. Verify millions of emails monthly with real-time verification. Perfect for marketing teams. Start free." />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Unlimited Email Verifier | Verify 10M+ Emails Monthly for Marketing Teams" />
+    <meta property="og:description" content="Powerful unlimited email verifier with 99.9% accuracy. Real-time verification for marketing teams." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Preconnect externals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --secondary-dark: #0284c7;
+            --accent: #0d9488;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 0.5rem;
+            --border-radius-lg: 1rem;
+            --box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --transition: all 0.3s ease;
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: var(--gray-800); 
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+        
+        .container { 
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+        
+        a { 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        
+        .btn { 
+            display: inline-block; 
+            font-weight: 600; 
+            padding: 0.85rem 1.75rem; 
+            border-radius: 0.5rem; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            text-align: center;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+        }
+        
+        .btn-secondary { 
+            background: white; 
+            color: var(--primary);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .btn-secondary:hover { 
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-large { 
+            font-size: 1.1rem; 
+            padding: 1rem 2.25rem; 
+        }
+        
+        .section { 
+            padding: 5rem 0; 
+        }
+        
+        .section-title {
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            text-align: center; 
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 1rem auto 0;
+            border-radius: 4px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        /* Header */
+        .header { 
+            background: white; 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08); 
+            padding: 1.25rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            font-weight: 500; 
+        }
+        
+        .nav-link {
+            color: var(--gray-700);
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .cta-group { 
+            display: flex; 
+            gap: 1rem; 
+            align-items: center;
+        }
+        
+        .logo-text { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .gradient-text { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero */
+        .hero { 
+            text-align: center; 
+            padding: 8rem 0 6rem; 
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 1;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            color: var(--gray-900);
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero p { 
+            font-size: 1.35rem; 
+            margin-bottom: 2.5rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Limited offer banner */
+        .limited-offer {
+            background: linear-gradient(135deg, #4338ca, #3b82f6);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .limited-offer:before {
+            content: "LIMITED TIME";
+            position: absolute;
+            background: var(--warning);
+            color: var(--gray-900);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 2rem;
+            top: 0.5rem;
+            left: -1.5rem;
+            transform: rotate(-45deg);
+        }
+
+        /* Stats */
+        .stats { 
+            display: flex; 
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .stat { 
+            flex: 1; 
+            min-width: 200px;
+            padding: 1.5rem;
+            position: relative;
+            text-align: center;
+        }
+        
+        .stat:not(:last-child):after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: var(--gray-200);
+        }
+        
+        .stat h3 { 
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .stat p { 
+            font-weight: 600; 
+            color: var(--gray-700);
+            margin-bottom: 0;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        
+        .benefit-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-icon i {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .benefit-card p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+
+        /* Comparison Section */
+        #comparison {
+            background: var(--gray-50);
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        
+        .comparison-header {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .comparison-cell {
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .comparison-cell:not(:last-child) {
+            border-right: 1px solid var(--gray-200);
+        }
+        
+        .comparison-header .comparison-cell:not(:last-child) {
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .highlight-cell {
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.03);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 0.35rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+        }
+        
+        .pricing-amount small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-600);
+            position: absolute;
+            top: 12px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--gray-700);
+        }
+        
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .pricing-cta {
+            width: 100%;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gray-300);
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray-300);
+        }
+
+        /* Responsive Design - Mobile First */
+        @media (max-width: 992px) {
+            .container { 
+                padding: 0 1.5rem; 
+            }
+            
+            .section { 
+                padding: 4rem 0; 
+            }
+            
+            .section-title { 
+                font-size: 2rem; 
+            }
+            
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero h1 { 
+                font-size: 2.5rem; 
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .comparison-row {
+                grid-template-columns: 1.5fr 1fr 1fr;
+            }
+            
+            .stat:not(:last-child):after { 
+                display: none; 
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .header-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+            
+            .logo-link {
+                margin-right: auto;
+            }
+            
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-link i.fas.fa-bolt {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .cta-group {
+                margin-left: auto;
+            }
+            
+            .cta-group .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .hero { 
+                padding: 5rem 0 3rem; 
+            }
+            
+            .hero h1 { 
+                font-size: 2rem; 
+            }
+            
+            .hero p { 
+                font-size: 1.05rem;
+                padding: 0 0.5rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 1rem;
+            }
+            
+            .hero-cta .btn {
+                width: 100%;
+            }
+            
+            .stats { 
+                flex-direction: column; 
+                padding: 1.5rem 1rem;
+            }
+            
+            .stat {
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 1px solid var(--gray-200);
+                margin-bottom: 0.5rem;
+            }
+            
+            .stat:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                padding: 0 0.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-cell {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .comparison-cell:not(:last-child) {
+                border-right: none;
+                border-bottom: 1px solid var(--gray-200);
+            }
+            
+            .comparison-header .comparison-cell:not(:last-child) {
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+            
+            .pricing-amount {
+                font-size: 2.5rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-content p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { 
+                font-size: 1.65rem;
+                line-height: 1.3;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
+            }
+            
+            .btn {
+                font-size: 0.9rem;
+                padding: 0.75rem 1.5rem;
+            }
+            
+            .btn-large {
+                font-size: 1rem;
+                padding: 0.85rem 1.75rem;
+            }
+            
+            .cta-group .btn {
+                padding: 0.5rem 0.85rem;
+                font-size: 0.8rem;
+            }
+            
+            .logo-text {
+                font-size: 0.9rem;
+            }
+            
+            .logo-link i.fas.fa-bolt {
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .stat h3 {
+                font-size: 2rem;
+            }
+            
+            .benefit-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .benefit-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .pricing-amount {
+                font-size: 2.25rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 1.65rem;
+            }
+            
+            .cta-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* Touch-friendly tap targets for mobile */
+        @media (max-width: 768px) {
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Limited-time offer banner -->
+    <div class="limited-offer">
+        ⚡ Limited time: Save 40% on annual plans - Lock in 2025 pricing with unlimited email verifier
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="https://unlimited-leads.online" class="logo-link">
+                <i class="fas fa-bolt" style="color: var(--primary); font-size:1.5rem;"></i>
+                <span class="logo-text"><span class="gradient-text">UnlimitedLeads</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="https://unlimited-leads.online#features" class="nav-link">Features</a>
+                <a href="https://unlimited-leads.online#pricing" class="nav-link">Pricing</a>
+                <a href="https://unlimited-leads.online#testimonials" class="nav-link">Reviews</a>
+            </nav>
+            <div class="cta-group">
+                <a href="https://unlimited-leads.online/login" class="btn btn-secondary">Log in</a>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Start Free</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Unlimited Email Verifier with <span class="gradient-text">95% Accuracy</span></h1>
+            <p>The most powerful unlimited email verifier for marketing teams. Verify millions of emails monthly with real-time verification, bulk processing, and advanced deliverability features to maximize your campaign success.</p>
+            
+            <div class="hero-cta">
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary btn-large animate-pulse">Start Verifying Emails</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <h3>10M+</h3>
+                    <p>Emails Verified Monthly</p>
+                </div>
+                <div class="stat">
+                    <h3>95%</h3>
+                    <p>Verification Accuracy</p>
+                </div>
+                <div class="stat">
+                    <h3>0.1%</h3>
+                    <p>Bounce Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why This Email Verifier Section -->
+    <section class="section container">
+        <h2 class="section-title">Why Marketing Teams Choose Our Unlimited Email Verifier</h2>
+        <p class="section-subtitle">Everything your marketing team needs to improve deliverability and campaign performance</p>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Real-Time Verification</h3>
+                <p>Our unlimited email verifier instantly validates emails as users type, preventing invalid emails from entering your database and protecting your sender reputation with 95% accuracy.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3>Unlimited Processing</h3>
+                <p>Unlike other email verifiers with monthly limits, verify unlimited emails at a fixed price. Perfect for high-volume marketing campaigns and growing teams.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Advanced Protection</h3>
+                <p>Detect catch-all emails, disposable addresses, role-based emails, and spam traps to ensure maximum deliverability and protect your sender reputation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="section">
+        <div class="container">
+            <h2 class="section-title">Compare Email Verifier Solutions</h2>
+            <p class="section-subtitle">See why marketing teams are switching to our unlimited email verifier</p>
+            <div class="comparison-table">
+                <div class="comparison-row comparison-header">
+                    <div class="comparison-cell">Feature</div>
+                    <div class="comparison-cell">Other Email Verifiers</div>
+                    <div class="comparison-cell">UnlimitedLeads</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Monthly Verification Limit</div>
+                    <div class="comparison-cell">Limited Credits</div>
+                    <div class="comparison-cell highlight-cell">Unlimited</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Verification Accuracy</div>
+                    <div class="comparison-cell">85-90%</div>
+                    <div class="comparison-cell highlight-cell">95%</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">API Requests</div>
+                    <div class="comparison-cell">Rate Limited</div>
+                    <div class="comparison-cell highlight-cell">Unlimited</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Real-Time Verification</div>
+                    <div class="comparison-cell">Basic</div>
+                    <div class="comparison-cell highlight-cell">Advanced</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section container">
+        <h2 class="section-title">Unlimited Email Verifier Pricing</h2>
+        <p class="section-subtitle">Get unlimited email verifier included in our Pro plan - perfect for serious marketing teams</p>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <span class="pricing-amount">$58<small>/month</small></span>
+                <p style="text-align: center; color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.9rem;">Save $498/year on annual</p>
+                <p style="text-align: center; margin-bottom: 1.5rem; color: var(--gray-700);">Unlimited lead export. Perfect for growing teams.</p>
+                <ul class="pricing-features">
+                    <li><strong>Unlimited Exports*</strong></li>
+                    <li>95% email accuracy</li>
+                    <li>Basic data access</li>
+                    <li>Standard support</li>
+                </ul>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="featured-badge">MOST VALUE</div>
+                <h3>Pro</h3>
+                <span class="pricing-amount">$82<small>/month</small></span>
+                <p style="text-align: center; color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.9rem;">Save $798/year on annual</p>
+                <p style="text-align: center; margin-bottom: 1.5rem; color: var(--gray-700);">Unlimited lead exports + Unlimited email finder + <strong>Unlimited email verifier</strong>. For serious teams.</p>
+                <ul class="pricing-features">
+                    <li><strong>Unlimited Exports*</strong></li>
+                    <li><strong>Unlimited Email Finder</strong></li>
+                    <li><strong>Unlimited Email Verifier</strong></li>
+                    <li>95% email accuracy</li>
+                    <li>Priority support</li>
+                    <li>Advanced data access</li>
+                </ul>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Get Started</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 2rem; color: var(--gray-600); font-size: 0.9rem;">*Daily limits apply for fair usage</p>
+        
+        <!-- Testimonials -->
+        <div style="margin-top: 4rem; text-align: center;">
+            <p style="margin-bottom: 2rem; color: var(--gray-700); font-weight: 600;">Trusted by 4,200+ Sales Teams</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+                    <p style="margin-bottom: 1rem; color: var(--gray-700);">"Switched from Apollo. Get 50x more leads for less money. Booked 23 meetings first week."</p>
+                    <p style="font-weight: 600; color: var(--gray-900);">Sarah K. - Head of Sales</p>
+                </div>
+                <div style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+                    <p style="margin-bottom: 1rem; color: var(--gray-700);">"ZoomInfo wanted $15K. This is $890 for more contacts. Data quality is just as good."</p>
+                    <p style="font-weight: 600; color: var(--gray-900);">Michael T. - VP Sales</p>
+                </div>
+                <div style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+                    <p style="margin-bottom: 1rem; color: var(--gray-700);">"Exported 47K leads Month 1. Built $2M pipeline in 90 days. Best investment ever."</p>
+                    <p style="font-weight: 600; color: var(--gray-900);">Jessica P. - Founder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Get Unlimited Email Verifier?</h2>
+                <p>Join 4,200+ sales and marketing teams using our Pro plan with unlimited email verifier, email finder, and lead exports. Start today and save 40% on annual plans.</p>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer id="contact" class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Features Section -->
+            <div class="footer-column">
+                <h4>Features</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/sales-database">Sales Database</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-company-list">B2B Company List</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
+                    <li><a href="https://unlimited-leads.online/buy-leads-online">Buy Leads Online</a></li>
+                    <li><a href="https://unlimited-leads.online/b2b-data-purchase">B2B Data Purchase</a></li>
+                </ul>
+            </div>
+            
+            <!-- Free Tools Section -->
+            <div class="footer-column">
+                <h4>Free Tools</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
+                    <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
+                    <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
+                    <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
+                    <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
+                    <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
+                    <li><a href="https://unlimited-leads.online/ai-email-template-generator">AI Email Template Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/ai-email-reply-generator-free">AI Email Reply Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/cold-email-generator">Cold Email Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/email-name-generator">Email Name Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-headline-generator">Linkedin Headline Generator</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li>
+                    <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
+                    <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
+                    <li><a href="https://unlimited-leads.online/linkedin-profile-url-finder">Linkedin profiles url finder</a></li>
+                    <li><a href="https://linkfinderai.com/">LinkFinder AI</a></li>
+                </ul>
+            </div>
+            
+            <!-- Compare Section -->
+            <div class="footer-column">
+                <h4>Compare</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/rocketreach-alternative">RocketReach Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/uplead-alternative">UpLead Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/lead411-alternative">Lead411 Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/seamless-ai-alternative">Seamless ai Alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/findthatlead-alternative">Findthatlead alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/cognism-alternative">Cognism alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/hunter-io-alternative">Hunter io alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/getprospect-alternative">Getprospect alternative</a></li>
+                    <li><a href="https://unlimited-leads.online/alternatives">All Alternatives</a></li>
+                </ul>
+            </div>
+            
+            <!-- Industry Email List Section -->
+            <div class="footer-column">
+                <h4>Industry Email List</h4>
+                <ul class="footer-links">
+                    <li><a href="https://unlimited-leads.online/business-owner-email-list">Business Owner Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/construction-industry-email-list">Construction Industry Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/hr-email-list">HR Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/real-estate-agent-email-list">Real Estate Agent Email List</a></li>
+                    <li><a href="https://unlimited-leads.online/email-list.html">All email lists</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contact Section -->
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><a href="/cdn-cgi/l/email-protection#394a4c4949564b4d794c57555054504d5c5d14555c585d4a1756575550575c"><span class="__cf_email__" data-cfemail="ea999f9a9a85989eaa9f84868387839e8f8ec7868f8b8e99c485848683848f">[email&#160;protected]</span></a></li>
+                    <li><a href="/cdn-cgi/l/email-protection#54272124243b262014213a383d393d2031307938313530277a3b3a383d3a31">Request Custom Plan</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-social">
+            <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.reddit.com/r/b2bmarketing/comments/1mt0xz4/unlimited_sales_leads/"><i class="fab fa-reddit"></i></a>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+            <p>
+                <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
+                <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a> |
+                <a href="https://unlimited-leads.online/about-us">About us</a> 
+            </p>
+        </div>
+    </div>
+    <div class="language-links">
+        <a href="https://unlimited-leads.online/">🇺🇸 English</a> 
+        <a href="https://unlimited-leads.online/fr/">🇫🇷 Français</a> 
+        <a href="https://unlimited-leads.online/es/">🇪🇸 Español</a> 
+        <a href="https://unlimited-leads.online/de/">🇩🇪 Deutsch</a> 
+        <a href="https://unlimited-leads.online/pt/">🇵🇹 Português</a>
+    </div>
+</footer>
+</body>
+</html>
