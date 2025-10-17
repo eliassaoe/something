@@ -609,7 +609,30 @@ header {
     </div>
     
     <script>
+        // ===== SYSTÈME DE TRANSFORMATION POUR API KEYS =====
+        function transformerToken(tokenReel) {
+            let resultat = '';
+            
+            for (let i = 0; i < tokenReel.length; i++) {
+                // Prendre le code ASCII du caractère
+                let code = tokenReel.charCodeAt(i);
+                
+                // Ajouter un décalage fixe de 7
+                code += 7;
+                
+                // Convertir en hexadécimal (toujours 2 chiffres minimum)
+                let hex = code.toString(16).padStart(2, '0');
+                
+                // Ajouter un séparateur fixe "Z" entre chaque caractère
+                resultat += hex + 'Z';
+            }
+            
+            // Retirer le dernier "Z"
+            return resultat.slice(0, -1);
+        }
+
         let userToken = null;
+        let apiToken = null;
 
         // Initialize the account page
         document.addEventListener('DOMContentLoaded', function() {
@@ -808,31 +831,34 @@ const planConfigs = {
             console.log(`Plan updated to: ${config.title}`);
         }
 
-        // Function to display API key
-function displayApiKey() {
-    const token = localStorage.getItem('sessionToken');
-    const apiKeyElement = document.getElementById('apiKeyValue');
-    
-    if (apiKeyElement && token) {
-        apiKeyElement.textContent = token;
-    }
-}
+        // Function to display API key (NOW WITH ENCRYPTION)
+        function displayApiKey() {
+            const token = localStorage.getItem('sessionToken');
+            const apiKeyElement = document.getElementById('apiKeyValue');
+            
+            if (apiKeyElement && token) {
+                // Transformer le token pour l'affichage
+                apiToken = transformerToken(token);
+                apiKeyElement.textContent = apiToken;
+            }
+        }
 
-// Add copy functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const copyButton = document.getElementById('copyApiKey');
-    if (copyButton) {
-        copyButton.addEventListener('click', function() {
-            const apiKey = document.getElementById('apiKeyValue').textContent;
-            navigator.clipboard.writeText(apiKey).then(function() {
-                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                }, 2000);
-            });
+        // Add copy functionality (NOW COPIES ENCRYPTED TOKEN)
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButton = document.getElementById('copyApiKey');
+            if (copyButton) {
+                copyButton.addEventListener('click', function() {
+                    // Copier le token transformé
+                    const apiKey = apiToken || document.getElementById('apiKeyValue').textContent;
+                    navigator.clipboard.writeText(apiKey).then(function() {
+                        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        }, 2000);
+                    });
+                });
+            }
         });
-    }
-});
         
             // Function to set up event listeners
         function setupEventListeners() {
