@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
    <style>
    /* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
@@ -2891,6 +2892,19 @@ if (logoutButton) {
                 searchAlert.style.display = 'none';
             }, 5000);
         }
-    </script>
+// Initialize n8n chat widget
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+createChat({
+    webhookUrl: 'https://eliasse-n8n.onrender.com/webhook/5edbe311-8358-4caf-b16e-25e6ebb15b1b/chat',
+    mode: 'window',
+    initialMessages: [
+        'Hi there! 👋',
+        'How can I help you with UnlimitedLeads today?'
+    ],
+    showWelcomeScreen: false
+});
+        
+</script>
 </body>
 </html>
