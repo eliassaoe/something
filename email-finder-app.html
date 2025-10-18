@@ -509,6 +509,113 @@ header {
     z-index: 9999 !important;
 }
 
+/* Force le chat widget au premier plan */
+#n8n-chat,
+#n8n-chat *,
+#n8n-chat input,
+#n8n-chat textarea {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+}
+
+#n8n-chat input:focus,
+#n8n-chat textarea:focus {
+    outline: 2px solid #007bff !important;
+    z-index: 100000 !important;
+}
+
+/* Personnalisation du chat widget - Branding UnlimitedLeads */
+:root {
+    /* Variables du chat - Couleurs de votre branding */
+    --chat--color--primary: #2563eb !important;
+    --chat--color--primary-shade-50: #1d4ed8 !important;
+    --chat--color--primary--shade-100: #1e40af !important;
+    --chat--color--secondary: #0ea5e9 !important;
+    --chat--color-secondary-shade-50: #0284c7 !important;
+    --chat--color-white: #ffffff !important;
+    --chat--color-light: #eff6ff !important;
+    --chat--color-light-shade-50: #dbeafe !important;
+    --chat--color-light-shade-100: #bfdbfe !important;
+    --chat--color-medium: #e5e7eb !important;
+    --chat--color-dark: #1f2937 !important;
+    --chat--color-disabled: #6b7280 !important;
+    --chat--color-typing: #374151 !important;
+
+    /* Tailles et espaces */
+    --chat--spacing: 1rem !important;
+    --chat--border-radius: 0.5rem !important;
+    --chat--transition-duration: 0.3s !important;
+
+    /* Fenêtre du chat */
+    --chat--window--width: 400px !important;
+    --chat--window--height: 600px !important;
+
+    /* Header personnalisé */
+    --chat--header--padding: 1.25rem !important;
+    --chat--header--background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    --chat--header--color: #ffffff !important;
+    --chat--header--border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    --chat--heading--font-size: 1.25rem !important;
+    --chat--subtitle--font-size: 0.875rem !important;
+    --chat--subtitle--line-height: 1.5 !important;
+
+    /* Messages */
+    --chat--message--font-size: 0.875rem !important;
+    --chat--message--padding: 0.75rem 1rem !important;
+    --chat--message--border-radius: 0.75rem !important;
+    --chat--message-line-height: 1.5 !important;
+    --chat--message--bot--background: #f8fafc !important;
+    --chat--message--bot--color: #1f2937 !important;
+    --chat--message--bot--border: 1px solid #e2e8f0 !important;
+    --chat--message--user--background: #2563eb !important;
+    --chat--message--user--color: #ffffff !important;
+    --chat--message--user--border: none !important;
+
+    /* Bouton toggle */
+    --chat--toggle--background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    --chat--toggle--hover--background: #1e40af !important;
+    --chat--toggle--active--background: #1e3a8a !important;
+    --chat--toggle--color: #ffffff !important;
+    --chat--toggle--size: 64px !important;
+}
+
+/* Style personnalisé pour le header */
+#n8n-chat .chat-header {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Icône AI dans le toggle button */
+#n8n-chat .chat-toggle::before {
+    content: '🤖' !important;
+    font-size: 28px !important;
+}
+
+/* Badge "AI Support" */
+#n8n-chat .chat-header::after {
+    content: "AI Support Agent" !important;
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    background: rgba(255,255,255,0.2) !important;
+    color: white !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+}
+
+/* Animation du toggle */
+#n8n-chat .chat-toggle {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+#n8n-chat .chat-toggle:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
+}
+
 
 
 /* LOADING */
@@ -1263,10 +1370,20 @@ document.addEventListener('DOMContentLoaded', () => {
         mode: 'window',
         target: '#n8n-chat',
         initialMessages: [
-            'Hi there! 👋',
-            'How can I help you with UnlimitedLeads today?'
+            'Hi! I\'m your AI support assistant 🤖',
+            'How can I assist you today?'
         ],
-        showWelcomeScreen: false
+        showWelcomeScreen: true,
+        i18n: {
+            en: {
+                title: 'AI Support Chat 🤖',
+                subtitle: 'Get instant help from our AI assistant',
+                footer: 'Powered by UnlimitedLeads AI',
+                getStarted: 'Start Chat',
+                inputPlaceholder: 'Ask me anything about UnlimitedLeads...',
+            },
+        },
+        loadPreviousSession: false
     });
 </script>
 
