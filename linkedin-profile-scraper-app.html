@@ -510,14 +510,16 @@ header {
 
 .modal-content {
     background-color: white;
-    margin: 60px auto;
+    margin: 20px auto;
     padding: 30px;
     width: 80%;
     max-width: 600px;
+    max-height: 80vh;
     border-radius: 1rem;
     box-shadow: var(--box-shadow-lg);
     position: relative;
     border-left: 4px solid var(--danger);
+    overflow-y: auto;
 }
 
 .modal-header {
@@ -1097,27 +1099,23 @@ header {
             <div class="modal-body">
                 <p><strong>The LinkedIn URL you entered is not supported.</strong></p>
                 
-                <p>We only accept LinkedIn profile URLs that contain readable usernames in the format:</p>
+                <p>We only accept URLs with readable usernames:</p>
                 
                 <div class="example-urls">
-                    <p><strong>✅ Supported URL formats:</strong></p>
+                    <p><strong>✅ Supported formats:</strong></p>
                     <div class="url-example valid">https://www.linkedin.com/in/john-doe-123/</div>
-                    <div class="url-example valid">https://www.linkedin.com/in/jane-smith-marketing/</div>
                     <div class="url-example valid">https://linkedin.com/in/eliasse-hamour-08194821a/</div>
                 </div>
                 
                 <div class="example-urls">
-                    <p><strong>❌ Unsupported URL formats:</strong></p>
+                    <p><strong>❌ Not supported:</strong></p>
                     <div class="url-example invalid">https://www.linkedin.com/in/fiuyngiuhefyg8379249/</div>
                     <div class="url-example invalid">https://www.linkedin.com/in/ACoAABXYZ123/</div>
-                    <div class="url-example invalid">https://www.linkedin.com/in/abc123def456/</div>
                 </div>
                 
-                <p><strong>Why this restriction?</strong></p>
-                <p>URLs with encrypted or random IDs cannot be reliably processed by our scraping system. We need URLs with readable usernames to ensure accurate data extraction.</p>
+                <p><strong>Why?</strong> URLs with encrypted IDs cannot be reliably processed by our system.</p>
                 
-                <p><strong>How to find the correct URL:</strong></p>
-                <p>Visit the LinkedIn profile directly and copy the URL from your browser's address bar. Make sure it contains the person's name or a readable username.</p>
+                <p><strong>How to fix:</strong> Visit the LinkedIn profile and copy the URL from your browser's address bar.</p>
             </div>
         </div>
     </div>
