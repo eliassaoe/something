@@ -264,74 +264,6 @@ header {
     line-height: 1.6;
 }
 
-/* PLAN CARD */
-.plan-card {
-    background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
-    border: 2px solid var(--primary);
-    border-radius: var(--radius-lg);
-    padding: 30px;
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-.plan-loading {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    margin-bottom: 30px;
-}
-
-.plan-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-}
-
-.plan-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.plan-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--gray-900);
-    margin-bottom: 8px;
-    font-family: var(--font-heading);
-}
-
-.plan-status {
-    background: var(--success);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.plan-type {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-.plan-description {
-    color: var(--gray-700);
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
 .security-note {
     background: #f8f9fa;
     border: 1px solid var(--gray-200);
@@ -385,8 +317,6 @@ header {
 .manage-plan-button i {
     font-size: 18px;
 }
-
-
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -448,19 +378,6 @@ header {
     .account-title {
         font-size: 1.5rem;
     }
-    
-    .plan-card {
-        padding: 20px;
-    }
-    
-    .plan-loading {
-        margin: 20px 0;
-    }
-    
-    .plan-header {
-        flex-direction: column;
-        gap: 10px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -470,10 +387,6 @@ header {
     
     .account-title {
         font-size: 1.3rem;
-    }
-    
-    .plan-title {
-        font-size: 1.2rem;
     }
     
     .manage-plan-button {
@@ -510,7 +423,6 @@ header {
     color: var(--warning);
 }
    </style>
-    <!-- Hreflang tags -->
 </head>
 <body>
      <div class="container">
@@ -561,49 +473,27 @@ header {
                 Manage your subscription and view your account details
             </p>
 
-             <div class="security-note">
-    <i class="fas fa-key"></i>
-    <div style="flex: 1;">
-        <p style="margin-bottom: 10px;">
-            <strong>Your API Key:</strong>
-        </p>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <code id="apiKeyValue" style="background: #f1f1f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; word-break: break-all; flex: 1; font-size: 13px;">Loading...</code>
-            <button id="copyApiKey" style="background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                <i class="fas fa-copy"></i> Copy
-            </button>
-        </div>
-    </div>
-</div>
-            
+            <div class="security-note">
+                <i class="fas fa-key"></i>
+                <div style="flex: 1;">
+                    <p style="margin-bottom: 10px;">
+                        <strong>Your API Key:</strong>
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <code id="apiKeyValue" style="background: #f1f1f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; word-break: break-all; flex: 1; font-size: 13px;">Loading...</code>
+                        <button id="copyApiKey" style="background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div id="accountAlert" class="alert"></div>
-
-            <div class="plan-card" id="planCard" style="display: none;">
-                <div class="plan-header">
-                    <div>
-                        <h2 class="plan-title">Your Plan</h2>
-                        <div class="plan-type" id="currentPlan">Free Plan</div>
-                    </div>
-                    <div class="plan-status">Active</div>
-                </div>
-                
-                <p class="plan-description" id="planDescription">
-                    You're currently on the <strong>Free Plan</strong>. Upgrade to get more credits and unlock premium features for unlimited lead generation.
-                </p>
-                
-                <a href="#" id="managePlanButton" class="manage-plan-button">
-                    <i class="fas fa-cogs"></i>
-                    Manage Plan
-                </a>
-            </div>
-
-            <div class="plan-loading" id="planLoading">
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 15px;"></i>
-                    <p style="color: var(--gray-600); margin: 0;">Loading your plan details...</p>
-                </div>
-            </div>
+            
+            <a href="https://unlimited-leads.online/pricing" id="managePlanButton" class="manage-plan-button">
+                <i class="fas fa-cogs"></i>
+                Manage Plan
+            </a>
             
         </section>
     </div>
@@ -644,7 +534,7 @@ header {
 
         /**
          * Token verification function
-         * Verifies token and displays user credits and account info
+         * Verifies token and displays user credits
          */
         function token_verif() {
             console.log("Token verification started");
@@ -714,57 +604,9 @@ header {
                 if (data && typeof data.credit === 'number') {
                     displayUserCredits(data.credit);
                 }
-                
-                // Fetch current plan after token verification
-                fetchCurrentPlan();
             })
             .catch(error => {
                 console.error('Error sending token:', error);
-            });
-        }
-
-        // Function to fetch current plan from API
-        function fetchCurrentPlan() {
-            if (!userToken) {
-                console.error('No user token available for plan fetch');
-                return;
-            }
-
-            const PLAN_API_URL = 'https://account-unlimited.hamoureliasse.workers.dev/';
-            
-            console.log('Fetching current plan...');
-            
-            fetch(`${PLAN_API_URL}?token=${userToken}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                console.log('Plan API response status:', response.status);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch plan: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(planData => {
-                console.log('Plan data received:', planData);
-                displayPlanInfo(planData);
-            })
-            .catch(error => {
-                console.error('Error fetching plan:', error);
-                // Hide loading and show Free Plan on error
-                const planLoading = document.getElementById('planLoading');
-                const planCard = document.getElementById('planCard');
-                
-                if (planLoading) {
-                    planLoading.style.display = 'none';
-                }
-                if (planCard) {
-                    planCard.style.display = 'block';
-                }
-                
-                displayPlanInfo({ plan: 'Free' });
             });
         }
 
@@ -777,78 +619,24 @@ header {
             }
         }
 
-        // Function to display plan information
-        function displayPlanInfo(data) {
-            const currentPlanElement = document.getElementById('currentPlan');
-            const planDescriptionElement = document.getElementById('planDescription');
-            const planCard = document.getElementById('planCard');
-            const planLoading = document.getElementById('planLoading');
-            
-            // Hide loading and show plan card
-            if (planLoading) {
-                planLoading.style.display = 'none';
-            }
-            if (planCard) {
-                planCard.style.display = 'block';
-            }
-            
-            // Get plan type from response
-            const planType = data.plan || 'Free';
-            
-            // Plan configurations
-            // Plan configurations
-const planConfigs = {
-    'Free': {
-        title: 'Free Plan',
-        description: 'You\'re currently on the <strong>Free Plan</strong>. Upgrade to get unlimited exports and unlimited email finder for your lead generation'
-    },
-    'Starter': {
-        title: 'Starter Plan',
-        description: 'You\'re on the <strong>Starter Plan</strong> ($59/month). You get unlimited exports from our 100M+ contact database. Upgrade to get Unlimited email finder'
-    },
-    'Pro': {
-        title: 'Pro Plan', 
-        description: 'You\'re on the <strong>Pro Plan</strong> ($149/month). You get unlimited exports plus unlimited email finder.'
-    },
-    'Premium': {
-        title: 'Pro Plan', 
-        description: 'You\'re on the <strong>Pro Plan</strong> ($149/month). You get unlimited exports plus unlimited email finder.'
-    }
-};
-            
-            // Get configuration for current plan
-            const config = planConfigs[planType] || planConfigs['Free'];
-            
-            // Update UI elements
-            if (currentPlanElement) {
-                currentPlanElement.textContent = config.title;
-            }
-            
-            if (planDescriptionElement) {
-                planDescriptionElement.innerHTML = config.description;
-            }
-            
-            console.log(`Plan updated to: ${config.title}`);
-        }
-
-        // Function to display API key (NOW WITH ENCRYPTION)
+        // Function to display API key (WITH ENCRYPTION)
         function displayApiKey() {
             const token = localStorage.getItem('sessionToken');
             const apiKeyElement = document.getElementById('apiKeyValue');
             
             if (apiKeyElement && token) {
-                // Transformer le token pour l'affichage
+                // Transform the token for display
                 apiToken = transformerToken(token);
                 apiKeyElement.textContent = apiToken;
             }
         }
 
-        // Add copy functionality (NOW COPIES ENCRYPTED TOKEN)
+        // Add copy functionality (COPIES ENCRYPTED TOKEN)
         document.addEventListener('DOMContentLoaded', function() {
             const copyButton = document.getElementById('copyApiKey');
             if (copyButton) {
                 copyButton.addEventListener('click', function() {
-                    // Copier le token transformé
+                    // Copy the transformed token
                     const apiKey = apiToken || document.getElementById('apiKeyValue').textContent;
                     navigator.clipboard.writeText(apiKey).then(function() {
                         copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
@@ -860,7 +648,7 @@ const planConfigs = {
             }
         });
         
-            // Function to set up event listeners
+        // Function to set up event listeners
         function setupEventListeners() {
             // Upgrade button
             const upgradeButton = document.getElementById('upgradeButton');
@@ -884,35 +672,18 @@ const planConfigs = {
                 });
             }
 
-            // Manage plan button
+            // Manage plan button - simplified to always go to pricing
             const managePlanButton = document.getElementById('managePlanButton');
             if (managePlanButton) {
                 managePlanButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
-                    const currentPlan = document.getElementById('currentPlan');
-                    const planText = currentPlan ? currentPlan.textContent : '';
-                    
-                    if (planText.includes('Free')) {
-                        // Go to pricing for free users
-                        const token = localStorage.getItem('sessionToken');
+                    const token = localStorage.getItem('sessionToken');
+                    if (token) {
                         window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
                     } else {
-                        // Open Stripe portal for paid users
-                        openStripePortal();
+                        window.location.href = 'https://unlimited-leads.online/pricing';
                     }
                 });
-            }
-        }
-
-        // Function to navigate to search page
-        function goToSearch() {
-            const token = localStorage.getItem('sessionToken');
-            if (token) {
-                // Replace with your actual search page URL
-                window.location.href = `search.html?token=${token}`;
-            } else {
-                window.location.href = 'search.html';
             }
         }
 
@@ -930,26 +701,6 @@ const planConfigs = {
                 }, 5000);
             }
         }
-
-        async function openStripePortal() {
-    try {
-        const response = await fetch('https://manage-plan.hamoureliasse.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                token: userToken,
-                return_url: window.location.href 
-            })
-        });
-        
-        const data = await response.json();
-        if (data.url) {
-            window.location.href = data.url;
-        }
-    } catch (error) {
-        alert('Error opening billing portal. Please try again.');
-    }
-}
 
         // Execute token verification immediately as well
         token_verif();
