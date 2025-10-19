@@ -122,7 +122,8 @@
         <div class="note">
             <strong>Rate Limits:</strong><br>
             • Email Finder: 1 request every 15 seconds, 1000 per day<br>
-            • Email Verifier: 1 request every 5 seconds, 1000 per day
+            • Email Verifier: 1 request every 5 seconds, 1000 per day<br>
+            • LinkedIn Scraper: 1 request every 10 seconds, 500 per day
         </div>
 
         <div class="api-section">
@@ -206,6 +207,70 @@
                 <li><strong>message</strong> - "Accepted" or "Rejected"</li>
                 <li><strong>deliverable</strong> - true if email can receive messages</li>
                 <li><strong>mx</strong> - Mail server for the domain</li>
+            </ul>
+        </div>
+
+        <div class="api-section">
+            <h2>3. LinkedIn Profile Scraper</h2>
+            
+            <div class="endpoint">POST https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev/</div>
+            
+            <p>Extract complete profile information from LinkedIn profiles using the profile URL.</p>
+            
+            <h3>Request Parameters</h3>
+            <ul>
+                <li><strong>url</strong> - LinkedIn profile URL with readable username (required)</li>
+            </ul>
+            
+            <div class="note">
+                <strong>Supported URL Format:</strong> Only URLs with readable usernames are supported.<br>
+                ✅ https://www.linkedin.com/in/john-doe-123/<br>
+                ❌ https://www.linkedin.com/in/ACoAABXYZ123/ (encrypted IDs not supported)
+            </div>
+            
+            <h3>Example Request</h3>
+            <div class="code-block">curl -X POST https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "url": "https://www.linkedin.com/in/john-doe-123/"
+  }'</div>
+            
+            <h3>Response - Profile Found</h3>
+            <div class="code-block">{
+  "name": "John Doe",
+  "jobTitle": "Software Engineer",
+  "company": "Tech Company Inc",
+  "location": "San Francisco, CA",
+  "industry": "Technology",
+  "website": "techcompany.com",
+  "email": "john.doe@techcompany.com",
+  "education": "Stanford University",
+  "headline": "Software Engineer at Tech Company Inc",
+  "linkedinUrl": "https://www.linkedin.com/in/john-doe-123/",
+  "verified": "true"
+}</div>
+            
+            <h3>Response - Profile Not Found/Error</h3>
+            <div class="code-block">{
+  "error": "Profile not accessible or invalid URL",
+  "name": null,
+  "verified": "false"
+}</div>
+
+            <h3>Response Fields</h3>
+            <ul>
+                <li><strong>name</strong> - Full name of the person</li>
+                <li><strong>jobTitle</strong> - Current job title</li>
+                <li><strong>company</strong> - Current company name</li>
+                <li><strong>location</strong> - Location information</li>
+                <li><strong>industry</strong> - Industry sector</li>
+                <li><strong>website</strong> - Company website</li>
+                <li><strong>email</strong> - Email address (if found)</li>
+                <li><strong>education</strong> - Educational background</li>
+                <li><strong>headline</strong> - LinkedIn headline</li>
+                <li><strong>linkedinUrl</strong> - Original LinkedIn URL</li>
+                <li><strong>verified</strong> - "true" if profile data was successfully extracted</li>
             </ul>
         </div>
 
