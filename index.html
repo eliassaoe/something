@@ -193,6 +193,29 @@
             color: transparent; 
         }
 
+        /* Limited offer banner */
+        .limited-offer {
+            background: linear-gradient(135deg, #4338ca, #3b82f6);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .limited-offer:before {
+            content: "LIMITED TIME";
+            position: absolute;
+            background: var(--warning);
+            color: var(--gray-900);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 2rem;
+            top: 0.5rem;
+            left: -1.5rem;
+            transform: rotate(-45deg);
+        }
+
         /* Hero */
         .hero { 
             text-align: center; 
@@ -234,29 +257,6 @@
             margin-bottom: 3rem;
         }
         
-        /* Limited offer banner */
-        .limited-offer {
-            background: linear-gradient(135deg, #4338ca, #3b82f6);
-            color: white;
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-        .limited-offer:before {
-            content: "LIMITED TIME";
-            position: absolute;
-            background: var(--warning);
-            color: var(--gray-900);
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.2rem 2rem;
-            top: 0.5rem;
-            left: -1.5rem;
-            transform: rotate(-45deg);
-        }
-
         /* Stats */
         .stats { 
             display: flex; 
@@ -299,90 +299,72 @@
             margin-bottom: 0;
         }
 
-        /* Steps */
-        .steps {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 2rem;
+        /* Trusted by section */
+        .trusted-by {
+            background: var(--gray-50);
+            padding: 4rem 0;
         }
-        .step {
+        .trusted-by h2 {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            opacity: 0.7;
+        }
+        .company-logos .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            padding: 1rem 2rem;
             background: white;
             border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .step:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--box-shadow-lg);
-        }
-        .step-number {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        .step-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: var(--primary-light);
-            margin-bottom: 1.5rem;
-        }
-        .step-icon i {
-            font-size: 1.75rem;
-            color: var(--primary);
-        }
-        .step h4 {
-            font-size: 1.35rem;
-            margin-bottom: 1rem;
-            color: var(--gray-900);
-        }
-        .step p {
-            color: var(--gray-600);
-            margin-bottom: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        /* Features */
-        #features {
-            background: var(--gray-50);
+        /* Everything you need section */
+        .everything-needed {
+            padding: 5rem 0;
+            background: white;
         }
-        .features { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 2rem; 
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        .feature-card { 
-            background: white; 
-            padding: 2.5rem 2rem; 
-            border-radius: var(--border-radius); 
-            box-shadow: var(--box-shadow); 
+        .feature-box {
+            border: 1px solid var(--gray-200);
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius-lg);
+            text-align: center;
             position: relative;
-            overflow: hidden;
-            transition: transform 0.4s ease;
-            border: 1px solid var(--gray-100);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
         }
-        .feature-card:hover { 
-            transform: translateY(-8px); 
+        .feature-box:hover {
+            transform: translateY(-8px);
             box-shadow: var(--box-shadow-lg);
+            border-color: var(--primary-light);
         }
-        .feature-icon { 
+        .feature-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+        .feature-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -396,279 +378,139 @@
             font-size: 1.75rem;
             color: var(--primary);
         }
-        .feature-card h3 { 
-            font-size: 1.35rem; 
-            margin-bottom: 1rem; 
-            color: var(--gray-900); 
+        .feature-box h3 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
         }
-        .feature-card p {
+        .feature-box p {
             color: var(--gray-600);
             margin-bottom: 0;
         }
 
-        /* Pricing Cards */
-        #pricing {
-            position: relative;
+        /* Product showcase section */
+        .product-showcase {
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,165,233,0.05) 100%);
+            padding: 5rem 0;
             overflow: hidden;
         }
-        #pricing:before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(58,79,231,0.05), rgba(14,165,233,0.05));
-            top: -100px;
-            left: -100px;
-            z-index: -1;
+        .product-image {
+            margin-top: 3rem;
+            text-align: center;
         }
-        #pricing:after {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(14,165,233,0.05), rgba(58,79,231,0.05));
-            bottom: -100px;
-            right: -100px;
-            z-index: -1;
-        }
-        .pricing-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-            gap: 3rem; 
-            margin-top: 2rem; 
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .pricing-card { 
-            background: white; 
-            padding: 3rem 2.5rem; 
-            border-radius: var(--border-radius-lg); 
-            box-shadow: var(--box-shadow); 
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--gray-100);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .pricing-card:hover {
-            transform: translateY(-10px);
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--box-shadow-lg);
         }
-        .pricing-card.featured {
-            border: 2px solid var(--primary);
-            transform: scale(1.03);
+
+        /* Tools suite section */
+        .tools-suite {
+            background: var(--gray-50);
+            padding: 5rem 0;
         }
-        .pricing-card.featured:hover {
-            transform: scale(1.03) translateY(-10px);
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        .featured-badge {
-            position: absolute;
-            top: 12px;
-            right: -30px;
-            background: var(--primary);
-            color: white;
-            padding: 0.35rem 2.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transform: rotate(45deg);
+        .tool-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
         }
-        .pricing-card h3 { 
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            color: var(--gray-900);
+        .tool-card:hover {
+            transform: translateY(-5px);
         }
-        .pricing-amount {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-            display: block;
-            position: relative;
-        }
-        .pricing-amount small {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            position: absolute;
-            top: 12px;
-        }
-        .pricing-description {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-        .pricing-features li {
+        .tool-card h3 {
+            font-size: 1.35rem;
             margin-bottom: 1rem;
-            padding-left: 1.75rem;
-            position: relative;
-            color: var(--gray-700);
-        }
-        .pricing-features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .leads-count {
-            font-weight: 700;
             color: var(--gray-900);
         }
-        .pricing-cta {
+        .tool-card p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+        .tool-screenshot {
             width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Waitlist */
-        .waitlist-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+        /* FAQ Section */
+        .faq-section {
             padding: 5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .waitlist-section:before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            top: -150px;
-            left: -150px;
-        }
-        .waitlist-section:after {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            bottom: -150px;
-            right: -150px;
-        }
-        .waitlist-section .section-title {
-            color: white;
-        }
-        .waitlist-section .section-title:after {
             background: white;
         }
-        .waitlist-section .section-subtitle {
-            color: rgba(255,255,255,0.9);
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        .waitlist-form { 
-            background: white; 
-            padding: 3rem; 
-            border-radius: var(--border-radius-lg); 
-            box-shadow: var(--box-shadow-lg); 
-            max-width: 600px; 
-            margin: 0 auto; 
-            position: relative;
-            z-index: 1;
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.5rem 0;
         }
-        .waitlist-form h3 {
-            text-align: center;
-            font-size: 1.75rem;
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
             color: var(--gray-900);
-            margin-bottom: 0.5rem;
         }
-        .waitlist-form p {
-            text-align: center;
+        .faq-question:hover {
+            color: var(--primary);
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            margin-top: 1rem;
             color: var(--gray-600);
-            margin-bottom: 2rem;
+            line-height: 1.6;
+            display: none;
         }
-        .waitlist-form input[type="email"] { 
-            width: 100%; 
-            padding: 1rem 1.25rem; 
-            border: 1px solid var(--gray-200); 
-            border-radius: var(--border-radius); 
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+        .faq-item.active .faq-answer {
+            display: block;
         }
-        .waitlist-form input[type="email"]:focus {
-            border-color: var(--primary);
-            outline: none;
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
         }
-        .free-leads-badge {
-            background: var(--accent);
-            color: white;
-            font-weight: 700;
-            padding: 0.35rem 1rem;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            margin-left: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-  .header .cta-group .btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* For mobile phones */
-@media (max-width: 480px) {
-  .header .cta-group .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-  }
-}
-
-/* For very small screens */
-@media (max-width: 360px) {
-  .header .cta-group .btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.75rem;
-  }
-  
-  /* Reduce gap between buttons */
-  .header .cta-group {
-    gap: 0.5rem;
-  }
-}
 
         /* Testimonials */
-        .testimonials-heading {
-            text-align: center;
-            margin-bottom: 4rem;
+        .testimonials-section {
+            background: var(--gray-50);
+            padding: 5rem 0;
         }
-        .testimonials { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 2rem; 
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        .testimonial { 
-            background: white; 
-            padding: 2rem; 
-            border-radius: var(--border-radius); 
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--box-shadow);
             position: relative;
-            border: 1px solid var(--gray-100);
         }
-        .testimonial:after {
+        .testimonial-card::before {
             content: """;
             position: absolute;
             top: 1rem;
             right: 1.5rem;
-            font-size: 5rem;
-            line-height: 1;
-            font-family: serif;
+            font-size: 4rem;
             color: var(--gray-200);
-            z-index: 0;
+            font-family: serif;
         }
-        .testimonial-content {
-            position: relative;
-            z-index: 1;
-        }
-        .testimonial-text { 
-            font-style: italic; 
+        .testimonial-text {
+            font-style: italic;
             margin-bottom: 1.5rem;
             color: var(--gray-700);
             position: relative;
@@ -691,8 +533,8 @@
             font-weight: 700;
             font-size: 1.25rem;
         }
-        .testimonial-info h4 { 
-            font-weight: 600; 
+        .testimonial-info h4 {
+            font-weight: 600;
             color: var(--gray-900);
             margin-bottom: 0.25rem;
         }
@@ -702,47 +544,16 @@
             font-size: 0.9rem;
         }
 
-        /* Trust badges */
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 3rem;
-            margin-top: 4rem;
-            margin-bottom: 2rem;
-        }
-        .trust-badge {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .trust-badge i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .trust-badge h4 {
-            font-size: 1.15rem;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-        .trust-badge p {
-            color: var(--gray-600);
-            font-size: 0.9rem;
-            margin-bottom: 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+        /* Final CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
             padding: 5rem 0;
             position: relative;
             overflow: hidden;
         }
-        .cta-section:before {
+        .final-cta::before {
             content: "";
             position: absolute;
             top: 0;
@@ -752,29 +563,29 @@
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
             opacity: 0.5;
         }
-        .cta-content {
+        .final-cta-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
             margin: 0 auto;
         }
-        .cta-content h2 {
+        .final-cta h2 {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
+            color: white;
         }
-        .cta-content p {
+        .final-cta h2:after {
+            background: white;
+        }
+        .final-cta p {
             font-size: 1.25rem;
             margin-bottom: 2rem;
             opacity: 0.9;
         }
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
         .btn-white {
             background: white;
             color: var(--primary);
+            font-weight: 700;
         }
         .btn-white:hover {
             background: var(--gray-100);
@@ -848,65 +659,6 @@
             transform: translateY(-3px);
         }
         
-        /* Floating Element */
-        .floating-badge {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 100;
-            border: 1px solid var(--gray-200);
-        }
-        .floating-badge-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: white;
-        }
-        .floating-badge-text {
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-        .floating-badge-cta {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        /* Logo responsiveness for mobile */
-@media (max-width: 768px) {
-    /* Make logo smaller on mobile */
-    .logo-text {
-        font-size: 1.1rem;
-    }
-    
-    /* Make the bolt icon smaller too */
-    .logo-link i.fas.fa-bolt {
-        font-size: 1.1rem;
-    }
-}
-
-/* Even smaller on very small screens */
-@media (max-width: 480px) {
-    .logo-text {
-        font-size: 0.9rem;
-    }
-    
-    .logo-link i.fas.fa-bolt {
-        font-size: 0.9rem;
-    }
-}
-        
         /* Responsive styles */
         @media (max-width: 992px) {
             .container { padding: 0 1.5rem; }
@@ -915,9 +667,6 @@
             .hero h1 { font-size: 2.75rem; }
             .hero p { font-size: 1.2rem; }
             .stat h3 { font-size: 2.25rem; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .pricing-card.featured { transform: scale(1); }
-            .pricing-card.featured:hover { transform: translateY(-10px); }
         }
         
         @media (max-width: 768px) {
@@ -963,32 +712,18 @@
                 margin-bottom: 0;
             }
             .stat:not(:last-child):after { display: none; }
-            .waitlist-form { padding: 2rem 1.5rem; }
             
             /* More mobile optimizations */
             .section { padding: 3rem 0; }
             .section-title { font-size: 1.75rem; }
             .section-subtitle { font-size: 1rem; }
-            .steps, .features, .testimonials {
+            .feature-grid, .tools-grid, .testimonials-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            .pricing-card {
-                padding: 2rem 1.5rem;
-            }
-            .pricing-amount {
-                font-size: 2.5rem;
-            }
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-            .floating-badge {
-                bottom: 1rem;
-                right: 1rem;
-                left: 1rem;
-                width: auto;
-                justify-content: center;
+            .company-logos {
+                flex-direction: column;
+                gap: 1.5rem;
             }
         }
         
@@ -999,14 +734,6 @@
             .cta-group .btn {
                 padding: 0.65rem 1rem;
                 font-size: 0.9rem;
-            }
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            .trust-badges {
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem;
             }
         }
         
@@ -1019,71 +746,70 @@
         .animate-pulse {
             animation: pulse 2s infinite ease-in-out;
         }
-        
-.leads-showcase {
-    max-width: 1200px;
-    width: 100%;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
 
-.leads-card {
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
+        /* Leads showcase */
+        .leads-showcase {
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
-.leads-image-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 60%; /* Ajusté pour le ratio de votre image */
-    overflow: hidden;
-}
+        .leads-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
 
-.leads-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
+        .leads-image-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            overflow: hidden;
+        }
 
-.leads-description {
-    padding: 1.5rem;
-    text-align: center;
-    border-top: 1px solid #f3f4f6;
-}
+        .leads-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
 
-.leads-description p {
-    margin: 0;
-    color: #4b5563;
-}
+        .leads-description {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #f3f4f6;
+        }
 
-@media (max-width: 768px) {
-    .leads-showcase {
-        margin: 1.5rem auto;
-    }
-    
-    .leads-description {
-        padding: 1rem;
-    }
-}
-</style>
+        .leads-description p {
+            margin: 0;
+            color: #4b5563;
+        }
 
-   <script defer data-domain="unlimited-leads.online" src="https://plausible.io/js/script.tagged-events.js"></script>
-<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
-    
-    <!-- Hreflang tags -->
+        @media (max-width: 768px) {
+            .leads-showcase {
+                margin: 1.5rem auto;
+            }
+            
+            .leads-description {
+                padding: 1rem;
+            }
+        }
+    </style>
+
+    <script defer data-domain="unlimited-leads.online" src="https://plausible.io/js/script.tagged-events.js"></script>
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 </head>
 <body>
     <!-- Limited-time offer banner -->
     <div class="limited-offer">
-        🔥  Sign up now and get 250 free leads to start
+        🔥 Sign up now and get 250 free leads to start
     </div>
 
     <!-- Header -->
@@ -1097,13 +823,12 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="#testimonials" class="nav-link">Success Stories</a>
-                <a href="#contact" class="nav-link">Contact Sales</a>
+                <a href="#faqs" class="nav-link">FAQs</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </nav>
-<div class="cta-group" style="display: flex; align-items: center; gap: 1rem;">
-    <a href="https://unlimited-leads.online/login" class="btn btn-secondary">Log in</a>
-    <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Sign Up Now</a>
-</div>
+            <div class="cta-group">
+                <a href="https://unlimited-leads.online/login" class="btn btn-secondary">Log in</a>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary">Sign Up Now</a>
             </div>
         </div>
     </header>
@@ -1112,7 +837,7 @@
     <section class="hero">
         <div class="container">
             <h1><span class="gradient-text">Truly Unlimited</span> Lead Finder.</h1>
-            <p>Unlimited leads is the first data provider with Truly Unlimited leads export. You can find and export as many leads as you need  — all without the hassle of managing credits.</p>
+            <p>Unlimited leads is the first data provider with Truly Unlimited leads export. You can find and export as many leads as you need — all without the hassle of managing credits.</p>
             
             <div class="hero-cta">
                 <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary btn-large animate-pulse">Get 250 Free Leads</a>
@@ -1134,156 +859,163 @@
         </div>
     </section>
 
-    <div class="container">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-4">A preview of your future leads</h2>
-            </div>
-
-<!-- HTML pour l'image (à insérer où vous voulez afficher l'image) -->
-<div class="leads-showcase">
-    <div class="leads-card">
-        <div class="leads-image-container">
-            <img src="https://i.imgur.com/aH13sck.png" alt="BtoB leads with contact information" class="leads-image">
-        </div>
-        <div class="leads-description">
-            <p><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
-        </div>
-    </div>
-</div>
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="section container">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Three simple steps to unlock your unlimited lead generation potential</p>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-icon">
-                    <i class="fas fa-search"></i>
-                </div>
-                <h4>Define Your Target</h4>
-                <p>Precisely filter your ideal customer profile by industry, company size, revenue, tech stack, funding, and growth signals to find perfect-fit prospects.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h4>Verify & Enrich</h4>
-                <p>Automatically validate and enhance your prospect list with direct contact information, including verified emails, direct dials, and detailed professional profiles.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-icon">
-                    <i class="fas fa-download"></i>
-                </div>
-                <h4>Export & Use</h4>
-                <p>Download unlimited leads with a fixed cost your outreach without limits and never worry about running out of fresh prospects again.</p>
-            </div>
-        </div>
-    </section>
-        
-<!-- Pricing -->
-<section id="pricing" class="section container">
-    <h2 class="section-title">Professional B2B Lead Generation</h2>
-    <p class="section-subtitle">Access 100M+ verified contacts with unlimited exports. Start with 250 free leads!</p>
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <div class="savings-badge">Start Free</div>
-            <h3>Starter Plan</h3>
-            <span class="pricing-amount">$99<small>/month</small></span>
-            <ul class="pricing-features">
-                <li><strong>Unlimited exports</strong></li>
-            </ul>
-            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
-        </div>
-        <div class="pricing-card featured">
-            <div class="featured-badge">MOST POPULAR</div>
-            <div class="savings-badge">Best Value</div>
-            <h3>Pro Plan</h3>
-            <span class="pricing-amount">$149<small>/month</small></span>
-            <ul class="pricing-features">
-                <li><strong>Unlimited Exports</strong></li>
-                <li><strong>Unlimited Email Finder</strong></li>
-                <li><strong>Unlimited Email Verifier</strong></li>
-  
-            </ul>
-            <a href="https://unlimited-leads.online/sign-up" class="btn btn-primary pricing-cta">Start with 250 Free Leads</a>
-        </div>
-    </div>
-    </section>
-
-          <!-- Features -->
-    <section id="features" class="section container">
-        <h2 class="section-title">Enterprise-Grade Features</h2>
-        <p class="section-subtitle">Everything you need to supercharge your B2B lead generation and sales outreach</p>
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-infinity"></i>
-                </div>
-                <h3>Unlimited Access</h3>
-                <p>A fixed cost grants you unlimited access to verified leads—no monthly caps, no unexpected charges, just unlimited value.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-filter"></i>
-                </div>
-                <h3>Advanced Filtering</h3>
-                <p>Precisely target your ideal customers with 30+ advanced filters including revenue bands, headcount growth, tech stack, funding rounds, and hiring trends.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-database"></i>
-                </div>
-                <h3>Comprehensive Database</h3>
-                <p>Access 100M+ verified contacts and 63M+ B2B companies worldwide—refreshed weekly to ensure you're always working with the most current information.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>99% Data Accuracy</h3>
-                <p>Enjoy industry-leading verification rates through our proprietary 12-point validation system that ensures the highest quality contact information.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3>Real-Time Enrichment</h3>
-                <p>Instantly enhance your existing prospect lists with current titles, direct dials, verified emails, and social profiles for seamless outreach.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>Growth Intelligence</h3>
-                <p>Identify companies showing growth signals like new funding, executive hires, or expansion—the perfect timing indicators for your sales outreach.</p>
-            </div>
-        </div>
-    </section>
 
 
-    <!-- Waitlist -->
-    <section id="signup" class="waitlist-section">
+    <!-- Everything you need section -->
+    <section class="everything-needed">
         <div class="container">
-            <h2 class="section-title">Limited-Time Opportunity</h2>
-            <p class="section-subtitle">Sign up now and get 250 verified B2B leads completely free</p>
-           <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
-    <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Sign Up Now</a>
-</div>
+            <h2 class="section-title">Everything You Need</h2>
+            <p class="section-subtitle">Whether you are a small company or a large enterprise, we have all the essential tools you will ever need for lead generation.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Unlimited Access</h3>
+                    <p>Save thousands of dollars compared to other lead generation apps. UnlimitedLeads is the only platform offering truly unlimited leads at a fixed cost.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Massive Database</h3>
+                    <p>Access 100M+ verified contacts and 63M+ B2B companies worldwide. Our database is refreshed weekly to ensure you're working with current information.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>99% Accuracy</h3>
+                    <p>Enjoy industry-leading data quality through our proprietary validation system that ensures the highest accuracy for all contact information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product showcase -->
+    <section class="product-showcase">
+        <div class="container">
+            <h2 class="section-title">See Your Leads in Action</h2>
+            <p class="section-subtitle">Get a preview of the high-quality, verified leads you'll be working with</p>
+            
+            <div class="leads-showcase">
+                <div class="leads-card">
+                    <div class="leads-image-container">
+                        <img src="https://i.imgur.com/aH13sck.png" alt="BtoB leads with contact information" class="leads-image">
+                    </div>
+                    <div class="leads-description">
+                        <p><strong>Our leads include:</strong> verified email addresses, phone numbers, detailed information about contacts and their companies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Powerful tools suite -->
+    <section id="features" class="tools-suite">
+        <div class="container">
+            <h2 class="section-title">Powerful Tools Suite</h2>
+            <p class="section-subtitle">Everything you need to supercharge your lead generation process.</p>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>Lead Finder</h3>
+                    <p>Tap into our database of over 100 million verified business leads. Connect instantly with decision-makers across industries, filtered by role, seniority, and location.</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Email Verifier</h3>
+                    <p>Maximize your email deliverability and protect your sender reputation. Our real-time validation engine cleans and validates your email lists for maximum delivery rates.</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Company Search</h3>
+                    <p>Find detailed company information including revenue, employee count, funding status, and growth signals to identify the perfect prospects for your business.</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Export & Integrations</h3>
+                    <p>Export unlimited leads to CSV or integrate directly with your CRM, email marketing tools, and sales platforms for seamless workflow automation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faqs" class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What does "truly unlimited" mean?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Unlike other platforms that charge per lead or have monthly limits, UnlimitedLeads offers truly unlimited access to our entire database for a fixed monthly fee. Export as many leads as you need without any additional costs or restrictions.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How accurate is your data?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We maintain a 99% accuracy rate through our proprietary 12-point validation system. Our database is updated weekly with the latest contact information, company changes, and professional moves.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I cancel my subscription anytime?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can cancel your subscription at any time from your account dashboard. There are no long-term contracts or cancellation fees. Your access continues until the end of your current billing period.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offer a free trial?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Every new user gets 250 free verified leads upon sign-up. No credit card required to start. This gives you a chance to experience our platform and data quality before committing to a subscription.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does your pricing compare to competitors?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our unlimited model saves businesses thousands of dollars compared to per-lead pricing. While competitors charge $0.10-$2 per lead, our unlimited access starts at just $99/month, making it perfect for high-volume lead generation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What support do you provide?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive support including email support, live chat, detailed documentation, and video tutorials. Our typical response time is under 4 hours for all support requests.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section id="testimonials" class="section container">
-        <div class="testimonials-heading">
-            <h2 class="section-title">Trusted by B2B Professionals</h2>
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
             <p class="section-subtitle">See how UnlimitedLeads is transforming lead generation for companies worldwide</p>
-        </div>
-        <div class="testimonials">
-            <div class="testimonial">
-                <div class="testimonial-content">
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
                     <p class="testimonial-text">"This database has completely transformed our outreach strategy. Within the first week, we booked 6 meetings with perfect-fit prospects. The unlimited access model is brilliant."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">AR</div>
@@ -1293,9 +1025,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <div class="testimonial-content">
+                
+                <div class="testimonial-card">
                     <p class="testimonial-text">"The quality of the data is exceptional. 95% of emails are deliverable and connect to the right people. Best lead generation investment we've ever made."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">JP</div>
@@ -1305,10 +1036,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <div class="testimonial-content">
-                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The unlimited model is refreshin —no more surprise monthly fees eating into our margins."</p>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"We cancelled three other subscription tools after getting UnlimitedLeads. The unlimited model is refreshing—no more surprise monthly fees eating into our margins."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">KK</div>
                         <div class="testimonial-info">
@@ -1318,135 +1048,115 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Final CTA -->
+    <section class="final-cta">
         <div class="container">
-            <div class="cta-content">
-                <h2>Don't Miss This Limited-Time Opportunity</h2>
-                <p>Sign up today to claim your 250 free verified leads and get immediate access to UnlimitedLeads—the only B2B database with unlimited access.</p>
-                <div class="cta-buttons" style="margin-top: 2rem; display: flex; justify-content: center;">
-    <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Get 250 leads for FREE</a>
-</div>
+            <div class="final-cta-content">
+                <h2>Ready to Get Unlimited Leads?</h2>
+                <p>Join thousands of businesses already generating unlimited leads with our platform. Start with 250 free leads today.</p>
+                <a href="https://unlimited-leads.online/sign-up" class="btn btn-white btn-large">Get Started for Free</a>
             </div>
         </div>
     </section>
-<!-- Footer -->
-<footer id="contact" class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <!-- Features Section -->
-            <div class="footer-column">
-                <h4>Features</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/sales-database">Sales Database</a></li>
-                    <li><a href="https://unlimited-leads.online/b2b-company-list">B2B Company List</a></li>
-                    <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
-                    <li><a href="https://unlimited-leads.online/buy-leads-online">Buy Leads Online</a></li>
-                    <li><a href="https://unlimited-leads.online/b2b-data-purchase">B2B Data Purchase</a></li>
-                    <li><a href="https://unlimited-leads.online/unlimited-email-verifier">Unlimited Email Verifier</a></li>
-                </ul>
-            </div>
-            
-            <!-- Free Tools Section -->
-            <div class="footer-column">
-                <h4>Free Tools</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk email finder</a></li>
-                    <li><a href="https://unlimited-leads.online/spam-words-checker">Spam word checker</a></li>
-                    <li><a href="https://unlimited-leads.online/find-email-from-phone-number">Find email from phone number</a></li>
-                    <li><a href="https://unlimited-leads.online/bulk-mx-lookup">Bulk mx lookup</a></li>
-                    <li><a href="https://unlimited-leads.online/email-extractor">Email extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/spintax-generator">Spintax Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/email-permutator">Email permutator</a></li>
-                    <li><a href="https://unlimited-leads.online/google-map-scraper.html">Google maps scrapper</a></li>
-                    <li><a href="https://unlimited-leads.online/apollo-email-finder">Apollo email finder</a></li>
-                    <li><a href="https://unlimited-leads.online/ai-email-template-generator">AI Email Template Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/ai-email-reply-generator-free">AI Email Reply Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/cold-email-generator">Cold Email Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/email-name-generator">Email Name Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/linkedin-headline-generator">Linkedin Headline Generator</a></li>
-                    <li><a href="https://unlimited-leads.online/linkedin-sales-navigator-scrapper">Linkedin Sales Navigator Scrapper</a></li>
-                    <li><a href="https://unlimited-leads.online/domain-extractor">Domain Extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/phone-number-extractor">Phone Number Extractor</a></li>
-                    <li><a href="https://unlimited-leads.online/find-website-from-company-name-in-bulk">Find Website from Company Name in Bulk</a></li>
-                    <li><a href="https://unlimited-leads.online/linkedin-profile-url-finder">Linkedin profiles url finder</a></li>
-                    <li><a href="https://linkfinderai.com/">LinkFinder AI</a></li>
-                </ul>
-            </div>
-            
-            <!-- Compare Section -->
-            <div class="footer-column">
-                <h4>Compare</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/lusha-alternative">Lusha Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/zoominfo-alternative">ZoomInfo Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/apollo-alternative">Apollo Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/snov-alternative">Snov Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/contact-out-alternative">ContactOut Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/rocketreach-alternative">RocketReach Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/uplead-alternative">UpLead Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/lead411-alternative">Lead411 Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/seamless-ai-alternative">Seamless ai Alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/findthatlead-alternative">Findthatlead alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/cognism-alternative">Cognism alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/hunter-io-alternative">Hunter io alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/getprospect-alternative">Getprospect alternative</a></li>
-                    <li><a href="https://unlimited-leads.online/alternatives">All Alternatives</a></li>
-                </ul>
-            </div>
-            
-            <!-- Industry Email List Section -->
-            <div class="footer-column">
-                <h4>Industry Email List</h4>
-                <ul class="footer-links">
-                    <li><a href="https://unlimited-leads.online/business-owner-email-list">Business Owner Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/attorney-email-list">Attorney Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/ceo-email-list">CEO Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/cfo-email-list">CFO Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/construction-industry-email-list">Construction Industry Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/hr-email-list">HR Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/real-estate-agent-email-list">Real Estate Agent Email List</a></li>
-                    <li><a href="https://unlimited-leads.online/email-list.html">All email lists</a></li>
-                </ul>
-            </div>
-            
-            <!-- Contact Section -->
-            <div class="footer-column">
-                <h4>Contact Us</h4>
-                <ul class="footer-links">
-                    <li><a href="mailto:support@unlimited-leads.online">support@unlimited-leads.online</a></li>
-                    <li><a href="mailto:support@unlimited-leads.online">Request Custom Plan</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-social">
-            <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.reddit.com/r/b2bmarketing/comments/1mt0xz4/unlimited_sales_leads/"><i class="fab fa-reddit"></i></a>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>© 2025 UnlimitedLeads. All rights reserved.</p>
-            <p>
-                <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
-                <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a> |
-                <a href="https://unlimited-leads.online/about-us">About us</a> 
-            </p>
-        </div>
-    </div>
-</footer>
 
-<!-- Floating Badge -->
-<div class="floating-badge">
-    <div class="floating-badge-icon">
-        <i class="fas fa-gift"></i>
-    </div>
-    <div class="floating-badge-content">
-        <a href="https://unlimited-leads.online/sign-up" class="btn btn-white">Sign Up Now and Get 250 FREE Leads</a>
-    </div>
-</div>
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Section -->
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/about-us">About Us</a></li>
+                        <li><a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="https://unlimited-leads.online/legal-notice">Terms of Service</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#bb888e8b8b94898fbb8e95979296928f9e9fd6979e9a9f88d594959792959e">Contact Sales</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Features Section -->
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/sales-database">Lead Finder</a></li>
+                        <li><a href="https://unlimited-leads.online/unlimited-email-verifier">Email Verifier</a></li>
+                        <li><a href="https://unlimited-leads.online/b2b-company-list">Company Database</a></li>
+                        <li><a href="https://unlimited-leads.online/bulk-email-finder">Bulk Tools</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Section -->
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://unlimited-leads.online/alternatives">Alternatives</a></li>
+                        <li><a href="https://unlimited-leads.online/email-list.html">Industry Lists</a></li>
+                        <li><a href="https://unlimited-leads.online/spam-words-checker">Free Tools</a></li>
+                        <li><a href="https://unlimited-leads.online/api">API Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support Section -->
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="/cdn-cgi/l/email-protection#4c3f393c3c233e380c3922202521253829286120292d283f62232220252229">Help Center</a></li>
+                        <li><a href="https://unlimited-leads.online/data-removal">Data Removal</a></li>
+                        <li><a href="https://unlimited-leads.online/refund">Refund Policy</a></li>
+                        <li><a href="https://unlimited-leads.online/status">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.reddit.com/r/b2bmarketing/"><i class="fab fa-reddit"></i></a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 UnlimitedLeads. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 </body>
 </html>
