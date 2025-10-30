@@ -497,6 +497,121 @@ header {
     z-index: 9999 !important;
 }
 
+/* Simple Review Notification - floating above chat widget */
+#reviewNotification {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    max-width: 320px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e5e7eb;
+    padding: 16px 20px;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #374151;
+    display: none;
+}
+
+#reviewNotification.show {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+}
+
+#reviewNotification.hide {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+#reviewNotification::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 30px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+}
+
+#reviewNotification .notification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+#reviewNotification .notification-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+#reviewNotification .notification-close:hover {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+#reviewNotification .review-sites {
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+#reviewNotification .review-sites a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#reviewNotification .review-sites a:hover {
+    text-decoration: underline;
+}
+
+#reviewNotification .bonus-text {
+    background: #fef3c7;
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: #92400e;
+}
+
+#reviewNotification .form-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#reviewNotification .form-link:hover {
+    text-decoration: underline;
+}
+
 /* Force le chat widget au premier plan */
 #n8n-chat,
 #n8n-chat *,
@@ -551,7 +666,7 @@ header {
     --chat--message--font-size: 0.875rem !important;
     --chat--message--padding: 0.75rem 1rem !important;
     --chat--message--border-radius: 0.75rem !important;
-    --chat--message-line-height: 1.5 !important;
+    --chat-message-line-height: 1.5 !important;
     --chat--message--bot--background: #f8fafc !important;
     --chat--message--bot--color: #1f2937 !important;
     --chat--message--bot--border: 1px solid #e2e8f0 !important;
@@ -1384,6 +1499,19 @@ header {
     #exportConfirmationModal .modal-body {
         padding: 20px;
     }
+
+    /* Review notification mobile adjustments */
+    #reviewNotification {
+        bottom: 100px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        width: calc(100vw - 20px);
+    }
+
+    #reviewNotification::before {
+        right: 50px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1714,6 +1842,33 @@ header {
         </section>
     </div>
     
+    <!-- Review Notification (Simple floating notification above chat widget) -->
+    <div id="reviewNotification">
+        <button class="notification-close">&times;</button>
+        <div class="notification-header">
+            <i class="fas fa-star" style="color: #fbbf24; margin-right: 6px;"></i>
+            Help us grow!
+        </div>
+        <div>
+            Hi! If you've found Unlimited Leads useful, please consider leaving us a review on these sites:
+        </div>
+        <div class="review-sites">
+            • <a href="https://www.trustradius.com/" target="_blank">TrustRadius</a><br>
+            • <a href="https://www.trustpilot.com/" target="_blank">Trustpilot</a><br>
+            • <a href="https://www.g2.com/" target="_blank">G2.com</a><br>
+            • <a href="https://www.capterra.com/" target="_blank">Capterra</a>
+        </div>
+        <div style="font-size: 13px; margin-top: 8px;">
+            It only takes less than 5 minutes on every site!
+        </div>
+        <div class="bonus-text">
+            🎁 <strong>Bonus:</strong> If you give us a review and provide us with links to your reviews <a href="https://unlimited-leads.online/feedback" class="form-link" target="_blank">in this form</a>, we will award you <strong>1000 free credits</strong> on your account!
+        </div>
+        <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
+            Thank you in advance 🚀
+        </div>
+    </div>
+    
     <div id="contactModal" class="contact-modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -1944,6 +2099,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contactModal.style.display = 'none';
             }
         });
+
+        // Initialize simple review notification
+        initializeSimpleReviewNotification();
       
     } catch (error) {
         console.error("Error initializing app:", error);
@@ -1953,6 +2111,105 @@ document.addEventListener('DOMContentLoaded', async () => {
         loading.style.display = 'none';
     }
 });
+
+// Simple Review Notification Function
+function initializeSimpleReviewNotification() {
+    // Check if review request has already been shown
+    const reviewRequestShown = localStorage.getItem('reviewRequestShown');
+    const userToken = localStorage.getItem('sessionToken');
+    
+    if (reviewRequestShown || !userToken) {
+        console.log('Review request already shown or no user token');
+        return;
+    }
+
+    let userActivity = 0;
+    let hasUsedTool = false;
+    
+    // Track user activity
+    const trackActivity = () => {
+        userActivity++;
+        if (userActivity >= 3 || hasUsedTool) { // Show after 3 activities or tool usage
+            showSimpleReviewNotification();
+        }
+    };
+
+    // Listen for search form submissions
+    const searchForm = document.getElementById('searchForm');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function() {
+            hasUsedTool = true;
+            setTimeout(() => {
+                showSimpleReviewNotification();
+            }, 15000); // Show 15 seconds after search
+        });
+    }
+
+    // Listen for export button clicks
+    const exportButton = document.getElementById('exportButton');
+    if (exportButton) {
+        exportButton.addEventListener('click', function() {
+            hasUsedTool = true;
+            setTimeout(() => {
+                showSimpleReviewNotification();
+            }, 10000); // Show 10 seconds after export
+        });
+    }
+
+    // Track clicks and interactions
+    document.addEventListener('click', function(event) {
+        if (event.target.closest('.results-table') || 
+            event.target.classList.contains('fa-eye') ||
+            event.target.closest('.action-icons')) {
+            trackActivity();
+        }
+    });
+
+    // Show after 2 minutes of being on page (if tab is active)
+    let timeOnPage = 0;
+    const timeInterval = setInterval(() => {
+        if (!document.hidden) {
+            timeOnPage += 1000;
+            if (timeOnPage >= 120000) { // 2 minutes
+                showSimpleReviewNotification();
+                clearInterval(timeInterval);
+            }
+        }
+    }, 1000);
+}
+
+function showSimpleReviewNotification() {
+    // Mark as shown so it doesn't appear again
+    localStorage.setItem('reviewRequestShown', 'true');
+    
+    const notification = document.getElementById('reviewNotification');
+    if (!notification) return;
+    
+    // Show the notification
+    notification.classList.add('show');
+    
+    // Auto-hide after 20 seconds
+    const autoHideTimeout = setTimeout(() => {
+        hideNotification();
+    }, 20000);
+    
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        clearTimeout(autoHideTimeout);
+        hideNotification();
+    });
+    
+    function hideNotification() {
+        notification.classList.remove('show');
+        notification.classList.add('hide');
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 400);
+    }
+    
+    console.log('Simple review notification shown');
+}
 
 // Fetch data from Supabase via n8n webhook
 async function fetchData() {
@@ -3064,180 +3321,6 @@ if (logoutButton) {
         },
         loadPreviousSession: false
     });
-
-    // Review request functionality
-    function initializeReviewRequest() {
-        // Check if review request has already been shown
-        const reviewRequestShown = localStorage.getItem('reviewRequestShown');
-        const userToken = localStorage.getItem('sessionToken');
-        
-        if (reviewRequestShown || !userToken) {
-            console.log('Review request already shown or no user token');
-            return; // Don't show if already shown or no user token
-        }
-
-        // Track user activity
-        let activityTimer = 0;
-        let hasSearched = false;
-        let hasExported = false;
-        let hasUsedTool = false;
-        
-        // Function to check if we should show review request
-        function checkReviewConditions() {
-            // Show after 3 minutes of activity OR after first search/export
-            if (activityTimer >= 180000 || hasSearched || hasExported || hasUsedTool) {
-                showReviewRequest();
-            }
-        }
-
-        // Track time spent on page (only when tab is active)
-        let isTabActive = true;
-        
-        document.addEventListener('visibilitychange', () => {
-            isTabActive = !document.hidden;
-        });
-
-        const activityInterval = setInterval(() => {
-            if (isTabActive) {
-                activityTimer += 1000; // Add 1 second only when tab is active
-                if (activityTimer >= 180000) { // 3 minutes
-                    checkReviewConditions();
-                    clearInterval(activityInterval);
-                }
-            }
-        }, 1000);
-
-        // Listen for search form submissions
-        const searchForm = document.getElementById('searchForm');
-        if (searchForm) {
-            searchForm.addEventListener('submit', function() {
-                hasUsedTool = true;
-                hasSearched = true;
-                console.log('Search detected, scheduling review request');
-                setTimeout(checkReviewConditions, 10000); // Show 10 seconds after search
-            });
-        }
-
-        // Listen for export button clicks
-        const exportButton = document.getElementById('exportButton');
-        if (exportButton) {
-            exportButton.addEventListener('click', function() {
-                hasUsedTool = true;
-                hasExported = true;
-                console.log('Export detected, scheduling review request');
-                setTimeout(checkReviewConditions, 5000); // Show 5 seconds after export
-            });
-        }
-
-        // Track other interactions that indicate tool usage
-        document.addEventListener('click', function(event) {
-            // Check if user clicked on result table or view details
-            if (event.target.closest('.results-table') || 
-                event.target.classList.contains('fa-eye') ||
-                event.target.closest('.action-icons')) {
-                hasUsedTool = true;
-                console.log('Tool interaction detected');
-            }
-        });
-    }
-
-    function showReviewRequest() {
-        // Mark as shown so it doesn't appear again
-        localStorage.setItem('reviewRequestShown', 'true');
-        console.log('Showing review request');
-        
-        // Wait a bit then send the review message
-        setTimeout(() => {
-            try {
-                const reviewMessage = `Hi there! 👋
-
-If you've found UnlimitedLeads useful, please consider leaving us a review on these sites:
-
-⭐ **TrustRadius** - https://www.trustradius.com/
-⭐ **Trustpilot** - https://www.trustpilot.com/
-⭐ **G2.com** - https://www.g2.com/
-⭐ **Capterra** - https://www.capterra.com/
-
-It only takes less than 5 minutes on every site! 
-
-🎁 **Special Bonus**: If you give us a review and provide us with links to your reviews in our feedback form, we will award you **1000 free credits** on your account!
-
-Thank you in advance for helping us grow! 🚀
-
-*This is a one-time message - you won't see this again.*`;
-
-                // Try to trigger the chat widget and send message
-                const chatContainer = document.querySelector('#n8n-chat');
-                if (chatContainer) {
-                    // First, try to open the chat
-                    const chatToggle = chatContainer.querySelector('button, [role="button"]');
-                    if (chatToggle) {
-                        // Add a notification badge to indicate new message
-                        addChatNotificationBadge();
-                        
-                        // Show alert to notify user
-                        if (typeof showAlert === 'function') {
-                            showAlert('💬 You have a special message waiting in the chat widget!', 'success');
-                        }
-                        
-                        // Try to simulate the message being sent from the bot
-                        setTimeout(() => {
-                            // Since we can't directly inject messages into the n8n chat,
-                            // we'll trigger the chat opening and rely on the notification
-                            console.log('Review request message prepared for chat widget');
-                            
-                            // You could also send this message through your webhook if needed
-                            // by making an API call to your n8n endpoint with the review message
-                        }, 1000);
-                    }
-                }
-                
-                console.log('Review request triggered successfully');
-                
-            } catch (error) {
-                console.error('Error showing review request:', error);
-            }
-        }, 2000);
-    }
-
-    // Function to add notification badge to chat widget
-    function addChatNotificationBadge() {
-        const chatContainer = document.querySelector('#n8n-chat');
-        if (chatContainer) {
-            // Remove existing badge if any
-            const existingBadge = chatContainer.querySelector('.chat-notification-badge');
-            if (existingBadge) {
-                existingBadge.remove();
-            }
-            
-            // Create new notification badge
-            const badge = document.createElement('div');
-            badge.className = 'chat-notification-badge';
-            badge.textContent = '1';
-            
-            // Find the chat toggle button and add badge to it
-            const chatToggle = chatContainer.querySelector('button, [role="button"]');
-            if (chatToggle) {
-                chatToggle.style.position = 'relative';
-                chatToggle.appendChild(badge);
-                
-                // Remove badge when chat is opened
-                chatToggle.addEventListener('click', () => {
-                    setTimeout(() => {
-                        if (badge && badge.parentNode) {
-                            badge.remove();
-                        }
-                    }, 1000);
-                });
-            }
-        }
-    }
-
-    // Initialize the review request system after chat is loaded
-    setTimeout(() => {
-        console.log('Initializing review request system');
-        initializeReviewRequest();
-    }, 3000); // Wait 3 seconds for chat to fully load
 </script>
 
 <!-- Div pour le chat widget -->
