@@ -497,121 +497,6 @@ header {
     z-index: 9999 !important;
 }
 
-/* Simple Review Notification - floating above chat widget */
-#reviewNotification {
-    position: fixed;
-    bottom: 120px;
-    right: 20px;
-    max-width: 320px;
-    background: white;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    border: 1px solid #e5e7eb;
-    padding: 16px 20px;
-    z-index: 10000;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #374151;
-    display: none;
-}
-
-#reviewNotification.show {
-    opacity: 1;
-    transform: translateY(0);
-    display: block;
-}
-
-#reviewNotification.hide {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-}
-
-#reviewNotification::before {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    right: 30px;
-    width: 16px;
-    height: 16px;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-top: none;
-    border-left: none;
-    transform: rotate(45deg);
-}
-
-#reviewNotification .notification-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #2563eb;
-}
-
-#reviewNotification .notification-close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 18px;
-    color: #9ca3af;
-    cursor: pointer;
-    padding: 0;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-#reviewNotification .notification-close:hover {
-    background: #f3f4f6;
-    color: #6b7280;
-}
-
-#reviewNotification .review-sites {
-    margin: 8px 0;
-    font-size: 13px;
-}
-
-#reviewNotification .review-sites a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-#reviewNotification .review-sites a:hover {
-    text-decoration: underline;
-}
-
-#reviewNotification .bonus-text {
-    background: #fef3c7;
-    border: 1px solid #fbbf24;
-    border-radius: 8px;
-    padding: 8px 10px;
-    margin: 8px 0;
-    font-size: 12px;
-    color: #92400e;
-}
-
-#reviewNotification .form-link {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-#reviewNotification .form-link:hover {
-    text-decoration: underline;
-}
-
 /* Force le chat widget au premier plan */
 #n8n-chat,
 #n8n-chat *,
@@ -666,7 +551,7 @@ header {
     --chat--message--font-size: 0.875rem !important;
     --chat--message--padding: 0.75rem 1rem !important;
     --chat--message--border-radius: 0.75rem !important;
-    --chat-message-line-height: 1.5 !important;
+    --chat--message-line-height: 1.5 !important;
     --chat--message--bot--background: #f8fafc !important;
     --chat--message--bot--color: #1f2937 !important;
     --chat--message--bot--border: 1px solid #e2e8f0 !important;
@@ -718,29 +603,114 @@ header {
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
 }
 
-/* Chat notification badge for new messages */
-.chat-notification-badge {
-    position: absolute !important;
-    top: -8px !important;
-    right: -8px !important;
-    background: #ef4444 !important;
-    color: white !important;
-    border-radius: 50% !important;
-    width: 24px !important;
-    height: 24px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 12px !important;
-    font-weight: bold !important;
-    border: 2px solid white !important;
-    animation: pulse-notification 2s infinite !important;
+/* Review Notification - Appears above chat widget */
+.review-notification {
+    position: fixed;
+    bottom: 100px; /* Above the chat widget */
+    right: 20px;
+    max-width: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: 9998;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-left: 4px solid var(--primary);
 }
 
-@keyframes pulse-notification {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
+.review-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.review-notification.hide {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.review-notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.review-notification-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 0;
+}
+
+.review-notification-close {
+    background: none;
+    border: none;
+    color: var(--gray-500);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.review-notification-close:hover {
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.review-notification-body {
+    color: var(--gray-700);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.review-notification-body p {
+    margin: 0 0 12px 0;
+}
+
+.review-notification-body ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.review-notification-body li {
+    margin: 6px 0;
+}
+
+.review-notification-body a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.review-notification-body a:hover {
+    text-decoration: underline;
+}
+
+.review-notification-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 13px;
+    color: var(--gray-600);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .review-notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        bottom: 80px;
+    }
 }
 
 
@@ -1499,19 +1469,6 @@ header {
     #exportConfirmationModal .modal-body {
         padding: 20px;
     }
-
-    /* Review notification mobile adjustments */
-    #reviewNotification {
-        bottom: 100px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-        width: calc(100vw - 20px);
-    }
-
-    #reviewNotification::before {
-        right: 50px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1842,33 +1799,6 @@ header {
         </section>
     </div>
     
-    <!-- Review Notification (Simple floating notification above chat widget) -->
-    <div id="reviewNotification">
-        <button class="notification-close">&times;</button>
-        <div class="notification-header">
-            <i class="fas fa-star" style="color: #fbbf24; margin-right: 6px;"></i>
-            Help us grow!
-        </div>
-        <div>
-            Hi! If you've found Unlimited Leads useful, please consider leaving us a review on these sites:
-        </div>
-        <div class="review-sites">
-            • <a href="https://www.trustradius.com/" target="_blank">TrustRadius</a><br>
-            • <a href="https://www.trustpilot.com/" target="_blank">Trustpilot</a><br>
-            • <a href="https://www.g2.com/" target="_blank">G2.com</a><br>
-            • <a href="https://www.capterra.com/" target="_blank">Capterra</a>
-        </div>
-        <div style="font-size: 13px; margin-top: 8px;">
-            It only takes less than 5 minutes on every site!
-        </div>
-        <div class="bonus-text">
-            🎁 <strong>Bonus:</strong> If you give us a review and provide us with links to your reviews <a href="https://unlimited-leads.online/feedback" class="form-link" target="_blank">in this form</a>, we will award you <strong>1000 free credits</strong> on your account!
-        </div>
-        <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
-            Thank you in advance 🚀
-        </div>
-    </div>
-    
     <div id="contactModal" class="contact-modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -2099,9 +2029,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contactModal.style.display = 'none';
             }
         });
-
-        // Initialize simple review notification
-        initializeSimpleReviewNotification();
       
     } catch (error) {
         console.error("Error initializing app:", error);
@@ -2111,105 +2038,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         loading.style.display = 'none';
     }
 });
-
-// Simple Review Notification Function
-function initializeSimpleReviewNotification() {
-    // Check if review request has already been shown
-    const reviewRequestShown = localStorage.getItem('reviewRequestShown');
-    const userToken = localStorage.getItem('sessionToken');
-    
-    if (reviewRequestShown || !userToken) {
-        console.log('Review request already shown or no user token');
-        return;
-    }
-
-    let userActivity = 0;
-    let hasUsedTool = false;
-    
-    // Track user activity
-    const trackActivity = () => {
-        userActivity++;
-        if (userActivity >= 3 || hasUsedTool) { // Show after 3 activities or tool usage
-            showSimpleReviewNotification();
-        }
-    };
-
-    // Listen for search form submissions
-    const searchForm = document.getElementById('searchForm');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function() {
-            hasUsedTool = true;
-            setTimeout(() => {
-                showSimpleReviewNotification();
-            }, 15000); // Show 15 seconds after search
-        });
-    }
-
-    // Listen for export button clicks
-    const exportButton = document.getElementById('exportButton');
-    if (exportButton) {
-        exportButton.addEventListener('click', function() {
-            hasUsedTool = true;
-            setTimeout(() => {
-                showSimpleReviewNotification();
-            }, 10000); // Show 10 seconds after export
-        });
-    }
-
-    // Track clicks and interactions
-    document.addEventListener('click', function(event) {
-        if (event.target.closest('.results-table') || 
-            event.target.classList.contains('fa-eye') ||
-            event.target.closest('.action-icons')) {
-            trackActivity();
-        }
-    });
-
-    // Show after 2 minutes of being on page (if tab is active)
-    let timeOnPage = 0;
-    const timeInterval = setInterval(() => {
-        if (!document.hidden) {
-            timeOnPage += 1000;
-            if (timeOnPage >= 120000) { // 2 minutes
-                showSimpleReviewNotification();
-                clearInterval(timeInterval);
-            }
-        }
-    }, 1000);
-}
-
-function showSimpleReviewNotification() {
-    // Mark as shown so it doesn't appear again
-    localStorage.setItem('reviewRequestShown', 'true');
-    
-    const notification = document.getElementById('reviewNotification');
-    if (!notification) return;
-    
-    // Show the notification
-    notification.classList.add('show');
-    
-    // Auto-hide after 20 seconds
-    const autoHideTimeout = setTimeout(() => {
-        hideNotification();
-    }, 20000);
-    
-    // Close button functionality
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        clearTimeout(autoHideTimeout);
-        hideNotification();
-    });
-    
-    function hideNotification() {
-        notification.classList.remove('show');
-        notification.classList.add('hide');
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 400);
-    }
-    
-    console.log('Simple review notification shown');
-}
 
 // Fetch data from Supabase via n8n webhook
 async function fetchData() {
@@ -3295,6 +3123,79 @@ if (logoutButton) {
                 searchAlert.style.display = 'none';
             }, 5000);
         }
+
+        function showReviewRequest() {
+    // Mark as shown so it doesn't appear again
+    localStorage.setItem('reviewRequestShown', 'true');
+    console.log('Showing review request notification');
+    
+    // Create the notification element
+    const notification = document.createElement('div');
+    notification.className = 'review-notification';
+    notification.innerHTML = `
+        <div class="review-notification-header">
+            <h4 class="review-notification-title">👋 Hi there!</h4>
+            <button class="review-notification-close" aria-label="Close notification">×</button>
+        </div>
+        <div class="review-notification-body">
+            <p>If you've found Unlimited Leads useful, please consider leaving us a review on these sites:</p>
+            <ul>
+                <li><a href="https://www.trustradius.com/" target="_blank">TrustRadius</a></li>
+                <li><a href="https://www.trustpilot.com/" target="_blank">Trustpilot</a></li>
+                <li><a href="https://www.g2.com/" target="_blank">G2.com</a></li>
+                <li><a href="https://www.capterra.com/" target="_blank">Capterra</a></li>
+            </ul>
+            <p>It only takes less than 5 minutes on every site!</p>
+            <p><strong>🎁 Special offer:</strong> Submit your review links <a href="#" id="reviewFormLink">in this form</a>, and we'll award you <strong>1000 free credits</strong>!</p>
+        </div>
+        <div class="review-notification-footer">
+            Thank you in advance! This message will only appear once.
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Show notification with animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 500);
+    
+    // Close button
+    const closeBtn = notification.querySelector('.review-notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        notification.classList.add('hide');
+        setTimeout(() => {
+            notification.remove();
+        }, 400);
+    });
+    
+    // Review form link
+    const formLink = notification.querySelector('#reviewFormLink');
+    formLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://your-review-form-url.com', '_blank'); // <— replace this URL
+    });
+    
+    // Auto-hide after 30 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.classList.remove('show');
+            notification.classList.add('hide');
+            setTimeout(() => {
+                notification.remove();
+            }, 400);
+        }
+    }, 30000);
+}
+
+// Only show if not shown before
+if (!localStorage.getItem('reviewRequestShown')) {
+    // Wait 3 minutes (180000 ms) before showing
+    setTimeout(showReviewRequest, 18);
+}
+
     </script>
 
 
@@ -3302,7 +3203,7 @@ if (logoutButton) {
 <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
     
-    const chat = createChat({
+    createChat({
         webhookUrl: 'https://eliasse-n8n.onrender.com/webhook/5edbe311-8358-4caf-b16e-25e6ebb15b1b/chat',
         mode: 'window',
         target: '#n8n-chat',
