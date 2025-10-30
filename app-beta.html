@@ -3124,71 +3124,100 @@ if (logoutButton) {
             }, 5000);
         }
 
-        function showReviewRequest() {
-    // Mark as shown so it doesn't appear again
-    localStorage.setItem('reviewRequestShown', 'true');
-    console.log('Showing review request notification');
-    
-    // Create the notification element
-    const notification = document.createElement('div');
-    notification.className = 'review-notification';
-    notification.innerHTML = `
-        <div class="review-notification-header">
-            <h4 class="review-notification-title">👋 Hi there!</h4>
-            <button class="review-notification-close" aria-label="Close notification">×</button>
-        </div>
-        <div class="review-notification-body">
-            <p>If you've found Unlimited Leads useful, please consider leaving us a review on these sites:</p>
-            <ul>
-                <li><a href="https://www.trustradius.com/" target="_blank">TrustRadius</a></li>
-                <li><a href="https://www.trustpilot.com/" target="_blank">Trustpilot</a></li>
-                <li><a href="https://www.g2.com/" target="_blank">G2.com</a></li>
-                <li><a href="https://www.capterra.com/" target="_blank">Capterra</a></li>
-            </ul>
-            <p>It only takes less than 5 minutes on every site!</p>
-            <p><strong>🎁 Special offer:</strong> Submit your review links <a href="#" id="reviewFormLink">in this form</a>, and we'll award you <strong>1000 free credits</strong>!</p>
-        </div>
-        <div class="review-notification-footer">
-            Thank you in advance! This message will only appear once.
-        </div>
-    `;
-    
-    // Add to page
-    document.body.appendChild(notification);
-    
-    // Show notification with animation
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 500);
-    
-    // Close button
-    const closeBtn = notification.querySelector('.review-notification-close');
-    closeBtn.addEventListener('click', () => {
-        notification.classList.remove('show');
-        notification.classList.add('hide');
-        setTimeout(() => {
-            notification.remove();
-        }, 400);
-    });
-    
-    // Review form link
-    const formLink = notification.querySelector('#reviewFormLink');
-    formLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.open('https://your-review-form-url.com', '_blank'); // <— replace this URL
-    });
-    
-    // Auto-hide after 30 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.classList.remove('show');
-            notification.classList.add('hide');
-            setTimeout(() => {
-                notification.remove();
-            }, 400);
-        }
-    }, 30000);
+// === Debug flag ===
+const DEBUG_REVIEW = true;
+
+// === Debug helper ===
+function logReviewDebug(...args) {
+  if (DEBUG_REVIEW) console.log("[Review Debug]", ...args);
 }
+
+// === Show Review Notification ===
+function showReviewRequest() {
+  logReviewDebug("Attempting to show review notification...");
+
+  // Check if already shown
+  if (localStorage.getItem('reviewRequestShown')) {
+    logReviewDebug("Notification already shown. Skipping display.");
+    return;
+  }
+
+  // Mark as shown
+  localStorage.setItem('reviewRequestShown', 'true');
+  logReviewDebug("Marked as shown in localStorage.");
+
+  // Create notification
+  const notification = document.createElement('div');
+  notification.className = 'review-notification';
+  notification.innerHTML = `
+    <div class="review-notification-header">
+      <h4 class="review-notification-title">👋 Hi there!</h4>
+      <button class="review-notification-close" aria-label="Close notification">×</button>
+    </div>
+    <div class="review-notification-body">
+      <p>If you've found Unlimited Leads useful, please consider leaving us a review:</p>
+      <ul>
+        <li><a href="https://www.trustradius.com/" target="_blank">TrustRadius</a></li>
+        <li><a href="https://www.trustpilot.com/" target="_blank">Trustpilot</a></li>
+        <li><a href="https://www.g2.com/" target="_blank">G2.com</a></li>
+        <li><a href="https://www.capterra.com/" target="_blank">Capterra</a></li>
+      </ul>
+      <p><strong>🎁 Bonus:</strong> Submit your review links <a href="#" id="reviewFormLink">here</a> to get 1000 free credits!</p>
+    </div>
+    <div class="review-notification-footer">
+      Thanks a lot! This message will only appear once.
+    </div>
+  `;
+
+  document.body.appendChild(notification);
+  logReviewDebug("Notification element added to DOM.");
+
+  // Animate it in
+  setTimeout(() => {
+    notification.classList.add('show');
+    logReviewDebug("Notification now visible.");
+  }, 300);
+
+  // Close button
+  notification.querySelector('.review-notification-close').addEventListener('click', () => {
+    logReviewDebug("Close button clicked.");
+    notification.classList.remove('show');
+    notification.classList.add('hide');
+    setTimeout(() => notification.remove(), 400);
+  });
+
+  // Link
+  const formLink = notification.querySelector('#reviewFormLink');
+  formLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    logReviewDebug("Form link clicked.");
+    window.open('https://your-review-form-url.com', '_blank');
+  });
+
+  // Auto-hide after 30 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      logReviewDebug("Auto-hiding notification after 30 seconds.");
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+      setTimeout(() => notification.remove(), 400);
+    }
+  }, 30000);
+}
+
+// === Trigger after delay ===
+document.addEventListener('DOMContentLoaded', () => {
+  logReviewDebug("DOM loaded, waiting before showing review message...");
+  if (!localStorage.getItem('reviewRequestShown')) {
+    setTimeout(() => {
+      logReviewDebug("Delay complete, calling showReviewRequest()");
+      showReviewRequest();
+    }, 5000); // <-- Show after 5 seconds
+  } else {
+    logReviewDebug("Review notification already shown previously.");
+  }
+});
+
 
 // Only show if not shown before
 if (!localStorage.getItem('reviewRequestShown')) {
