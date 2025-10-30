@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlimited Leads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet"/>
    <style>
    /* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
@@ -486,6 +487,147 @@ header {
     color: var(--primary);
     background-color: var(--primary-light);
 }
+
+/* Position chat widget en bas à droite */
+#n8n-chat {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    z-index: 9999 !important;
+}
+
+/* Force le chat widget au premier plan */
+#n8n-chat,
+#n8n-chat *,
+#n8n-chat input,
+#n8n-chat textarea {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+}
+
+#n8n-chat input:focus,
+#n8n-chat textarea:focus {
+    outline: 2px solid #007bff !important;
+    z-index: 100000 !important;
+}
+
+/* Personnalisation du chat widget - Branding UnlimitedLeads */
+:root {
+    /* Variables du chat - Couleurs de votre branding */
+    --chat--color--primary: #2563eb !important;
+    --chat--color--primary-shade-50: #1d4ed8 !important;
+    --chat--color--primary--shade-100: #1e40af !important;
+    --chat--color--secondary: #0ea5e9 !important;
+    --chat--color-secondary-shade-50: #0284c7 !important;
+    --chat--color-white: #ffffff !important;
+    --chat--color-light: #eff6ff !important;
+    --chat--color-light-shade-50: #dbeafe !important;
+    --chat--color-light-shade-100: #bfdbfe !important;
+    --chat--color-medium: #e5e7eb !important;
+    --chat--color-dark: #1f2937 !important;
+    --chat--color-disabled: #6b7280 !important;
+    --chat--color-typing: #374151 !important;
+
+    /* Tailles et espaces */
+    --chat--spacing: 1rem !important;
+    --chat--border-radius: 0.5rem !important;
+    --chat--transition-duration: 0.3s !important;
+
+    /* Fenêtre du chat */
+    --chat--window--width: 400px !important;
+    --chat--window--height: 600px !important;
+
+    /* Header personnalisé */
+    --chat--header--padding: 1.25rem !important;
+    --chat--header--background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    --chat--header--color: #ffffff !important;
+    --chat--header--border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    --chat--heading--font-size: 1.25rem !important;
+    --chat--subtitle--font-size: 0.875rem !important;
+    --chat--subtitle--line-height: 1.5 !important;
+
+    /* Messages */
+    --chat--message--font-size: 0.875rem !important;
+    --chat--message--padding: 0.75rem 1rem !important;
+    --chat--message--border-radius: 0.75rem !important;
+    --chat--message-line-height: 1.5 !important;
+    --chat--message--bot--background: #f8fafc !important;
+    --chat--message--bot--color: #1f2937 !important;
+    --chat--message--bot--border: 1px solid #e2e8f0 !important;
+    --chat--message--user--background: #2563eb !important;
+    --chat--message--user--color: #ffffff !important;
+    --chat--message--user--border: none !important;
+
+    /* Bouton toggle */
+    --chat--toggle--background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    --chat--toggle--hover--background: #1e40af !important;
+    --chat--toggle--active--background: #1e3a8a !important;
+    --chat--toggle--color: #ffffff !important;
+    --chat--toggle--size: 64px !important;
+}
+
+/* Style personnalisé pour le header */
+#n8n-chat .chat-header {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Icône AI dans le toggle button */
+#n8n-chat .chat-toggle::before {
+    content: '🤖' !important;
+    font-size: 28px !important;
+}
+
+/* Badge "AI Support" */
+#n8n-chat .chat-header::after {
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    background: rgba(255,255,255,0.2) !important;
+    color: white !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+}
+
+/* Animation du toggle */
+#n8n-chat .chat-toggle {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+#n8n-chat .chat-toggle:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* Chat notification badge for new messages */
+.chat-notification-badge {
+    position: absolute !important;
+    top: -8px !important;
+    right: -8px !important;
+    background: #ef4444 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    border: 2px solid white !important;
+    animation: pulse-notification 2s infinite !important;
+}
+
+@keyframes pulse-notification {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 
 /* LOADING - AMÉLIORÉ */
 .loading {
@@ -1318,6 +1460,18 @@ header {
         }
         
     </style>
+    
+  <script type="text/javascript">
+  (function (f, b) { if (!b.__SV) { var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) { function g(a, d) { var b = d.split("."); 2 == b.length && ((a = a[b[0]]), (d = b[1])); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))); }; } var a = b; "undefined" !== typeof c ? (a = b[c] = []) : (c = "mixpanel"); a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d; }; a.people.toString = function () { return a.toString(1) + ".people (stub)"; }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split( " "); for (h = 0; h < i.length; h++) g(a, i[h]); var j = "set set_once union unset remove delete".split(" "); a.get_group = function () { function b(c) { d[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); a.push([e, call2]); }; } for ( var d = {}, e = ["get_group"].concat( Array.prototype.slice.call(arguments, 0)), c = 0; c < j.length; c++) b(j[c]); return d; }; b._i.push([e, f, c]); }; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g); } })(document, window.mixpanel || []);
+
+  // Configuration avec ton token
+  mixpanel.init("7d0e88032f9aff193eaa4504dd11239e", {
+    debug: true,
+    track_pageview: true,
+    persistence: "localStorage",
+  });
+</script>
+    
     <!-- Hreflang tags -->
 </head>
 <body>
@@ -1326,7 +1480,7 @@ header {
         <header>
     <div class="user-credits-container">
         <div id="userCredits" class="user-credits">
-            <i class="fas fa-coins"></i> 0 credits
+            <i class="fas fa-coins"></i> Loading...
         </div>
         <button id="upgradeButton" class="upgrade-button">
             <i class="fas fa-crown"></i> Upgrade
@@ -1350,9 +1504,14 @@ header {
             </a>
         </li>
         <li class="menu-item">
-            <a href="https://chromewebstore.google.com/detail/unlimited-leads-linkedin/hcjohgbpfcjhkpipckaibiibmeigmpfa?authuser=0&hl=fr" class="menu-link">
-                <i class="fas fa-rocket"></i> Linkedin Scrapper
-            </a>
+                    <a href="https://unlimited-leads.online/email-verifier-app" class="menu-link">
+                        <i class="fas fa-check-circle"></i> Email Verifier
+                    </a>
+        </li>
+        <li class="menu-item">
+                    <a href="https://unlimited-leads.online/linkedin-profile-scraper-app" class="menu-link">
+                        <i class="fab fa-linkedin"></i> LinkedIn Scraper
+                    </a>
         </li>
         <li class="menu-item">
                     <a href="https://unlimited-leads.online/account" class="menu-link">
@@ -1367,14 +1526,10 @@ header {
     <h2 class="search-title">Find Business Contacts</h2>
     
     <div id="searchAlert" class="alert"></div>
-
-    <div class="info-box">
-         <p><strong>How it works:</strong> Search for contacts using our filters. Then export them with the Export to CSV button</p>
-    </div>
     
     <form id="searchForm" class="search-form">
         <div class="form-group">
-            <label for="country">Country (required)</label>
+            <label for="country">Country</label>
             <select id="country" name="country">
                 <option value="United States">Select a country</option>
                 <option value="Canada">Canada</option>
@@ -1404,8 +1559,8 @@ header {
 </div>
                 
         <div class="form-group">
-    <label for="industry">Industry</label>
-    <select id="industry" name="industry">
+    <label for="industry">Industry (required)</label>
+    <select id="industry" name="industry" required>
         <option value="">All Industries</option> 
         <option value="Accounting">Accounting</option>
         <option value="Agriculture">Agriculture</option>
@@ -1425,7 +1580,6 @@ header {
         <option value="Chemicals">Chemicals</option>
         <option value="Civic & social organization">Civic & social organization</option>
         <option value="Civil engineering">Civil engineering</option>
-        <option value="Clean energy">Clean energy</option>
         <option value="Computer & network security">Computer & network security</option>
         <option value="Computer networking">Computer networking</option>
         <option value="Computer software">Computer software</option>
@@ -1446,7 +1600,6 @@ header {
         <option value="Furniture">Furniture</option>
         <option value="Government administration">Government administration</option>
         <option value="Health, Wellness & fitness">Health, Wellness & fitness</option>
-        <option value="Healthcare">Healthcare</option>
         <option value="Hospital & health care">Hospital & health care</option>
         <option value="Hospitality">Hospitality</option>
         <option value="Information technology & services">Information technology & services</option>
@@ -1471,7 +1624,6 @@ header {
         <option value="Retail">Retail</option>
         <option value="Sporting goods">Sporting goods</option>
         <option value="Staffing & recruiting">Staffing & recruiting</option>
-        <option value="Technology">Technology</option>
         <option value="Telecommunications">Telecommunications</option>
         <option value="Transportation">Transportation</option>
         <option value="Utilities">Utilities</option>
@@ -1489,7 +1641,7 @@ header {
                 
 
          <div class="form-group">
-                <label for="jobTitle">Job Title:</label>
+                <label for="jobTitle">Job Title</label>
                 <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g ceo,cto,founder">
             </div>
                 
@@ -1499,16 +1651,15 @@ header {
         </div>
                 
         <div class="form-group">
-            <label for="keywords">Keywords</label>
-            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS, B2B sales, Tech">
+            <label for="keywords">One Keyword</label>
+            <input type="text" id="keywords" name="keywords" placeholder="e.g. SaaS">
         </div>
 
         <div class="form-group">
-    <label for="hasEmail">Has Email:</label>
+    <label for="hasEmail">Has Email</label>
     <select id="hasEmail" name="hasEmail">
         <option value="">All contacts</option>
         <option value="yes">Has email only</option>
-        <option value="no">No email only</option>
     </select>
 </div>
                 
@@ -1523,7 +1674,7 @@ header {
         
         <div id="loading" class="loading">
             <i class="fas fa-spinner"></i>
-            <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+            <p>Searching for contacts...</p>
         </div>
         
         <section id="resultsSection" class="results-section" style="display: none;">
@@ -1708,7 +1859,8 @@ header {
     
     <script>
         // n8n webhook URL
-        const N8N_WEBHOOK_URL = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/webhook1';
+        const N8N_WEBHOOK_URL = 'https://contacts-fetch.hamoureliasse.workers.dev/';
+        const SEARCH_WEBHOOK_URL = 'https://contacts-search.hamoureliasse.workers.dev/';
         
         
         let allContacts = [];
@@ -1792,9 +1944,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contactModal.style.display = 'none';
             }
         });
-        
-        // Show success message
-        showAlert("Connected to database successfully! Ready to search.", 'success');
+      
     } catch (error) {
         console.error("Error initializing app:", error);
         showAlert(`Error connecting to database: ${error.message}`, 'error');
@@ -1826,8 +1976,10 @@ async function fetchData() {
         });
         
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-        }
+    console.log(`API error: ${response.status}`);
+    allContacts = [];
+    return; // Exit silently
+      }
         
         const data = await response.json();
         
@@ -1865,7 +2017,7 @@ function token_verif() {
     console.log("Fonction token_verif démarrée");
     
     // URL de l'API webhook
-    const WEBHOOK_URL_A = 'https://email-finder-proxy-yellow-dawn-7aa3.hamoureliasse.workers.dev/api/credits';
+    const WEBHOOK_URL_A = 'https://token-unlimited-v2.hamoureliasse.workers.dev/';
     
     // Récupérer les paramètres de l'URL actuelle
     const urlParams = new URLSearchParams(window.location.search);
@@ -1979,7 +2131,7 @@ function displayUserCredits(credits) {
     }
     
     // Mettre à jour le contenu avec le nombre de crédits
-    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${credits === -1 ? 'Unlimited' : credits + ' credits'}`;
+    creditsElement.innerHTML = `<i class="fas fa-coins"></i> ${(credits === -1 || credits === -2) ? 'Unlimited' : credits + ' credits'}`;
 }
 
 // Exécuter la fonction immédiatement
@@ -2083,7 +2235,7 @@ async function handleSearch(e) {
 
      loading.innerHTML = `
         <i class="fas fa-spinner"></i>
-        <p>Searching for contacts. Please wait it can take up to 5 minutes...</p>
+        <p>Searching for contacts...</p>
     `;
     
     // Reset any custom styles applied during export
@@ -2109,6 +2261,11 @@ async function handleSearch(e) {
         const companySize = document.getElementById('companySize').value;
         const city = document.getElementById('city').value;
         const hasEmail = document.getElementById('hasEmail').value;
+
+        if (!industry) {
+    showAlert('Please select an industry before searching.', 'error');
+    return;
+    }
         
         // If search criteria are provided, filter the data
         if (country || industry || companyName || keywords) {
@@ -2116,6 +2273,7 @@ async function handleSearch(e) {
                 // Search contacts using n8n webhook
                 const requestData = {
                     action: 'search',
+                    token: userToken,
                     searchParams: {
                         country,
                         industry,
@@ -2130,26 +2288,34 @@ async function handleSearch(e) {
                 };
                 
                 // Make POST request to n8n webhook
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Update allContacts with search results
-                allContacts = data;
+                const [response, trueCount] = await Promise.all([
+    fetch(SEARCH_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    }),
+    fetchTotalCount()
+]);
 
-                    // ► NEW: fetch the true total count
-    const trueCount = await fetchTotalCount();
-    globalTrueCount = trueCount;
+if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+}
+
+const data = await response.json();
+
+// Add rate limit check for search
+if (data && data.code === 403 && data.message === "You are above your daily rate limit") {
+    console.log("*** SEARCH RATE LIMIT REACHED ***");
+    showAlert(data.message, 'warning');
+    showRateLimitModal();
+    return; // Stop the search process
+}
+
+// Update allContacts with search results
+allContacts = data;
+globalTrueCount = trueCount;
     // update your UI with the count from the RPC
     resultsNumber.textContent        = trueCount;
     totalDisplayRecords.textContent  = trueCount;
@@ -2162,8 +2328,9 @@ async function handleSearch(e) {
                 // Show search completion message
                     showAlert(`Search completed: Found ${trueCount} contacts.`, 'success');
             } catch (error) {
-                showAlert(`Error searching: ${error.message}`, 'error');
-            }
+    console.log(`Error searching: ${error.message}`);
+    loading.style.display = 'none';
+           }
         }
         
         // Display the results (either original or filtered)
@@ -2181,7 +2348,7 @@ async function handleSearch(e) {
 
 
 // Define the export-specific webhook URL
-const EXPORT_WEBHOOK_URL = 'https://export.hamoureliasse.workers.dev/export';
+const EXPORT_WEBHOOK_URL = 'https://export-unlimited.hamoureliasse.workers.dev/';
 
 async function exportToCSV() {
     try {
@@ -2210,8 +2377,19 @@ async function exportToCSV() {
                 // Hide the export modal
                 exportModal.style.display = 'none';
                 
-                // Get the export limit from the input field
+               // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
+
+// Add validation to enforce the 5000 limit
+            if (exportLimit > 5000) {
+                showAlert('Export limit cannot exceed 5000 contacts. Please enter a smaller number.', 'error');
+                return; // Stop the export process
+            }
+
+            if (exportLimit < 1) {
+                showAlert('Export limit must be at least 1 contact.', 'error');
+                return; // Stop the export process
+            }
                 
                 // REMOVED: verification checkbox logic
                 
@@ -2297,8 +2475,10 @@ async function exportToCSV() {
                     loading.style.display = 'none';
                     
                     if (!response.ok) {
-                        throw new Error(`API error: ${response.status} ${response.statusText}`);
-                    }
+    console.log(`API error: ${response.status} ${response.statusText}`);
+    loading.style.display = 'none';
+    return; // Exit silently
+                     }
 
                     // Check for CSV content type
                     const contentType = response.headers.get('content-type');
@@ -2353,13 +2533,21 @@ async function exportToCSV() {
 
                     console.log("Parsed JSON response:", responseData);
                     
+                    if (responseData && responseData.code === 403 && responseData.message === "You are above your daily rate limit") {
+    // Handle rate limit error
+                    console.log("*** DAILY RATE LIMIT REACHED ***");
+                    showAlert(responseData.message, 'warning');
+                    showRateLimitModal();
+                    return;
+            }
+
                     if (responseData && responseData.code === 403) {
-                        // Handle insufficient credits error
-                        console.log("*** INSUFFICIENT CREDITS DETECTED ***");
-                        showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
-                        showCreditUpgradeModal();
-                        return;
-                    }
+    // Handle insufficient credits error
+                    console.log("*** INSUFFICIENT CREDITS DETECTED ***");
+                    showAlert(responseData.message || "You do not have enough credits to export these contacts.", 'error');
+                    showCreditUpgradeModal();
+                    return;
+            }
                     
                     if (Array.isArray(responseData) && responseData.length > 0) {
                         // Download the data as CSV
@@ -2667,11 +2855,78 @@ function showCreditUpgradeModal() {
         }
     });
 }
+
+// Add this new function right after showCreditUpgradeModal()
+function showRateLimitModal() {
+    // Check if the modal already exists
+    let rateLimitModal = document.getElementById('rateLimitModal');
+    
+    // If the modal doesn't exist, create it
+    if (!rateLimitModal) {
+        rateLimitModal = document.createElement('div');
+        rateLimitModal.id = 'rateLimitModal';
+        rateLimitModal.className = 'contact-modal';
+        
+        // Create the modal content
+        rateLimitModal.innerHTML = `
+            <div class="modal-content" style="border-left: 4px solid #F59E0B;">
+                <span class="close-rate-limit-modal">&times;</span>
+                
+                <div class="modal-header" style="background: linear-gradient(135deg, #F59E0B, #D97706); border-bottom: none;">
+                    <h2 class="modal-title" style="color: white;"><i class="fas fa-clock" style="color: white;"></i> Daily Rate Limit Reached</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="info-item" style="text-align: center;">
+                        <div class="info-value">
+                            <p style="font-size: 18px; margin-bottom: 15px;"><strong>You have reached your daily rate limit.</strong></p>
+                            <p>Our platform has rate limits in place to prevent data harvesting and scraping of our database.</p>
+                            <p style="color: #92400e; margin-top: 15px;"><i class="fas fa-shield-alt"></i> This helps us maintain data quality and service availability for all users.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button id="understandRateLimitBtn" class="search-button" style="max-width: 200px; background: linear-gradient(135deg, #F59E0B, #D97706);">
+                            <i class="fas fa-check"></i> I Understand
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add the modal to the document
+        document.body.appendChild(rateLimitModal);
+    }
+    
+    // Show the modal
+    rateLimitModal.style.display = 'block';
+    
+    // Add event listener for the close button
+    const closeBtn = rateLimitModal.querySelector('.close-rate-limit-modal');
+    closeBtn.addEventListener('click', () => {
+        rateLimitModal.style.display = 'none';
+    });
+    
+    // Add event listener for the "I Understand" button
+    const understandBtn = document.getElementById('understandRateLimitBtn');
+    understandBtn.addEventListener('click', () => {
+        rateLimitModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === rateLimitModal) {
+            rateLimitModal.style.display = 'none';
+        }
+    });
+}
+        
  // Get the total count of contacts without fetching all data
 async function fetchTotalCount() {
   try {
     const requestData = {
       action: 'getCount',
+      token: userToken,
       searchParams: {
         country: countrySelect.value,
         industry: industrySelect.value,
@@ -2683,17 +2938,37 @@ async function fetchTotalCount() {
         hasemail: document.getElementById('hasEmail').value
       }
     };
-    const response = await fetch(N8N_WEBHOOK_URL, {
+    const response = await fetch('https://count-v2.hamoureliasse.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestData)
     });
-    if (!response.ok) throw new Error(`API error: ${response.status}`);
+
+    console.log("🔥 RESPONSE STATUS:", response.status);
+    console.log("🔥 RESPONSE OK:", response.ok);
+      
+    if (!response.ok) {
+    console.log(`API error: ${response.status}`);
+    loading.style.display = 'none';
+    return;
+    }
     const data = await response.json();
+
+    if (data && data.code === 403 && data.message === "You are above your daily rate limit") {
+    console.log("*** COUNT RATE LIMIT REACHED ***");
+    showAlert(data.message, 'warning');
+    showRateLimitModal();
+    return 0; // Return 0 count when rate limited
+  }
+
+    console.log("🔥 RAW RESPONSE:", data);
+    console.log("🔥 TYPE OF DATA:", typeof data);
+    console.log("🔥 IS ARRAY:", Array.isArray(data));
     // data is [count], so grab first element
-    const trueCount = Array.isArray(data) && data[0] && data[0].count ? parseInt(data[0].count) : 0;
+    const trueCount = Array.isArray(data) && data[0] ? parseInt(data[0]) : 0;
     resultsNumber.textContent       = trueCount;
     totalDisplayRecords.textContent = trueCount;
+    console.log("🔥 FINAL COUNT:", trueCount);
     return trueCount;
   } catch (err) {
     console.error('Error fetching count:', err);
@@ -2701,12 +2976,17 @@ async function fetchTotalCount() {
   }
 }
 
-        // Add this function to your script section
-function redirectToApolloFinder() {
-    // Use the userToken global variable that's already defined in your code
-    window.location.href = `https://unlimited-leads.online/emailverif-app.html?token=${userToken}`;
-}
-
+// Add real-time validation for export limit input
+document.getElementById('exportLimit').addEventListener('input', function() {
+    const value = parseInt(this.value);
+    if (value > 5000) {
+        this.value = 5000;
+        showAlert('Maximum export limit is 5000 contacts.', 'warning');
+    }
+    if (value < 1 && this.value !== '') {
+        this.value = 1;
+    }
+});
         // Upgrade function
 function upgrade() {
     // Get the token from localStorage
@@ -2759,5 +3039,209 @@ if (logoutButton) {
             }, 5000);
         }
     </script>
+
+
+
+<script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    
+    const chat = createChat({
+        webhookUrl: 'https://eliasse-n8n.onrender.com/webhook/5edbe311-8358-4caf-b16e-25e6ebb15b1b/chat',
+        mode: 'window',
+        target: '#n8n-chat',
+        initialMessages: [
+            'Hi! I\'m your AI support assistant 🤖',
+            'How can I assist you today?'
+        ],
+        showWelcomeScreen: true,
+        i18n: {
+            en: {
+                title: 'AI Support Chat 🤖',
+                subtitle: 'Get instant help from our AI assistant',
+                getStarted: 'Start Chat',
+                inputPlaceholder: 'Ask me anything about UnlimitedLeads...',
+            },
+        },
+        loadPreviousSession: false
+    });
+
+    // Review request functionality
+    function initializeReviewRequest() {
+        // Check if review request has already been shown
+        const reviewRequestShown = localStorage.getItem('reviewRequestShown');
+        const userToken = localStorage.getItem('sessionToken');
+        
+        if (reviewRequestShown || !userToken) {
+            console.log('Review request already shown or no user token');
+            return; // Don't show if already shown or no user token
+        }
+
+        // Track user activity
+        let activityTimer = 0;
+        let hasSearched = false;
+        let hasExported = false;
+        let hasUsedTool = false;
+        
+        // Function to check if we should show review request
+        function checkReviewConditions() {
+            // Show after 3 minutes of activity OR after first search/export
+            if (activityTimer >= 180000 || hasSearched || hasExported || hasUsedTool) {
+                showReviewRequest();
+            }
+        }
+
+        // Track time spent on page (only when tab is active)
+        let isTabActive = true;
+        
+        document.addEventListener('visibilitychange', () => {
+            isTabActive = !document.hidden;
+        });
+
+        const activityInterval = setInterval(() => {
+            if (isTabActive) {
+                activityTimer += 1000; // Add 1 second only when tab is active
+                if (activityTimer >= 180000) { // 3 minutes
+                    checkReviewConditions();
+                    clearInterval(activityInterval);
+                }
+            }
+        }, 1000);
+
+        // Listen for search form submissions
+        const searchForm = document.getElementById('searchForm');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function() {
+                hasUsedTool = true;
+                hasSearched = true;
+                console.log('Search detected, scheduling review request');
+                setTimeout(checkReviewConditions, 10000); // Show 10 seconds after search
+            });
+        }
+
+        // Listen for export button clicks
+        const exportButton = document.getElementById('exportButton');
+        if (exportButton) {
+            exportButton.addEventListener('click', function() {
+                hasUsedTool = true;
+                hasExported = true;
+                console.log('Export detected, scheduling review request');
+                setTimeout(checkReviewConditions, 5000); // Show 5 seconds after export
+            });
+        }
+
+        // Track other interactions that indicate tool usage
+        document.addEventListener('click', function(event) {
+            // Check if user clicked on result table or view details
+            if (event.target.closest('.results-table') || 
+                event.target.classList.contains('fa-eye') ||
+                event.target.closest('.action-icons')) {
+                hasUsedTool = true;
+                console.log('Tool interaction detected');
+            }
+        });
+    }
+
+    function showReviewRequest() {
+        // Mark as shown so it doesn't appear again
+        localStorage.setItem('reviewRequestShown', 'true');
+        console.log('Showing review request');
+        
+        // Wait a bit then send the review message
+        setTimeout(() => {
+            try {
+                const reviewMessage = `Hi there! 👋
+
+If you've found UnlimitedLeads useful, please consider leaving us a review on these sites:
+
+⭐ **TrustRadius** - https://www.trustradius.com/
+⭐ **Trustpilot** - https://www.trustpilot.com/
+⭐ **G2.com** - https://www.g2.com/
+⭐ **Capterra** - https://www.capterra.com/
+
+It only takes less than 5 minutes on every site! 
+
+🎁 **Special Bonus**: If you give us a review and provide us with links to your reviews in our feedback form, we will award you **1000 free credits** on your account!
+
+Thank you in advance for helping us grow! 🚀
+
+*This is a one-time message - you won't see this again.*`;
+
+                // Try to trigger the chat widget and send message
+                const chatContainer = document.querySelector('#n8n-chat');
+                if (chatContainer) {
+                    // First, try to open the chat
+                    const chatToggle = chatContainer.querySelector('button, [role="button"]');
+                    if (chatToggle) {
+                        // Add a notification badge to indicate new message
+                        addChatNotificationBadge();
+                        
+                        // Show alert to notify user
+                        if (typeof showAlert === 'function') {
+                            showAlert('💬 You have a special message waiting in the chat widget!', 'success');
+                        }
+                        
+                        // Try to simulate the message being sent from the bot
+                        setTimeout(() => {
+                            // Since we can't directly inject messages into the n8n chat,
+                            // we'll trigger the chat opening and rely on the notification
+                            console.log('Review request message prepared for chat widget');
+                            
+                            // You could also send this message through your webhook if needed
+                            // by making an API call to your n8n endpoint with the review message
+                        }, 1000);
+                    }
+                }
+                
+                console.log('Review request triggered successfully');
+                
+            } catch (error) {
+                console.error('Error showing review request:', error);
+            }
+        }, 2000);
+    }
+
+    // Function to add notification badge to chat widget
+    function addChatNotificationBadge() {
+        const chatContainer = document.querySelector('#n8n-chat');
+        if (chatContainer) {
+            // Remove existing badge if any
+            const existingBadge = chatContainer.querySelector('.chat-notification-badge');
+            if (existingBadge) {
+                existingBadge.remove();
+            }
+            
+            // Create new notification badge
+            const badge = document.createElement('div');
+            badge.className = 'chat-notification-badge';
+            badge.textContent = '1';
+            
+            // Find the chat toggle button and add badge to it
+            const chatToggle = chatContainer.querySelector('button, [role="button"]');
+            if (chatToggle) {
+                chatToggle.style.position = 'relative';
+                chatToggle.appendChild(badge);
+                
+                // Remove badge when chat is opened
+                chatToggle.addEventListener('click', () => {
+                    setTimeout(() => {
+                        if (badge && badge.parentNode) {
+                            badge.remove();
+                        }
+                    }, 1000);
+                });
+            }
+        }
+    }
+
+    // Initialize the review request system after chat is loaded
+    setTimeout(() => {
+        console.log('Initializing review request system');
+        initializeReviewRequest();
+    }, 3000); // Wait 3 seconds for chat to fully load
+</script>
+
+<!-- Div pour le chat widget -->
+<div id="n8n-chat"></div>
+    
 </body>
 </html>
