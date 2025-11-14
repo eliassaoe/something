@@ -6,7 +6,7 @@
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Access - Unlimited leads</title>
+    <title>API Documentation - Unlimited Leads</title>
     <style>
         * {
             margin: 0;
@@ -15,130 +15,346 @@
         }
         
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #fff;
+            color: #2c3e50;
+            background: #f8f9fa;
             padding: 20px;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
         }
         
         h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-            border-bottom: 2px solid #0066cc;
-            padding-bottom: 10px;
+            color: #0066cc;
+            margin-bottom: 10px;
+            font-size: 32px;
         }
         
-        h2 {
-            color: #333;
-            margin: 40px 0 15px 0;
-            font-size: 20px;
-        }
-        
-        h3 {
-            color: #333;
-            margin: 20px 0 10px 0;
+        .subtitle {
+            color: #666;
             font-size: 16px;
         }
         
-        p {
-            margin-bottom: 15px;
+        .auth-section {
+            background: #e8f4ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .auth-section h2 {
+            color: #0066cc;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .auth-code {
+            background: white;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #d63384;
+        }
+        
+        .limits {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .limits h3 {
+            color: #856404;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .limits ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .limits li {
+            color: #856404;
+            font-size: 13px;
+            margin: 5px 0;
+        }
+        
+        .api-section {
+            margin: 50px 0;
+            padding: 30px 0;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .api-section:last-child {
+            border-bottom: none;
+        }
+        
+        .api-number {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .api-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .api-title h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin: 0;
         }
         
         .endpoint {
-            background: #0066cc;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px;
+            padding: 15px 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .method {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-family: monospace;
-            margin: 15px 0;
+            font-size: 12px;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 20px;
             font-size: 15px;
+        }
+        
+        h3 {
+            color: #0066cc;
+            margin: 25px 0 15px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .params-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .params-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .params-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .required {
+            background: #dc3545;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .optional {
+            background: #6c757d;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
             font-weight: bold;
         }
         
         .code-block {
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 4px;
-            font-family: monospace;
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
             margin: 15px 0;
             overflow-x: auto;
             font-size: 13px;
-            line-height: 1.4;
-            border-left: 3px solid #0066cc;
+            line-height: 1.6;
         }
         
-        ul {
-            margin: 15px 0;
-            padding-left: 20px;
+        .code-block .keyword {
+            color: #c678dd;
         }
         
-        li {
-            margin-bottom: 5px;
+        .code-block .string {
+            color: #98c379;
         }
         
-        strong {
-            font-weight: bold;
+        .code-block .number {
+            color: #d19a66;
         }
         
         .note {
-            background: #fffbf0;
-            border: 1px solid #ffeaa7;
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
             padding: 15px;
             margin: 20px 0;
             border-radius: 4px;
         }
         
-        .api-section {
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #ddd;
+        .note strong {
+            color: #1976D2;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .note p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .success-badge {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .error-badge {
+            color: #dc3545;
+            font-weight: bold;
         }
         
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .endpoint {
+                font-size: 12px;
+                padding: 12px;
+            }
+            
+            .code-block {
+                font-size: 11px;
+                padding: 15px;
             }
         }
     </style>
-    <!-- Hreflang tags -->
 </head>
 <body>
     <div class="container">
         
-        <h1>Unlimited leads API Documentation</h1>
+        <div class="header">
+            <h1>🚀 Unlimited Leads API</h1>
+            <p class="subtitle">Simple, powerful APIs for email finding, verification, LinkedIn scraping, and database export</p>
+        </div>
         
-        <h2>Authentication</h2>
-        <p>All API requests must include an <strong>Authorization</strong> header with your API key:</p>
-        <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
-        <p>Your API key is available in your account dashboard.</p>
-
-        <div class="note">
-            <strong>Rate Limits:</strong><br>
-            • Email Finder: 1 request every 15 seconds, 1000 per day<br>
-            • Email Verifier: 1 request every 5 seconds, 1000 per day<br>
-            • LinkedIn Scraper: 1 request every 10 seconds, 500 per day
+        <div class="auth-section">
+            <h2>🔐 Authentication</h2>
+            <p>Include your API key in the Authorization header for all requests:</p>
+            <div class="auth-code">Authorization: Bearer YOUR_API_KEY</div>
+            <p style="margin-top: 10px; font-size: 14px;">Get your API key from your account dashboard.</p>
         </div>
 
-        <div class="api-section">
-            <h2>1. Find Email</h2>
-            
-            <div class="endpoint">POST https://unlimited-finder-api.hamoureliasse.workers.dev</div>
-            
-            <p>Find email addresses for any person at any company.</p>
-            
-            <h3>Request Parameters</h3>
+        <div class="limits">
+            <h3>⚡ Rate Limits</h3>
             <ul>
-                <li><strong>firstName</strong> - First name (required)</li>
-                <li><strong>lastName</strong> - Last name (required)</li>
-                <li><strong>domain</strong> - Company domain like company.com (required)</li>
+                <li><strong>Email Finder:</strong> 1 request/15s • 1,000/day</li>
+                <li><strong>Email Verifier:</strong> 1 request/5s • 1,000/day</li>
+                <li><strong>LinkedIn Scraper:</strong> 1 request/10s • 500/day</li>
+                <li><strong>Database Export:</strong> 1 request/5s • 1,000/day</li>
             </ul>
+        </div>
+
+        <!-- API 1: Email Finder -->
+        <div class="api-section">
+            <div class="api-title">
+                <span class="api-number">1</span>
+                <h2>Email Finder</h2>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method">POST</span>
+                https://unlimited-finder-api.hamoureliasse.workers.dev
+            </div>
+            
+            <p class="description">Find professional email addresses using a person's name and company domain.</p>
+            
+            <h3>Parameters</h3>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>firstName</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Person's first name</td>
+                    </tr>
+                    <tr>
+                        <td><code>lastName</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Person's last name</td>
+                    </tr>
+                    <tr>
+                        <td><code>domain</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Company domain (e.g., company.com)</td>
+                    </tr>
+                </tbody>
+            </table>
             
             <h3>Example Request</h3>
             <div class="code-block">curl -X POST https://unlimited-finder-api.hamoureliasse.workers.dev \
@@ -150,28 +366,50 @@
     "domain": "company.com"
   }'</div>
             
-            <h3>Response - Email Found</h3>
+            <h3>Response <span class="success-badge">✓ Email Found</span></h3>
             <div class="code-block">{
   "email": "john.doe@company.com"
 }</div>
             
-            <h3>Response - No Email Found</h3>
+            <h3>Response <span class="error-badge">✗ Not Found</span></h3>
             <div class="code-block">{
   "email": null
 }</div>
         </div>
 
+        <!-- API 2: Email Verifier -->
         <div class="api-section">
-            <h2>2. Verify Email</h2>
+            <div class="api-title">
+                <span class="api-number">2</span>
+                <h2>Email Verifier</h2>
+            </div>
             
-            <div class="endpoint">POST https://api-unlimited-email-verifier.hamoureliasse.workers.dev</div>
+            <div class="endpoint">
+                <span class="method">POST</span>
+                https://api-unlimited-email-verifier.hamoureliasse.workers.dev
+            </div>
             
-            <p>Verify if an email address is valid and can receive messages.</p>
+            <p class="description">Verify if an email address is valid and deliverable.</p>
             
-            <h3>Request Parameters</h3>
-            <ul>
-                <li><strong>email</strong> - Email address to verify (required)</li>
-            </ul>
+            <h3>Parameters</h3>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>email</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Email address to verify</td>
+                    </tr>
+                </tbody>
+            </table>
             
             <h3>Example Request</h3>
             <div class="code-block">curl -X POST https://api-unlimited-email-verifier.hamoureliasse.workers.dev \
@@ -181,7 +419,7 @@
     "email": "john.doe@company.com"
   }'</div>
             
-            <h3>Response - Valid Email</h3>
+            <h3>Response <span class="success-badge">✓ Valid</span></h3>
             <div class="code-block">{
   "status": "valid",
   "message": "Accepted",
@@ -191,52 +429,66 @@
   "mx": "mail.company.com"
 }</div>
             
-            <h3>Response - Invalid Email</h3>
+            <h3>Response <span class="error-badge">✗ Invalid</span></h3>
             <div class="code-block">{
   "status": "invalid",
   "message": "Rejected",
-  "email": "fake@company.com",
+  "email": "invalid@company.com",
   "domain": "company.com",
   "deliverable": false,
   "mx": "mail.company.com"
 }</div>
-
-            <h3>Response Fields</h3>
-            <ul>
-                <li><strong>status</strong> - "valid" or "invalid"</li>
-                <li><strong>message</strong> - "Accepted" or "Rejected"</li>
-                <li><strong>deliverable</strong> - true if email can receive messages</li>
-                <li><strong>mx</strong> - Mail server for the domain</li>
-            </ul>
         </div>
 
+        <!-- API 3: LinkedIn Scraper -->
         <div class="api-section">
-            <h2>3. LinkedIn Profile Scraper</h2>
+            <div class="api-title">
+                <span class="api-number">3</span>
+                <h2>LinkedIn Profile Scraper</h2>
+            </div>
             
-            <div class="endpoint">POST https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev/</div>
+            <div class="endpoint">
+                <span class="method">POST</span>
+                https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev
+            </div>
             
-            <p>Extract complete profile information from LinkedIn profiles using the profile URL.</p>
+            <p class="description">Extract complete profile data from LinkedIn URLs.</p>
             
-            <h3>Request Parameters</h3>
-            <ul>
-                <li><strong>url</strong> - LinkedIn profile URL with readable username (required)</li>
-            </ul>
+            <h3>Parameters</h3>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>url</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>LinkedIn profile URL (readable username format only)</td>
+                    </tr>
+                </tbody>
+            </table>
             
             <div class="note">
-                <strong>Supported URL Format:</strong> Only URLs with readable usernames are supported.<br>
-                ✅ https://www.linkedin.com/in/john-doe-123/<br>
-                ❌ https://www.linkedin.com/in/ACoAABXYZ123/ (encrypted IDs not supported)
+                <strong>⚠️ Supported URL Format</strong>
+                <p>✅ https://www.linkedin.com/in/john-doe-123/</p>
+                <p>❌ https://www.linkedin.com/in/ACoAABXYZ123/ (encrypted IDs not supported)</p>
             </div>
             
             <h3>Example Request</h3>
-            <div class="code-block">curl -X POST https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev/ \
+            <div class="code-block">curl -X POST https://api-unlimited-linkedin-scraper.hamoureliasse.workers.dev \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
     "url": "https://www.linkedin.com/in/john-doe-123/"
   }'</div>
             
-            <h3>Response - Profile Found</h3>
+            <h3>Response <span class="success-badge">✓ Success</span></h3>
             <div class="code-block">{
   "name": "John Doe",
   "jobTitle": "Software Engineer",
@@ -244,34 +496,168 @@
   "location": "San Francisco, CA",
   "industry": "Technology",
   "website": "techcompany.com",
-  "email": "john.doe@techcompany.com",
+  "email": "john@techcompany.com",
   "education": "Stanford University",
   "headline": "Software Engineer at Tech Company Inc",
   "linkedinUrl": "https://www.linkedin.com/in/john-doe-123/",
   "verified": "true"
 }</div>
             
-            <h3>Response - Profile Not Found/Error</h3>
+            <h3>Response <span class="error-badge">✗ Error</span></h3>
             <div class="code-block">{
   "error": "Profile not accessible or invalid URL",
   "name": null,
   "verified": "false"
 }</div>
+        </div>
 
-            <h3>Response Fields</h3>
-            <ul>
-                <li><strong>name</strong> - Full name of the person</li>
-                <li><strong>jobTitle</strong> - Current job title</li>
-                <li><strong>company</strong> - Current company name</li>
-                <li><strong>location</strong> - Location information</li>
-                <li><strong>industry</strong> - Industry sector</li>
-                <li><strong>website</strong> - Company website</li>
-                <li><strong>email</strong> - Email address (if found)</li>
-                <li><strong>education</strong> - Educational background</li>
-                <li><strong>headline</strong> - LinkedIn headline</li>
-                <li><strong>linkedinUrl</strong> - Original LinkedIn URL</li>
-                <li><strong>verified</strong> - "true" if profile data was successfully extracted</li>
-            </ul>
+        <!-- API 4: Database Export -->
+        <div class="api-section">
+            <div class="api-title">
+                <span class="api-number">4</span>
+                <h2>Database Export</h2>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method">POST</span>
+                https://YOUR-WORKER-URL.workers.dev
+            </div>
+            
+            <p class="description">Export leads from the database with advanced filtering options. Maximum 5,000 records per request.</p>
+            
+            <h3>Parameters</h3>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>action</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Must be "export"</td>
+                    </tr>
+                    <tr>
+                        <td><code>limit</code></td>
+                        <td>number</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Number of records (1-5000)</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.country</code></td>
+                        <td>string</td>
+                        <td><span class="required">REQUIRED</span></td>
+                        <td>Target country (see allowed values below)</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.industry</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Industry filter</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.company</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Company name filter</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.keywords</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Keywords to search</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.city</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>City filter</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.jobtitle</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Job title filter</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.companysize</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Company size: 1-25, 26-50, 51-250, 251-1000, 1000+</td>
+                    </tr>
+                    <tr>
+                        <td><code>searchParams.hasemail</code></td>
+                        <td>string</td>
+                        <td><span class="optional">OPTIONAL</span></td>
+                        <td>Filter by email: "yes" or "no"</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <strong>🌍 Allowed Countries</strong>
+                <p>United States • France • Spain • Italy • Germany • Netherlands • Canada • Australia • India • United Kingdom</p>
+            </div>
+            
+            <h3>Example Request</h3>
+            <div class="code-block">curl -X POST https://YOUR-WORKER-URL.workers.dev \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "action": "export",
+    "limit": 100,
+    "searchParams": {
+      "country": "United States",
+      "industry": "Information technology & services",
+      "city": "San Francisco",
+      "companysize": "51-250",
+      "hasemail": "yes",
+      "company": "",
+      "keywords": "",
+      "jobtitle": ""
+    }
+  }'</div>
+            
+            <h3>Response <span class="success-badge">✓ Success</span></h3>
+            <div class="code-block">{
+  "success": true,
+  "records": [
+    {
+      "name": "John Doe",
+      "email": "john@company.com",
+      "company": "Tech Corp",
+      "jobTitle": "Software Engineer",
+      "location": "San Francisco, CA",
+      "industry": "Information technology & services"
+    }
+    // ... more records
+  ],
+  "count": 100,
+  "filters_applied": {
+    "country": "United States",
+    "industry": "Information technology & services",
+    "city": "San Francisco"
+  }
+}</div>
+            
+            <h3>Response <span class="error-badge">✗ Validation Error</span></h3>
+            <div class="code-block">{
+  "error": "Validation failed",
+  "code": "INVALID_REQUEST",
+  "validation_errors": [
+    {
+      "field": "limit",
+      "message": "Limit cannot exceed 5000",
+      "received": 6000,
+      "max_allowed": 5000
+    }
+  ]
+}</div>
         </div>
 
     </div>
