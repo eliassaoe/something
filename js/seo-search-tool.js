@@ -1038,30 +1038,34 @@
         
         return 'Education'; // Default fallback
     }
+    
+function extractKeyword() {
+    const title = document.title.toLowerCase();
+    
+    // Pattern to match database pages
+    const patterns = [
+        /(\w+(?:\s+\w+)*)\s+database/i,
+        /database\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i,
+        /(\w+(?:\s+\w+)*)\s+email\s+list/i,
+        /email\s+list\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i
+    ];
 
-    // Extract keyword from page title
-    function extractKeyword() {
-        const title = document.title.toLowerCase();
-        
-        // Pattern to match database pages - UPDATED
-        const patterns = [
-            /(\w+(?:\s+\w+)*)\s+database/i,
-            /database\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i,
-            /(\w+(?:\s+\w+)*)\s+email\s+list/i,
-            /email\s+list\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i
-        ];
-
-        for (let pattern of patterns) {
-            const match = title.match(pattern);
-            if (match && match[1]) {
-                console.log('✅ Keyword extracted:', match[1].trim());
-                return match[1].trim();
-            }
+    for (let pattern of patterns) {
+        const match = title.match(pattern);
+        if (match && match[1]) {
+            let keyword = match[1].trim();
+            
+            // Remove "industry" from the keyword if present
+            keyword = keyword.replace(/\s+industry\s*$/i, '').trim();
+            
+            console.log('✅ Keyword extracted:', keyword);
+            return keyword;
         }
-
-        console.log('⚠️ No keyword match, using default: professional');
-        return 'professional';
     }
+
+    console.log('⚠️ No keyword match, using default: professional');
+    return 'professional';
+}
 
     // Create the SEO search tool HTML
     function createSearchToolHTML(jobTitle, country, industry, displayKeyword) {
