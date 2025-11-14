@@ -3,6 +3,10 @@
 (function() {
     'use strict';
 
+    console.log('🔧 SEO Search Tool script loaded!');
+    console.log('📄 Page title:', document.title);
+    console.log('📍 Current URL:', window.location.href);
+
     // Configuration
     const CONFIG = {
         searchUrl: 'https://contacts-search.hamoureliasse.workers.dev/',
@@ -1039,8 +1043,10 @@
     function extractKeyword() {
         const title = document.title.toLowerCase();
         
-        // Pattern to match your email list pages
+        // Pattern to match database pages - UPDATED
         const patterns = [
+            /(\w+(?:\s+\w+)*)\s+database/i,
+            /database\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i,
             /(\w+(?:\s+\w+)*)\s+email\s+list/i,
             /email\s+list\s+(?:of\s+)?(\w+(?:\s+\w+)*)/i
         ];
@@ -1048,10 +1054,12 @@
         for (let pattern of patterns) {
             const match = title.match(pattern);
             if (match && match[1]) {
+                console.log('✅ Keyword extracted:', match[1].trim());
                 return match[1].trim();
             }
         }
 
+        console.log('⚠️ No keyword match, using default: professional');
         return 'professional';
     }
 
@@ -1389,10 +1397,13 @@
             }
         `;
         document.head.appendChild(style);
+        console.log('✅ Responsive styles added');
     }
 
     // Initialize search functionality
     function initializeSearchTool() {
+        console.log('🚀 Initializing search tool functionality...');
+        
         let searchCount = parseInt(localStorage.getItem('seoSearchCount') || '0');
         
         const seoSearchForm = document.getElementById('seoSearchForm');
@@ -1404,7 +1415,12 @@
         const seoResultsCount = document.getElementById('seoResultsCount');
         const seoSearchLimit = document.getElementById('seoSearchLimit');
 
-        if (!seoSearchForm) return;
+        if (!seoSearchForm) {
+            console.error('❌ seoSearchForm not found!');
+            return;
+        }
+
+        console.log('✅ All form elements found');
 
         // Check search limit
         function checkSearchLimit() {
@@ -1418,6 +1434,7 @@
         // Handle search
         seoSearchForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            console.log('🔍 Form submitted');
 
             if (searchCount >= CONFIG.maxFreeSearches) {
                 window.location.href = CONFIG.signupUrl;
@@ -1433,6 +1450,8 @@
                 const country = document.getElementById('seoCountry').value;
                 const industry = document.getElementById('seoIndustry').value;
                 const city = document.getElementById('seoCity').value;
+
+                console.log('🔎 Search params:', { jobTitle, country, industry, city });
 
                 const searchParams = {
                     country: country,
@@ -1452,6 +1471,8 @@
                 const totalCount = Array.isArray(countData) && countData[0] && countData[0].count 
                     ? parseInt(countData[0].count) : 0;
 
+                console.log('📊 Total count:', totalCount);
+
                 // Get sample results
                 const searchResponse = await fetch(CONFIG.searchUrl, {
                     method: 'POST',
@@ -1463,6 +1484,7 @@
                 });
 
                 const searchData = await searchResponse.json();
+                console.log('📋 Results:', searchData.length);
 
                 seoResultsCount.textContent = totalCount.toLocaleString();
                 seoResultsBody.innerHTML = '';
@@ -1499,7 +1521,7 @@
                 checkSearchLimit();
 
             } catch (error) {
-                console.error('SEO Search Error:', error);
+                console.error('❌ SEO Search Error:', error);
                 seoResultsBody.innerHTML = `
                     <tr>
                         <td colspan="5" style="text-align: center; padding: 2rem; color: #ef4444;">
@@ -1525,34 +1547,60 @@
         }
 
         checkSearchLimit();
+        console.log('✅ Search tool initialized successfully');
     }
 
     // Main initialization function
     function init() {
-        // Only run on email list pages
+        console.log('🎬 Starting init function...');
+        
         // Run on email list and database pages
-const pageTitle = document.title.toLowerCase();
-if (!pageTitle.includes('email list') && !pageTitle.includes('database')) {
-    return;
-}
+        const pageTitle = document.title.toLowerCase();
+        console.log('🔍 Checking page title:', pageTitle);
+        
+        if (!pageTitle.includes('email list') && !pageTitle.includes('database')) {
+            console.log('❌ Page title does not match - exiting');
+            return;
+        }
+        
+        console.log('✅ Page title matches!');
 
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
+            console.log('⏳ DOM still loading, waiting...');
             document.addEventListener('DOMContentLoaded', init);
             return;
         }
 
+        console.log('✅ DOM ready');
+
         // Find target element (.hero section)
-        const targetElement = document.querySelector('.hero');
+        let targetElement = document.querySelector('.hero');
+        console.log('🎯 Target element (.hero):', targetElement);
+        
         if (!targetElement) {
-            console.warn('SEO Search Tool: .hero element not found');
+            console.warn('⚠️ .hero element not found, trying .stats-section...');
+            targetElement = document.querySelector('.stats-section');
+            console.log('🎯 Fallback target element (.stats-section):', targetElement);
+        }
+        
+        if (!targetElement) {
+            console.error('❌ No valid target element found!');
             return;
         }
+
+        console.log('✅ Target element found!');
 
         // Extract keyword and determine what it represents
         const keyword = extractKeyword();
         const isCountry = isCountryKeyword(keyword);
         const isIndustry = !isCountry && isIndustryKeyword(keyword);
+        
+        console.log('🏷️ Keyword analysis:', {
+            keyword,
+            isCountry,
+            isIndustry
+        });
         
         // Set values based on keyword type
         let jobTitle, country, industry, displayKeyword;
@@ -1577,17 +1625,31 @@ if (!pageTitle.includes('email list') && !pageTitle.includes('database')) {
             displayKeyword = keyword;
         }
         
+        console.log('📋 Final parameters:', {
+            jobTitle,
+            country,
+            industry,
+            displayKeyword
+        });
+        
         // Create and inject the search tool
+        console.log('💉 Injecting HTML...');
         const searchToolHTML = createSearchToolHTML(jobTitle, country, industry, displayKeyword);
         targetElement.insertAdjacentHTML('afterend', searchToolHTML);
+        console.log('✅ HTML injected');
 
         // Add styles and initialize functionality
         addResponsiveStyles();
         
         // Wait a bit for the HTML to be fully inserted
-        setTimeout(initializeSearchTool, 100);
+        console.log('⏳ Waiting 100ms for HTML to settle...');
+        setTimeout(() => {
+            console.log('🎯 Initializing search tool...');
+            initializeSearchTool();
+        }, 100);
     }
 
     // Start the initialization
+    console.log('🚀 Script execution starting...');
     init();
 })();
