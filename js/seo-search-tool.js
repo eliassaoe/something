@@ -1530,10 +1530,11 @@
     // Main initialization function
     function init() {
         // Only run on email list pages
-        const pageTitle = document.title.toLowerCase();
-        if (!pageTitle.includes('email list')) {
-            return;
-        }
+        // Run on email list and database pages
+const pageTitle = document.title.toLowerCase();
+if (!pageTitle.includes('email list') && !pageTitle.includes('database')) {
+    return;
+}
 
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
