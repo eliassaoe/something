@@ -1938,7 +1938,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Fetch data from Supabase via n8n webhook
+
 async function fetchData() {
     try {
         // Show loading indicator
@@ -1947,7 +1947,8 @@ async function fetchData() {
         // Prepare the data to send to n8n
         const requestData = {
             action: 'fetchAll', // Changed to new table name
-            limit: 1000
+            limit: 1000,
+            token: userToken
         };
         
         // Make POST request to n8n webhook
