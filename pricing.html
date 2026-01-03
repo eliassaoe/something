@@ -521,8 +521,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://linkfinderai.gumroad.com/l/hcgoty?wanted=true" class="btn plan-cta gumroad-link annual-link">Get Started</a>
-                <a href="https://linkfinderai.gumroad.com/l/quazy?wanted=true" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
+                <a href="https://linkfinderai.gumroad.com/l/hcgoty" class="btn plan-cta gumroad-link annual-link">Get Started</a>
+                <a href="https://linkfinderai.gumroad.com/l/quazy" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
             </div>
             
             <div class="pricing-card featured">
@@ -550,8 +550,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://linkfinderai.gumroad.com/l/dlbbep?wanted=true" class="btn plan-cta gumroad-link annual-link">Get Started</a>
-                <a href="https://linkfinderai.gumroad.com/l/obsclj?wanted=true" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
+                <a href="https://linkfinderai.gumroad.com/l/dlbbep" class="btn plan-cta gumroad-link annual-link">Get Started</a>
+                <a href="https://linkfinderai.gumroad.com/l/obsclj" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
             </div>
         </div>
 
@@ -665,47 +665,83 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Page loaded ===');
+            console.log('Current URL:', window.location.href);
+            console.log('URL params:', window.location.search);
             
             function getUserToken() {
+                // Essayer d'abord depuis l'URL
                 const urlParams = new URLSearchParams(window.location.search);
-                let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
+                let token = urlParams.get('token') || 
+                           urlParams.get('customer_id') || 
+                           urlParams.get('user_id');
                 
-                if (!token) {
-                    token = localStorage.getItem('userToken') || 
-                           localStorage.getItem('customer_id') || 
-                           localStorage.getItem('user_id') ||
-                           localStorage.getItem('token');
+                // Si trouvé dans l'URL, le sauvegarder dans localStorage
+                if (token) {
+                    localStorage.setItem('unlimitedLeadsToken', token);
+                    console.log('Token found in URL and saved:', token);
+                    return token;
                 }
                 
-                if (!token) {
-                    token = sessionStorage.getItem('userToken') || 
-                           sessionStorage.getItem('customer_id') || 
-                           sessionStorage.getItem('user_id') ||
-                           sessionStorage.getItem('token');
+                // Sinon, chercher dans localStorage
+                token = localStorage.getItem('unlimitedLeadsToken') || 
+                       localStorage.getItem('userToken') || 
+                       localStorage.getItem('customer_id') || 
+                       localStorage.getItem('user_id') ||
+                       localStorage.getItem('token');
+                
+                if (token) {
+                    console.log('Token found in localStorage:', token);
+                    return token;
                 }
                 
-                return token;
+                // En dernier recours, chercher dans sessionStorage
+                token = sessionStorage.getItem('unlimitedLeadsToken') ||
+                       sessionStorage.getItem('userToken') || 
+                       sessionStorage.getItem('customer_id') || 
+                       sessionStorage.getItem('user_id') ||
+                       sessionStorage.getItem('token');
+                
+                if (token) {
+                    console.log('Token found in sessionStorage:', token);
+                    return token;
+                }
+                
+                console.log('No token found');
+                return null;
             }
             
             function updateGumroadUrls() {
                 const token = getUserToken();
                 
-                if (token) {
-                    const gumroadLinks = document.querySelectorAll('.gumroad-link, a[href*="gumroad.com"]');
-                    
-                    gumroadLinks.forEach(link => {
-                        const currentHref = link.getAttribute('href');
-                        if (currentHref && currentHref.includes('gumroad.com')) {
-                            if (!currentHref.includes('wanted=')) {
-                                const separator = currentHref.includes('?') ? '&' : '?';
-                                const newHref = currentHref + separator + 'wanted=true&user_id=' + encodeURIComponent(token);
-                                link.setAttribute('href', newHref);
-                            }
-                        }
-                    });
+                console.log('=== updateGumroadUrls called ===');
+                console.log('Token retrieved:', token);
+                
+                if (!token) {
+                    console.log('No token available, skipping URL update');
+                    return;
                 }
+                
+                const gumroadLinks = document.querySelectorAll('.gumroad-link, a[href*="gumroad.com"]');
+                console.log('Found Gumroad links:', gumroadLinks.length);
+                
+                gumroadLinks.forEach((link, index) => {
+                    const currentHref = link.getAttribute('href');
+                    console.log(`Link ${index + 1} current href:`, currentHref);
+                    
+                    if (currentHref && currentHref.includes('gumroad.com')) {
+                        // Toujours reconstruire l'URL avec les bons paramètres
+                        let baseUrl = currentHref.split('?')[0]; // Enlever les anciens paramètres
+                        const newHref = baseUrl + '?wanted=true&user_id=' + encodeURIComponent(token);
+                        
+                        link.setAttribute('href', newHref);
+                        console.log(`Link ${index + 1} updated to:`, newHref);
+                    }
+                });
             }
             
+            // Appeler au chargement de la page
+            console.log('Initial token check:', getUserToken());
             updateGumroadUrls();
             
             const monthlyToggle = document.getElementById('monthlyToggle');
@@ -716,6 +752,7 @@
             const monthlyLinks = document.querySelectorAll('.monthly-link');
 
             monthlyToggle.addEventListener('click', function() {
+                console.log('Monthly plan selected');
                 monthlyToggle.classList.add('active');
                 annualToggle.classList.remove('active');
                 
@@ -724,10 +761,12 @@
                 annualLinks.forEach(link => link.style.display = 'none');
                 monthlyLinks.forEach(link => link.style.display = 'block');
                 
-                updateGumroadUrls();
+                // Important: mettre à jour les URLs avec le token
+                setTimeout(updateGumroadUrls, 100);
             });
 
             annualToggle.addEventListener('click', function() {
+                console.log('Annual plan selected');
                 annualToggle.classList.add('active');
                 monthlyToggle.classList.remove('active');
                 
@@ -736,7 +775,8 @@
                 monthlyLinks.forEach(link => link.style.display = 'none');
                 annualLinks.forEach(link => link.style.display = 'block');
                 
-                updateGumroadUrls();
+                // Important: mettre à jour les URLs avec le token
+                setTimeout(updateGumroadUrls, 100);
             });
             
             const faqQuestions = document.querySelectorAll('.faq-question');
