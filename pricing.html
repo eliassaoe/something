@@ -521,8 +521,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://buy.stripe.com/fZu5kDdylfJzfmk5oD8IU1b" class="btn plan-cta stripe-link annual-link">Get Started</a>
-                <a href="https://buy.stripe.com/9B68wPcuhapffmk6sH8IU17" class="btn plan-cta stripe-link monthly-link" style="display: none;">Get Started</a>
+                <a href="https://unlimitedleads.gumroad.com/l/starter-annual" class="btn plan-cta gumroad-link annual-link">Get Started</a>
+                <a href="https://unlimitedleads.gumroad.com/l/starter-monthly" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
             </div>
             
             <div class="pricing-card featured">
@@ -550,8 +550,8 @@
                     <li>95% email accuracy</li>
                 </ul>
                 
-                <a href="https://buy.stripe.com/28E8wPgKx7d35LKcR58IU1c" class="btn plan-cta stripe-link annual-link">Get Started</a>
-                <a href="https://buy.stripe.com/9B67sLdylfJza20g3h8IU0X" class="btn plan-cta stripe-link monthly-link" style="display: none;">Get Started</a>
+                <a href="https://unlimitedleads.gumroad.com/l/pro-annual" class="btn plan-cta gumroad-link annual-link">Get Started</a>
+                <a href="https://unlimitedleads.gumroad.com/l/pro-monthly" class="btn plan-cta gumroad-link monthly-link" style="display: none;">Get Started</a>
             </div>
         </div>
 
@@ -687,18 +687,18 @@
                 return token;
             }
             
-            function updateStripeUrls() {
+            function updateGumroadUrls() {
                 const token = getUserToken();
                 
                 if (token) {
-                    const stripeLinks = document.querySelectorAll('.stripe-link, a[href*="stripe.com"]');
+                    const gumroadLinks = document.querySelectorAll('.gumroad-link, a[href*="gumroad.com"]');
                     
-                    stripeLinks.forEach(link => {
+                    gumroadLinks.forEach(link => {
                         const currentHref = link.getAttribute('href');
-                        if (currentHref && currentHref.includes('stripe.com')) {
-                            if (!currentHref.includes('client_reference_id=')) {
+                        if (currentHref && currentHref.includes('gumroad.com')) {
+                            if (!currentHref.includes('wanted=')) {
                                 const separator = currentHref.includes('?') ? '&' : '?';
-                                const newHref = currentHref + separator + 'client_reference_id=' + encodeURIComponent(token);
+                                const newHref = currentHref + separator + 'wanted=true&user_id=' + encodeURIComponent(token);
                                 link.setAttribute('href', newHref);
                             }
                         }
@@ -706,7 +706,7 @@
                 }
             }
             
-            updateStripeUrls();
+            updateGumroadUrls();
             
             const monthlyToggle = document.getElementById('monthlyToggle');
             const annualToggle = document.getElementById('annualToggle');
@@ -724,7 +724,7 @@
                 annualLinks.forEach(link => link.style.display = 'none');
                 monthlyLinks.forEach(link => link.style.display = 'block');
                 
-                updateStripeUrls();
+                updateGumroadUrls();
             });
 
             annualToggle.addEventListener('click', function() {
@@ -736,7 +736,7 @@
                 monthlyLinks.forEach(link => link.style.display = 'none');
                 annualLinks.forEach(link => link.style.display = 'block');
                 
-                updateStripeUrls();
+                updateGumroadUrls();
             });
             
             const faqQuestions = document.querySelectorAll('.faq-question');
@@ -758,7 +758,7 @@
                 });
             });
             
-            window.addEventListener('popstate', updateStripeUrls);
+            window.addEventListener('popstate', updateGumroadUrls);
         });
     </script>
 </body>
