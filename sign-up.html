@@ -250,11 +250,11 @@
         // Your signup worker URL
         const WORKER_URL = 'https://sign-up.hamoureliasse.workers.dev/';
         
-        // Initialize Supabase
-        const supabase = window.supabase.createClient(
-            'https://snxhsboboatjywgwdeds.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
-        );
+       // Initialize Supabase
+const supabaseClient = window.supabase.createClient(
+    'https://snxhsboboatjywgwdeds.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
+);
 
         // Show message to user
         function showMessage(text, type = 'error') {
@@ -276,7 +276,7 @@
 
                 plausible('Sign up', {props: {method: 'google'}});
                 
-                const { data, error } = await supabase.auth.signInWithOAuth({
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
                         redirectTo: `https://unlimited-leads.online/confirmation-signup`
