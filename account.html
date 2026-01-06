@@ -314,6 +314,12 @@ header {
     background: linear-gradient(135deg, var(--primary), #1e40af);
 }
 
+.manage-plan-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .manage-plan-button i {
     font-size: 18px;
 }
@@ -495,10 +501,10 @@ header {
 
             <div id="accountAlert" class="alert"></div>
             
-            <a href="https://unlimited-leads.online/pricing" id="managePlanButton" class="manage-plan-button">
+            <button id="managePlanButton" class="manage-plan-button">
                 <i class="fas fa-cogs"></i>
                 Manage Plan
-            </a>
+            </button>
             
         </section>
     </div>
@@ -636,22 +642,20 @@ header {
             }
         }
 
-        // Add copy functionality (COPIES ENCRYPTED TOKEN)
-        document.addEventListener('DOMContentLoaded', function() {
-            const copyButton = document.getElementById('copyApiKey');
-            if (copyButton) {
-                copyButton.addEventListener('click', function() {
-                    // Copy the transformed token
-                    const apiKey = apiToken || document.getElementById('apiKeyValue').textContent;
-                    navigator.clipboard.writeText(apiKey).then(function() {
-                        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        setTimeout(() => {
-                            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                        }, 2000);
-                    });
-                });
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            const alert = document.getElementById('accountAlert');
+            if (alert) {
+                alert.textContent = message;
+                alert.className = `alert alert-${type}`;
+                alert.style.display = 'block';
+                
+                // Hide the alert after 5 seconds
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 5000);
             }
-        });
+        }
         
         // Function to set up event listeners
         function setupEventListeners() {
@@ -677,58 +681,76 @@ header {
                 });
             }
 
+            // Copy API Key button
+            const copyButton = document.getElementById('copyApiKey');
+            if (copyButton) {
+                copyButton.addEventListener('click', function() {
+                    // Copy the transformed token
+                    const apiKey = apiToken || document.getElementById('apiKeyValue').textContent;
+                    navigator.clipboard.writeText(apiKey).then(function() {
+                        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        }, 2000);
+                    });
+                });
+            }
 
-       // Manage plan button - call n8n webhook
-const managePlanButton = document.getElementById('managePlanButton');
-if (managePlanButton) {
-    managePlanButton.addEventListener('click', async function(e) {
-        e.preventDefault();
-        
-        const token = localStorage.getItem('sessionToken');
-        if (!token) {
-            showAlert('No session found. Please login again.', 'error');
-            return;
-        }
-        
-        // Disable button and show loading
-        managePlanButton.disabled = true;
-        managePlanButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-        
-        try {
-            const response = await fetch('https://eliasse-n8n.onrender.com/webhook/48e316de-4d22-4428-8e88-afede86b2c8f', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    token: token
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error('API request failed');
+            // Manage plan button - call n8n webhook
+            const managePlanButton = document.getElementById('managePlanButton');
+            if (managePlanButton) {
+                managePlanButton.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    
+                    const token = localStorage.getItem('sessionToken');
+                    if (!token) {
+                        showAlert('No session found. Please login again.', 'error');
+                        return;
+                    }
+                    
+                    // Disable button and show loading
+                    managePlanButton.disabled = true;
+                    managePlanButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                    
+                    try {
+                        const response = await fetch('https://eliasse-n8n.onrender.com/webhook/48e316de-4d22-4428-8e88-afede86b2c8f', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                token: token
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('API request failed');
+                        }
+                        
+                        const data = await response.json();
+                        console.log('N8N response:', data);
+                        
+                        // Si le webhook retourne une URL de redirection
+                        if (data.url) {
+                            window.location.href = data.url;
+                        } else {
+                            showAlert('Billing portal link received', 'success');
+                            // Re-enable button
+                            managePlanButton.disabled = false;
+                            managePlanButton.innerHTML = '<i class="fas fa-cogs"></i> Manage Plan';
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error calling n8n webhook:', error);
+                        showAlert('Error loading billing portal. Please try again.', 'error');
+                        
+                        // Re-enable button
+                        managePlanButton.disabled = false;
+                        managePlanButton.innerHTML = '<i class="fas fa-cogs"></i> Manage Plan';
+                    }
+                });
             }
-            
-            const data = await response.json();
-            console.log('N8N response:', data);
-            
-            // Si le webhook retourne une URL de redirection
-            if (data.url) {
-                window.location.href = data.url;
-            } else {
-                showAlert('Billing portal link received', 'success');
-            }
-            
-        } catch (error) {
-            console.error('Error calling n8n webhook:', error);
-            showAlert('Error loading billing portal. Please try again.', 'error');
-            
-            // Re-enable button
-            managePlanButton.disabled = false;
-            managePlanButton.innerHTML = '<i class="fas fa-cogs"></i> Manage Plan';
         }
-    });
-}
 
         // Execute token verification immediately as well
         token_verif();
