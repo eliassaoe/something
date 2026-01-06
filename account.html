@@ -728,17 +728,20 @@ header {
                         }
                         
                         const data = await response.json();
-                        console.log('N8N response:', data);
-                        
-                        // Si le webhook retourne une URL de redirection
-                        if (data.url) {
-                            window.location.href = data.url;
-                        } else {
-                            showAlert('Billing portal link received', 'success');
-                            // Re-enable button
-                            managePlanButton.disabled = false;
-                            managePlanButton.innerHTML = '<i class="fas fa-cogs"></i> Manage Plan';
-                        }
+console.log('N8N response:', data);
+
+// Si le webhook retourne une URL de redirection valide
+if (data.url && data.url !== '') {
+    window.location.href = data.url;
+} else {
+    // Pas d'URL ou URL vide = rediriger vers pricing
+    const token = localStorage.getItem('sessionToken');
+    if (token) {
+        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
+    } else {
+        window.location.href = 'https://unlimited-leads.online/pricing';
+    }
+}
                         
                     } catch (error) {
                         console.error('Error calling n8n webhook:', error);
