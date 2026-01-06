@@ -677,20 +677,6 @@ header {
                 });
             }
 
-            // Manage plan button - simplified to always go to pricing
-            const managePlanButton = document.getElementById('managePlanButton');
-            if (managePlanButton) {
-                managePlanButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const token = localStorage.getItem('sessionToken');
-                    if (token) {
-                        window.location.href = `https://unlimited-leads.online/pricing?token=${token}`;
-                    } else {
-                        window.location.href = 'https://unlimited-leads.online/pricing';
-                    }
-                });
-            }
-        }
 
        // Manage plan button - call n8n webhook
 const managePlanButton = document.getElementById('managePlanButton');
