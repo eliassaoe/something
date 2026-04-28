@@ -15,71 +15,457 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1f2937; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            color: #1f2937; 
+            line-height: 1.6;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+        
         a { text-decoration: none; color: inherit; }
-        .header { background: white; padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #2563eb; }
-        .top-banner { background: linear-gradient(135deg, #fef3c7, #fde68a); text-align: center; padding: 0.75rem; font-size: 0.95rem; font-weight: 600; color: #92400e; border-bottom: 1px solid #fbbf24; }
-        .pricing-header { text-align: center; padding: 3rem 0 2rem; }
-        .pricing-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.75rem; color: #111827; }
-        .pricing-header p { font-size: 1.15rem; color: #6b7280; max-width: 600px; margin: 0 auto; }
-        .pricing-toggle { text-align: center; margin: 2rem 0; }
-        .toggle-wrapper { display: inline-flex; background: #f3f4f6; border-radius: 8px; padding: 4px; position: relative; }
-        .toggle-option { padding: 0.65rem 1.5rem; cursor: pointer; font-weight: 600; border-radius: 6px; transition: all 0.2s; position: relative; z-index: 1; }
-        .toggle-option.active { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .save-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto 1rem; }
-        .pricing-card { background: white; padding: 2rem; border-radius: 12px; border: 2px solid #e5e7eb; position: relative; }
-        .pricing-card.featured { border-color: #2563eb; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15); }
-        .featured-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #2563eb; color: white; padding: 0.35rem 1rem; font-size: 0.75rem; font-weight: 700; border-radius: 20px; letter-spacing: 0.5px; }
-        .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #111827; }
-        .plan-price { margin-bottom: 1rem; }
-        .price-amount { font-size: 2.75rem; font-weight: 800; color: #111827; }
-        .price-amount small { font-size: 1rem; font-weight: 500; color: #6b7280; }
-        .price-save { color: #059669; font-weight: 700; font-size: 0.9rem; margin-top: 0.25rem; }
-        .plan-description { color: #4b5563; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; min-height: 60px; }
-        .plan-features { list-style: none; margin-bottom: 1.5rem; }
-        .plan-features li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; color: #374151; font-size: 0.95rem; }
-        .plan-features li:before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: 700; }
-        .asterisk { color: #6b7280; font-size: 0.85rem; margin-left: 2px; vertical-align: super; line-height: 0; }
-        .plan-cta { display: block; width: 100%; padding: 0.85rem; background: #2563eb; color: white; text-align: center; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; font-size: 1rem; transition: all 0.2s; }
-        .plan-cta:hover { background: #1d4ed8; transform: translateY(-2px); }
-        .featured .plan-cta { background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-        .usage-note { max-width: 900px; margin: 0 auto 3rem; padding: 0 1rem; text-align: center; }
-        .usage-note p { font-size: 0.8rem; color: #6b7280; line-height: 1.5; }
-        .testimonials { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
-        .testimonials h3 { text-align: center; font-size: 1.75rem; margin-bottom: 2rem; color: #111827; }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .testimonial { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; }
-        .stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 0.75rem; }
-        .testimonial-text { color: #374151; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6; }
-        .testimonial-author { font-size: 0.85rem; color: #6b7280; }
-        .testimonial-author strong { color: #111827; font-weight: 600; }
-        .faq { max-width: 700px; margin: 3rem auto 4rem; }
-        .faq h3 { text-align: center; font-size: 1.75rem; margin-bottom: 2rem; color: #111827; }
-        .faq-item { margin-bottom: 1rem; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
-        .faq-question { padding: 1rem 1.25rem; background: white; font-weight: 600; color: #111827; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
-        .faq-question:after { content: "+"; font-size: 1.25rem; color: #2563eb; }
-        .faq-question.active:after { content: "−"; }
-        .faq-answer { padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: #4b5563; font-size: 0.9rem; }
-        .faq-answer.active { padding: 0 1.25rem 1rem; max-height: 300px; }
-        .footer { background: #f9fafb; padding: 3rem 0 1rem; border-top: 1px solid #e5e7eb; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        .footer-column h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: #111827; }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.5rem; }
-        .footer-links a { color: #6b7280; font-size: 0.9rem; transition: color 0.2s; }
-        .footer-links a:hover { color: #2563eb; }
-        .footer-social { text-align: center; margin: 2rem 0 1rem; }
-        .footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: 0 0.5rem; background: #e5e7eb; border-radius: 50%; color: #374151; transition: all 0.2s; }
-        .footer-social a:hover { background: #2563eb; color: white; }
-        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 0.9rem; }
-        .footer-bottom p { margin: 0.5rem 0; }
-        .footer-bottom a { color: #6b7280; transition: color 0.2s; }
-        .footer-bottom a:hover { color: #2563eb; }
-        @media (max-width: 768px) { .pricing-header h1 { font-size: 2rem; } .pricing-grid { grid-template-columns: 1fr; gap: 1.5rem; } .testimonial-grid { grid-template-columns: 1fr; } .footer-content { grid-template-columns: 1fr; } }
+        
+        .header { 
+            background: white; 
+            padding: 1rem 0; 
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            text-align: center;
+            padding: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #92400e;
+            border-bottom: 1px solid #fbbf24;
+        }
+
+        .pricing-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .pricing-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: #111827;
+        }
+        
+        .pricing-header p {
+            font-size: 1.15rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-toggle {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .toggle-wrapper {
+            display: inline-flex;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 4px;
+            position: relative;
+        }
+        
+        .toggle-option {
+            padding: 0.65rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .toggle-option.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .save-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .pricing-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+            max-width: 900px;
+            margin: 0 auto 1rem;
+        }
+        
+        .pricing-card { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            border: 2px solid #e5e7eb;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: #2563eb;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+        }
+        
+        .featured-tag {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2563eb;
+            color: white;
+            padding: 0.35rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .plan-name { 
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+        
+        .plan-price {
+            margin-bottom: 1rem;
+        }
+        
+        .price-amount {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #111827;
+        }
+        
+        .price-amount small {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        
+        .price-save {
+            color: #059669;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        
+        .plan-description {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            min-height: 60px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-features li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .asterisk {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-left: 2px;
+            vertical-align: super;
+            line-height: 0;
+        }
+        
+        .plan-cta {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .plan-cta:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .featured .plan-cta {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .usage-note {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .usage-note p {
+            font-size: 0.8rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .testimonials {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        .testimonials h3 {
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: #111827;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .testimonial {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .stars {
+            color: #f59e0b;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .testimonial-text {
+            color: #374151;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        
+        .testimonial-author strong {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .faq {
+            max-width: 700px;
+            margin: 3rem auto 4rem;
+        }
+        
+        .faq h3 {
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: #111827;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1rem 1.25rem;
+            background: white;
+            font-weight: 600;
+            color: #111827;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .faq-question:after {
+            content: "+";
+            font-size: 1.25rem;
+            color: #2563eb;
+        }
+        
+        .faq-question.active:after {
+            content: "−";
+        }
+        
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #4b5563;
+            font-size: 0.9rem;
+        }
+        
+        .faq-answer.active {
+            padding: 0 1.25rem 1rem;
+            max-height: 300px;
+        }
+
+        .footer { 
+            background: #f9fafb; 
+            padding: 3rem 0 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #6b7280;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: #2563eb;
+        }
+        
+        .footer-social {
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 0.5rem;
+            background: #e5e7eb;
+            border-radius: 50%;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        
+        .footer-social a:hover {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+        
+        .footer-bottom a {
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        
+        .footer-bottom a:hover {
+            color: #2563eb;
+        }
+        
+        .language-links {
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .language-links a {
+            margin: 0 0.5rem;
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        
+        .language-links a:hover {
+            color: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-header h1 { font-size: 2rem; }
+            .pricing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -131,10 +517,8 @@
                 </p>
                 
                 <ul class="plan-features">
-                    <li><strong>3,000 leads/day</strong> (~90,000/month)</li>
+                    <li><strong>Unlimited Exports</strong><span class="asterisk">*</span></li>            
                     <li>95% email accuracy</li>
-                    <li>CSV export</li>
-                    <li>Email support</li>
                 </ul>
                 
                 <a href="https://linkfinderai.gumroad.com/l/hcgoty" class="btn plan-cta gumroad-link annual-link">Get Started</a>
@@ -155,17 +539,13 @@
                 </div>
                 
                 <p class="plan-description">
-                    Unlimited lead exports + Unlimited email finder. For serious teams.
+                    Unlimited lead exports + Unlimited email finder  For serious teams.
                 </p>
                 
                 <ul class="plan-features">
-                    <li><strong>5,000 leads/day</strong> (~150,000/month)</li>
+                    <li><strong>Unlimited Exports</strong><span class="asterisk">*</span></li>
                     <li><strong>Unlimited Email Finder</strong></li>
-                    <li><strong>Unlimited Email Verifier</strong></li>
-                    <li><strong>Unlimited LinkedIn Scraping</strong></li>
                     <li>95% email accuracy</li>
-                    <li>CSV export</li>
-                    <li>Priority support</li>
                 </ul>
                 
                 <a href="https://linkfinderai.gumroad.com/l/dlbbep" class="btn plan-cta gumroad-link annual-link">Get Started</a>
@@ -174,7 +554,7 @@
         </div>
 
         <div class="usage-note">
-            <p>Starter: 3,000 leads/day · Pro: 5,000 leads/day · Limits reset daily</p>
+            <p><span class="asterisk">*</span>Daily limits apply for fair usage</p>
         </div>
     </section>
 
@@ -183,18 +563,32 @@
         <div class="testimonial-grid">
             <div class="testimonial">
                 <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="testimonial-text">"Switched from Apollo. Get 50x more leads for less money. Booked 23 meetings first week."</p>
-                <div class="testimonial-author"><strong>Sarah K.</strong> - Head of Sales</div>
+                <p class="testimonial-text">
+                    "Switched from Apollo. Get 50x more leads for less money. Booked 23 meetings first week."
+                </p>
+                <div class="testimonial-author">
+                    <strong>Sarah K.</strong> - Head of Sales
+                </div>
             </div>
+            
             <div class="testimonial">
                 <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="testimonial-text">"ZoomInfo wanted $15K. This is $890 for more contacts. Data quality is just as good."</p>
-                <div class="testimonial-author"><strong>Michael T.</strong> - VP Sales</div>
+                <p class="testimonial-text">
+                    "ZoomInfo wanted $15K. This is $890 for more contacts. Data quality is just as good."
+                </p>
+                <div class="testimonial-author">
+                    <strong>Michael T.</strong> - VP Sales
+                </div>
             </div>
+            
             <div class="testimonial">
                 <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="testimonial-text">"Exported 47K leads Month 1. Built $2M pipeline in 90 days. Best investment ever."</p>
-                <div class="testimonial-author"><strong>Jessica P.</strong> - Founder</div>
+                <p class="testimonial-text">
+                    "Exported 47K leads Month 1. Built $2M pipeline in 90 days. Best investment ever."
+                </p>
+                <div class="testimonial-author">
+                    <strong>Jessica P.</strong> - Founder
+                </div>
             </div>
         </div>
     </section>
@@ -204,31 +598,28 @@
         <div class="faq-item">
             <div class="faq-question">What's the difference between plans?</div>
             <div class="faq-answer">
-                Starter gives you 3,000 leads per day with CSV export and email support. Pro gives you 5,000 leads per day plus unlimited email finder, email verifier, and LinkedIn scraping — everything you need to build and contact prospects at scale.
+                Starter gives you unlimited exports with daily limits for fair usage. Pro gives you unlimited exports with higher daily limits plus unlimited email finder.
             </div>
         </div>
+
         <div class="faq-item">
             <div class="faq-question">What are the daily export limits?</div>
             <div class="faq-answer">
-                Starter plan: 3,000 leads per day (~90,000/month). Pro plan: 5,000 leads per day (~150,000/month). Limits reset daily and are more than enough for most sales teams.
+                Starter plan: Up to 5,000 leads per day (~150,000/month). Pro plan: Up to 10,000 leads per day (~300,000/month). Both limits are more than enough for most sales teams and reset daily.
             </div>
         </div>
+        
         <div class="faq-item">
             <div class="faq-question">Can I cancel anytime?</div>
             <div class="faq-answer">
                 Yes, cancel anytime. No contracts. You keep access until your current billing period ends.
             </div>
         </div>
+        
         <div class="faq-item">
             <div class="faq-question">How accurate is the data?</div>
             <div class="faq-answer">
                 95% email deliverability rate with verified contacts and real-time validation.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">Do you offer a free trial?</div>
-            <div class="faq-answer">
-                Yes! Sign up and get 250 free leads to test the platform before committing to a plan.
             </div>
         </div>
     </section>
@@ -244,6 +635,7 @@
                         <li><a href="https://unlimited-leads.online/b2b-contact-database-provider">B2B Contact Database Provider</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-column">
                     <h4>Contact Us</h4>
                     <ul class="footer-links">
@@ -251,17 +643,19 @@
                     </ul>
                 </div>
             </div>
+            
             <div class="footer-social">
                 <a href="https://www.linkedin.com/in/eliasse-hamour-08194821a/"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://www.youtube.com/@unlimited_leads_online"><i class="fab fa-youtube"></i></a>
                 <a href="https://www.reddit.com/r/b2bmarketing/comments/1mt0xz4/unlimited_sales_leads/"><i class="fab fa-reddit"></i></a>
             </div>
+            
             <div class="footer-bottom">
                 <p>© 2025 UnlimitedLeads. All rights reserved.</p>
                 <p>
                     <a href="https://unlimited-leads.online/privacy-policy">Privacy Policy</a> | 
                     <a href="https://unlimited-leads.online/legal-notice">Terms of Service</a> |
-                    <a href="https://unlimited-leads.online/about-us">About us</a>
+                    <a href="https://unlimited-leads.online/about-us">About us</a> 
                 </p>
             </div>
         </div>
@@ -269,29 +663,83 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Page loaded ===');
+            console.log('Current URL:', window.location.href);
+            console.log('URL params:', window.location.search);
+            
             function getUserToken() {
+                // Essayer d'abord depuis l'URL
                 const urlParams = new URLSearchParams(window.location.search);
-                let token = urlParams.get('token') || urlParams.get('customer_id') || urlParams.get('user_id');
-                if (token) { localStorage.setItem('unlimitedLeadsToken', token); return token; }
-                token = localStorage.getItem('unlimitedLeadsToken') || localStorage.getItem('userToken') || localStorage.getItem('customer_id') || localStorage.getItem('user_id') || localStorage.getItem('token');
-                if (token) return token;
-                token = sessionStorage.getItem('unlimitedLeadsToken') || sessionStorage.getItem('userToken') || sessionStorage.getItem('customer_id') || sessionStorage.getItem('user_id') || sessionStorage.getItem('token');
-                return token || null;
+                let token = urlParams.get('token') || 
+                           urlParams.get('customer_id') || 
+                           urlParams.get('user_id');
+                
+                // Si trouvé dans l'URL, le sauvegarder dans localStorage
+                if (token) {
+                    localStorage.setItem('unlimitedLeadsToken', token);
+                    console.log('Token found in URL and saved:', token);
+                    return token;
+                }
+                
+                // Sinon, chercher dans localStorage
+                token = localStorage.getItem('unlimitedLeadsToken') || 
+                       localStorage.getItem('userToken') || 
+                       localStorage.getItem('customer_id') || 
+                       localStorage.getItem('user_id') ||
+                       localStorage.getItem('token');
+                
+                if (token) {
+                    console.log('Token found in localStorage:', token);
+                    return token;
+                }
+                
+                // En dernier recours, chercher dans sessionStorage
+                token = sessionStorage.getItem('unlimitedLeadsToken') ||
+                       sessionStorage.getItem('userToken') || 
+                       sessionStorage.getItem('customer_id') || 
+                       sessionStorage.getItem('user_id') ||
+                       sessionStorage.getItem('token');
+                
+                if (token) {
+                    console.log('Token found in sessionStorage:', token);
+                    return token;
+                }
+                
+                console.log('No token found');
+                return null;
             }
             
             function updateGumroadUrls() {
                 const token = getUserToken();
-                if (!token) return;
+                
+                console.log('=== updateGumroadUrls called ===');
+                console.log('Token retrieved:', token);
+                
+                if (!token) {
+                    console.log('No token available, skipping URL update');
+                    return;
+                }
+                
                 const gumroadLinks = document.querySelectorAll('.gumroad-link, a[href*="gumroad.com"]');
-                gumroadLinks.forEach((link) => {
+                console.log('Found Gumroad links:', gumroadLinks.length);
+                
+                gumroadLinks.forEach((link, index) => {
                     const currentHref = link.getAttribute('href');
+                    console.log(`Link ${index + 1} current href:`, currentHref);
+                    
                     if (currentHref && currentHref.includes('gumroad.com')) {
-                        let baseUrl = currentHref.split('?')[0];
-                        link.setAttribute('href', baseUrl + '?wanted=true&user_id=' + encodeURIComponent(token));
+                        // Toujours reconstruire l'URL avec les bons paramètres
+                        let baseUrl = currentHref.split('?')[0]; // Enlever les anciens paramètres
+                        const newHref = baseUrl + '?wanted=true&user_id=' + encodeURIComponent(token);
+                        
+                        link.setAttribute('href', newHref);
+                        console.log(`Link ${index + 1} updated to:`, newHref);
                     }
                 });
             }
             
+            // Appeler au chargement de la page
+            console.log('Initial token check:', getUserToken());
             updateGumroadUrls();
             
             const monthlyToggle = document.getElementById('monthlyToggle');
@@ -302,32 +750,49 @@
             const monthlyLinks = document.querySelectorAll('.monthly-link');
 
             monthlyToggle.addEventListener('click', function() {
+                console.log('Monthly plan selected');
                 monthlyToggle.classList.add('active');
                 annualToggle.classList.remove('active');
-                annualPrices.forEach(p => p.style.display = 'none');
-                monthlyPrices.forEach(p => p.style.display = 'block');
-                annualLinks.forEach(l => l.style.display = 'none');
-                monthlyLinks.forEach(l => l.style.display = 'block');
+                
+                annualPrices.forEach(price => price.style.display = 'none');
+                monthlyPrices.forEach(price => price.style.display = 'block');
+                annualLinks.forEach(link => link.style.display = 'none');
+                monthlyLinks.forEach(link => link.style.display = 'block');
+                
+                // Important: mettre à jour les URLs avec le token
                 setTimeout(updateGumroadUrls, 100);
             });
 
             annualToggle.addEventListener('click', function() {
+                console.log('Annual plan selected');
                 annualToggle.classList.add('active');
                 monthlyToggle.classList.remove('active');
-                monthlyPrices.forEach(p => p.style.display = 'none');
-                annualPrices.forEach(p => p.style.display = 'block');
-                monthlyLinks.forEach(l => l.style.display = 'none');
-                annualLinks.forEach(l => l.style.display = 'block');
+                
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                annualPrices.forEach(price => price.style.display = 'block');
+                monthlyLinks.forEach(link => link.style.display = 'none');
+                annualLinks.forEach(link => link.style.display = 'block');
+                
+                // Important: mettre à jour les URLs avec le token
                 setTimeout(updateGumroadUrls, 100);
             });
             
             const faqQuestions = document.querySelectorAll('.faq-question');
+            
             faqQuestions.forEach(question => {
                 question.addEventListener('click', function() {
                     const answer = this.nextElementSibling;
                     const isActive = this.classList.contains('active');
-                    document.querySelectorAll('.faq-question').forEach(q => { q.classList.remove('active'); q.nextElementSibling.classList.remove('active'); });
-                    if (!isActive) { this.classList.add('active'); answer.classList.add('active'); }
+                    
+                    document.querySelectorAll('.faq-question').forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+                    
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
                 });
             });
             
