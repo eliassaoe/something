@@ -1934,15 +1934,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-document.getElementById('linkedinScraperBtn').addEventListener('click', () => {
-  document.getElementById('linkedinScraperModal').style.display = 'block';
-});
-document.getElementById('closeLinkedinModal').addEventListener('click', () => {
-  document.getElementById('linkedinScraperModal').style.display = 'none';
-});
-window.addEventListener('click', (e) => {
+document.addEventListener('click', function(e) {
   const modal = document.getElementById('linkedinScraperModal');
-  if (e.target === modal) modal.style.display = 'none';
+  if (!modal) return;
+  
+  if (e.target.id === 'linkedinScraperBtn' || e.target.closest('#linkedinScraperBtn')) {
+    modal.style.display = 'block';
+  }
+  if (e.target.id === 'closeLinkedinModal') {
+    modal.style.display = 'none';
+  }
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
 });
         
 async function fetchData() {
