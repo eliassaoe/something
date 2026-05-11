@@ -2358,6 +2358,7 @@ async function exportToCSV() {
         // Show the custom export modal
         const exportModal = document.getElementById('exportModal');
         exportModal.style.display = 'block';
+        posthog.capture('export_button_clicked');
 
         document.getElementById('exportLimit').value = Math.min(globalTrueCount, 250);
         
@@ -2379,6 +2380,7 @@ async function exportToCSV() {
             try {
                 // Hide the export modal
                 exportModal.style.display = 'none';
+                posthog.capture('export_started', { limit: parseInt(document.getElementById('exportLimit').value) || 250 });
                 
                // Get the export limit from the input field
                 const exportLimit = parseInt(document.getElementById('exportLimit').value) || 1000;
@@ -2521,6 +2523,7 @@ async function exportToCSV() {
                         }, 100);
                         
                         // Show success message
+                        posthog.capture('export_completed', { type: 'csv', token: userToken });
                         showAlert(`Export successful! Downloaded contacts to your device.`, 'success');
                         
                         // Show the confirmation modal
@@ -2564,6 +2567,7 @@ async function exportToCSV() {
                             `${processingSecs} seconds`;
                         
                         // Show success message
+                        posthog.capture('export_completed', { type: 'json', count: responseData.length, token: userToken });
                         showAlert(`Export successful! Downloaded ${responseData.length} contacts (processed in ${timeStr}).`, 'success');
                         
                         // Show the confirmation modal
