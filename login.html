@@ -188,7 +188,6 @@
             text-decoration: underline;
         }
     </style>
-    <!-- Hreflang tags -->
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
     posthog.init('phc_n9VVpe6R4n3MLnbERBSvvqdukfgQEXUYpmWd8xWhnvGw', {
@@ -205,6 +204,19 @@
         
         <!-- Message area -->
         <div id="message" class="message"></div>
+
+        <!-- Google Sign In Button -->
+        <button type="button" class="google-btn" onclick="signInWithGoogle()">
+            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                <path d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z" fill="#FBBC05"/>
+                <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 6.294C4.672 4.167 6.656 3.58 9 3.58z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+        </button>
+
+        <div class="divider"><span>or</span></div>
         
         <!-- Email/Password Form -->
         <form id="loginForm">
@@ -225,16 +237,14 @@
     </div>
 
     <script>
-        // Your worker URL
         const WORKER_URL = 'https://login-v2.hamoureliasse.workers.dev/';
         
-        // Initialize Supabase
+        // FIX: using supabaseClient to avoid duplicate declaration conflict
         const supabaseClient = window.supabase.createClient(
-    'https://snxhsboboatjywgwdeds.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
-);
+            'https://snxhsboboatjywgwdeds.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNueGhzYm9ib2F0anl3Z3dkZWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMTY5NzgsImV4cCI6MjA2MTU5Mjk3OH0.qkoiXJoqujQ4iUByOqSAsacuJVtJx32j19PTuy7brMo'
+        );
 
-        // Show message to user
         function showMessage(text, type = 'error') {
             const messageEl = document.getElementById('message');
             messageEl.textContent = text;
@@ -242,17 +252,16 @@
             messageEl.style.display = 'block';
         }
 
-        // Hide message
         function hideMessage() {
             document.getElementById('message').style.display = 'none';
         }
 
-        // Google Sign In - Simple redirect to confirmation page
+        // FIX: was using supabase.auth — now correctly uses supabaseClient.auth
         async function signInWithGoogle() {
             try {
                 hideMessage();
-                
-                const { data, error } = await supabase.auth.signInWithOAuth({
+
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
                         redirectTo: `https://unlimited-leads.online/confirmation-login`
@@ -267,7 +276,6 @@
             }
         }
 
-        // Email/Password Login - Simple POST to worker
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -280,7 +288,6 @@
                 return;
             }
             
-            // Show loading
             submitButton.innerHTML = '<span class="spinner"></span> Signing In...';
             submitButton.disabled = true;
             hideMessage();
@@ -288,9 +295,7 @@
             try {
                 const response = await fetch(WORKER_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: email,
                         password: password,
@@ -317,13 +322,11 @@
                 showMessage('Connection error. Please try again.');
                 console.error('Login error:', error);
             } finally {
-                // Reset button
                 submitButton.innerHTML = 'Sign In';
                 submitButton.disabled = false;
             }
         });
 
-        // Check for error in URL (from Google auth redirects)
         const urlParams = new URLSearchParams(window.location.search);
         const error = urlParams.get('error');
         if (error) {
